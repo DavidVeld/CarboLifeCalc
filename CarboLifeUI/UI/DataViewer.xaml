@@ -62,9 +62,9 @@
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="20" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Hidden"/>
 
-                <DataGridTextColumn Width="1*" MinWidth="75" Header="Category" Binding="{Binding Path=Category, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="120" Header="Material" Binding="{Binding Path=MaterialName, Mode=TwoWay}" IsReadOnly="False"/>
-                <DataGridTextColumn Width="1*" MinWidth="100" Header="Description" Binding="{Binding Path=Description}" IsReadOnly="False"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Category" Binding="{Binding Path=Category, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="120" Header="Material" Binding="{Binding Path=MaterialName}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="200" Header="Description" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="False"/>
 
                 <DataGridTemplateColumn Header="MaterialList" Width="100" Visibility="Hidden" >
                     <DataGridTemplateColumn.CellTemplate>
@@ -83,9 +83,9 @@
                 <DataGridTextColumn Width="1*" MinWidth="75" Header="Density" Binding="{Binding Path=Density}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="1*" MinWidth="75" Header="Mass" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
 
-                <DataGridTextColumn MinWidth="100" Header="EEI(MJ/kg)" Binding="{Binding Path=EEI}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="EEI(MJ/kg)" Binding="{Binding Path=EEI}" IsReadOnly="True" Visibility="Hidden"/>
                 <DataGridTextColumn MinWidth="100" Header="ECI(kgCo2/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="100" Header="EE (GJ)" Binding="{Binding Path=EE}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="EE (GJ)" Binding="{Binding Path=EE}" IsReadOnly="True"  Visibility="Hidden"/>
                 <DataGridTextColumn MinWidth="100" Header="EC (tCo2)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
 
                 <DataGridTemplateColumn Header="Total" Width="5*" MinWidth="100">

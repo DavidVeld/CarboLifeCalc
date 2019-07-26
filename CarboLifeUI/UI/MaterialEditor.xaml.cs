@@ -161,5 +161,10 @@ namespace CarboLifeUI.UI
         {
             RefreshMaterialList();
         }
+
+        private void Btn_A1_A3_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

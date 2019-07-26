@@ -33,7 +33,7 @@ namespace CarboLifeUI.UI
         {
             UserMaterials = userMaterials;
             BaseMaterials = new CarboDatabase();
-            BaseMaterials.DeSerializeXML("BaseMaterials");
+            BaseMaterials = BaseMaterials.DeSerializeXML("BaseMaterials");
 
             InitializeComponent();
         }
@@ -60,11 +60,17 @@ namespace CarboLifeUI.UI
 
                     DataTable dt = CarboLifeAPI.Utils.LoadCSV(filePath);
 
-                    CarboDatabase newFloorOptionCategory = tryParseData(dt);
+                    CarboDatabase newMaterialDatabase = tryParseData(dt);
 
                     //dgv_Data.ItemsSource = dt.DefaultView;
-                    dgv_Data.ItemsSource = newFloorOptionCategory.getData();
-                    newFloorOptionCategory.SerializeXML(name);
+                    dgv_Data.ItemsSource = newMaterialDatabase.getData();
+                    newMaterialDatabase.SerializeXML(name);
+
+                    if (name == "BaseMaterials")
+                        BaseMaterials = newMaterialDatabase;
+                    else if(name == "UserMaterials")
+                        UserMaterials = newMaterialDatabase;
+
                 }
             }
             catch (Exception ex)
@@ -89,7 +95,7 @@ namespace CarboLifeUI.UI
             //Reach row is one element
             //Loop through datatab;e
 
-            int newIdNr = 10000;
+            //int newIdNr = 10000;
             //int columncount = 0;
 
             PropertyInfo[] propertyValues = typeof(CarboMaterial).GetProperties();
@@ -105,9 +111,9 @@ namespace CarboLifeUI.UI
                     propertyList.Add(prInf);
                 }
                 //Set Id;
-                newMaterial.Id = newIdNr;
+                //newMaterial.Id = newIdNr;
                 //columncount = 0;
-                bool valueisParameterOrMaterial = false; ;
+                bool valueisParameter = false; ;
 
                 foreach (DataColumn dc in dt.Columns)
                 {
@@ -126,12 +132,17 @@ namespace CarboLifeUI.UI
                             try
                             {
                                 string value = dr[dc].ToString();
-                                double parsedValue = 0;
-                                bool isNumber = false;
-                                isNumber = double.TryParse(value, out parsedValue);
+                                double parsedDoubleValue = 0;
+                                int parcedIntValue;
+                                bool isDouble = false;
+                                bool isInt = false;
+                                isDouble = double.TryParse(value, out parsedDoubleValue);
+                                isInt = int.TryParse(value, out parcedIntValue);                           
 
-                                if (isNumber)
+                                if (isDouble == true)
                                 {
+                                    //Handle as number or bolean
+
                                     if (property.PropertyType == typeof(bool))
                                     {
                                         bool boolValue = Convert.ToBoolean(Convert.ToInt32(value));
@@ -139,12 +150,19 @@ namespace CarboLifeUI.UI
                                     }
                                     else
                                     {
-                                        parsedValue = Math.Round(parsedValue, 2);
-                                        property.SetValue(newMaterial, parsedValue);
+                                        if (property.PropertyType == typeof(int))
+                                        {
+                                            //must be int
+                                            property.SetValue(newMaterial, parcedIntValue);
+                                        }
+                                        else
+                                        {
+                                            //must be double
+                                            //parsedDoubleValue = Math.Round(parsedDoubleValue, 2);
+                                            property.SetValue(newMaterial, parsedDoubleValue);
+                                        }
+                                            //see if is int or double
                                     }
-
-
-
                                 }
                                 else
                                 {
@@ -153,7 +171,7 @@ namespace CarboLifeUI.UI
                                 }
 
                                 //Value Successfully added
-                                valueisParameterOrMaterial = false;
+                                valueisParameter = false;
 
                                 //removethePropertyFromlistToSpeedThingsUpNextRound;
                                 propertyList.Remove(property);
@@ -167,14 +185,13 @@ namespace CarboLifeUI.UI
                         }
                         else
                         {
-                            valueisParameterOrMaterial = true;
+                            valueisParameter = true;
                         }
                     }
 
-                    if (valueisParameterOrMaterial == true)
+                    if (valueisParameter == true)
                     {
                         // If its not a property it will be added as a free parameter.
-
                         try
                         {
 
@@ -206,13 +223,14 @@ namespace CarboLifeUI.UI
 
                     //columncount++;
                 }
+                newMaterial.CalculateTotals();
                 resultList.Add(newMaterial);
                 //lbl_Status.Text = newOption.Name;
 
                 //lbl_Status.Refresh();
                 //this.Refresh();
                 //Next Id Nr:
-                newIdNr++;
+                //newIdNr++;
             }
             //result.Floortype = -1;
             //result.FloorTypeName = txt_TypeName.Text;
@@ -221,5 +239,23 @@ namespace CarboLifeUI.UI
             return result;
         }
 
+        private void Cbb_ViewableTable_DropDownClosed(object sender, EventArgs e)
+        {
+
+            if (cbb_ViewableTable.Text == "Base Materials")
+            {
+                dgv_Data.ItemsSource = null;
+                dgv_Data.Items.Clear();
+                if(BaseMaterials != null)
+                    dgv_Data.ItemsSource = BaseMaterials.getData();
+            }
+            else
+            {
+                dgv_Data.ItemsSource = null;
+                dgv_Data.Items.Clear();
+                if(UserMaterials != null)
+                    dgv_Data.ItemsSource = UserMaterials.getData();
+            }
+        }
     }
 }

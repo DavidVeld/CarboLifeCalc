@@ -96,7 +96,7 @@
                     <Label  Grid.Row="8" Grid.Column="1" Height="30" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleTitle}">Embodied Corbon:</Label>
                     <Label  Grid.Row="9" Grid.Column="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">A1 -> A3 Value:</Label>
                     <TextBox Name="txt_A1_A3"  Grid.Row="9" Grid.Column="2" Height="25" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"></TextBox>
-                    <Button Name="btn_A1_A3"  Grid.Row="9" Grid.Column="3" Height="25" VerticalAlignment="Top" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}">Edit...</Button>
+                    <Button Name="btn_A1_A3"  Grid.Row="9" Grid.Column="3" Height="25" VerticalAlignment="Top" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A1_A3_Click">Edit...</Button>
 
                     <Label  Grid.Row="10" Grid.Column="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">A4 -> A5 Value:</Label>
                     <TextBox Name="txt_A4_A5"  Grid.Row="10" Grid.Column="2" Height="25" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"></TextBox>

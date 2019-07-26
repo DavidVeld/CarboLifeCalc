@@ -48,6 +48,7 @@ namespace CarboLifeAPI.Data
             elementList = new ObservableCollection<CarboElement>();
 
             Name = "New Project";
+            Number = "00000";
             Category = "";
             Description = "New Project";
         }

@@ -23,15 +23,18 @@ namespace CarboLifeUI.UI
     public partial class CarboLifeMainWindow : Window
     {
         public CarboProject carboLifeProject { get; set; }
-        public CarboDatabase carboDataBase { get; set; }
+        //public CarboDatabase carboDataBase { get; set; }
         public CarboLifeMainWindow()
         {
+            carboLifeProject = new CarboProject();
             InitializeComponent();
         }
 
         public CarboLifeMainWindow(CarboProject myProject)
         {
             carboLifeProject = myProject;
+            //carboDataBase = carboDataBase.DeSerializeXML("");
+
             carboLifeProject.CreateGroups();
             InitializeComponent();
         }
@@ -49,7 +52,7 @@ namespace CarboLifeUI.UI
 
         private void Mnu_openDataBasemanager_Click(object sender, RoutedEventArgs e)
         {
-            CaboDatabaseManager dataBaseManager = new CaboDatabaseManager(carboDataBase);
+            CaboDatabaseManager dataBaseManager = new CaboDatabaseManager(carboLifeProject.CarboDatabase);
             dataBaseManager.ShowDialog();
 
         }

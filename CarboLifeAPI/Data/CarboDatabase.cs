@@ -95,15 +95,22 @@ namespace CarboLifeAPI.Data
                 XmlSerializer ser = new XmlSerializer(typeof(CarboDatabase));
                 CarboDatabase bufferproject;
 
-
-                using (FileStream fs = new FileStream(myPath, FileMode.Open))
+                try
                 {
-                    bufferproject = ser.Deserialize(fs) as CarboDatabase;
+                    using (FileStream fs = new FileStream(myPath, FileMode.Open))
+                    {
+                        bufferproject = ser.Deserialize(fs) as CarboDatabase;
 
-                }
-
+                    }
 
                 return bufferproject;
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
             }
             else
             {

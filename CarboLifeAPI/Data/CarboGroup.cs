@@ -147,6 +147,7 @@ namespace CarboLifeAPI.Data
 
         internal void CalculateTotals()
         {
+            Material.CalculateTotals();
             //Clear Values
             EEI = Material.EEI;
             ECI = Material.ECI;

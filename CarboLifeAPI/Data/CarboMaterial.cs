@@ -74,5 +74,10 @@ namespace CarboLifeAPI.Data
             Properties = new List<CarboProperty>();
         }
 
+        public void CalculateTotals()
+        {
+            ECI = ECI_A1A3 + ECI_A4A5 + ECI_B1B7 + ECI_C1C4 + ECI_D;
+
+        }
     }
 }
