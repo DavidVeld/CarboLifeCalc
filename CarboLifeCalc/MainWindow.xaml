@@ -1,0 +1,42 @@
+﻿<Window x:Class="CarboLifeCalc.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarboLifeCalc"
+        mc:Ignorable="d"
+        Title="Carbon Life Calculator" Height="450" Width="800">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="MyStyles.xaml">
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        
+        <Button Grid.Column="1" Grid.Row="2" Width="125" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,10,10" Click="Button_Click">Open Dummy Project</Button>
+        <Button Grid.Column="1" Grid.Row="2" Width="125" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,10,10">Open Project</Button>
+        <Label Grid.Column="1" Grid.Row="2" Width="125" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,100,10,10">Open Recent...</Label>
+        
+        <Button Grid.Column="1" Grid.Row="2" Width="125" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,150,10,10" Click="Button_Click_1">Manage Databases</Button>
+
+
+    </Grid>
+</Window>

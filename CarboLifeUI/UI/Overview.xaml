@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="CarboLifeUI.UI.Overview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarboLifeUI.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1200" IsVisibleChanged="UserControl_IsVisibleChanged">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MyStyles.xaml"/>
+                <ResourceDictionary Source="MyDataGrid.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <local:MaterialList x:Key="MaterialList" />
+            
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="White">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="1" Grid.Row="2" Style="{StaticResource baseStyleTitle}">Summary</Label>
+        <Label Name="lbl_Values" Grid.Column="1" Grid.Row="2" Style="{StaticResource baseStyleLabel}" Margin="0,30,10,0">-</Label>
+
+        <Canvas Name="cnv_Summary" Grid.Column="1" Grid.Row="2" Visibility="Visible">
+            <Canvas.Background>
+                <DrawingBrush TileMode="Tile" Viewport="0,0,100,100" 
+                                     ViewportUnits="Absolute">
+                    <DrawingBrush.Drawing>
+                        <GeometryDrawing>
+                            <GeometryDrawing.Geometry>
+                                <RectangleGeometry Rect="0,0,100,100"/>
+                            </GeometryDrawing.Geometry>
+                            <GeometryDrawing.Pen>
+                                <Pen Brush="Gray" Thickness="0.1"/>
+                            </GeometryDrawing.Pen>
+                        </GeometryDrawing>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+
+            </Canvas.Background>
+            <Border x:Name="cborder" BorderBrush="Black" BorderThickness="2">
+            </Border>
+        </Canvas>
+
+
+    </Grid>
+</UserControl>

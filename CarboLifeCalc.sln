@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarboLifeCalc", "CarboLifeCalc\CarboLifeCalc.csproj", "{DF8B1C1A-DEEF-4A4D-B7C1-427968FE1C49}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C0DD1E5-1E52-48F4-9877-6615B2133931} = {0C0DD1E5-1E52-48F4-9877-6615B2133931}
+		{0C38F4ED-1D83-4FFE-AD65-B884410AF824} = {0C38F4ED-1D83-4FFE-AD65-B884410AF824}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarboLifeUI", "CarboLifeUI\CarboLifeUI.csproj", "{0C0DD1E5-1E52-48F4-9877-6615B2133931}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarboLifeAPI", "CarboLifeAPI\CarboLifeAPI.csproj", "{0C38F4ED-1D83-4FFE-AD65-B884410AF824}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarboLifeRevit", "CarboLifeRevit\CarboLifeRevit.csproj", "{7538BFFC-7E84-48AA-845D-250FB8B475C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF8B1C1A-DEEF-4A4D-B7C1-427968FE1C49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF8B1C1A-DEEF-4A4D-B7C1-427968FE1C49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF8B1C1A-DEEF-4A4D-B7C1-427968FE1C49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF8B1C1A-DEEF-4A4D-B7C1-427968FE1C49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C0DD1E5-1E52-48F4-9877-6615B2133931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C0DD1E5-1E52-48F4-9877-6615B2133931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C0DD1E5-1E52-48F4-9877-6615B2133931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C0DD1E5-1E52-48F4-9877-6615B2133931}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C38F4ED-1D83-4FFE-AD65-B884410AF824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C38F4ED-1D83-4FFE-AD65-B884410AF824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C38F4ED-1D83-4FFE-AD65-B884410AF824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C38F4ED-1D83-4FFE-AD65-B884410AF824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7538BFFC-7E84-48AA-845D-250FB8B475C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7538BFFC-7E84-48AA-845D-250FB8B475C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7538BFFC-7E84-48AA-845D-250FB8B475C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7538BFFC-7E84-48AA-845D-250FB8B475C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0F232E6-1D3A-474E-B85C-D30658741AA4}
+	EndGlobalSection
+EndGlobal
