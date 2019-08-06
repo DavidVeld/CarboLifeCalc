@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ using System.Windows.Shapes;
 using CarboLifeAPI.Data;
 using CarboLifeUI;
 using CarboLifeUI.UI;
+using Microsoft.Win32;
 
 namespace CarboLifeCalc
 {
@@ -44,6 +46,32 @@ namespace CarboLifeCalc
 
             CaboDatabaseManager dataBaseManager = new CaboDatabaseManager(cd);
             dataBaseManager.ShowDialog();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+
+                var path = openFileDialog.ShowDialog();
+
+                if (openFileDialog.FileName != "")
+                {
+                    CarboProject newProject = new CarboProject();
+
+                    CarboProject buffer = new CarboProject();
+                    newProject = buffer.DeSerializeXML(openFileDialog.FileName);
+
+                    CarboLifeUI.UI.CarboLifeMainWindow CarboApp = new CarboLifeUI.UI.CarboLifeMainWindow(newProject);
+                    CarboApp.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

@@ -31,7 +31,25 @@ namespace CarboLifeAPI.Data
             CarboMaterialList = new List<CarboMaterial>();
         }
 
-        internal CarboMaterial getClosestMatch(CarboMaterial materialToLookup)
+        public CarboMaterial LookupMaterial(string materialName)
+        {
+            CarboMaterial result = new CarboMaterial();
+
+            foreach (CarboMaterial cm in this.CarboMaterialList)
+            {
+                // string materialname = cm.Name;
+                if (cm.Name == materialName)
+                {
+                    result = cm;
+                    break;
+                }
+            }
+
+            return result;
+
+        }
+
+        public CarboMaterial getClosestMatch(CarboMaterial materialToLookup)
         {
             CarboMaterial result = new CarboMaterial();
             int basedist = 100;
@@ -49,9 +67,52 @@ namespace CarboLifeAPI.Data
             }
 
             return result;
+        }
+        public CarboMaterial getClosestMatch(string materialToLookup)
+        {
+            CarboMaterial result = new CarboMaterial();
+            int basedist = 100;
 
+            foreach (CarboMaterial cm in this.CarboMaterialList)
+            {
+                // string materialname = cm.Name;
+                int dist = Utils.CalcLevenshteinDistance(materialToLookup, cm.Name);
+
+                if (dist < basedist)
+                {
+                    basedist = dist;
+                    result = cm;
+                }
+            }
+
+            return result;
+        }
+
+        public List<string> getCategoryList()
+        {
+            List<string> result = new List<string>();
+
+            foreach (CarboMaterial cm in CarboMaterialList)
+            {
+                bool uniqueCategory = true;
+
+                foreach (string mc in result)
+                {
+                    if (mc == cm.Category)
+                    {
+                        uniqueCategory = false;
+                    }
+                }
+                if (uniqueCategory == true)
+                {
+                    result.Add(cm.Category);
+                }
+            }
+            result.Sort();
+            return result;
 
         }
+
         /// <summary>
         /// Serialises a materialDatabase
         /// </summary>

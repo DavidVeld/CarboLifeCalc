@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="827.108">
+             mc:Ignorable="d" Title="Carbo Life Calculator"
+             d:DesignHeight="450" d:DesignWidth="830">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -35,8 +35,8 @@
               Background="White" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Loaded="Menu_Loaded">
             <MenuItem FontSize="14" Header="Program" Background="White">
                 <MenuItem Name="mnu_openDataBasemanager" Header="Manage Database" Click="Mnu_openDataBasemanager_Click"/>
-                <MenuItem Name="mnu_openDataBase" Header="Open Project"/>
-                <MenuItem Name="mnu_saveDataBase" Header="Save Project as"/>
+                <MenuItem Name="mnu_openDataBase" Header="Open Project" Click="Mnu_openDataBase_Click"/>
+                <MenuItem Name="mnu_saveDataBase" Header="Save Project as" Click="Mnu_saveDataBase_Click"/>
                 <MenuItem Name="mnu_generateDummyDb" Header="DummyData" />
 
                 <Separator></Separator>
@@ -50,7 +50,7 @@
             </MenuItem>
         </Menu>
 
-        <TabControl Grid.Row="2" Grid.Column="1" Background="White" BorderBrush="Black" BorderThickness="0" Grid.ColumnSpan="2">
+        <TabControl Name="tab_Main" Grid.Row="2" Grid.Column="1" Background="White" BorderBrush="Black" BorderThickness="0" Grid.ColumnSpan="2">
             <TabItem Header="Overview">
                 <Grid Background="White">
                     <Grid.RowDefinitions>

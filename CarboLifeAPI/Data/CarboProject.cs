@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace CarboLifeAPI.Data
 {
@@ -110,6 +112,104 @@ namespace CarboLifeAPI.Data
             CalculateProject();
         }
 
+        public void Audit()
+        {
+            //Check if all groups have unique Id;
+            List<int> ids = new List<int>();
+            bool renumberGroupIds = false;
+
+            //find error
+            foreach(CarboGroup cg in groupList)
+            {
+                int idToCheck = cg.Id;
+                ids.Add(idToCheck);
+                bool containsId = ids.Contains(idToCheck);
+
+                if(containsId == true)
+                {
+                    renumberGroupIds = true;
+                    break;
+                }
+            }
+            //Fix
+            if(renumberGroupIds == true)
+            {
+                int idnr = 10000;
+                foreach (CarboGroup cg in groupList)
+                {
+                    cg.Id = idnr;
+                    idnr++;
+                }
+            }
+        }
+
+        public bool SerializeXML(string myPath)
+        {
+            bool result = false;
+            try
+            {
+                XmlSerializer ser = new XmlSerializer(typeof(CarboProject));
+
+                using (FileStream fs = new FileStream(myPath, FileMode.Create))
+                {
+                    ser.Serialize(fs, this);
+                }
+            }
+            catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+                return false;
+            }
+
+            return result;
+        }
+
+        public void UpdateMaterial(CarboGroup TargetGroup, CarboMaterial NewMaterial)
+        {
+            foreach(CarboGroup cg in groupList)
+            {
+                // Update selected group per se. 
+                // 
+                if(cg.Id == TargetGroup.Id)
+                {
+                    cg.MaterialName = NewMaterial.Name;
+                    cg.Material = NewMaterial;
+                }
+
+                //Update all idential materials
+                if (cg.Material.Id == NewMaterial.Id)
+                {
+                    cg.MaterialName = NewMaterial.Name;
+                    cg.Material = NewMaterial;
+                }
+            }
+        }
+
+        public CarboProject DeSerializeXML(string myPath)
+        { 
+            if (File.Exists(myPath))
+            {
+                try
+                {
+                    XmlSerializer ser = new XmlSerializer(typeof(CarboProject));
+                    CarboProject bufferproject;
+
+
+                    using (FileStream fs = new FileStream(myPath, FileMode.Open))
+                    {
+                        bufferproject = ser.Deserialize(fs) as CarboProject;
+                    }
+                    
+                     return bufferproject;
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show(ex.Message);
+                    return null;
+                }
+            }
+            return null;
+        }
         public void DeleteGroup(CarboGroup groupToDelete)
         {
             groupList.Remove(groupToDelete);

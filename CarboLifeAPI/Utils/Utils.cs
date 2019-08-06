@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CarboLifeAPI.Data;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -82,6 +84,34 @@ namespace CarboLifeAPI
             string _path = Assembly.GetExecutingAssembly().Location;
             string myPath = Path.GetDirectoryName(_path);
             return myPath;
+        }
+
+        public static DataTable ToDataTables(CarboMaterial material)
+        {
+            DataTable table = new DataTable();
+            PropertyInfo[] propertyValues = typeof(CarboMaterial).GetProperties();
+
+            table.Columns.Add("Property");
+            table.Columns.Add("Value");
+
+            for (int i = 0; i < propertyValues.Length; i++)
+            {
+                PropertyInfo property = propertyValues[i];
+                if (property.PropertyType != typeof(List<CarboProperty>))
+                {
+                    table.Rows.Add(property.Name, property.GetValue(material));
+                }
+
+            }
+            if (material.Properties.Count > 0)
+            {
+                foreach (CarboProperty cp in material.Properties)
+                {
+                    table.Rows.Add(cp.PropertyName, cp.Value);
+                }
+            }
+
+            return table;
         }
 
         public static DataTable ToDataTables<T>(List<T> data)

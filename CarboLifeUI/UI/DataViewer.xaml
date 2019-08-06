@@ -23,6 +23,7 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
@@ -60,7 +61,7 @@
         <DataGrid x:Name="dgv_Overview" Grid.Row="2" Grid.Column="1" 
                               Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="False" SelectionChanged="Dgv_Overview_SelectionChanged" >
             <DataGrid.Columns>
-                <DataGridTextColumn MinWidth="20" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Hidden"/>
+                <DataGridTextColumn MinWidth="20" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
 
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Category" Binding="{Binding Path=Category, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn MinWidth="120" Header="Material" Binding="{Binding Path=MaterialName}" IsReadOnly="True"/>
@@ -79,9 +80,9 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Width="1*" MinWidth="75" Header="Volume" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False"/>
-                <DataGridTextColumn Width="1*" MinWidth="75" Header="Density" Binding="{Binding Path=Density}" IsReadOnly="True"/>
-                <DataGridTextColumn Width="1*" MinWidth="75" Header="Mass" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="75" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn Width="1*" MinWidth="140" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="85" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
 
                 <DataGridTextColumn MinWidth="100" Header="EEI(MJ/kg)" Binding="{Binding Path=EEI}" IsReadOnly="True" Visibility="Hidden"/>
                 <DataGridTextColumn MinWidth="100" Header="ECI(kgCo2/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
@@ -114,7 +115,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <DataGrid x:Name="dgv_Elements" Grid.Row="3" Grid.Column="1" ></DataGrid>
+        <DataGrid x:Name="dgv_Elements" Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible"></DataGrid>
 
     </Grid>
 </UserControl>

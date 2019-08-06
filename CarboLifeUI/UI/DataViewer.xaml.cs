@@ -119,9 +119,13 @@ namespace CarboLifeUI.UI
 
                 if(materialEditor.acceptNew == true)
                 {
-                    carboGroup.Material = materialEditor.returnedMaterial;
-                    carboGroup.MaterialName = materialEditor.returnedMaterial.Name;
                     CarboLifeProject.CarboDatabase = materialEditor.returnedDatabase;
+
+                    CarboLifeProject.UpdateMaterial(carboGroup, materialEditor.selectedMaterial);
+                    /*
+                    carboGroup.Material = materialEditor.selectedMaterial;
+                    carboGroup.MaterialName = materialEditor.selectedMaterial.Name;
+                    */
                 }
 
             }

@@ -8,7 +8,7 @@
 
 
     <Style TargetType="{x:Type Control}" x:Key="baseStyle">
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="11" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold"></Setter>
@@ -616,7 +616,7 @@
 
     <Style x:Key="ButtonStyle" TargetType="Button">
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="FontWeight" Value="DemiBold"></Setter>
         <Setter Property="Padding" Value="5,0,5,2" />

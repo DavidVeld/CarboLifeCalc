@@ -26,6 +26,7 @@ namespace CarboLifeAPI.Data
         public double ECI { get; set; }
 
         public double ECI_A1A3 { get; set; }
+
         public double ECI_A4A5 { get; set; }
 
         public double ECI_B1B7 { get; set; }
@@ -37,13 +38,12 @@ namespace CarboLifeAPI.Data
         [XmlArray("Property"), XmlArrayItem(typeof(CarboProperty), ElementName = "Property")]
         public List<CarboProperty> Properties { get; set; }
 
-
         public CarboMaterial()
         {
             Id = -1;
-            Name = "Not specified";
-            Category = "Not specified";
-            Description = "Carbon material and properties not set.";
+            Name = "";
+            Category = "";
+            Description = "";
             Density = 1;
             EEI = 1;
             ECI = 1;
@@ -78,6 +78,46 @@ namespace CarboLifeAPI.Data
         {
             ECI = ECI_A1A3 + ECI_A4A5 + ECI_B1B7 + ECI_C1C4 + ECI_D;
 
+        }
+
+        public void SetProperty(string properyName, string propertyValue)
+        {
+            CarboProperty cpnew = new CarboProperty();
+            cpnew.PropertyName = properyName;
+            cpnew.Value = propertyValue;
+            bool isUnique = true;
+
+            foreach(CarboProperty cp in Properties)
+            {
+                if(cp.PropertyName == cpnew.PropertyName)
+                {
+                    cp.Value = cpnew.Value;
+                    isUnique = false;
+                    break;
+                }
+            }
+            if(isUnique == true)
+            {
+                Properties.Add(cpnew);
+            }
+        }
+        public CarboProperty GetCarboProperty(string propertyName)
+        {
+            CarboProperty result = null;
+
+            foreach (CarboProperty cp in Properties)
+            {
+                if (cp.PropertyName == propertyName)
+                {
+                    result = cp;
+                    break;
+                }
+            }
+            if(result == null)
+            {
+                result = new CarboProperty();
+            }
+            return result;
         }
     }
 }

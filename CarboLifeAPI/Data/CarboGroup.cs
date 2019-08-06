@@ -22,15 +22,15 @@ namespace CarboLifeAPI.Data
         public double Mass { get; set; }
 
         //Calculated Values
-        public double EEI { get; private set; }
-        public double ECI { get; private set; }
+        public double EEI { get; set; }
+        public double ECI { get; set; }
         public double EE { get; set; }
         public double EC { get; set; }
         public double PerCent { get; set; }
 
         public CarboMaterial Material {get;set;}
 
-        public List<CarboElement> AllElements { get; private set; }
+        public List<CarboElement> AllElements { get; set; }
 
         CarboGroup()
         {
