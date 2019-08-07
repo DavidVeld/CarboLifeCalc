@@ -36,11 +36,14 @@
 
 
         <Menu Grid.Row="1" Grid.Column="1" Background="Transparent">
-            <MenuItem FontSize="14" Header="Item Actions" Background="White">
+            <MenuItem FontSize="14" Header="Groups" Background="White">
                 <MenuItem Name="mnu_NewGroup" Header="New Item"/>
                 <MenuItem Name="mnu_DeleteGroup" Header="Delete Item"/>
                 <MenuItem Name="mnu_DuplicateGroup" Header="Duplicate Item"/>
-
+                <MenuItem Name="mnu_reGroupData" Header="Rebuild ElementGroups" Click="Mnu_reGroupData_Click"/>
+            </MenuItem>
+            <Separator Background="Black"/>
+            <MenuItem FontSize="14" Header="Actions" Background="White">
                 <Separator></Separator>
                 <Label>Structure</Label>
                 <MenuItem Name="mnu_Reinforce" Header="Concrete ->Reinforce"/>
@@ -52,9 +55,6 @@
 
                 <MenuItem Name="mnu_CloseMe" Header="Close"/>
             </MenuItem>
-            <Button Name="btn_Calculate" Content="Calculate" Style="{StaticResource ButtonStyle}" Click="Btn_Calculate_Click" />
-            <Button Name="btn_EditMaterial" Content="Edit Material" Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" />
-
             <Separator></Separator>
         </Menu>
 
@@ -114,7 +114,10 @@
 
             </DataGrid.Columns>
         </DataGrid>
-
+        
+        <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="1" Content="Calculate" Width="75" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Calculate_Click" />
+        <Button Name="btn_EditMaterial" Grid.Row="3" Grid.Column="1" Content="Edit Material" Width="75" Height="25" HorizontalAlignment="Left" Margin="85,0,0,0"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" />
+        
         <DataGrid x:Name="dgv_Elements" Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible"></DataGrid>
 
     </Grid>

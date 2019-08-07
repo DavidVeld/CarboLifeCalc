@@ -18,7 +18,7 @@ namespace CarboLifeAPI.Data
             //
             foreach (CarboElement ce in allElementsList)
             {
-                CarboMaterial elementMaterial = materialData.getClosestMatch(ce.material);
+                CarboMaterial elementMaterial = materialData.getClosestMatch(ce.Material);
                 
                 result = AddToCarboGroup(result, ce, elementMaterial);
             }
@@ -76,6 +76,142 @@ namespace CarboLifeAPI.Data
 
         }
 
+        public static ObservableCollection<CarboGroup> GroupElementsAdvanced(ObservableCollection<CarboElement> carboElementList, string mainGroupClass, string secondaryGroupClass, string specialGroupTypes, double levelcutoff = -999, bool includeDemolition = false)
+        {
+            ObservableCollection<CarboGroup> result = new ObservableCollection<CarboGroup>();
+            //Audit 
+            bool hasPrimaryClass = false;
+            bool hasSecondaryClass = false;
+            bool hasSpecialRequests = false;
+            bool hasLevelCutoff = false;
+            bool hasDemolition = false;
+
+            if (carboElementList.Count <= 0)
+                return null;
+            else
+            {
+                if (mainGroupClass != "")
+                    hasPrimaryClass = true;
+
+                if (secondaryGroupClass != "")
+                    hasSecondaryClass = true;
+
+                if (specialGroupTypes != "")
+                    hasSpecialRequests = true;
+
+                if (levelcutoff != -999)
+                    hasLevelCutoff = true;
+
+                    hasDemolition = includeDemolition;
+            }
+
+            //Audit 
+            foreach (CarboElement ce in carboElementList)
+            {
+                result = AddToCarboGroup(result, ce, hasPrimaryClass, hasSecondaryClass, hasSpecialRequests, hasLevelCutoff, hasDemolition);
+            }
+
+
+            return result;
+        }
+
+        private static ObservableCollection<CarboGroup> AddToCarboGroup(ObservableCollection<CarboGroup> carboGroupList, CarboElement carboElement, 
+            bool hasPrimaryClass, bool hasSecondaryClass, bool hasSpecialRequests, bool hasSubstructure, bool hasDemolition)
+        {
+            int idbase = 1000;
+            //Try Add
+            bool matchPrimaryClass = false;
+            bool matchSecondaryClass = false;
+            bool matchMaterial = false;
+            bool matchSpecialRequests = false;
+            bool matchLevelCutoff = false;
+            bool matchDemolition = false;
+
+            bool okCheck = false;
+
+
+            foreach (CarboGroup cg in carboGroupList)
+            {
+                //Find which conditions match
+                if (cg.Category == carboElement.Category)
+                    matchPrimaryClass = true;
+                if (cg.SubCategory == carboElement.SubCategory)
+                    matchSecondaryClass = true;
+                if (cg.MaterialName == carboElement.MaterialName)
+                    matchMaterial = true;
+                if (cg.AllElements[0].Name == carboElement.Name)
+                    matchSpecialRequests = true;
+                if (carboElement.isDemolished == true)
+                    matchDemolition = true;
+                //if all required conditions match requested then add, if not, create new.
+
+                if (hasPrimaryClass == true)
+                {
+                    if (matchPrimaryClass == true)
+                        okCheck = true;
+                    else
+                        okCheck = false;
+                }
+
+                if (hasSecondaryClass == true)
+                {
+                    if (matchSecondaryClass == true)
+                        okCheck = true;
+                    else
+                        okCheck = false;
+                }
+
+                if (matchMaterial == true)
+                    okCheck = true;
+                else
+                    okCheck = false;
+
+                if (hasSpecialRequests == true)
+                {
+                    if (matchSpecialRequests == true)
+                        okCheck = true;
+                    else
+                        okCheck = false;
+                }
+
+                if (hasDemolition == true)
+                {
+                    if (matchDemolition == true)
+                        okCheck = true;
+                    else
+                        okCheck = false;
+                }
+
+                //The Item passed all required filters;
+                if (okCheck == true)
+                {
+                    cg.AllElements.Add(carboElement);
+                    return carboGroupList;
+                }
+
+            }
+
+            //NoCategoryWasFound: make new group
+            int id = carboGroupList.Count;
+
+            CarboGroup newGroup = new CarboGroup(carboElement);
+            newGroup.Id = idbase + id;
+            newGroup.Material = carboElement.Material;
+            newGroup.MaterialName = carboElement.MaterialName;
+            newGroup.Density = carboElement.Material.Density;
+            newGroup.isSubstructure = false;
+            newGroup.isDemolished = carboElement.isDemolished;
+            newGroup.Description = "A new group";
+
+            //newGroup.ECI = mappedMaterial.ECI;
+            //newGroup.EEI = mappedMaterial.EEI;
+            //newGroup.Volume = carboElement.Volume;
+
+            carboGroupList.Add(newGroup);
+            return carboGroupList;
+
+        }
+
         private static ObservableCollection<CarboGroup> UpdateElement(ObservableCollection<CarboGroup> carboGroupList, CarboElement carboElement)
         {
 
@@ -87,7 +223,7 @@ namespace CarboLifeAPI.Data
                     {
                         if(ce.Category == carboElement.Category)
                         ce.Volume = carboElement.Volume;
-                        ce.CarboCategory = carboElement.Category;
+                        ce.SubCategory = carboElement.Category;
                     }
                     break;
                 }

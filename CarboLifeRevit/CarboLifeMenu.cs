@@ -20,6 +20,7 @@ namespace CarboLifeRevit
 
             //Create  A button
             PushButton pB_CarboCalc = CarboCalcPanel.AddItem(new PushButtonData("CarboLifeCalc", "CarboLifeCalc", MyAssemblyPath, "CarboLifeRevit.CarboLifeCalc")) as PushButton;
+            PushButton pB_CarboCalcPlus = CarboCalcPanel.AddItem(new PushButtonData("CarboLifeCalcPlus", "CarboLifeCalcPlus", MyAssemblyPath, "CarboLifeRevit.CarboLifeCalcPlus")) as PushButton;
 
             return Result.Succeeded;
         }

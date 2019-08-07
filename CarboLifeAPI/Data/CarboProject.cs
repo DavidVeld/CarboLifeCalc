@@ -22,6 +22,8 @@ namespace CarboLifeAPI.Data
         //Calculated Values
         public double EE { get; set; }
         public double EC { get; set; }
+        public double Value { get; set; }
+        public List<CarboLevel> carboLevelList { get; set; }
 
         private ObservableCollection<CarboElement> elementList;
         private ObservableCollection<CarboGroup> groupList;
@@ -40,7 +42,6 @@ namespace CarboLifeAPI.Data
         }
 
 
-
         public CarboProject()
         {
             CarboDatabase = new CarboDatabase();
@@ -48,6 +49,7 @@ namespace CarboLifeAPI.Data
 
             groupList = new ObservableCollection<CarboGroup>();
             elementList = new ObservableCollection<CarboElement>();
+            carboLevelList = new List<CarboLevel>();
 
             Name = "New Project";
             Number = "00000";
@@ -102,7 +104,7 @@ namespace CarboLifeAPI.Data
                 carboLifeElement.MaterialName = materialName;
                 carboLifeElement.Volume = volume;
                 carboLifeElement.Category = category;
-                carboLifeElement.material = new CarboMaterial(materialName);
+                carboLifeElement.Material = new CarboMaterial(materialName);
 
                 elementList.Add(carboLifeElement);
             }
@@ -143,26 +145,6 @@ namespace CarboLifeAPI.Data
             }
         }
 
-        public bool SerializeXML(string myPath)
-        {
-            bool result = false;
-            try
-            {
-                XmlSerializer ser = new XmlSerializer(typeof(CarboProject));
-
-                using (FileStream fs = new FileStream(myPath, FileMode.Create))
-                {
-                    ser.Serialize(fs, this);
-                }
-            }
-            catch(Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-                return false;
-            }
-
-            return result;
-        }
 
         public void UpdateMaterial(CarboGroup TargetGroup, CarboMaterial NewMaterial)
         {
@@ -210,6 +192,27 @@ namespace CarboLifeAPI.Data
             }
             return null;
         }
+        public bool SerializeXML(string myPath)
+        {
+            bool result = false;
+            try
+            {
+                XmlSerializer ser = new XmlSerializer(typeof(CarboProject));
+
+                using (FileStream fs = new FileStream(myPath, FileMode.Create))
+                {
+                    ser.Serialize(fs, this);
+                }
+            }
+            catch(Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+                return false;
+            }
+
+            return result;
+        }
+        
         public void DeleteGroup(CarboGroup groupToDelete)
         {
             groupList.Remove(groupToDelete);

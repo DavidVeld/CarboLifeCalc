@@ -133,5 +133,16 @@ namespace CarboLifeUI.UI
             refreshData();
 
         }
+
+        private void Mnu_reGroupData_Click(object sender, RoutedEventArgs e)
+        {
+            ImportSettingsWindow importGroupWindow = new ImportSettingsWindow(CarboLifeProject.getAllElements, CarboLifeProject.carboLevelList);
+            importGroupWindow.ShowDialog();
+            if (importGroupWindow.dialogOk == true)
+            {
+                CarboLifeProject.SetGroups(importGroupWindow.carboGroupList);
+                refreshData();
+            }
+        }
     }
 }

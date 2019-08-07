@@ -50,6 +50,7 @@
     <Compile Include="Data\CarboDatabase.cs" />
     <Compile Include="Data\CarboProject.cs" />
     <Compile Include="Data\CarboProperty.cs" />
+    <Compile Include="UtilClasses\CarboLevel.cs" />
     <Compile Include="Utils\ReadWriteCsv.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

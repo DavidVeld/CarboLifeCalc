@@ -54,6 +54,9 @@
       <DependentUpon>CarboLifeMainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DataSource\CarboMaterial.cs" />
+    <Compile Include="UI\ImportSettingsWindow.xaml.cs">
+      <DependentUpon>ImportSettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\MaterialBasePicker.xaml.cs">
       <DependentUpon>MaterialBasePicker.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,10 @@
     <Page Include="UI\CarboLifeMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\ImportSettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\MaterialBasePicker.xaml">
       <SubType>Designer</SubType>

@@ -69,10 +69,21 @@ namespace CarboLifeRevit
                     }
                 }
 
-                newCarboElement.material = carboMaterial;
+                newCarboElement.Material = carboMaterial;
 
                 double volumeCubicFt = el.GetMaterialVolume(materialIds);
                 newCarboElement.Volume = Utils.convertToCubicMtrs(volumeCubicFt);
+                newCarboElement.isDemolished = false;
+                ElementId elId = el.GetTypeId();
+                ElementType type = doc.GetElement(elId) as ElementType;
+
+                newCarboElement.Name = type.Name;
+
+                Level lvl = doc.GetElement(el.LevelId) as Level;
+                if (lvl != null)
+                {
+                    newCarboElement.Level = Convert.ToDouble((lvl.Elevation) * 304.8);
+                }
 
                 if (newCarboElement.Volume != 0)
                 {

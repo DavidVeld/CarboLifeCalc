@@ -13,7 +13,7 @@ namespace CarboLifeRevit
 {
     [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
 
-    class CarboLifeCalc : IExternalCommand
+    class CarboLifeCalcPlus : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -94,10 +94,33 @@ namespace CarboLifeRevit
             }
 
             #endregion
+            if(myProject.getAllElements.Count > 0)
+            {
+                List<CarboLevel> levellist = new List<CarboLevel>();
+                List<Level> levels = new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().OrderBy(l => l.Elevation).ToList();
+                foreach (Level lvl in levels)
+                {
+                    CarboLevel newlvl = new CarboLevel();
+                    newlvl.Id = lvl.Id.IntegerValue;
+                    newlvl.Name = lvl.Name;
+                    newlvl.Level = (lvl.Elevation * 304.8);
 
+                    levellist.Add(newlvl);
+                }
+
+                myProject.carboLevelList = levellist;
+
+                ImportSettingsWindow importGroupWindow = new ImportSettingsWindow(myProject.getAllElements, levellist);
+                importGroupWindow.ShowDialog();
+
+                if (importGroupWindow.dialogOk == true)
+                {
+                    myProject.SetGroups(importGroupWindow.carboGroupList);
+                }
+            }
+            
             if (myProject.getAllElements.Count > 0)
             {
-                myProject.CreateGroups();
                 CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(myProject);
                 carboCalcProgram.ShowDialog();
             }

@@ -14,6 +14,7 @@ namespace CarboLifeAPI.Data
         public int Id { get; set; }
         public string MaterialName { get; set; }
         public string Category { get; set; }
+        public string SubCategory { get; set; }
         public string Description { get; set; }
         public double Volume { get; set; }
         
@@ -32,11 +33,16 @@ namespace CarboLifeAPI.Data
 
         public List<CarboElement> AllElements { get; set; }
 
+        public bool isDemolished { get; set; }
+        public bool isSubstructure { get; set; }
+
+
         CarboGroup()
         {
             Id = -999;
             MaterialName = "";
             Category = "";
+            SubCategory = "";
             Description = "";
 
             Volume = 0;
@@ -51,6 +57,9 @@ namespace CarboLifeAPI.Data
             PerCent = 0;
             Material = new CarboMaterial();
             AllElements = new List<CarboElement>();
+
+            isDemolished = false;
+            isSubstructure = false;
         }
 
         internal void RefreshValuesFromElements()
@@ -118,7 +127,7 @@ namespace CarboLifeAPI.Data
             Id = -999;
             MaterialName = carboElement.MaterialName;
             Category = carboElement.Category;
-            Description = carboElement.CarboCategory;
+            Description = carboElement.SubCategory;
 
             Volume = carboElement.Volume;
             Density = 0;
@@ -131,11 +140,12 @@ namespace CarboLifeAPI.Data
 
             PerCent = 0;
             Material = new CarboMaterial();
-            Material = carboElement.material;
+            Material = carboElement.Material;
 
             AllElements = new List<CarboElement>();
 
             AllElements.Add(carboElement);
+            isDemolished = carboElement.isDemolished;
 
         }
 

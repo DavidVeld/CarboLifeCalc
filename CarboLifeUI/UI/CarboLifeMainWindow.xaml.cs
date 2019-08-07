@@ -36,7 +36,7 @@ namespace CarboLifeUI.UI
             carboLifeProject = myProject;
             //carboDataBase = carboDataBase.DeSerializeXML("");
 
-            carboLifeProject.CreateGroups();
+            //carboLifeProject.CreateGroups();
             InitializeComponent();
         }
         private void Menu_Loaded(object sender, RoutedEventArgs e)
