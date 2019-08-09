@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using CarboLifeUI;
 
 namespace CarboLifeAPI.Data
 {
@@ -41,7 +42,6 @@ namespace CarboLifeAPI.Data
             this.groupList = groupList;
         }
 
-
         public CarboProject()
         {
             CarboDatabase = new CarboDatabase();
@@ -58,11 +58,15 @@ namespace CarboLifeAPI.Data
         }
         public void CreateGroups()
         {
-            this.groupList = CarboElementImporter.CreateNewGroupLists(this.elementList, CarboDatabase,"");
+            //get default group settings;
+            CarboGroupSettings groupSettings = new CarboGroupSettings();
+            groupSettings = groupSettings.DeSerializeXML();
+
+            this.groupList = CarboElementImporter.GroupElementsAdvanced(this.elementList, groupSettings.groupCategory, groupSettings.groupSubCategory, groupSettings.groupType, groupSettings.groupMaterial, groupSettings.groupSubStructure, groupSettings.groupDemolition, CarboDatabase, groupSettings.uniqueTypeNames);
+            CalculateProject();
         }
         public void CalculateProject()
         {
-            
             EE = 0;
             EC = 0;
             //This Will calculate all totals;
@@ -80,7 +84,6 @@ namespace CarboLifeAPI.Data
             }
 
         }
-
         public void GenerateDummyList()
         {
             //Create a large list of dummy elements;
@@ -109,7 +112,7 @@ namespace CarboLifeAPI.Data
                 elementList.Add(carboLifeElement);
             }
 
-            groupList = CarboElementImporter.CreateNewGroupLists(getAllElements, CarboDatabase, "");
+            //groupList = CarboElementImporter.GroupElementsAdvanced(getAllElements, CarboDatabase, "");
 
             CalculateProject();
         }
@@ -144,8 +147,6 @@ namespace CarboLifeAPI.Data
                 }
             }
         }
-
-
         public void UpdateMaterial(CarboGroup TargetGroup, CarboMaterial NewMaterial)
         {
             foreach(CarboGroup cg in groupList)
@@ -165,6 +166,15 @@ namespace CarboLifeAPI.Data
                     cg.Material = NewMaterial;
                 }
             }
+        }
+        public void DeleteGroup(CarboGroup groupToDelete)
+        {
+            groupList.Remove(groupToDelete);
+        }
+
+        public void AddElement(CarboElement carboElement)
+        {
+            elementList.Add(carboElement);
         }
 
         public CarboProject DeSerializeXML(string myPath)
@@ -213,14 +223,6 @@ namespace CarboLifeAPI.Data
             return result;
         }
         
-        public void DeleteGroup(CarboGroup groupToDelete)
-        {
-            groupList.Remove(groupToDelete);
-        }
 
-        public void AddElement(CarboElement carboElement)
-        {
-            elementList.Add(carboElement);
-        }
     }
 }

@@ -12,42 +12,36 @@ namespace CarboLifeRevit
 {
     public static class CarboRevitUtils
     {
-        public static CarboElement getNewCarboElement(Document doc, Element el, ElementId materialIds, int i)
+        public static CarboElement getNewCarboElement(Document doc, Element el, ElementId materialIds, CarboRevitImportSettings settings)
         {
 
             CarboElement newCarboElement = new CarboElement();
             try
             {
-               // Material material = doc.GetElement(materialIds) as Material;
+                int setId;
+                string setName;
+                string setMaterialName;
+                string setCategory;
+                string setSubCategory;
+                double setVolume;
+                double setLevel;
+                bool setIsDemolished;
+                bool setIsSubstructure;
 
-                newCarboElement.Id = el.Id.IntegerValue;
-                newCarboElement.MaterialName = doc.GetElement(materialIds).Name.ToString();
+                // Material material = doc.GetElement(materialIds) as Material;
+                //Id:
+                setId = el.Id.IntegerValue;
 
-                if (el.Category.Name != null)
-                {
-                    newCarboElement.Category = el.Category.Name;
-                }
+                //Name (Type)
+                ElementId elId = el.GetTypeId();
+                ElementType type = doc.GetElement(elId) as ElementType;
+                setName = type.Name;
 
-                /*
-                Phase elPhase = doc.GetElement(el.CreatedPhaseId) as Phase;
-                if (elPhase != null)
-                {
-                    newCarboElement.PhaseCreated = elPhase.Name;
-                }
+                //MaterialName
+                setMaterialName = doc.GetElement(materialIds).Name.ToString();
+                CarboMaterial carboMaterial = new CarboMaterial(setMaterialName);
+                
 
-                Phase elDemoPhase = doc.GetElement(el.DemolishedPhaseId) as Phase;
-                if (elDemoPhase != null)
-                {
-                    newCarboElement.Demolished = true;
-                }
-                else
-                {
-                    newCarboElement.Demolished = false;
-                }
-                */
-
-                CarboMaterial carboMaterial = new CarboMaterial();
-                carboMaterial.Name = newCarboElement.MaterialName;
 
                 //GetDensity
                 Parameter paramMaterial = el.get_Parameter(BuiltInParameter.STRUCTURAL_MATERIAL_PARAM);
@@ -57,7 +51,7 @@ namespace CarboLifeRevit
                     if (material != null)
                     {
                         PropertySetElement property = doc.GetElement(material.StructuralAssetId) as PropertySetElement;
-                        if (material != null)
+                        if (property != null)
                         {
                             Parameter paramDensity = property.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_STRUCTURAL_DENSITY);
                             if (paramDensity != null)
@@ -69,21 +63,65 @@ namespace CarboLifeRevit
                     }
                 }
 
-                newCarboElement.Material = carboMaterial;
 
+                //Category
+                setCategory = getValueFromList(el,type, settings.MainCategory);
+
+                //SubCategory
+                setSubCategory = getValueFromList(el, type, settings.SubCategory);
+                
+                //Volume
+                               
                 double volumeCubicFt = el.GetMaterialVolume(materialIds);
-                newCarboElement.Volume = Utils.convertToCubicMtrs(volumeCubicFt);
+                setVolume = Utils.convertToCubicMtrs(volumeCubicFt);
+
                 newCarboElement.isDemolished = false;
-                ElementId elId = el.GetTypeId();
-                ElementType type = doc.GetElement(elId) as ElementType;
-
-                newCarboElement.Name = type.Name;
-
+                
                 Level lvl = doc.GetElement(el.LevelId) as Level;
                 if (lvl != null)
                 {
-                    newCarboElement.Level = Convert.ToDouble((lvl.Elevation) * 304.8);
+                    setLevel = Convert.ToDouble((lvl.Elevation) * 304.8);
                 }
+                else
+                {
+                    setLevel = 0;
+                }
+
+                if (setLevel <= settings.CutoffLevelValue)
+                    setIsSubstructure = true;
+                else
+                    setIsSubstructure = false;
+
+                //Set Demolition
+                Phase elDemoPhase = doc.GetElement(el.DemolishedPhaseId) as Phase;
+                if (elDemoPhase != null)
+                {
+                    setIsDemolished = true;
+                    if (settings.IncludeDemo == false)
+                        return null;
+                }
+                else
+                {
+                    setIsDemolished = false;
+                }
+                //Set all properties
+
+                newCarboElement.Id = setId;
+                newCarboElement.Name = setName;
+                newCarboElement.MaterialName = setMaterialName;
+                newCarboElement.Category = setCategory;
+                newCarboElement.SubCategory = setSubCategory;
+                newCarboElement.Volume = Math.Round(setVolume, 4);
+                newCarboElement.Material = carboMaterial;
+                newCarboElement.Level = Math.Round(setLevel,3);
+                newCarboElement.isDemolished = setIsDemolished;
+                newCarboElement.isSubstructure = setIsSubstructure;
+
+
+                //Makepass;
+                if (settings.IncludeDemo == false && setIsDemolished == true)
+                    return null;
+
 
                 if (newCarboElement.Volume != 0)
                 {
@@ -99,6 +137,39 @@ namespace CarboLifeRevit
                 //TaskDialog.Show("Error", ex.Message);
                 return null;
             }
+
+        }
+
+        private static string getValueFromList(Element el, ElementType type, string settings)
+        {
+            string result = "";
+
+            if (settings == "Type Comment")
+            {
+                Parameter commentpar = type.LookupParameter("Type Comments");
+                if (commentpar != null)
+                    result = commentpar.AsString();
+            }
+            else if (settings == "Family Name")
+            {
+                result = type.FamilyName;
+            }
+            else if (settings == "")
+            {
+                result = "";
+            }
+            else if (settings == "CarboLifeCategory")
+            {
+                Parameter carbonpar = type.LookupParameter("CarboLifeCategory");
+                if (carbonpar != null)
+                    result = carbonpar.AsString();
+            }
+            else
+            {
+                result = el.Category.Name;
+            }
+
+            return result;
 
         }
 

@@ -122,6 +122,13 @@ namespace CarboLifeAPI.Data
             AllElements = new List<CarboElement>();
         }
 
+        internal void setMaterial(CarboMaterial material)
+        {
+            this.MaterialName = material.Name;
+            this.Material = material;
+            CalculateTotals();
+        }
+
         public CarboGroup(CarboElement carboElement)
         {
             Id = -999;
@@ -146,7 +153,7 @@ namespace CarboLifeAPI.Data
 
             AllElements.Add(carboElement);
             isDemolished = carboElement.isDemolished;
-
+            isSubstructure = carboElement.isSubstructure;
         }
 
         internal void SetPercentageOf(double eCTotal)
@@ -155,10 +162,11 @@ namespace CarboLifeAPI.Data
             PerCent = Math.Round(PerCent, 2);
         }
 
-        internal void CalculateTotals()
+        public void CalculateTotals()
         {
             Material.CalculateTotals();
             //Clear Values
+            MaterialName = Material.Name;
             EEI = Material.EEI;
             ECI = Material.ECI;
             Density = Material.Density;

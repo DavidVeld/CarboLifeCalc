@@ -136,7 +136,10 @@ namespace CarboLifeUI.UI
 
         private void Mnu_reGroupData_Click(object sender, RoutedEventArgs e)
         {
-            ImportSettingsWindow importGroupWindow = new ImportSettingsWindow(CarboLifeProject.getAllElements, CarboLifeProject.carboLevelList);
+            CarboGroupSettings groupSettings = new CarboGroupSettings();
+            groupSettings = groupSettings.DeSerializeXML();
+
+            GroupWindow importGroupWindow = new GroupWindow(CarboLifeProject.getAllElements, CarboLifeProject.CarboDatabase, groupSettings);
             importGroupWindow.ShowDialog();
             if (importGroupWindow.dialogOk == true)
             {

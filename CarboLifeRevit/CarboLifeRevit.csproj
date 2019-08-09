@@ -58,7 +58,12 @@
     <Compile Include="CarboLifeCalcPlus.cs" />
     <Compile Include="CarboLifeMenu.cs" />
     <Compile Include="CarboLifeCalc.cs" />
+    <Compile Include="CarboLifeRevitImport.cs" />
+    <Compile Include="CarboRevitImportSettings.cs" />
     <Compile Include="CarboRevitUtils.cs" />
+    <Compile Include="UI\ImportSettingsWindow.xaml.cs">
+      <DependentUpon>ImportSettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +81,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\ImportSettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UI\MyStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

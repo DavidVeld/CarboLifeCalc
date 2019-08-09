@@ -28,102 +28,39 @@ namespace CarboLifeRevit
 
             ICollection<ElementId> selectionList = uidoc.Selection.GetElementIds();
 
-            #region buildQuantitiestable
 
-            if (selectionList.Count == 0)
+            //Get levels
+            List<CarboLevel> levellist = new List<CarboLevel>();
+            List<Level> levels = new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().OrderBy(l => l.Elevation).ToList();
+            foreach (Level lvl in levels)
             {
-                FilteredElementCollector coll = new FilteredElementCollector(app.ActiveUIDocument.Document);
+                CarboLevel newlvl = new CarboLevel();
+                newlvl.Id = lvl.Id.IntegerValue;
+                newlvl.Name = lvl.Name;
+                newlvl.Level = (lvl.Elevation * 304.8);
 
-                coll.WherePasses(new LogicalOrFilter(new ElementIsElementTypeFilter(false),
-                    new ElementIsElementTypeFilter(true)));
+                levellist.Add(newlvl);
+            }
 
-                //Now cast them as elements into a container
-                IList<Element> collection = coll.ToElements();
+            myProject.carboLevelList = levellist;
 
-                int i = 1000;
+            //Get Settings
+            ImportSettingsWindow importGroupWindow = new ImportSettingsWindow(levellist);
+            importGroupWindow.ShowDialog();
+            CarboRevitImportSettings importsettings = importGroupWindow.importSettings;
 
-                try
-                {
-                    foreach (Element el in collection)
-                    {
-                        if (CarboRevitUtils.isElementReal(el) == true)
-                        {
-                            ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
-                            foreach (ElementId materialIds in MaterialIds)
-                            {
-                                CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, i);
-
-                                if (carboElement != null)
-                                    myProject.AddElement(carboElement);
-                            }
-                        }
-                        i++;
-
-                    }
-                }
-                catch (Exception ex)
-                {
-                    TaskDialog.Show("Error", ex.Message);
-                }
+            if (importGroupWindow.dialogOk == System.Windows.MessageBoxResult.Yes)
+            {
+                //Import the elements
             }
             else
             {
-                int i = 1000;
-                try
-                {
-                    foreach (ElementId elid in selectionList)
-                    {
-                        Element el = doc.GetElement(elid);
-                        ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
-
-                        if (CarboRevitUtils.isElementReal(el) == true)
-                        {
-                            foreach (ElementId materialIds in MaterialIds)
-                            {
-                                myProject.AddElement(CarboRevitUtils.getNewCarboElement(doc, el, materialIds, i));
-                            }
-                        }
-                        i++;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    TaskDialog.Show("Error", ex.Message);
-                }
-
+                return Result.Succeeded;
             }
 
-            #endregion
-            if(myProject.getAllElements.Count > 0)
-            {
-                List<CarboLevel> levellist = new List<CarboLevel>();
-                List<Level> levels = new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().OrderBy(l => l.Elevation).ToList();
-                foreach (Level lvl in levels)
-                {
-                    CarboLevel newlvl = new CarboLevel();
-                    newlvl.Id = lvl.Id.IntegerValue;
-                    newlvl.Name = lvl.Name;
-                    newlvl.Level = (lvl.Elevation * 304.8);
 
-                    levellist.Add(newlvl);
-                }
-
-                myProject.carboLevelList = levellist;
-
-                ImportSettingsWindow importGroupWindow = new ImportSettingsWindow(myProject.getAllElements, levellist);
-                importGroupWindow.ShowDialog();
-
-                if (importGroupWindow.dialogOk == true)
-                {
-                    myProject.SetGroups(importGroupWindow.carboGroupList);
-                }
-            }
-            
-            if (myProject.getAllElements.Count > 0)
-            {
-                CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(myProject);
-                carboCalcProgram.ShowDialog();
-            }
+            //Launch normal Command
+            CarboLifeRevitImport.ImportElements(app, importsettings);
 
             return Result.Succeeded;
         }
