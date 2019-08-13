@@ -45,7 +45,7 @@
             <MenuItem FontSize="12" Header="Actions" Background="White">
                 <Separator></Separator>
                 <MenuItem Name="mnu_Reinforce" Header="Reinforce Item" Click="Mnu_Reinforce_Click"/>
-                <MenuItem Name="mnu_Metaldeck" Header="Profile Element" />
+                <MenuItem Name="mnu_Metaldeck" Header="Profile Element" Click="Mnu_Metaldeck_Click" />
                 <Separator></Separator>
                 <MenuItem Name="mnu_PurgeElements" Header="Purge Elements" Click="Mnu_PurgeElements_Click"/>
                 <Separator></Separator>

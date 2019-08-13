@@ -59,6 +59,9 @@
     <Compile Include="UI\GroupWindow.xaml.cs">
       <DependentUpon>GroupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\ProfileWindow.xaml.cs">
+      <DependentUpon>ProfileWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ReinforcementWindow.xaml.cs">
       <DependentUpon>ReinforcementWindow.xaml</DependentUpon>
     </Compile>
@@ -79,7 +82,6 @@
     <Compile Include="UI\PieChartBuilder\PieDataPoint.cs" />
     <Compile Include="UI\PieChartBuilder\PiePiece.cs" />
     <Compile Include="UI\PieChartBuilder\PieChartGenerator.cs" />
-    <Compile Include="UI\Utils_SummaryScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CarboLifeAPI\CarboLifeAPI.csproj">
@@ -97,6 +99,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\GroupWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\ProfileWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -224,5 +224,20 @@ namespace CarboLifeUI.UI
                 }
             }
         }
+
+        private void Mnu_Metaldeck_Click(object sender, RoutedEventArgs e)
+        {
+            CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+            if (carboGroup != null)
+            {
+                ReinforcementWindow reinforementWindow = new ReinforcementWindow(CarboLifeProject.CarboDatabase, carboGroup);
+                reinforementWindow.ShowDialog();
+
+                if (reinforementWindow.isAccepted == true)
+                {
+                    CarboLifeProject.AddGroup(reinforementWindow.reinforcementGroup);
+                }
+            }
+        }
     }
 }

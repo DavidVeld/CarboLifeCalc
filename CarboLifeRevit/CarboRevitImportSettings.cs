@@ -58,7 +58,6 @@ namespace CarboLifeRevit
                 newsettings.SerializeXML();
                 return newsettings;
             }
-            return null;
         }
         public bool SerializeXML()
         {
