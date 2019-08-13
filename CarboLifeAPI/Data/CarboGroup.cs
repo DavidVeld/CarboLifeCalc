@@ -37,7 +37,7 @@ namespace CarboLifeAPI.Data
         public bool isSubstructure { get; set; }
 
 
-        CarboGroup()
+        public CarboGroup()
         {
             Id = -999;
             MaterialName = "";
@@ -188,6 +188,14 @@ namespace CarboLifeAPI.Data
             EE = Mass * EEI;
             EC = (Mass * ECI) / 1000;
 
+        }
+
+        internal void TrucateElements()
+        {
+            if(AllElements.Count > 0)
+            {
+                AllElements.Clear();
+            }
         }
     }
 }

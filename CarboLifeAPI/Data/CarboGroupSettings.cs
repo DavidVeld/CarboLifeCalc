@@ -18,6 +18,8 @@ namespace CarboLifeUI
         public bool groupMaterial { get; set; }
         public bool groupSubStructure { get; set; }
         public bool groupDemolition { get; set; }
+        public bool groupuniqueTypeNames { get; set; }
+
         public string uniqueTypeNames { get; set; }
         public CarboGroupSettings()
         {
@@ -27,6 +29,7 @@ namespace CarboLifeUI
             groupMaterial = true;
             groupSubStructure = true;
             groupDemolition = false;
+            groupuniqueTypeNames = false;
             uniqueTypeNames = "";
         }
 
@@ -61,7 +64,6 @@ namespace CarboLifeUI
                 newsettings.SerializeXML();
                 return newsettings;
             }
-            return null;
         }
         public bool SerializeXML()
         {

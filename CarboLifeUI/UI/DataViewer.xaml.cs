@@ -136,15 +136,92 @@ namespace CarboLifeUI.UI
 
         private void Mnu_reGroupData_Click(object sender, RoutedEventArgs e)
         {
-            CarboGroupSettings groupSettings = new CarboGroupSettings();
-            groupSettings = groupSettings.DeSerializeXML();
-
-            GroupWindow importGroupWindow = new GroupWindow(CarboLifeProject.getAllElements, CarboLifeProject.CarboDatabase, groupSettings);
-            importGroupWindow.ShowDialog();
-            if (importGroupWindow.dialogOk == true)
+            MessageBoxResult result = MessageBox.Show("Regrouping the set can remove any groups that you have created thus far, do you want to proceed?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
+            if (result == MessageBoxResult.Yes)
             {
-                CarboLifeProject.SetGroups(importGroupWindow.carboGroupList);
-                refreshData();
+                CarboGroupSettings groupSettings = new CarboGroupSettings();
+                groupSettings = groupSettings.DeSerializeXML();
+
+                GroupWindow importGroupWindow = new GroupWindow(CarboLifeProject.getAllElements, CarboLifeProject.CarboDatabase, groupSettings);
+                importGroupWindow.ShowDialog();
+                if (importGroupWindow.dialogOk == true)
+                {
+                    //Save non-element items;
+
+                    ObservableCollection<CarboGroup> userGroups = new ObservableCollection<CarboGroup>();
+                    userGroups = CarboLifeProject.GetGroupsWithoutElements();
+
+                    CarboLifeProject.SetGroups(importGroupWindow.carboGroupList);
+                    CarboLifeProject.AddGroups(userGroups);
+                    refreshData();
+                }
+            }
+        }
+
+        private void Mnu_NewGroup_Click(object sender, RoutedEventArgs e)
+        {
+            CarboLifeProject.CreateNewGroup();
+        }
+
+        private void Mnu_DeleteGroup_Click(object sender, RoutedEventArgs e)
+        {
+            CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+            if (carboGroup != null)
+            {
+                CarboLifeProject.DeleteGroup(carboGroup);
+            }
+        }
+
+        private void Dgv_Overview_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+            if (carboGroup != null)
+            {
+                CarboLifeProject.UpdateGroup(carboGroup);
+            }
+        }
+
+        private void Mnu_DuplicateGroup_Click(object sender, RoutedEventArgs e)
+        {
+            CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+            if (carboGroup != null)
+            {
+                CarboLifeProject.DuplicateGroup(carboGroup);
+            }
+        }
+
+        private void Mnu_PurgeElements_Click(object sender, RoutedEventArgs e)
+        {
+            CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+            if (carboGroup != null)
+            {
+                if (carboGroup.AllElements.Count > 0)
+                {
+                    MessageBoxResult result = MessageBox.Show("Do you really want to remove all elements from this collection? This action is can NOT be undone", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        CarboLifeProject.PurgeElements(carboGroup);
+                    }
+                }
+                else
+                {
+                    MessageBoxResult result = MessageBox.Show("This collection contains no elements", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
+                }
+            }
+        }
+
+        private void Mnu_Reinforce_Click(object sender, RoutedEventArgs e)
+        {
+            CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+            if (carboGroup != null)
+            {
+                ReinforcementWindow reinforementWindow = new ReinforcementWindow(CarboLifeProject.CarboDatabase, carboGroup);
+                reinforementWindow.ShowDialog();
+
+                if (reinforementWindow.isAccepted == true)
+                {
+                    CarboLifeProject.AddGroup(reinforementWindow.reinforcementGroup);
+                }
             }
         }
     }

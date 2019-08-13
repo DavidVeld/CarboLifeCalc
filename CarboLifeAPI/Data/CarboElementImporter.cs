@@ -44,9 +44,9 @@ namespace CarboLifeAPI.Data
                 result = AddToCarboGroup(result, ce, groupCategory, groupSubCategory, groupType, groupMaterial, groupSubStructure, groupDemolition, uniqueTypeNames);
             }
 
-            result = RefreshValues(result);
+            
             result = mapGroupMaterials(result, materialData);
-
+            result = RefreshValues(result);
             return result;
         }
 
@@ -79,6 +79,8 @@ namespace CarboLifeAPI.Data
             bool okSubStructure = false;
             bool okDemolition = false;
             bool okUniqueType = false;
+
+            bool containsRelavantName = false;
 
             //split 
             string[] uniquenamelist = uniqueTypeNames.Split(',');
@@ -121,6 +123,7 @@ namespace CarboLifeAPI.Data
                         {
                             //The item matched the qunique type group.
                             groupContainsUniqueTypename = true;
+                            break;
                         }
                         else
                         {
@@ -128,10 +131,23 @@ namespace CarboLifeAPI.Data
                             groupContainsUniqueTypename = false;
                         }
                     }
+                    else
+                    {
+                        matchUniqueType = false;
+                    }
                     //Ignore switch:
-                    //matchUniqueType = true;
+
+                    containsRelavantName = CaseInsensitiveContains(carboElement.Name, str_trimmed);
+
+
                 }
                 //see if item contains unique groupname;
+                //at the end of this loop we know that this group contains a type name that needs to be separated.
+                //So the element can be added to this group:
+
+                //if this group doesnt contain the type name then another group needs to be found or (at the very end) a new group will have to be made; 
+                if (groupContainsUniqueTypename == true)
+                    matchUniqueType = true;
 
                 //if all required conditions match requested then add, if not, create new.
 
@@ -199,10 +215,23 @@ namespace CarboLifeAPI.Data
                     okUniqueType = true;
                 else
                 {
-                    if (matchUniqueType == true)
-                        okUniqueType = true;
+                    if (containsRelavantName == true)
+                    {
+                        //If this group contains the EXCACT TYPE NAME then proceed to add; 
+                        if (matchUniqueType == true)
+                        {
+                            //The type name matched the group elements
+                            okUniqueType = true;
+                        }
+                        else
+                        {
+                            okUniqueType = false;
+                        }
+                    }
                     else
-                        okUniqueType = false;
+                    {
+                        okUniqueType = true;
+                    }
                 }
 
                 //If all passes add to group if not skip and create new group;
@@ -230,6 +259,8 @@ namespace CarboLifeAPI.Data
             newGroup.Density = carboElement.Material.Density;
             newGroup.Description = "A new group";
 
+            newGroup.Material.Name = carboElement.MaterialName;
+
             //newGroup.ECI = mappedMaterial.ECI;
             //newGroup.EEI = mappedMaterial.EEI;
             //newGroup.Volume = carboElement.Volume;
@@ -245,7 +276,7 @@ namespace CarboLifeAPI.Data
             return embededname.IndexOf(str, stringCompare) >= 0;
         }
 
-        private static ObservableCollection<CarboGroup> mapGroupMaterials(ObservableCollection<CarboGroup> group, CarboDatabase materialData)
+        public static ObservableCollection<CarboGroup> mapGroupMaterials(ObservableCollection<CarboGroup> group, CarboDatabase materialData)
         {
             if (group.Count > 0)
             {

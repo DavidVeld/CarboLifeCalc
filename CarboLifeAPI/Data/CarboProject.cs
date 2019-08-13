@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
 using CarboLifeUI;
 
@@ -107,6 +108,7 @@ namespace CarboLifeAPI.Data
                 carboLifeElement.MaterialName = materialName;
                 carboLifeElement.Volume = volume;
                 carboLifeElement.Category = category;
+                carboLifeElement.SubCategory = "";
                 carboLifeElement.Material = new CarboMaterial(materialName);
 
                 elementList.Add(carboLifeElement);
@@ -147,6 +149,104 @@ namespace CarboLifeAPI.Data
                 }
             }
         }
+
+        public ObservableCollection<CarboGroup> GetGroupsWithoutElements()
+        {
+            ObservableCollection<CarboGroup> result = new ObservableCollection<CarboGroup>();
+
+            foreach (CarboGroup cg in groupList)
+            {
+                if (cg.AllElements.Count == 0)
+                    result.Add(cg);
+            }
+
+            return result;
+        }
+
+        public void CreateNewGroup()
+        {
+            CarboGroup newGroup = new CarboGroup();
+            int id = getNewId();
+            newGroup.Id = id;
+
+            AddGroup(newGroup);
+        }
+
+        public void AddGroups(ObservableCollection<CarboGroup> groupList)
+        {
+            foreach(CarboGroup cg in groupList)
+            {
+                AddGroup(cg);
+            }
+        }
+
+        private int getNewId()
+        {
+            int id = 0;
+            foreach(CarboGroup cg in groupList)
+            {
+                if(cg.Id > id)
+                {
+                    id = cg.Id;
+                }
+            }
+            return id + 1;
+        }
+
+        public void UpdateGroup(CarboGroup carboGroup)
+        {
+            foreach (CarboGroup cg in groupList)
+            {
+                // Update selected group per se. 
+                // 
+                if (cg.Id == carboGroup.Id)
+                {
+                    cg.Category = carboGroup.Category;
+                    cg.Description = carboGroup.Description;
+                    cg.Volume = carboGroup.Volume;
+                    cg.SubCategory = carboGroup.SubCategory;
+                }
+            }
+        }
+
+        public void DuplicateGroup(CarboGroup carboGroup)
+        {
+            CarboGroup newCarboGroup = new CarboGroup();
+            newCarboGroup.Id = getNewId();
+            newCarboGroup.TrucateElements();
+            newCarboGroup.Description = carboGroup.Description  + "- Copy";
+            newCarboGroup.Category = carboGroup.Category;
+            newCarboGroup.SubCategory = carboGroup.SubCategory;
+            newCarboGroup.Volume = carboGroup.Volume;
+            newCarboGroup.Density = carboGroup.Density;
+            newCarboGroup.Material = carboGroup.Material;
+            newCarboGroup.setMaterial(carboGroup.Material);
+            AddGroup(newCarboGroup);
+        }
+
+        public void PurgeElements(CarboGroup carboGroup)
+        {
+            foreach (CarboGroup cg in groupList)
+            {
+                if (cg.Id == carboGroup.Id)
+                {
+                    cg.TrucateElements();
+                }
+            }
+        }
+        public void AddGroup(CarboGroup newGroup)
+        {
+            if (!(groupList.Contains(newGroup)))
+            {
+                newGroup.Id = getNewId();
+                groupList.Add(newGroup);
+            }
+            else
+            {
+                MessageBox.Show("new group already exists");
+            }
+        }
+
         public void UpdateMaterial(CarboGroup TargetGroup, CarboMaterial NewMaterial)
         {
             foreach(CarboGroup cg in groupList)

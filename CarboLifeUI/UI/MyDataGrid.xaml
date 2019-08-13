@@ -10,8 +10,8 @@
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="MinWidth" Value="0" />
         <Setter Property="MinHeight" Value="28" />
-        <Setter Property="FontFamily" Value="Arial" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="Calabri" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="SeparatorBrush" Value="Black"></Setter>
     </Style>
@@ -20,11 +20,10 @@
         <Setter Property="Background" Value="White"></Setter>
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="MinWidth" Value="0" />
-        <Setter Property="MinHeight" Value="28" />
-        <Setter Property="FontFamily" Value="Arial" />
+        <Setter Property="MinHeight" Value="20" />
+        <Setter Property="FontFamily" Value="Calabri" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="FontWeight" Value="Normal" />
-
         <Setter  Property="VerticalContentAlignment" Value="Center"></Setter>
     </Style>
 

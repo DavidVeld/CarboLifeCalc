@@ -36,6 +36,9 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
+      <HintPath>..\packages\WPFToolkit.DataVisualization.3.5.50211.1\lib\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -56,6 +59,9 @@
     <Compile Include="UI\GroupWindow.xaml.cs">
       <DependentUpon>GroupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\ReinforcementWindow.xaml.cs">
+      <DependentUpon>ReinforcementWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\MaterialBasePicker.xaml.cs">
       <DependentUpon>MaterialBasePicker.xaml</DependentUpon>
     </Compile>
@@ -70,6 +76,9 @@
       <DependentUpon>DataViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DataSource\NotifyUIBase.cs" />
+    <Compile Include="UI\PieChartBuilder\PieDataPoint.cs" />
+    <Compile Include="UI\PieChartBuilder\PiePiece.cs" />
+    <Compile Include="UI\PieChartBuilder\PieChartGenerator.cs" />
     <Compile Include="UI\Utils_SummaryScreen.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\GroupWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\ReinforcementWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

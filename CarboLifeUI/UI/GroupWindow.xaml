@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d"  Title="Carbon Life: Element Grouping Settings"
-             d:DesignHeight="400" d:DesignWidth="750" MinWidth="750" MinHeight="400" Width="750" Height="400" Loaded="Window_Loaded">
+             d:DesignHeight="400" d:DesignWidth="1000" MinWidth="1000" MinHeight="400" Width="1000" Height="400" Loaded="Window_Loaded">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -32,9 +32,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="15"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="350"/>
             <ColumnDefinition Width="15"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="*"/>
 
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
@@ -47,8 +47,11 @@
         <CheckBox Name="chk_GroupSec" IsEnabled="True" Grid.Column="2" Grid.Row="3" Margin="0,25,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource allbuttons}">Group Sub Category</CheckBox>
         
         <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="4" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Separate Items by Type Name:</Label>
-        <CheckBox Name="chk_GroupType" IsEnabled="True" Grid.Column="2" Grid.Row="4" Margin="0,25,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource allbuttons}">Group Type Names</CheckBox>
-        <Label Grid.Column="1" Margin="0,45,10,0" Grid.Row="4" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Separate Items that contain these words in type name:</Label>
+        <CheckBox Name="chk_GroupType" IsEnabled="True" Grid.Column="2" Grid.Row="4" Margin="0,25,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource allbuttons}">Group ALL Type Names (Many groups!)</CheckBox>
+
+        <CheckBox Name="chk_GroupUniqueTypes" IsEnabled="True" Grid.Column="2" Grid.Row="4" Margin="0,45,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource allbuttons}">Group ONLY elements where type name contains:</CheckBox>
+        
+        <Label Grid.Column="1" Margin="0,45,10,0" Grid.Row="4" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Visibility="Hidden" Style="{StaticResource baseStyle}">Separate Items that contain these words in type name:</Label>
         <TextBox Name="txt_SpecialTypes" Grid.Column="2" Grid.Row="4" Margin="0,67,5,0" Height="25" VerticalAlignment="Top"></TextBox>
 
         <CheckBox Name="chk_GroupSuperSubStructure" IsEnabled="True" Grid.Column="2" Grid.Row="5" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource allbuttons}">Group Super and Sub Elements</CheckBox>

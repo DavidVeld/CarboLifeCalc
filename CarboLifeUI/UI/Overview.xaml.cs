@@ -38,22 +38,22 @@ namespace CarboLifeUI.UI
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             try
-            { 
-                
+            {
+
                 DependencyObject parent = VisualTreeHelper.GetParent(this);
                 Window parentWindow = Window.GetWindow(parent);
                 CarboLifeMainWindow mainViewer = parentWindow as CarboLifeMainWindow;
 
                 if (mainViewer != null)
                     CarboLifeProject = mainViewer.getCarbonLifeProject();
-                    
+
                 if (CarboLifeProject != null)
                 {
                     //A project Is loaded, Proceed to next
 
                     SetupInterFace();
                 }
-                
+
                 //Rebuild the materialList
 
             }
@@ -68,17 +68,75 @@ namespace CarboLifeUI.UI
             lbl_Values.Content = (CarboLifeProject.EC) / 1000 + " tCO2";
             try
             {
-                IList<UIElement> uIElements = Utils_SummaryScreen.generateImage(cnv_Summary, CarboLifeProject);
+                cnv_Summary.Children.Clear();
+                List<PiePiece> PieceList = new List<PiePiece>();
+                List<KeyValuePair<string, double>> valueList = new List<KeyValuePair<string, double>>();
+
+                foreach (CarboGroup CarboGroup in CarboLifeProject.getGroupList)
+                {
+                    PiePiece newelement = new PiePiece();
+                    newelement.Name = CarboGroup.MaterialName;
+                    newelement.Value = CarboGroup.EC;
+
+                   bool merged = false;
+
+                    if (PieceList.Count > 0)
+                    {
+                        foreach (PiePiece pp in PieceList)
+                        {
+                            if (pp.Name == newelement.Name)
+                            {
+                                pp.Value += newelement.Value;
+                                merged = true;
+                                break;
+                            }
+                        }
+                    }
+                    if(merged == false)
+                        PieceList.Add(newelement);
+                }
+
+                PieceList = PieceList.OrderByDescending(o => o.Value).ToList();
+
+                IList<UIElement> uIElements = PieChartGenerator.generateImage(cnv_Summary, PieceList);
 
                 foreach (UIElement uiE in uIElements)
                 {
-                    //cnv_Summary.Children.Add(uiE);
+                    cnv_Summary.Children.Add(uiE);
                 }
+                
+                if (PieceList.Count > 0)
+                {
+                    foreach (PiePiece pp in PieceList)
+                    {
+                        KeyValuePair<string, double> pair = new KeyValuePair<string, double>(pp.Name, pp.Value);
+                        valueList.Add(pair);
+                    }
+                }
+                chr_Pie.DataContext = valueList;
+                var chartArea1 = new System.Windows.Controls.DataVisualization.Charting.Chart();
+                Style st = new Style();
+                //st.
+                //var chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Cnv_Summary_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Visibility = Visibility.Hidden;
+            this.Visibility = Visibility.Visible;
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SetupInterFace();
         }
     }
 }

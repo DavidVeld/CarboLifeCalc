@@ -21,7 +21,7 @@
         
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="1*"/>
@@ -36,34 +36,37 @@
 
 
         <Menu Grid.Row="1" Grid.Column="1" Background="Transparent">
-            <MenuItem FontSize="14" Header="Groups" Background="White">
-                <MenuItem Name="mnu_NewGroup" Header="New Item"/>
-                <MenuItem Name="mnu_DeleteGroup" Header="Delete Item"/>
-                <MenuItem Name="mnu_DuplicateGroup" Header="Duplicate Item"/>
+            <MenuItem FontSize="12" Header="Edit" Background="White">
+                <MenuItem Name="mnu_NewGroup" Header="New Item" Click="Mnu_NewGroup_Click"/>
+                <MenuItem Name="mnu_DeleteGroup" Header="Delete Item" Click="Mnu_DeleteGroup_Click"/>
+                <MenuItem Name="mnu_DuplicateGroup" Header="Duplicate Item" Click="Mnu_DuplicateGroup_Click"/>
                 <MenuItem Name="mnu_reGroupData" Header="Rebuild ElementGroups" Click="Mnu_reGroupData_Click"/>
             </MenuItem>
-            <Separator Background="Black"/>
-            <MenuItem FontSize="14" Header="Actions" Background="White">
+            <MenuItem FontSize="12" Header="Actions" Background="White">
                 <Separator></Separator>
-                <Label>Structure</Label>
-                <MenuItem Name="mnu_Reinforce" Header="Concrete ->Reinforce"/>
-                <MenuItem Name="mnu_Area" Header="Convert to Area" />
+                <MenuItem Name="mnu_Reinforce" Header="Reinforce Item" Click="Mnu_Reinforce_Click"/>
                 <MenuItem Name="mnu_Metaldeck" Header="Profile Element" />
                 <Separator></Separator>
-                <MenuItem Name="mnu_PurgeElements" Header="Purge Elements"/>
+                <MenuItem Name="mnu_PurgeElements" Header="Purge Elements" Click="Mnu_PurgeElements_Click"/>
                 <Separator></Separator>
 
                 <MenuItem Name="mnu_CloseMe" Header="Close"/>
             </MenuItem>
-            <Separator></Separator>
+            <Separator Background="Beige" Width="1" Height="30"></Separator>
+                    
+        <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="1" Content="Calculate" Width="75" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Calculate_Click" />
+            <Button x:Name="btn_EditMaterial" Content="Edit Material" Width="75" Height="25" HorizontalAlignment="Left"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" />
+
+
         </Menu>
 
         <DataGrid x:Name="dgv_Overview" Grid.Row="2" Grid.Column="1" 
-                              Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="False" SelectionChanged="Dgv_Overview_SelectionChanged" >
+                              Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="False" SelectionChanged="Dgv_Overview_SelectionChanged" 
+                  CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding">
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="20" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
 
-                <DataGridTextColumn Width="1*" MinWidth="100" Header="Category" Binding="{Binding Path=Category, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Category" Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="False"/>
                 <DataGridTextColumn MinWidth="120" Header="Material" Binding="{Binding Path=MaterialName}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="1*" MinWidth="200" Header="Description" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="False"/>
 
@@ -114,10 +117,7 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        
-        <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="1" Content="Calculate" Width="75" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Calculate_Click" />
-        <Button Name="btn_EditMaterial" Grid.Row="3" Grid.Column="1" Content="Edit Material" Width="75" Height="25" HorizontalAlignment="Left" Margin="85,0,0,0"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" />
-        
+
         <DataGrid x:Name="dgv_Elements" Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible"></DataGrid>
 
     </Grid>
