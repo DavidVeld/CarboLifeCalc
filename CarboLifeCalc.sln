@@ -17,7 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarboLifeRevit", "CarboLife
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9494B6DF-0677-43EF-BF93-780421B38954}"
 	ProjectSection(SolutionItems) = preProject
+		SampleDataBases\BaseMaterials.xml = SampleDataBases\BaseMaterials.xml
 		LICENCE.txt = LICENCE.txt
+		SampleDataBases\UserMaterials.xml = SampleDataBases\UserMaterials.xml
 	EndProjectSection
 EndProject
 Global
