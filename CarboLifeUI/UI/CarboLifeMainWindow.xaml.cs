@@ -36,6 +36,7 @@ namespace CarboLifeUI.UI
         {
             carboLifeProject = myProject;
             //carboDataBase = carboDataBase.DeSerializeXML("");
+            AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
             //carboLifeProject.CreateGroups();
             InitializeComponent();
@@ -124,6 +125,23 @@ namespace CarboLifeUI.UI
                 if (ok == true)
                     MessageBox.Show("Project Saved");
             }
+        }
+
+        //When assembly cant be find bind to current
+        System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            System.Reflection.Assembly ayResult = null;
+            string sShortAssemblyName = args.Name.Split(',')[0];
+            System.Reflection.Assembly[] ayAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (System.Reflection.Assembly ayAssembly in ayAssemblies)
+            {
+                if (sShortAssemblyName == ayAssembly.FullName.Split(',')[0])
+                {
+                    ayResult = ayAssembly;
+                    break;
+                }
+            }
+            return ayResult;
         }
     }
 }

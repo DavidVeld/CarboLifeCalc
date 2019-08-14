@@ -25,6 +25,9 @@ namespace CarboLifeRevit
 
             CarboProject myProject = new CarboProject();
 
+            myProject.Name = doc.ProjectInformation.Name.Trim();
+            myProject.Number = doc.ProjectInformation.Number;
+
             ICollection<ElementId> selectionList = uidoc.Selection.GetElementIds();
 
             #region buildQuantitiestable
