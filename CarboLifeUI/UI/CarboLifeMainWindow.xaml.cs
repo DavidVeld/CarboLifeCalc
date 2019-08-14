@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -111,6 +112,17 @@ namespace CarboLifeUI.UI
                 {
                     MessageBox.Show(ex.Message);
                 }
+            }
+        }
+
+        private void Mnu_saveProject_Click(object sender, RoutedEventArgs e)
+        {
+            string Path = carboLifeProject.filePath;
+            if(File.Exists(Path))
+            {
+                bool ok = carboLifeProject.SerializeXML(Path);
+                if (ok == true)
+                    MessageBox.Show("Project Saved");
             }
         }
     }

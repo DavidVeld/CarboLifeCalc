@@ -65,61 +65,70 @@ namespace CarboLifeUI.UI
 
         private void SetupInterFace()
         {
-            lbl_Values.Content = (CarboLifeProject.EC) / 1000 + " tCO2";
             try
             {
-                cnv_Summary.Children.Clear();
-                List<PiePiece> PieceList = new List<PiePiece>();
-                List<KeyValuePair<string, double>> valueList = new List<KeyValuePair<string, double>>();
-
-                foreach (CarboGroup CarboGroup in CarboLifeProject.getGroupList)
+                if (CarboLifeProject != null)
                 {
-                    PiePiece newelement = new PiePiece();
-                    newelement.Name = CarboGroup.MaterialName;
-                    newelement.Value = CarboGroup.EC;
+                    cnv_Summary.Children.Clear();
+                    List<PiePiece> PieceList = new List<PiePiece>();
+                    List<KeyValuePair<string, double>> valueList = new List<KeyValuePair<string, double>>();
 
-                   bool merged = false;
+                    foreach (CarboGroup CarboGroup in CarboLifeProject.getGroupList)
+                    {
+                        PiePiece newelement = new PiePiece();
+                        newelement.Name = CarboGroup.MaterialName;
+                        newelement.Value = CarboGroup.EC;
+
+                        bool merged = false;
+
+                        if (PieceList.Count > 0)
+                        {
+                            foreach (PiePiece pp in PieceList)
+                            {
+                                if (pp.Name == newelement.Name)
+                                {
+                                    pp.Value += newelement.Value;
+                                    merged = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (merged == false)
+                            PieceList.Add(newelement);
+                    }
+
+                    PieceList = PieceList.OrderByDescending(o => o.Value).ToList();
+
+                    IList<UIElement> uIElements = PieChartGenerator.generateImage(cnv_Summary, PieceList);
+
+                    foreach (UIElement uiE in uIElements)
+                    {
+                        cnv_Summary.Children.Add(uiE);
+                    }
 
                     if (PieceList.Count > 0)
                     {
                         foreach (PiePiece pp in PieceList)
                         {
-                            if (pp.Name == newelement.Name)
-                            {
-                                pp.Value += newelement.Value;
-                                merged = true;
-                                break;
-                            }
+                            KeyValuePair<string, double> pair = new KeyValuePair<string, double>(pp.Name, pp.Value);
+                            valueList.Add(pair);
                         }
                     }
-                    if(merged == false)
-                        PieceList.Add(newelement);
+                    chr_Pie.DataContext = valueList;
+                    var chartArea1 = new System.Windows.Controls.DataVisualization.Charting.Chart();
+                    Style st = new Style();
+                    //st.
+                    //var chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+
+                    txt_ProjectName.Text = CarboLifeProject.Name;
+                    txt_Number.Text = CarboLifeProject.Number;
+                    txt_Category.Text = CarboLifeProject.Category;
+                    txt_Desctiption.Text = CarboLifeProject.Description;
+
+                    txt_Area.Text = CarboLifeProject.Area.ToString();
+                    txt_Value.Text = CarboLifeProject.Value.ToString();
+
                 }
-
-                PieceList = PieceList.OrderByDescending(o => o.Value).ToList();
-
-                IList<UIElement> uIElements = PieChartGenerator.generateImage(cnv_Summary, PieceList);
-
-                foreach (UIElement uiE in uIElements)
-                {
-                    cnv_Summary.Children.Add(uiE);
-                }
-                
-                if (PieceList.Count > 0)
-                {
-                    foreach (PiePiece pp in PieceList)
-                    {
-                        KeyValuePair<string, double> pair = new KeyValuePair<string, double>(pp.Name, pp.Value);
-                        valueList.Add(pair);
-                    }
-                }
-                chr_Pie.DataContext = valueList;
-                var chartArea1 = new System.Windows.Controls.DataVisualization.Charting.Chart();
-                Style st = new Style();
-                //st.
-                //var chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-
-
             }
             catch (Exception ex)
             {
@@ -133,10 +142,27 @@ namespace CarboLifeUI.UI
             this.Visibility = Visibility.Visible;
 
         }
+      
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SetupInterFace();
+        }
+
+        private void SaveSettings()
+        {
+            CarboLifeProject.Name = txt_ProjectName.Text;
+            CarboLifeProject.Number = txt_Number.Text;
+            CarboLifeProject.Category = txt_Category.Text;
+            CarboLifeProject.Description = txt_Desctiption.Text;
+
+            CarboLifeProject.Area = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Area.Text);
+            CarboLifeProject.Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
+        }
+
+        private void Btn_SaveInfo_Click(object sender, RoutedEventArgs e)
+        {
+            SaveSettings();
         }
     }
 }

@@ -69,7 +69,36 @@
 
         </DVC:Chart>
 
-        <Button Grid.Column="1" Grid.Row="3" Height="35" Width="75" Click="Button_Click">Refresh</Button>
+        <!--
+                public string Name { get; set; }
+        public string Number { get; set; }
+        public string Category { get; set; }
+        public string Description { get; set; }
+        -->
+        
+        <Label Grid.Column="1" Margin="0,15,10,0" Grid.Row="3" Height="25" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Project Name:</Label>
+        <TextBox Name="txt_ProjectName" Grid.Column="1" Grid.Row="3" Margin="120,15,75,0" Height="25" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" ></TextBox>
+
+        <Label Grid.Column="1" Margin="0,44,10,0" Grid.Row="3" Height="25" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Project Number:</Label>
+        <TextBox Name="txt_Number" Grid.Column="1" Grid.Row="3" Margin="120,44,75,0" Height="25" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" ></TextBox>
+
+        <Label Grid.Column="1" Margin="0,73,10,0" Grid.Row="3" Height="25" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Project Category:</Label>
+        <TextBox Name="txt_Category" Grid.Column="1" Grid.Row="3" Margin="120,73,75,0" Height="25" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" ></TextBox>
+
+        <Label Grid.Column="1" Margin="0,102,10,0" Grid.Row="3" Height="25" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Project Description:</Label>
+        <TextBox Name="txt_Desctiption" Grid.Column="1" Grid.Row="3" Margin="120,102,75,0" Height="25" Width="400" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" ></TextBox>
+
+        <Label Grid.Column="1" Margin="0,131,10,0" Grid.Row="3" Height="25" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Total Area:</Label>
+        <TextBox Name="txt_Area" Grid.Column="1" Grid.Row="3" Margin="120,131,75,0" Height="25" Width="110" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" ></TextBox>
+        <Label Grid.Column="1" Margin="235,131,10,0" Grid.Row="3" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m²</Label>
+
+        <Label Grid.Column="1" Margin="0,160,10,0" Grid.Row="3" Height="25" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Total Value:</Label>
+        <TextBox Name="txt_Value" Grid.Column="1" Grid.Row="3" Margin="120,160,75,0" Height="25" Width="110" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" ></TextBox>
+        <Label Grid.Column="1" Margin="235,160,10,0" Grid.Row="3" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">$ / £ / €</Label>
+        <Button Name="btn_SaveInfo" Grid.Column="1" Grid.Row="3" Height="25" Width="75"  Margin="0,0,5,5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="Btn_SaveInfo_Click">Apply</Button>
+
+
+        <Button Grid.Column="2" Grid.Row="3" Height="25" Width="75"  Margin="0,0,10,0" Click="Button_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}">Refresh</Button>
         
       </Grid>
 </UserControl>

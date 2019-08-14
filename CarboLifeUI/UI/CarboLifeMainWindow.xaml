@@ -34,18 +34,18 @@
         <Menu Grid.Row="1" Grid.Column="1"
               Background="White" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Loaded="Menu_Loaded">
             <MenuItem FontSize="14" Header="Program" Background="White">
-                <MenuItem Name="mnu_openDataBasemanager" Header="Manage Database" Click="Mnu_openDataBasemanager_Click"/>
-                <MenuItem Name="mnu_openDataBase" Header="Open Project" Click="Mnu_openDataBase_Click"/>
-                <MenuItem Name="mnu_saveDataBase" Header="Save Project as" Click="Mnu_saveDataBase_Click"/>
-                <MenuItem Name="mnu_generateDummyDb" Header="DummyData" />
-
                 <Separator></Separator>
+                <MenuItem Name="mnu_openDataBase" Header="Open Project" Click="Mnu_openDataBase_Click"/>
+                <MenuItem Name="mnu_saveProject" Header="Save Project" Click="Mnu_saveProject_Click"/>
+                <MenuItem Name="mnu_saveDataBase" Header="Save Project as..." Click="Mnu_saveDataBase_Click"/>
+                <MenuItem Name="mnu_generateDummyDb" Header="DummyData" />
+                <Separator></Separator>
+                <MenuItem Name="mnu_openDataBasemanager" Header="Manage Database" Click="Mnu_openDataBasemanager_Click"/>
                 <MenuItem Name="mnu_ExportSelection" Header="Export Data"/>
                 <MenuItem Name="mnu_ExportFull" Header="Export All to CSV" />
                 <Separator></Separator>
                 <MenuItem Name="mnu_BuildReport" Header="Save as Report"/>
                 <Separator></Separator>
-
                 <MenuItem Name="mnu_CloseMe" Header="Close"/>
             </MenuItem>
         </Menu>

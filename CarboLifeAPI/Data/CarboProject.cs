@@ -25,6 +25,9 @@ namespace CarboLifeAPI.Data
         public double EE { get; set; }
         public double EC { get; set; }
         public double Value { get; set; }
+        public double Area { get; set; }
+        public string filePath { get; set; }
+
         public List<CarboLevel> carboLevelList { get; set; }
 
         private ObservableCollection<CarboElement> elementList;
@@ -291,7 +294,7 @@ namespace CarboLifeAPI.Data
                     {
                         bufferproject = ser.Deserialize(fs) as CarboProject;
                     }
-                    
+                    bufferproject.filePath = myPath;
                      return bufferproject;
                 }
                 catch (Exception ex)
@@ -305,6 +308,7 @@ namespace CarboLifeAPI.Data
         public bool SerializeXML(string myPath)
         {
             bool result = false;
+            //this.filePath = "";
             try
             {
                 XmlSerializer ser = new XmlSerializer(typeof(CarboProject));
@@ -313,8 +317,10 @@ namespace CarboLifeAPI.Data
                 {
                     ser.Serialize(fs, this);
                 }
+                return true;
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 System.Windows.MessageBox.Show(ex.Message);
                 return false;

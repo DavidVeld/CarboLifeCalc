@@ -230,12 +230,23 @@ namespace CarboLifeUI.UI
             CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
             if (carboGroup != null)
             {
-                ReinforcementWindow reinforementWindow = new ReinforcementWindow(CarboLifeProject.CarboDatabase, carboGroup);
-                reinforementWindow.ShowDialog();
-
-                if (reinforementWindow.isAccepted == true)
+                if (carboGroup.AllElements.Count > 0)
                 {
-                    CarboLifeProject.AddGroup(reinforementWindow.reinforcementGroup);
+                    MessageBoxResult result = MessageBox.Show("To apply a profile decking to this item you need to trucate all elements", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        CarboLifeProject.PurgeElements(carboGroup);
+                    }
+                }
+                else
+                {
+                    ProfileWindow ProfileWindowWindow = new ProfileWindow(CarboLifeProject.CarboDatabase, carboGroup);
+                    ProfileWindowWindow.ShowDialog();
+
+                    if (ProfileWindowWindow.isAccepted == true)
+                    {
+                        CarboLifeProject.AddGroup(ProfileWindowWindow.reinforcementGroup);
+                    }
                 }
             }
         }
