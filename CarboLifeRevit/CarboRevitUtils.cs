@@ -65,10 +65,10 @@ namespace CarboLifeRevit
 
 
                 //Category
-                setCategory = getValueFromList(el,type, settings.MainCategory);
+                setCategory = getValueFromList(el,type, settings.MainCategory, doc);
 
                 //SubCategory
-                setSubCategory = getValueFromList(el, type, settings.SubCategory);
+                setSubCategory = getValueFromList(el, type, settings.SubCategory, doc);
                 
                 //Volume
                                
@@ -140,29 +140,42 @@ namespace CarboLifeRevit
 
         }
 
-        private static string getValueFromList(Element el, ElementType type, string settings)
+        private static string getValueFromList(Element el, ElementType type, string searchString, Document doc)
         {
             string result = "";
 
-            if (settings == "Type Comment")
+            if (searchString == "Type Comment")
             {
                 Parameter commentpar = type.LookupParameter("Type Comments");
                 if (commentpar != null)
                     result = commentpar.AsString();
             }
-            else if (settings == "Family Name")
+            else if (searchString == "Family Name")
             {
                 result = type.FamilyName;
             }
-            else if (settings == "")
+            else if (searchString == "")
             {
                 result = "";
             }
-            else if (settings == "CarboLifeCategory")
+            else if (searchString == "CarboLifeCategory")
             {
                 Parameter carbonpar = type.LookupParameter("CarboLifeCategory");
                 if (carbonpar != null)
                     result = carbonpar.AsString();
+            }
+            else if ( searchString == "Level")
+            {
+                Element lvlEl = doc.GetElement(el.LevelId);
+                if (lvlEl != null)
+                {
+                    Level lvl = doc.GetElement(el.LevelId) as Level;
+                    result = lvl.Name;
+                }
+                else
+                {
+                    result = "";
+                }
             }
             else
             {

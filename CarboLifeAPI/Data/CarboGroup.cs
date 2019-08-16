@@ -134,7 +134,9 @@ namespace CarboLifeAPI.Data
             Id = -999;
             MaterialName = carboElement.MaterialName;
             Category = carboElement.Category;
-            Description = carboElement.SubCategory;
+            SubCategory = carboElement.SubCategory;
+
+            Description = "";
 
             Volume = carboElement.Volume;
             Density = 0;

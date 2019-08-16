@@ -98,7 +98,26 @@ namespace CarboLifeRevit
             {
                 myProject.CreateGroups();
                 CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(myProject);
+                AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
+
                 carboCalcProgram.ShowDialog();
+            }
+
+            //When assembly cant be find bind to current
+            System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+            {
+                System.Reflection.Assembly ayResult = null;
+                string sShortAssemblyName = args.Name.Split(',')[0];
+                System.Reflection.Assembly[] ayAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+                foreach (System.Reflection.Assembly ayAssembly in ayAssemblies)
+                {
+                    if (sShortAssemblyName == ayAssembly.FullName.Split(',')[0])
+                    {
+                        ayResult = ayAssembly;
+                        break;
+                    }
+                }
+                return ayResult;
             }
         }
     }
