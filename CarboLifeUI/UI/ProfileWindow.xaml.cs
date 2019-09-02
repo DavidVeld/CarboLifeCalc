@@ -23,7 +23,7 @@ namespace CarboLifeUI.UI
     {
         public CarboDatabase materials;
         public CarboGroup concreteGroup;
-        public CarboGroup reinforcementGroup;
+        public CarboGroup profileGroup;
 
         public bool isAccepted;
 
@@ -32,12 +32,15 @@ namespace CarboLifeUI.UI
             isAccepted = false;
             materials = materialDatabase;
             concreteGroup = myConcreteGroup;
-            reinforcementGroup = new CarboGroup();
+            profileGroup = new CarboGroup();
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            List<Profile> profiles = new List<Profile>();
+            //CarboLifeAPI.Utils.LoadCSV("");
+
             foreach (CarboMaterial cm in materials.CarboMaterialList)
             {
                 if (cm.Category == "Steel" ||
@@ -61,15 +64,11 @@ namespace CarboLifeUI.UI
         {
             CarboMaterial material = materials.LookupMaterial(cbb_ProfileMaterial.Text);
             double volume = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Volume.Text);
-            double density = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Density.Text);
+            double thickness = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Thickness.Text);
 
-
-            if (material != null && txt_Volume.Text != "" && txt_Density.Text != "")
+            if (material != null && txt_Volume.Text != "" && thickness != 0)
             {
-
-                reinforcementGroup = calculateRebar(material, reinforcementGroup, volume, density);
-                txt_VolumeRebar.Text = reinforcementGroup.Volume.ToString();
-                txt_WeightRebar.Text = reinforcementGroup.Mass.ToString();
+                lbl_Area.Content = volume / (thickness/1000) + " m²";
             }
             
         }
@@ -106,5 +105,9 @@ namespace CarboLifeUI.UI
             this.Close();
         }
 
+    }
+
+    internal class Profile
+    {
     }
 }

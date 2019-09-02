@@ -52,17 +52,48 @@
 
                 <MenuItem Name="mnu_CloseMe" Header="Close"/>
             </MenuItem>
+            
+            <MenuItem FontSize="12" Header="Sort" Background="White">
+                <MenuItem Name="mnu_noSort" Header="Unsort" Click="Mnu_noSort_Click"/>
+                <MenuItem Name="mnu_sortMaterial" Header="Sort Material" Click="Mnu_sortMaterial_Click"/>
+                <MenuItem Name="mnu_sortCategory" Header="Sort Category" Click="Mnu_sortCategory_Click" />
+                <Separator></Separator>
+            </MenuItem>
             <Separator Background="Beige" Width="1" Height="30"></Separator>
                     
         <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="1" Content="Calculate" Width="75" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Calculate_Click" />
-            <Button x:Name="btn_EditMaterial" Content="Edit Material" Width="75" Height="25" HorizontalAlignment="Left"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" />
-
-
+        <Button x:Name="btn_EditMaterial" Content="Edit Material" Width="75" Height="25" HorizontalAlignment="Left"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" />
         </Menu>
 
         <DataGrid x:Name="dgv_Overview" Grid.Row="2" Grid.Column="1" 
                               Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="False" SelectionChanged="Dgv_Overview_SelectionChanged" 
                   CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding">
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <Expander IsExpanded="True" BorderThickness="1,1,1,1" Foreground="Black" Background="Beige" BorderBrush="Orange">
+                                            <Expander.Header>
+                                                <DockPanel>
+                                                    <TextBlock FontSize="12" FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>
+                                                    <TextBlock FontSize="12" FontWeight="Bold" Text="{Binding Path=ItemCount}" Visibility="Hidden"/>
+                                                </DockPanel>
+                                            </Expander.Header>
+                                            <Expander.Content>
+                                                <ItemsPresenter />
+                                            </Expander.Content>
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+            
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="20" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
 

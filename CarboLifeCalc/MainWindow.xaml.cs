@@ -32,10 +32,9 @@ namespace CarboLifeCalc
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CarboProject dummyProject = new CarboProject();
-            dummyProject.GenerateDummyList();
+            CarboProject newProject = new CarboProject();
 
-            CarboLifeUI.UI.CarboLifeMainWindow CarboApp = new CarboLifeUI.UI.CarboLifeMainWindow(dummyProject);
+            CarboLifeUI.UI.CarboLifeMainWindow CarboApp = new CarboLifeMainWindow(newProject);
             CarboApp.Show();
         }
 

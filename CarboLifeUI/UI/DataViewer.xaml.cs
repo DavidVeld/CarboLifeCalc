@@ -245,10 +245,39 @@ namespace CarboLifeUI.UI
 
                     if (ProfileWindowWindow.isAccepted == true)
                     {
-                        CarboLifeProject.AddGroup(ProfileWindowWindow.reinforcementGroup);
+                        CarboLifeProject.AddGroup(ProfileWindowWindow.profileGroup);
                     }
                 }
             }
+        }
+
+        private void Mnu_sortMaterial_Click(object sender, RoutedEventArgs e)
+        {
+            if (CarboLifeProject.getGroupList != null)
+            {
+                ListCollectionView collectionView = new ListCollectionView(CarboLifeProject.getGroupList);
+                collectionView.GroupDescriptions.Add(new PropertyGroupDescription("MaterialName"));
+                dgv_Overview.ItemsSource = null;
+                dgv_Overview.ItemsSource = collectionView;
+            }
+        }
+
+        private void Mnu_sortCategory_Click(object sender, RoutedEventArgs e)
+        {
+            if (CarboLifeProject.getGroupList != null)
+            {
+                ListCollectionView collectionView = new ListCollectionView(CarboLifeProject.getGroupList);
+                collectionView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
+                dgv_Overview.ItemsSource = null;
+                dgv_Overview.ItemsSource = collectionView;
+            }
+        }
+
+        private void Mnu_noSort_Click(object sender, RoutedEventArgs e)
+        {
+
+            dgv_Overview.ItemsSource = null;
+            dgv_Overview.ItemsSource = CarboLifeProject.getGroupList;
         }
     }
 }
