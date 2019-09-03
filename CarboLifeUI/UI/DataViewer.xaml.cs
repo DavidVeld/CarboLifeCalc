@@ -228,6 +228,8 @@ namespace CarboLifeUI.UI
         private void Mnu_Metaldeck_Click(object sender, RoutedEventArgs e)
         {
             CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+            bool fieldready = false;
+
             if (carboGroup != null)
             {
                 if (carboGroup.AllElements.Count > 0)
@@ -236,9 +238,15 @@ namespace CarboLifeUI.UI
                     if (result == MessageBoxResult.Yes)
                     {
                         CarboLifeProject.PurgeElements(carboGroup);
+                        fieldready = true;
                     }
                 }
                 else
+                {
+                    fieldready = true;
+                }
+
+                if (fieldready == true)
                 {
                     ProfileWindow ProfileWindowWindow = new ProfileWindow(CarboLifeProject.CarboDatabase, carboGroup);
                     ProfileWindowWindow.ShowDialog();

@@ -75,11 +75,11 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <Expander IsExpanded="True" BorderThickness="1,1,1,1" Foreground="Black" Background="Beige" BorderBrush="Orange">
+                                        <Expander IsExpanded="True" BorderThickness="1,1,1,1" Foreground="Black" Background="#FFD097" BorderBrush="#FFD097">
                                             <Expander.Header>
                                                 <DockPanel>
-                                                    <TextBlock FontSize="12" FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>
-                                                    <TextBlock FontSize="12" FontWeight="Bold" Text="{Binding Path=ItemCount}" Visibility="Hidden"/>
+                                                    <TextBlock FontSize="14" FontFamily="Segoe UI" FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>
+                                                    <TextBlock FontSize="14" FontFamily="Segoe UI" FontWeight="Bold" Text="{Binding Path=ItemCount}" Visibility="Hidden"/>
                                                 </DockPanel>
                                             </Expander.Header>
                                             <Expander.Content>
@@ -114,8 +114,8 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Width="1*" MinWidth="75" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False"/>
-                <DataGridTextColumn Width="1*" MinWidth="140" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn Width="1*" MinWidth="130" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="1*" MinWidth="85" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
 
                 <DataGridTextColumn MinWidth="100" Header="EEI(MJ/kg)" Binding="{Binding Path=EEI}" IsReadOnly="True" Visibility="Hidden"/>

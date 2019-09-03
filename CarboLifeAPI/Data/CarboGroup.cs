@@ -196,6 +196,7 @@ namespace CarboLifeAPI.Data
         {
             if(AllElements.Count > 0)
             {
+                this.Description += " Removed: " + this.AllElements[0].Name;
                 AllElements.Clear();
             }
         }

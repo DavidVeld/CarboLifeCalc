@@ -53,12 +53,21 @@
         <Setter Property="FontWeight" Value="DemiBold" />
         <Setter Property="BorderThickness" Value="4"/>
     </Style>
+    
     <Style TargetType="{x:Type TextBox}" x:Key="textboxStyle">
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="15" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold" />
         <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+    <Style TargetType="{x:Type TextBox}" x:Key="textboxReadOnlyStyle">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Foreground" Value="Gray" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="LightGray"/>
     </Style>
 
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource allbuttons}"></Style>

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Carbo Life: Reinforcement"
-             d:DesignHeight="400" d:DesignWidth="400" MinWidth="400" MinHeight="400" Width="400" Height="400"  Loaded="Window_Loaded">
+             d:DesignHeight="400" d:DesignWidth="600" MinWidth="500" MinHeight="400" Width="500" Height="400"  Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,13 +21,11 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="55"/>
             <RowDefinition Height="130"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -37,33 +35,84 @@
             <ColumnDefinition Width="15"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
+
         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Reinforcement</Label>
 
-        <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="2" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Material:</Label>
-        <ComboBox Name="cbb_ReinforcementMaterial" Grid.Column="2" Grid.Row="2" Margin="0,22,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="Cbb_Categories_DropDownClosed"></ComboBox>
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="2" Header="Input:" Style="{StaticResource baseStyleBold}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="3" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Volume to Reinforce:</Label>
-        <TextBox Name="txt_Volume" Grid.Column="2" Grid.Row="3" Margin="0,22,75,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" TextChanged="Txt_Search_TextChanged" IsReadOnly="True"></TextBox>
-        <Label Grid.Column="2" Margin="120,22,10,0" Grid.Row="3" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m³</Label>
+                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Volume to Reinforce:</Label>
+                <TextBox Name="txt_Volume" Grid.Column="1" Grid.Row="1" Margin="125,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" TextChanged="Txt_Search_TextChanged" IsReadOnly="True"></TextBox>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m³</Label>
+            </Grid>
+        </GroupBox>
 
-        <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="4" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Reinforcement Density:</Label>
-        <TextBox Name="txt_Density" Grid.Column="2" Grid.Row="4" Margin="0,22,75,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" TextChanged="Txt_Search_TextChanged">50</TextBox>
-        <Label Grid.Column="2" Margin="120,22,10,0" Grid.Row="4" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kg/m³</Label>
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="3" Header="Calculation:" Style="{StaticResource baseStyleBold}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="1" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Material:</Label>
+                <ComboBox Name="cbb_ReinforcementMaterial" Grid.Column="1" Grid.Row="1" Margin="0,22,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="Cbb_Categories_DropDownClosed"></ComboBox>
+
+                <Label Grid.Column="1" Margin="0,55,10,0" Grid.Row="1" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Reinforcement Density:</Label>
+                <TextBox Name="txt_Density" Grid.Column="1" Grid.Row="1" Margin="125,55,75,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" TextChanged="Txt_Search_TextChanged">50</TextBox>
+                <Label Grid.Column="1" Margin="230,55,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kg/m³</Label>
+
+
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="4" Header="Reinforcement:" Style="{StaticResource baseStyleBold}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="1" Height="25" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Volume:</Label>
+                <Label Grid.Column="1" Margin="0,36,0,0" Grid.Row="1" Height="25" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Weight:</Label>
+
+                <TextBox Name="txt_VolumeRebar" Grid.Column="1" Grid.Row="1" Margin="125,1,10,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"></TextBox>
+                <TextBox Name="txt_WeightRebar" Grid.Column="1" Grid.Row="1" Margin="125,36,10,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"></TextBox>
+                <Label Grid.Column="1" Margin="250,1,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m³</Label>
+                <Label Grid.Column="1" Margin="250,36,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kg</Label>
+
+            </Grid>
+        </GroupBox>
 
 
 
-        <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="5" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Reinforcement:</Label>
-        <Label Grid.Column="1" Margin="0,25,10,0" Grid.Row="5" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Volume:</Label>
-        <Label Grid.Column="1" Margin="0,70,10,0" Grid.Row="5" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Weight:</Label>
-
-        <TextBox Name="txt_VolumeRebar" Grid.Column="2" Grid.Row="5" Margin="0,50,10,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" IsReadOnly="True"></TextBox>
-        <TextBox Name="txt_WeightRebar" Grid.Column="2" Grid.Row="5" Margin="0,100,10,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" IsReadOnly="True"></TextBox>
-        <Label Grid.Column="2" Margin="120,50,10,0" Grid.Row="5" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m³</Label>
-        <Label Grid.Column="2" Margin="120,100,10,0" Grid.Row="5" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kg</Label>
 
 
-        <Button Name="btn_Accept" Grid.Row="7" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
-        <Button Name="btn_Cancel" Grid.Row="7" Grid.Column="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
+
+
+        <Button Name="btn_Accept" Grid.Row="5" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
+        <Button Name="btn_Cancel" Grid.Row="5" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
 
     </Grid>
 </Window>

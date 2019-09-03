@@ -1,6 +1,9 @@
-﻿using CarboLifeAPI.Data;
+﻿using CarboLifeAPI;
+using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +28,10 @@ namespace CarboLifeUI.UI
         public CarboGroup concreteGroup;
         public CarboGroup profileGroup;
 
+        List<Profile> profileList;
+
         public bool isAccepted;
+
 
         public ProfileWindow(CarboDatabase materialDatabase, CarboGroup myConcreteGroup)
         {
@@ -33,13 +39,20 @@ namespace CarboLifeUI.UI
             materials = materialDatabase;
             concreteGroup = myConcreteGroup;
             profileGroup = new CarboGroup();
+            profileGroup.Category = "Floor";
+            profileGroup.Description = "Metal deck / Profile";
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Profile> profiles = new List<Profile>();
+            profileList = LoadProfiles();
             //CarboLifeAPI.Utils.LoadCSV("");
+
+            foreach (Profile pf in profileList)
+            {
+                    cbb_Profile.Items.Add(pf.name);
+            }
 
             foreach (CarboMaterial cm in materials.CarboMaterialList)
             {
@@ -54,48 +67,99 @@ namespace CarboLifeUI.UI
             {
                 MessageBox.Show("No rebar or steel materials found in database, please create one and try again");
             }
+
+            cbb_Profile.SelectedItem = cbb_Profile.Items[0];
             cbb_ProfileMaterial.SelectedItem = cbb_ProfileMaterial.Items[0];
             txt_Volume.Text = concreteGroup.Volume.ToString();
 
             refreshInterface();
         }
 
+        private List<Profile> LoadProfiles()
+        {
+            List<Profile> result = new List<Profile>();
+
+            //Find Profilelist;
+            string myPath = Utils.getAssemblyPath() + "\\data\\" + "Profiles.csv";
+
+            if(File.Exists(myPath))
+            {
+                DataTable profileTable = Utils.LoadCSV(myPath);
+                foreach(DataRow dr in profileTable.Rows)
+                {
+                    Profile newProfile = new Profile();
+
+                    string name = dr[0].ToString() + " - " + dr[1].ToString() + " - " +  dr[2].ToString();
+                    double steel = Utils.ConvertMeToDouble(dr[3].ToString());
+                    double constant = Utils.ConvertMeToDouble(dr[4].ToString());
+                    double profileHeight = Utils.ConvertMeToDouble(dr[5].ToString());
+
+                    newProfile.name = name;
+                    newProfile.steel = steel;
+                    newProfile.constant = constant;
+                    newProfile.profileHeight = profileHeight;
+
+                    result.Add(newProfile);
+                }
+            }
+            else
+            {
+                MessageBox.Show("File: " + myPath + " could not be found, make sure you have the profile list located in indicated folder");
+            }
+
+            return result;
+        }
+
         private void refreshInterface()
         {
-            CarboMaterial material = materials.LookupMaterial(cbb_ProfileMaterial.Text);
             double volume = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Volume.Text);
             double thickness = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Thickness.Text);
 
-            if (material != null && txt_Volume.Text != "" && thickness != 0)
+            if (cbb_ProfileMaterial != null &&  cbb_Profile != null)
             {
-                lbl_Area.Content = volume / (thickness/1000) + " m²";
+
+                CarboMaterial material = materials.LookupMaterial(cbb_ProfileMaterial.Text);
+                Profile selectedProfile = profileList.Find(x=> x.name.Contains(cbb_Profile.Text));
+
+
+                if (material != null && txt_Volume.Text != "" && thickness != 0 && selectedProfile != null)
+                {
+                    //=J13+((D13-K13)/1000)
+                    //=Constsnt+((Thickness-ProfileHeight)/1000)
+                    double area = volume / (thickness / 1000);
+                    double constant = selectedProfile.constant;
+                    double profileHeight = selectedProfile.profileHeight;
+
+                    double conVolPerM2 = constant+((thickness - profileHeight)/1000);
+                    double stlWeightPerM2 = selectedProfile.steel * 7850;
+
+
+                    lbl_CalcCon.Content = conVolPerM2 + " m³/m² x " + area + " m²";
+                    lbl_CalcSteel.Content = Math.Round(stlWeightPerM2,2) + " kg/m² x " + area + " m²";
+
+                    txt_ConcreteVolume.Text = Convert.ToString(Math.Round((conVolPerM2 * area),2));
+                    txt_SteelVolume.Text = Convert.ToString(Math.Round(((stlWeightPerM2 * area) / 7850), 2));
+
+
+                }
             }
-            
-        }
-
-        private CarboGroup calculateRebar(CarboMaterial material, CarboGroup reinforcementGroup, double volume, double density)
-        {
-            double steelDensity = material.Density;
-            double steelWeight = volume * density;
-            double steelVolume = steelWeight / steelDensity;
-
-            reinforcementGroup.Volume = steelVolume;
-            reinforcementGroup.Mass = steelWeight;
-            reinforcementGroup.SubCategory = "";
-            reinforcementGroup.Category = "Reinforcement";
-            reinforcementGroup.Material = material;
-            reinforcementGroup.MaterialName = material.Name;
-            reinforcementGroup.Density =  material.Density;
-            reinforcementGroup.ECI =  material.ECI;
-
-            reinforcementGroup.Description = "Reinforcement of: " + volume + "m³ " +  "/ With: " + density + " kg/m³ Reinforcement";
-
-            return reinforcementGroup;
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = true;
+            CarboMaterial material = materials.LookupMaterial(cbb_ProfileMaterial.Text);
+
+
+
+            concreteGroup.Volume = Utils.ConvertMeToDouble(txt_ConcreteVolume.Text);
+            concreteGroup.Description += " - Corrected volume";
+
+            profileGroup.Volume = Utils.ConvertMeToDouble(txt_SteelVolume.Text);
+            profileGroup.Description = cbb_Profile.Text;
+            profileGroup.Material = material;
+            profileGroup.CalculateTotals();
+
             this.Close();
         }
 
@@ -105,9 +169,38 @@ namespace CarboLifeUI.UI
             this.Close();
         }
 
+        private void Cbb_Profile_DropDownClosed(object sender, EventArgs e)
+        {
+            refreshInterface();
+        }
+
+        private void Cbb_ProfileMaterial_DropDownClosed(object sender, EventArgs e)
+        {
+            refreshInterface();
+
+        }
+
+        private void Txt_Thickness_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            refreshInterface();
+        }
     }
 
-    internal class Profile
+
+    public class Profile
     {
+        public string name { get; set; }
+
+        public double steel { get; set; }
+        public double constant { get; set; }
+        public double profileHeight { get; set; }
+
+        public Profile()
+        {
+            name = "";
+            steel = 0;
+            constant = 0;
+            profileHeight = 0;
+        }
     }
 }

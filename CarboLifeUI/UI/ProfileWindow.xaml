@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Carbo Life: Profile"
-             d:DesignHeight="400" d:DesignWidth="400" MinWidth="400" MinHeight="400" Width="400" Height="400"  Loaded="Window_Loaded">
+             d:DesignHeight="400" d:DesignWidth="600" MinWidth="500" MinHeight="400" Width="500" Height="400"  Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,7 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="55"/>
+            <RowDefinition Height="65"/>
             <RowDefinition Height="130"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="40"/>
@@ -35,9 +35,9 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Apply Profile</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Metal Profile</Label>
 
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="2" Header="Input:">
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="2" Header="Input:" Style="{StaticResource baseStyleBold}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
@@ -50,13 +50,13 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="1" Margin="0,1,250,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}">(Revit) Volume:</Label>
-                <TextBox Name="txt_Volume" Grid.Column="1" Grid.Row="1" Margin="95,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" IsReadOnly="True"></TextBox>
+                <TextBox Name="txt_Volume" Grid.Column="1" Grid.Row="1" Margin="95,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"></TextBox>
                 <Label Grid.Column="1" Margin="200,1,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="65">m³</Label>
 
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="3" Header="Calculation:">
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="3" Header="Calculation:" Style="{StaticResource baseStyleBold}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
@@ -70,14 +70,14 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="1" Margin="0,1,250,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Thickness:</Label>
-                <TextBox Name="txt_Thickness" Grid.Column="1" Grid.Row="1" Margin="95,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}">150</TextBox>
+                <TextBox Name="txt_Thickness" Grid.Column="1" Grid.Row="1" Margin="95,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" TextChanged="Txt_Thickness_TextChanged">150</TextBox>
                 <Label Grid.Column="1" Margin="200,1,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="68">mm</Label>
 
                 <Label Grid.Column="1" Margin="0,35,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="89">Profile:</Label>
-                <ComboBox Name="cbb_Profile" Grid.Column="1" Grid.Row="1" Margin="95,35,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="240"></ComboBox>
+                <ComboBox Name="cbb_Profile" Grid.Column="1" Grid.Row="1" Margin="95,35,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="240" DropDownClosed="Cbb_Profile_DropDownClosed"></ComboBox>
 
                 <Label Grid.Column="1" Margin="0,70,212,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Profile Material:</Label>
-                <ComboBox Name="cbb_ProfileMaterial" Grid.Column="1" Grid.Row="1" Margin="95,70,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="241"></ComboBox>
+                <ComboBox Name="cbb_ProfileMaterial" Grid.Column="1" Grid.Row="1" Margin="95,70,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="241" DropDownClosed="Cbb_ProfileMaterial_DropDownClosed"></ComboBox>
 
 
             </Grid>
@@ -85,7 +85,7 @@
 
         </GroupBox>
 
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="4" Header="Corrected Output:">
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="4" Header="Corrected Output:" Style="{StaticResource baseStyleBold}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
@@ -97,15 +97,16 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="1" Margin="0,0,250,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Concrete:</Label>
-                <Label Grid.Column="1" Margin="0,36,250,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Steel:</Label>
+                <Label Grid.Column="1" Margin="0,0,350,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Concrete:</Label>
+                <Label Grid.Column="1" Margin="0,36,350,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Steel:</Label>
 
-                <TextBox Name="txt_VolumeRebar" Grid.Column="1" Grid.Row="1" Margin="95,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" IsReadOnly="True"></TextBox>
-                <TextBox Name="txt_WeightRebar" Grid.Column="1" Grid.Row="1" Margin="95,36,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" IsReadOnly="True"></TextBox>
+                <TextBox Name="txt_ConcreteVolume" Grid.Column="1" Grid.Row="1" Margin="95,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"></TextBox>
+                <TextBox Name="txt_SteelVolume" Grid.Column="1" Grid.Row="1" Margin="95,36,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"></TextBox>
                 <Label Grid.Column="1" Margin="200,1,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m³</Label>
                 <Label Grid.Column="1" Margin="200,36,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m³</Label>
                 
-                <Label Name="lbl_Area" Grid.Column="1" Margin="230,1,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="105">[Area]</Label>
+                <Label Name="lbl_CalcCon" Grid.Column="1" Margin="230,1,0,0" Grid.Row="1" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="200">[Area]</Label>
+                <Label Name="lbl_CalcSteel" Grid.Column="1" Margin="230,36,0,0" Grid.Row="1" Height="24" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="200">[Area]</Label>
 
             </Grid>
         </GroupBox>
