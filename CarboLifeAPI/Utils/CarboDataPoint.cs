@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarboLifeUI.UI
+namespace CarboLifeAPI
 {
-    class PiePiece
+    public class CarboDataPoint
     {
             public string Name
             {

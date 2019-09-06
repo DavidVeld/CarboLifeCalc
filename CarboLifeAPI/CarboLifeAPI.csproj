@@ -52,6 +52,7 @@
     <Compile Include="Data\CarboProperty.cs" />
     <Compile Include="Data\CarboGroupSettings.cs" />
     <Compile Include="UtilClasses\CarboLevel.cs" />
+    <Compile Include="Utils\CarboDataPoint.cs" />
     <Compile Include="Utils\ReadWriteCsv.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

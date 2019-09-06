@@ -69,16 +69,62 @@ namespace CarboLifeAPI.Data
             this.groupList = CarboElementImporter.GroupElementsAdvanced(this.elementList, groupSettings.groupCategory, groupSettings.groupSubCategory, groupSettings.groupType, groupSettings.groupMaterial, groupSettings.groupSubStructure, groupSettings.groupDemolition, CarboDatabase, groupSettings.uniqueTypeNames);
             CalculateProject();
         }
+
+        public List<CarboDataPoint> getTotals(string value)
+        {
+            List<CarboDataPoint> valueList = new List<CarboDataPoint>();
+
+            if(value == "Material")
+            {
+                foreach (CarboGroup CarboGroup in this.groupList)
+                {
+
+                    CarboDataPoint newelement = new CarboDataPoint();
+                    newelement.Name = CarboGroup.MaterialName;
+                    newelement.Value = CarboGroup.EC;
+
+                    bool merged = false;
+
+                    if (valueList.Count > 0)
+                    {
+                        foreach (CarboDataPoint pp in valueList)
+                        {
+                            if (pp.Name == newelement.Name)
+                            {
+                                pp.Value += newelement.Value;
+                                merged = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (merged == false)
+                        valueList.Add(newelement);
+                }
+            }
+            //Would be Per life
+            else
+            {
+
+            }
+
+            //Values should return now;
+
+
+
+            return valueList;
+        }
+
+
         public void CalculateProject()
         {
-            EE = 0;
+            //EE = 0;
             EC = 0;
             //This Will calculate all totals;
             foreach(CarboGroup cg in groupList)
             {
                 cg.CalculateTotals();
 
-                EE += cg.EE;
+                //EE += cg.EE;
                 EC += cg.EC;
                 
             }

@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
-             xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1200" IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
@@ -38,7 +38,7 @@
         <Label Grid.Column="1" Grid.Row="2" Style="{StaticResource baseStyleTitle}">Summary</Label>
         <Label Name="lbl_Values" Grid.Column="1" Grid.Row="2" Style="{StaticResource baseStyleLabel}" Margin="0,30,10,0">-</Label>
 
-        <Canvas Name="cnv_Summary" Grid.Column="1" Grid.Row="2" Visibility="Visible" Margin="0,0,0,0">
+        <!-- <Canvas Name="cnv_Summary" Grid.Column="1" Grid.Row="2" Visibility="Visible" Margin="0,0,0,0">
             <Canvas.Background>
                 <DrawingBrush TileMode="Tile" Viewport="0,0,10,10" 
                                      ViewportUnits="Absolute">
@@ -60,14 +60,20 @@
         
         </Canvas>
 
-        <DVC:Chart  Name="chr_Pie" Title="By Material" 
+       <DVC:Chart  Name="chr_Pie" Title="By Material" Visibility="Hidden"
 		Grid.Column="2" Grid.Row="2" Margin="0,0,0,0" Background="White" Foreground="Black" BorderBrush="White">
 
+            
             <DVC:PieSeries DependentValuePath="Value" 
 		IndependentValuePath="Key" ItemsSource="{Binding}" 
 		IsSelectionEnabled="true" Background="White" Foreground="Black" BorderBrush="Black"  FontSize="16" FontFamily="Calibri" OpacityMask="White"/>
 
         </DVC:Chart>
+-->
+        <lvc:PieChart Name="pie_Chart1" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="2,2,2,2" AnimationsSpeed="0" Foreground="Black" Background="LightGray" LegendLocation="Right">
+        </lvc:PieChart>
+        <lvc:PieChart Name="pie_Chart2" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Margin="2,2,2,2" AnimationsSpeed="0" Foreground="Black" Background="LightGray" LegendLocation="Right">
+        </lvc:PieChart>
 
         <!--
                 public string Name { get; set; }

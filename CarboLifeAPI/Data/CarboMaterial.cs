@@ -12,27 +12,63 @@ namespace CarboLifeAPI.Data
 
     public class CarboMaterial
     {
+        /// <summary>
+        /// Unique Identifier
+        /// </summary>
         public int Id { get; set; }
+        /// <summary>
+        /// Preferably Unique name for a material
+        /// </summary>
         public string Name { get; set; }
         /// <summary>
         /// Values: "Timber", "Steel", "Concrete", "Brick", "Plastic", "Other" Accepted
         /// </summary>
         public string Category { get; set; }
+        /// <summary>
+        /// Description for a material
+        /// </summary>
         public string Description { get; set; }
 
-        //Technical Properties
+        //Technical Properties 
+
+        /// <summary>
+        /// kg/m³
+        /// </summary>
         public double Density { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Obsolete]
         public double EEI { get; set; }
+        /// <summary>
+        /// kgCO2e
+        /// </summary>
         public double ECI { get; set; }
 
+        /// <summary>
+        /// kgCO2e/kg
+        /// </summary>
         public double ECI_A1A3 { get; set; }
-
+        /// <summary>
+        /// kgCO2e/kg
+        /// </summary>
         public double ECI_A4A5 { get; set; }
-
+        /// <summary>
+        /// kgCO2e/kg
+        /// </summary>
         public double ECI_B1B7 { get; set; }
+        /// <summary>
+        /// kgCO2e/kg
+        /// </summary>
         public double ECI_C1C4 { get; set; }
+        /// <summary>
+        /// kgCO2e/kg
+        /// </summary>
         public double ECI_D { get; set; }
 
+        /// <summary>
+        /// Used to protect data
+        /// </summary>
         public bool isLocked { get; set; }
 
         [XmlArray("Property"), XmlArrayItem(typeof(CarboProperty), ElementName = "Property")]
@@ -45,7 +81,7 @@ namespace CarboLifeAPI.Data
             Category = "";
             Description = "";
             Density = 1;
-            EEI = 1;
+            //EEI = 1;
             ECI = 1;
             ECI_A1A3 = 1;
             ECI_A4A5 = 1;
@@ -63,7 +99,7 @@ namespace CarboLifeAPI.Data
             Category = "Not specified";
             Description = "Carbon material and properties not set.";
             Density = 1;
-            EEI = 1;
+            //EEI = 1;
             ECI = 1;
             ECI_A1A3 = 1;
             ECI_A4A5 = 1;
@@ -82,9 +118,11 @@ namespace CarboLifeAPI.Data
 
         public void SetProperty(string properyName, string propertyValue)
         {
-            CarboProperty cpnew = new CarboProperty();
-            cpnew.PropertyName = properyName;
-            cpnew.Value = propertyValue;
+            CarboProperty cpnew = new CarboProperty
+            {
+                PropertyName = properyName,
+                Value = propertyValue
+            };
             bool isUnique = true;
 
             foreach(CarboProperty cp in Properties)

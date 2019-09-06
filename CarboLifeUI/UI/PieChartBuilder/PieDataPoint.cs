@@ -6,12 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls.DataVisualization.Charting;
 using System.Windows.Media;
 
 namespace CarboLifeUI.UI
 {
-    public class PieSeries : System.Windows.Controls.DataVisualization.Charting.PieSeries
+    public class CarboPieSeries : System.Windows.Controls.DataVisualization.Charting.PieSeries
     {
         protected override DataPoint CreateDataPoint()
         {

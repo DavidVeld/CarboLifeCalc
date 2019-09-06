@@ -1,4 +1,5 @@
-﻿using CarboLifeAPI.Data;
+﻿using CarboLifeAPI;
+using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,10 @@ using System.Windows.Shapes;
 
 namespace CarboLifeUI.UI
 {
+    [Obsolete]
     public static class PieChartGenerator
     {
-        internal static IList<UIElement> generateImage(Canvas chartCanvas, List<PiePiece> Pieces)
+        internal static IList<UIElement> generateImage(Canvas chartCanvas, List<CarboDataPoint> Pieces)
         {
             IList<UIElement> result = new List<UIElement>();
 
@@ -50,7 +52,7 @@ namespace CarboLifeUI.UI
                 //double Yoffset = 50;
                 double startAngle = 0;
                 //Write Values
-                foreach (PiePiece pcp in Pieces)
+                foreach (CarboDataPoint pcp in Pieces)
                 {
                     double valueScale = pcp.Value / total;
                     double valuePerCent = valueScale * 100;
@@ -120,12 +122,12 @@ namespace CarboLifeUI.UI
             return result;
         }
 
-        private static double getTotal(List<PiePiece> pieces)
+        private static double getTotal(List<CarboDataPoint> pieces)
         {
             double result = 0;
             if(pieces.Count > 0)
             {
-                foreach (PiePiece pcp in pieces)
+                foreach (CarboDataPoint pcp in pieces)
                 {
                     result += pcp.Value;
                 }

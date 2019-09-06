@@ -23,9 +23,9 @@ namespace CarboLifeAPI.Data
         public double Mass { get; set; }
 
         //Calculated Values
-        public double EEI { get; set; }
+        //public double EEI { get; set; }
         public double ECI { get; set; }
-        public double EE { get; set; }
+        //public double EE { get; set; }
         public double EC { get; set; }
         public double PerCent { get; set; }
 
@@ -49,9 +49,7 @@ namespace CarboLifeAPI.Data
             Density = 0;
             Mass = 0;
 
-            EEI = 0;
             ECI = 0;
-            EE = 0;
             EC = 0;
 
             PerCent = 0;
@@ -68,11 +66,8 @@ namespace CarboLifeAPI.Data
 
             Density = 0;
             Mass = 0;
-            EEI = 0;
             ECI = 0;
-            EE = 0;
             EC = 0;
-
 
             PerCent = 0;
 
@@ -86,7 +81,7 @@ namespace CarboLifeAPI.Data
 
                     Volume += ce.Volume;
 
-                    EE = 0;
+                    //EE = 0;
                     EC = 0;
                 }
             }
@@ -94,7 +89,7 @@ namespace CarboLifeAPI.Data
             //Set Material Properties
             MaterialName = Material.Name;
             Density = Material.Density;
-            EEI = Material.EEI;
+            //EEI = Material.EEI;
             ECI = Material.ECI;
 
             Mass = Material.Density * Volume;
@@ -109,12 +104,12 @@ namespace CarboLifeAPI.Data
             Description = description; 
 
             Volume = volume;
-            Density = 0;
+            Density = density;
             Mass = mass;
 
-            EEI = eei;
+            //EEI = eei;
             ECI = eci;
-            EE = ee;
+            //EE = ee;
             EC = ec;
 
             PerCent = 0;
@@ -142,9 +137,9 @@ namespace CarboLifeAPI.Data
             Density = 0;
             Mass = 0;
 
-            EEI = 0;
+            //EEI = 0;
             ECI = 0;
-            EE = 0;
+            //EE = 0;
             EC = 0;
 
             PerCent = 0;
@@ -169,7 +164,7 @@ namespace CarboLifeAPI.Data
             Material.CalculateTotals();
             //Clear Values
             MaterialName = Material.Name;
-            EEI = Material.EEI;
+            //EEI = Material.EEI;
             ECI = Material.ECI;
             Density = Material.Density;
 
@@ -187,7 +182,7 @@ namespace CarboLifeAPI.Data
 
             //Calculate Valuesl
             Mass = Volume * Density;
-            EE = Mass * EEI;
+            //EE = Mass * EEI;
             EC = (Mass * ECI) / 1000;
 
         }

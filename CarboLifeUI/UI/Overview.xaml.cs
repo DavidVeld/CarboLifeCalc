@@ -14,6 +14,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LiveCharts;
+using LiveCharts.Wpf;
+using CarboLifeAPI;
 
 namespace CarboLifeUI.UI
 {
@@ -27,15 +30,14 @@ namespace CarboLifeUI.UI
         public Overview()
         {
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
-
             InitializeComponent();
         }
 
         public Overview(CarboProject carboLifeProject)
         {
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
-
             InitializeComponent();
+
             CarboLifeProject = carboLifeProject;
         }
 
@@ -73,56 +75,62 @@ namespace CarboLifeUI.UI
             {
                 if (CarboLifeProject != null)
                 {
-                    cnv_Summary.Children.Clear();
-                    List<PiePiece> PieceList = new List<PiePiece>();
+                    //cnv_Summary.Children.Clear();
+                    List<CarboDataPoint> PieceList = new List<CarboDataPoint>();
                     List<KeyValuePair<string, double>> valueList = new List<KeyValuePair<string, double>>();
 
-                    foreach (CarboGroup CarboGroup in CarboLifeProject.getGroupList)
-                    {
-                        PiePiece newelement = new PiePiece();
-                        newelement.Name = CarboGroup.MaterialName;
-                        newelement.Value = CarboGroup.EC;
+                    PieceList = CarboLifeProject.getTotals("Material");
 
-                        bool merged = false;
-
-                        if (PieceList.Count > 0)
-                        {
-                            foreach (PiePiece pp in PieceList)
-                            {
-                                if (pp.Name == newelement.Name)
-                                {
-                                    pp.Value += newelement.Value;
-                                    merged = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (merged == false)
-                            PieceList.Add(newelement);
-                    }
 
                     PieceList = PieceList.OrderByDescending(o => o.Value).ToList();
 
+                    /*
                     IList<UIElement> uIElements = PieChartGenerator.generateImage(cnv_Summary, PieceList);
 
                     foreach (UIElement uiE in uIElements)
                     {
-                        cnv_Summary.Children.Add(uiE);
+                        //cnv_Summary.Children.Add(uiE);
                     }
+                    */
 
                     if (PieceList.Count > 0)
                     {
-                        foreach (PiePiece pp in PieceList)
+                        foreach (CarboDataPoint pp in PieceList)
                         {
                             KeyValuePair<string, double> pair = new KeyValuePair<string, double>(pp.Name, pp.Value);
                             valueList.Add(pair);
                         }
                     }
-                    chr_Pie.DataContext = valueList;
-                    var chartArea1 = new System.Windows.Controls.DataVisualization.Charting.Chart();
+                    //chr_Pie.DataContext = valueList;
+                    //var chartArea1 = new System.Windows.Controls.DataVisualization.Charting.Chart();
                     Style st = new Style();
+
                     //st.
                     //var chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+                    //LiveChart sample
+
+                    Func<ChartPoint, string> labelPoint = chartPoint =>
+    string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+
+                    SeriesCollection pieSeries = new SeriesCollection();
+
+                    foreach (CarboDataPoint ppin in PieceList)
+                    {
+                        PieSeries newSeries = new PieSeries
+                        {
+                            Title = ppin.Name,
+                            Values = new ChartValues<double> { Math.Round(ppin.Value,0) },
+                            PushOut = 10,
+                            DataLabels = true,
+                            LabelPoint = labelPoint
+                        };
+
+                        pieSeries.Add(newSeries);
+
+                    }
+
+                    pie_Chart1.Series = pieSeries;
+
 
                     txt_ProjectName.Text = CarboLifeProject.Name;
                     txt_Number.Text = CarboLifeProject.Number;
@@ -184,6 +192,11 @@ namespace CarboLifeUI.UI
                 }
             }
             return ayResult;
+        }
+
+        private void Pie_Chart_DataClick(object sender, LiveCharts.ChartPoint chartPoint)
+        {
+
         }
     }
 }
