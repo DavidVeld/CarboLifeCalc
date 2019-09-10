@@ -33,7 +33,7 @@ namespace CarboLifeUI.UI
         {
             UserMaterials = userMaterials;
             BaseMaterials = new CarboDatabase();
-            BaseMaterials = BaseMaterials.DeSerializeXML("BaseMaterials");
+            BaseMaterials = BaseMaterials.DeSerializeXML("db\\BaseMaterials");
 
             InitializeComponent();
         }

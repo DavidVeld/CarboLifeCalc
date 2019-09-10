@@ -74,7 +74,7 @@ namespace CarboLifeAPI.Data
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
 
-            if(value == "Material")
+            if (value != "")
             {
                 foreach (CarboGroup CarboGroup in this.groupList)
                 {
@@ -104,12 +104,64 @@ namespace CarboLifeAPI.Data
             //Would be Per life
             else
             {
+                CarboDataPoint cb_A1A3 = new CarboDataPoint("A1 A3",0);
+                CarboDataPoint cb_A4A5 = new CarboDataPoint("A4 A5", 0);
+                CarboDataPoint cb_B1B7 = new CarboDataPoint("B1 B7", 0);
+                CarboDataPoint cb_C1C4 = new CarboDataPoint("C1 C4", 0);
+                CarboDataPoint cb_D = new CarboDataPoint("D", 0);
 
+                valueList.Add(cb_A1A3);
+                valueList.Add(cb_A4A5);
+                valueList.Add(cb_B1B7);
+                valueList.Add(cb_C1C4);
+                valueList.Add(cb_D);
+                               
+
+                foreach (CarboGroup CarboGroup in this.groupList)
+                {
+                    double ECI_A1A3 = CarboGroup.Material.ECI_A1A3;
+                    double ECI_A4A5 = CarboGroup.Material.ECI_A4A5;
+                    double ECI_B1B7 = CarboGroup.Material.ECI_B1B7;
+                    double ECI_C1C4 = CarboGroup.Material.ECI_C1C4;
+                    double ECI_D = CarboGroup.Material.ECI_D;
+
+                    if (valueList.Count > 0)
+                    {
+                        foreach (CarboDataPoint pp in valueList)
+                        {
+                            string ppName = pp.Name;
+
+                            if (ppName == "A1 A3")
+                            {
+                                pp.Value += ECI_A1A3;
+                            }
+                            else if (ppName == "A4 A5")
+                            {
+                                pp.Value += ECI_A4A5;
+                            }
+                            else if (ppName == "B1 B7")
+                            {
+                                pp.Value += ECI_B1B7;
+                            }
+                            else if (ppName == "C1 C4")
+                            {
+                                pp.Value += ECI_C1C4;
+                            }
+                            else if (ppName == "D")
+                            {
+                                pp.Value += ECI_D;
+                            }
+                            else
+                            {
+                                pp.Value = 0;
+                            }
+                        }
+                    }
+
+                }
             }
 
             //Values should return now;
-
-
 
             return valueList;
         }

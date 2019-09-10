@@ -1,0 +1,30 @@
+Brand,Type,Gauge,Steel,Constant,ProfileHeight
+Tata,ComFlor 46,0.9,0.001168702,0.027,46
+Tata,ComFlor 46,1.2,0.001688125,0.027,46
+Tata,ComFlor 51+,0.9,0.001688125,0.041,51
+Tata,ComFlor 51+,1,0.001817981,0.041,51
+Tata,ComFlor 51+,1.2,0.002207549,0.041,51
+Tata,ComFlor 60,0.9,0.001298558,0.043,75
+Tata,ComFlor 60,1,0.001428414,0.043,75
+Tata,ComFlor 60,1.2,0.001817981,0.043,75
+Tata,ComFlor 80 ,0.9,0.001428414,0.05,95
+Tata,ComFlor 80 ,1,0.00155827,0.05,95
+Tata,ComFlor 80 ,1.2,0.001947837,0.05,95
+Tata,ComFlor 100 ,0.9,0.00155827,0.04,100
+Tata,ComFlor 100 ,1.2,0.002077693,0.04,100
+Tata,ComFlor 210,1.25,0.002077693,0.04,210
+Tata,ComFlor 225,1.25,0.002207549,0.056,225
+Kingspan,Multideck 50-V3,0.85,0.001454385,0.041,50
+Kingspan,Multideck 50-V3,0.9,0.001636183,0.041,50
+Kingspan,Multideck 50-V3,1,0.001830967,0.041,50
+Kingspan,Multideck 50-V3,1.1,0.002012765,0.041,50
+Kingspan, Multideck 50-V3,1.2,0.002207549,0.041,50
+Kingspan,Multideck 60-V2,0.9,0.001194673,0.034,69
+Kingspan,Multideck 60-V2,1,0.001324529,0.034,69
+Kingspan,Multideck 60-V2,1.1,0.001454385,0.034,69
+Kingspan,Multideck 60-V2,1.2,0.001584241,0.034,69
+Kingspan,Multideck 80-V2,1,0.00146737,0.0415,89.5
+Kingspan,Multideck 80-V2,1.1,0.001610212,0.0415,89.5
+Kingspan,Multideck 80-V2,1.2,0.001766039,0.0415,89.5
+Kingspan,Multideck 146,1.2,0.002480246,0.073,160
+Kingspan,Multideck 146,1.5,0.003103554,0.073,160

@@ -35,7 +35,7 @@ namespace CarboLifeUI
 
         public CarboGroupSettings DeSerializeXML()
         {
-            string fileName = "GroupSettings.xml";
+            string fileName = "db\\GroupSettings.xml";
             string myPath = Utils.getAssemblyPath() + "\\" + fileName;
 
             if (File.Exists(fileName))
@@ -68,7 +68,7 @@ namespace CarboLifeUI
         public bool SerializeXML()
         {
 
-            string fileName = "GroupSettings.xml";
+            string fileName = "db\\GroupSettings.xml";
 
             string myPath = Utils.getAssemblyPath() + "\\" + fileName;
 

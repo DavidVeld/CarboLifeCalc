@@ -143,5 +143,10 @@ namespace CarboLifeUI.UI
             }
             return ayResult;
         }
+
+        private void Mnu_About_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("This program was written by David In't Veld, and is provided AS IS. Any further queries contact me on: davidveld@gmail.com","About Carbo Life Calculator",MessageBoxButton.OK,MessageBoxImage.Information);
+        }
     }
 }

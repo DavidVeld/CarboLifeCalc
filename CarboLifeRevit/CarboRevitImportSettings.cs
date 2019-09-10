@@ -29,7 +29,7 @@ namespace CarboLifeRevit
 
         public CarboRevitImportSettings DeSerializeXML()
         {
-            string fileName = "RevitImportSettings.xml";
+            string fileName = "db\\RevitImportSettings.xml";
             string myPath = Utils.getAssemblyPath() + "\\" + fileName;
 
             if (File.Exists(fileName))
@@ -62,7 +62,7 @@ namespace CarboLifeRevit
         public bool SerializeXML()
         {
 
-            string fileName = "RevitImportSettings.xml";
+            string fileName = "db\\RevitImportSettings.xml";
 
             string myPath = Utils.getAssemblyPath() + "\\" + fileName;
 

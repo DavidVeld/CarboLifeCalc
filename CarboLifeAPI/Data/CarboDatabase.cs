@@ -120,7 +120,7 @@ namespace CarboLifeAPI.Data
         public void SerializeXML(string fileName)
         {
             if (fileName == "")
-                fileName = "UserMaterials.xml";
+                fileName = "db\\UserMaterials.xml";
             else
                 fileName = fileName + ".xml";
 
@@ -144,7 +144,7 @@ namespace CarboLifeAPI.Data
         public CarboDatabase DeSerializeXML(string fileName)
         {
             if (fileName == "")
-                fileName = "UserMaterials.xml";
+                fileName = "db\\UserMaterials.xml";
             else
                 fileName = fileName + ".xml";
 

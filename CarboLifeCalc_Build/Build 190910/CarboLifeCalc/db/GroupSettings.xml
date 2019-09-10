@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<CarboGroupSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <groupCategory>true</groupCategory>
+  <groupSubCategory>false</groupSubCategory>
+  <groupType>false</groupType>
+  <groupMaterial>true</groupMaterial>
+  <groupSubStructure>true</groupSubStructure>
+  <groupDemolition>false</groupDemolition>
+  <groupuniqueTypeNames>false</groupuniqueTypeNames>
+  <uniqueTypeNames />
+</CarboGroupSettings>

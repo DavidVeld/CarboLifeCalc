@@ -41,8 +41,7 @@ namespace CarboLifeUI.UI
             returnedDatabase = database;
 
             baseMaterials = new CarboDatabase();
-            baseMaterials = baseMaterials.DeSerializeXML("BaseMaterials");
-
+            baseMaterials = baseMaterials.DeSerializeXML("db\\BaseMaterials");
 
             acceptNew = false;
 
@@ -96,7 +95,7 @@ namespace CarboLifeUI.UI
             cbb_Category.Text = selectedMaterial.Category;
             txt_Density.Text = selectedMaterial.Density.ToString();
             txt_ECI.Text = selectedMaterial.ECI.ToString();
-            txt_EEI.Text = selectedMaterial.EEI.ToString();
+            //txt_EEI.Text = selectedMaterial.EEI.ToString();
 
             txt_A1_A3.Text = selectedMaterial.ECI_A1A3.ToString();
             txt_A1_A3_Setting.Text = selectedMaterial.GetCarboProperty("ECI_A1A3_Settings").Value;
@@ -110,6 +109,9 @@ namespace CarboLifeUI.UI
             txt_C1_C4.Text = selectedMaterial.ECI_C1C4.ToString();
             txt_C1_C4_Setting.Text = selectedMaterial.GetCarboProperty("ECI_C1C4_Settings").Value;
 
+            txt_D.Text = selectedMaterial.ECI_D.ToString();
+            txt_D_Setting.Text = selectedMaterial.GetCarboProperty("ECI_D_Settings").Value;
+
             chk_Locked.IsChecked = selectedMaterial.isLocked;
 
             if(selectedMaterial.isLocked == true)
@@ -119,7 +121,6 @@ namespace CarboLifeUI.UI
             else
             {
                 grd_Edit.Visibility = Visibility.Visible;
-
             }
 
         }

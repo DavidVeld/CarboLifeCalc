@@ -1,0 +1,151 @@
+Id,Name,Description,Category,Density,EEI,ECI,ECI_A1A3,ECI_A4A5,ECI_B1B7,ECI_C1C4,ECI_D,isLocked
+1001,Aluminium - General,No description provided,Steel,2700,0,0,9.16,0,0,0,0,1
+1002,Aluminium - Virgin,No description provided,Steel,2700,0,0,12.79,0,0,0,0,1
+1003,Aluminium - Recycled,No description provided,Steel,2700,0,0,1.81,0,0,0,0,1
+1004,Asphalt,No description provided,Other,2100,0,0,0.066,0,0,0,0,1
+1005,Bitumen,No description provided,Other,1300,0,0,0.55,0,0,0,0,1
+1006,Brass - General,No description provided,Steel,8450,0,0,2.64,0,0,0,0,1
+1007,Brass - Recycled,No description provided,Steel,8450,0,0,1.2,0,0,0,0,1
+1008,Brass - Virgin,No description provided,Steel,8450,0,0,4.8,0,0,0,0,1
+1009,Bricks - EXAMPLE: Single Brick,No description provided,Brick,1000,0,0,0.55,0,0,0,0,1
+1010,Bricks - General (Common Brick),No description provided,Brick,1000,0,0,0.24,0,0,0,0,1
+1011,Bronze - General,No description provided,Steel,8700,0,0,4,0,0,0,0,1
+1012,Carpet - Estimate,No description provided,Other,3000,0,0,15,0,0,0,0,1
+1013,"Cement - Average CEM I Portland Cement, 94% Clinker",No description provided,Concrete,1600,0,0,0.95,0,0,0,0,1
+1014,Cement - Cement stabilised soil @ 5%,No description provided,Concrete,1600,0,0,0.061,0,0,0,0,1
+1015,Cement - Cement stabilised soil @ 8%,No description provided,Concrete,1600,0,0,0.084,0,0,0,0,1
+1016,Cement - General (UK weighted average),No description provided,Concrete,1600,0,0,0.74,0,0,0,0,1
+1017,Cement - Mortar (1:0.5:4.5 Cement:Lime:Sand mix),No description provided,Concrete,2160,0,0,0.213,0,0,0,0,1
+1018,Cement - Mortar (1:1:6 Cement:Lime:Sand mix),No description provided,Concrete,2160,0,0,0.174,0,0,0,0,1
+1019,Cement - Mortar (1:2:9 Cement:Lime:Sand mix),No description provided,Concrete,2160,0,0,0.155,0,0,0,0,1
+1020,Cement - Mortar (1:3 cement:sand mix),No description provided,Concrete,2160,0,0,0.221,0,0,0,0,1
+1021,Cement - Mortar (1:4),No description provided,Concrete,2160,0,0,0.182,0,0,0,0,1
+1022,Cement - Mortar (1:5),No description provided,Concrete,2160,0,0,0.156,0,0,0,0,1
+1023,Cement - Mortar (1:6),No description provided,Concrete,2160,0,0,0.136,0,0,0,0,1
+1024,Ceramics - Fittings,No description provided,Other,2500,0,0,1.14,0,0,0,0,1
+1025,Ceramics - General,No description provided,Other,2500,0,0,0.7,0,0,0,0,1
+1026,Ceramics - Sanitary Products,No description provided,Other,2500,0,0,1.61,0,0,0,0,1
+1027,Ceramics - Tiles and Cladding Panels,No description provided,Other,2500,0,0,0.78,0,0,0,0,1
+1028,Clay - General (Simple Baked Products),No description provided,Other,1800,0,0,0.24,0,0,0,0,1
+1029,Clay - Tile,No description provided,Other,1900,0,0,0.48,0,0,0,0,1
+1030,Clay - Vitrified clay pipe DN 100 & DN 150,No description provided,Other,1800,0,0,0.46,0,0,0,0,1
+1031,Clay - Vitrified clay pipe DN 200 & DN 300,No description provided,Other,1800,0,0,0.5,0,0,0,0,1
+1032,Clay - Vitrified clay pipe DN 500,No description provided,Other,1800,0,0,0.55,0,0,0,0,1
+1033,Concrete - 16/20 Mpa,No description provided,Concrete,2400,0,0,0.1,0,0,0,0,1
+1034,Concrete - 20/25 MPa,No description provided,Concrete,2400,0,0,0.107,0,0,0,0,1
+1035,Concrete - 25/30 MPa,No description provided,Concrete,2400,0,0,0.113,0,0,0,0,1
+1036,Concrete - 28/35 MPa,No description provided,Concrete,2400,0,0,0.12,0,0,0,0,1
+1037,Concrete - 32/40 MPa,No description provided,Concrete,2400,0,0,0.132,0,0,0,0,1
+1038,Concrete - 40/50 MPa,No description provided,Concrete,2400,0,0,0.151,0,0,0,0,1
+1039,Concrete - GEN 0 (6/8 MPa),No description provided,Concrete,2400,0,0,0.076,0,0,0,0,1
+1040,Concrete - GEN 0 (6/8 MPa),No description provided,Concrete,2400,0,0,0.076,0,0,0,0,1
+1041,Concrete - GEN 1 (8/10 MPa),No description provided,Concrete,2400,0,0,0.104,0,0,0,0,1
+1042,Concrete - GEN 1 (8/10 MPa),No description provided,Concrete,2400,0,0,0.104,0,0,0,0,1
+1043,Concrete - GEN 2 (12/15 MPa),No description provided,Concrete,2400,0,0,0.114,0,0,0,0,1
+1044,Concrete - GEN 2 (12/15 MPa),No description provided,Concrete,2400,0,0,0.114,0,0,0,0,1
+1045,Concrete - GEN 3 (16/20 MPa),No description provided,Concrete,2400,0,0,0.123,0,0,0,0,1
+1046,Concrete - GEN 3 (16/20 MPa),No description provided,Concrete,2400,0,0,0.123,0,0,0,0,1
+1047,Concrete - General,No description provided,Concrete,2400,0,0,0.107,0,0,0,0,1
+1048,Concrete - PAV1,No description provided,Concrete,2400,0,0,0.148,0,0,0,0,1
+1049,Concrete - PAV1,No description provided,Concrete,2400,0,0,0.148,0,0,0,0,1
+1050,Concrete - PAV2,No description provided,Concrete,2400,0,0,0.163,0,0,0,0,1
+1051,Concrete - RC 20/25 (20/25 MPa),No description provided,Concrete,2400,0,0,0.132,0,0,0,0,1
+1052,Concrete - RC 20/25 (20/25 MPa),No description provided,Concrete,2400,0,0,0.132,0,0,0,0,1
+1053,Concrete - RC 25/30 (25/30 MPa),No description provided,Concrete,2400,0,0,0.14,0,0,0,0,1
+1054,Concrete - RC 25/30 (25/30 MPa),No description provided,Concrete,2400,0,0,0.14,0,0,0,0,1
+1055,Concrete - RC 28/35 (28/35 MPa),No description provided,Concrete,2400,0,0,0.148,0,0,0,0,1
+1056,Concrete - RC 28/35 (28/35 MPa),No description provided,Concrete,2400,0,0,0.148,0,0,0,0,1
+1057,Concrete - RC 32/40 (32/40 MPa),No description provided,Concrete,2400,0,0,0.163,0,0,0,0,1
+1058,Concrete - RC 32/40 (32/40 MPa),No description provided,Concrete,2400,0,0,0.163,0,0,0,0,1
+1059,Concrete - RC 40/50 (40/50 MPa),No description provided,Concrete,2400,0,0,0.188,0,0,0,0,1
+1060,Concrete - RC 40/50 (40/50 MPa),No description provided,Concrete,2400,0,0,0.188,0,0,0,0,1
+1061,Copper - EU Tube & Sheet,No description provided,Steel,8900,0,0,2.71,0,0,0,0,1
+1062,Copper - Recycled,No description provided,Steel,8900,0,0,0.84,0,0,0,0,1
+1063,Copper - Virgin,No description provided,Steel,8900,0,0,3.81,0,0,0,0,1
+1064,Glass - Primary Glass,No description provided,Other,2480,0,0,0.91,0,0,0,0,1
+1065,Glass - Secondary Glass,No description provided,Other,2480,0,0,0.59,0,0,0,0,1
+1066,Glass - Toughened,No description provided,Other,2480,0,0,1.35,0,0,0,0,1
+1067,Insulation - Cork,No description provided,Other,240,0,0,0.19,0,0,0,0,1
+1068,Insulation - Fibreglass (Glasswool),No description provided,Other,200,0,0,1.35,0,0,0,0,1
+1069,Insulation - Flax (Insulation),No description provided,Other,200,0,0,1.7,0,0,0,0,1
+1070,Insulation - General Insulation,No description provided,Other,200,0,0,1.86,0,0,0,0,1
+1071,Insulation - Mineral wool,No description provided,Other,200,0,0,1.28,0,0,0,0,1
+1072,Insulation - Paper wool,No description provided,Other,200,0,0,0.63,0,0,0,0,1
+1073,Insulation - Rockwool,No description provided,Other,200,0,0,1.12,0,0,0,0,1
+1074,Insulation - Woodwool (Board),No description provided,Other,200,0,0,0.98,0,0,0,0,1
+1075,Iron - General,No description provided,Steel,7870,0,0,2.03,0,0,0,0,1
+1076,Lead - General,No description provided,Other,11340,0,0,1.67,0,0,0,0,1
+1077,Lead - Recycled,No description provided,Other,11340,0,0,0.58,0,0,0,0,1
+1078,Lead - Virgin,No description provided,Other,11340,0,0,3.37,0,0,0,0,1
+1079,Lime - General,No description provided,Other,1000,0,0,0.78,0,0,0,0,1
+1080,Paint - General,No description provided,Other,1200,0,0,2.91,0,0,0,0,1
+1081,Paint - Solventborne Paint,No description provided,Other,1200,0,0,3.76,0,0,0,0,1
+1082,Paint - Waterborne Paint,No description provided,Other,1000,0,0,2.54,0,0,0,0,1
+1083,Plaster - General (Gypsum),No description provided,Other,1200,0,0,0.13,0,0,0,0,1
+1084,Plaster - Plasterboard,No description provided,Other,1900,0,0,0.39,0,0,0,0,1
+1085,Plastics - Calendered Sheet PVC,No description provided,Other,1400,0,0,3.19,0,0,0,0,1
+1086,Plastics - Expanded Polystyrene,No description provided,Other,1400,0,0,3.29,0,0,0,0,1
+1087,Plastics - General,No description provided,Other,1200,0,0,3.31,0,0,0,0,1
+1088,Plastics - General Polyethylene,No description provided,Other,1400,0,0,2.54,0,0,0,0,1
+1089,Plastics - General Purpose Polystyrene,No description provided,Other,50,0,0,3.43,0,0,0,0,1
+1090,Plastics - Nylon,No description provided,Other,1150,0,0,9.14,0,0,0,0,1
+1091,Plastics - PVC General,No description provided,Other,1400,0,0,3.1,0,0,0,0,1
+1092,Rubber,No description provided,Other,910,0,0,2.85,0,0,0,0,1
+1093,Sand,No description provided,Other,1800,0,0,0.005,0,0,0,0,1
+1094,Soil - Cement stabilised soil @ 5%,No description provided,Other,1800,0,0,0.061,0,0,0,0,1
+1095,Soil - Cement stabilised soil @ 8%,No description provided,Other,1800,0,0,0.084,0,0,0,0,1
+1096,Soil - Fly ash stabilised soil,No description provided,Other,1800,0,0,0.041,0,0,0,0,1
+1097,Soil - General (Rammed Soil),No description provided,Other,2200,0,0,0.024,0,0,0,0,1
+1098,Soil - GGBS stabilised soil,No description provided,Other,1800,0,0,0.047,0,0,0,0,1
+1099,Steel - Bar & rod - UK (EU) Average Recycled Content,No description provided,Steel,7850,0,0,1.4,0,0,0,0,1
+1100,Steel - Bar & rod - World Avg. Recy. Cont.,No description provided,Steel,7850,0,0,1.86,0,0,0,0,1
+1101,Steel - Bar & rod- R.O.W. Avg. Recy. Cont.,No description provided,Steel,7850,0,0,1.95,0,0,0,0,1
+1102,Steel - Coil - R.O.W. Avg. Recy. Cont.,No description provided,Steel,7850,0,0,1.92,0,0,0,0,1
+1103,Steel - Coil - World Avg. Recy. Cont.,No description provided,Steel,7850,0,0,1.85,0,0,0,0,1
+1104,Steel - Coil (Sheet) - UK (EU) Average Recycled Content,No description provided,Steel,7850,0,0,1.38,0,0,0,0,1
+1105,"Steel - Coil (Sheet), Galvanised - UK (EU) Average Recycled Content",No description provided,Steel,7850,0,0,1.54,0,0,0,0,1
+1106,"Steel - Coil, Galvanised - R.O.W. Avg. Recy. Cont.",No description provided,Steel,7850,0,0,2.12,0,0,0,0,1
+1107,"Steel - Coil, Galvanised - World Avg. Recy. Cont.",No description provided,Steel,7850,0,0,2.03,0,0,0,0,1
+1108,Steel - Engineering steel - Recycled,No description provided,Steel,7850,0,0,0.72,0,0,0,0,1
+1109,Steel - General - R.O.W. Avg. Recy. Cont.,No description provided,Steel,7850,0,0,2.03,0,0,0,0,1
+1110,Steel - General - UK (EU) Average Recycled Content,No description provided,Steel,7850,0,0,1.46,0,0,0,0,1
+1111,Steel - General - World Avg. Recy. Cont.,No description provided,Steel,7850,0,0,1.95,0,0,0,0,1
+1112,Steel - Pipe - R.O.W. Avg. Recy. Cont.,No description provided,Steel,7850,0,0,2.01,0,0,0,0,1
+1113,Steel - Pipe - World Avg. Recy. Cont.,No description provided,Steel,7850,0,0,1.94,0,0,0,0,1
+1114,Steel - Pipe- UK (EU) Average Recycled Content,No description provided,Steel,7850,0,0,1.45,0,0,0,0,1
+1115,Steel - Plate - R.O.W. Avg. Recy. Cont.,No description provided,Steel,7850,0,0,2.31,0,0,0,0,1
+1116,Steel - Plate - World Avg. Recy. Cont.,No description provided,Steel,7850,0,0,2.21,0,0,0,0,1
+1117,Steel - Plate- UK (EU) Average Recycled Content,No description provided,Steel,7850,0,0,1.66,0,0,0,0,1
+1118,Steel - Recycled,No description provided,Steel,7850,0,0,0.45,0,0,0,0,1
+1119,Steel - Recycled,No description provided,Steel,7850,0,0,0.47,0,0,0,0,1
+1120,Steel - Section - R.O.W. Avg. Recy. Cont.,No description provided,Steel,7850,0,0,2.12,0,0,0,0,1
+1121,Steel - Section - World Avg. Recy. Cont.,No description provided,Steel,7850,0,0,2.03,0,0,0,0,1
+1122,Steel - Section- UK (EU) Average Recycled Content,No description provided,Steel,7850,0,0,1.53,0,0,0,0,1
+1123,Steel - Virgin,No description provided,Steel,7850,0,0,2.74,0,0,0,0,1
+1124,Steel - Wire - Virgin,No description provided,Steel,7850,0,0,3.02,0,0,0,0,1
+1125,Stone - General,No description provided,Other,2600,0,0,0.079,0,0,0,0,1
+1126,Stone - Granite,No description provided,Other,2600,0,0,0.7,0,0,0,0,1
+1127,Stone - Limestone,No description provided,Other,2900,0,0,0.09,0,0,0,0,1
+1128,Stone - Marble,No description provided,Other,2900,0,0,0.13,0,0,0,0,1
+1129,Stone - Marble tile,No description provided,Other,2900,0,0,0.21,0,0,0,0,1
+1130,Stone - Sandstone,No description provided,Other,2500,0,0,0.06,0,0,0,0,1
+1131,Stone - Shale,No description provided,Other,2500,0,0,0.002,0,0,0,0,1
+1132,Stone - Slate,No description provided,Other,2500,0,0,0.063,0,0,0,0,1
+1133,Timber - General,No description provided,Timber,700,0,0,0.72,0,0,0,0,1
+1134,Timber - Glue Laminated timber,No description provided,Timber,700,0,0,0.87,0,0,0,0,1
+1135,Timber - Hardboard,No description provided,Timber,700,0,0,1.09,0,0,0,0,1
+1136,Timber - Laminated Veneer Lumber,No description provided,Timber,700,0,0,0.65,0,0,0,0,1
+1137,Timber - MDF,No description provided,Timber,700,0,0,0.74,0,0,0,0,1
+1138,Timber - Oriented Strand Board (OSB),No description provided,Timber,700,0,0,0.99,0,0,0,0,1
+1139,Timber - Particle Board,No description provided,Timber,700,0,0,0.86,0,0,0,0,1
+1140,Timber - Plywood,No description provided,Timber,700,0,0,1.1,0,0,0,0,1
+1141,Timber - Sawn Hardwood,No description provided,Timber,720,0,0,0.87,0,0,0,0,1
+1142,Timber - Sawn Softwood,No description provided,Timber,450,0,0,0.59,0,0,0,0,1
+1143,Timber - Veneer Particleboard (Furniture),No description provided,Timber,700,0,0,0.59,0,0,0,0,1
+1144,Tin - General,No description provided,Metal,7310,0,0,14.47,0,0,0,0,1
+1145,Titanium - Recycled,No description provided,Metal,4540,0,0,14.7,0,0,0,0,1
+1146,Titanium - Virgin,No description provided,Metal,4540,0,0,30,0,0,0,0,1
+1147,Vinyl Flooring - General,No description provided,Other,1500,0,0,3.19,0,0,0,0,1
+1148,Zinc - General,No description provided,Metal,7000,0,0,3.09,0,0,0,0,1
+1149,Zinc - Recycled,No description provided,Metal,7000,0,0,0.52,0,0,0,0,1
+1150,Zinc - Virgin,No description provided,Metal,7000,0,0,4.18,0,0,0,0,1

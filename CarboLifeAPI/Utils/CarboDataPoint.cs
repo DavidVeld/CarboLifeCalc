@@ -18,5 +18,17 @@ namespace CarboLifeAPI
                 get;
                 set;
             }
+
+        public CarboDataPoint()
+        {
+            this.Name = "";
+            this.Value = 0;
+        }
+
+        public CarboDataPoint(string Name, double Value)
+        {
+            this.Name = Name;
+            this.Value = Value;
+        }
     }
 }
