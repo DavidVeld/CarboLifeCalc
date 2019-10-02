@@ -119,36 +119,36 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="120"/>
                     <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label  Grid.Row="2" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">A1 -> A3 Value:</Label>
+                <Label  Grid.Row="2" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">A1-A3 (Production):</Label>
                 <TextBox Name="txt_A1_A3_Setting"  Grid.Row="2" Grid.Column="2" Height="24" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
                 <TextBox Name="txt_A1_A3"  Grid.Row="2" Grid.Column="2" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
                 <Button Name="btn_A1_A3"  Grid.Row="2" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A1_A3_Click">Edit...</Button>
 
-                <Label  Grid.Row="3" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">A4 -> A5 Value:</Label>
+                <Label  Grid.Row="3" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">A4-A5 (Transport):</Label>
                 <TextBox Name="txt_A4_A5_Setting"  Grid.Row="3" Grid.Column="2" Height="24" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
                 <TextBox Name="txt_A4_A5"  Grid.Row="3" Grid.Column="2" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
-                <Button Name="btn_A4_A5"  Grid.Row="3" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}">Edit...</Button>
+                <Button Name="btn_A4_A5"  Grid.Row="3" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A4_A5_Click">Edit...</Button>
 
-                <Label  Grid.Row="4" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">B1 -> B7 Value:</Label>
+                <Label  Grid.Row="4" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">B1-B7 (Construction):</Label>
                 <TextBox Name="txt_B1_B7_Setting"  Grid.Row="4" Grid.Column="2" Height="24" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
                 <TextBox Name="txt_B1_B7"  Grid.Row="4" Grid.Column="2" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
-                <Button Name="btn_B1_B7"  Grid.Row="4" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}">Edit...</Button>
+                <Button Name="btn_B1_B7"  Grid.Row="4" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_B1_B7_Click">Edit...</Button>
 
-                <Label  Grid.Row="5" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">C1 -> C4 Value:</Label>
+                <Label  Grid.Row="5" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">C1-C4 (Life):</Label>
                 <TextBox Name="txt_C1_C4_Setting"  Grid.Row="5" Grid.Column="2" Height="24" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
                 <TextBox Name="txt_C1_C4"  Grid.Row="5" Grid.Column="2" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
-                <Button Name="btn_C1_C4"  Grid.Row="5" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}">Edit...</Button>
+                <Button Name="btn_C1_C4"  Grid.Row="5" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_C1_C4_Click">Edit...</Button>
 
-                <Label  Grid.Row="6" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">D Value:</Label>
+                <Label  Grid.Row="6" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">D  (End of Life):</Label>
                 <TextBox Name="txt_D_Setting"  Grid.Row="6" Grid.Column="2" Height="24" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
                 <TextBox Name="txt_D"  Grid.Row="6" Grid.Column="2" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
-                <Button Name="btn_D"  Grid.Row="6" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}">Edit...</Button>
+                <Button Name="btn_D"  Grid.Row="6" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_D_Click">Edit...</Button>
 
                 <Label Grid.Column="1" Grid.Row="7" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Total ECI:</Label>
                 <TextBox Name="txt_ECI" Grid.Column="2" Grid.Row="7" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>

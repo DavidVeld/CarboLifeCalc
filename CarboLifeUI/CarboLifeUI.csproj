@@ -62,6 +62,18 @@
     <Compile Include="UI\GroupWindow.xaml.cs">
       <DependentUpon>GroupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\MaterialConstructionPicker.xaml.cs">
+      <DependentUpon>MaterialConstructionPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MaterialEndofLifePicker.xaml.cs">
+      <DependentUpon>MaterialEndofLifePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MaterialLifePicker.xaml.cs">
+      <DependentUpon>MaterialLifePicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MaterialTransportPicker.xaml.cs">
+      <DependentUpon>MaterialTransportPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ProfileWindow.xaml.cs">
       <DependentUpon>ProfileWindow.xaml</DependentUpon>
     </Compile>
@@ -102,6 +114,22 @@
     <Page Include="UI\GroupWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\MaterialConstructionPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\MaterialEndofLifePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\MaterialLifePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\MaterialTransportPicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\ProfileWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
