@@ -51,18 +51,18 @@
             <Grid Name="grd_Edit" Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="32"/>
                     <RowDefinition Height="60"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="5"/>
@@ -78,16 +78,16 @@
 
 
                 <Label Grid.Column="1" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Name:</Label>
-                <TextBox Name="txt_Name" Grid.Column="2" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_Name" Grid.Column="2" Grid.Row="1" Height="26" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"></TextBox>
 
                 <Label Grid.Column="1" Grid.Row="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Description:</Label>
                 <TextBox Name="txt_Description" Grid.Column="2" Grid.Row="2" Margin="0,5,0,5"  Style="{StaticResource flatTextBox}"></TextBox>
 
                 <Label Grid.Column="1" Grid.Row="3" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Category:</Label>
-                <ComboBox Name="cbb_Category"  Grid.Column="2" Grid.Row="3" Height="25" Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="245"></ComboBox>
+                <ComboBox Name="cbb_Category"  Grid.Column="2" Grid.Row="3" Height="26" Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="245"></ComboBox>
 
                 <Label Grid.Column="1" Grid.Row="4" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Density:</Label>
-                <TextBox Name="txt_Density" Grid.Column="2" Grid.Row="4" Height="25" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_Density" Grid.Column="2" Grid.Row="4" Height="26" Style="{StaticResource flatTextBox}"></TextBox>
                 <Label Grid.Column="3" Grid.Row="4" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kg/m³</Label>
 
                 <Label Grid.Column="1" Grid.Row="5" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Visibility="Hidden">EEI:</Label>
@@ -103,16 +103,16 @@
             <Grid Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="5"/>
@@ -126,32 +126,32 @@
                 </Grid.ColumnDefinitions>
 
                 <Label  Grid.Row="2" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">A1-A3 (Production):</Label>
-                <TextBox Name="txt_A1_A3_Setting"  Grid.Row="2" Grid.Column="2" Height="24" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
-                <TextBox Name="txt_A1_A3"  Grid.Row="2" Grid.Column="2" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_A1_A3_Setting"  Grid.Row="2" Grid.Column="2" Height="26" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_A1_A3"  Grid.Row="2" Grid.Column="2" Height="26" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
                 <Button Name="btn_A1_A3"  Grid.Row="2" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A1_A3_Click">Edit...</Button>
 
                 <Label  Grid.Row="3" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">A4-A5 (Transport):</Label>
-                <TextBox Name="txt_A4_A5_Setting"  Grid.Row="3" Grid.Column="2" Height="24" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
-                <TextBox Name="txt_A4_A5"  Grid.Row="3" Grid.Column="2" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_A4_A5_Setting"  Grid.Row="3" Grid.Column="2" Height="26" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_A4_A5"  Grid.Row="3" Grid.Column="2" Height="26" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
                 <Button Name="btn_A4_A5"  Grid.Row="3" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A4_A5_Click">Edit...</Button>
 
                 <Label  Grid.Row="4" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">B1-B7 (Construction):</Label>
-                <TextBox Name="txt_B1_B7_Setting"  Grid.Row="4" Grid.Column="2" Height="24" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
-                <TextBox Name="txt_B1_B7"  Grid.Row="4" Grid.Column="2" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_B1_B7_Setting"  Grid.Row="4" Grid.Column="2" Height="26" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_B1_B7"  Grid.Row="4" Grid.Column="2" Height="26" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
                 <Button Name="btn_B1_B7"  Grid.Row="4" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_B1_B7_Click">Edit...</Button>
 
                 <Label  Grid.Row="5" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">C1-C4 (Life):</Label>
-                <TextBox Name="txt_C1_C4_Setting"  Grid.Row="5" Grid.Column="2" Height="24" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
-                <TextBox Name="txt_C1_C4"  Grid.Row="5" Grid.Column="2" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_C1_C4_Setting"  Grid.Row="5" Grid.Column="2" Height="26" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_C1_C4"  Grid.Row="5" Grid.Column="2" Height="26" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
                 <Button Name="btn_C1_C4"  Grid.Row="5" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_C1_C4_Click">Edit...</Button>
 
                 <Label  Grid.Row="6" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">D  (End of Life):</Label>
-                <TextBox Name="txt_D_Setting"  Grid.Row="6" Grid.Column="2" Height="24" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
-                <TextBox Name="txt_D"  Grid.Row="6" Grid.Column="2" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_D_Setting"  Grid.Row="6" Grid.Column="2" Height="26" Width="195" Margin="0,3" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_D"  Grid.Row="6" Grid.Column="2" Height="26" Width="45" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}"></TextBox>
                 <Button Name="btn_D"  Grid.Row="6" Grid.Column="3" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_D_Click">Edit...</Button>
 
                 <Label Grid.Column="1" Grid.Row="7" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Total ECI:</Label>
-                <TextBox Name="txt_ECI" Grid.Column="2" Grid.Row="7" Height="25" Width="45" Margin="0,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>
+                <TextBox Name="txt_ECI" Grid.Column="2" Grid.Row="7" Height="26" Width="45" Margin="0,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>
                 <Label Grid.Column="3" Grid.Row="7" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2/kg</Label>
 
                 <Button Name="btn_Refresh"  Grid.Row="8" Grid.Column="3" Height="25" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_Refresh_Click">Refresh</Button>

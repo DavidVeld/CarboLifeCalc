@@ -59,6 +59,7 @@
     <Compile Include="UI\CarboLifeMainWindow.xaml.cs">
       <DependentUpon>CarboLifeMainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\DataSource\TransportationList.cs" />
     <Compile Include="UI\GroupWindow.xaml.cs">
       <DependentUpon>GroupWindow.xaml</DependentUpon>
     </Compile>

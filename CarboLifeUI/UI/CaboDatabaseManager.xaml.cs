@@ -26,14 +26,18 @@ namespace CarboLifeUI.UI
     /// </summary>
     public partial class CaboDatabaseManager : Window
     {
-        private CarboDatabase UserMaterials;
-        private CarboDatabase BaseMaterials;
+        public CarboDatabase UserMaterials;
+        public CarboDatabase BaseMaterials;
+
+        public bool isOk;
+        
 
         public CaboDatabaseManager(CarboDatabase userMaterials)
         {
             UserMaterials = userMaterials;
             BaseMaterials = new CarboDatabase();
             BaseMaterials = BaseMaterials.DeSerializeXML("db\\BaseMaterials");
+            isOk = false;
 
             InitializeComponent();
         }
@@ -43,9 +47,9 @@ namespace CarboLifeUI.UI
             string name = "";
             //Get the profile from a cvs:
             if (cbb_ViewableTable.Text == "User Materials")
-                name = "UserMaterials";
+                name = "db\\UserMaterials";
             else if (cbb_ViewableTable.Text == "Base Materials")
-                name = "BaseMaterials";
+                name = "db\\BaseMaterials";
             
             try
             {
@@ -128,17 +132,67 @@ namespace CarboLifeUI.UI
 
                         if (propertyName == ccolumnName)
                         {
+                            string value = dr[dc].ToString();
+
                             //The column is a propery value, thus it need to be added as such
                             try
                             {
-                                string value = dr[dc].ToString();
-                                double parsedDoubleValue = 0;
-                                int parcedIntValue;
-                                bool isDouble = false;
-                                bool isInt = false;
-                                isDouble = double.TryParse(value, out parsedDoubleValue);
-                                isInt = int.TryParse(value, out parcedIntValue);                           
 
+                                //Improved:
+
+                                if (property.PropertyType == typeof(bool))
+                                {
+                                    int parcedIntValue;
+                                    bool isInt = false;
+
+                                    isInt = int.TryParse(value, out parcedIntValue);
+
+                                    if (isInt == false)
+                                        parcedIntValue = 0;
+
+                                    bool boolValue = Convert.ToBoolean(Convert.ToInt32(parcedIntValue));
+                                    property.SetValue(newMaterial, boolValue);
+                                }
+                                else if(property.PropertyType == typeof(int))
+                                {
+                                    int parcedIntValue;
+                                    bool isInt = false;
+
+                                    isInt = int.TryParse(value, out parcedIntValue);
+
+                                    if (isInt == false)
+                                        parcedIntValue = 0;
+
+                                    //must be int
+                                    property.SetValue(newMaterial, parcedIntValue);
+                                }
+                                else if (property.PropertyType == typeof(double))
+                                {
+                                    double parsedDoubleValue = 0;
+                                    bool isDouble = false;
+
+                                    isDouble = double.TryParse(value, out parsedDoubleValue);
+
+                                    if (isDouble == false)
+                                        parsedDoubleValue = 0;
+
+                                    property.SetValue(newMaterial, parsedDoubleValue);
+
+                                }
+                                else if (property.PropertyType == typeof(string))
+                                {
+                                    if (value == null)
+                                        value = "";
+
+                                    property.SetValue(newMaterial, value);
+                                }
+                                else
+                                {
+                                    //Skip
+                                }
+
+                                //OLD
+                                /*
                                 if (isDouble == true)
                                 {
                                     //Handle as number or bolean
@@ -169,6 +223,8 @@ namespace CarboLifeUI.UI
                                     //is string
                                     property.SetValue(newMaterial, value);
                                 }
+                                */
+
 
                                 //Value Successfully added
                                 valueisParameter = false;
@@ -176,11 +232,12 @@ namespace CarboLifeUI.UI
                                 //removethePropertyFromlistToSpeedThingsUpNextRound;
                                 propertyList.Remove(property);
 
+                                //End the loop and go to next column
                                 break;
                             }
                             catch (Exception ex)
                             {
-                                messageString += ex.Message;
+                                messageString += value + " : " + ex.Message;
                             }
                         }
                         else
@@ -256,6 +313,12 @@ namespace CarboLifeUI.UI
                 if(UserMaterials != null)
                     dgv_Data.ItemsSource = UserMaterials.getData();
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            isOk = true;
+            this.Close();
         }
     }
 }

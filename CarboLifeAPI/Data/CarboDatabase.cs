@@ -116,7 +116,7 @@ namespace CarboLifeAPI.Data
         /// <summary>
         /// Serialises a materialDatabase
         /// </summary>
-        /// <param name="fileName">Current Options are: "UserMaterial" and "BaseMaterial"</param>
+        /// <param name="fileName">Current Options are: "db\\UserMaterial" and "db\\BaseMaterial"</param>
         public void SerializeXML(string fileName)
         {
             if (fileName == "")

@@ -20,24 +20,36 @@ namespace CarboLifeUI.UI
     /// </summary>
     public partial class MaterialTransportPicker : Window
     {
+        private double Density;
+
         internal bool isAccepted;
         public double Value;
         public string Settings;
+        public TransportationList transportationlist;
+        private Vehicle selectedTransmeans;
 
         public MaterialTransportPicker()
         {
             InitializeComponent();
+            transportationlist = new TransportationList();
         }
 
-        public MaterialTransportPicker(string settings, double value)
+        public MaterialTransportPicker(string settings, double value, double density)
         {
             this.Settings = settings;
             this.Value = value;
+            this.Density = density;
+            transportationlist = new TransportationList();
+
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            foreach(Vehicle tm in transportationlist)
+            {
+                cbb_Type.Items.Add(tm.Name);
+            }
             txt_Value.Text = Value.ToString();
         }
 
@@ -53,6 +65,78 @@ namespace CarboLifeUI.UI
             this.Close();
         }
 
+        private void Cbb_Type_DropDownClosed(object sender, EventArgs e)
+        {
+            string nameToFind = cbb_Type.Text;
 
+            Vehicle selectedValue = transportationlist.First(item => item.Name == nameToFind);
+
+            selectedTransmeans = selectedValue;
+
+            UpdateList();
+        }
+
+        private void UpdateList()
+        {
+            //Store data in list.
+            
+
+            txt_CarboPerkm.Text = selectedTransmeans.ECPerkm.ToString();
+            txt_NewTransport.Text = selectedTransmeans.CarboNew.ToString();
+            txt_PerTransport.Text = selectedTransmeans.VolumePerTransport.ToString();
+            txt_Range.Text = selectedTransmeans.MaxDistance.ToString();
+
+            Calculate();
+
+        }
+
+        private void Calculate()
+        {
+            //Calculate total nr of trips;
+            string calcResult = "";
+            double carboperkm = CarboLifeAPI.Utils.ConvertMeToDouble(txt_CarboPerkm.Text);
+            double costofnewvehiclem = CarboLifeAPI.Utils.ConvertMeToDouble(txt_NewTransport.Text);
+            double volumePerTransport = CarboLifeAPI.Utils.ConvertMeToDouble(txt_PerTransport.Text);
+            double totalDistPervehicle = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Range.Text);
+            double tripDistance = CarboLifeAPI.Utils.ConvertMeToDouble(txt_TotalDistance.Text);
+
+            double conversion = 1;
+            string units = " km";
+
+            double costPerTrip = Math.Round(tripDistance * carboperkm);
+
+            double costFromNewVehicle = costofnewvehiclem * (tripDistance / totalDistPervehicle);
+
+            double costTotalPerTrip = costFromNewVehicle + costPerTrip;
+
+            double massPerTransport = Math.Round(volumePerTransport * Density);
+
+            double co2prtkg = Math.Round(((1 / massPerTransport) * costTotalPerTrip), 2);
+
+            calcResult += "This calculation will try to create a CO2 per kg cost based on the given paremeters." + System.Environment.NewLine;
+            calcResult += "One trip costs: " + tripDistance + units + " x " + carboperkm + "kgCo2/" + units + "= " + costPerTrip + " kgCo2" + System.Environment.NewLine;
+            calcResult += System.Environment.NewLine;
+            calcResult += "This will use: " + costFromNewVehicle + "kgCO2 from a new vehicle" + System.Environment.NewLine; 
+            calcResult += "New vehicle = " + costofnewvehiclem + "kgCO2 x (" + tripDistance + units + " / " + totalDistPervehicle + units + ") = " + costFromNewVehicle + units + System.Environment.NewLine;
+            calcResult += System.Environment.NewLine;
+            calcResult += "Total CEI per trip then is " + costFromNewVehicle + " kgCO2 + " + costPerTrip + " kgCO2 = " + costTotalPerTrip + " kgCO2" + System.Environment.NewLine;
+
+            calcResult += "One " + selectedTransmeans.Name + " can carry " + volumePerTransport + " per trip" + System.Environment.NewLine;
+            calcResult += "This weighs: " + Density + " kg/m³ x " + volumePerTransport +  " m³ = " + massPerTransport + "kg/transport" + System.Environment.NewLine; ;
+            calcResult += System.Environment.NewLine;
+
+            calcResult += "So per kg this will cost : (1 /" + massPerTransport + ") x " + costTotalPerTrip + " = " + co2prtkg  + " CO2/kg" + System.Environment.NewLine; ;
+
+
+            txt_Calculation.Text = calcResult;
+            txt_Value.Text = co2prtkg.ToString();
+        }
+
+        private void Txt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Calculate();
+        }
     }
+
+
 }

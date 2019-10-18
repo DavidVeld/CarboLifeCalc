@@ -53,6 +53,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource ButtonStyle}" Width="75" Height="30" Margin="1,1,1,1" Background="AliceBlue" HorizontalAlignment="Right">Ok</Button>
+        <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource ButtonStyle}" Width="75" Height="30" Margin="1,1,1,1" Background="AliceBlue" HorizontalAlignment="Right" Click="Button_Click">Ok</Button>
     </Grid>
 </Window>

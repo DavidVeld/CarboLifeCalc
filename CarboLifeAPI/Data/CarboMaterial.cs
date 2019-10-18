@@ -38,11 +38,6 @@ namespace CarboLifeAPI.Data
         /// <summary>
         /// 
         /// </summary>
-        [Obsolete]
-        public double EEI { get; set; }
-        /// <summary>
-        /// kgCO2e
-        /// </summary>
         public double ECI { get; set; }
 
         /// <summary>

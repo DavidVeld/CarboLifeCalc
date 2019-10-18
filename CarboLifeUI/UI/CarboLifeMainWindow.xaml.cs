@@ -58,6 +58,11 @@ namespace CarboLifeUI.UI
             CaboDatabaseManager dataBaseManager = new CaboDatabaseManager(carboLifeProject.CarboDatabase);
             dataBaseManager.ShowDialog();
 
+            if (dataBaseManager.isOk == true)
+            {
+                carboLifeProject.CarboDatabase = dataBaseManager.UserMaterials;
+            }
+
         }
 
         private void Mnu_saveDataBase_Click(object sender, RoutedEventArgs e)

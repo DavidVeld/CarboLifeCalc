@@ -37,12 +37,6 @@
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold" />
     </Style>
-    <Style TargetType="{x:Type Control}" x:Key="baseStyleMenu">
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="Foreground" Value="Black" />
-        <Setter Property="FontWeight" Value="Bold" />
-    </Style>
 
     <Style TargetType="{x:Type Control}" x:Key="allbuttons">
         <Setter Property="FontSize" Value="12" />
@@ -73,7 +67,6 @@
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource baseStyle}"></Style>
     <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource baseStyle}"></Style>
     <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource baseStyle}"></Style>
-    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource baseStyleMenu}"></Style>
 
     <!-- ComboBox, RadioButton, CheckBox, etc... -->
 
@@ -723,8 +716,17 @@
         </Setter>
     </Style>
 
+<!--MENU-->
 
-    
+    <Style TargetType="{x:Type Menu}" x:Key="DropDownMenu">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Background" Value="#FF171616"/>
+        <Setter Property="Foreground" Value="White" />
+       
+    </Style>
+
 
 </ResourceDictionary>
     

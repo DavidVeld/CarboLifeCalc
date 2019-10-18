@@ -52,5 +52,25 @@ namespace CarboLifeUI.UI
         {
             this.Close();
         }
+
+        private void Txt_Life_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateValue();
+        }
+
+        private void UpdateValue()
+        {
+            double yearspan = CarboLifeAPI.Utils.ConvertMeToDouble(txt_ReplaceValue.Text);
+            double year = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Life.Text);
+
+            double value = year / yearspan;
+            txt_Value.Text = Math.Round(value, 2).ToString();
+
+        }
+
+        private void Txt_Value2_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateValue();
+        }
     }
 }

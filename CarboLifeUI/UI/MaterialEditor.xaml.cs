@@ -168,7 +168,7 @@ namespace CarboLifeUI.UI
 
         private void Btn_A4_A5_Click(object sender, RoutedEventArgs e)
         {
-            MaterialTransportPicker materialTransportPicker = new MaterialTransportPicker(txt_A4_A5_Setting.Text, Utils.ConvertMeToDouble(txt_A4_A5.Text));
+            MaterialTransportPicker materialTransportPicker = new MaterialTransportPicker(txt_A4_A5_Setting.Text, Utils.ConvertMeToDouble(txt_A4_A5.Text), Utils.ConvertMeToDouble(txt_Density.Text));
             materialTransportPicker.ShowDialog();
             if (materialTransportPicker.isAccepted == true)
             {
