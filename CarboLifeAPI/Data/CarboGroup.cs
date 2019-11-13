@@ -17,7 +17,7 @@ namespace CarboLifeAPI.Data
         public string SubCategory { get; set; }
         public string Description { get; set; }
         public double Volume { get; set; }
-        
+        public string Correction { get; set; }
         //Calculated Values;
         public double Density { get; set; }
         public double Mass { get; set; }
@@ -44,6 +44,7 @@ namespace CarboLifeAPI.Data
             Category = "";
             SubCategory = "";
             Description = "";
+            Correction = "";
 
             Volume = 0;
             Density = 0;

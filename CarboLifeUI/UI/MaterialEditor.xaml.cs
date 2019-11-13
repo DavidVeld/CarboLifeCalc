@@ -100,17 +100,19 @@ namespace CarboLifeUI.UI
             txt_A1_A3.Text = selectedMaterial.ECI_A1A3.ToString();
             txt_A1_A3_Setting.Text = selectedMaterial.GetCarboProperty("ECI_A1A3_Settings").Value;
 
-            txt_A4_A5.Text = selectedMaterial.ECI_A4A5.ToString();
-            txt_A4_A5_Setting.Text = selectedMaterial.GetCarboProperty("ECI_A4A5_Settings").Value;
+            txt_A4.Text = selectedMaterial.ECI_A4.ToString();
+            txt_A4_Setting.Text = selectedMaterial.GetCarboProperty("ECI_A4_Settings").Value;
 
-            txt_B1_B7.Text = selectedMaterial.ECI_B1B7.ToString();
-            txt_B1_B7_Setting.Text = selectedMaterial.GetCarboProperty("ECI_B1B7_Settings").Value;
+            txt_A5.Text = selectedMaterial.ECI_D.ToString();
+            txt_A5_Setting.Text = selectedMaterial.GetCarboProperty("ECI_A5_Settings").Value;
 
-            txt_C1_C4.Text = selectedMaterial.ECI_C1C4.ToString();
+            txt_B1_B5.Text = selectedMaterial.ECI_A5.ToString();
+            txt_B1_B5_Setting.Text = selectedMaterial.GetCarboProperty("ECI_B1B5_Settings").Value;
+
+            txt_C1_C4.Text = selectedMaterial.ECI_B1B5.ToString();
             txt_C1_C4_Setting.Text = selectedMaterial.GetCarboProperty("ECI_C1C4_Settings").Value;
 
-            txt_D.Text = selectedMaterial.ECI_D.ToString();
-            txt_D_Setting.Text = selectedMaterial.GetCarboProperty("ECI_D_Settings").Value;
+
 
             chk_Locked.IsChecked = selectedMaterial.isLocked;
 
@@ -166,46 +168,46 @@ namespace CarboLifeUI.UI
 
         }
 
-        private void Btn_A4_A5_Click(object sender, RoutedEventArgs e)
+        private void Btn_A4_Click(object sender, RoutedEventArgs e)
         {
-            MaterialTransportPicker materialTransportPicker = new MaterialTransportPicker(txt_A4_A5_Setting.Text, Utils.ConvertMeToDouble(txt_A4_A5.Text), Utils.ConvertMeToDouble(txt_Density.Text));
+            MaterialTransportPicker materialTransportPicker = new MaterialTransportPicker(txt_A4_Setting.Text, Utils.ConvertMeToDouble(txt_A4.Text), Utils.ConvertMeToDouble(txt_Density.Text));
             materialTransportPicker.ShowDialog();
             if (materialTransportPicker.isAccepted == true)
             {
                 //selectedMaterial.Category = materialTransportPicker.selectedBaseMaterial.Category;
-                selectedMaterial.ECI_A4A5 = materialTransportPicker.Value;
+                selectedMaterial.ECI_A4 = materialTransportPicker.Value;
                 selectedMaterial.SetProperty("ECI_A4A5_Settings", materialTransportPicker.Settings);
             }
             UpdateMaterialSettings();
         }
 
-        private void Btn_B1_B7_Click(object sender, RoutedEventArgs e)
+        private void Btn_A5_Click(object sender, RoutedEventArgs e)
         {
-            MaterialConstructionPicker materialConstructionPicker = new MaterialConstructionPicker(txt_B1_B7_Setting.Text, Utils.ConvertMeToDouble(txt_B1_B7.Text));
+            MaterialConstructionPicker materialConstructionPicker = new MaterialConstructionPicker(txt_B1_B5_Setting.Text, Utils.ConvertMeToDouble(txt_B1_B5.Text));
             materialConstructionPicker.ShowDialog();
             if (materialConstructionPicker.isAccepted == true)
             {
                 //selectedMaterial.Category = materialTransportPicker.selectedBaseMaterial.Category;
-                selectedMaterial.ECI_B1B7 = materialConstructionPicker.Value;
+                selectedMaterial.ECI_A5 = materialConstructionPicker.Value;
                 selectedMaterial.SetProperty("ECI_B1B7_Settings", materialConstructionPicker.Settings);
             }
             UpdateMaterialSettings();
         }
 
-        private void Btn_C1_C4_Click(object sender, RoutedEventArgs e)
+        private void Btn_B1_B5_Click(object sender, RoutedEventArgs e)
         {
             MaterialLifePicker materialLifePicker = new MaterialLifePicker(txt_C1_C4_Setting.Text, Utils.ConvertMeToDouble(txt_C1_C4.Text));
             materialLifePicker.ShowDialog();
             if (materialLifePicker.isAccepted == true)
             {
                 //selectedMaterial.Category = materialTransportPicker.selectedBaseMaterial.Category;
-                selectedMaterial.ECI_C1C4 = materialLifePicker.Value;
+                selectedMaterial.ECI_B1B5 = materialLifePicker.Value;
                 selectedMaterial.SetProperty("ECI_C1C4_Settings", materialLifePicker.Settings);
             }
             UpdateMaterialSettings();
         }
 
-        private void Btn_D_Click(object sender, RoutedEventArgs e)
+        private void Btn_C1_C4_Click(object sender, RoutedEventArgs e)
         {
             MaterialEndofLifePicker materialEndofLifePicker = new MaterialEndofLifePicker(txt_D_Setting.Text, Utils.ConvertMeToDouble(txt_D.Text));
             materialEndofLifePicker.ShowDialog();
@@ -216,6 +218,11 @@ namespace CarboLifeUI.UI
                 selectedMaterial.SetProperty("ECI_D_Settings", materialEndofLifePicker.Settings);
             }
             UpdateMaterialSettings();
+        }
+
+        private void Btn_D_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void Btn_Refresh_Click(object sender, RoutedEventArgs e)
@@ -233,10 +240,10 @@ namespace CarboLifeUI.UI
             selectedMaterial.Density = Utils.ConvertMeToDouble(txt_Density.Text);
             selectedMaterial.ECI = Utils.ConvertMeToDouble(txt_ECI.Text);
             selectedMaterial.ECI_A1A3 = Utils.ConvertMeToDouble(txt_A1_A3.Text);
-            selectedMaterial.ECI_A4A5 = Utils.ConvertMeToDouble(txt_A4_A5.Text);
-            selectedMaterial.ECI_B1B7 = Utils.ConvertMeToDouble(txt_B1_B7.Text);
-            selectedMaterial.ECI_C1C4 = Utils.ConvertMeToDouble(txt_C1_C4.Text);
-            selectedMaterial.ECI_D = 0;
+            selectedMaterial.ECI_A4 = Utils.ConvertMeToDouble(txt_A4.Text);
+            selectedMaterial.ECI_A5 = Utils.ConvertMeToDouble(txt_A5.Text);
+            selectedMaterial.ECI_B1B5 = Utils.ConvertMeToDouble(txt_B1_B5.Text);
+            selectedMaterial.ECI_C1C4 = 0;
 
             UpdateMaterialSettings();
 

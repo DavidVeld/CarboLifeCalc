@@ -120,9 +120,9 @@ namespace CarboLifeAPI.Data
                 foreach (CarboGroup CarboGroup in this.groupList)
                 {
                     double ECI_A1A3 = CarboGroup.Material.ECI_A1A3;
-                    double ECI_A4A5 = CarboGroup.Material.ECI_A4A5;
-                    double ECI_B1B7 = CarboGroup.Material.ECI_B1B7;
-                    double ECI_C1C4 = CarboGroup.Material.ECI_C1C4;
+                    double ECI_A4A5 = CarboGroup.Material.ECI_A4;
+                    double ECI_B1B7 = CarboGroup.Material.ECI_A5;
+                    double ECI_C1C4 = CarboGroup.Material.ECI_B1B5;
                     double ECI_D = CarboGroup.Material.ECI_D;
 
                     if (valueList.Count > 0)

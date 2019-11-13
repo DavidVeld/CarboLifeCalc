@@ -57,6 +57,7 @@ namespace CarboLifeUI.UI
         {
             isAccepted = true;
             Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
+            Settings = cbb_Type.Text + "," + txt_PerTransport.Text + "," + txt_NewTransport.Text + "," + txt_Range.Text + "," + txt_CarboPerkm.Text + "," + txt_TotalDistance.Text;
             this.Close();
         }
 
@@ -111,17 +112,17 @@ namespace CarboLifeUI.UI
 
             double massPerTransport = Math.Round(volumePerTransport * Density);
 
-            double co2prtkg = Math.Round(((1 / massPerTransport) * costTotalPerTrip), 2);
+            double co2prtkg = Math.Round(((1 / massPerTransport) * costTotalPerTrip), 5);
 
-            calcResult += "This calculation will try to create a CO2 per kg cost based on the given paremeters." + System.Environment.NewLine;
+            calcResult += "This calculation will try to create a CO2 per kg value based on the given parameters." + System.Environment.NewLine;
             calcResult += "One trip costs: " + tripDistance + units + " x " + carboperkm + "kgCo2/" + units + "= " + costPerTrip + " kgCo2" + System.Environment.NewLine;
             calcResult += System.Environment.NewLine;
             calcResult += "This will use: " + costFromNewVehicle + "kgCO2 from a new vehicle" + System.Environment.NewLine; 
-            calcResult += "New vehicle = " + costofnewvehiclem + "kgCO2 x (" + tripDistance + units + " / " + totalDistPervehicle + units + ") = " + costFromNewVehicle + units + System.Environment.NewLine;
+            calcResult += "New vehicle = " + costofnewvehiclem + "kgCO2 x (" + tripDistance + units + " / " + totalDistPervehicle + units + ") = " + costFromNewVehicle + "kgCO2" + System.Environment.NewLine;
             calcResult += System.Environment.NewLine;
             calcResult += "Total CEI per trip then is " + costFromNewVehicle + " kgCO2 + " + costPerTrip + " kgCO2 = " + costTotalPerTrip + " kgCO2" + System.Environment.NewLine;
 
-            calcResult += "One " + selectedTransmeans.Name + " can carry " + volumePerTransport + " per trip" + System.Environment.NewLine;
+            calcResult += "One " + selectedTransmeans.Name + " can carry " + volumePerTransport + " m³ per trip" + System.Environment.NewLine;
             calcResult += "This weighs: " + Density + " kg/m³ x " + volumePerTransport +  " m³ = " + massPerTransport + "kg/transport" + System.Environment.NewLine; ;
             calcResult += System.Environment.NewLine;
 

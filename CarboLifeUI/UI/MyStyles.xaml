@@ -718,15 +718,6 @@
 
 <!--MENU-->
 
-    <Style TargetType="{x:Type Menu}" x:Key="DropDownMenu">
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Background" Value="#FF171616"/>
-        <Setter Property="Foreground" Value="White" />
-       
-    </Style>
-
 
 </ResourceDictionary>
     

@@ -68,8 +68,11 @@ namespace CarboLifeUI.UI
         private void lib_Materials_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             CarboMaterial cm = lib_Materials.SelectedItem as CarboMaterial;
-            txt_Search.Text = cm.Name;
-            refreshInterface();
+            if (cm != null)
+            {
+                txt_Search.Text = cm.Name;
+                refreshInterface();
+            }
         }
 
         private void Txt_Search_TextChanged(object sender, TextChangedEventArgs e)

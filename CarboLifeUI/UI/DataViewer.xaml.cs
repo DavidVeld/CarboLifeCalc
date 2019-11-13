@@ -67,7 +67,7 @@ namespace CarboLifeUI.UI
             try
             {
                 dgv_Overview.ItemsSource = CarboLifeProject.getGroupList;
-
+                SortData();
             }
             catch (Exception ex)
             {
@@ -107,6 +107,7 @@ namespace CarboLifeUI.UI
         {
             dgv_Overview.ItemsSource = null;
             dgv_Overview.ItemsSource = CarboLifeProject.getGroupList;
+            SortData();
         }
 
         private void Btn_Material_Click(object sender, RoutedEventArgs e)
@@ -161,6 +162,7 @@ namespace CarboLifeUI.UI
         private void Mnu_NewGroup_Click(object sender, RoutedEventArgs e)
         {
             CarboLifeProject.CreateNewGroup();
+            SortData();
         }
 
         private void Mnu_DeleteGroup_Click(object sender, RoutedEventArgs e)
@@ -170,6 +172,7 @@ namespace CarboLifeUI.UI
             {
                 CarboLifeProject.DeleteGroup(carboGroup);
             }
+            SortData();
         }
 
         private void Dgv_Overview_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
@@ -179,6 +182,7 @@ namespace CarboLifeUI.UI
             {
                 CarboLifeProject.UpdateGroup(carboGroup);
             }
+            SortData();
         }
 
         private void Mnu_DuplicateGroup_Click(object sender, RoutedEventArgs e)
@@ -188,6 +192,7 @@ namespace CarboLifeUI.UI
             {
                 CarboLifeProject.DuplicateGroup(carboGroup);
             }
+            SortData();
         }
 
         private void Mnu_PurgeElements_Click(object sender, RoutedEventArgs e)
@@ -208,6 +213,7 @@ namespace CarboLifeUI.UI
                     MessageBoxResult result = MessageBox.Show("This collection contains no elements", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
                 }
             }
+            SortData();
         }
 
         private void Mnu_Reinforce_Click(object sender, RoutedEventArgs e)
@@ -223,6 +229,7 @@ namespace CarboLifeUI.UI
                     CarboLifeProject.AddGroup(reinforementWindow.reinforcementGroup);
                 }
             }
+            SortData();
         }
 
         private void Mnu_Metaldeck_Click(object sender, RoutedEventArgs e)
@@ -257,9 +264,10 @@ namespace CarboLifeUI.UI
                     }
                 }
             }
+            SortData();
         }
 
-        private void Mnu_sortMaterial_Click(object sender, RoutedEventArgs e)
+        private void SortByMaterial()
         {
             if (CarboLifeProject.getGroupList != null)
             {
@@ -270,7 +278,7 @@ namespace CarboLifeUI.UI
             }
         }
 
-        private void Mnu_sortCategory_Click(object sender, RoutedEventArgs e)
+        private void SortByCategoty()
         {
             if (CarboLifeProject.getGroupList != null)
             {
@@ -281,11 +289,21 @@ namespace CarboLifeUI.UI
             }
         }
 
-        private void Mnu_noSort_Click(object sender, RoutedEventArgs e)
+        private void ComboBox_DropDownClosed(object sender, EventArgs e)
         {
+            SortData();
+        }
 
-            dgv_Overview.ItemsSource = null;
-            dgv_Overview.ItemsSource = CarboLifeProject.getGroupList;
+        private void SortData()
+        {
+            if(cbb_Sort.Text == "Material")
+            {
+                SortByMaterial();
+            }
+            else
+            {
+                SortByCategoty();
+            }
         }
     }
 }

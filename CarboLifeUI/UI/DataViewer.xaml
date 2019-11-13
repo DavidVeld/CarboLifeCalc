@@ -33,16 +33,14 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-
-
-        <Menu Grid.Row="1" Grid.Column="1" Background="Transparent">
-            <MenuItem FontSize="12" Header="Edit" Background="White">
-                <MenuItem Name="mnu_NewGroup" Header="New Item" Click="Mnu_NewGroup_Click"/>
-                <MenuItem Name="mnu_DeleteGroup" Header="Delete Item" Click="Mnu_DeleteGroup_Click"/>
+        <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" >
+            <MenuItem FontSize="12" Header="Edit" Background="White" >
+                <MenuItem Name="mnu_NewGroup" Header="_New Item" Click="Mnu_NewGroup_Click"/>
+                <MenuItem Name="mnu_DeleteGroup" Header="Delete Item" Click="Mnu_DeleteGroup_Click" />
                 <MenuItem Name="mnu_DuplicateGroup" Header="Duplicate Item" Click="Mnu_DuplicateGroup_Click"/>
                 <MenuItem Name="mnu_reGroupData" Header="Rebuild ElementGroups" Click="Mnu_reGroupData_Click"/>
             </MenuItem>
-            <MenuItem FontSize="12" Header="Actions" Background="White">
+            <MenuItem FontSize="12" Header="Actions" Background="White"  VerticalAlignment="Top">
                 <Separator></Separator>
                 <MenuItem Name="mnu_Reinforce" Header="Reinforce Item" Click="Mnu_Reinforce_Click"/>
                 <MenuItem Name="mnu_Metaldeck" Header="Profile Element" Click="Mnu_Metaldeck_Click" />
@@ -52,13 +50,12 @@
 
                 <MenuItem Name="mnu_CloseMe" Header="Close"/>
             </MenuItem>
-            
-            <MenuItem FontSize="12" Header="Sort" Background="White">
-                <MenuItem Name="mnu_noSort" Header="Unsort" Click="Mnu_noSort_Click"/>
-                <MenuItem Name="mnu_sortMaterial" Header="Sort Material" Click="Mnu_sortMaterial_Click"/>
-                <MenuItem Name="mnu_sortCategory" Header="Sort Category" Click="Mnu_sortCategory_Click" />
-                <Separator></Separator>
-            </MenuItem>
+            <Label FontSize="12" VerticalAlignment="Top">Sort by: </Label>
+            <ComboBox Name="cbb_Sort" FontSize="12" Width="75" SelectedIndex="0" DropDownClosed="ComboBox_DropDownClosed" >
+                <ComboBoxItem>Material</ComboBoxItem>
+                <ComboBoxItem>Category</ComboBoxItem>
+            </ComboBox>
+
             <Separator Background="Beige" Width="1" Height="30"></Separator>
                     
         <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="1" Content="Calculate" Width="75" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Calculate_Click" />

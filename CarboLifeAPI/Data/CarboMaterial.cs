@@ -41,23 +41,27 @@ namespace CarboLifeAPI.Data
         public double ECI { get; set; }
 
         /// <summary>
-        /// kgCO2e/kg
+        /// Fabrication kgCO2e/kg
         /// </summary>
         public double ECI_A1A3 { get; set; }
         /// <summary>
-        /// kgCO2e/kg
+        /// Transport kgCO2e/kg
         /// </summary>
-        public double ECI_A4A5 { get; set; }
+        public double ECI_A4 { get; set; }
         /// <summary>
-        /// kgCO2e/kg
+        /// Construction kgCO2e/kg
         /// </summary>
-        public double ECI_B1B7 { get; set; }
+        public double ECI_A5 { get; set; }
         /// <summary>
-        /// kgCO2e/kg
+        /// Life kgCO2e/kg
+        /// </summary>
+        public double ECI_B1B5 { get; set; }
+        /// <summary>
+        /// Demolition kgCO2e/kg
         /// </summary>
         public double ECI_C1C4 { get; set; }
         /// <summary>
-        /// kgCO2e/kg
+        /// SUPPLEMENTARY INFORMATION BEYOND THE PROJECT LIFE CYCLE kgCO2e/kg
         /// </summary>
         public double ECI_D { get; set; }
 
@@ -79,10 +83,12 @@ namespace CarboLifeAPI.Data
             //EEI = 1;
             ECI = 1;
             ECI_A1A3 = 1;
-            ECI_A4A5 = 1;
-            ECI_B1B7 = 1;
+            ECI_A4 = 1;
+            ECI_A5 = 1;
+            ECI_B1B5 = 1;
             ECI_C1C4 = 1;
             ECI_D = 1;
+
             isLocked = false;
             Properties = new List<CarboProperty>();
         }
@@ -97,8 +103,9 @@ namespace CarboLifeAPI.Data
             //EEI = 1;
             ECI = 1;
             ECI_A1A3 = 1;
-            ECI_A4A5 = 1;
-            ECI_B1B7 = 1;
+            ECI_A4 = 1;
+            ECI_A5 = 1;
+            ECI_B1B5 = 1;
             ECI_C1C4 = 1;
             ECI_D = 1;
             isLocked = false;
@@ -107,8 +114,7 @@ namespace CarboLifeAPI.Data
 
         public void CalculateTotals()
         {
-            ECI = ECI_A1A3 + ECI_A4A5 + ECI_B1B7 + ECI_C1C4 + ECI_D;
-
+            ECI = ECI_B1B5 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_D);
         }
 
         public void SetProperty(string properyName, string propertyValue)
