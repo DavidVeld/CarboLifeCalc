@@ -103,15 +103,17 @@ namespace CarboLifeUI.UI
             txt_A4.Text = selectedMaterial.ECI_A4.ToString();
             txt_A4_Setting.Text = selectedMaterial.GetCarboProperty("ECI_A4_Settings").Value;
 
-            txt_A5.Text = selectedMaterial.ECI_D.ToString();
+            txt_A5.Text = selectedMaterial.ECI_A5.ToString();
             txt_A5_Setting.Text = selectedMaterial.GetCarboProperty("ECI_A5_Settings").Value;
 
-            txt_B1_B5.Text = selectedMaterial.ECI_A5.ToString();
+            txt_B1_B5.Text = selectedMaterial.ECI_B1B5.ToString();
             txt_B1_B5_Setting.Text = selectedMaterial.GetCarboProperty("ECI_B1B5_Settings").Value;
 
-            txt_C1_C4.Text = selectedMaterial.ECI_B1B5.ToString();
+            txt_C1_C4.Text = selectedMaterial.ECI_C1C4.ToString();
             txt_C1_C4_Setting.Text = selectedMaterial.GetCarboProperty("ECI_C1C4_Settings").Value;
 
+            txt_D.Text = selectedMaterial.ECI_D.ToString();
+            txt_D_Setting.Text = selectedMaterial.GetCarboProperty("ECI_D_Settings").Value;
 
 
             chk_Locked.IsChecked = selectedMaterial.isLocked;

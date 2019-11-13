@@ -43,11 +43,22 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="1" Grid.Row="1">Show:</Label>
-                    <ComboBox Name="cbb_ViewableTable" Grid.Column="1" Grid.Row="1" Style="{StaticResource ComboBoxFlatStyle}" Width="200" Height="25" HorizontalAlignment="Left" Margin="50,0,0,0" DropDownClosed="Cbb_ViewableTable_DropDownClosed"></ComboBox>
-                    <Button Name="btn_Import" Grid.Column="1" Grid.Row="1" Style="{StaticResource ButtonStyle}" Width="75" Height="30" Margin="260,3,0,2" Background="AliceBlue" HorizontalAlignment="Left" Click="Btn_Import_Click">Import</Button>
-                    <CheckBox Name="chk_ReplaceOld" Grid.Column="1" Grid.Row="1" Width="200" Height="30" Margin="350,3,0,2" HorizontalAlignment="Left" IsChecked="True">Update</CheckBox>
-                    
+
+                    <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top">
+                        <MenuItem FontSize="14" Header="Edit" Background="White" Style="{StaticResource baseStyleLabel}">
+                            <MenuItem Name="mnu_ImportData" Header="_Import Into..." Click="Mnu_ImportData_Click" />
+                            <MenuItem Name="mnu_ImportNew" Header="_Import as New..." Click="Mnu_ImportNew_Click" />
+                            <Separator/>
+                            <MenuItem Name="mnu_SaveData" Header="Save Dataset" Click="Mnu_SaveData_Click"  />
+                            <MenuItem Name="mnu_ExportToCSV" Header="_Export as CSV..." Click="Mnu_EXportToCVS" />
+
+                        </MenuItem>
+                    </Menu>
+
+                    <Label Grid.Column="1" Grid.Row="1" Margin="50,0,0,0" Width="50" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}">Show:</Label>
+                    <ComboBox Name="cbb_ViewableTable" Grid.Column="1" Grid.Row="1" Style="{StaticResource ComboBoxFlatStyle}" Width="200" Height="25" HorizontalAlignment="Left" Margin="150,0,0,0" DropDownClosed="Cbb_ViewableTable_DropDownClosed">
+                    </ComboBox>
+                   
                     <DataGrid Name="dgv_Data" Grid.Column="1" Grid.Row="2" Background="AliceBlue"></DataGrid>
 
                 </Grid>

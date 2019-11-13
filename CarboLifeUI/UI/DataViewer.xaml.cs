@@ -182,7 +182,7 @@ namespace CarboLifeUI.UI
             {
                 CarboLifeProject.UpdateGroup(carboGroup);
             }
-            SortData();
+            //SortData();
         }
 
         private void Mnu_DuplicateGroup_Click(object sender, RoutedEventArgs e)

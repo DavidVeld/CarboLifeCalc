@@ -42,47 +42,6 @@ namespace CarboLifeUI.UI
             InitializeComponent();
         }
 
-        private void Btn_Import_Click(object sender, RoutedEventArgs e)
-        {
-            string name = "";
-            //Get the profile from a cvs:
-            if (cbb_ViewableTable.Text == "User Materials")
-                name = "db\\UserMaterials";
-            else if (cbb_ViewableTable.Text == "Base Materials")
-                name = "db\\BaseMaterials";
-            
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "cvs files (*.csv)|*.csv|All files (*.*)|*.*";
-
-                var path = openFileDialog.ShowDialog();
-                FileInfo finfo = new FileInfo(openFileDialog.FileName);
-                if (openFileDialog.FileName != "")
-                {
-                    string filePath = openFileDialog.FileName;
-
-                    DataTable dt = CarboLifeAPI.Utils.LoadCSV(filePath);
-
-                    CarboDatabase newMaterialDatabase = tryParseData(dt);
-
-                    //dgv_Data.ItemsSource = dt.DefaultView;
-                    dgv_Data.ItemsSource = newMaterialDatabase.getData();
-                    newMaterialDatabase.SerializeXML(name);
-
-                    if (name == "BaseMaterials")
-                        BaseMaterials = newMaterialDatabase;
-                    else if(name == "UserMaterials")
-                        UserMaterials = newMaterialDatabase;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             cbb_ViewableTable.Items.Add("User Materials");
@@ -319,6 +278,99 @@ namespace CarboLifeUI.UI
         {
             isOk = true;
             this.Close();
+        }
+
+        private void Mnu_ImportData_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Mnu_ImportNew_Click(object sender, RoutedEventArgs e)
+        {
+            string name = "";
+            //Get the profile from a cvs:
+            if (cbb_ViewableTable.Text == "User Materials")
+                name = "db\\UserMaterials";
+            else if (cbb_ViewableTable.Text == "Base Materials")
+                name = "db\\BaseMaterials";
+
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "cvs files (*.csv)|*.csv|All files (*.*)|*.*";
+
+                var path = openFileDialog.ShowDialog();
+                FileInfo finfo = new FileInfo(openFileDialog.FileName);
+                if (openFileDialog.FileName != "")
+                {
+                    string filePath = openFileDialog.FileName;
+
+                    DataTable dt = CarboLifeAPI.Utils.LoadCSV(filePath);
+
+                    CarboDatabase newMaterialDatabase = tryParseData(dt);
+
+                    //dgv_Data.ItemsSource = dt.DefaultView;
+                    dgv_Data.ItemsSource = newMaterialDatabase.getData();
+                    newMaterialDatabase.SerializeXML(name);
+
+                    if (name == "BaseMaterials")
+                        BaseMaterials = newMaterialDatabase;
+                    else if (name == "UserMaterials")
+                        UserMaterials = newMaterialDatabase;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void Mnu_SaveData_Click(object sender, RoutedEventArgs e)
+        {
+            string name = "";
+            //Get the profile from a cvs:
+            try
+            {
+                if (cbb_ViewableTable.Text == "User Materials")
+                    name = "db\\UserMaterials";
+                else if (cbb_ViewableTable.Text == "Base Materials")
+                    name = "db\\BaseMaterials";
+                else
+                {
+                    name = "";
+                }
+
+                MessageBoxResult result = MessageBox.Show("This will overwite the current default materials, do you want to proceed?", "Warning", MessageBoxButton.YesNo);
+
+                if (name != "" && result == MessageBoxResult.Yes)
+                {
+                    if (name == "db\\UserMaterials")
+                    {
+                        UserMaterials.SerializeXML(name);
+                        MessageBox.Show("UserMaterials Saved");
+
+                    }
+                    else if(name == "db\\BaseMaterials")
+                    {
+                        BaseMaterials.SerializeXML(name);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Dataset not saved");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void Mnu_EXportToCVS(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("To Be Implemented");
         }
     }
 }

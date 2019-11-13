@@ -34,13 +34,13 @@
         </Grid.ColumnDefinitions>
 
         <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" >
-            <MenuItem FontSize="12" Header="Edit" Background="White" >
+            <MenuItem Header="Edit" Background="White" Style="{StaticResource baseStyleLabel}" >
                 <MenuItem Name="mnu_NewGroup" Header="_New Item" Click="Mnu_NewGroup_Click"/>
                 <MenuItem Name="mnu_DeleteGroup" Header="Delete Item" Click="Mnu_DeleteGroup_Click" />
                 <MenuItem Name="mnu_DuplicateGroup" Header="Duplicate Item" Click="Mnu_DuplicateGroup_Click"/>
                 <MenuItem Name="mnu_reGroupData" Header="Rebuild ElementGroups" Click="Mnu_reGroupData_Click"/>
             </MenuItem>
-            <MenuItem FontSize="12" Header="Actions" Background="White"  VerticalAlignment="Top">
+            <MenuItem Header="Actions" Background="White"  VerticalAlignment="Top" Style="{StaticResource baseStyleLabel}">
                 <Separator></Separator>
                 <MenuItem Name="mnu_Reinforce" Header="Reinforce Item" Click="Mnu_Reinforce_Click"/>
                 <MenuItem Name="mnu_Metaldeck" Header="Profile Element" Click="Mnu_Metaldeck_Click" />
@@ -50,7 +50,7 @@
 
                 <MenuItem Name="mnu_CloseMe" Header="Close"/>
             </MenuItem>
-            <Label FontSize="12" VerticalAlignment="Top">Sort by: </Label>
+            <Label VerticalAlignment="Top" Style="{StaticResource baseStyleLabel}">Sort by: </Label>
             <ComboBox Name="cbb_Sort" FontSize="12" Width="75" SelectedIndex="0" DropDownClosed="ComboBox_DropDownClosed" >
                 <ComboBoxItem>Material</ComboBoxItem>
                 <ComboBoxItem>Category</ComboBoxItem>
