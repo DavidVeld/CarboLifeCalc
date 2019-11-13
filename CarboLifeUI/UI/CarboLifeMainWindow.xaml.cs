@@ -61,6 +61,12 @@ namespace CarboLifeUI.UI
             if (dataBaseManager.isOk == true)
             {
                 carboLifeProject.CarboDatabase = dataBaseManager.UserMaterials;
+                carboLifeProject.UpdateAllMaterials();
+                DataScreen.Visibility = Visibility.Hidden;
+                DataScreen.Visibility = Visibility.Visible;
+
+
+
             }
 
         }

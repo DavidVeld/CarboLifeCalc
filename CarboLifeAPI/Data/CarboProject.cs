@@ -70,6 +70,26 @@ namespace CarboLifeAPI.Data
             CalculateProject();
         }
 
+        public void UpdateAllMaterials()
+        {
+            List<string> updatedmaterials = new List<string>();
+            foreach(CarboGroup gr in this.groupList)
+            {
+                CarboMaterial cm = CarboDatabase.GetExcactMatch(gr.Material.Name);
+                if (cm != null)
+                {
+                    if (cm.ECI != gr.ECI)
+                    {
+                        //The material has been changed, update required. 
+                        gr.Material = cm;
+                        gr.RefreshValuesFromElements();
+                        gr.CalculateTotals();
+                        updatedmaterials.Add(gr.MaterialName);
+                    }
+                }
+            }
+        }
+
         public List<CarboDataPoint> getTotals(string value)
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();

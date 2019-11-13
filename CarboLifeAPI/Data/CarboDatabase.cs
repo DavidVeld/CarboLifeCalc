@@ -31,9 +31,14 @@ namespace CarboLifeAPI.Data
             CarboMaterialList = new List<CarboMaterial>();
         }
 
-        public CarboMaterial LookupMaterial(string materialName)
+        /// <summary>
+        /// Excact Match
+        /// </summary>
+        /// <param name="materialName"></param>
+        /// <returns></returns>
+        public CarboMaterial GetExcactMatch(string materialName)
         {
-            CarboMaterial result = new CarboMaterial();
+            CarboMaterial result = null;
 
             foreach (CarboMaterial cm in this.CarboMaterialList)
             {
@@ -46,9 +51,12 @@ namespace CarboLifeAPI.Data
             }
 
             return result;
-
         }
-
+        /// <summary>
+        /// Approx Match
+        /// </summary>
+        /// <param name="materialToLookup"></param>
+        /// <returns></returns>
         public CarboMaterial getClosestMatch(CarboMaterial materialToLookup)
         {
             CarboMaterial result = new CarboMaterial();
@@ -138,7 +146,7 @@ namespace CarboLifeAPI.Data
         }
         /// <summary>
         /// De-Serialises a material Database No file extension. 
-        /// Current Options are: "UserMaterial" and "BaseMaterial" use "" for UserMaterial
+        /// Current Options are: "db\\UserMaterials" and "db\\BaseMaterials" use "" for UserMaterial
         /// </summary>
         /// <param name="fileName"></param>
         public CarboDatabase DeSerializeXML(string fileName)
@@ -182,6 +190,37 @@ namespace CarboLifeAPI.Data
 
         }
 
+        public void Update(CarboDatabase cdb)
+        {
+            List<CarboMaterial> newMaterials = new List<CarboMaterial>();
 
+            foreach (CarboMaterial cmNew in cdb.CarboMaterialList)
+            {
+                bool isfound = false;
+
+                foreach (CarboMaterial cmCurrent in this.CarboMaterialList)
+                {
+                    if (cmCurrent.Name == cmNew.Name)
+                    {
+                        cmCurrent.Copy(cmNew);
+                        isfound = true;
+                        break;
+                    }
+                }
+                if (isfound == false)
+                {
+                    //This is a new material add it to the list;
+                    newMaterials.Add(cmNew);
+                }
+
+            }
+            if(newMaterials.Count > 0)
+            {
+                foreach(CarboMaterial cm in newMaterials)
+                {
+                    this.CarboMaterialList.Add(cm);
+                }
+            }
+        }
     }
 }

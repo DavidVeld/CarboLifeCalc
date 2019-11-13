@@ -39,6 +39,8 @@ namespace CarboLifeUI.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             txt_Value.Text = Value.ToString();
+            string[] settingSplit = Settings.Split(',');
+
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)

@@ -101,13 +101,13 @@ namespace CarboLifeAPI.Data
             Description = "Carbon material and properties not set.";
             Density = 1;
             //EEI = 1;
-            ECI = 1;
-            ECI_A1A3 = 1;
-            ECI_A4 = 1;
-            ECI_A5 = 1;
+            ECI = 0;
+            ECI_A1A3 = 0;
+            ECI_A4 = 0;
+            ECI_A5 = 0;
             ECI_B1B5 = 1;
-            ECI_C1C4 = 1;
-            ECI_D = 1;
+            ECI_C1C4 = 0;
+            ECI_D = 0;
             isLocked = false;
             Properties = new List<CarboProperty>();
         }
@@ -157,6 +157,21 @@ namespace CarboLifeAPI.Data
                 result = new CarboProperty();
             }
             return result;
+        }
+
+        internal void Copy(CarboMaterial cmNew)
+        {
+            var type = typeof(CarboMaterial);
+            foreach (var sourceProperty in type.GetProperties())
+            {
+                var targetProperty = type.GetProperty(sourceProperty.Name);
+                targetProperty.SetValue(this, sourceProperty.GetValue(cmNew, null), null);
+            }
+            foreach (var sourceField in type.GetFields())
+            {
+                var targetField = type.GetField(sourceField.Name);
+                targetField.SetValue(this, sourceField.GetValue(cmNew));
+            }
         }
     }
 }

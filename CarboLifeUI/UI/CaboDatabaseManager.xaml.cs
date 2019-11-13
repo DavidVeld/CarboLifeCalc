@@ -30,7 +30,7 @@ namespace CarboLifeUI.UI
         public CarboDatabase BaseMaterials;
 
         public bool isOk;
-        
+
 
         public CaboDatabaseManager(CarboDatabase userMaterials)
         {
@@ -112,7 +112,7 @@ namespace CarboLifeUI.UI
                                     bool boolValue = Convert.ToBoolean(Convert.ToInt32(parcedIntValue));
                                     property.SetValue(newMaterial, boolValue);
                                 }
-                                else if(property.PropertyType == typeof(int))
+                                else if (property.PropertyType == typeof(int))
                                 {
                                     int parcedIntValue;
                                     bool isInt = false;
@@ -262,14 +262,14 @@ namespace CarboLifeUI.UI
             {
                 dgv_Data.ItemsSource = null;
                 dgv_Data.Items.Clear();
-                if(BaseMaterials != null)
+                if (BaseMaterials != null)
                     dgv_Data.ItemsSource = BaseMaterials.getData();
             }
             else
             {
                 dgv_Data.ItemsSource = null;
                 dgv_Data.Items.Clear();
-                if(UserMaterials != null)
+                if (UserMaterials != null)
                     dgv_Data.ItemsSource = UserMaterials.getData();
             }
         }
@@ -351,7 +351,7 @@ namespace CarboLifeUI.UI
                         MessageBox.Show("UserMaterials Saved");
 
                     }
-                    else if(name == "db\\BaseMaterials")
+                    else if (name == "db\\BaseMaterials")
                     {
                         BaseMaterials.SerializeXML(name);
                     }
@@ -371,6 +371,48 @@ namespace CarboLifeUI.UI
         private void Mnu_EXportToCVS(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("To Be Implemented");
+        }
+
+        private void Mnu_Update(object sender, RoutedEventArgs e)
+        {
+            string name = "";
+            //Get the profile from a cvs:
+            try
+            {
+                if (cbb_ViewableTable.Text == "User Materials")
+                    name = "db\\UserMaterials";
+                else if (cbb_ViewableTable.Text == "Base Materials")
+                    name = "db\\BaseMaterials";
+                else
+                {
+                    name = "";
+                }
+
+                MessageBoxResult result = MessageBox.Show("This will overwite the current default materials, do you want to proceed?", "Warning", MessageBoxButton.YesNo);
+
+                if (name != "" && result == MessageBoxResult.Yes)
+                {
+                    CarboDatabase cdb = new CarboDatabase();
+
+                    if (name == "db\\UserMaterials")
+                    {
+                        cdb = cdb.DeSerializeXML("db\\UserMaterials");
+                        UserMaterials.Update(cdb);
+
+                    }
+                    else if (name == "db\\BaseMaterials")
+                    {
+                        cdb = cdb.DeSerializeXML("db\\BaseMaterials");
+                        BaseMaterials.Update(cdb);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
         }
     }
 }

@@ -48,6 +48,8 @@
                         <MenuItem FontSize="14" Header="Edit" Background="White" Style="{StaticResource baseStyleLabel}">
                             <MenuItem Name="mnu_ImportData" Header="_Import Into..." Click="Mnu_ImportData_Click" />
                             <MenuItem Name="mnu_ImportNew" Header="_Import as New..." Click="Mnu_ImportNew_Click" />
+                            <MenuItem Name="mnu_UpdateData" Header="_Update Dataset..." Click="Mnu_Update" />
+
                             <Separator/>
                             <MenuItem Name="mnu_SaveData" Header="Save Dataset" Click="Mnu_SaveData_Click"  />
                             <MenuItem Name="mnu_ExportToCSV" Header="_Export as CSV..." Click="Mnu_EXportToCVS" />

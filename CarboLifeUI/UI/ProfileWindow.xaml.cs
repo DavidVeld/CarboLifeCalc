@@ -118,7 +118,7 @@ namespace CarboLifeUI.UI
             if (cbb_ProfileMaterial != null &&  cbb_Profile != null)
             {
 
-                CarboMaterial material = materials.LookupMaterial(cbb_ProfileMaterial.Text);
+                CarboMaterial material = materials.GetExcactMatch(cbb_ProfileMaterial.Text);
                 Profile selectedProfile = profileList.Find(x=> x.name.Contains(cbb_Profile.Text));
 
 
@@ -148,7 +148,7 @@ namespace CarboLifeUI.UI
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = true;
-            CarboMaterial material = materials.LookupMaterial(cbb_ProfileMaterial.Text);
+            CarboMaterial material = materials.GetExcactMatch(cbb_ProfileMaterial.Text);
 
 
 

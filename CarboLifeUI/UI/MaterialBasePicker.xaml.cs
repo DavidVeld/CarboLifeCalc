@@ -32,7 +32,7 @@ namespace CarboLifeUI.UI
             basematerials = new CarboDatabase();
 
             basematerials = basematerials.DeSerializeXML("");
-            selectedBaseMaterial = basematerials.LookupMaterial(selection);
+            selectedBaseMaterial = basematerials.GetExcactMatch(selection);
 
             InitializeComponent();
         }
@@ -42,7 +42,7 @@ namespace CarboLifeUI.UI
             basematerials = baseMaterials;
             isAccepted = false;
 
-            selectedBaseMaterial = basematerials.LookupMaterial(selection);
+            selectedBaseMaterial = basematerials.GetExcactMatch(selection);
 
             InitializeComponent();
         }

@@ -60,7 +60,7 @@ namespace CarboLifeUI.UI
 
         private void refreshInterface()
         {
-            CarboMaterial material = materials.LookupMaterial(cbb_ReinforcementMaterial.Text);
+            CarboMaterial material = materials.GetExcactMatch(cbb_ReinforcementMaterial.Text);
             double volume = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Volume.Text);
             double density = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Density.Text);
 

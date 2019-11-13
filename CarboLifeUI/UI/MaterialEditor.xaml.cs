@@ -178,46 +178,46 @@ namespace CarboLifeUI.UI
             {
                 //selectedMaterial.Category = materialTransportPicker.selectedBaseMaterial.Category;
                 selectedMaterial.ECI_A4 = materialTransportPicker.Value;
-                selectedMaterial.SetProperty("ECI_A4A5_Settings", materialTransportPicker.Settings);
+                selectedMaterial.SetProperty("ECI_A4_Settings", materialTransportPicker.Settings);
             }
             UpdateMaterialSettings();
         }
 
         private void Btn_A5_Click(object sender, RoutedEventArgs e)
         {
-            MaterialConstructionPicker materialConstructionPicker = new MaterialConstructionPicker(txt_B1_B5_Setting.Text, Utils.ConvertMeToDouble(txt_B1_B5.Text));
+            MaterialConstructionPicker materialConstructionPicker = new MaterialConstructionPicker(txt_A5_Setting.Text, Utils.ConvertMeToDouble(txt_A5.Text));
             materialConstructionPicker.ShowDialog();
             if (materialConstructionPicker.isAccepted == true)
             {
                 //selectedMaterial.Category = materialTransportPicker.selectedBaseMaterial.Category;
                 selectedMaterial.ECI_A5 = materialConstructionPicker.Value;
-                selectedMaterial.SetProperty("ECI_B1B7_Settings", materialConstructionPicker.Settings);
+                selectedMaterial.SetProperty("ECI_A5_Settings", materialConstructionPicker.Settings);
             }
             UpdateMaterialSettings();
         }
 
         private void Btn_B1_B5_Click(object sender, RoutedEventArgs e)
         {
-            MaterialLifePicker materialLifePicker = new MaterialLifePicker(txt_C1_C4_Setting.Text, Utils.ConvertMeToDouble(txt_C1_C4.Text));
+            MaterialLifePicker materialLifePicker = new MaterialLifePicker(txt_B1_B5_Setting.Text, Utils.ConvertMeToDouble(txt_B1_B5.Text));
             materialLifePicker.ShowDialog();
             if (materialLifePicker.isAccepted == true)
             {
                 //selectedMaterial.Category = materialTransportPicker.selectedBaseMaterial.Category;
                 selectedMaterial.ECI_B1B5 = materialLifePicker.Value;
-                selectedMaterial.SetProperty("ECI_C1C4_Settings", materialLifePicker.Settings);
+                selectedMaterial.SetProperty("ECI_B1B5_Settings", materialLifePicker.Settings);
             }
             UpdateMaterialSettings();
         }
 
         private void Btn_C1_C4_Click(object sender, RoutedEventArgs e)
         {
-            MaterialEndofLifePicker materialEndofLifePicker = new MaterialEndofLifePicker(txt_D_Setting.Text, Utils.ConvertMeToDouble(txt_D.Text));
+            MaterialEndofLifePicker materialEndofLifePicker = new MaterialEndofLifePicker(txt_C1_C4_Setting.Text, Utils.ConvertMeToDouble(txt_C1_C4.Text));
             materialEndofLifePicker.ShowDialog();
             if (materialEndofLifePicker.isAccepted == true)
             {
                 //selectedMaterial.Category = materialTransportPicker.selectedBaseMaterial.Category;
-                selectedMaterial.ECI_D = materialEndofLifePicker.Value;
-                selectedMaterial.SetProperty("ECI_D_Settings", materialEndofLifePicker.Settings);
+                selectedMaterial.ECI_C1C4 = materialEndofLifePicker.Value;
+                selectedMaterial.SetProperty("ECI_C1C4_Settings", materialEndofLifePicker.Settings);
             }
             UpdateMaterialSettings();
         }
