@@ -47,6 +47,7 @@ namespace CarboLifeUI.UI
         {
             isAccepted = true;
             Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
+            Settings = "Manual Override";
             this.Close();
         }
 

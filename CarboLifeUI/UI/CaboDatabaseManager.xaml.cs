@@ -47,6 +47,9 @@ namespace CarboLifeUI.UI
             cbb_ViewableTable.Items.Add("User Materials");
             cbb_ViewableTable.Items.Add("Base Materials");
             cbb_ViewableTable.Text = cbb_ViewableTable.Items[0].ToString();
+            cbb_ViewableTable.SelectedIndex = 0;
+            RefreshTable();
+
         }
 
         private CarboDatabase tryParseData(DataTable dt)
@@ -257,7 +260,11 @@ namespace CarboLifeUI.UI
 
         private void Cbb_ViewableTable_DropDownClosed(object sender, EventArgs e)
         {
+            RefreshTable();
+        }
 
+        private void RefreshTable()
+        {
             if (cbb_ViewableTable.Text == "Base Materials")
             {
                 dgv_Data.ItemsSource = null;
@@ -373,38 +380,32 @@ namespace CarboLifeUI.UI
             MessageBox.Show("To Be Implemented");
         }
 
-        private void Mnu_Update(object sender, RoutedEventArgs e)
+        private void Mnu_UpdateUserMaterials(object sender, RoutedEventArgs e)
         {
             string name = "";
             //Get the profile from a cvs:
             try
             {
-                if (cbb_ViewableTable.Text == "User Materials")
-                    name = "db\\UserMaterials";
-                else if (cbb_ViewableTable.Text == "Base Materials")
-                    name = "db\\BaseMaterials";
-                else
+                MessageBoxResult result = MessageBox.Show("Do you want to update the usermaterials based on a project or database file ?", "Warning", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
                 {
-                    name = "";
-                }
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
 
-                MessageBoxResult result = MessageBox.Show("This will overwite the current default materials, do you want to proceed?", "Warning", MessageBoxButton.YesNo);
-
-                if (name != "" && result == MessageBoxResult.Yes)
-                {
-                    CarboDatabase cdb = new CarboDatabase();
-
-                    if (name == "db\\UserMaterials")
+                    var path = openFileDialog.ShowDialog();
+                    FileInfo finfo = new FileInfo(openFileDialog.FileName);
+                    if (openFileDialog.FileName != "")
                     {
-                        cdb = cdb.DeSerializeXML("db\\UserMaterials");
-                        UserMaterials.Update(cdb);
+                        name = openFileDialog.FileName;
 
-                    }
-                    else if (name == "db\\BaseMaterials")
-                    {
-                        cdb = cdb.DeSerializeXML("db\\BaseMaterials");
-                        BaseMaterials.Update(cdb);
+                        CarboDatabase cdb = new CarboDatabase();
 
+                        cdb = cdb.DeSerializeXML(name);
+                        if (cdb != null & cdb.CarboMaterialList.Count > 0)
+                        {
+                            UserMaterials.Update(cdb);
+                        }
                     }
                 }
             }
@@ -413,6 +414,38 @@ namespace CarboLifeUI.UI
                 MessageBox.Show(ex.ToString());
             }
 
+        }
+
+        private void Mnu_SaveDataAs_Click(object sender, RoutedEventArgs e)
+        {
+            string name = "";
+            try
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "xml files (*.xml)|*.xml";
+
+                var path = saveFileDialog.ShowDialog();
+                FileInfo finfo = new FileInfo(saveFileDialog.FileName);
+                if (saveFileDialog.FileName != "")
+                {
+                    if(File.Exists(name))
+                    {
+
+                        MessageBoxResult result = MessageBox.Show("Do you want to override the file?", "Warning", MessageBoxButton.YesNo);
+                        if(result == MessageBoxResult.Yes)
+                        {
+                            UserMaterials.SerializeXML(name);
+                            MessageBox.Show("User Database Saved", "Information", MessageBoxButton.OK);
+                        }
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

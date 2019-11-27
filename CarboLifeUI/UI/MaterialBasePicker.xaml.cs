@@ -63,6 +63,18 @@ namespace CarboLifeUI.UI
             }
 
             lib_Materials.ItemsSource = basematerials.CarboMaterialList;
+            int index = 0;
+            int i = 0;
+            foreach(CarboMaterial ibm in lib_Materials.Items.SourceCollection)
+            {
+                if(ibm.Name == selectedBaseMaterial.Name)
+                {
+                    index = i;
+                    break;
+                }
+                i++;
+            }
+            lib_Materials.SelectedIndex = index;
         }
 
         private void lib_Materials_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -16,22 +16,20 @@ using System.Windows.Shapes;
 namespace CarboLifeUI.UI
 {
     /// <summary>
-    /// Interaction logic for MaterialEndofLifePicker.xaml
+    /// Interaction logic for MaterialConstructionPicker.xaml
     /// </summary>
-    public partial class MaterialEndofLifePicker : Window
+    public partial class ValueDialogBox : Window
     {
         internal bool isAccepted;
-        public double Value;
-        public string Settings;
+        public string Value;
 
-        public MaterialEndofLifePicker()
+        public ValueDialogBox()
         {
             InitializeComponent();
         }
 
-        public MaterialEndofLifePicker(string settings, double value)
+        public ValueDialogBox(string value="")
         {
-            this.Settings = settings;
             this.Value = value;
             InitializeComponent();
         }
@@ -39,27 +37,18 @@ namespace CarboLifeUI.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             txt_Value.Text = Value.ToString();
-
-            string[] settingSplit = Settings.Split(',');
-
-            if (settingSplit.Length > 0)
-                //txt_Life.Text = settingSplit[0];
-            if (settingSplit.Length > 1)
-                //txt_ReplaceValue.Text = settingSplit[1];
-
-            UpdateValue();
-        }
-
-        private void UpdateValue()
-        {
+            txt_Value.SelectAll();
+            txt_Value.Focus();
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
-            isAccepted = true;
-            Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
-            Settings = "Manual Override";
-            this.Close();
+            if (txt_Value.Text != "")
+            {
+                isAccepted = true;
+                Value = txt_Value.Text;
+                this.Close();
+            }
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)

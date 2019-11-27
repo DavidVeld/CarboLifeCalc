@@ -33,7 +33,7 @@
 
         <Menu Grid.Row="1" Grid.Column="1"
               Background="White" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Loaded="Menu_Loaded">
-            <MenuItem FontSize="14" Header="Program" Background="White" >
+            <MenuItem Header="Program" Background="White" Style="{StaticResource baseStyleLabel}">
                 <Separator></Separator>
                 <MenuItem Name="mnu_openDataBase" Header="Open Project" Click="Mnu_openDataBase_Click"/>
                 <MenuItem Name="mnu_saveProject" Header="Save Project" Click="Mnu_saveProject_Click"/>
@@ -49,7 +49,7 @@
                 <Separator></Separator>
                 <MenuItem Name="mnu_CloseMe" Header="Close"/>
             </MenuItem>
-            <MenuItem Name="mnu_About" Header="About..." Click="Mnu_About_Click"/>
+            <MenuItem Name="mnu_About" Header="About..." Click="Mnu_About_Click"  Style="{StaticResource baseStyleLabel}"/>
 
         </Menu>
 

@@ -16,20 +16,20 @@ using System.Windows.Shapes;
 namespace CarboLifeUI.UI
 {
     /// <summary>
-    /// Interaction logic for MaterialEndofLifePicker.xaml
+    /// Interaction logic for MaterialConstructionPicker.xaml
     /// </summary>
-    public partial class MaterialEndofLifePicker : Window
+    public partial class MaterialAdditionalPicker : Window
     {
         internal bool isAccepted;
         public double Value;
         public string Settings;
 
-        public MaterialEndofLifePicker()
+        public MaterialAdditionalPicker()
         {
             InitializeComponent();
         }
 
-        public MaterialEndofLifePicker(string settings, double value)
+        public MaterialAdditionalPicker(string settings, double value)
         {
             this.Settings = settings;
             this.Value = value;
@@ -39,19 +39,8 @@ namespace CarboLifeUI.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             txt_Value.Text = Value.ToString();
-
             string[] settingSplit = Settings.Split(',');
 
-            if (settingSplit.Length > 0)
-                //txt_Life.Text = settingSplit[0];
-            if (settingSplit.Length > 1)
-                //txt_ReplaceValue.Text = settingSplit[1];
-
-            UpdateValue();
-        }
-
-        private void UpdateValue()
-        {
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)

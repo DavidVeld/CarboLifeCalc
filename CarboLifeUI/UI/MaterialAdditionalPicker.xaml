@@ -1,4 +1,4 @@
-﻿<Window x:Class="CarboLifeUI.UI.MaterialEndofLifePicker"
+﻿<Window x:Class="CarboLifeUI.UI.MaterialAdditionalPicker"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -22,9 +22,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="5"/>
             <RowDefinition Height="55"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
@@ -36,9 +36,9 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">End of Life</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Additional</Label>
 
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="2" Header="Input" Style="{StaticResource baseStyleBold}">
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="4" Header="Result:" Style="{StaticResource baseStyleBold}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
@@ -51,34 +51,9 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">% To landfill:</Label>
-                <TextBox Name="txt_ReplaceValue" Grid.Column="1" Grid.Row="1" Margin="125,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" IsReadOnly="False"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">%</Label>
-
-                <Label Grid.Column="1" Margin="0,35,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">% Reused:</Label>
-                <TextBox Name="txt_Life" Grid.Column="1" Grid.Row="1" Margin="125,35,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" IsReadOnly="False"></TextBox>
-                <Label Grid.Column="1" Margin="230,35,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">%</Label>
-
-            </Grid>
-        </GroupBox>
-
-
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="4" Header="Result" Style="{StaticResource baseStyleBold}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="5"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="5"/>
-                </Grid.ColumnDefinitions>
-
-                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Cost per kg:</Label>
+                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">CO2 per kg:</Label>
                 <TextBox Name="txt_Value" Grid.Column="1" Grid.Row="1" Margin="125,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="False"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2/kg</Label>
             </Grid>
         </GroupBox>
 

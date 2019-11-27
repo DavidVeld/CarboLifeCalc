@@ -64,9 +64,6 @@ namespace CarboLifeUI.UI
                 carboLifeProject.UpdateAllMaterials();
                 DataScreen.Visibility = Visibility.Hidden;
                 DataScreen.Visibility = Visibility.Visible;
-
-
-
             }
 
         }

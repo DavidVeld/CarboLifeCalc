@@ -125,14 +125,16 @@ namespace CarboLifeAPI.Data
             else
             {
                 CarboDataPoint cb_A1A3 = new CarboDataPoint("A1 A3",0);
-                CarboDataPoint cb_A4A5 = new CarboDataPoint("A4 A5", 0);
-                CarboDataPoint cb_B1B7 = new CarboDataPoint("B1 B7", 0);
+                CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
+                CarboDataPoint cb_A5 = new CarboDataPoint("A5", 0);
+                CarboDataPoint cb_B1B5 = new CarboDataPoint("B1 B5", 0);
                 CarboDataPoint cb_C1C4 = new CarboDataPoint("C1 C4", 0);
                 CarboDataPoint cb_D = new CarboDataPoint("D", 0);
 
                 valueList.Add(cb_A1A3);
-                valueList.Add(cb_A4A5);
-                valueList.Add(cb_B1B7);
+                valueList.Add(cb_A4);
+                valueList.Add(cb_A5);
+                valueList.Add(cb_B1B5);
                 valueList.Add(cb_C1C4);
                 valueList.Add(cb_D);
                                
@@ -140,9 +142,10 @@ namespace CarboLifeAPI.Data
                 foreach (CarboGroup CarboGroup in this.groupList)
                 {
                     double ECI_A1A3 = CarboGroup.Material.ECI_A1A3;
-                    double ECI_A4A5 = CarboGroup.Material.ECI_A4;
-                    double ECI_B1B7 = CarboGroup.Material.ECI_A5;
-                    double ECI_C1C4 = CarboGroup.Material.ECI_B1B5;
+                    double ECI_A4 = CarboGroup.Material.ECI_A4;
+                    double ECI_A5 = CarboGroup.Material.ECI_A5;
+                    double ECI_B1B5 = CarboGroup.Material.ECI_B1B5;
+                    double ECI_C1C4 = CarboGroup.Material.ECI_C1C4;
                     double ECI_D = CarboGroup.Material.ECI_D;
 
                     if (valueList.Count > 0)
@@ -155,13 +158,17 @@ namespace CarboLifeAPI.Data
                             {
                                 pp.Value += ECI_A1A3;
                             }
-                            else if (ppName == "A4 A5")
+                            else if (ppName == "A4")
                             {
-                                pp.Value += ECI_A4A5;
+                                pp.Value += ECI_A4;
                             }
-                            else if (ppName == "B1 B7")
+                            else if (ppName == "A5")
                             {
-                                pp.Value += ECI_B1B7;
+                                pp.Value += ECI_A5;
+                            }
+                            else if (ppName == "B1 B5")
+                            {
+                                pp.Value += ECI_B1B5;
                             }
                             else if (ppName == "C1 C4")
                             {
@@ -181,8 +188,19 @@ namespace CarboLifeAPI.Data
                 }
             }
 
-            //Values should return now;
+     
+            //ValidateData
+            foreach(CarboDataPoint cp in valueList)
+            {
+                if (cp.Value < 0)
+                {
+                    cp.Value = cp.Value * -1;
+                    cp.Name = cp.Name + "[NEGATIVE]";
+                }
 
+            }
+            
+            //Values should return now;
             return valueList;
         }
 

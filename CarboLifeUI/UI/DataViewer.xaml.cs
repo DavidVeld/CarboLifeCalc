@@ -89,8 +89,7 @@ namespace CarboLifeUI.UI
             CarboLifeProject.CalculateProject();
             refreshData();
         }
-
-
+        
         private void Btn_Delete_Click(object sender, RoutedEventArgs e)
         {
             CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
@@ -115,7 +114,7 @@ namespace CarboLifeUI.UI
             CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
             if (carboGroup != null)
             {
-                MaterialEditor materialEditor = new MaterialEditor(carboGroup.Material, CarboLifeProject.CarboDatabase);
+                MaterialEditor materialEditor = new MaterialEditor(carboGroup.Material.Name, CarboLifeProject.CarboDatabase);
                 materialEditor.ShowDialog();
 
                 if(materialEditor.acceptNew == true)

@@ -63,6 +63,12 @@
     <Compile Include="UI\GroupWindow.xaml.cs">
       <DependentUpon>GroupWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\ValueDialogBox.xaml.cs">
+      <DependentUpon>ValueDialogBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MaterialAdditionalPicker.xaml.cs">
+      <DependentUpon>MaterialAdditionalPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\MaterialConstructionPicker.xaml.cs">
       <DependentUpon>MaterialConstructionPicker.xaml</DependentUpon>
     </Compile>
@@ -113,6 +119,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\GroupWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\ValueDialogBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\MaterialAdditionalPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

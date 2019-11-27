@@ -127,12 +127,21 @@ namespace CarboLifeAPI.Data
         /// <param name="fileName">Current Options are: "db\\UserMaterial" and "db\\BaseMaterial"</param>
         public void SerializeXML(string fileName)
         {
-            if (fileName == "")
-                fileName = "db\\UserMaterials.xml";
-            else
-                fileName = fileName + ".xml";
+            string myPath = fileName;
 
-            string myPath = Utils.getAssemblyPath() + "\\" + fileName;
+            //if its a relative path use:
+
+            if (!(File.Exists(myPath)))
+            {
+                if (fileName == "")
+                    fileName = "db\\UserMaterials.xml";
+                else
+                    fileName = fileName + ".xml";
+
+            myPath = Utils.getAssemblyPath() + "\\" + fileName;
+
+            }
+
 
             XmlSerializer ser = new XmlSerializer(typeof(CarboDatabase));
 
@@ -151,13 +160,19 @@ namespace CarboLifeAPI.Data
         /// <param name="fileName"></param>
         public CarboDatabase DeSerializeXML(string fileName)
         {
-            if (fileName == "")
-                fileName = "db\\UserMaterials.xml";
-            else
-                fileName = fileName + ".xml";
+            string myPath = fileName;
 
+            //if its a relative path use:
+            if (!(File.Exists(myPath)))
+                {
+                if (fileName == "")
+                    fileName = "db\\UserMaterials.xml";
+                else
+                    fileName = fileName + ".xml";
+
+            myPath = Utils.getAssemblyPath() + "\\" + fileName;
+            }
             //Reatemp
-            string myPath = Utils.getAssemblyPath() + "\\" + fileName;
 
             if (File.Exists(myPath))
             {
@@ -221,6 +236,33 @@ namespace CarboLifeAPI.Data
                     this.CarboMaterialList.Add(cm);
                 }
             }
+        }
+
+        public bool AddMaterial(CarboMaterial newMaterial)
+        {
+            bool result = false;
+            bool exists = false;
+
+            foreach(CarboMaterial cm in CarboMaterialList)
+            {
+                if(cm.Name == newMaterial.Name)
+                {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (exists == false)
+            {
+                CarboMaterialList.Add(newMaterial);
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+
+            return result;
         }
     }
 }

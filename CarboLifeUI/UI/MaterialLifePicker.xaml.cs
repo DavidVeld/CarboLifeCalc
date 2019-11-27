@@ -39,12 +39,23 @@ namespace CarboLifeUI.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             txt_Value.Text = Value.ToString();
+
+            string[] settingSplit = Settings.Split(',');
+
+            if (settingSplit.Length > 0)
+                txt_Life.Text = settingSplit[0];
+            if (settingSplit.Length > 1)
+                txt_ReplaceValue.Text = settingSplit[1];
+
+            UpdateValue();
+
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = true;
             Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
+            Settings = txt_Life.Text + "," + txt_ReplaceValue.Text;
             this.Close();
         }
 
