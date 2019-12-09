@@ -54,6 +54,7 @@
     <Compile Include="UtilClasses\CarboLevel.cs" />
     <Compile Include="Utils\CarboDataPoint.cs" />
     <Compile Include="Utils\ReadWriteCsv.cs" />
+    <Compile Include="Utils\StringToFormula.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

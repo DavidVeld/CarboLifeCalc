@@ -17,6 +17,7 @@ namespace CarboLifeAPI.Data
         public string SubCategory { get; set; }
         public string Description { get; set; }
         public double Volume { get; set; }
+        public double TotalVolume { get; set; }
         public string Correction { get; set; }
         //Calculated Values;
         public double Density { get; set; }
@@ -168,7 +169,7 @@ namespace CarboLifeAPI.Data
             //EEI = Material.EEI;
             ECI = Material.ECI;
             Density = Material.Density;
-
+            
             if (AllElements != null)
             {
                 if (AllElements.Count > 0)
@@ -181,8 +182,22 @@ namespace CarboLifeAPI.Data
                 }
             }
 
+
+            if (Utils.isValidExpression(Correction) == true)
+            {
+                string volumeStr = Volume.ToString();
+                StringToFormula stf = new StringToFormula();
+                double result = stf.Eval(volumeStr + Correction);
+                TotalVolume = result;
+            }
+            else
+            {
+                TotalVolume = Volume;
+            }
+            
+
             //Calculate Valuesl
-            Mass = Volume * Density;
+            Mass = TotalVolume * Density;
             //EE = Mass * EEI;
             EC = (Mass * ECI) / 1000;
 

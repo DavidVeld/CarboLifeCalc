@@ -39,8 +39,8 @@
     <!-- style for all datagrids-->
     <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DataViewerStyle}"></Style>
 
-    
-    <!---Expander-->
+
+    <!---DATAGRID VIEWER-->
 
 </ResourceDictionary>
     

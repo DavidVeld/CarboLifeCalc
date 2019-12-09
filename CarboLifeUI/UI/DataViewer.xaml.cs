@@ -1,4 +1,5 @@
-﻿using CarboLifeAPI.Data;
+﻿using CarboLifeAPI;
+using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -177,11 +178,36 @@ namespace CarboLifeUI.UI
         private void Dgv_Overview_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+
             if (carboGroup != null)
             {
-                CarboLifeProject.UpdateGroup(carboGroup);
+                TextBox t = e.EditingElement as TextBox;
+                DataGridColumn dgc = e.Column;
+
+                if (t != null)
+                {
+
+                    //Corrections:
+                    if (dgc.Header.ToString() == "Correction")
+                    {
+                        string textExpression = t.Text;
+                        if (Utils.isValidExpression(textExpression) == true)
+                        {
+                            carboGroup.Correction = textExpression;
+                            CarboLifeProject.UpdateGroup(carboGroup);
+                        }
+                    }
+                    if(dgc.Header.ToString() == "Volume (m³)")
+                    {
+                        if(carboGroup.AllElements.Count > 0)
+                        {
+                            MessageBox.Show("Volume is based on Element Totals, Purge the elements before overriding the volume");
+                            carboGroup.CalculateTotals();
+                            btn_Calculate.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                        }
+                    }
+                }
             }
-            //SortData();
         }
 
         private void Mnu_DuplicateGroup_Click(object sender, RoutedEventArgs e)
@@ -304,5 +330,22 @@ namespace CarboLifeUI.UI
                 SortByCategoty();
             }
         }
+
+        private void Btn_ShowHideCorrections_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (column_Volume.Visibility == Visibility.Hidden)
+            {
+                column_Volume.Visibility = Visibility.Visible;
+                column_Correction.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                column_Volume.Visibility = Visibility.Hidden;
+                column_Correction.Visibility = Visibility.Hidden;
+            }
+
+        }
+
     }
 }

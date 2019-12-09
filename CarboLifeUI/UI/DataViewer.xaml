@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="780" IsVisibleChanged="UserControl_IsVisibleChanged">
+             d:DesignHeight="400" d:DesignWidth="900" IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -50,8 +50,8 @@
 
                 <MenuItem Name="mnu_CloseMe" Header="Close"/>
             </MenuItem>
-            <Label VerticalAlignment="Top" Style="{StaticResource baseStyleLabel}">Sort by: </Label>
-            <ComboBox Name="cbb_Sort" FontSize="12" Width="75" SelectedIndex="0" DropDownClosed="ComboBox_DropDownClosed" >
+            <Label VerticalAlignment="Bottom" Margin="0,0,0,-0" Height="28" Style="{StaticResource baseStyleLabel}">Sort by: </Label>
+            <ComboBox Name="cbb_Sort" FontSize="12" Width="75" SelectedIndex="0" DropDownClosed="ComboBox_DropDownClosed" Style="{StaticResource ComboBoxFlatStyle}" >
                 <ComboBoxItem>Material</ComboBoxItem>
                 <ComboBoxItem>Category</ComboBoxItem>
             </ComboBox>
@@ -60,6 +60,8 @@
                     
         <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="1" Content="Calculate" Width="75" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Calculate_Click" />
         <Button x:Name="btn_EditMaterial" Content="Edit Material" Width="75" Height="25" HorizontalAlignment="Left"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" />
+        <ToggleButton x:Name="btn_ShowHideCorrections" Content="Advanced" Width="75" Height="25" HorizontalAlignment="Left" Click="Btn_ShowHideCorrections_Click" />
+
         </Menu>
 
         <DataGrid x:Name="dgv_Overview" Grid.Row="2" Grid.Column="1" 
@@ -96,7 +98,8 @@
 
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Category" Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="False"/>
                 <DataGridTextColumn MinWidth="120" Header="Material" Binding="{Binding Path=MaterialName}" IsReadOnly="True"/>
-                <DataGridTextColumn Width="1*" MinWidth="200" Header="Description" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Description" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn x:Name="column_Correction" MinWidth="75" Header="Correction" Binding="{Binding Path=Correction, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
 
                 <DataGridTemplateColumn Header="MaterialList" Width="100" Visibility="Hidden" >
                     <DataGridTemplateColumn.CellTemplate>
@@ -111,11 +114,12 @@
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Width="1*" MinWidth="100" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn MinWidth="100" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
+                <DataGridTextColumn x:Name="column_Volume"  MinWidth="100" Header="Total Volume (m³)" Binding="{Binding Path=TotalVolume, Mode=TwoWay}" IsReadOnly="True" Visibility="Hidden"/>
+ 
                 <DataGridTextColumn Width="1*" MinWidth="130" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="1*" MinWidth="85" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
 
-                <DataGridTextColumn MinWidth="100" Header="EEI(MJ/kg)" Binding="{Binding Path=EEI}" IsReadOnly="True" Visibility="Hidden"/>
                 <DataGridTextColumn MinWidth="100" Header="ECI(kgCo2/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
                 <DataGridTextColumn MinWidth="100" Header="EE (GJ)" Binding="{Binding Path=EE}" IsReadOnly="True"  Visibility="Hidden"/>
                 <DataGridTextColumn MinWidth="100" Header="EC (tCo2)" Binding="{Binding Path=EC}" IsReadOnly="True"/>

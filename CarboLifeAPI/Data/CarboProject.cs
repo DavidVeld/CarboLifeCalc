@@ -341,9 +341,11 @@ namespace CarboLifeAPI.Data
                 if (cg.Id == carboGroup.Id)
                 {
                     cg.Category = carboGroup.Category;
+                    cg.Correction = carboGroup.Correction;
                     cg.Description = carboGroup.Description;
                     cg.Volume = carboGroup.Volume;
                     cg.SubCategory = carboGroup.SubCategory;
+                    cg.CalculateTotals();
                 }
             }
         }

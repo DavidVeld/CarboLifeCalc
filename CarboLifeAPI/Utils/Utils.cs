@@ -187,5 +187,44 @@ namespace CarboLifeAPI
             return result;
 
         }
+
+        public static bool isValidExpression(string correction)
+        {
+            string one = "1";
+            try
+            {
+                string[] _operators = { "-", "+", "/", "*", "^" };
+
+                bool okGo = false;
+
+                if (correction.Length < 2)
+                    return false;
+
+                string first = correction.Substring(0, 1);
+                foreach (string str in _operators)
+                {
+                    if (first == str)
+                        okGo = true;
+                }
+
+                if (okGo == false)
+                    return false;
+
+                StringToFormula stf = new StringToFormula();
+                double result = stf.Eval(one + correction);
+                if (result == 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
