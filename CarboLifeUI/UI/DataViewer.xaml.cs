@@ -347,5 +347,108 @@ namespace CarboLifeUI.UI
 
         }
 
-    }
+        private void Mnu_MoveToNewGroup_Click(object sender, RoutedEventArgs e)
+        {
+            //IList<DataGridCellInfo> selectedElementList = dgv_Elements.SelectedCells;
+            try
+            {
+            List<CarboElement> selectedCarboElementList = new List<CarboElement>();
+                selectedCarboElementList = dgv_Elements.SelectedItems.Cast<CarboElement>().ToList();
+
+                    if (selectedCarboElementList.Count > 0)
+                    {
+                        CarboGroup selectedCarboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+                        int carbogroupId = selectedCarboGroup.Id;
+                        List<CarboElement> allCarboElementList = selectedCarboGroup.AllElements;
+
+                        CarboGroup newGroup = new CarboGroup();
+                        newGroup.AllElements = selectedCarboElementList;
+                        newGroup.Category = selectedCarboGroup.Category;
+                        newGroup.SubCategory = selectedCarboGroup.SubCategory;
+                        newGroup.Description = "A new Group";
+                        newGroup.Material = allCarboElementList[0].Material;
+                        newGroup.MaterialName = allCarboElementList[0].MaterialName;
+
+
+                    int delcounter = 0;
+
+                        foreach (CarboElement ce in selectedCarboElementList)
+                        {
+                            for (int i = 0; i >= 0; i--)
+                            {
+                                CarboElement oldce = allCarboElementList[i];
+                                if (ce.Id == oldce.Id)
+                                {
+                                    allCarboElementList.RemoveAt(i);
+                                    delcounter++;
+                                }
+                            }
+
+                        }
+                        //Now there should be two lists, one with the selcted items and one without.
+                        foreach (CarboGroup cg in CarboLifeProject.getGroupList)
+                        {
+                            if (cg.Id == carbogroupId)
+                                cg.AllElements = allCarboElementList;
+                        }
+                        CarboLifeProject.AddGroup(newGroup);
+
+                        MessageBox.Show(delcounter + " Elements moved to new group", "Warning", MessageBoxButton.OK);
+
+                    CarboLifeProject.CalculateProject();
+                    refreshData();
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warning", MessageBoxButton.OK);
+            }
+
+            //List<CarboElement> selectedElement = dgv_Elements.SelectedCells;
+        }
+
+        private void Mnu_MergeGroup_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<CarboGroup> selectedCarboGroupList = new List<CarboGroup>();
+                selectedCarboGroupList = dgv_Overview.SelectedItems.Cast<CarboGroup>().ToList();
+
+
+                if (selectedCarboGroupList != null && selectedCarboGroupList.Count > 1)
+                {
+                    CarboGroup FirstCarboGroup = selectedCarboGroupList[0];
+
+                    CarboGroup mergedCarboGroup = FirstCarboGroup.Copy();
+                    mergedCarboGroup.AllElements = new List<CarboElement>();
+
+                    foreach (CarboGroup gc in selectedCarboGroupList)
+                    {
+                        if(gc.AllElements.Count > 0)
+                        {
+                            foreach (CarboElement ce in gc.AllElements)
+                            {
+                                mergedCarboGroup.AllElements.Add(ce);
+                            }
+                        }
+                    }
+
+                    CarboLifeProject.AddGroup(mergedCarboGroup);
+
+                    foreach (CarboGroup cg in selectedCarboGroupList)
+                    {
+                        CarboLifeProject.DeleteGroup(cg);
+                    }
+
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warning", MessageBoxButton.OK);
+            }
+        }
+        }
 }

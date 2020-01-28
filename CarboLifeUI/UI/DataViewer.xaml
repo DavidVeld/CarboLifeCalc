@@ -37,6 +37,7 @@
             <MenuItem Header="Edit" Background="White" Style="{StaticResource baseStyleLabel}" >
                 <MenuItem Name="mnu_NewGroup" Header="_New Item" Click="Mnu_NewGroup_Click"/>
                 <MenuItem Name="mnu_DeleteGroup" Header="Delete Item" Click="Mnu_DeleteGroup_Click" />
+                <MenuItem Name="mnu_MergeGroup" Header="Merge Items" Click="Mnu_MergeGroup_Click"/>
                 <MenuItem Name="mnu_DuplicateGroup" Header="Duplicate Item" Click="Mnu_DuplicateGroup_Click"/>
                 <MenuItem Name="mnu_reGroupData" Header="Rebuild ElementGroups" Click="Mnu_reGroupData_Click"/>
             </MenuItem>
@@ -92,6 +93,8 @@
                     </GroupStyle.ContainerStyle>
                 </GroupStyle>
             </DataGrid.GroupStyle>
+            
+
             
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="20" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
@@ -149,6 +152,12 @@
 
             </DataGrid.Columns>
         </DataGrid>
+        
+        <Menu Grid.Row="3" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" >
+            <MenuItem Header="Elements" Background="White" Style="{StaticResource baseStyleLabel}" >
+                <MenuItem Name="mnu_MoveToNewGroup" Header="_To New Group" Click="Mnu_MoveToNewGroup_Click"/>
+            </MenuItem>
+        </Menu>
 
         <DataGrid x:Name="dgv_Elements" Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible"></DataGrid>
 

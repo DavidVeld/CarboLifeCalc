@@ -36,21 +36,26 @@ namespace CarboLifeUI.UI
         {
             //originalMaterial = material;
             //selectedMaterial = material;
-
-            //originalDatabase = database;
-            returnedDatabase = database;
-            selectedMaterial = database.GetExcactMatch(materialName);
-            if(selectedMaterial == null)
+            try
             {
-                MessageBox.Show("This material could not be found in the database, the closest match will now be found");
-                selectedMaterial = database.getClosestMatch(materialName);
+                //originalDatabase = database;
+                returnedDatabase = database;
+                selectedMaterial = database.GetExcactMatch(materialName);
+                if (selectedMaterial == null)
+                {
+                    MessageBox.Show("This material could not be found in the database, the closest match will now be found");
+                    selectedMaterial = database.getClosestMatch(materialName);
+                }
+
+                baseMaterials = new CarboDatabase();
+                baseMaterials = baseMaterials.DeSerializeXML("db\\BaseMaterials");
+
+                acceptNew = false;
             }
-
-            baseMaterials = new CarboDatabase();
-            baseMaterials = baseMaterials.DeSerializeXML("db\\BaseMaterials");
-
-            acceptNew = false;
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             InitializeComponent();
         }
 

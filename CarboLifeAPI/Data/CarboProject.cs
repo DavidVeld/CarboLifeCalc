@@ -302,13 +302,20 @@ namespace CarboLifeAPI.Data
             return result;
         }
 
-        public void CreateNewGroup()
+        public bool CreateNewGroup(string category = "")
         {
+            bool result = false;
+
             CarboGroup newGroup = new CarboGroup();
+            if(category != "")
+                newGroup.Category = category;
+
             int id = getNewId();
             newGroup.Id = id;
 
             AddGroup(newGroup);
+
+            return result;
         }
 
         public void AddGroups(ObservableCollection<CarboGroup> groupList)
@@ -375,8 +382,11 @@ namespace CarboLifeAPI.Data
                 }
             }
         }
-        public void AddGroup(CarboGroup newGroup)
+
+        public bool AddGroup(CarboGroup newGroup)
         {
+            bool result = false;
+
             if (!(groupList.Contains(newGroup)))
             {
                 newGroup.Id = getNewId();
@@ -385,7 +395,11 @@ namespace CarboLifeAPI.Data
             else
             {
                 MessageBox.Show("new group already exists");
+                return false;
             }
+
+            return result;
+
         }
 
         public void UpdateMaterial(CarboGroup TargetGroup, CarboMaterial NewMaterial)
@@ -464,7 +478,6 @@ namespace CarboLifeAPI.Data
                 return false;
             }
 
-            return result;
         }
 
 

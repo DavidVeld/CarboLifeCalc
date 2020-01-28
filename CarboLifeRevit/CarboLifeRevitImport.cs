@@ -35,8 +35,9 @@ namespace CarboLifeRevit
             if (selectionList.Count == 0)
             {
                 //No elements are selected: 
+                View activeView = doc.ActiveView;
 
-                FilteredElementCollector coll = new FilteredElementCollector(app.ActiveUIDocument.Document);
+                FilteredElementCollector coll = new FilteredElementCollector(app.ActiveUIDocument.Document, activeView.Id);
 
                 coll.WherePasses(new LogicalOrFilter(new ElementIsElementTypeFilter(false),
                     new ElementIsElementTypeFilter(true)));

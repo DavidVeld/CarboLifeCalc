@@ -114,7 +114,7 @@ namespace CarboLifeAPI.Data
 
         public void CalculateTotals()
         {
-            ECI = ECI_B1B5 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_B1B5 + ECI_C1C4 + ECI_D);
+            ECI = ECI_B1B5 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_C1C4 + ECI_D);
         }
 
         public void SetProperty(string properyName, string propertyValue)

@@ -157,8 +157,15 @@ namespace CarboLifeAPI.Data
 
         internal void SetPercentageOf(double eCTotal)
         {
-            PerCent = (EC / eCTotal) * 100;
-            PerCent = Math.Round(PerCent, 2);
+            if (EC > 0)
+            {
+                PerCent = (EC / eCTotal) * 100;
+                PerCent = Math.Round(PerCent, 2);
+            }
+            else
+            {
+                PerCent = 0;
+            }
         }
 
         public void CalculateTotals()
@@ -182,7 +189,7 @@ namespace CarboLifeAPI.Data
                 }
             }
 
-
+            //Calculate the real volume based on a correction if required. 
             if (Utils.isValidExpression(Correction) == true)
             {
                 string volumeStr = Volume.ToString();
@@ -210,6 +217,22 @@ namespace CarboLifeAPI.Data
                 this.Description += " Removed: " + this.AllElements[0].Name;
                 AllElements.Clear();
             }
+        }
+
+        public CarboGroup Copy()
+        {
+            CarboGroup result = new CarboGroup();
+            result.Category = this.Category;
+            result.SubCategory = this.SubCategory;
+            result.Material = this.Material;
+            result.MaterialName = this.MaterialName;
+            result.AllElements = this.AllElements;
+            result.Volume = this.Volume;
+
+            result.RefreshValuesFromElements();
+
+            return result;
+
         }
     }
 }

@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\CarboLifeCalc_Build\debug\</OutputPath>
+    <OutputPath>..\..\..\..\..\CarboLifeCalc\2017 Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,6 +31,34 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Revit|AnyCPU'">
+    <OutputPath>bin\Debug Revit\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\..\..\CarboLifeCalc\2017 Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\CarboLifeCalc_Build\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Revit|x64'">
+    <OutputPath>..\..\..\..\..\CarboLifeCalc\2017 Debug\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -70,10 +98,6 @@
     <ProjectReference Include="..\CarboLifeAPI\CarboLifeAPI.csproj">
       <Project>{0c38f4ed-1d83-4ffe-ad65-b884410af824}</Project>
       <Name>CarboLifeAPI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CarboLifeCalc\CarboLifeCalc.csproj">
-      <Project>{df8b1c1a-deef-4a4d-b7c1-427968fe1c49}</Project>
-      <Name>CarboLifeCalc</Name>
     </ProjectReference>
     <ProjectReference Include="..\CarboLifeUI\CarboLifeUI.csproj">
       <Project>{0c0dd1e5-1e52-48f4-9877-6615b2133931}</Project>
