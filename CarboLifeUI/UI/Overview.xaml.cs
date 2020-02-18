@@ -57,7 +57,7 @@ namespace CarboLifeUI.UI
                 {
                     //A project Is loaded, Proceed to next
 
-                    SetupInterFace();
+                    RefreshInterFace();
                 }
 
                 //Rebuild the materialList
@@ -69,7 +69,7 @@ namespace CarboLifeUI.UI
             }
         }
 
-        private void SetupInterFace()
+        private void RefreshInterFace()
         {
             try
             {
@@ -87,40 +87,8 @@ namespace CarboLifeUI.UI
                     
                     PieceListMaterial = PieceListMaterial.OrderByDescending(o => o.Value).ToList();
 
-                    /*
-                    IList<UIElement> uIElements = PieChartGenerator.generateImage(cnv_Summary, PieceList);
-
-                    foreach (UIElement uiE in uIElements)
-                    {
-                        //cnv_Summary.Children.Add(uiE);
-                    }
-                    
-
-                    if (PieceListMaterial.Count > 0)
-                    {
-                        foreach (CarboDataPoint pp in PieceListMaterial)
-                        {
-                            KeyValuePair<string, double> pair = new KeyValuePair<string, double>(pp.Name, pp.Value);
-                            valueListMaterial.Add(pair);
-                        }
-                    }
-
-                    if (PieceListLifePoint.Count > 0)
-                    {
-                        foreach (CarboDataPoint pp in PieceListLifePoint)
-                        {
-                            KeyValuePair<string, double> pair = new KeyValuePair<string, double>(pp.Name, pp.Value);
-                            valueListLifePoint.Add(pair);
-                        }
-                    }
-                    */
-                    //chr_Pie.DataContext = valueList;
-                    //var chartArea1 = new System.Windows.Controls.DataVisualization.Charting.Chart();
                     Style st = new Style();
 
-                    //st.
-                    //var chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-                    //LiveChart sample
 
                     Func<ChartPoint, string> labelPoint = chartPoint =>
     string.Format("{0} tCO2 ({1:P})", chartPoint.Y, chartPoint.Participation);
@@ -160,8 +128,7 @@ namespace CarboLifeUI.UI
 
                     pie_Chart1.Series = pieMaterialSeries;
                     pie_Chart2.Series = pieLifeSeries;
-
-
+                    
                     txt_ProjectName.Text = CarboLifeProject.Name;
                     txt_Number.Text = CarboLifeProject.Number;
                     txt_Category.Text = CarboLifeProject.Category;
@@ -170,12 +137,36 @@ namespace CarboLifeUI.UI
                     txt_Area.Text = CarboLifeProject.Area.ToString();
                     txt_Value.Text = CarboLifeProject.Value.ToString();
 
+                    //Totals
+                    refreshSumary();
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void refreshSumary()
+        {
+            if (CarboLifeProject != null)
+            {
+                double totalCO2 = CarboLifeProject.getTotalsGroup().EC;
+
+                TextBlock summaryText = new TextBlock();
+                summaryText.Text = "Total: " + Math.Round(totalCO2,2) + " MtCO2e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine + 
+                    "This equals to: " + Math.Round(totalCO2 / 68.5, 2) + " average car emission per year. (UK)";
+
+                summaryText.Foreground = Brushes.Black;
+                summaryText.TextWrapping = TextWrapping.WrapWithOverflow;
+                summaryText.VerticalAlignment = VerticalAlignment.Top;
+                summaryText.FontSize = 16;
+
+                Canvas.SetLeft(summaryText, 5);
+                Canvas.SetTop(summaryText, 5);
+                cnv_Totals.Children.Add(summaryText);
+            }
+
         }
 
         private void Cnv_Summary_Loaded(object sender, RoutedEventArgs e)
@@ -185,12 +176,6 @@ namespace CarboLifeUI.UI
 
         }
       
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            SetupInterFace();
-        }
-
         private void SaveSettings()
         {
             CarboLifeProject.Name = txt_ProjectName.Text;
@@ -205,7 +190,10 @@ namespace CarboLifeUI.UI
         private void Btn_SaveInfo_Click(object sender, RoutedEventArgs e)
         {
             SaveSettings();
+            RefreshInterFace();
         }
+
+
 
         //When assembly cant be find bind to current
         System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)

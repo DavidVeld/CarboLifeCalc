@@ -24,7 +24,8 @@
             <RowDefinition Height="32"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1*" Name="grd_Elements"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -35,11 +36,11 @@
 
         <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" >
             <MenuItem Header="Edit" Background="White" Style="{StaticResource baseStyleLabel}" >
-                <MenuItem Name="mnu_NewGroup" Header="_New Item" Click="Mnu_NewGroup_Click"/>
-                <MenuItem Name="mnu_DeleteGroup" Header="Delete Item" Click="Mnu_DeleteGroup_Click" />
-                <MenuItem Name="mnu_MergeGroup" Header="Merge Items" Click="Mnu_MergeGroup_Click"/>
-                <MenuItem Name="mnu_DuplicateGroup" Header="Duplicate Item" Click="Mnu_DuplicateGroup_Click"/>
-                <MenuItem Name="mnu_reGroupData" Header="Rebuild ElementGroups" Click="Mnu_reGroupData_Click"/>
+                <MenuItem Name="mnu_NewGroup" Header="New Group" Click="Mnu_NewGroup_Click"/>
+                <MenuItem Name="mnu_DeleteGroup" Header="Delete Group" Click="Mnu_DeleteGroup_Click" />
+                <MenuItem Name="mnu_MergeGroup" Header="Merge Groups" Click="Mnu_MergeGroup_Click"/>
+                <MenuItem Name="mnu_DuplicateGroup" Header="Duplicate Group" Click="Mnu_DuplicateGroup_Click"/>
+                <MenuItem Name="mnu_reGroupData" Header="Rebuild Groups from Elements..." Click="Mnu_reGroupData_Click"/>
             </MenuItem>
             <MenuItem Header="Actions" Background="White"  VerticalAlignment="Top" Style="{StaticResource baseStyleLabel}">
                 <Separator></Separator>
@@ -152,14 +153,18 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        
-        <Menu Grid.Row="3" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" >
-            <MenuItem Header="Elements" Background="White" Style="{StaticResource baseStyleLabel}" >
+
+        <Label Name="lbl_Total" Grid.Row="3" Grid.Column="1" Background="Transparent">TOTAL: xxx tCo2 (Recalculate to refresh)</Label>
+
+
+        <Menu Grid.Row="4" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" >
+            <Button x:Name="btn_Collaps" Width="35" Content="▼" HorizontalAlignment="Right" VerticalAlignment="Top"  Margin="0,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Collaps_Click"/>
+            <MenuItem Name="mnu_EditElements" Header="Elements" Background="White" Style="{StaticResource baseStyleLabel}" >
                 <MenuItem Name="mnu_MoveToNewGroup" Header="_To New Group" Click="Mnu_MoveToNewGroup_Click"/>
             </MenuItem>
         </Menu>
 
-        <DataGrid x:Name="dgv_Elements" Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible"></DataGrid>
+        <DataGrid x:Name="dgv_Elements" Grid.Row="5" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible"></DataGrid>
 
     </Grid>
 </UserControl>

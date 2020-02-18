@@ -264,5 +264,33 @@ namespace CarboLifeAPI.Data
 
             return result;
         }
+
+        public void deleteMaterial(int id)
+        {
+            string name = "";
+            bool ok = false;
+
+            try
+            {
+                for (int i = CarboMaterialList.Count -1; i > 0; i--)
+                {
+                    if (CarboMaterialList[i].Id == id)
+                    {
+                        name = CarboMaterialList[i].Name;
+                        CarboMaterialList.RemoveAt(i);
+                        ok = true;
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warning", MessageBoxButton.OK);
+
+            }
+
+            if (ok == true)
+                MessageBox.Show(name + " deleted.", "Deleted", MessageBoxButton.OK);
+        }
     }
 }

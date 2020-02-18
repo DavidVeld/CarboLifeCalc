@@ -107,6 +107,22 @@ namespace CarboLifeUI.UI
         {
             dgv_Overview.ItemsSource = null;
             dgv_Overview.ItemsSource = CarboLifeProject.getGroupList;
+
+            //GetTotals
+            double totals = 0;
+
+            if (CarboLifeProject.getGroupList.Count > 0)
+            {
+                totals = CarboLifeProject.getTotalsGroup().EC;
+            }
+            else
+            {
+                totals = 0;
+            }
+
+            lbl_Total.Content = "TOTAL: " + Math.Round(totals,2) + " tCo2";
+
+
             SortData();
         }
 
@@ -358,6 +374,7 @@ namespace CarboLifeUI.UI
                     if (selectedCarboElementList.Count > 0)
                     {
                         CarboGroup selectedCarboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+
                         int carbogroupId = selectedCarboGroup.Id;
                         List<CarboElement> allCarboElementList = selectedCarboGroup.AllElements;
 
@@ -432,23 +449,36 @@ namespace CarboLifeUI.UI
                             }
                         }
                     }
-
                     CarboLifeProject.AddGroup(mergedCarboGroup);
-
                     foreach (CarboGroup cg in selectedCarboGroupList)
                     {
                         CarboLifeProject.DeleteGroup(cg);
                     }
-
                 }
-
-
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Warning", MessageBoxButton.OK);
             }
         }
+
+        private void Btn_Collaps_Click(object sender, RoutedEventArgs e)
+        {
+            double length = grd_Elements.Height.Value;
+            if (length > 0)
+            {
+                grd_Elements.Height = new GridLength(0, GridUnitType.Pixel);
+                btn_Collaps.Content = "▲";
+                mnu_EditElements.Visibility = Visibility.Hidden;
+          
+            }
+            else
+            {
+                grd_Elements.Height = new GridLength(200, GridUnitType.Pixel);
+                btn_Collaps.Content = "▼";
+                mnu_EditElements.Visibility = Visibility.Visible;
+
+            }
         }
+    }
 }

@@ -294,6 +294,8 @@ namespace CarboLifeUI.UI
             selectedMaterial.ECI_D = Utils.ConvertMeToDouble(txt_D.Text);
 
             UpdateMaterialSettings();
+            RefreshMaterialList();
+            selectMaterial(txt_Name.Text);
 
             //selectedMaterial.EEI = Utils.ConvertMeToDouble(txt_EEI.Text);
 
@@ -329,6 +331,17 @@ namespace CarboLifeUI.UI
 
                 RefreshMaterialList();
                 selectMaterial(vdb.Value);
+            }
+        }
+
+        private void Btn_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            if(selectedMaterial != null)
+            {
+                returnedDatabase.deleteMaterial(selectedMaterial.Id);
+                RefreshMaterialList();
+
+                liv_materialList.SelectedIndex = 0;
             }
         }
     }

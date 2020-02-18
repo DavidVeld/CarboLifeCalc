@@ -39,8 +39,35 @@ namespace CarboLifeAPI.Data
         }
         public ObservableCollection<CarboGroup> getGroupList
         {
-            get { return groupList; }
+
+            get {return groupList;}
         }
+
+        public CarboGroup getTotalsGroup()
+        {
+            CarboGroup newGroup = new CarboGroup();
+            newGroup.Category = "Total";
+            newGroup.Material = null;
+            newGroup.Description = "Totals";
+            newGroup.Volume = 0;
+            newGroup.Density = 0;
+            newGroup.Mass = 0;
+            newGroup.ECI = 0;
+            newGroup.EC = 0;
+            newGroup.Id = getNewId();
+            double totals = 0;
+
+            foreach (CarboGroup cgr in getGroupList)
+            {
+                totals += cgr.EC;
+
+            }
+            newGroup.EC = Math.Round(totals,2);
+            newGroup.PerCent = 100;
+
+            return newGroup;
+        }
+
         public void SetGroups(ObservableCollection<CarboGroup> groupList)
         {
             this.groupList = groupList;
