@@ -480,5 +480,23 @@ namespace CarboLifeUI.UI
 
             }
         }
+
+        private void mnu_CreateMaterialFromElement_Click(object sender, RoutedEventArgs e)
+        {
+            List<CarboElement> selectedCarboElementList = new List<CarboElement>();
+            selectedCarboElementList = dgv_Elements.SelectedItems.Cast<CarboElement>().ToList();
+
+            if(selectedCarboElementList.Count == 1)
+            {
+                CarboElement newBufferElement = selectedCarboElementList[0];
+                string materialName = newBufferElement.MaterialName;
+                if(materialName != "")
+                    CarboLifeProject.CarboDatabase.AddMaterial(new CarboMaterial(materialName));
+            }
+            else
+            {
+                MessageBox.Show("Please select a element from the list");
+            }
+        }
     }
 }

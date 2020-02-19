@@ -242,8 +242,10 @@ namespace CarboLifeAPI.Data
         {
             bool result = false;
             bool exists = false;
+            int id = getUniqueId();
+            newMaterial.Id = id;
 
-            foreach(CarboMaterial cm in CarboMaterialList)
+            foreach (CarboMaterial cm in CarboMaterialList)
             {
                 if(cm.Name == newMaterial.Name)
                 {
@@ -264,6 +266,35 @@ namespace CarboLifeAPI.Data
 
             return result;
         }
+
+        private int getUniqueId()
+        {
+            Found:
+            Random rnd = new Random();
+            int id = rnd.Next(20000, 30000);  // creates a number between 1 and 12
+
+            bool isUnique = isUniqueId(id);
+
+            if (isUnique == false)
+                goto Found;
+            else
+                return id;
+        }
+
+        private bool isUniqueId(int id)
+        {
+            bool result = true;
+            foreach (CarboMaterial cm in CarboMaterialList)
+            {
+                if (cm.Id == id)
+                {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        }
+    
 
         public void deleteMaterial(int id)
         {

@@ -40,6 +40,7 @@
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
                     <GridViewColumn Header="Name" Width="250" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="ECI" Width="250" DisplayMemberBinding="{Binding ECI}"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -167,11 +168,12 @@
             </Grid>
         </GroupBox>
 
-        <Button Name="btn_New"  Grid.Row="3" Grid.Column="1" Height="25" Margin="0,0,0,0" VerticalAlignment="Top" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_New_Click" >New</Button>
-        <Button Name="btn_Delete"  Grid.Row="3" Grid.Column="1" Height="25" Margin="75,0,0,0" VerticalAlignment="Top" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_Delete_Click" >Delete</Button>
+        <Button Name="btn_New"  Grid.Row="3" Grid.Column="1" Height="25" Margin="0,0,0,0" VerticalAlignment="Center" Width="65" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_New_Click" >New</Button>
+        <Button Name="btn_Delete"  Grid.Row="3" Grid.Column="1" Height="25" Margin="75,0,0,0" VerticalAlignment="Center" Width="65" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_Delete_Click" >Delete</Button>
+        <Button Name="btn_Duplicate"  Grid.Row="3" Grid.Column="1" Height="25" Margin="150,0,0,0" VerticalAlignment="Center" Width="65" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Duplicate_Click" >Duplicate</Button>
+        <Button Name="btn_CopyProperties"  Grid.Row="3" Grid.Column="1" Height="25" Margin="225,0,0,0" VerticalAlignment="Center" Width="70" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_CopyProperties_Click" >Copy From</Button>
 
-
-        <Button Name="btn_Accept" Grid.Row="3" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
-        <Button Name="btn_Cancel" Grid.Row="3" Grid.Column="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
+        <Button Name="btn_Accept" Grid.Row="3" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
+        <Button Name="btn_Cancel" Grid.Row="3" Grid.Column="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
     </Grid>
 </Window>

@@ -2,7 +2,9 @@
 using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -343,6 +345,42 @@ namespace CarboLifeUI.UI
 
                 liv_materialList.SelectedIndex = 0;
             }
+        }
+
+        private void btn_Duplicate_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedMaterial != null)
+            {
+                ValueDialogBox vdb = new ValueDialogBox("New Material Name");
+                vdb.txt_Value.Focus();
+                vdb.ShowDialog();
+
+                if (vdb.isAccepted == true)
+                {
+                    CarboMaterial newMaterial = DeepCopy<CarboMaterial>(selectedMaterial);
+                    newMaterial.Name = vdb.Value;
+                    returnedDatabase.AddMaterial(newMaterial);
+                                                         
+                    RefreshMaterialList();
+                    selectMaterial(vdb.Value);
+                }
+            }
+        }
+
+        public static T DeepCopy<T>(T other)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(ms, other);
+                ms.Position = 0;
+                return (T)formatter.Deserialize(ms);
+            }
+        }
+
+        private void btn_CopyProperties_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
