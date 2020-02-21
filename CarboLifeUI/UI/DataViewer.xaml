@@ -41,6 +41,9 @@
                 <MenuItem Name="mnu_MergeGroup" Header="Merge Groups" Click="Mnu_MergeGroup_Click"/>
                 <MenuItem Name="mnu_DuplicateGroup" Header="Duplicate Group" Click="Mnu_DuplicateGroup_Click"/>
                 <MenuItem Name="mnu_reGroupData" Header="Rebuild Groups from Elements..." Click="Mnu_reGroupData_Click"/>
+                <Separator></Separator>
+                <MenuItem Name="mnu_Export" Header="Export Report" Click="mnu_Export_Click"/>
+
             </MenuItem>
             <MenuItem Header="Actions" Background="White"  VerticalAlignment="Top" Style="{StaticResource baseStyleLabel}">
                 <Separator></Separator>

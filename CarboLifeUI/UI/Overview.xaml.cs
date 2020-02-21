@@ -151,6 +151,8 @@ namespace CarboLifeUI.UI
         {
             if (CarboLifeProject != null)
             {
+                cnv_Totals.Children.Clear();
+
                 double totalCO2 = CarboLifeProject.getTotalsGroup().EC;
 
                 TextBlock summaryText = new TextBlock();
@@ -192,7 +194,6 @@ namespace CarboLifeUI.UI
             SaveSettings();
             RefreshInterFace();
         }
-
 
 
         //When assembly cant be find bind to current

@@ -498,5 +498,10 @@ namespace CarboLifeUI.UI
                 MessageBox.Show("Please select a element from the list");
             }
         }
+
+        private void mnu_Export_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

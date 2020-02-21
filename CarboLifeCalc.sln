@@ -102,11 +102,16 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Default = Debug|Default
 		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|Default = Release|Default
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Default = Debug|Default
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
 		Release|Default = Release|Default
+		Release|x64 = Release|x64
 	EndGlobalSection
 EndGlobal

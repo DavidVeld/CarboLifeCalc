@@ -44,7 +44,7 @@
                 <MenuItem Name="mnu_ExportSelection" Header="Export Data"/>
                 <MenuItem Name="mnu_ExportFull" Header="Export All to CSV" />
                 <Separator></Separator>
-                <MenuItem Name="mnu_BuildReport" Header="Save as Report"/>
+                <MenuItem Name="mnu_BuildReport" Header="Save as Report" Click="mnu_BuildReport_Click"/>
 
                 <Separator></Separator>
                 <MenuItem Name="mnu_CloseMe" Header="Close"/>
@@ -84,8 +84,8 @@
                     <local:DataViewer x:Name="DataScreen" Grid.Row="1" Grid.Column="1" Visibility="Visible" ></local:DataViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Graphs"></TabItem>
-            <TabItem Header="All Data"></TabItem>
+            <TabItem Header="Graphs" Visibility="Hidden"></TabItem>
+            <TabItem Header="All Data" Visibility="Hidden"></TabItem>
 
         </TabControl>
 
