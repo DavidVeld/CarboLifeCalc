@@ -78,21 +78,50 @@ namespace CarboLifeAPI.Data
         }
         public CarboMaterial getClosestMatch(string materialToLookup)
         {
+            int score = 0;
+            int highscore = -50;
+            int basescore = materialToLookup.Length;
+
             CarboMaterial result = new CarboMaterial();
-            int basedist = 100;
+            string[] wordsInMaterialToLookup = materialToLookup.Split(' ');
+
 
             foreach (CarboMaterial cm in this.CarboMaterialList)
             {
+                
+                score = 0;
+
+                //Direct Hit == LOADS OF POINTS;
+
+                if (cm.Name.ToLower() == materialToLookup.ToLower())
+                    score += (basescore * 3);
+
                 // string materialname = cm.Name;
                 int dist = Utils.CalcLevenshteinDistance(materialToLookup, cm.Name);
+                score += (basescore - dist);
 
-                if (dist < basedist)
+                //Get additional score points;
+
+                //See if any of the words have a direct match in the lookup;
+                foreach (string word in wordsInMaterialToLookup)
                 {
-                    basedist = dist;
+                    string lowerWord = word.ToLower();
+
+                    //Thif the material contains a word from the carbolist; get points
+                    bool contains = cm.Name.IndexOf(lowerWord, StringComparison.OrdinalIgnoreCase) >= 0;
+                    
+                    if (contains == true)
+                        score += basescore * 2;
+                }
+
+                //Make a decision of this is better than current best;
+                if (score > highscore)
+                {
+                    highscore = score;
                     result = cm;
                 }
             }
-
+            Utils.WriteToLog("LookedupMaterial: " + materialToLookup + " Score: " + highscore + " -> " + result.Name);
             return result;
         }
 

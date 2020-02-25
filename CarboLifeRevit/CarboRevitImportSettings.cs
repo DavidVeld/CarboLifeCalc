@@ -17,6 +17,7 @@ namespace CarboLifeRevit
         public string CutoffLevel { get; set; }
         public double CutoffLevelValue { get; set; }
         public bool IncludeDemo { get; set; }
+        public bool IncludeExisting { get; set; }
 
         public CarboRevitImportSettings()
         {
@@ -25,6 +26,7 @@ namespace CarboLifeRevit
             CutoffLevel = "Ground Floor";
             CutoffLevelValue = 0;
             IncludeDemo = false;
+            IncludeExisting = false;
         }
 
         public CarboRevitImportSettings DeSerializeXML()

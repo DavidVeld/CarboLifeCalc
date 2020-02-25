@@ -16,6 +16,7 @@ namespace CarboLifeAPI.Data
         public double Volume { get; set; }
         public double Level { get; set; }
         public bool isDemolished { get; set; }
+        public bool isExisting { get; set; }
         public bool isSubstructure { get; set; }
 
         public CarboMaterial Material {get;set; }
@@ -30,6 +31,7 @@ namespace CarboLifeAPI.Data
             Volume = 0;
             Level = 0;
             isDemolished = false;
+            isExisting = false;
             Material = new CarboMaterial();
         }
 

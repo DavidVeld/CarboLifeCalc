@@ -72,7 +72,7 @@ namespace CarboLifeRevit
             cbb_Levels.Text = settings.CutoffLevel;
             //txt_SpecialTypes.Text = settings.TypeNameSeparators;
             chk_ImportDemolished.IsChecked = settings.IncludeDemo;
-
+            chk_ImportExisting.IsChecked = settings.IncludeExisting;
         }
 
         private double getCutoffLevel()
@@ -117,8 +117,9 @@ namespace CarboLifeRevit
             settings.IncludeDemo = chk_ImportDemolished.IsChecked.Value;
             settings.CutoffLevel = cbb_Levels.Text;
             settings.CutoffLevelValue = getCutoffLevel();
-            settings.SerializeXML();
+            settings.IncludeExisting = chk_ImportExisting.IsChecked.Value;
 
+            settings.SerializeXML();
             importSettings = settings;
         }
     }

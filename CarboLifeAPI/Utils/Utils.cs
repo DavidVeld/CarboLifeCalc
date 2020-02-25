@@ -226,5 +226,19 @@ namespace CarboLifeAPI
                 return false;
             }
         }
+
+        public static void WriteToLog(string text)
+        {
+            string fileName = "db\\log.txt";
+
+            string myPath = Utils.getAssemblyPath() + "\\" + fileName;
+            string timeStamp = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss.ff");
+
+            using (StreamWriter sw = File.AppendText(myPath))
+            {
+                sw.WriteLine(timeStamp + " :: " + text);
+            }
+
+        }
     }
 }

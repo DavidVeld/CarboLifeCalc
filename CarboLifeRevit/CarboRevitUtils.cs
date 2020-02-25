@@ -27,6 +27,7 @@ namespace CarboLifeRevit
                 double setLevel;
                 bool setIsDemolished;
                 bool setIsSubstructure;
+                bool setIsExisting;
 
                 // Material material = doc.GetElement(materialIds) as Material;
                 //Id:
@@ -92,19 +93,46 @@ namespace CarboLifeRevit
                 else
                     setIsSubstructure = false;
 
-                //Set Demolition
+                //Get Phasing;
+                Phase elCreatedPhase = doc.GetElement(el.CreatedPhaseId) as Phase;
                 Phase elDemoPhase = doc.GetElement(el.DemolishedPhaseId) as Phase;
+                
+
                 if (elDemoPhase != null)
                 {
                     setIsDemolished = true;
-                    if (settings.IncludeDemo == false)
-                        return null;
                 }
                 else
                 {
                     setIsDemolished = false;
                 }
-                //Set all properties
+
+                if (elCreatedPhase.Name == "Existing")
+                {
+                    setIsExisting = true;
+                }
+                else
+                {
+                    setIsExisting = false;
+                }
+
+                //Makepass;
+
+                //Is existing and retained
+                if (setIsExisting == true && setIsDemolished == false)
+                {
+                    if (settings.IncludeExisting == false)
+                        return null;
+                }
+
+                //Is demolished
+                if (setIsDemolished == true)
+                {
+                    if(settings.IncludeDemo == false)
+                        return null;
+                }
+
+                //If it passed it is either proposed, or demolished and retained.
 
                 newCarboElement.Id = setId;
                 newCarboElement.Name = setName;
@@ -115,14 +143,9 @@ namespace CarboLifeRevit
                 newCarboElement.Material = carboMaterial;
                 newCarboElement.Level = Math.Round(setLevel,3);
                 newCarboElement.isDemolished = setIsDemolished;
+                newCarboElement.isExisting = setIsExisting;
                 newCarboElement.isSubstructure = setIsSubstructure;
-
-
-                //Makepass;
-                if (settings.IncludeDemo == false && setIsDemolished == true)
-                    return null;
-
-
+                             
                 if (newCarboElement.Volume != 0)
                 {
                     return newCarboElement;
