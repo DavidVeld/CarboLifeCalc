@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d"  Title="Carbon Life: Element Grouping Settings"
-             d:DesignHeight="600" d:DesignWidth="1000" MinWidth="1000" MinHeight="600" Width="1000" Height="600" Loaded="Window_Loaded">
+             d:DesignHeight="600" d:DesignWidth="1450" MinWidth="1450" MinHeight="600" Width="1450" Height="600" Loaded="Window_Loaded">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -63,7 +63,24 @@
         <Button Name="btn_Group" Grid.Row="6" Grid.Column="2" Grid.RowSpan="2" Margin="0,0,5,5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Group_Click">Group</Button>
 
         <Label Grid.Column="3" Margin="0,0,10,0" Grid.Row="2" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Preview:</Label>
-        <DataGrid Name="dgv_Preview" Grid.Column="4" Grid.Row="2" Grid.RowSpan="6" Margin="0,22,5,5" IsReadOnly="True"  EnableRowVirtualization="false"  CanUserAddRows="False" CanUserReorderColumns="False" ColumnWidth="*"/>
+        <DataGrid AutoGenerateColumns="False" Name="dgv_Preview" Grid.Column="4" Grid.Row="2" Grid.RowSpan="6" Margin="0,22,5,5" IsReadOnly="True"  EnableRowVirtualization="false"  CanUserAddRows="False" CanUserReorderColumns="False" ColumnWidth="*" HorizontalScrollBarVisibility="Hidden">
+            <DataGrid.Columns>
+                <DataGridTextColumn MinWidth="25" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
+
+                <DataGridTextColumn Width="1*" MinWidth="200" Header="Category" Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="200" Header="Material" Binding="{Binding Path=MaterialName}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Description" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="90" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
+
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="90" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="100" Header="ECI(kgCo2/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="EC (tCo2)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
 
 
         <Button Name="btn_Accept" Grid.Row="8" Grid.Column="4" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Import_Click">Accept</Button>

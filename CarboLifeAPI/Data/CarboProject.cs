@@ -27,6 +27,8 @@ namespace CarboLifeAPI.Data
         public double Value { get; set; }
         public double Area { get; set; }
         public string filePath { get; set; }
+        //Project based value
+        public double A5 { get; set; }
 
         public List<CarboLevel> carboLevelList { get; set; }
 
@@ -60,7 +62,6 @@ namespace CarboLifeAPI.Data
             foreach (CarboGroup cgr in getGroupList)
             {
                 totals += cgr.EC;
-
             }
             newGroup.EC = Math.Round(totals,2);
             newGroup.PerCent = 100;
@@ -231,10 +232,36 @@ namespace CarboLifeAPI.Data
             return valueList;
         }
 
+        public string getSummaryText(bool materials, bool globals, bool cars, bool trees)
+        {
+            string result = "";
+
+            double totalMaterials = getTotalsGroup().EC;
+            double totalA5 = A5;
+            double totalTotal = totalMaterials + totalA5;
+
+            if (materials == true)
+                result += "Total, material specific: " + Math.Round(totalMaterials, 2) + " MtCO2e " + Environment.NewLine;
+            if (globals == true)
+                result += "Total, global project specific (A5): " + Math.Round(totalA5, 2) + " MtCO2e" + Environment.NewLine;
+            
+            if(totalA5 == 0)
+                result += "(No project value to base A5 emissions )" + Environment.NewLine;
+
+            result += "Total: " + Math.Round(totalTotal, 2) + " MtCO2e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine;
+            
+            if (materials == true)
+                result += "This equals to: " + Math.Round(totalTotal / 68.5, 2) + " average car emission per year. (UK)" + Environment.NewLine;
+            if (materials == true)
+                result += "This requires " + Math.Round(totalTotal / 0.0217724, 0) + " trees to exists a year" + Environment.NewLine;
+
+            return result;
+        }
 
         public void CalculateProject()
         {
             //EE = 0;
+            
             EC = 0;
             //This Will calculate all totals;
             foreach(CarboGroup cg in groupList)
@@ -250,6 +277,10 @@ namespace CarboLifeAPI.Data
                 cg.SetPercentageOf(EC);
             }
 
+            //Set A5 based on value;
+            //1.400tCO2e/£100k
+            A5 = 1.400 * (Value / 100000);
+                       
         }
         public void GenerateDummyList()
         {

@@ -27,15 +27,15 @@ namespace CarboLifeAPI.Data
             return result;
         }
 
-        public static ObservableCollection<CarboGroup> GroupElementsAdvanced(ObservableCollection<CarboElement> carboElementList, 
-            bool groupCategory, 
-            bool groupSubCategory,
-            bool groupType,
-            bool groupMaterial, 
-            bool groupSubStructure, 
-            bool groupDemolition, 
-            CarboDatabase materialData,
-            string uniqueTypeNames = "")
+        public static ObservableCollection<CarboGroup> GroupElementsAdvanced(ObservableCollection<CarboElement> carboElementList,
+                                                                             bool groupCategory,
+                                                                             bool groupSubCategory,
+                                                                             bool groupType,
+                                                                             bool groupMaterial,
+                                                                             bool groupSubStructure,
+                                                                             bool groupDemolition,
+                                                                             CarboDatabase materialData,
+                                                                             string uniqueTypeNames = "")
         {
             ObservableCollection<CarboGroup> result = new ObservableCollection<CarboGroup>();
 
@@ -44,7 +44,7 @@ namespace CarboLifeAPI.Data
                 result = AddToCarboGroup(result, ce, groupCategory, groupSubCategory, groupType, groupMaterial, groupSubStructure, groupDemolition, uniqueTypeNames);
             }
 
-            
+
             result = mapGroupMaterials(result, materialData);
             result = RefreshValues(result);
             return result;
@@ -63,15 +63,6 @@ namespace CarboLifeAPI.Data
         {
             int idbase = 1000;
             //define all constnts
-
-            bool matchCategory = false;
-            bool matchSubCategory = false;
-            bool matchType = false;
-            bool matchMaterial = false;
-            bool matchSubStructure = false;
-            bool matchDemolition = false;
-            bool matchUniqueType = false;
-
             bool okCategory = false;
             bool okSubCategory = false;
             bool okType = false;
@@ -80,6 +71,7 @@ namespace CarboLifeAPI.Data
             bool okDemolition = false;
             bool okUniqueType = false;
 
+
             bool containsRelavantName = false;
 
             //split 
@@ -87,6 +79,22 @@ namespace CarboLifeAPI.Data
 
             foreach (CarboGroup cg in carboGroupList)
             {
+                bool matchCategory = false;
+                bool matchSubCategory = false;
+                bool matchType = false;
+                bool matchMaterial = false;
+                bool matchSubStructure = false;
+                bool matchDemolition = false;
+                bool matchUniqueType = false;
+
+                okCategory = false;
+                okSubCategory = false;
+                okType = false;
+                okMaterial = false;
+                okSubStructure = false;
+                okDemolition = false;
+                okUniqueType = false;
+
                 //Find which conditions match
                 //Category
                 if (cg.Category == carboElement.Category)
@@ -234,6 +242,8 @@ namespace CarboLifeAPI.Data
                     }
                 }
 
+
+
                 //If all passes add to group if not skip and create new group;
                 if (
                     okCategory == true &&
@@ -245,6 +255,16 @@ namespace CarboLifeAPI.Data
                  okUniqueType == true)
                 {
                     cg.AllElements.Add(carboElement);
+
+                Utils.WriteToLog("Mapped element: [" + carboElement.Category + "] - [" + carboElement.MaterialName + "] to group: [" + cg.Category + "] - [" +  cg.MaterialName + "] -> " + 
+                    " Category: " + okCategory + 
+                    " sub Category: " + okSubCategory + 
+                    " Type: " + okType + 
+                    " Material: " + okMaterial + 
+                    " SubStr: " + okSubStructure + 
+                    " Demo: " + okDemolition + 
+                    " Uniquetype: " + okUniqueType);
+
                     return carboGroupList;
                 }
             }
@@ -266,6 +286,16 @@ namespace CarboLifeAPI.Data
             //newGroup.Volume = carboElement.Volume;
 
             carboGroupList.Add(newGroup);
+
+            Utils.WriteToLog("Created New group for element: " + carboElement.Category + " - " + carboElement.MaterialName + " New Group: " + newGroup.MaterialName + " -> " +
+            " Category: " + okCategory +
+            " sub Category: " + okSubCategory +
+            " Type: " + okType +
+            " Material: " + okMaterial +
+            " SubStr: " + okSubStructure +
+            " Demo: " + okDemolition +
+            " Uniquetype: " + okUniqueType);
+
             return carboGroupList;
 
         }

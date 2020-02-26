@@ -136,7 +136,6 @@
 
                 <Button Name="btn_SaveInfo" Grid.Column="3" Grid.Row="7" Height="25" Width="75"  Margin="10,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="left" Style="{StaticResource ButtonStyle}" Click="Btn_SaveInfo_Click">Apply</Button>
             </Grid>
-
         </GroupBox>
 
         <Canvas Name="cnv_Totals" Grid.Column="2" Margin="5,5,5,5" Grid.Row="3" Background="White"></Canvas>

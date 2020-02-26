@@ -153,11 +153,11 @@ namespace CarboLifeUI.UI
             {
                 cnv_Totals.Children.Clear();
 
-                double totalCO2 = CarboLifeProject.getTotalsGroup().EC;
+
 
                 TextBlock summaryText = new TextBlock();
-                summaryText.Text = "Total: " + Math.Round(totalCO2,2) + " MtCO2e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine + 
-                    "This equals to: " + Math.Round(totalCO2 / 68.5, 2) + " average car emission per year. (UK)";
+                summaryText.Text = CarboLifeProject.getSummaryText(true, true, true, true);
+                    
 
                 summaryText.Foreground = Brushes.Black;
                 summaryText.TextWrapping = TextWrapping.WrapWithOverflow;
@@ -187,6 +187,8 @@ namespace CarboLifeUI.UI
 
             CarboLifeProject.Area = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Area.Text);
             CarboLifeProject.Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
+            CarboLifeProject.CalculateProject();
+
         }
 
         private void Btn_SaveInfo_Click(object sender, RoutedEventArgs e)
