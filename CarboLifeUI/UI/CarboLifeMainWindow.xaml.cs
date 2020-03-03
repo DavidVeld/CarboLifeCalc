@@ -1,4 +1,5 @@
-﻿using CarboLifeAPI.Data;
+﻿using CarboLifeAPI;
+using CarboLifeAPI.Data;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,14 @@ namespace CarboLifeUI.UI
         }
         private void Menu_Loaded(object sender, RoutedEventArgs e)
         {
+            //Delete log
+            string fileName = "db\\log.txt";
+            string logPath = Utils.getAssemblyPath() + "\\" + fileName;
+
+            if (File.Exists(logPath))
+                File.Delete(logPath);
+
+            Utils.WriteToLog("New Log Started: " + carboLifeProject.Name);
         }
 
         internal CarboProject getCarbonLifeProject()

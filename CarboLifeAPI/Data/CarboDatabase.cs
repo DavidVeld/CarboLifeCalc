@@ -73,7 +73,6 @@ namespace CarboLifeAPI.Data
                     result = cm;
                 }
             }
-
             return result;
         }
         public CarboMaterial getClosestMatch(string materialToLookup)
@@ -124,7 +123,6 @@ namespace CarboLifeAPI.Data
             Utils.WriteToLog("LookedupMaterial: " + materialToLookup + " Score: " + highscore + " -> " + result.Name);
             return result;
         }
-
         public List<string> getCategoryList()
         {
             List<string> result = new List<string>();
@@ -213,10 +211,9 @@ namespace CarboLifeAPI.Data
                     using (FileStream fs = new FileStream(myPath, FileMode.Open))
                     {
                         bufferproject = ser.Deserialize(fs) as CarboDatabase;
-
                     }
-
-                return bufferproject;
+                        Utils.WriteToLog("Deserialised: " + myPath);
+                    return bufferproject;
 
                 }
                 catch (Exception ex)
@@ -232,39 +229,6 @@ namespace CarboLifeAPI.Data
 
             return null;
 
-        }
-
-        public void Update(CarboDatabase cdb)
-        {
-            List<CarboMaterial> newMaterials = new List<CarboMaterial>();
-
-            foreach (CarboMaterial cmNew in cdb.CarboMaterialList)
-            {
-                bool isfound = false;
-
-                foreach (CarboMaterial cmCurrent in this.CarboMaterialList)
-                {
-                    if (cmCurrent.Name == cmNew.Name)
-                    {
-                        cmCurrent.Copy(cmNew);
-                        isfound = true;
-                        break;
-                    }
-                }
-                if (isfound == false)
-                {
-                    //This is a new material add it to the list;
-                    newMaterials.Add(cmNew);
-                }
-
-            }
-            if(newMaterials.Count > 0)
-            {
-                foreach(CarboMaterial cm in newMaterials)
-                {
-                    this.CarboMaterialList.Add(cm);
-                }
-            }
         }
 
         public bool AddMaterial(CarboMaterial newMaterial)
@@ -322,8 +286,7 @@ namespace CarboLifeAPI.Data
                 }
             }
             return result;
-        }
-    
+        }   
 
         public void deleteMaterial(int id)
         {
@@ -352,5 +315,54 @@ namespace CarboLifeAPI.Data
             if (ok == true)
                 MessageBox.Show(name + " deleted.", "Deleted", MessageBoxButton.OK);
         }
+
+        /// <summary>
+        /// Will update one database without the other, no elements will be deleted.
+        /// </summary>
+        /// <param name="userMaterials">The database the user wants to syncronize with</param>
+        /// <returns></returns>
+        public bool SyncMaterials(CarboDatabase userMaterials)
+        {
+            try
+            {
+                //Loop though all materials and update the current ones
+                for (int i = userMaterials.CarboMaterialList.Count - 1; i > 0; i--)
+                {
+                    CarboMaterial newcarboMaterial = userMaterials.CarboMaterialList[i];
+                    bool matchfound = false;
+
+                    //Find a match in current database
+                    foreach (CarboMaterial carboMaterial in this.CarboMaterialList)
+                    {
+                        if (newcarboMaterial.Name == carboMaterial.Name)
+                        {
+                            //Copy all properties;
+                            carboMaterial.Copy(newcarboMaterial);
+                            matchfound = true;
+                            //next'
+                            break;
+                        }
+                    }
+
+                    //If this part has been reached; 
+                    //the material doesn't exist in the database and a new material will be created:
+                    if (matchfound == false)
+                    {
+                        AddMaterial(newcarboMaterial);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                Utils.WriteToLog(ex.Message);
+                return false;
+            }
+
+            //success:
+            return true;
+        }
+
+
+
     }
 }

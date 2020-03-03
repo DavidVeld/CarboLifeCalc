@@ -287,11 +287,6 @@ namespace CarboLifeUI.UI
             this.Close();
         }
 
-        private void Mnu_ImportData_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void Mnu_ImportNew_Click(object sender, RoutedEventArgs e)
         {
             string name = "";
@@ -386,7 +381,8 @@ namespace CarboLifeUI.UI
             //Get the profile from a cvs:
             try
             {
-                MessageBoxResult result = MessageBox.Show("Do you want to update the usermaterials based on a project or database file ?", "Warning", MessageBoxButton.YesNo);
+                MessageBoxResult result = MessageBox.Show("Do you want to update the base set of usermaterials based on these project settings ?" + Environment.NewLine +
+                    "Materials with excact same names will be overwritten", "Warning", MessageBoxButton.YesNo);
 
                 if (result == MessageBoxResult.Yes)
                 {
@@ -399,12 +395,15 @@ namespace CarboLifeUI.UI
                     {
                         name = openFileDialog.FileName;
 
-                        CarboDatabase cdb = new CarboDatabase();
+                        CarboDatabase buffer = UserMaterials.DeSerializeXML(name);
+                        
+                        bool syncResult = UserMaterials.SyncMaterials(buffer);
 
-                        cdb = cdb.DeSerializeXML(name);
-                        if (cdb != null & cdb.CarboMaterialList.Count > 0)
+                        if (syncResult == true)
                         {
-                            UserMaterials.Update(cdb);
+                            buffer.SerializeXML(name);
+                            Utils.WriteToLog("Database saved to: " + name);
+                            MessageBox.Show("Dataset saved");
                         }
                     }
                 }
@@ -428,11 +427,11 @@ namespace CarboLifeUI.UI
                 FileInfo finfo = new FileInfo(saveFileDialog.FileName);
                 if (saveFileDialog.FileName != "")
                 {
-                    if(File.Exists(name))
+                    if (File.Exists(name))
                     {
 
                         MessageBoxResult result = MessageBox.Show("Do you want to override the file?", "Warning", MessageBoxButton.YesNo);
-                        if(result == MessageBoxResult.Yes)
+                        if (result == MessageBoxResult.Yes)
                         {
                             UserMaterials.SerializeXML(name);
                             MessageBox.Show("User Database Saved", "Information", MessageBoxButton.OK);
@@ -447,5 +446,87 @@ namespace CarboLifeUI.UI
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        private void mnu_ImportUser_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to update the PROJECT MATERIALS based on the DEFAULT USER MATERIALS?" + Environment.NewLine +
+                    "Materials with IDENTICAL names will be OVERWRITTEN, NON-EXISTING  materials will be ADDED", "Warning", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    string name = "db\\UserMaterials";
+                    CarboDatabase buffer = UserMaterials.DeSerializeXML(name);
+
+                    bool syncResult = UserMaterials.SyncMaterials(buffer);
+
+                    if (syncResult == true)
+                    {
+                        buffer.SerializeXML(name);
+                        Utils.WriteToLog("Database saved to: " + name);
+                        MessageBox.Show("Dataset saved");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Dataset not saved");
+                    Utils.WriteToLog("Database not saved");
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Utils.WriteToLog(ex.Message);
+
+            }
+            RefreshTable();
+
+        }
+
+        private void mnu_ExportUser_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to update the DEFAULT USER MATERIALS based on these PROJECT settings ?" + Environment.NewLine +
+                    "Materials with IDENTICAL names will be OVERWRITTEN, NON-EXISTING  materials will be ADDED", "Warning", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    string name = "db\\UserMaterials";
+                    CarboDatabase buffer = UserMaterials.DeSerializeXML(name);
+                    bool syncResult = buffer.SyncMaterials(UserMaterials);
+
+                    if (syncResult == true)
+                    {
+                        buffer.SerializeXML(name);
+                        Utils.WriteToLog("Database saved to: " + name);
+
+                    }
+                    MessageBox.Show("Dataset saved");
+                }
+
+                else
+                {
+                    MessageBox.Show("Dataset not saved");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Utils.WriteToLog(ex.Message);
+
+            }
+            RefreshTable();
+        }
+
+        private void mnu_OpenDataas_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
+

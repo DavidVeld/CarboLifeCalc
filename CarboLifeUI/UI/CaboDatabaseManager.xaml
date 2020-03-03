@@ -46,15 +46,18 @@
 
                     <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top">
                         <MenuItem FontSize="14" Header="Data" Background="White" Style="{StaticResource baseStyleLabel}">
-                            <MenuItem Name="mnu_ImportData" Header="_Import Into..." Click="Mnu_ImportData_Click" />
-                            <MenuItem Name="mnu_ImportNew" Header="_Import as New..." Click="Mnu_ImportNew_Click" />
-                            <MenuItem Name="mnu_UpdateData" Header="_Update User Materials..." Click="Mnu_UpdateUserMaterials" />
+                            <MenuItem Name="mnu_ImportNew" Header="_Import from CSV" Click="Mnu_ImportNew_Click" />
+                            
+                            <Separator/>
+                            <MenuItem Name="mnu_ExportBase" Header="_Sync to User Materials" Click="mnu_ExportUser_Click" />
+                            <MenuItem Name="mnu_ImportBase" Header="_Import Default User Materials" Click="mnu_ImportUser_Click" />
+                            <MenuItem Name="mnu_SaveData" Header="Save Current as User Materials" Click="Mnu_SaveData_Click"  />
 
                             <Separator/>
-                            <MenuItem Name="mnu_SaveDataas" Header="Save Dataset As..." Click="Mnu_SaveDataAs_Click"  />
-                            <MenuItem Name="mnu_SaveData" Header="Set Current Dataset as Default" Click="Mnu_SaveData_Click"  />
-                            <MenuItem Name="mnu_ExportToCSV" Header="Export as CSV..." Click="Mnu_EXportToCVS" />
 
+                            <MenuItem Name="mnu_SaveDataas" Header="Save User Materials Data As..." Click="Mnu_SaveDataAs_Click" Visibility="Visible" />
+                            <MenuItem Name="mnu_OpenDataas" Header="Open User Materials Data From..." Click="Mnu_UpdateUserMaterials" Visibility="Visible" />
+                            <Separator/>
                         </MenuItem>
                     </Menu>
 
