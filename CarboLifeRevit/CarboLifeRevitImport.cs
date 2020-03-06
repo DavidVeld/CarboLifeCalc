@@ -30,6 +30,8 @@ namespace CarboLifeRevit
 
             ICollection<ElementId> selectionList = uidoc.Selection.GetElementIds();
 
+            double area = 0;
+
             #region buildQuantitiestable
 
             if (selectionList.Count == 0)
@@ -61,6 +63,9 @@ namespace CarboLifeRevit
                                     myProject.AddElement(carboElement);
                             }
                         }
+
+                        //See if is floor(then count area)
+                        area += getFloorarea(el);
                     }
                 }
                 catch (Exception ex)
@@ -83,7 +88,11 @@ namespace CarboLifeRevit
                             {
                                 CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, settings);
                             }
+
+                            //See if is floor(then count area)
+                            area += getFloorarea(el);
                         }
+
                     }
                 }
                 catch (Exception ex)
@@ -98,6 +107,10 @@ namespace CarboLifeRevit
             if (myProject.getAllElements.Count > 0)
             {
                 myProject.CreateGroups();
+
+                double areaMSqr = Math.Round((area * (0.3048 * 0.3048)),2);
+                myProject.Area = areaMSqr;
+
                 CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(myProject);
                 AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
@@ -120,6 +133,30 @@ namespace CarboLifeRevit
                 }
                 return ayResult;
             }
+        }
+
+        private static double getFloorarea(Element el)
+        {
+            double result = 0;
+
+            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.IntegerValue;
+
+            if (enumCategory == BuiltInCategory.OST_Floors)
+            {
+                Floor floorElement = el as Floor;
+                if (floorElement != null)
+                {
+
+                    Parameter floorPar = floorElement.LookupParameter("Area");
+                    if (floorPar != null)
+                    {
+                        double floorArea = floorPar.AsDouble();
+                        result += floorArea;
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

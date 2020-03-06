@@ -178,9 +178,9 @@ namespace CarboLifeAPI
         private static string writeReportTable(CarboProject carboProject)
         {
 
-            string html = "<H1><B>" + "Embedded Carbon Calculation Groups" + "</B></H1><BR>" + System.Environment.NewLine;
+            string html = "<H1><B>" + "Embodied Carbon Calculation Groups:" + "</B></H1><BR>" + System.Environment.NewLine;
             
-            html += "<TABLE border=1 cellpadding=0 cellspacing=0>";
+            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=850>";
             
             html += "<TR></TR>";
             //ResultTable in a table
@@ -205,17 +205,17 @@ namespace CarboLifeAPI
                 html += "</TR>" + System.Environment.NewLine;
                 //UNITS
                 html += "<TR>" + System.Environment.NewLine;
-                html += "<TD align='middle'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD align='middle'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD align='middle'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
 
-                html += "<TD align='middle'><B>" + "m³" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD align='middle'><B>" + "kg/m³" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD align='middle'><B>" + "kg" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "m³" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "kg/m³" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "kg" + "</B></TD>" + System.Environment.NewLine;
 
-                html += "<TD align='middle'><B>" + "kgCo<SUB>2</SUB>/kg" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD align='middle'><B>" + "tCo<SUB>2</SUB>" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD align='middle'><B>" + "%" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "kgCO<SUB>2</SUB>/kg" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "tCO<SUB>2</SUB>" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "%" + "</B></TD>" + System.Environment.NewLine;
 
                 html += "</TR>" + System.Environment.NewLine;
 
@@ -309,19 +309,25 @@ namespace CarboLifeAPI
 
             try
             {
-                html = "<HTML><HEAD><TITLE>Carbon Life Calculation</TITLE>" + System.Environment.NewLine;
+                html = "<HTML><HEAD><TITLE>Carbon Life Calculation for: " + carboProject.Name + " </TITLE>" + System.Environment.NewLine;
                 //add header row
                 html += "<LINK href = 'https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>" + System.Environment.NewLine;
 
                 html += getCSS();
                 html += "</HEAD><BODY>";
-                html += "<H1>Project</H1>" + System.Environment.NewLine;
+                html += "<H1>Project Info:</H1>" + System.Environment.NewLine;
                 html += "<H2>Name: " + carboProject.Name + "</H2>" + System.Environment.NewLine;
                 html += "<H2>Description: " + carboProject.Description + "</H2>" + System.Environment.NewLine;
-                html += "<H2>Value: " + carboProject.Value + "</H2>" + System.Environment.NewLine;
-                html += "<H2>Area: " + carboProject.Area + "</H2>" + System.Environment.NewLine;
-                html += "<H2>Category: " + carboProject.Area + "</H2>" + System.Environment.NewLine;
+                html += "<H2>Value: £ " + carboProject.Value + " </H2>" + System.Environment.NewLine;
+                html += "<H2>Area: " + carboProject.Area + " m²</H2>" + System.Environment.NewLine;
+                html += "<H2>" + Math.Round(carboProject.getTotalEC(), 2) + " tCO<SUB>2</SUB></H2>" + System.Environment.NewLine;
+                html += "<H2>" + Math.Round((carboProject.getTotalEC()/carboProject.Area), 2) + " tCO<SUB>2</SUB>/m²</H2>" + System.Environment.NewLine;
+
+                html += "<H2>Category: " + carboProject.Category + "</H2>" + System.Environment.NewLine;
                 html += "<H2>Export Date: " + DateTime.Today.ToShortDateString() + "</H2>" + System.Environment.NewLine;
+
+                html += "<H3>" + carboProject.getSummaryText(true,true,true,true) + "</H3>" + System.Environment.NewLine;
+
             }
             catch (Exception ex)
             {

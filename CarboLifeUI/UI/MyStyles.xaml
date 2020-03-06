@@ -17,7 +17,7 @@
 
     </Style>
     <Style TargetType="{x:Type Control}" x:Key="baseStyleLabel">
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="15" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold" />
@@ -61,12 +61,20 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="LightGray"/>
     </Style>
+    <Style TargetType="{x:Type Control}" x:Key="MenuItemMarkup">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="FontWeight" Value="Regular" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Background" Value="WhiteSmoke"/>
+    </Style>
 
     <Style TargetType="{x:Type Button}" BasedOn="{StaticResource allbuttons}"></Style>
     <Style TargetType="{x:Type Label}" BasedOn="{StaticResource baseStyleLabel}"></Style>
     <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource baseStyle}"></Style>
     <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource baseStyle}"></Style>
     <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource baseStyle}"></Style>
+    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MenuItemMarkup}"></Style>
 
     <!-- ComboBox, RadioButton, CheckBox, etc... -->
 
@@ -241,16 +249,16 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Panel" Property="Background" Value="#d51c6a"/>
+                            <Setter TargetName="Panel" Property="Background" Value="#FFB21616"/>
                             <Setter Property="Foreground" Value="White"/>
                             <Setter Property="FontFamily" Value="Segoe UI"></Setter>
-                            <Setter Property="FontSize" Value="14"></Setter>
+                            <Setter Property="FontSize" Value="15"></Setter>
                             <Setter Property="FontWeight" Value="DemiBold"></Setter>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="False">
                             <Setter TargetName="Panel" Property="Background" Value="White" />
                             <Setter Property="FontFamily" Value="Segoe UI"></Setter>
-                            <Setter Property="FontSize" Value="14"></Setter>
+                            <Setter Property="FontSize" Value="15"></Setter>
                             <Setter Property="FontWeight" Value="DemiBold"></Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>

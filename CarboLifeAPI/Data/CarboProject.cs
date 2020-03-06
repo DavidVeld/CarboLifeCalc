@@ -232,6 +232,15 @@ namespace CarboLifeAPI.Data
             return valueList;
         }
 
+        public double getTotalEC() 
+        {
+            double totalMaterials = getTotalsGroup().EC;
+            double totalA5 = A5;
+            double totalTotal = totalMaterials + totalA5;
+            
+            return totalTotal;
+        }
+
         public string getSummaryText(bool materials, bool globals, bool cars, bool trees)
         {
             string result = "";
@@ -248,10 +257,16 @@ namespace CarboLifeAPI.Data
             if(totalA5 == 0)
                 result += "(No project value to base A5 emissions )" + Environment.NewLine;
 
-            result += "Total: " + Math.Round(totalTotal, 2) + " MtCO2e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine;
-            
+            result += "Total: " + Math.Round(totalTotal, 2) + " MtCO2e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine + Environment.NewLine;
+            if (Area > 0)
+            {
+                result += "Total: " + Math.Round(totalTotal / Area, 2) + " MtCO2e/m² (Metric tons of carbon dioxide equivalent)" + Environment.NewLine;
+            }
+
+            result += Environment.NewLine;
+
             if (materials == true)
-                result += "This equals to: " + Math.Round(totalTotal / 68.5, 2) + " average car emission per year. (UK)" + Environment.NewLine;
+                result += "This equals to: " + Math.Round(totalTotal / 68.5, 2) + " average car emission per year. (UK)" + Environment.NewLine + Environment.NewLine;
             if (materials == true)
                 result += "This requires " + Math.Round(totalTotal / 0.0217724, 0) + " trees to exists a year" + Environment.NewLine;
 
