@@ -211,6 +211,7 @@ namespace CarboLifeUI.UI
                     if (valueisParameter == true)
                     {
                         // If its not a property it will be added as a free parameter.
+                        /*
                         try
                         {
 
@@ -238,6 +239,7 @@ namespace CarboLifeUI.UI
                         {
                             messageString += ex.Message;
                         }
+                        */
                     }
 
                     //columncount++;

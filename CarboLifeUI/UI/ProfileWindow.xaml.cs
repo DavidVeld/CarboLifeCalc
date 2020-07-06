@@ -150,8 +150,6 @@ namespace CarboLifeUI.UI
             isAccepted = true;
             CarboMaterial material = materials.GetExcactMatch(cbb_ProfileMaterial.Text);
 
-
-
             concreteGroup.Volume = Utils.ConvertMeToDouble(txt_ConcreteVolume.Text);
             concreteGroup.Description += " - Corrected volume";
 

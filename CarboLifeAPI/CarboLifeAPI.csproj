@@ -70,15 +70,23 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\CarboDProperties.cs" />
+    <Compile Include="Data\CarboB1B5Properties.cs" />
     <Compile Include="Data\CarboElement.cs" />
     <Compile Include="Data\CarboElementImporter.cs" />
     <Compile Include="Data\CarboMaterial.cs" />
     <Compile Include="Data\CarboGroup.cs" />
     <Compile Include="Data\CarboDatabase.cs" />
     <Compile Include="Data\CarboProject.cs" />
+    <Compile Include="Data\CarboA5Properties.cs" />
+    <Compile Include="Data\CarboA4Properties.cs" />
+    <Compile Include="Data\CarboC1C4Properties.cs" />
     <Compile Include="Data\CarboProperty.cs" />
     <Compile Include="Data\CarboGroupSettings.cs" />
+    <Compile Include="UtilClasses\A1A3Collection.cs" />
     <Compile Include="UtilClasses\CarboLevel.cs" />
+    <Compile Include="UtilClasses\EoLElement.cs" />
+    <Compile Include="UtilClasses\Vehicle.cs" />
     <Compile Include="Utils\CarboDataPoint.cs" />
     <Compile Include="Utils\ReadWriteCsv.cs" />
     <Compile Include="Utils\ReportBuilder.cs" />

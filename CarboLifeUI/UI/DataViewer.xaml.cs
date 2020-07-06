@@ -259,18 +259,41 @@ namespace CarboLifeUI.UI
 
         private void Mnu_Reinforce_Click(object sender, RoutedEventArgs e)
         {
-            CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
-            if (carboGroup != null)
+            if (dgv_Overview.SelectedItems.Count > 0)
             {
-                ReinforcementWindow reinforementWindow = new ReinforcementWindow(CarboLifeProject.CarboDatabase, carboGroup);
-                reinforementWindow.ShowDialog();
+                var selectedItems = dgv_Overview.SelectedItems;
+                IList<CarboGroup> selectedGroups = new List<CarboGroup>();
 
-                if (reinforementWindow.isAccepted == true)
+                // ... Add all Names to a List.
+                foreach (var item in selectedItems)
                 {
-                    CarboLifeProject.AddGroup(reinforementWindow.reinforcementGroup);
+                    CarboGroup cg = item as CarboGroup;
+                    selectedGroups.Add(cg);
+                }
+
+                CarboGroup bufferGroup = selectedGroups[0].Copy();
+
+
+                for(int i=1 ; i <= (selectedGroups.Count -1) ; i++)
+                {
+                    CarboGroup carboGroupTemp = selectedGroups[i];
+                    bufferGroup.Volume += carboGroupTemp.Volume;
+                }
+
+                if(bufferGroup != null)
+                {
+                    ReinforcementWindow reinforementWindow = new ReinforcementWindow(CarboLifeProject.CarboDatabase, bufferGroup);
+                    reinforementWindow.ShowDialog();
+
+                    if (reinforementWindow.isAccepted == true)
+                    {
+                        CarboLifeProject.AddGroup(reinforementWindow.reinforcementGroup);
+                    }
                 }
             }
-            SortData();
+           
+            CarboLifeProject.CalculateProject();
+            refreshData();
         }
 
         private void Mnu_Metaldeck_Click(object sender, RoutedEventArgs e)

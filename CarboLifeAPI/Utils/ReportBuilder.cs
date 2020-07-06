@@ -192,7 +192,7 @@ namespace CarboLifeAPI
                 html += "<TR>" + System.Environment.NewLine;
                 html += "<TD width=" + 50 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 50 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 50 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
 
                 html += "<TD width=" + 50 + "><B>" + "Volume" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 50 + "><B>" + "Density" + "</B></TD>" + System.Environment.NewLine;
@@ -240,7 +240,7 @@ namespace CarboLifeAPI
                     html += "<TD align='left' valign='middle'>" + cbg.Material.Name + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + cbg.Description + "</td>" + System.Environment.NewLine;
 
-                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Volume,2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.TotalVolume, 2) + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + cbg.Density + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Mass,2) + "</td>" + System.Environment.NewLine;
 

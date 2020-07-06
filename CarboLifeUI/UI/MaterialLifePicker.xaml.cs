@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarboLifeAPI.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,8 +22,7 @@ namespace CarboLifeUI.UI
     public partial class MaterialLifePicker : Window
     {
         internal bool isAccepted;
-        public double Value;
-        public string Settings;
+        public CarboB1B5Properties materialB1B5Properties;
 
         public MaterialLifePicker()
         {
@@ -31,57 +31,72 @@ namespace CarboLifeUI.UI
 
         public MaterialLifePicker(string settings, double value)
         {
-            this.Settings = settings;
-            this.Value = value;
+            this.materialB1B5Properties = new CarboB1B5Properties();
+
+            InitializeComponent();
+        }
+
+        public MaterialLifePicker(CarboB1B5Properties materialB1B5Properties)
+        {
+            this.materialB1B5Properties = materialB1B5Properties;
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            txt_Value.Text = Value.ToString();
-
-            string[] settingSplit = Settings.Split(',');
-
-            if (settingSplit.Length > 0)
-                txt_Life.Text = settingSplit[0];
-            if (settingSplit.Length > 1)
-                txt_ReplaceValue.Text = settingSplit[1];
+            txt_Life.Text = materialB1B5Properties.buildingdesignlife.ToString();
+            txt_ReplaceValue.Text = materialB1B5Properties.elementdesignlife.ToString();
 
             UpdateValue();
+        }
 
+
+
+        private async void Txt_Life_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(250);
+            if (startLength == tb.Text.Length)
+            {
+                UpdateValue();
+            }
+        }
+
+        private async void Txt_Value2_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(250);
+            if (startLength == tb.Text.Length)
+            {
+                UpdateValue();
+            }
+        }
+
+        private void UpdateValue()
+        {
+            materialB1B5Properties.elementdesignlife = CarboLifeAPI.Utils.ConvertMeToDouble(txt_ReplaceValue.Text);
+            materialB1B5Properties.buildingdesignlife = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Life.Text);
+
+            materialB1B5Properties.calculate();
+
+            txt_Value.Text = Math.Round(materialB1B5Properties.value, 3).ToString();
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = true;
-            Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
-            Settings = txt_Life.Text + "," + txt_ReplaceValue.Text;
+            materialB1B5Properties.value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
+            materialB1B5Properties.name = txt_Life.Text + " Years design life ";
             this.Close();
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void Txt_Life_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateValue();
-        }
-
-        private void UpdateValue()
-        {
-            double yearspan = CarboLifeAPI.Utils.ConvertMeToDouble(txt_ReplaceValue.Text);
-            double year = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Life.Text);
-
-            double value = year / yearspan;
-            txt_Value.Text = Math.Round(value, 2).ToString();
-
-        }
-
-        private void Txt_Value2_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            UpdateValue();
         }
     }
 }

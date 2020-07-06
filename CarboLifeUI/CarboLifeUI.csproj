@@ -85,9 +85,14 @@
     <Compile Include="UI\CarboLifeMainWindow.xaml.cs">
       <DependentUpon>CarboLifeMainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\DataSource\TransportationList.cs" />
     <Compile Include="UI\GroupWindow.xaml.cs">
       <DependentUpon>GroupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MaterialA1A3Picker.xaml.cs">
+      <DependentUpon>MaterialA1A3Picker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\DescriptionEditor.xaml.cs">
+      <DependentUpon>DescriptionEditor.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\ValueDialogBox.xaml.cs">
       <DependentUpon>ValueDialogBox.xaml</DependentUpon>
@@ -145,6 +150,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\GroupWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\MaterialA1A3Picker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\DescriptionEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

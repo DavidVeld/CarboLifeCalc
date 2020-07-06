@@ -103,6 +103,7 @@ namespace CarboLifeAPI
                 }
 
             }
+            /*
             if (material.Properties.Count > 0)
             {
                 foreach (CarboProperty cp in material.Properties)
@@ -110,7 +111,7 @@ namespace CarboLifeAPI
                     table.Rows.Add(cp.PropertyName, cp.Value);
                 }
             }
-
+            */
             return table;
         }
 

@@ -36,7 +36,7 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Transport</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Transport (A4)</Label>
 
         <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="2" Header="Input" Style="{StaticResource baseStyleBold}">
             <Grid>
@@ -63,23 +63,23 @@
                 <ComboBox Name="cbb_Type"  Grid.Column="2" Grid.Row="1" Height="26" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="150" DropDownClosed="Cbb_Type_DropDownClosed"></ComboBox>
 
                 <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="2" Height="26" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Vehicle Capacity:</Label>
-                <TextBox Name="txt_PerTransport" Grid.Column="2" Grid.Row="2" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" IsReadOnly="False" TextChanged="Txt_TextChanged" ></TextBox>
+                <TextBox Name="txt_Capacity" Grid.Column="2" Grid.Row="2" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" IsReadOnly="False" KeyDown="txt_KeyDown" />
                 <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m³</Label>
 
                 <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="3" Height="26" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Vehicle Construction:</Label>
-                <TextBox Name="txt_NewTransport" Grid.Column="2" Grid.Row="3" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" IsReadOnly="False"  TextChanged="Txt_TextChanged"></TextBox>
+                <TextBox Name="txt_Construction" Grid.Column="2" Grid.Row="3" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" IsReadOnly="False" KeyDown="txt_KeyDown"></TextBox>
                 <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="3" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2</Label>
 
                 <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="4" Height="26" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Total Distance Vehicle</Label>
-                <TextBox Name="txt_Range" Grid.Column="2" Grid.Row="4" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" IsReadOnly="False" TextChanged="Txt_TextChanged" ></TextBox>
+                <TextBox Name="txt_MaxDistance" Grid.Column="2" Grid.Row="4" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" IsReadOnly="False" KeyDown="txt_KeyDown" ></TextBox>
                 <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="4" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">km</Label>
 
                 <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="5" Height="26" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">CO2 per km</Label>
-                <TextBox Name="txt_CarboPerkm" Grid.Column="2" Grid.Row="5" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" IsReadOnly="False"  TextChanged="Txt_TextChanged"></TextBox>
+                <TextBox Name="txt_CarboPerkm" Grid.Column="2" Grid.Row="5" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" IsReadOnly="False"  KeyDown="txt_KeyDown"></TextBox>
                 <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="5" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/km</Label>
 
                 <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="7" Height="26" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Distance to Site</Label>
-                <TextBox Name="txt_TotalDistance" Grid.Column="2" Grid.Row="7" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" IsReadOnly="False" TextChanged="Txt_TextChanged"></TextBox>
+                <TextBox Name="txt_DistanceToSite" Grid.Column="2" Grid.Row="7" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" IsReadOnly="False" KeyDown="txt_KeyDown"></TextBox>
                 <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="7" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">km</Label>
 
 
@@ -110,8 +110,12 @@
                 <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="2" Height="26" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Value per kg:</Label>
                 <TextBox Name="txt_Value" Grid.Column="2" Grid.Row="2" Margin="5,0,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"></TextBox>
                 <Label Grid.Column="2" Margin="180,0,0,0" Grid.Row="2" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2/kg</Label>
+
+                <Button Name="btn_Calculate" Grid.Row="2" Grid.Column="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="btn_Calculate_Click" >Calculate</Button>
+
             </Grid>
         </GroupBox>
+        
 
         <Button Name="btn_Accept" Grid.Row="5" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
         <Button Name="btn_Cancel" Grid.Row="5" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>

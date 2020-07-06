@@ -36,7 +36,7 @@ namespace CarboLifeAPI.Data
         /// </summary>
         public double Density { get; set; }
         /// <summary>
-        /// 
+        /// Total ECI kgCO2e/kg
         /// </summary>
         public double ECI { get; set; }
 
@@ -57,7 +57,7 @@ namespace CarboLifeAPI.Data
         /// </summary>
         public double ECI_B1B5 { get; set; }
         /// <summary>
-        /// Demolition kgCO2e/kg
+        /// End of Life kgCO2e/kg
         /// </summary>
         public double ECI_C1C4 { get; set; }
         /// <summary>
@@ -70,8 +70,32 @@ namespace CarboLifeAPI.Data
         /// </summary>
         public bool isLocked { get; set; }
 
+        /*
         [XmlArray("Property"), XmlArrayItem(typeof(CarboProperty), ElementName = "Property")]
         public List<CarboProperty> Properties { get; set; }
+        */
+
+        //ReplaceMaterialProperties:
+        //Fabrication
+        public A1A3Element materialA1A3Properties { get; set; }
+        //Transport
+        public CarboA4Properties materiaA4Properties { get; set; }
+        //Construction
+        public CarboA5Properties materialA5Properties { get; set; }
+        //Life
+        public CarboB1B5Properties materialB1B5Properties { get; set; }
+        //EndofLift
+        public CarboC1C4Properties materialC1C4Properties { get;set;}
+        //Suplemental
+        public CarboDProperties materialDProperties { get; set; }
+
+        public bool ECI_A1A3_Override { get; set; }
+        public bool ECI_A4_Override { get; set; }
+        public bool ECI_A5_Override { get; set; }
+        public bool ECI_B1B5_Override { get; set; }
+        public bool ECI_C1C4_Override { get; set; }
+        public bool ECI_D_Override { get; set; }
+
 
         public CarboMaterial()
         {
@@ -80,7 +104,6 @@ namespace CarboLifeAPI.Data
             Category = "";
             Description = "";
             Density = 1;
-            //EEI = 1;
             ECI = 1;
             ECI_A1A3 = 1;
             ECI_A4 = 1;
@@ -90,7 +113,22 @@ namespace CarboLifeAPI.Data
             ECI_D = 1;
 
             isLocked = false;
-            Properties = new List<CarboProperty>();
+            //Properties = new List<CarboProperty>();
+
+            materialA1A3Properties = new A1A3Element();
+            materiaA4Properties = new CarboA4Properties();
+            materialA5Properties = new CarboA5Properties();
+            materialB1B5Properties = new CarboB1B5Properties();
+            materialC1C4Properties = new CarboC1C4Properties();
+            materialDProperties = new CarboDProperties();
+
+            ECI_A1A3_Override = false;
+            ECI_A4_Override = false;
+            ECI_A5_Override = false;
+            ECI_B1B5_Override = false;
+            ECI_C1C4_Override = false;
+            ECI_D_Override = false;
+
         }
 
         public CarboMaterial(string materialName)
@@ -109,14 +147,68 @@ namespace CarboLifeAPI.Data
             ECI_C1C4 = 0;
             ECI_D = 0;
             isLocked = false;
-            Properties = new List<CarboProperty>();
+            //Properties = new List<CarboProperty>();
+
+            //Calculated Values;
+            materialA1A3Properties = new A1A3Element();
+            materiaA4Properties = new CarboA4Properties();
+            materialA5Properties = new CarboA5Properties();
+            materialB1B5Properties = new CarboB1B5Properties();
+            materialC1C4Properties = new CarboC1C4Properties();
+            materialDProperties = new CarboDProperties();
+
+            ECI_A1A3_Override = false;
+            ECI_A4_Override = false;
+            ECI_A5_Override = false;
+            ECI_B1B5_Override = false;
+            ECI_C1C4_Override = false;
+            ECI_D_Override = false;
         }
 
         public void CalculateTotals()
         {
+            //Set All calculated Values:
+            if (ECI_A1A3_Override == false)
+            {
+                materialA1A3Properties.Calculate();
+                ECI_A1A3 = materialA1A3Properties.ECI_A1A3;
+            }
+
+            if (ECI_A4_Override == false)
+            {
+                materiaA4Properties.calculate();
+                ECI_A4 = materiaA4Properties.value;
+            }
+
+            if (ECI_A5_Override == false)
+            {
+                materialA5Properties.calculate();
+                ECI_A5 = materialA5Properties.value;
+            }
+
+            if (ECI_B1B5_Override == false)
+            {
+                materialB1B5Properties.calculate();
+                ECI_B1B5 = materialB1B5Properties.value;
+            }
+
+            if (ECI_C1C4_Override == false)
+            {
+                materialC1C4Properties.calculate();
+                ECI_C1C4 = materialC1C4Properties.value;
+            }
+
+            if (ECI_D_Override == false)
+            {
+                materialDProperties.calculate();
+                ECI_D = materialDProperties.value;
+            }
+
+
             ECI = ECI_B1B5 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_C1C4 + ECI_D);
         }
 
+        /*
         public void SetProperty(string properyName, string propertyValue)
         {
             CarboProperty cpnew = new CarboProperty
@@ -158,7 +250,7 @@ namespace CarboLifeAPI.Data
             }
             return result;
         }
-
+        */
         internal void Copy(CarboMaterial cmNew)
         {
             var type = typeof(CarboMaterial);

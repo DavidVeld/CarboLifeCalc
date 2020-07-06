@@ -70,7 +70,7 @@ namespace CarboLifeAPI.Data
             Mass = 0;
             ECI = 0;
             EC = 0;
-
+            Volume = 0;
             PerCent = 0;
 
             //Get total Volumes;

@@ -20,42 +20,42 @@ namespace CarboLifeUI.UI
     /// <summary>
     /// Interaction logic for MaterialConstructionPicker.xaml
     /// </summary>
-    public partial class MaterialAdditionalPicker : Window
+    public partial class DescriptionEditor : Window
     {
         internal bool isAccepted;
-        public CarboDProperties materialDProperties;
+        public string description;
 
-        public MaterialAdditionalPicker()
+        public DescriptionEditor()
         {
-            materialDProperties = new CarboDProperties();
+            description = "";
 
             InitializeComponent();
         }
 
-        public MaterialAdditionalPicker(CarboDProperties materialDProperties)
+        public DescriptionEditor(string description)
         {
-            this.materialDProperties = materialDProperties;
+            this.description = description;
             InitializeComponent();
 
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            txt_Value.Text = materialDProperties.value.ToString();
-            txt_Description.Text = materialDProperties.calcResult;
+            txt_Description.Text = description;
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = true;
-            materialDProperties.value = Utils.ConvertMeToDouble(txt_Value.Text);
-            materialDProperties.calcResult = txt_Description.Text;
-            materialDProperties.name = "Enhanced value";
+            description = txt_Description.Text;
+
             this.Close();
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
+            isAccepted = false;
+
             this.Close();
         }
     }

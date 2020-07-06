@@ -1,5 +1,9 @@
-﻿using System;
+﻿using CarboLifeAPI;
+using CarboLifeAPI.Data;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,66 +27,93 @@ namespace CarboLifeUI.UI
         private double Density;
 
         internal bool isAccepted;
-        public double Value;
-        public string Settings;
-        public TransportationList transportationlist;
-        private Vehicle selectedTransmeans;
+        //public double Value;
+        //public string Settings;
+        public List<Vehicle> transportationlist;
+        public CarboA4Properties c2Properties;
 
-        public MaterialTransportPicker()
+        public MaterialTransportPicker(CarboA4Properties c2Properties, CarboMaterial materialToBeTransported)
         {
+            this.c2Properties = c2Properties;
+            this.c2Properties.density = materialToBeTransported.Density;
             InitializeComponent();
-            transportationlist = new TransportationList();
-        }
 
-        public MaterialTransportPicker(string settings, double value, double density)
-        {
-            this.Settings = settings;
-            this.Value = value;
-            this.Density = density;
-            transportationlist = new TransportationList();
-
-            InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach(Vehicle tm in transportationlist)
+            transportationlist = LoadElements();
+
+            foreach (Vehicle tm in transportationlist)
             {
-                cbb_Type.Items.Add(tm.Name);
+                cbb_Type.Items.Add(tm.name);
             }
-            txt_Value.Text = Value.ToString();
-            string[] settingSplit = Settings.Split(',');
+            loadSettings();
+        }
 
-            if (settingSplit.Length > 0)
+        private void loadSettings()
+        {
+            cbb_Type.Text = c2Properties.name;
+
+            txt_Capacity.Text = c2Properties.capacity.ToString();
+            txt_Construction.Text = c2Properties.construction.ToString();
+            txt_MaxDistance.Text = c2Properties.maxDistance.ToString();
+            txt_CarboPerkm.Text = c2Properties.emissionPerKm.ToString();
+            txt_DistanceToSite.Text = c2Properties.distanceToSite.ToString();
+
+            txt_Calculation.Text = c2Properties.calcResult;
+            txt_Value.Text = c2Properties.value.ToString();
+        }
+
+        private List<Vehicle> LoadElements()
+        {
+            List<Vehicle> result = new List<Vehicle>();
+
+            //Find Profilelist;
+            string myPath = Utils.getAssemblyPath() + "\\data\\" + "Transport.csv";
+
+            if (File.Exists(myPath))
             {
-                cbb_Type.SelectedItem = settingSplit[0];
+                DataTable profileTable = Utils.LoadCSV(myPath);
+                foreach (DataRow dr in profileTable.Rows)
+                {
+                    Vehicle newElement = new Vehicle();
 
-                Vehicle selectedValue = transportationlist.First(item => item.Name == cbb_Type.Text);
+                    string name = dr[0].ToString();
+                    double carboNew = Utils.ConvertMeToDouble(dr[1].ToString());
+                    double maxDistance = Utils.ConvertMeToDouble(dr[2].ToString());
+                    double volumePerTransport = Utils.ConvertMeToDouble(dr[3].ToString());
+                    double eCPerkm = Utils.ConvertMeToDouble(dr[4].ToString());
 
-                selectedTransmeans = selectedValue;
+                    newElement.name = name;
+                    newElement.construction = carboNew;
+                    newElement.maxDistance = maxDistance;
+                    newElement.capacity = volumePerTransport;
+                    newElement.emissionPerKm = eCPerkm;
+
+                    result.Add(newElement);
+                }
             }
-            if (settingSplit.Length > 1)
-                txt_PerTransport.Text = settingSplit[1];
-            if (settingSplit.Length > 2)
-                txt_NewTransport.Text = settingSplit[2];
-            if (settingSplit.Length > 3)
-                txt_Range.Text = settingSplit[3];
-            if (settingSplit.Length > 4)
-                txt_CarboPerkm.Text = settingSplit[4];
-            if (settingSplit.Length > 5)
-                txt_TotalDistance.Text = settingSplit[5];
+            else
+            {
+                MessageBox.Show("File: " + myPath + " could not be found, make sure you have the Eol list located in indicated folder");
+            }
+
+            return result;
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = true;
-            Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
-            Settings = cbb_Type.Text + "," + txt_PerTransport.Text + "," + txt_NewTransport.Text + "," + txt_Range.Text + "," + txt_CarboPerkm.Text + "," + txt_TotalDistance.Text;
+            Refresh();
+
             this.Close();
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
+            isAccepted = false;
+
             this.Close();
         }
 
@@ -90,79 +121,55 @@ namespace CarboLifeUI.UI
         {
             string nameToFind = cbb_Type.Text;
 
-            Vehicle selectedValue = transportationlist.First(item => item.Name == nameToFind);
+            Vehicle selectedValue = transportationlist.First(item => item.name == nameToFind);
 
-            selectedTransmeans = selectedValue;
+            if (selectedValue != null)
+            {
+                c2Properties.name = cbb_Type.Text;
 
-            UpdateList();
+                c2Properties.capacity = selectedValue.capacity;
+                c2Properties.construction = selectedValue.construction;
+                c2Properties.maxDistance = selectedValue.maxDistance;
+                c2Properties.emissionPerKm = selectedValue.emissionPerKm;
+
+                txt_DistanceToSite.Text = c2Properties.distanceToSite.ToString();
+                
+                c2Properties.calculate();
+                loadSettings();
+            }
         }
 
-        private void UpdateList()
+        private void Refresh()
         {
             //Store data in list.
-            
-
-            txt_CarboPerkm.Text = selectedTransmeans.ECPerkm.ToString();
-            txt_NewTransport.Text = selectedTransmeans.CarboNew.ToString();
-            txt_PerTransport.Text = selectedTransmeans.VolumePerTransport.ToString();
-            txt_Range.Text = selectedTransmeans.MaxDistance.ToString();
-
-            Calculate();
-
+            StoreData();
+            c2Properties.calculate();
+            loadSettings();
         }
 
-        private void Calculate()
+        private void StoreData()
         {
-            //Calculate total nr of trips;
-            string calcResult = "";
-            double carboperkm = CarboLifeAPI.Utils.ConvertMeToDouble(txt_CarboPerkm.Text);
-            double costofnewvehiclem = CarboLifeAPI.Utils.ConvertMeToDouble(txt_NewTransport.Text);
-            double volumePerTransport = CarboLifeAPI.Utils.ConvertMeToDouble(txt_PerTransport.Text);
-            double totalDistPervehicle = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Range.Text);
-            double tripDistance = CarboLifeAPI.Utils.ConvertMeToDouble(txt_TotalDistance.Text);
-            try
-            {
+            //
+            c2Properties.name = cbb_Type.Text;
 
+            c2Properties.capacity = Math.Round(Utils.ConvertMeToDouble(txt_Capacity.Text), 3);
+            c2Properties.construction = Math.Round(Utils.ConvertMeToDouble(txt_Construction.Text), 3);
+            c2Properties.maxDistance = Math.Round(Utils.ConvertMeToDouble(txt_MaxDistance.Text), 3);
+            c2Properties.emissionPerKm = Math.Round(Utils.ConvertMeToDouble(txt_CarboPerkm.Text), 3);
+            c2Properties.distanceToSite = Math.Round(Utils.ConvertMeToDouble(txt_DistanceToSite.Text),3);
 
-                double conversion = 1;
-                string units = " km";
-
-                double costPerTrip = Math.Round(tripDistance * carboperkm);
-
-                double costFromNewVehicle = costofnewvehiclem * (tripDistance / totalDistPervehicle);
-
-                double costTotalPerTrip = costFromNewVehicle + costPerTrip;
-
-                double massPerTransport = Math.Round(volumePerTransport * Density);
-
-                double co2prtkg = Math.Round(((1 / massPerTransport) * costTotalPerTrip), 5);
-
-                calcResult += "This calculation will try to create a CO2 per kg value based on the given parameters." + System.Environment.NewLine;
-                calcResult += "One trip costs: " + tripDistance + units + " x " + carboperkm + "kgCo2/" + units + "= " + costPerTrip + " kgCo2" + System.Environment.NewLine;
-                calcResult += System.Environment.NewLine;
-                calcResult += "This will use: " + costFromNewVehicle + "kgCO2 from a new vehicle" + System.Environment.NewLine;
-                calcResult += "New vehicle = " + costofnewvehiclem + "kgCO2 x (" + tripDistance + units + " / " + totalDistPervehicle + units + ") = " + costFromNewVehicle + "kgCO2" + System.Environment.NewLine;
-                calcResult += System.Environment.NewLine;
-                calcResult += "Total CEI per trip then is " + costFromNewVehicle + " kgCO2 + " + costPerTrip + " kgCO2 = " + costTotalPerTrip + " kgCO2" + System.Environment.NewLine;
-
-                calcResult += "One " + selectedTransmeans.Name + " can carry " + volumePerTransport + " m³ per trip" + System.Environment.NewLine;
-                calcResult += "This weighs: " + Density + " kg/m³ x " + volumePerTransport + " m³ = " + massPerTransport + "kg/transport" + System.Environment.NewLine; ;
-                calcResult += System.Environment.NewLine;
-
-                calcResult += "So per kg this will cost : (1 /" + massPerTransport + ") x " + costTotalPerTrip + " = " + co2prtkg + " CO2/kg" + System.Environment.NewLine; ;
-
-
-                txt_Calculation.Text = calcResult;
-                txt_Value.Text = co2prtkg.ToString();
-            }
-            catch(Exception ex)
-            { }
         }
 
-        private void Txt_TextChanged(object sender, TextChangedEventArgs e)
+        private void txt_KeyDown(object sender, KeyEventArgs e)
         {
-            Calculate();
+            Refresh();
         }
+
+        private void btn_Calculate_Click(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+        }
+
     }
 
 

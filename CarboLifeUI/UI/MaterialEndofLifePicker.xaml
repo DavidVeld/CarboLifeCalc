@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600" MinWidth="500" MinHeight="400" Width="500" Height="400"  Loaded="Window_Loaded">
+             d:DesignHeight="650" d:DesignWidth="850" MinWidth="850" MinHeight="650" Width="800" Height="650"  Loaded="Window_Loaded">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,8 +24,6 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="55"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
@@ -32,58 +31,221 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="15"/>
             <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="15"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">End of Life</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">End of Life (C1-C4)</Label>
 
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="2" Header="Input" Style="{StaticResource baseStyleBold}">
+        <Grid Grid.Column="2" Margin="0,0,10,0" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="85"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="85"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="85"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="85"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Grid.Column="1" Grid.Row="1" Margin="0,0,10,0" BorderThickness="1" Header="C1 - Deconstruction and demolition emissions" Style="{StaticResource baseStyleBold}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+
+                        <RowDefinition Height="0"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0"/>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="1" Grid.Row="1" Margin="0,1,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Area density:</Label>
+                    <TextBox Name="txt_C1Thickness"  Grid.Column="2" Grid.Row="1" Height="26" Margin="0,2" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" Width="61" PreviewKeyDown="txt_KeyDown"></TextBox>
+                    <Label Grid.Column="2" Margin="60,1,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kg/m2</Label>
+                    <TextBox Name="txt_C1BaseValue" Grid.Column="2" Grid.Row="1" Margin="103,1,0,0" Height="25" Width="82" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" PreviewKeyDown="txt_KeyDown"></TextBox>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/m2</Label>
+
+
+                    <Label Grid.Column="1" Grid.Row="2" Margin="0,1,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Value:</Label>
+                    <TextBox Name="txt_C1Value"  Grid.Column="2" Grid.Row="2" Height="26" Margin="0,2" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" Width="185" IsReadOnly="True"></TextBox>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Grid.Row="3" Margin="0,0,10,0"  Header="C2 - Transport Emissions" Style="{StaticResource baseStyleBold}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+
+                        <RowDefinition Height="0"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0"/>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0"/>
+                    </Grid.ColumnDefinitions>
+                  
+                    <TextBox Name="txt_C2Name"  Grid.Column="2" Grid.Row="1" Height="26" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" Width="185"></TextBox>
+                    <Button Name="btn_C2Pick" Margin="195,1,0,0"  Grid.Row="1" Grid.Column="2" Height="25" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_C2Pick_Click">Edit...</Button>
+                    
+                    <Label Grid.Column="1" Grid.Row="2" Margin="0,1,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Default Value:</Label>
+                    <TextBox Name="txt_C2Value"  Grid.Column="2" Grid.Row="2" Height="26" Margin="0,2" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" Width="185" KeyDown="txt_KeyDown"></TextBox>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+  
+
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Grid.Row="5" Margin="0,0,10,0"  Header="C3 - Waste Processing for reuse, recovery or recycling emissions" Style="{StaticResource baseStyleBold}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+
+                        <RowDefinition Height="0"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0"/>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="1" Grid.Row="1" Margin="0,1,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Default Value:</Label>
+                    <TextBox Name="txt_C3Value"  Grid.Column="2" Grid.Row="1" Height="26" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" Width="185" KeyDown="txt_KeyDown"></TextBox>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+
+                </Grid>
+            </GroupBox>
+
+
+            <GroupBox Grid.Column="1" Grid.Row="7" Margin="0,0,10,0"  Header="C4 - Disposal emissions" Style="{StaticResource baseStyleBold}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="15"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+
+                        <RowDefinition Height="0"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0"/>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="1" Grid.Row="1" Margin="0,1,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Material Type:</Label>
+                    <ComboBox Name="cbb_Type"  Grid.Column="2" Grid.Row="1" Height="26" Margin="0,2" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="260" DropDownClosed="Cbb_Type_DropDownClosed"></ComboBox>
+
+                    <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="2" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">% To landfill:</Label>
+                    <TextBox Name="txt_landfillP" Grid.Column="2" Grid.Row="2" Margin="0,1,0,0" Height="25" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" KeyDown="txt_KeyDown"></TextBox>
+                    <Label Grid.Column="2" Margin="50,1,0,0" Grid.Row="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">% of</Label>
+                    <TextBox Name="txt_landfillValue" Grid.Column="2" Grid.Row="2" Margin="85,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_landfillValue_TextChanged" ></TextBox>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="2" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+
+                    <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="3" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">% Incinerator:</Label>
+                    <TextBox Name="txt_incineratedP" Grid.Column="2" Grid.Row="3" Margin="0,1,0,0" Height="25" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False"  KeyDown="txt_KeyDown"></TextBox>
+                    <Label Grid.Column="2" Margin="50,1,0,0" Grid.Row="3" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">% of</Label>
+                    <TextBox Name="txt_incineratedValue" Grid.Column="2" Grid.Row="3" Margin="85,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False"  KeyDown="txt_KeyDown"></TextBox>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="3" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+
+
+                    <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="4" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">% Reused:</Label>
+                    <TextBox Name="txt_reusedP" Grid.Column="2" Grid.Row="4" Margin="0,1,0,0" Height="25" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" IsEnabled="False"  KeyDown="txt_KeyDown"></TextBox>
+                    <Label Grid.Column="2" Margin="50,1,0,0" Grid.Row="4" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">% of</Label>
+                    <TextBox Name="txt_reusedValue" Grid.Column="2" Grid.Row="4" Margin="85,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False"  KeyDown="txt_KeyDown"></TextBox>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="4" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+
+
+
+
+
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Grid.Column="1" Grid.Row="9" Margin="0,0,10,0"  Header="Additional" Style="{StaticResource baseStyleBold}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0"/>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Value:</Label>
+                    <TextBox Name="txt_additional" Grid.Column="2" Grid.Row="1" Margin="0,1,0,0" Height="25" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" KeyDown="txt_KeyDown"></TextBox>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+
+                </Grid>
+            </GroupBox>
+
+
+        </Grid>
+
+        <GroupBox Grid.Column="4" Margin="0,0,10,0" Grid.Row="2" Header="Result" Style="{StaticResource baseStyleBold}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">% To landfill:</Label>
-                <TextBox Name="txt_ReplaceValue" Grid.Column="1" Grid.Row="1" Margin="125,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" IsReadOnly="False"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">%</Label>
+                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="1" Height="26" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Calculation:</Label>
+                <TextBox Name="txt_Calculation" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Margin="5,5,5,5" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True" FontSize="12"></TextBox>
 
-                <Label Grid.Column="1" Margin="0,35,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">% Reused:</Label>
-                <TextBox Name="txt_Life" Grid.Column="1" Grid.Row="1" Margin="125,35,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" IsReadOnly="False"></TextBox>
-                <Label Grid.Column="1" Margin="230,35,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">%</Label>
 
+                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="3" Height="26" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Value per kg:</Label>
+                <TextBox Name="txt_Value" Grid.Column="2" Grid.Row="3" Margin="5,0,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"></TextBox>
+                <Label Grid.Column="2" Margin="180,0,0,0" Grid.Row="3" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2/kg</Label>
             </Grid>
         </GroupBox>
+        <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="btn_Calculate_Click">Calculate</Button>
 
-
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="4" Header="Result" Style="{StaticResource baseStyleBold}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="5"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="5"/>
-                </Grid.ColumnDefinitions>
-
-                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Cost per kg:</Label>
-                <TextBox Name="txt_Value" Grid.Column="1" Grid.Row="1" Margin="125,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="False"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
-            </Grid>
-        </GroupBox>
-
-        <Button Name="btn_Accept" Grid.Row="5" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
-        <Button Name="btn_Cancel" Grid.Row="5" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
+        <Button Name="btn_Accept" Grid.Row="3" Grid.Column="4" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
+        <Button Name="btn_Cancel" Grid.Row="3" Grid.Column="4" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
 
     </Grid>
-    </Window>
+</Window>

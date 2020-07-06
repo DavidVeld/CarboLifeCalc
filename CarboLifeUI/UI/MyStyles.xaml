@@ -16,6 +16,13 @@
         <Setter Property="FontWeight" Value="DemiBold"></Setter>
 
     </Style>
+    <Style TargetType="{x:Type Control}" x:Key="bigStyle">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontWeight" Value="DemiBold"></Setter>
+
+    </Style>
     <Style TargetType="{x:Type Control}" x:Key="baseStyleLabel">
         <Setter Property="FontSize" Value="15" />
         <Setter Property="FontFamily" Value="Segoe UI" />
@@ -32,7 +39,7 @@
     </Style>
 
     <Style TargetType="{x:Type Control}" x:Key="baseStyleBold">
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold" />
@@ -709,7 +716,7 @@
     <Style x:Key="flatTextBox" TargetType="{x:Type TextBox}">
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="#444" />
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Template">
             <Setter.Value>

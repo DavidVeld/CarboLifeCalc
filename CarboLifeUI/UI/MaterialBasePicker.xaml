@@ -37,7 +37,7 @@
 
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Materials</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Material Production (A1-A3)</Label>
 
         <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="2" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Material Type:</Label>
         <ComboBox Name="cbb_Categories" Grid.Column="2" Grid.Row="2" Margin="0,22,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="Cbb_Categories_DropDownClosed"></ComboBox>
@@ -51,8 +51,8 @@
                       BorderBrush="Black" BorderThickness="1" SelectionChanged="lib_Materials_SelectionChanged" Visibility="Visible" >
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
-                    <GridViewColumn Header="Name" Width="210" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="ECI (A1>A3)" Width="100" DisplayMemberBinding="{Binding ECI}" />
+                    <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="ECI (A1>A3)" Width="120" DisplayMemberBinding="{Binding ECI}" />
                 </GridView>
             </ListView.View>
             <ListView.GroupStyle>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarboLifeAPI.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,33 +22,32 @@ namespace CarboLifeUI.UI
     public partial class MaterialConstructionPicker : Window
     {
         internal bool isAccepted;
-        public double Value;
-        public string Settings;
+
+        public CarboA5Properties materialA5Properties;
 
         public MaterialConstructionPicker()
         {
+            materialA5Properties = new CarboA5Properties();
             InitializeComponent();
         }
 
-        public MaterialConstructionPicker(string settings, double value)
+        public MaterialConstructionPicker(CarboA5Properties materialA5Properties)
         {
-            this.Settings = settings;
-            this.Value = value;
+            this.materialA5Properties = materialA5Properties;
             InitializeComponent();
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            txt_Value.Text = Value.ToString();
-            string[] settingSplit = Settings.Split(',');
-
+            txt_Value.Text = materialA5Properties.value.ToString();
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = true;
-            Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
-            Settings = "Manual Override";
+            materialA5Properties.value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
+            materialA5Properties.name = "Calculated";
             this.Close();
         }
 

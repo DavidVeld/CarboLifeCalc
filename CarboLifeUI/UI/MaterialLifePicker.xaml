@@ -36,7 +36,7 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Life Cycle</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Life Cycle (B1-B5)</Label>
 
         <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="2" Header="Input" Style="{StaticResource baseStyleBold}">
             <Grid>

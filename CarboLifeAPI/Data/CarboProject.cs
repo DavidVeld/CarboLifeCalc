@@ -154,7 +154,7 @@ namespace CarboLifeAPI.Data
             {
                 CarboDataPoint cb_A1A3 = new CarboDataPoint("A1 A3",0);
                 CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
-                CarboDataPoint cb_A5 = new CarboDataPoint("A5", 0);
+                CarboDataPoint cb_A5 = new CarboDataPoint("A5", this.A5);
                 //CarboDataPoint cb_B1B5 = new CarboDataPoint("B1 B5", 0);
                 CarboDataPoint cb_C1C4 = new CarboDataPoint("C1 C4", 0);
                 CarboDataPoint cb_D = new CarboDataPoint("D", 0);
@@ -169,12 +169,12 @@ namespace CarboLifeAPI.Data
 
                 foreach (CarboGroup CarboGroup in this.groupList)
                 {
-                    double ECI_A1A3 = CarboGroup.Material.ECI_A1A3;
-                    double ECI_A4 = CarboGroup.Material.ECI_A4;
-                    double ECI_A5 = CarboGroup.Material.ECI_A5;
+                    double ECI_A1A3 = CarboGroup.Material.ECI_A1A3 * CarboGroup.Mass;
+                    double ECI_A4 = CarboGroup.Material.ECI_A4 * CarboGroup.Mass;
+                    double ECI_A5 = CarboGroup.Material.ECI_A5 * CarboGroup.Mass;
                     //double ECI_B1B5 = CarboGroup.Material.ECI_B1B5;
-                    double ECI_C1C4 = CarboGroup.Material.ECI_C1C4;
-                    double ECI_D = CarboGroup.Material.ECI_D;
+                    double ECI_C1C4 = CarboGroup.Material.ECI_C1C4 * CarboGroup.Mass;
+                    double ECI_D = CarboGroup.Material.ECI_D * CarboGroup.Mass;
 
                     if (valueList.Count > 0)
                     {
@@ -208,7 +208,7 @@ namespace CarboLifeAPI.Data
                             }
                             else
                             {
-                                pp.Value = 0;
+                                pp.Value += 0;
                             }
                         }
                     }
