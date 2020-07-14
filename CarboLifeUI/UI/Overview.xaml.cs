@@ -219,5 +219,15 @@ namespace CarboLifeUI.UI
         {
 
         }
+
+        private void btn_EditDescription_Click(object sender, RoutedEventArgs e)
+        {
+            DescriptionEditor editor = new DescriptionEditor(txt_Desctiption.Text);
+            editor.ShowDialog();
+            if (editor.isAccepted == true)
+            {
+                txt_Desctiption.Text = editor.description;
+            }
+        }
     }
 }

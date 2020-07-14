@@ -25,6 +25,8 @@ namespace CarboLifeUI.UI
 
         public ValueDialogBox()
         {
+            this.Value = "";
+
             InitializeComponent();
         }
 

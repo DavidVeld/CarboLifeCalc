@@ -19,6 +19,8 @@ namespace CarboLifeAPI.Data
         public double maxDistance { get; set; }
         public double emissionPerKm { get; set; }
         public double density { get; set; }
+        public double maxcapacity { get; set; }
+        public double maxvolume { get; set; }
 
         //User Variables
         public double distanceToSite { get; set; }
@@ -34,6 +36,8 @@ namespace CarboLifeAPI.Data
             capacity = 0;
             construction = 0;
             maxDistance = 0;
+            maxcapacity = 0;
+            maxvolume = 0;
             emissionPerKm = 0;
 
             distanceToSite = 0;

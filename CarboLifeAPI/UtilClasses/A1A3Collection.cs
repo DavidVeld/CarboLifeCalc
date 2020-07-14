@@ -195,7 +195,8 @@ namespace CarboLifeAPI.Data
             }
         }
     }
-
+    
+    [Serializable]
     public class A1A3Element
     {
         public int Id { get; set; }

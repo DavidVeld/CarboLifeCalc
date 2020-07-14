@@ -49,22 +49,35 @@ namespace CarboLifeUI.UI
 
             //Check if a element leeds to be loaded, if not show blank screen
 
-            foreach(string grp in groupNames)
+            foreach (string grp in groupNames)
             {
                 cbb_Group.Items.Add(grp);
             }
 
             if (a1a3ElementSelected != null)
             {
-                cbb_Group.Text = a1a3ElementSelected.Group;
-                cbb_Categories.Text = a1a3ElementSelected.Category;
-                lib_Materials.SelectedItem = a1a3ElementSelected;
+                a1a3ElementSelected = new A1A3Element();
+            }
 
+            if (a1a3ElementSelected.Group != null)
+            {
+                cbb_Group.Text = a1a3ElementSelected.Group;
             }
             else
             {
                 cbb_Group.Text = groupNames[0];
             }
+
+            if (a1a3ElementSelected.Category != null)
+            {
+                cbb_Categories.Text = a1a3ElementSelected.Category;
+            }
+            else
+            {
+                cbb_Categories.Text = "ALL";
+            }
+
+            //lib_Materials.SelectedItem = a1a3ElementSelected;
         }
 
 
@@ -79,9 +92,16 @@ namespace CarboLifeUI.UI
             }
         }
 
-        private void Txt_Search_TextChanged(object sender, TextChangedEventArgs e)
+        private async void Txt_Search_TextChanged(object sender, TextChangedEventArgs e)
         {
-            loadPossibleElements();
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(250);
+            if (startLength == tb.Text.Length)
+            {
+                loadPossibleElements();
+            }
         }
 
         private void loadPossibleElements()
@@ -100,7 +120,9 @@ namespace CarboLifeUI.UI
                             cbb_Categories.Text == "" ||
                             cbb_Categories.Text == "All")
                         {
-                            if (a1a3Element.Name.Contains(txt_Search.Text) ||
+                            bool contains = a1a3Element.Name.IndexOf(txt_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                            if (contains == true ||
                                 txt_Search.Text == "")
                             {
                                 lib_Materials.Items.Add(a1a3Element);
@@ -135,7 +157,8 @@ namespace CarboLifeUI.UI
 
         private void Cbb_Categories_DropDownClosed(object sender, EventArgs e)
         {
-            
+            loadPossibleElements();
+/*
             lib_Materials.ItemsSource = null;
             lib_Materials.Items.Clear();
 
@@ -161,7 +184,7 @@ namespace CarboLifeUI.UI
                     break;
                 }
             }
-            
+            */
         }
 
         private void cbb_Group_DropDownClosed(object sender, EventArgs e)
@@ -180,6 +203,14 @@ namespace CarboLifeUI.UI
 
             cbb_Categories.Items.Add("All");
 
+        }
+
+        private void btn_EditDescription_Click(object sender, RoutedEventArgs e)
+        {
+            DescriptionEditor editor = new DescriptionEditor(txt_Description.Text);
+            editor.ShowDialog();
+            if (editor.isAccepted == true)
+                txt_Description.Text = editor.description;
         }
     }
 }

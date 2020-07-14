@@ -101,7 +101,7 @@
 
                 <Label Grid.Column="1" Grid.Row="2" Height="25" Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Description:</Label>
                 <TextBox Name="txt_Description" Grid.Column="2" Grid.Row="2" Margin="0,5,0,5"  Style="{StaticResource flatTextBox}"></TextBox>
-                <Button Name="btn_EditDescription"  Grid.Row="2" Grid.Column="3" Height="25" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}">Edit...</Button>
+                <Button Name="btn_EditDescription"  Grid.Row="2" Grid.Column="3" Height="25" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_EditDescription_Click">Edit...</Button>
 
                 <Label Grid.Column="1" Grid.Row="3" Height="25"  Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Category:</Label>
                 <TextBox Name="txt_Category"  Grid.Column="2" Grid.Row="3" Height="26" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"></TextBox>

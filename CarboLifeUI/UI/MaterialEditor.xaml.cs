@@ -28,7 +28,7 @@ namespace CarboLifeUI.UI
 
         //private CarboMaterial originalMaterial;
         //private CarboDatabase originalDatabase;
-        private CarboDatabase baseMaterials;
+        //private CarboDatabase baseMaterials;
 
 
         public CarboMaterial selectedMaterial;
@@ -49,8 +49,8 @@ namespace CarboLifeUI.UI
                     selectedMaterial = database.getClosestMatch(materialName);
                 }
 
-                baseMaterials = new CarboDatabase();
-                baseMaterials = baseMaterials.DeSerializeXML("db\\BaseMaterials");
+                //baseMaterials = new CarboDatabase();
+                //baseMaterials = baseMaterials.DeSerializeXML("db\\BaseMaterials");
 
                 acceptNew = false;
             }
@@ -192,7 +192,7 @@ namespace CarboLifeUI.UI
                 //Calculated
                 chx_A1_A3_Manual.IsChecked = false;
 
-                txt_A1_A3_Setting.Text = selectedMaterial.Name;
+                txt_A1_A3_Setting.Text = selectedMaterial.materialA1A3Properties.Name;
                 txt_A1_A3.Text = selectedMaterial.ECI_A1A3.ToString();
                 txt_A1_A3.IsReadOnly = true;
 
@@ -342,16 +342,42 @@ namespace CarboLifeUI.UI
         {
             //selectedMaterial = null;
             string cat = cbb_Categories.Text;
+            string searchtext = txt_Search.Text;
+
             liv_materialList.Items.Clear();
+
             foreach(CarboMaterial cm in returnedDatabase.CarboMaterialList)
             {
                 if(cm.Category == cat || cat == "All" || cat == "")
                 {
-                    liv_materialList.Items.Add(cm);
+                    //Search Bar
+                    int hit = cm.Name.IndexOf(searchtext, StringComparison.OrdinalIgnoreCase);
+                    if (searchtext == "" || hit >= 0)
+                    {
+                        liv_materialList.Items.Add(cm);
+                    }
                 }
             }
             if (selectedMaterial != null)
                 liv_materialList.SelectedItem = selectedMaterial;
+
+            //Sort list
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(liv_materialList.Items);
+
+            if (view != null)
+            {
+                view.SortDescriptions.Add(new System.ComponentModel.SortDescription("Category", System.ComponentModel.ListSortDirection.Ascending));
+                /*
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+                view.GroupDescriptions.Add(groupDescription);
+
+                liv_materialList.Items.Clear();
+                liv_materialList.ItemsSource = null;
+                
+                liv_materialList.ItemsSource = view;
+                */
+            }
+
         }
 
         private void Chb_ShowICE_Click(object sender, RoutedEventArgs e)
@@ -377,6 +403,7 @@ namespace CarboLifeUI.UI
 
                 selectedMaterial.Category = selectedMaterial.materialA1A3Properties.Category;
                 selectedMaterial.ECI_A1A3 = selectedMaterial.materialA1A3Properties.ECI_A1A3;
+                
                 if (selectedMaterial.materialA1A3Properties.Density != selectedMaterial.Density)
                 {
                     MessageBoxResult result = MessageBox.Show("The material density of your selected material does not match the material density of your base material, do you wish to override this with the new value?", "Warning", MessageBoxButton.YesNo);
@@ -474,21 +501,23 @@ namespace CarboLifeUI.UI
 
         private void Btn_Apply_Click(object sender, RoutedEventArgs e)
         {
-            selectedMaterial.Name = txt_Name.Text;
-            selectedMaterial.Description = txt_Description.Text;
-            selectedMaterial.Category = cbb_Category.Text;
-            selectedMaterial.Density = Utils.ConvertMeToDouble(txt_Density.Text);
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.Name = txt_Name.Text;
+                selectedMaterial.Description = txt_Description.Text;
+                selectedMaterial.Category = cbb_Category.Text;
+                selectedMaterial.Density = Utils.ConvertMeToDouble(txt_Density.Text);
 
-            /*
-            selectedMaterial.ECI = Utils.ConvertMeToDouble(txt_ECI.Text);
-            selectedMaterial.ECI_A1A3 = Utils.ConvertMeToDouble(txt_A1_A3.Text);
-            selectedMaterial.ECI_A4 = Utils.ConvertMeToDouble(txt_A4.Text);
-            selectedMaterial.ECI_A5 = Utils.ConvertMeToDouble(txt_A5.Text);
-            selectedMaterial.ECI_B1B5 = Utils.ConvertMeToDouble(txt_B1_B5.Text);
-            selectedMaterial.ECI_C1C4 = Utils.ConvertMeToDouble(txt_C1_C4.Text);
-            selectedMaterial.ECI_D = Utils.ConvertMeToDouble(txt_D.Text);
-            */
-
+                /*
+                selectedMaterial.ECI = Utils.ConvertMeToDouble(txt_ECI.Text);
+                selectedMaterial.ECI_A1A3 = Utils.ConvertMeToDouble(txt_A1_A3.Text);
+                selectedMaterial.ECI_A4 = Utils.ConvertMeToDouble(txt_A4.Text);
+                selectedMaterial.ECI_A5 = Utils.ConvertMeToDouble(txt_A5.Text);
+                selectedMaterial.ECI_B1B5 = Utils.ConvertMeToDouble(txt_B1_B5.Text);
+                selectedMaterial.ECI_C1C4 = Utils.ConvertMeToDouble(txt_C1_C4.Text);
+                selectedMaterial.ECI_D = Utils.ConvertMeToDouble(txt_D.Text);
+                */
+            }
             UpdateMaterialSettings();
             RefreshMaterialList();
             selectMaterial(txt_Name.Text);
@@ -715,6 +744,54 @@ namespace CarboLifeUI.UI
                 UpdateMaterialSettings();
 
             }
+        }
+
+        private async void Txt_Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(250);
+            if (startLength == tb.Text.Length)
+            {
+                RefreshMaterialList();
+            }
+        }
+
+        private void btn_AddCategory_Click(object sender, RoutedEventArgs e)
+        {
+            ValueDialogBox valDia = new ValueDialogBox();
+            valDia.ShowDialog();
+            if(valDia.isAccepted == true)
+            {
+                string newCat = valDia.Value;
+                if (newCat != "")
+                {
+                    List<string> categories = returnedDatabase.getCategoryList();
+
+                    bool catExistins = categories.Contains(newCat);
+                    if(catExistins == false)
+                    {
+                        cbb_Category.Items.Add(newCat);
+                        cbb_Categories.Items.Add(newCat);
+                        cbb_Category.Text = newCat;
+                    }
+                    else
+                    {
+                        MessageBox.Show("This category allready exists.", "Friendly Warning", MessageBoxButton.OK);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid value", "Friendly Warning", MessageBoxButton.OK);
+                }
+            }
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double width = liv_materialList.ActualWidth;
+            //liv_materialList.
         }
     }
 }

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarboLifeAPI.Data
+namespace CarboLifeAPI.Data.Superseded
 {
     [Serializable]
+    [Obsolete]
     public class CarboProperty
     {
         public string PropertyName { get; set; }

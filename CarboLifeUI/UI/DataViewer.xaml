@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="900" IsVisibleChanged="UserControl_IsVisibleChanged">
+             d:DesignHeight="400" d:DesignWidth="900" IsVisibleChanged="UserControl_IsVisibleChanged" Background="WhiteSmoke">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Background="White">
+    <Grid Background="Transparent">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
@@ -34,8 +34,8 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" >
-            <MenuItem Header="Edit" Background="White" Style="{StaticResource baseStyleLabel}" >
+        <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" Height="32" Margin="0,0,0,0">
+            <MenuItem Header="Edit" Background="Transparent" Style="{StaticResource baseStyleLabel}" Height="26" Margin="0,2,0,0" VerticalAlignment="Top">
                 <MenuItem Name="mnu_NewGroup" Header="New Group" Click="Mnu_NewGroup_Click"/>
                 <MenuItem Name="mnu_DeleteGroup" Header="Delete Group" Click="Mnu_DeleteGroup_Click" />
                 <MenuItem Name="mnu_MergeGroup" Header="Merge Groups" Click="Mnu_MergeGroup_Click"/>
@@ -45,7 +45,7 @@
                 <MenuItem Name="mnu_Export" Header="Export Report" Click="mnu_Export_Click"/>
 
             </MenuItem>
-            <MenuItem Header="Actions" Background="White"  VerticalAlignment="Top" Style="{StaticResource baseStyleLabel}">
+            <MenuItem Header="Actions" Background="Transparent"  VerticalAlignment="Top" Style="{StaticResource baseStyleLabel}"  Height="26" Margin="0,2,0,0">
                 <Separator></Separator>
                 <MenuItem Name="mnu_Reinforce" Header="Reinforce Item" Click="Mnu_Reinforce_Click"/>
                 <MenuItem Name="mnu_Metaldeck" Header="Profile Element" Click="Mnu_Metaldeck_Click" />
@@ -55,7 +55,7 @@
 
                 <MenuItem Name="mnu_CloseMe" Header="Close"/>
             </MenuItem>
-            <Label VerticalAlignment="Bottom" Margin="0,0,0,-0" Height="28" Style="{StaticResource baseStyleLabel}">Sort by: </Label>
+            <Label VerticalAlignment="Top"  Height="29" Margin="0,-4,0,0" Style="{StaticResource baseStyleLabel}">Sort by: </Label>
             <ComboBox Name="cbb_Sort" FontSize="12" Width="75" SelectedIndex="0" DropDownClosed="ComboBox_DropDownClosed" Style="{StaticResource ComboBoxFlatStyle}" >
                 <ComboBoxItem>Material</ComboBoxItem>
                 <ComboBoxItem>Category</ComboBoxItem>
@@ -63,9 +63,10 @@
 
             <Separator Background="Beige" Width="1" Height="30"></Separator>
                     
-        <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="1" Content="Calculate" Width="75" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Calculate_Click" />
-        <Button x:Name="btn_EditMaterial" Content="Edit Material" Width="75" Height="25" HorizontalAlignment="Left"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" />
-        <ToggleButton x:Name="btn_ShowHideCorrections" Content="Advanced" Width="75" Height="25" HorizontalAlignment="Left" Click="Btn_ShowHideCorrections_Click" />
+        <Button x:Name="btn_EditMaterial" Content="Edit Material" Width="80" Height="25" HorizontalAlignment="Left"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" />
+            <Separator Background="Gray" Width="2" Height="30"></Separator>
+            <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="1" Content="Refresh" Width="75" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Calculate_Click" />
+            <ToggleButton x:Name="btn_ShowHideCorrections" Content="Advanced" Width="75" Height="25" HorizontalAlignment="Right" Click="Btn_ShowHideCorrections_Click" Style="{StaticResource baseStyle}"/>
 
         </Menu>
 
@@ -162,7 +163,7 @@
 
         <Menu Grid.Row="4" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" >
             <Button x:Name="btn_Collaps" Width="35" Content="▼" HorizontalAlignment="Right" VerticalAlignment="Top"  Margin="0,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Collaps_Click"/>
-            <MenuItem Name="mnu_EditElements" Header="Elements" Background="White" Style="{StaticResource baseStyleLabel}" >
+            <MenuItem Name="mnu_EditElements" Header="Elements" Background="Transparent" Style="{StaticResource baseStyleLabel}" >
                 <MenuItem Name="mnu_MoveToNewGroup" Header="_To New Group" Click="Mnu_MoveToNewGroup_Click"/>
                 <MenuItem Name="mnu_CreateMaterialFromElement" Header="_Create Material From Element" Click="mnu_CreateMaterialFromElement_Click"/>
 

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace CarboLifeAPI.Data
 {
-
     public class Vehicle
     {
         public string name;
@@ -14,5 +13,7 @@ namespace CarboLifeAPI.Data
         public double construction;
         public double maxDistance;
         public double emissionPerKm;
+        public double maxCapacity;
+        public double maxWeight;
     }
 }

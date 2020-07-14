@@ -47,7 +47,7 @@
                 <MenuItem Name="mnu_BuildReport" Header="Save as Report" Click="mnu_BuildReport_Click"/>
 
                 <Separator></Separator>
-                <MenuItem Name="mnu_CloseMe" Header="Close"/>
+                <MenuItem Name="mnu_CloseMe" Header="Close" Click="mnu_CloseMe_Click"/>
             </MenuItem>
             <MenuItem Name="mnu_About" Header="About..." Click="Mnu_About_Click"  Style="{StaticResource baseStyleLabel}"/>
 

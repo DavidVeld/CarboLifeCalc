@@ -171,5 +171,28 @@ namespace CarboLifeUI.UI
             if (carboLifeProject != null)
                 CarboLifeAPI.ReportBuilder.CreateReport(carboLifeProject);
         }
+
+        private void mnu_CloseMe_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to save your project? ", "Warning", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                string Path = carboLifeProject.filePath;
+                if (File.Exists(Path))
+                {
+                    bool ok = carboLifeProject.SerializeXML(Path);
+                    if (ok == true)
+                    {
+                        MessageBox.Show("Project Saved");
+                        this.Close();
+                    }
+                }
+            }
+            else
+            {
+                this.Close();
+            }
+        }
     }
 }

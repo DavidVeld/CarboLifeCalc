@@ -97,7 +97,8 @@ namespace CarboLifeAPI
             for (int i = 0; i < propertyValues.Length; i++)
             {
                 PropertyInfo property = propertyValues[i];
-                if (property.PropertyType != typeof(List<CarboProperty>))
+
+                if (property.PropertyType != typeof(A1A3Element))
                 {
                     table.Rows.Add(property.Name, property.GetValue(material));
                 }

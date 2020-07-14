@@ -6,21 +6,24 @@
     <!--       -->
     <!--COLOURS-->
     <!--       -->
-    <SolidColorBrush x:Key="EWP_Purple" Color="#d51c6a" />
+    <SolidColorBrush x:Key="DVColour" Color="#ff6600" />
 
 
     <Style TargetType="{x:Type Control}" x:Key="baseStyle">
         <Setter Property="FontSize" Value="11" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
-        <Setter Property="FontWeight" Value="DemiBold"></Setter>
-
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="Background" Value="Transparent"/>
     </Style>
     <Style TargetType="{x:Type Control}" x:Key="bigStyle">
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
-        <Setter Property="FontWeight" Value="DemiBold"></Setter>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="Background" Value="Transparent"/>
+
+
 
     </Style>
     <Style TargetType="{x:Type Control}" x:Key="baseStyleLabel">
@@ -28,14 +31,14 @@
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold" />
-        <Setter Property="Background" Value="White" />
+        <Setter Property="Background" Value="Transparent" />
     </Style>
     <Style TargetType="{x:Type Control}" x:Key="baseStyleTitle">
         <Setter Property="FontSize" Value="18" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Background" Value="White" />
+        <Setter Property="Background" Value="Transparent" />
     </Style>
 
     <Style TargetType="{x:Type Control}" x:Key="baseStyleBold">
@@ -43,6 +46,7 @@
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold" />
+        <Setter Property="Background" Value="Transparent"/>
     </Style>
 
     <Style TargetType="{x:Type Control}" x:Key="allbuttons">
@@ -51,6 +55,8 @@
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold" />
         <Setter Property="BorderThickness" Value="4"/>
+        <Setter Property="Background" Value="Transparent"/>
+
     </Style>
     
     <Style TargetType="{x:Type TextBox}" x:Key="textboxStyle">
@@ -103,13 +109,13 @@
     <!-- Flat ComboBox -->
 
 
-    <SolidColorBrush x:Key="ComboBoxNormalBorderBrush" Color="#ddd" />
+    <SolidColorBrush x:Key="ComboBoxNormalBorderBrush" Color="#979797" />
     <!--d51c6a-->
 
     <SolidColorBrush x:Key="ComboBoxNormalBackgroundBrush" Color="#fff" />
     <SolidColorBrush x:Key="ComboBoxDisabledForegroundBrush" Color="#888" />
     <SolidColorBrush x:Key="ComboBoxDisabledBackgroundBrush" Color="#eee" />
-    <SolidColorBrush x:Key="ComboBoxDisabledBorderBrush" Color="#fff" />
+    <SolidColorBrush x:Key="ComboBoxDisabledBorderBrush" Color="#979797" />
 
     <ControlTemplate TargetType="ToggleButton" x:Key="ComboBoxToggleButtonTemplate">
         <Grid>
@@ -121,13 +127,13 @@
               BorderBrush="{StaticResource ComboBoxNormalBorderBrush}" 
               CornerRadius="0" BorderThickness="1, 1, 1, 1" 
               Background="{StaticResource ComboBoxNormalBackgroundBrush}" />
-            <Border Grid.Column="1" Margin="1, 1, 1, 1" BorderBrush="#444" Name="ButtonBorder"
+            <Border Grid.Column="1" Margin="1, 1, 1, 1" BorderBrush="#979797" Name="ButtonBorder"
               CornerRadius="0, 0, 0, 0" BorderThickness="0, 0, 0, 0" 
               Background="{StaticResource ComboBoxNormalBackgroundBrush}" />
 
             <Path Name="Arrow" Grid.Column="1" 
             Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
-            HorizontalAlignment="Center" Fill="{StaticResource EWP_Purple}"
+            HorizontalAlignment="Center" Fill="{StaticResource DVColour}"
             VerticalAlignment="Center" />
         </Grid>
         <ControlTemplate.Triggers>
@@ -386,7 +392,7 @@
                               Height="16" 
                               CornerRadius="0" 
                               Background="#fff"
-                              BorderBrush="#ddd"
+                              BorderBrush="#979797"
                               BorderThickness="1">
                                 <Path 
                                                     Width="8" Height="8" 
@@ -590,7 +596,7 @@
     <Color x:Key="Color_000">#FF282828</Color>
     <Color x:Key="Color_001">#000000</Color>
     <Color x:Key="Color_003">#FF858585</Color>
-    <Color x:Key="Color_004">#FFB9B9B9</Color>
+    <Color x:Key="Color_004">#979797</Color>
     <Color x:Key="Color_005">#FFD7D7D7</Color>
     <Color x:Key="Color_006">#FFE7E7E7</Color>
     <Color x:Key="Color_007">#FFF4F4F4</Color>
@@ -716,7 +722,7 @@
     <Style x:Key="flatTextBox" TargetType="{x:Type TextBox}">
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="#444" />
-        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Template">
             <Setter.Value>

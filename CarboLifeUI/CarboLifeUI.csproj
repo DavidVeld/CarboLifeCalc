@@ -118,9 +118,6 @@
     <Compile Include="UI\ReinforcementWindow.xaml.cs">
       <DependentUpon>ReinforcementWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\MaterialBasePicker.xaml.cs">
-      <DependentUpon>MaterialBasePicker.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UI\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
@@ -192,10 +189,6 @@
     <Page Include="UI\ReinforcementWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MaterialBasePicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\Overview.xaml">
       <Generator>MSBuild:Compile</Generator>
