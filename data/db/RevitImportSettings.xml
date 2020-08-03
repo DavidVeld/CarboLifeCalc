@@ -5,4 +5,5 @@
   <CutoffLevel>Ground Floor</CutoffLevel>
   <CutoffLevelValue>0</CutoffLevelValue>
   <IncludeDemo>false</IncludeDemo>
+  <IncludeExisting>false</IncludeExisting>
 </CarboRevitImportSettings>

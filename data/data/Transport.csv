@@ -1,0 +1,14 @@
+Name,MaxVolume,MaxLoad,kmPer,CarboCostNew,MaxDistance,DefaultFuel,gCO2Pertonne-km,Description
+Rail,0,0,0,0,0,Electricity,22,
+Barge,0,800000,4,0,0,,31,
+Short Sea,0,2500000,0.004,0,0,,16,
+Deep-sea container,0,20000000,0.0034,0,0,,8,
+Big Plane (Boeing 747-700F),754,113000,0.1,1835000,54000000,Jet Kerosene,602,A big transport plane to trasport all your goods
+Truck,96,22000,3.85,280000,250000,Diesel,62,"A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m³. It produces about 680g of CO2 per km, Using 3.80 l/km. "
+Truck 10t (4 wheel),45,10000,3.85,60000,250000,Diesel,62,"A 10t truck, a truck can have a max capacity of 10t and a capacity of between 80-100 m³."
+Truck 15t (6 wheel),55,15000,3.85,75000,250000,Diesel,62,"A 15t truck, a truck can have a max capacity of 15t and a capacity of around 55 m³."
+Truck 22t (10 wheel),96,22000,3.85,280000,250000,Diesel,62,"A 22t truck, a truck can have a max capacity of 22t and a capacity of around 100 m³."
+Truck 93t (10 wheel) Low loader,200,93000,3.85,280000,250000,Diesel,62,"A 93t truck, a truck can have a max capacity of 93t and a capacity of around 200 m³."
+Truck 25t (10 wheel) Container,68,25000,3,280000,250000,Diesel,62,"A container truck, a truck can have a max capacity of 25t and a capacity of between 68 m³."
+Concrete Truck 6m³,6,14400,3,90000,250000,Diesel,62,"A generic concrete truck, a truck with a capacity of 6m³. It produces about 800g of CO2 per km, Using 4.00 l/km. "
+Concrete Truck 8m³,8,19200,3,150000,250000,Diesel,62,"A generic concrete truck, a truck with a capacity of 8m³. It produces about 900g of CO2 per km, Using 4.50 l/km. "

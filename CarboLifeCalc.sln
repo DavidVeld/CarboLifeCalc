@@ -33,7 +33,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{41861564-40CB-
 		..\..\..\..\CarboLifeCalc\2017 Debug\db\UserMaterials.xml = ..\..\..\..\CarboLifeCalc\2017 Debug\db\UserMaterials.xml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{C236BD4A-C952-4B40-A171-5A32D17E4453}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{C236BD4A-C952-4B40-A171-5A32D17E4453}"
+	ProjectSection(SolutionItems) = preProject
+		data\data\Eol.csv = data\data\Eol.csv
+		data\data\Fuel.csv = data\data\Fuel.csv
+		data\data\Profiles.csv = data\data\Profiles.csv
+		data\data\Transport.csv = data\data\Transport.csv
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
