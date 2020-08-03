@@ -16,16 +16,31 @@
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
+    
     <Style TargetType="{x:Type Control}" x:Key="bigStyle">
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Background" Value="Transparent"/>
-
-
-
     </Style>
+    
+    <Style TargetType="{x:Type Control}" x:Key="InfoLabel">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="Background" Value="Transparent"/>
+        
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="#ff6600" />
+            </Trigger>
+        </Style.Triggers>
+        
+    </Style>
+
+
     <Style TargetType="{x:Type Control}" x:Key="baseStyleLabel">
         <Setter Property="FontSize" Value="15" />
         <Setter Property="FontFamily" Value="Segoe UI" />
@@ -395,13 +410,13 @@
                               BorderBrush="#979797"
                               BorderThickness="1">
                                 <Path 
-                                                    Width="8" Height="8" 
+                                                    Width="10" Height="10" 
                                                     x:Name="CheckMark"
                                                     SnapsToDevicePixels="False" 
-                                                    Stroke="#979797"
-                                                    StrokeThickness="0"
-                                                    Fill="#d51c6a"
-                                                    Data="M 0 0 L 0 8 L 8 8 L 8 0 L 0 0" />
+                                                    Stroke="#000000"
+                                                    StrokeThickness="1"
+                                                    Fill="{StaticResource DVColour}"
+                                                    Data="M 0 0 L 0 10 L 10 10 L 10 0 L 0 0" />
                             </Border>
                         </BulletDecorator.Bullet>
                         <ContentPresenter Margin="8,0,0,0"

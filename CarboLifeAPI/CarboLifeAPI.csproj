@@ -86,7 +86,7 @@
     <Compile Include="UtilClasses\A1A3Collection.cs" />
     <Compile Include="UtilClasses\CarboLevel.cs" />
     <Compile Include="UtilClasses\EoLElement.cs" />
-    <Compile Include="UtilClasses\Vehicle.cs" />
+    <Compile Include="UtilClasses\VehicleAndFuel.cs" />
     <Compile Include="Utils\CarboDataPoint.cs" />
     <Compile Include="Utils\ReadWriteCsv.cs" />
     <Compile Include="Utils\ReportBuilder.cs" />

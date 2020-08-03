@@ -33,10 +33,13 @@ namespace CarboLifeUI.UI
 
         List<EoLElement> materialList;
 
+        private bool noUpdates = true;
+
         public MaterialEndofLifePicker(CarboMaterial material)
         {
             carboMaterial = material;
             eolProperties = material.materialC1C4Properties;
+            noUpdates = true;
 
             InitializeComponent();
         }
@@ -103,7 +106,8 @@ namespace CarboLifeUI.UI
 
         private void loadSettings()
         {
-            eolProperties.calculate();
+            //no updates should trigger text changes events;
+            noUpdates = true;
 
             txt_C1Thickness.Text = eolProperties.c1density.ToString();
             txt_C1BaseValue.Text = eolProperties.c1BaseValue.ToString();
@@ -121,7 +125,20 @@ namespace CarboLifeUI.UI
             txt_incineratedP.Text = eolProperties.c4incfP.ToString(); ;
             txt_incineratedValue.Text = eolProperties.c4incfV.ToString();
             txt_reusedP.Text = eolProperties.c4reUseP.ToString();
-            txt_reusedP.Text = eolProperties.c4reUseV.ToString();
+            txt_reusedValue.Text = eolProperties.c4reUseV.ToString();
+
+            double totalP = eolProperties.c4landfP + eolProperties.c4incfP + eolProperties.c4reUseP;
+            if (totalP != 100)
+            {
+                lbl_CheckPercent.Content = "Please review total percentages, delta = " + (100 - totalP).ToString() + " %";
+                lbl_CheckPercent.Foreground = Brushes.Red;
+            }
+            else
+            {
+                lbl_CheckPercent.Content = "";
+                lbl_CheckPercent.Foreground = Brushes.Black;
+
+            }
 
             txt_additional.Text = eolProperties.other.ToString();
 
@@ -129,11 +146,12 @@ namespace CarboLifeUI.UI
 
             //Totals;
             txt_Value.Text = eolProperties.value.ToString();
+            noUpdates = false;
+
         }
-               
+
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
-            StoreData();
             isAccepted = true;
 
             this.Close();
@@ -170,53 +188,10 @@ namespace CarboLifeUI.UI
         private void Refresh()
         {
             //Store data in list.
-            StoreData();
+            //StoreData();
             eolProperties.calculate();
             loadSettings();
         }
-
-        private void StoreData()
-        {
-            //C1
-            eolProperties.propertyName = cbb_Type.Text;
-
-            eolProperties.c1density = Math.Round(Utils.ConvertMeToDouble(txt_C1Thickness.Text), 3);
-            eolProperties.c1BaseValue = Math.Round(Utils.ConvertMeToDouble(txt_C1BaseValue.Text), 3);
-            eolProperties.c1Value = Math.Round(Utils.ConvertMeToDouble(txt_C1Value.Text), 3);
-            //C2 - C3
-            eolProperties.c2Value = Math.Round(Utils.ConvertMeToDouble(txt_C2Value.Text), 3);
-            eolProperties.c3Value = Math.Round(Utils.ConvertMeToDouble(txt_C3Value.Text), 3);
-            //C4
-            eolProperties.c4DisposalName = cbb_Type.Text;
-            eolProperties.c4landfP = Math.Round(Utils.ConvertMeToDouble(txt_landfillP.Text), 3);
-            eolProperties.c4landfV = Math.Round(Utils.ConvertMeToDouble(txt_landfillValue.Text), 3);
-            eolProperties.c4incfP = Math.Round(Utils.ConvertMeToDouble(txt_incineratedP.Text), 3);
-            eolProperties.c4incfV = Math.Round(Utils.ConvertMeToDouble(txt_incineratedValue.Text), 3);
-            eolProperties.c4reUseP = Math.Round(Utils.ConvertMeToDouble(txt_reusedP.Text), 3);
-            eolProperties.c4reUseV = Math.Round(Utils.ConvertMeToDouble(txt_reusedValue.Text), 3);
-
-            //Other
-            eolProperties.other = Math.Round(Utils.ConvertMeToDouble(txt_additional.Text), 3);
-
-        }
-
-
-        private void txt_landfillP_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            double value = 0;
-
-            if (double.TryParse(txt_landfillP.Text, out value))
-                Refresh();
-        }
-
-        private void txt_incineratedP_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            double value = 0;
-
-            if (double.TryParse(txt_incineratedP.Text, out value))
-                Refresh();
-        }
-
 
         private void btn_C2Pick_Click(object sender, RoutedEventArgs e)
         {
@@ -225,25 +200,156 @@ namespace CarboLifeUI.UI
 
             if (transportSelector.isAccepted == true)
             {
-                eolProperties.c2Properties = transportSelector.c2Properties;
-                eolProperties.c2Value = transportSelector.c2Properties.value;
-
-                txt_C2Name.Text = eolProperties.c2Properties.name;
-                txt_C2Value.Text = eolProperties.c2Value.ToString();
-
+                eolProperties.c2Properties = transportSelector.a4Properties;
+                eolProperties.c2Value = transportSelector.a4Properties.value;
             }
 
-            Refresh();
-        }
-
-        private void txt_KeyDown(object sender, KeyEventArgs e)
-        {
             Refresh();
         }
 
         private void btn_Calculate_Click(object sender, RoutedEventArgs e)
         {
             Refresh();
+        }
+        
+        private void GroupBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            CarboInfoBox infoBox = new CarboInfoBox("Only use this value for a demolished material, use section C4 for end of life values of a new material. 3.4 kgCO2/m2 is recommended by RICS guidelines unless specified data is available");
+            infoBox.Show();
+        }
+
+        private async void txt_C1Thickness_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length)
+            {
+                eolProperties.c1density = Utils.ConvertMeToDouble(tb.Text);
+                Refresh();
+            }
+        }
+
+        private async void txt_C1BaseValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length)
+            {
+                eolProperties.c1BaseValue = Utils.ConvertMeToDouble(tb.Text);
+                Refresh();
+            }
+        }
+
+        private async void txt_C1Value_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length)
+            {
+            }
+        }
+
+        private async void txt_C2Value_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length)
+            {
+                if (noUpdates == false)
+                {
+                    eolProperties.c2Properties.name = "Manual";
+                    eolProperties.c2Value = Utils.ConvertMeToDouble(tb.Text);
+                    Refresh();
+
+                }
+            }
+        }
+
+        private async void txt_C3Value_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length && noUpdates == false)
+            {
+                eolProperties.c3Value = Utils.ConvertMeToDouble(tb.Text);
+                Refresh();
+            }
+        }
+
+        private async void txt_landfillP_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length && noUpdates == false)
+            {
+                double landfP = Utils.ConvertMeToDouble(tb.Text);
+                //Check Range:
+                if (landfP > 100)
+                    landfP = 100;
+                else if (landfP < 0)
+                    landfP = 0;
+
+                //Balance percentages tbc
+                eolProperties.c4landfP = landfP;
+
+                Refresh();
+            }
+        }
+
+        private async void txt_incineratedP_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length && noUpdates == false)
+            {
+                double incP = Utils.ConvertMeToDouble(tb.Text);
+                //Check Range:
+                if (incP > 100)
+                    incP = 100;
+                else if (incP < 0)
+                    incP = 0;
+
+                //Balance percentages tbc
+                eolProperties.c4incfP = incP;
+
+                Refresh();
+            }
+        }
+
+       private async void txt_reusedP_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length && noUpdates == false)
+            {
+                double reusep = Utils.ConvertMeToDouble(tb.Text);
+                //Check Range:
+                if (reusep > 100)
+                    reusep = 100;
+                else if (reusep < 0)
+                    reusep = 0;
+
+                //Balance percentages tbc
+                eolProperties.c4reUseP = reusep;
+
+                Refresh();
+            }
         }
 
         private async void txt_landfillValue_TextChanged(object sender, TextChangedEventArgs e)
@@ -252,11 +358,57 @@ namespace CarboLifeUI.UI
             int startLength = tb.Text.Length;
 
             await Task.Delay(500);
-            if (startLength == tb.Text.Length)
+            if (startLength == tb.Text.Length && noUpdates == false)
             {
+                double p = Utils.ConvertMeToDouble(tb.Text);
+                eolProperties.c4landfV = p;
+               // Refresh();
+            }
+        }
+
+        private async void txt_incineratedValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length && noUpdates == false)
+            {
+                double p = Utils.ConvertMeToDouble(tb.Text);
+                eolProperties.c4incfV = p;
+               // Refresh();
+            }
+        }
+
+        private async void txt_reusedValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length && noUpdates == false)
+            {
+                double p = Utils.ConvertMeToDouble(tb.Text);
+                eolProperties.c4reUseV = p;
+                // Refresh();
+            }
+        }
+
+        private async void txt_additional_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length && noUpdates == false)
+            {
+                double p = Utils.ConvertMeToDouble(tb.Text);
+                eolProperties.other = p;
                 Refresh();
             }
         }
+
+
     }
 
 }

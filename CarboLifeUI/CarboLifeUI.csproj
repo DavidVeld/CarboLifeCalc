@@ -85,6 +85,9 @@
     <Compile Include="UI\CarboLifeMainWindow.xaml.cs">
       <DependentUpon>CarboLifeMainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\CarboInfoBox.xaml.cs">
+      <DependentUpon>CarboInfoBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\GroupWindow.xaml.cs">
       <DependentUpon>GroupWindow.xaml</DependentUpon>
     </Compile>
@@ -145,6 +148,10 @@
     <Page Include="UI\CarboLifeMainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\CarboInfoBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\GroupWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

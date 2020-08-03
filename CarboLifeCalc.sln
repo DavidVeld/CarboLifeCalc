@@ -25,6 +25,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		SampleDataBases\UserMaterials.xml = SampleDataBases\UserMaterials.xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{41861564-40CB-4C6D-B6C5-E08515094B29}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\CarboLifeCalc\2017 Debug\db\BaseMaterials.xml = ..\..\..\..\CarboLifeCalc\2017 Debug\db\BaseMaterials.xml
+		..\..\..\..\CarboLifeCalc\2017 Debug\db\GroupSettings.xml = ..\..\..\..\CarboLifeCalc\2017 Debug\db\GroupSettings.xml
+		..\..\..\..\CarboLifeCalc\2017 Debug\db\RevitImportSettings.xml = ..\..\..\..\CarboLifeCalc\2017 Debug\db\RevitImportSettings.xml
+		..\..\..\..\CarboLifeCalc\2017 Debug\db\UserMaterials.xml = ..\..\..\..\CarboLifeCalc\2017 Debug\db\UserMaterials.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{C236BD4A-C952-4B40-A171-5A32D17E4453}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

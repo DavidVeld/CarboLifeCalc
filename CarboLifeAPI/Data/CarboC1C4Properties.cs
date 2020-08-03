@@ -75,43 +75,82 @@ namespace CarboLifeAPI.Data
         public void calculate()
         {
             string calcResult = "";
-            double value = 0;
-
-            //C1V = txt1BaseV * txtC1Fact;
-
-            //Calculate re-usage:
-            double c4reUseP = 100 - (c4landfP + c4incfP);
-            
-            //Recalibrate percentages
-            if (c4reUseP < 0)
-            {
-                c4reUseP = 0;
-
-                if (c4landfP > 100)
-                    c4landfP = 100;
-
-                c4incfP = 100 - c4landfP;
-            }
-
+           
             //Calculate total nr of trips;
             //C1
-            c1Value = Math.Round((c1BaseValue * c1density), 3);
+            c1Value = c1BaseValue * c1density;
 
-            double c4incResult = Math.Round(c4incfV * (c4incfP / 100), 3);
-            double c4lanfResult = Math.Round(c4landfV * (c4landfP / 100), 3);
-            double c4reUseResult = Math.Round(c4reUseV * (c4reUseP / 100), 3);
+            double c4incResult = c4incfV * (c4incfP / 100);
+            double c4lanfResult = c4landfV * (c4landfP / 100);
+            double c4reUseResult = c4reUseV * (c4reUseP / 100);
+            double c4value = c4incResult + c4lanfResult + c4reUseResult;
 
-            double costTotal = Math.Round((c4incResult + c4lanfResult + c4reUseResult + other), 3);
+
+            double costTotal = c1Value + c2Value + c3Value + c4value + other;
+
             try
             {
-                calcResult += "This calculation will try to create a CO2 per kg value based on the given parameters." + System.Environment.NewLine + System.Environment.NewLine;
-                calcResult += "Incinerator costs are: " + c4incfV + " x " + c4incfP + " % = " + c4incResult + " kgCO2/kg " + System.Environment.NewLine;
-                calcResult += "Landfill costs are: " + c4landfV + " x " + c4landfP + " % = " + c4lanfResult + " kgCO2/kg " + System.Environment.NewLine;
-                calcResult += "Re-use costs are: " + c4reUseV + " x " + c4reUseP + " % = " + c4reUseResult + " kgCO2/kg " + System.Environment.NewLine;
-                calcResult += "Additional costs are: " + other + " kgCO2/kg " + System.Environment.NewLine;
+                calcResult += "This calculation create a CO2 per kg value based on the given parameters." + System.Environment.NewLine + System.Environment.NewLine;
+                calcResult += System.Environment.NewLine;
 
-                calcResult += "Total costs are: " + c4incResult + " + " + c4lanfResult + " + " + c4reUseResult + " + " + other + System.Environment.NewLine;
+                if (c1Value != 0)
+                {
+                    calcResult += "[C1] Demolition carbon cost: " + System.Environment.NewLine;
+                   // calcResult += System.Environment.NewLine;
+                    calcResult += c1BaseValue + "kgCo2e/m2  x " + c1density + "kg/m2 = " + c4incResult + " kgCO2/kg " + System.Environment.NewLine;
+                    calcResult += System.Environment.NewLine;
+                }
+
+
+                if (c2Value != 0)
+                {
+                    calcResult += "[C2] Transport carbon cost: " + System.Environment.NewLine;
+                    //calcResult += System.Environment.NewLine;
+                    calcResult += c2Value + " kgCo2e/m2 " + System.Environment.NewLine;
+                    calcResult += System.Environment.NewLine;
+                }
+
+                if (c3Value != 0)
+                {
+                    calcResult += "[C3]  Waste Processing carbon costs: " + System.Environment.NewLine;
+                    //calcResult += System.Environment.NewLine;
+                    calcResult += "Waste Processing cost are set as: " + c3Value + " kgCO2/kg " + System.Environment.NewLine;
+                    calcResult += System.Environment.NewLine;
+                }
+
+                if (c4value != 0)
+                {
+                    calcResult += "[C4] Disposal carbon costs: " + System.Environment.NewLine;
+                    //calcResult += System.Environment.NewLine;
+                    calcResult += "[C4] Incinerator costs is: " + c4incfV + " x " + c4incfP + " % = " + c4incResult + " kgCO2/kg " + System.Environment.NewLine;
+                    calcResult += "[C4] Landfill costs is: " + c4landfV + " x " + c4landfP + " % = " + c4lanfResult + " kgCO2/kg " + System.Environment.NewLine;
+                    calcResult += "[C4] Re-use costs is: " + c4reUseV + " x " + c4reUseP + " % = " + c4reUseResult + " kgCO2/kg " + System.Environment.NewLine;
+                    calcResult += System.Environment.NewLine;
+                    calcResult += "[C4] total cost is: " + c4incResult + " + " + c4lanfResult + " + " + c4reUseResult + " = " + c4value + " kgCO2/kg " + System.Environment.NewLine;
+
+                    calcResult += System.Environment.NewLine;
+                }
+
+                if (c3Value != 0)
+                {
+                    calcResult += "Additional costs are (please specify in descrition otherwise leave as 0): " + other + " kgCO2/kg " + System.Environment.NewLine;
+                    calcResult += System.Environment.NewLine;
+                }
+
+                calcResult += "[C4] Disposal carbon costs: " + System.Environment.NewLine;
+                calcResult += "Total costs are: " + "[C1]" + " + " + "[C2]" + " + " + "[C3]" + " + " + "[C4]" + " + " + "[Additional]" + System.Environment.NewLine;
+
+                calcResult += "Total costs are: " + c1Value + " + " + c2Value + " + " + c3Value + " + " + c4value + " + " + other + System.Environment.NewLine;
                 calcResult += "= " + costTotal + " kgCO2/kg " + System.Environment.NewLine;
+                
+                if(c1Value > 1 && c4value > 1)
+                {
+                    calcResult += System.Environment.NewLine;
+                    calcResult += "WARNING, YOUR EOL CALCULATION SHOWS A C1 AND A C4 VALUE, ONLY ONE CAN BE USED OTHERWISE DEMOLITION WILL BE COUNTED DOUBLE" + System.Environment.NewLine;
+                    calcResult += System.Environment.NewLine;
+
+                }
+
 
                 this.calcResult = calcResult;
                 this.value = costTotal;

@@ -425,7 +425,7 @@ namespace CarboLifeUI.UI
                 chx_A4_Manual.IsChecked = false;
                 selectedMaterial.ECI_A4_Override = false;
 
-                selectedMaterial.materiaA4Properties = materialTransportPicker.c2Properties;
+                selectedMaterial.materiaA4Properties = materialTransportPicker.a4Properties;
                 selectedMaterial.ECI_A4 = selectedMaterial.materiaA4Properties.value;
 
                 //selectedMaterial.SetProperty("ECI_A4_Settings", materialTransportPicker.Settings);
