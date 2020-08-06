@@ -20,6 +20,7 @@ namespace CarboLifeAPI.Data
         public string Number { get; set; }
         public string Category { get; set; }
         public string Description { get; set; }
+        public double SocialCost { get; set; }
 
         //Calculated Values
         public double EE { get; set; }
@@ -76,6 +77,7 @@ namespace CarboLifeAPI.Data
 
         public CarboProject()
         {
+
             CarboDatabase = new CarboDatabase();
             CarboDatabase = CarboDatabase.DeSerializeXML("");
 
@@ -87,6 +89,7 @@ namespace CarboLifeAPI.Data
             Number = "00000";
             Category = "";
             Description = "New Project";
+            SocialCost = 0;
         }
         public void CreateGroups()
         {
@@ -241,6 +244,13 @@ namespace CarboLifeAPI.Data
             return totalTotal;
         }
 
+        public double getTotalSocialCost()
+        {
+            double result = getTotalEC() * SocialCost;
+
+            return result;
+        }
+
         public string getSummaryText(bool materials, bool globals, bool cars, bool trees)
         {
             string result = "";
@@ -270,6 +280,12 @@ namespace CarboLifeAPI.Data
             if (materials == true)
                 result += "This requires " + Math.Round(totalTotal / 0.0217724, 0) + " trees to exists a year" + Environment.NewLine;
 
+            double socialcost = (totalTotal * SocialCost);
+
+            result += Environment.NewLine;
+            result += "The Social Carbon Costs are: " + Math.Round(socialcost, 2) + " $/£/€ total" + Environment.NewLine + Environment.NewLine;
+
+
             return result;
         }
 
@@ -297,6 +313,7 @@ namespace CarboLifeAPI.Data
             A5 = 1.400 * (Value / 100000);
                        
         }
+
         public void GenerateDummyList()
         {
             //Create a large list of dummy elements;

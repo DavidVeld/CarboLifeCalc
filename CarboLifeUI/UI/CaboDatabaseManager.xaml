@@ -30,7 +30,7 @@
         </Grid.ColumnDefinitions>
 
         <TabControl Grid.Row="1" Grid.Column="1" Background="White" BorderBrush="Black" BorderThickness="0" Grid.ColumnSpan="2">
-            <TabItem Header="Materials">
+            <TabItem Header="Project Materials">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="5"/>
@@ -45,26 +45,24 @@
                     </Grid.ColumnDefinitions>
 
                     <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top">
-                        <MenuItem FontSize="14" Header="Data" Background="White" Style="{StaticResource baseStyleLabel}">
-                            <MenuItem Name="mnu_ImportNew" Header="_Import from CSV" Click="Mnu_ImportNew_Click" />
+                        <MenuItem FontSize="14" Header="File" Background="White" Style="{StaticResource baseStyleLabel}">
                             
-                            <Separator/>
-                            <MenuItem Name="mnu_ExportBase" Header="_Sync to User Materials" Click="mnu_ExportUser_Click" />
-                            <MenuItem Name="mnu_ImportBase" Header="_Import Default User Materials" Click="mnu_ImportUser_Click" />
-                            <MenuItem Name="mnu_SaveData" Header="Save Current as User Materials" Click="Mnu_SaveData_Click"  />
+                            <MenuItem Name="mnu_LoadTemplate" Header="Load Template" Click="mnu_LoadTemplate_Click" />
+                            <MenuItem Name="mnu_SaveTemplate" Header="Save Current Project Materials as Template" Click="mnu_SaveTemplate_Click" />
+
+                            <MenuItem Name="mnu_SyncToTemplate" Header="Sync to Template" Click="mnu_SyncToTemplate_Click" Visibility="Visible" />
+                            <MenuItem Name="mnu_SyncFromTemplate" Header="Sync from Template" Click="mnu_SyncFromTemplate_Click" Visibility="Visible"  />
 
                             <Separator/>
+                            <MenuItem Name="mnu_SyncFromOnline" Header="Get Online Materials" Click="mnu_SyncFromOnline_Click"  Visibility="Visible"  />
+                            <Separator/>
 
-                            <MenuItem Name="mnu_SaveDataas" Header="Save User Materials Data As..." Click="Mnu_SaveDataAs_Click" Visibility="Visible" />
-                            <MenuItem Name="mnu_OpenDataas" Header="Open User Materials Data From..." Click="Mnu_UpdateUserMaterials" Visibility="Visible" />
+                            <MenuItem Name="mnu_SaveDataas" Header="Save Project Materials As..." Click="Mnu_SaveDataAs_Click" Visibility="Visible" />
+                            <MenuItem Name="mnu_OpenDataas" Header="Open Project Materials From..." Click="mnu_OpenDataFrom" Visibility="Visible" />
                             <Separator/>
                         </MenuItem>
                     </Menu>
 
-                    <Label Grid.Column="1" Grid.Row="1" Margin="50,0,0,0" Width="50" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}">Show:</Label>
-                    <ComboBox Name="cbb_ViewableTable" Grid.Column="1" Grid.Row="1" Style="{StaticResource ComboBoxFlatStyle}" Width="200" Height="25" HorizontalAlignment="Left" Margin="150,0,0,0" DropDownClosed="Cbb_ViewableTable_DropDownClosed">
-                    </ComboBox>
-                   
                     <DataGrid Name="dgv_Data" Grid.Column="1" Grid.Row="2" Background="AliceBlue"></DataGrid>
 
                 </Grid>

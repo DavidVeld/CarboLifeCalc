@@ -174,6 +174,16 @@ namespace CarboLifeUI.UI
 
         private void mnu_CloseMe_Click(object sender, RoutedEventArgs e)
         {
+                this.Close();
+        }
+
+        private void mnu_Help_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Help files tbc, please visit www.davidveld.nl for resources and updates ", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
             MessageBoxResult result = MessageBox.Show("Do you want to save your project? ", "Warning", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes)
@@ -185,13 +195,11 @@ namespace CarboLifeUI.UI
                     if (ok == true)
                     {
                         MessageBox.Show("Project Saved");
-                        this.Close();
                     }
                 }
             }
             else
             {
-                this.Close();
             }
         }
     }

@@ -61,7 +61,7 @@
                 <ComboBoxItem>Category</ComboBoxItem>
             </ComboBox>
 
-            <Separator Background="Beige" Width="1" Height="30"></Separator>
+            <Separator Background="Black" Width="1" Height="30"></Separator>
                     
         <Button x:Name="btn_EditMaterial" Content="Edit Material" Width="80" Height="25" HorizontalAlignment="Left"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" />
             <Separator Background="Gray" Width="2" Height="30"></Separator>
@@ -84,7 +84,8 @@
                                             <Expander.Header>
                                                 <DockPanel>
                                                     <TextBlock FontSize="14" FontFamily="Segoe UI" FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>
-                                                    <TextBlock FontSize="14" FontFamily="Segoe UI" FontWeight="Bold" Text="{Binding Path=ItemCount}" Visibility="Hidden"/>
+                                                    <TextBlock FontSize="14" FontFamily="Segoe UI" FontWeight="Bold" Text="{Binding Path=ItemCount}" Visibility="Visible"/>
+
                                                 </DockPanel>
                                             </Expander.Header>
                                             <Expander.Content>

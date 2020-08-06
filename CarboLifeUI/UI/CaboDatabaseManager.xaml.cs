@@ -27,7 +27,7 @@ namespace CarboLifeUI.UI
     public partial class CaboDatabaseManager : Window
     {
         public CarboDatabase UserMaterials;
-        public CarboDatabase BaseMaterials;
+        ///public CarboDatabase BaseMaterials;
 
         public bool isOk;
 
@@ -35,8 +35,8 @@ namespace CarboLifeUI.UI
         public CaboDatabaseManager(CarboDatabase userMaterials)
         {
             UserMaterials = userMaterials;
-            BaseMaterials = new CarboDatabase();
-            BaseMaterials = BaseMaterials.DeSerializeXML("db\\BaseMaterials");
+            //BaseMaterials = new CarboDatabase();
+            //BaseMaterials = BaseMaterials.DeSerializeXML("db\\BaseMaterials");
             isOk = false;
 
             InitializeComponent();
@@ -44,14 +44,10 @@ namespace CarboLifeUI.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            cbb_ViewableTable.Items.Add("User Materials");
-            cbb_ViewableTable.Items.Add("Base Materials");
-            cbb_ViewableTable.Text = cbb_ViewableTable.Items[0].ToString();
-            cbb_ViewableTable.SelectedIndex = 0;
             RefreshTable();
-
         }
-
+        
+        [Obsolete]
         private CarboDatabase tryParseData(DataTable dt)
         {
             CarboDatabase result = new CarboDatabase();
@@ -188,8 +184,8 @@ namespace CarboLifeUI.UI
                                 */
 
 
-                                //Value Successfully added
-                                valueisParameter = false;
+        //Value Successfully added
+        valueisParameter = false;
 
                                 //removethePropertyFromlistToSpeedThingsUpNextRound;
                                 propertyList.Remove(property);
@@ -260,193 +256,18 @@ namespace CarboLifeUI.UI
             return result;
         }
 
-        private void Cbb_ViewableTable_DropDownClosed(object sender, EventArgs e)
-        {
-            RefreshTable();
-        }
-
         private void RefreshTable()
         {
-            if (cbb_ViewableTable.Text == "Base Materials")
-            {
-                dgv_Data.ItemsSource = null;
-                dgv_Data.Items.Clear();
-                if (BaseMaterials != null)
-                    dgv_Data.ItemsSource = BaseMaterials.getData();
-            }
-            else
-            {
-                dgv_Data.ItemsSource = null;
-                dgv_Data.Items.Clear();
-                if (UserMaterials != null)
-                    dgv_Data.ItemsSource = UserMaterials.getData();
-            }
+            dgv_Data.ItemsSource = null;
+            dgv_Data.Items.Clear();
+            if (UserMaterials != null)
+                dgv_Data.ItemsSource = UserMaterials.getData();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             isOk = true;
             this.Close();
-        }
-
-        private void Mnu_ImportNew_Click(object sender, RoutedEventArgs e)
-        {
-            string name = "";
-            //Get the profile from a cvs:
-            if (cbb_ViewableTable.Text == "User Materials")
-                name = "db\\UserMaterials";
-            else if (cbb_ViewableTable.Text == "Base Materials")
-                name = "db\\BaseMaterials";
-
-            try
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "cvs files (*.csv)|*.csv|All files (*.*)|*.*";
-
-                var path = openFileDialog.ShowDialog();
-                FileInfo finfo = new FileInfo(openFileDialog.FileName);
-                if (openFileDialog.FileName != "")
-                {
-                    string filePath = openFileDialog.FileName;
-
-                    DataTable dt = CarboLifeAPI.Utils.LoadCSV(filePath);
-
-                    CarboDatabase newMaterialDatabase = tryParseData(dt);
-
-                    //dgv_Data.ItemsSource = dt.DefaultView;
-                    dgv_Data.ItemsSource = newMaterialDatabase.getData();
-                    newMaterialDatabase.SerializeXML(name);
-
-                    if (name == "BaseMaterials")
-                        BaseMaterials = newMaterialDatabase;
-                    else if (name == "UserMaterials")
-                        UserMaterials = newMaterialDatabase;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-        private void Mnu_SaveData_Click(object sender, RoutedEventArgs e)
-        {
-            string name = "";
-            //Get the profile from a cvs:
-            try
-            {
-                if (cbb_ViewableTable.Text == "User Materials")
-                    name = "db\\UserMaterials";
-                else if (cbb_ViewableTable.Text == "Base Materials")
-                    name = "db\\BaseMaterials";
-                else
-                {
-                    name = "";
-                }
-
-                MessageBoxResult result = MessageBox.Show("This will overwite the current default materials, do you want to proceed?", "Warning", MessageBoxButton.YesNo);
-
-                if (name != "" && result == MessageBoxResult.Yes)
-                {
-                    if (name == "db\\UserMaterials")
-                    {
-                        UserMaterials.SerializeXML(name);
-                        MessageBox.Show("UserMaterials Saved");
-
-                    }
-                    else if (name == "db\\BaseMaterials")
-                    {
-                        BaseMaterials.SerializeXML(name);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Dataset not saved");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-
-        }
-
-        private void Mnu_EXportToCVS(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("To Be Implemented");
-        }
-
-        private void Mnu_UpdateUserMaterials(object sender, RoutedEventArgs e)
-        {
-            string name = "";
-            //Get the profile from a cvs:
-            try
-            {
-                MessageBoxResult result = MessageBox.Show("Do you want to update the base set of usermaterials based on these project settings ?" + Environment.NewLine +
-                    "Materials with excact same names will be overwritten", "Warning", MessageBoxButton.YesNo);
-
-                if (result == MessageBoxResult.Yes)
-                {
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
-
-                    var path = openFileDialog.ShowDialog();
-                    FileInfo finfo = new FileInfo(openFileDialog.FileName);
-                    if (openFileDialog.FileName != "")
-                    {
-                        name = openFileDialog.FileName;
-
-                        CarboDatabase buffer = UserMaterials.DeSerializeXML(name);
-                        
-                        bool syncResult = UserMaterials.SyncMaterials(buffer);
-
-                        if (syncResult == true)
-                        {
-                            buffer.SerializeXML(name);
-                            Utils.WriteToLog("Database saved to: " + name);
-                            MessageBox.Show("Dataset saved");
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-
-        }
-
-        private void Mnu_SaveDataAs_Click(object sender, RoutedEventArgs e)
-        {
-            string name = "";
-            try
-            {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter = "xml files (*.xml)|*.xml";
-
-                var path = saveFileDialog.ShowDialog();
-                FileInfo finfo = new FileInfo(saveFileDialog.FileName);
-                if (saveFileDialog.FileName != "")
-                {
-                    if (File.Exists(name))
-                    {
-
-                        MessageBoxResult result = MessageBox.Show("Do you want to override the file?", "Warning", MessageBoxButton.YesNo);
-                        if (result == MessageBoxResult.Yes)
-                        {
-                            UserMaterials.SerializeXML(name);
-                            MessageBox.Show("User Database Saved", "Information", MessageBoxButton.OK);
-                        }
-
-                    }
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
         }
 
         private void mnu_ImportUser_Click(object sender, RoutedEventArgs e)
@@ -525,9 +346,183 @@ namespace CarboLifeUI.UI
             RefreshTable();
         }
 
-        private void mnu_OpenDataas_Click(object sender, RoutedEventArgs e)
+        private void mnu_LoadTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to replace the current materials in your project with the ones in the template? User made materials will be removed." + Environment.NewLine +
+                    "[TO BE IMPLEMENTED]", "Warning", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Utils.WriteToLog(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Saves the current project materials as a template
+        /// </summary>
+        private void mnu_SaveTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to replace your template file with the current project materials?" + Environment.NewLine + "You will lose materials that exist in the template, but not in this project" + Environment.NewLine
+                    , "Warning", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    string name = "db\\UserMaterials";
+
+                        if (name != "" && result == MessageBoxResult.Yes)
+                        {
+                            if (name == "db\\UserMaterials")
+                            {
+                                UserMaterials.SerializeXML(name);
+                                MessageBox.Show("Current Project Materials saved as template", "Warning", MessageBoxButton.OK);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Dataset not saved");
+                            }
+                        }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Utils.WriteToLog(ex.Message);
+            }
+        }
+
+        private void mnu_SyncFromOnline_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Load materials from a online database, download a database and sync with it" + Environment.NewLine +
+                    "[TO BE IMPLEMENTED]", "Warning", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Utils.WriteToLog(ex.Message);
+            }
+        }
+
+        private void mnu_SyncToTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            string name = "";
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to update the material template with the current project materials ?" + Environment.NewLine +
+                    "Materials with excact same names will be overwritten with new values", "Warning", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+
+                    var path = openFileDialog.ShowDialog();
+                    FileInfo finfo = new FileInfo(openFileDialog.FileName);
+                    if (openFileDialog.FileName != "")
+                    {
+                        name = openFileDialog.FileName;
+
+                        CarboDatabase buffer = UserMaterials.DeSerializeXML(name);
+
+                        bool syncResult = UserMaterials.SyncMaterials(buffer);
+
+                        if (syncResult == true)
+                        {
+                            buffer.SerializeXML(name);
+                            Utils.WriteToLog("Database saved to: " + name);
+                            MessageBox.Show("Dataset saved");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void mnu_SyncFromTemplate_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Mnu_SaveDataAs_Click(object sender, RoutedEventArgs e)
+        {
+            string name = "";
+            try
+            {
+                MessageBoxResult mresult = MessageBox.Show("Do you want to save the current Project Materials in a seperate file for sharing or use in anoter project ?", "Warning", MessageBoxButton.YesNo);
+
+                if (mresult == MessageBoxResult.Yes)
+                {
+                    SaveFileDialog saveFileDialog = new SaveFileDialog();
+                    saveFileDialog.Filter = "carboLife Materials (*.clm)|*.cml";
+
+                    var path = saveFileDialog.ShowDialog();
+                    FileInfo finfo = new FileInfo(saveFileDialog.FileName);
+                    if (saveFileDialog.FileName != "")
+                    {
+                        if (File.Exists(name))
+                        {
+                            MessageBoxResult result = MessageBox.Show("Do you want to override the file?", "Warning", MessageBoxButton.YesNo);
+                            if (result == MessageBoxResult.Yes)
+                            {
+                                UserMaterials.SerializeXML(name);
+                                MessageBox.Show("Project Materials Saved", "Information", MessageBoxButton.OK);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void mnu_OpenDataFrom(object sender, RoutedEventArgs e)
+        {
+            string name = "";
+
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "carboLife Materials (*.cml)|*.cml";
+
+                var path = openFileDialog.ShowDialog();
+                FileInfo finfo = new FileInfo(openFileDialog.FileName);
+                if (openFileDialog.FileName != "")
+                {
+                    string filePath = openFileDialog.FileName;
+                    CarboDatabase newMaterialDatabase = new CarboDatabase();
+                    if (File.Exists(filePath))
+                    {
+                        newMaterialDatabase = newMaterialDatabase.DeSerializeXML(filePath);
+                        if (newMaterialDatabase != null)
+                        {
+                            UserMaterials = newMaterialDatabase;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

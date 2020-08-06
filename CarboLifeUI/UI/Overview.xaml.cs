@@ -137,6 +137,8 @@ namespace CarboLifeUI.UI
                     txt_Area.Text = CarboLifeProject.Area.ToString();
                     txt_Value.Text = CarboLifeProject.Value.ToString();
 
+                    txt_SocialCost.Text = CarboLifeProject.SocialCost.ToString();
+
                     //Totals
                     refreshSumary();
                 }
@@ -185,8 +187,10 @@ namespace CarboLifeUI.UI
             CarboLifeProject.Category = txt_Category.Text;
             CarboLifeProject.Description = txt_Desctiption.Text;
 
+            CarboLifeProject.SocialCost = CarboLifeAPI.Utils.ConvertMeToDouble(txt_SocialCost.Text);
             CarboLifeProject.Area = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Area.Text);
             CarboLifeProject.Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
+            CarboLifeProject.SocialCost = CarboLifeAPI.Utils.ConvertMeToDouble(txt_SocialCost.Text);
             CarboLifeProject.CalculateProject();
 
         }

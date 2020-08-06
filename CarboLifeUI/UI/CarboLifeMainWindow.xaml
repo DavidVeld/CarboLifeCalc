@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Carbo Life Calculator"
-             d:DesignHeight="740" d:DesignWidth="1200" MinWidth="1200" MinHeight="740" Width="1200" Height="740">
+             d:DesignHeight="740" d:DesignWidth="1200" MinWidth="1200" MinHeight="740" Width="1200" Height="740" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -33,24 +33,22 @@
 
         <Menu Grid.Row="1" Grid.Column="1"
               Background="White" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Loaded="Menu_Loaded">
-            <MenuItem Header="Program" Background="White" Style="{StaticResource baseStyleLabel}">
-                <Separator></Separator>
+            <MenuItem Header="File" Background="White" Style="{StaticResource baseStyleLabel}">
                 <MenuItem Name="mnu_openDataBase" Header="Open Project" Click="Mnu_openDataBase_Click"/>
                 <MenuItem Name="mnu_saveProject" Header="Save Project" Click="Mnu_saveProject_Click"/>
                 <MenuItem Name="mnu_saveDataBase" Header="Save Project as..." Click="Mnu_saveDataBase_Click"/>
-                <MenuItem Name="mnu_generateDummyDb" Header="DummyData" />
                 <Separator></Separator>
                 <MenuItem Name="mnu_openDataBasemanager" Header="Manage Database" Click="Mnu_openDataBasemanager_Click"/>
-                <MenuItem Name="mnu_ExportSelection" Header="Export Data"/>
-                <MenuItem Name="mnu_ExportFull" Header="Export All to CSV" />
                 <Separator></Separator>
                 <MenuItem Name="mnu_BuildReport" Header="Save as Report" Click="mnu_BuildReport_Click"/>
 
                 <Separator></Separator>
                 <MenuItem Name="mnu_CloseMe" Header="Close" Click="mnu_CloseMe_Click"/>
             </MenuItem>
-            <MenuItem Name="mnu_About" Header="About..." Click="Mnu_About_Click"  Style="{StaticResource baseStyleLabel}"/>
-
+            <MenuItem Header="Help" Background="White" Style="{StaticResource baseStyleLabel}">
+                <MenuItem Name="mnu_Help" Header="Help" Click="mnu_Help_Click" />
+                <MenuItem Name="mnu_About" Header="About..." Click="Mnu_About_Click" />
+            </MenuItem>
         </Menu>
 
         <TabControl Name="tab_Main" Grid.Row="2" Grid.Column="1" Background="White" BorderBrush="Black" BorderThickness="0" Grid.ColumnSpan="2">
