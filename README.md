@@ -1,7 +1,7 @@
 # CarboLifeCalc
 A Quick-Action Carbon full life calculator using Revit material quantities.
 
-To be completed
+Status: Work in Good Progress
 
 http://www.davidveld.nl/new/carbocalc.php
 
