@@ -13,12 +13,13 @@
                 <ResourceDictionary Source="MyDataGrid.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <local:MaterialList x:Key="MaterialList" />
-            
+
         </ResourceDictionary>
+        
     </UserControl.Resources>
 
     <Grid Background="Transparent">
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="32"/>
@@ -34,7 +35,13 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" Height="32" Margin="0,0,0,0">
+        <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" Height="32" Margin="0,0,0,0" HorizontalAlignment="Stretch">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            
             <MenuItem Header="Edit" Background="Transparent" Style="{StaticResource baseStyleLabel}" Height="26" Margin="0,2,0,0" VerticalAlignment="Top">
                 <MenuItem Name="mnu_NewGroup" Header="New Group" Click="Mnu_NewGroup_Click"/>
                 <MenuItem Name="mnu_DeleteGroup" Header="Delete Group" Click="Mnu_DeleteGroup_Click" />
@@ -55,24 +62,94 @@
 
                 <MenuItem Name="mnu_CloseMe" Header="Close"/>
             </MenuItem>
-            <Label VerticalAlignment="Top"  Height="29" Margin="0,-4,0,0" Style="{StaticResource baseStyleLabel}">Sort by: </Label>
-            <ComboBox Name="cbb_Sort" FontSize="12" Width="75" SelectedIndex="0" DropDownClosed="ComboBox_DropDownClosed" Style="{StaticResource ComboBoxFlatStyle}" >
-                <ComboBoxItem>Material</ComboBoxItem>
-                <ComboBoxItem>Category</ComboBoxItem>
-            </ComboBox>
 
-            <Separator Background="Black" Width="1" Height="30"></Separator>
-                    
-        <Button x:Name="btn_EditMaterial" Content="Edit Material" Width="80" Height="25" HorizontalAlignment="Left"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" />
-            <Separator Background="Gray" Width="2" Height="30"></Separator>
+<!--
+            <Button x:Name="btn_EditMaterial" Content="Edit Material" Width="80" Height="25" HorizontalAlignment="Left"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click" Visibility="Hidden">
+
+            </Button>
+
+            <Button x:Name="btn_EditMaterial_V2" Width="80" Height="24" HorizontalAlignment="Left"  Style="{StaticResource ButtonStyle}" Click="Btn_Material_Click">
+                <StackPanel>
+                    <Image Source="editicon.png" Width="22" Height="22" Margin="0,0,0,0" HorizontalAlignment="Left"/>
+                    <TextBlock Margin="0,0,0,0" VerticalAlignment="Top"><Run Text="Edit Material" /></TextBlock>
+                </StackPanel>
+            </Button>
+-->
+            <Separator Background="Gray" Width="20" Height="2" BorderThickness="1" BorderBrush="#000000">
+                <Separator.LayoutTransform>
+                    <RotateTransform Angle="90" />
+                </Separator.LayoutTransform>
+            </Separator>
+            
+            <Button x:Name="btn_EditMaterial_V2" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="125" Height="24" Padding="5,0,5,0"
+                    BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" 
+                    FontWeight="DemiBold" BorderThickness="0" Click="Btn_Material_Click" ToolTip="Edit the material of the selected group">
+                <StackPanel HorizontalAlignment="Stretch" Background="WhiteSmoke">
+                    <Image x:Name="img_editButton" HorizontalAlignment="Left"  Source="editicon.png" Height="18" Width="18" />
+                    <TextBlock HorizontalAlignment="Left" Width="120" Height="22" VerticalAlignment="Top" Margin="24,-19,-24,0" Text="Edit Material"  />
+                </StackPanel>
+            </Button>
+
+
+            <!--
             <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="1" Content="Refresh" Width="75" Height="25" HorizontalAlignment="Left" Margin="5,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Calculate_Click" />
-            <ToggleButton x:Name="btn_ShowHideCorrections" Content="Advanced" Width="75" Height="25" HorizontalAlignment="Right" Click="Btn_ShowHideCorrections_Click" Style="{StaticResource baseStyle}"/>
+-->
+            <Button x:Name="btn_Calculate" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="115" Height="24" Padding="5,0,5,0"
+                    BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" 
+                    FontWeight="DemiBold" BorderThickness="0" Click="Btn_Calculate_Click">
+                <StackPanel HorizontalAlignment="Stretch" Background="WhiteSmoke">
+                    <Image x:Name="img_refreshbutton" HorizontalAlignment="Left" Height="18" Width="18" />
+                    <TextBlock HorizontalAlignment="Left" Width="105" Height="22" VerticalAlignment="Top" Margin="24,-19,-24,0" Text="Refresh" ToolTip="Refresh the calculation" />
+                </StackPanel>
+            </Button>
+
+            <Separator Background="Gray" Width="20" Height="2" BorderThickness="2" BorderBrush="#000000">
+                <Separator.LayoutTransform>
+                    <RotateTransform Angle="90" />
+                </Separator.LayoutTransform>
+            </Separator>
+
+            <ToggleButton x:Name="btn_ShowHideCorrections" Content="Advanced" Width="100" Height="25" BorderBrush="#444" FontWeight="DemiBold"
+                          HorizontalAlignment="Right" Click="Btn_ShowHideCorrections_Click" FontFamily="Segoe UI" Background="WhiteSmoke" FontSize="14" ToolTip="Add extra features to manipulate the dataset"/>
+            
+            <Separator Background="Gray" Width="20" Height="2" BorderThickness="1" BorderBrush="#000000">
+                <Separator.LayoutTransform>
+                    <RotateTransform Angle="90" />
+                </Separator.LayoutTransform>
+            </Separator>
+ 
+            <StackPanel HorizontalAlignment="Right">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="85"/>
+                        <ColumnDefinition Width="130"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource baseStyleLabel}" HorizontalAlignment="Right" VerticalAlignment="Top"  Height="29" Margin="0,0,0,0">Sort by:</Label>
+
+                    <ComboBox  Grid.Row="0" Grid.Column="1" Name="cbb_Sort" FontSize="14" FontWeight="DemiBold" Width="125" Height="24" SelectedIndex="0" Margin="0,-2,0,0" DropDownClosed="ComboBox_DropDownClosed" Style="{StaticResource ComboBoxFlatStyle}" HorizontalAlignment="Right" >
+                        <ComboBoxItem>Material</ComboBoxItem>
+                        <ComboBoxItem>Category</ComboBoxItem>
+                    </ComboBox>
+
+                </Grid>
+            </StackPanel>
+
+            
+
 
         </Menu>
 
         <DataGrid x:Name="dgv_Overview" Grid.Row="2" Grid.Column="1" 
                               Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="False" SelectionChanged="Dgv_Overview_SelectionChanged" 
-                  CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding">
+                  CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" HorizontalScrollBarVisibility="Hidden">
+            <DataGrid.Resources>
+                <local:SumValues x:Key="SumValues"/>
+            </DataGrid.Resources>
+
+            
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>
@@ -82,10 +159,10 @@
                                     <ControlTemplate TargetType="{x:Type GroupItem}">
                                         <Expander IsExpanded="True" BorderThickness="1,1,1,1" Foreground="Black" Background="#FFD097" BorderBrush="#FFD097">
                                             <Expander.Header>
-                                                <DockPanel>
+                                                <DockPanel Width="800"  >
                                                     <TextBlock FontSize="14" FontFamily="Segoe UI" FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>
-                                                    <TextBlock FontSize="14" FontFamily="Segoe UI" FontWeight="Bold" Text="{Binding Path=ItemCount}" Visibility="Visible"/>
-
+                                                    <TextBlock FontSize="14" FontFamily="Segoe UI" FontWeight="Bold" Text="{Binding Path=ItemCount}" Visibility="Hidden"/>
+                                                    <TextBlock FontSize="14" FontFamily="Segoe UI" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold" Margin="50,0,20,0"  Text="{Binding StringFormat=Total: {0}, Converter={StaticResource SumValues}, ConverterParameter=EC}" Visibility="Visible"/>
                                                 </DockPanel>
                                             </Expander.Header>
                                             <Expander.Content>
@@ -94,22 +171,25 @@
                                         </Expander>
                                     </ControlTemplate>
                                 </Setter.Value>
+                                <!--Experimental-->
                             </Setter>
                         </Style>
                     </GroupStyle.ContainerStyle>
                 </GroupStyle>
             </DataGrid.GroupStyle>
-            
 
-            
+
+
             <DataGrid.Columns>
-                <DataGridTextColumn MinWidth="50" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
+                <DataGridTextColumn MinWidth="50" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Hidden"/>
 
-                <DataGridTextColumn Width="1*" MinWidth="150" Header="Category" Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="False"/>
-                <DataGridTextColumn MinWidth="250" Header="Material" Binding="{Binding Path=MaterialName}" IsReadOnly="True"/>
-                <DataGridTextColumn Width="1*" MinWidth="100" Header="Description" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="False"/>
-                <DataGridTextColumn x:Name="column_Correction" MinWidth="75" Header="Correction" Binding="{Binding Path=Correction, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
+                <DataGridTextColumn Width="1*" MinWidth="150" Header="Category &#x0a; " Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn MinWidth="250" Header="Material &#x0a;" Binding="{Binding Path=MaterialName}" IsReadOnly="True" Visibility="Visible" Foreground="#000" FontWeight="DemiBold"/>
 
+
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Description &#x0a;" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="False"/>
+
+                <!--
                 <DataGridTemplateColumn Header="MaterialList" Width="100" Visibility="Hidden" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -118,31 +198,85 @@
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox Height="22" SelectedItem="{Binding MaterialName}" ItemsSource="{StaticResource MaterialList}"></ComboBox>                        
+                            <ComboBox Height="22" SelectedItem="{Binding MaterialName}" ItemsSource="{StaticResource MaterialList}"></ComboBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
+-->
 
-                <DataGridTextColumn MinWidth="100" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
-                <DataGridTextColumn x:Name="column_Volume"  MinWidth="100" Header="Total Volume (m³)" Binding="{Binding Path=TotalVolume, Mode=TwoWay}" IsReadOnly="True" Visibility="Hidden"/>
- 
-                <DataGridTextColumn Width="1*" MinWidth="100" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True"/>
-                <DataGridTextColumn Width="1*" MinWidth="100" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="Volume &#x0a;(m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
+                <DataGridTextColumn x:Name="column_Correction" MinWidth="75" Header="Correction &#x0a; " Binding="{Binding Path=Correction, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
+                <DataGridTextColumn x:Name="column_Volume"  MinWidth="100" Header="Total Volume &#x0a;(m³)" Binding="{Binding Path=TotalVolume, Mode=TwoWay}" IsReadOnly="True" Visibility="Hidden"/>
 
-                <DataGridTextColumn MinWidth="75" Header="ECI(kgCo2/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="75" Header="EE (GJ)" Binding="{Binding Path=EE}" IsReadOnly="True"  Visibility="Hidden"/>
-                <DataGridTextColumn MinWidth="75" Header="EC (tCo2)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
 
-                <DataGridTemplateColumn Header="Total" Width="5*" MinWidth="100">
+                <!--<DataGridTextColumn Width="1*" MinWidth="100" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True" Visibility="Hidden"/>-->
+
+                <DataGridTemplateColumn Header="Density &#x0a;(kg/m³)" Width="1*" MinWidth="80"  IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Density, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+                <!--<DataGridTextColumn Width="1*" MinWidth="100" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True" Visibility="Hidden"/>-->
+
+                <DataGridTemplateColumn Header="Mass &#x0a;(kg)" MinWidth="90" Width="1*" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Mass, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!--<DataGridTextColumn MinWidth="75" Header="ECI (kgCo2/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True" Visibility="Hidden"/>-->
+                <!--Test to be used for all Double values-->
+                <DataGridTemplateColumn Header="CO2 Density &#x0a;(kgCo2/kg)" Width="90" MinWidth="90"  IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=ECI, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!--<DataGridTextColumn MinWidth="75" Header="EE (GJ)" Binding="{Binding Path=EE}" IsReadOnly="True"  Visibility="Hidden"/>-->
+
+                <!--<DataGridTextColumn MinWidth="75" Header="EC (tCo2)" Binding="{Binding Path=EC}" IsReadOnly="True" Visibility="Hidden"/>-->
+                <DataGridTemplateColumn Header="Total &#x0a;(tCo2)" Width="75" MinWidth="90"  IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=EC, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray" FontWeight="DemiBold"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+                <!--
+                <DataGridTemplateColumn Header="%" Width="5*" MinWidth="100" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
-                                <ProgressBar Value="{Binding Path=PerCent, Mode=OneWay}" Minimum="0" Maximum="100" />
-                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=PerCent}" />
+                                <ProgressBar Value="{Binding Path=PerCent, Mode=OneWay}" Minimum="0" Maximum="100" Background="LightGray" />
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=PerCent}"/>
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+-->
+                <DataGridTemplateColumn Header="% &#x0a;" Width="5*" MinWidth="100" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <ProgressBar Value="{Binding Path=PerCent, Mode=OneWay}" Minimum="0" Maximum="100" Background="LightGray" />
+                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=PerCent}" Loaded="PercentValue"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+                <!--<DataGridTextColumn MinWidth="75" Header="ECI(kgCo2/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True" Visibility="Hidden"/>-->
 
                 <!--
                                 <DataGridComboBoxColumn

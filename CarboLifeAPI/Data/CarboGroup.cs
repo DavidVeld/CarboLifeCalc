@@ -188,6 +188,7 @@ namespace CarboLifeAPI.Data
                     }
                 }
             }
+            Volume = Math.Round(Volume, 2);
 
             //Calculate the real volume based on a correction if required. 
             if (Utils.isValidExpression(Correction) == true)
@@ -195,7 +196,7 @@ namespace CarboLifeAPI.Data
                 string volumeStr = Volume.ToString();
                 StringToFormula stf = new StringToFormula();
                 double result = stf.Eval(volumeStr + Correction);
-                TotalVolume = result;
+                TotalVolume = Math.Round(result,2);
             }
             else
             {

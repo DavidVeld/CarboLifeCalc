@@ -24,7 +24,7 @@ namespace CarboLifeUI.UI
     /// </summary>
     public partial class MaterialTransportPicker : Window
     {
-        private double Density;
+        //private double Density;
 
         internal bool isAccepted;
         //public double Value;

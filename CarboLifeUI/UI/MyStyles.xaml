@@ -42,7 +42,7 @@
 
 
     <Style TargetType="{x:Type Control}" x:Key="baseStyleLabel">
-        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold" />

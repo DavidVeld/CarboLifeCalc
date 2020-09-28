@@ -69,6 +69,22 @@ namespace CarboLifeUI.UI
             {
                 dgv_Overview.ItemsSource = CarboLifeProject.getGroupList;
                 SortData();
+
+                //Load images
+                string _path = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                string imgpath = System.IO.Path.GetDirectoryName(_path);
+
+                //Attempt1: edit button
+                BitmapImage bimg_edit = new BitmapImage(new Uri(imgpath + @"\img\editicon.png"));
+                ImageSource rcs = bimg_edit;
+                img_editButton.Source = rcs;
+
+
+                BitmapImage bimg_ref = new BitmapImage(new Uri(imgpath + @"\img\refreshicon.png"));
+                ImageSource src_ref = bimg_ref;
+                img_refreshbutton.Source = src_ref;
+
+
             }
             catch (Exception ex)
             {
@@ -139,10 +155,6 @@ namespace CarboLifeUI.UI
                     CarboLifeProject.CarboDatabase = materialEditor.returnedDatabase;
 
                     CarboLifeProject.UpdateMaterial(carboGroup, materialEditor.selectedMaterial);
-                    /*
-                    carboGroup.Material = materialEditor.selectedMaterial;
-                    carboGroup.MaterialName = materialEditor.selectedMaterial.Name;
-                    */
                 }
 
             }
@@ -204,7 +216,7 @@ namespace CarboLifeUI.UI
                 {
 
                     //Corrections:
-                    if (dgc.Header.ToString() == "Correction")
+                    if (dgc.Header.ToString().StartsWith("Correction"))
                     {
                         string textExpression = t.Text;
                         if (Utils.isValidExpression(textExpression) == true)
@@ -213,11 +225,11 @@ namespace CarboLifeUI.UI
                             CarboLifeProject.UpdateGroup(carboGroup);
                         }
                     }
-                    if(dgc.Header.ToString() == "Volume (m³)")
+                    if(dgc.Header.ToString().StartsWith("Volume"))
                     {
                         if(carboGroup.AllElements.Count > 0)
                         {
-                            MessageBox.Show("Volume is based on Element Totals, Purge the elements before overriding the volume");
+                            MessageBox.Show("The volume is calculated using the element volumes extracted from the 3D model, you need to purge the elements before overriding the volume");
                             carboGroup.CalculateTotals();
                             btn_Calculate.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                         }
@@ -525,6 +537,45 @@ namespace CarboLifeUI.UI
         private void mnu_Export_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void RoundValue(object sender, RoutedEventArgs e)
+        {
+            TextBlock tb = ((TextBlock)sender);
+
+            // do anything with textblock    
+            if (tb.Text != null)
+            {
+                double value = Utils.ConvertMeToDouble(tb.Text);
+
+                tb.Text = Math.Round(value,2).ToString();
+            }
+        }
+
+        Color GetColor(Int32 rangeStart /*Complete Red*/, Int32 rangeEnd /*Complete Green*/, Int32 actualValue)
+        {
+            if (rangeStart >= rangeEnd) return Colors.Black;
+
+            Int32 max = rangeEnd - rangeStart; // make the scale start from 0
+            Int32 value = actualValue - rangeStart; // adjust the value accordingly
+
+            Int32 green = (255 * value) / max; // calculate green (the closer the value is to max, the greener it gets)
+            Int32 red = 255 - green; // set red as inverse of green
+
+            return Color.FromRgb((Byte)red, (Byte)green, (Byte)0);
+        }
+
+        private void PercentValue(object sender, RoutedEventArgs e)
+        {
+            TextBlock tb = ((TextBlock)sender);
+
+            // do anything with textblock    
+            if (tb.Text != null)
+            {
+                double value = Utils.ConvertMeToDouble(tb.Text);
+
+                tb.Text = Math.Round(value, 2).ToString() + " % ";
+            }
         }
     }
 }

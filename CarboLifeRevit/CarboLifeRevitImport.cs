@@ -46,12 +46,13 @@ namespace CarboLifeRevit
 
                 //Now cast them as elements into a container
                 IList<Element> collection = coll.ToElements();
+                string name = "";
 
                 try
                 {
-
                     foreach (Element el in collection)
                     {
+                        name = el.Id.ToString();
                         if (CarboRevitUtils.isElementReal(el) == true)
                         {
                             ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);

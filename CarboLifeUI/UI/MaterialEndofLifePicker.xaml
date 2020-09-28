@@ -194,7 +194,7 @@
                 </Grid>
             </GroupBox>
 
-            <GroupBox Grid.Column="1" Grid.Row="9" Margin="0,0,10,0"  Header="Additional" Style="{StaticResource baseStyleBold}">
+            <GroupBox Grid.Column="1" Grid.Row="9" Margin="0,0,10,0"  Header="Additional - Anything you'd like to add..." Style="{StaticResource baseStyleBold}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0"/>

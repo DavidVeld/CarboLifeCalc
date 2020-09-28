@@ -740,9 +740,11 @@ namespace CarboLifeUI.UI
             editor.ShowDialog();
             if(editor.isAccepted == true)
             {
-                selectedMaterial.Description = editor.description;
-                UpdateMaterialSettings();
-
+                if (selectedMaterial != null)
+                {
+                    selectedMaterial.Description = editor.description;
+                    UpdateMaterialSettings();
+                }
             }
         }
 
