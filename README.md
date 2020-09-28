@@ -3,8 +3,6 @@ A Quick-Action Carbon full life calculator using Revit material quantities.
 
 Status: Work in Good Progress
 
-http://www.davidveld.nl/new/carbocalc.php
-
 Current Build for testing download link: (28-09-2020)
 
 https://drive.google.com/file/d/1IvEt3gzRp8v1_Y2frsPiwzrUlyJCqBWt/view?usp=sharing
