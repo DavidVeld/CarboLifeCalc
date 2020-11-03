@@ -10,6 +10,9 @@ https://drive.google.com/file/d/1JtlMpoI-KGBhRv9Y8XHSz45uVZy4IxzQ/view?usp=shari
 The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design. 
 As a standalone application you can set quantities and materials,  or you can use a 3d model from Revit to import your building into the calculator. Your revit materials will automatically be mapped to to the CarboLifeCalc's own, thus giving you an instant result on the building's embodied carbon.
 
+Installation and demonstration:
+https://youtu.be/pJJy4qMkvHk
+
 Roadmap:
 0. Improved material Database
 1. EPD import possibility, using a new menu to convert volume based data to mass based data used in CarboLifeCalc
