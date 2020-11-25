@@ -167,7 +167,7 @@ namespace CarboLifeRevit
 
         private static void CreateHeatMap(Document doc, CarboProject carboLifeProject)
         {
-            using (Transaction t = new Transaction(doc, "Set Element Override"))
+            using (Transaction t = new Transaction(doc, "Create Heatmap"))
             {
                 t.Start();
 
