@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarboLifeAPI.Data
 {
+    [Serializable]
     public class CarboElement
     {
         public int Id { get; set; }
@@ -19,6 +20,10 @@ namespace CarboLifeAPI.Data
         public bool isExisting { get; set; }
         public bool isSubstructure { get; set; }
 
+        public byte r { get; set; }
+        public byte g { get; set; }
+        public byte b { get; set; }
+        public double EC { get; set; }
         public CarboMaterial Material {get;set; }
 
         public CarboElement()

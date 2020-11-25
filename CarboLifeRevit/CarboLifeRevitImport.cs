@@ -140,6 +140,11 @@ namespace CarboLifeRevit
                 AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
                 carboCalcProgram.ShowDialog();
+                //Create a visual
+                if(carboCalcProgram.createHeatmap == true)
+                {
+                    CreateHeatMap(doc, carboCalcProgram.carboLifeProject);
+                }
             }
 
             //When assembly cant be find bind to current
@@ -157,6 +162,59 @@ namespace CarboLifeRevit
                     }
                 }
                 return ayResult;
+            }
+        }
+
+        private static void CreateHeatMap(Document doc, CarboProject carboLifeProject)
+        {
+            using (Transaction t = new Transaction(doc, "Set Element Override"))
+            {
+                t.Start();
+
+                FilteredElementCollector elements = new FilteredElementCollector(doc);
+                FillPatternElement solidFillPattern = elements.OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>().First(a => a.GetFillPattern().IsSolidFill);
+
+                foreach (CarboElement ce in carboLifeProject.getAllElements)
+                {
+                    ElementId id = new ElementId(ce.Id);
+                    ElementId patid = solidFillPattern.Id; //Solid
+
+                    OverrideGraphicSettings ogs = new OverrideGraphicSettings();
+                    ogs.SetHalftone(false);
+
+                    ogs.SetProjectionLineColor(new Color(ce.r, ce.g, ce.b));
+                    ogs.SetSurfaceTransparency(0);
+
+                    ogs.SetProjectionLineWeight(1);
+
+                    //Solid Fill;
+                    Color elementColour = new Color(ce.r, ce.g, ce.b);
+
+                    ogs.SetProjectionLineWeight(1);
+                    ogs.SetSurfaceForegroundPatternId(patid);
+                    ogs.SetSurfaceForegroundPatternColor(elementColour);
+                    ogs.SetSurfaceForegroundPatternVisible(true);
+                    
+                    ogs.SetCutLineWeight(1);
+                    ogs.SetCutForegroundPatternId(patid);
+                    ogs.SetCutForegroundPatternVisible(true);
+                    ogs.SetCutForegroundPatternColor(elementColour);
+
+                    //Set the override
+                    try
+                    {
+                        Element elementcheck = doc.GetElement(id);
+                         if(elementcheck != null)
+                        {
+                            doc.ActiveView.SetElementOverrides(id, ogs);
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+                }
+                t.Commit();
             }
         }
 

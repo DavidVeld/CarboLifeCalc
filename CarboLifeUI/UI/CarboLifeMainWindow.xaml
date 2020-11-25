@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Carbo Life Calculator"
-             d:DesignHeight="740" d:DesignWidth="1200" MinWidth="1200" MinHeight="740" Width="1200" Height="740" Closing="Window_Closing">
+             d:DesignHeight="780" d:DesignWidth="1200" MinWidth="1200" MinHeight="780" Width="1200" Height="780" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,7 +21,7 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -44,6 +44,10 @@
 
                 <Separator></Separator>
                 <MenuItem Name="mnu_CloseMe" Header="Close" Click="mnu_CloseMe_Click"/>
+            </MenuItem>
+
+            <MenuItem Header="Revit" Background="White" Style="{StaticResource baseStyleLabel}">
+                <MenuItem Name="mnu_Heatmap" Header="Create Heatmap Colours" Click="mnu_Heatmap_Click" />
             </MenuItem>
             <MenuItem Header="Help" Background="White" Style="{StaticResource baseStyleLabel}">
                 <MenuItem Name="mnu_Help" Header="Help" Click="mnu_Help_Click" />
@@ -87,6 +91,11 @@
 
         </TabControl>
 
+        <Label Name="lbl_AcceptHeatmap" Grid.Row="3" Grid.Column="1" Height="25" VerticalAlignment="Center" Margin="0,0,85,0" Visibility="Hidden" HorizontalAlignment="Right" Style="{StaticResource bigStyle}">Build Heatmap on close</Label>
+        <CheckBox Name="chx_AcceptHeatmap" Grid.Row="3" Grid.Column="1" Height="26" Width="23" Visibility="Hidden" Margin="0,0,234,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.RowSpan="1" Click="chx_AcceptHeatmap_Click"></CheckBox>
+        
+        <Button Name="btn_Accept" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Close</Button>
+        <Button Name="btn_Cancel" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
 
     </Grid>
 </Window>

@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Drawing;
 
 namespace CarboLifeAPI
 {
@@ -251,5 +252,170 @@ namespace CarboLifeAPI
                 if (link.StartsWith("http://") | link.StartsWith("https://"))
                     Process.Start(link);
         }
+
+        public static System.Windows.Media.Color getColour(double max, double min, double value, string fieldName)
+        {
+            System.Windows.Media.Color result = new System.Windows.Media.Color();
+            double range;
+            double maxScale = 0;
+            double minScale = 0;
+
+            double byteRange = 254;
+
+            byte dotcolour = 0;
+            //See what Type applies:
+            //Situation 1: All values are below 0
+            // Situation 2: All values are above 0
+            // Situation 3: Below and above, values are to be split:
+
+            /*
+             Colour scale in minusL
+             RGB([0(min)-254(max)], 255, 25)
+
+             Colour scale in plus
+             RGB(255, [255(min)-0(max)], 25)
+             */
+
+            if (min < 0 && max <= 0)
+            {
+                //Situation 1: All values are below 0
+                //min will be 0 max will be 254 (range);
+
+                range = max - min;
+                minScale = byteRange / range;
+                double newColorValue = (value - max) * minScale * -1;
+                newColorValue = verifyByte(newColorValue, byteRange);
+
+                dotcolour = Convert.ToByte(newColorValue);
+
+                //Second colour slider:
+                byte secondColorValue = 255;
+
+                //if(newColorValue < 150)
+                secondColorValue = Convert.ToByte(255 - newColorValue * .5);
+                dotcolour = Convert.ToByte(255 - newColorValue);
+
+                result = System.Windows.Media.Color.FromRgb(dotcolour, secondColorValue, 25);
+
+            }
+            else if (max > 0 && min >= 0)
+            {
+                //Situation 2: All values are above 0
+                //min will be 0 max will be 254 (range);
+
+                range = max - min;
+                maxScale = byteRange / range;
+                double newColorValue = (value - min) * maxScale;
+
+                newColorValue = verifyByte(newColorValue, byteRange);
+                dotcolour = Convert.ToByte(255 - newColorValue);
+
+                result = System.Windows.Media.Color.FromRgb(255, dotcolour, 25);
+
+            }
+            else
+            {
+                // Situation 3: Below and above, values are to be split:
+                //Split;
+                minScale = byteRange / min * -1;
+                maxScale = byteRange / max;
+                double newColorValue = 0;
+
+                if (value < 0)
+                {
+                    newColorValue = (value * minScale) * -1;
+                    newColorValue = verifyByte(newColorValue, byteRange);
+
+                    //Second colour slider:
+                    byte secondColorValue = 255;
+
+                    //if(newColorValue < 150)
+                    secondColorValue = Convert.ToByte(255 - newColorValue * .5);
+
+                    dotcolour = Convert.ToByte(255 - newColorValue);
+                    result = System.Windows.Media.Color.FromRgb(dotcolour, secondColorValue, 25);
+
+
+
+                }
+                else
+                {
+                    newColorValue = value * maxScale;
+                    newColorValue = verifyByte(newColorValue, byteRange);
+
+                    dotcolour = Convert.ToByte(255 - newColorValue);
+                    result = System.Windows.Media.Color.FromRgb(255, dotcolour, 25);
+                }
+
+            }
+
+            return result;
+        }
+
+        private static double verifyByte(double value, double byteRange)
+        {
+            if (value < 0)
+                value = 0;
+            else if (value > 255)
+                value = byteRange;
+
+            return value;
+        }
+
+        public static Color GetBlendedColor(double max, double min, double value)
+        {
+            //Normalize the range;
+            if (min < 0)
+            {
+                max = max + (min * -1);
+                value = value + (min * -1);
+                min = 0;
+            }
+            else if(min > 0)
+                {
+                max = max - min;
+                value = value - min;
+                min = 0;
+            }
+
+            double total = max - min;
+
+            double x = value / total;
+            x = 1 - x;
+            Color myColor = GetBlendedColor(Convert.ToInt32(x*100));
+
+            //int f = 255;
+            /*
+            byte r = Convert.ToByte(verifyByte(2.0f * x, 254));
+            byte g = Convert.ToByte(verifyByte(2.0f * (1 - x),254));
+            byte b = 0;
+
+
+            Color myColor = Color.FromRgb(r,g, b);
+            */
+
+            return myColor;
+        }
+
+        public static System.Drawing.Color GetBlendedColor(int percentage)
+        {
+            if (percentage < 50)
+                return Interpolate(System.Drawing.Color.Red, System.Drawing.Color.Yellow, percentage / 50.0);
+            return Interpolate(Color.Yellow, Color.Lime, (percentage - 50) / 50.0);
+        }
+
+        private static System.Drawing.Color Interpolate(System.Drawing.Color color1, System.Drawing.Color color2, double fraction)
+        {
+            double r = Interpolate(color1.R, color2.R, fraction);
+            double g = Interpolate(color1.G, color2.G, fraction);
+            double b = Interpolate(color1.B, color2.B, fraction);
+            return Color.FromArgb((int)Math.Round(r), (int)Math.Round(g), (int)Math.Round(b));
+        }
+
+        private static double Interpolate(double d1, double d2, double fraction)
+        {
+            return d1 + (d2 - d1) * fraction;
+        }
+
     }
 }

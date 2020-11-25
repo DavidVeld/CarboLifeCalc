@@ -26,7 +26,14 @@ namespace CarboLifeUI.UI
     public partial class CarboLifeMainWindow : Window
     {
         public CarboProject carboLifeProject { get; set; }
+        /// <summary>
+        /// If the app is launched from Revit IsRevit = true to allow extra settings.
+        /// </summary>
         public bool IsRevit { get; set; }
+        /// <summary>
+        /// If a heat map will be created after exit;
+        /// </summary>
+        public bool createHeatmap {get; set;}
 
         //public CarboDatabase carboDataBase { get; set; }
         public CarboLifeMainWindow()
@@ -205,6 +212,64 @@ namespace CarboLifeUI.UI
             else
             {
             }
+        }
+
+        private void mnu_Heatmap_Click(object sender, RoutedEventArgs e)
+        {
+            IsRevit = true;
+            if (IsRevit == true)
+            {
+                HeatMapBuilder heatmapBuilder = new HeatMapBuilder();
+                heatmapBuilder.Total = carboLifeProject.getTotalEC();
+
+                heatmapBuilder.ShowDialog();
+                if (heatmapBuilder.isAccepted == true)
+                {
+                    MessageBox.Show("The date to build a heat map image will be stored within the calculation, after you close the aplication, Revit will colour in your view.", "Warning", MessageBoxButton.OK);
+                    if (heatmapBuilder.rad_Bymaterial.IsChecked == true)
+                    {
+                        carboLifeProject.CreateMaterialHeat();
+                    }
+                    else if(heatmapBuilder.rad_ByGroup.IsChecked == true)
+                    {
+                        carboLifeProject.CreateGroupHeat();
+                    }
+                    else if (heatmapBuilder.rad_ByElement.IsChecked == true)
+                    {
+                        carboLifeProject.CreateElementHeat();
+                    }
+
+                    chx_AcceptHeatmap.Visibility = Visibility.Visible;
+                    chx_AcceptHeatmap.IsChecked = true;
+                    lbl_AcceptHeatmap.Visibility = Visibility.Visible;
+                    createHeatmap = true;
+
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("This feature is available once you launch the program from Autodesk Revit");
+            }
+        }
+
+        private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Btn_Accept_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void chx_AcceptHeatmap_Click(object sender, RoutedEventArgs e)
+        {
+            if (chx_AcceptHeatmap.IsChecked == true)
+                createHeatmap = true;
+            else
+                createHeatmap = false;
+
         }
     }
 }
