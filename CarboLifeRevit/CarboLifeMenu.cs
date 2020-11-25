@@ -17,7 +17,7 @@ namespace CarboLifeRevit
         public Result OnStartup(UIControlledApplication application)
         {
             //Create  A button
-            RibbonPanel CarboCalcPanel = application.CreateRibbonPanel("CarboLifeCalcc");
+            RibbonPanel CarboCalcPanel = application.CreateRibbonPanel("CarboLifeCalc");
 
             //Add button
 

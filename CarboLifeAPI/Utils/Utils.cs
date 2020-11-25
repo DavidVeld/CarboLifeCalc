@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -241,6 +242,14 @@ namespace CarboLifeAPI
                 sw.WriteLine(timeStamp + " :: " + text);
             }
 
+        }
+
+        public static void Openlink(string text)
+        {
+            string link = text;
+            if (link != "")
+                if (link.StartsWith("http://") | link.StartsWith("https://"))
+                    Process.Start(link);
         }
     }
 }

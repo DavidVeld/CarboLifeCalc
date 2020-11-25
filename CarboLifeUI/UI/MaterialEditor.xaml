@@ -52,7 +52,7 @@
         <Label  Grid.Row="1" Grid.Column="2" Height="30" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleTitle}">Properties</Label>
 
 
-        <GroupBox Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="1" Header="General" Style="{StaticResource baseStyleBold}" Height="195" VerticalAlignment="Top" >
+        <GroupBox Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="1" Header="General" Style="{StaticResource baseStyleBold}" Height="235" VerticalAlignment="Top" >
             <Grid Name="grd_Edit" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
@@ -60,8 +60,7 @@
                     <RowDefinition Height="60"/>
                     <RowDefinition Height="36"/>
                     <RowDefinition Height="36"/>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="36"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -89,12 +88,16 @@
                 <TextBox Name="txt_Density" Grid.Column="2" Grid.Row="4" Height="26" Margin="0,5,5,5"  Style="{StaticResource flatTextBox}"></TextBox>
                 <Label Grid.Column="3" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Margin="5,5,0,0">kg/m³</Label>
 
+                <Label Grid.Column="1" Grid.Row="5" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Margin="0,5,0,0">EDP Link:</Label>
+                <TextBox Name="txt_EPDLink"  Grid.Column="2" Grid.Row="5" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}" ></TextBox>
+                <Button Name="btn_OpenLink"  Grid.Row="5" Grid.Column="3" Height="26" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_OpenLink_Click" >Open...</Button>
+
                 <CheckBox Name="chk_Locked" Grid.Column="2" Grid.Row="6" Height="25" VerticalAlignment="Center" Visibility="Hidden">Lock Material</CheckBox>
 
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Row="2" Grid.Column="2" Margin="0,200,0,0" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="1" Header="Material" Style="{StaticResource baseStyleBold}" >
+        <GroupBox Grid.Row="2" Grid.Column="2" Margin="0,235,0,0" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="1" Header="Material" Style="{StaticResource baseStyleBold}" >
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
@@ -145,7 +148,7 @@
                 <TextBox Name="txt_A5"  Grid.Row="4" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_A5_TextChanged"></TextBox>
                 <Button Name="btn_A5"  Grid.Row="4" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A5_Click">Edit...</Button>
 
-                <Label  Grid.Row="5" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Life (B1-B5):</Label>
+                <Label  Grid.Row="5" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Life (B1-B5) (TBC):</Label>
                 <TextBox Name="txt_B1_B5_Setting"  Grid.Row="5" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="True" Style="{StaticResource flatTextBox}"></TextBox>
                 <CheckBox x:Name="chx_B1_B5_Manual" Grid.Row="5" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_B1_B5_Manual_Click"></CheckBox>
                 <TextBox Name="txt_B1_B5"  Grid.Row="5" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_B1_B5_TextChanged"></TextBox>
@@ -184,7 +187,8 @@
                     </Grid>
                 </GroupBox>
 
-                <Button Name="btn_Apply"  Grid.Row="12" Grid.Column="4" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="Btn_Apply_Click">Apply</Button>
+                <Button Name="btn_Apply"  Grid.Row="12" Grid.Column="4" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="Btn_Apply_Click">Apply</Button>
+                <Button Name="btn_FromEPD"  Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="btn_FromEPD_Click">From EPD...</Button>
 
             </Grid>
         </GroupBox>

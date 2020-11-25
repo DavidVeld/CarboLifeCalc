@@ -29,6 +29,12 @@ namespace CarboLifeAPI.Data
         /// </summary>
         public string Description { get; set; }
 
+        /// <summary>
+        /// URL Link to a EPD.
+        /// </summary>
+        public string EPDurl { get; set; }
+
+
         //Technical Properties 
 
         /// <summary>

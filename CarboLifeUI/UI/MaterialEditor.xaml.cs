@@ -2,6 +2,7 @@
 using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -126,6 +127,7 @@ namespace CarboLifeUI.UI
             cbb_Category.Text = selectedMaterial.Category;
             txt_Density.Text = selectedMaterial.Density.ToString();
             txt_ECI.Text = selectedMaterial.ECI.ToString();
+            txt_EPDLink.Text = selectedMaterial.EPDurl;
 
             chx_A4_Manual.IsChecked = selectedMaterial.ECI_A4_Override;
             chx_A5_Manual.IsChecked = selectedMaterial.ECI_A5_Override;
@@ -507,7 +509,7 @@ namespace CarboLifeUI.UI
                 selectedMaterial.Description = txt_Description.Text;
                 selectedMaterial.Category = cbb_Category.Text;
                 selectedMaterial.Density = Utils.ConvertMeToDouble(txt_Density.Text);
-
+                selectedMaterial.EPDurl = txt_EPDLink.Text;
                 /*
                 selectedMaterial.ECI = Utils.ConvertMeToDouble(txt_ECI.Text);
                 selectedMaterial.ECI_A1A3 = Utils.ConvertMeToDouble(txt_A1_A3.Text);
@@ -794,6 +796,54 @@ namespace CarboLifeUI.UI
         {
             double width = liv_materialList.ActualWidth;
             //liv_materialList.
+        }
+
+        private void btn_FromEPD_Click(object sender, RoutedEventArgs e)
+        {
+            MaterialMyEPD epdForm = new MaterialMyEPD(selectedMaterial.Density, txt_EPDLink.Text);
+            epdForm.ShowDialog();
+            if (epdForm.isAccepted == true)
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to update values based in EPD input? " + Environment.NewLine + "This will override your current settings", "Warning", MessageBoxButton.OKCancel);
+                if(result == MessageBoxResult.OK)
+                {
+                    double A1A3 = epdForm.getA1A3();
+                    double A4 = epdForm.kgA4;
+                    double A5 = epdForm.kgA5;
+                    double B17 = epdForm.kgB17;
+                    double C14 = epdForm.getC14();
+                    double D = epdForm.kgD;
+
+                    //Override the material properties
+                    selectedMaterial.ECI_A1A3_Override = true;
+                    selectedMaterial.ECI_A4_Override = true;
+                    selectedMaterial.ECI_A5_Override = true;
+                    selectedMaterial.ECI_B1B5_Override = true;
+                    selectedMaterial.ECI_C1C4_Override = true;
+                    selectedMaterial.ECI_D_Override = true;
+
+
+                    selectedMaterial.ECI_A1A3 = A1A3;
+                    selectedMaterial.ECI_A4 = A4;
+                    selectedMaterial.ECI_A5 = A5;
+
+                    //WIP
+                    selectedMaterial.ECI_B1B5 = 1;
+
+                    selectedMaterial.ECI_C1C4 = C14;
+                    selectedMaterial.ECI_D = D;
+
+
+
+                }
+            }
+            UpdateMaterialSettings();
+
+        }
+
+        private void btn_OpenLink_Click(object sender, RoutedEventArgs e)
+        {
+            Utils.Openlink(txt_EPDLink.Text);
         }
     }
 }

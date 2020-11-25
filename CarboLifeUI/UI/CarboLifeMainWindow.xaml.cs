@@ -26,9 +26,12 @@ namespace CarboLifeUI.UI
     public partial class CarboLifeMainWindow : Window
     {
         public CarboProject carboLifeProject { get; set; }
+        public bool IsRevit { get; set; }
+
         //public CarboDatabase carboDataBase { get; set; }
         public CarboLifeMainWindow()
         {
+            IsRevit = false;
             carboLifeProject = new CarboProject();
             InitializeComponent();
         }
@@ -36,6 +39,7 @@ namespace CarboLifeUI.UI
         public CarboLifeMainWindow(CarboProject myProject)
         {
             carboLifeProject = myProject;
+            IsRevit = false;
             //carboDataBase = carboDataBase.DeSerializeXML("");
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 

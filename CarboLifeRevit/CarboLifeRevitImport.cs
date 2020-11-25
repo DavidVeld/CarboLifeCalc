@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
@@ -48,11 +49,15 @@ namespace CarboLifeRevit
                 IList<Element> collection = coll.ToElements();
                 string name = "";
 
-                try
-                {
+                List<string> IdsNotFound = new List<string>();
+
                     foreach (Element el in collection)
                     {
-                        name = el.Id.ToString();
+                    name = el.Id.ToString();
+
+                    try
+                    {
+
                         if (CarboRevitUtils.isElementReal(el) == true)
                         {
                             ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
@@ -63,16 +68,33 @@ namespace CarboLifeRevit
                                 if (carboElement != null)
                                     myProject.AddElement(carboElement);
                             }
+                        //See if is floor(then count area)
+                            area += getFloorarea(el);
                         }
 
-                        //See if is floor(then count area)
-                        area += getFloorarea(el);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        IdsNotFound.Add(name);
+
+                        //TaskDialog.Show("Error", ex.Message);
+                    }
+
+                    if(IdsNotFound.Count > 0)
+                    {
+                        string message = "One or more elements weren't processed, most likely because they didn't contain any volume the element ids of these elements are: ";
+
+                        foreach (string id in IdsNotFound)
+                        {
+                            message += "\n" + id;
+                        }
+
+                        MessageBox.Show(message, "Warning", MessageBoxButton.OK);
                     }
                 }
-                catch (Exception ex)
-                {
-                    TaskDialog.Show("Error", ex.Message);
-                }
+
+
             }
             else
             {
@@ -113,6 +135,8 @@ namespace CarboLifeRevit
                 myProject.Area = areaMSqr;
 
                 CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(myProject);
+                carboCalcProgram.IsRevit = true;
+
                 AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
                 carboCalcProgram.ShowDialog();
