@@ -220,23 +220,31 @@ namespace CarboLifeUI.UI
             if (IsRevit == true)
             {
                 HeatMapBuilder heatmapBuilder = new HeatMapBuilder();
-                heatmapBuilder.Total = carboLifeProject.getTotalEC();
 
                 heatmapBuilder.ShowDialog();
                 if (heatmapBuilder.isAccepted == true)
                 {
-                    MessageBox.Show("The date to build a heat map image will be stored within the calculation, after you close the aplication, Revit will colour in your view.", "Warning", MessageBoxButton.OK);
+                    MessageBox.Show("The heatmap data will be stored within the calculation, once you close the application, Revit will colour in your view.", "Warning", MessageBoxButton.OK);
                     if (heatmapBuilder.rad_Bymaterial.IsChecked == true)
                     {
-                        carboLifeProject.CreateMaterialHeat();
+                        if(heatmapBuilder.chx_Norm.IsChecked == true)
+                            carboLifeProject.CreateMaterialHeatNorm();
+                        else
+                            carboLifeProject.CreateMaterialHeat();
                     }
                     else if(heatmapBuilder.rad_ByGroup.IsChecked == true)
                     {
-                        carboLifeProject.CreateGroupHeat();
+                        if (heatmapBuilder.chx_Norm.IsChecked == true)
+                            carboLifeProject.CreateGroupHeatNorm();
+                        else
+                            carboLifeProject.CreateGroupHeat();
                     }
                     else if (heatmapBuilder.rad_ByElement.IsChecked == true)
                     {
-                        carboLifeProject.CreateElementHeat();
+                        if (heatmapBuilder.chx_Norm.IsChecked == true)
+                            carboLifeProject.CreateElementHeatNorm();
+                        else
+                            carboLifeProject.CreateElementHeat();
                     }
 
                     chx_AcceptHeatmap.Visibility = Visibility.Visible;

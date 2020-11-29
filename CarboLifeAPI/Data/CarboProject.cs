@@ -241,18 +241,11 @@ namespace CarboLifeAPI.Data
         /// <param name="v">1 = material, 2=Group, 3=Elements</param>
         public void CreateMaterialHeat()
         {
-
                 string list = "List: " + Environment.NewLine;
                 List<CarboMaterial> materialList = getUsedmaterials();
                 //By Material
                 List<CarboMaterial> SortedMatList = materialList.OrderBy(o => o.ECI).ToList();
 
-            /*
-                foreach (CarboMaterial mat in SortedMatList)
-                {
-                    list += mat.Name + " : " + mat.ECI + Environment.NewLine;
-                }
-            */
                 double low = SortedMatList[0].ECI;
                 double high = SortedMatList[SortedMatList.Count - 1].ECI;
 
@@ -270,6 +263,36 @@ namespace CarboLifeAPI.Data
                 }
 
              //   MessageBox.Show(list);
+        }
+
+        public void CreateMaterialHeatNorm()
+        {
+
+            string list = "List: " + Environment.NewLine;
+            List<CarboMaterial> materialList = getUsedmaterials();
+            //By Material
+            List<CarboMaterial> SortedMatList = materialList.OrderBy(o => o.ECI).ToList();
+
+            int low = 0; //l0wst value
+            int high = SortedMatList.Count - 1; //highest index
+
+            foreach (CarboGroup grp in getGroupList)
+            {
+                CarboMaterial material = grp.Material;
+                int index = SortedMatList.IndexOf(material);
+
+                System.Drawing.Color groupColour = Utils.GetBlendedColor(high, low, index);
+
+                List<CarboElement> elements = grp.AllElements;
+                foreach (CarboElement cel in elements)
+                {
+                    cel.r = groupColour.R;
+                    cel.g = groupColour.G;
+                    cel.b = groupColour.B;
+                }
+            }
+
+            //   MessageBox.Show(list);
         }
 
         public void CreateGroupHeat()
@@ -303,6 +326,35 @@ namespace CarboLifeAPI.Data
 
             //MessageBox.Show(list);
         }
+
+        public void CreateGroupHeatNorm()
+        {
+            string list = "List: " + Environment.NewLine;
+            List<CarboGroup> groupList = getGroupList.ToList();
+            //By Material
+            List<CarboGroup> SortedgroupList = groupList.OrderBy(o => o.EC).ToList();
+
+            double low = 0;
+            double high = SortedgroupList.Count -1;
+
+            foreach (CarboGroup grp in getGroupList)
+            {
+                int index = SortedgroupList.IndexOf(grp);
+
+                System.Drawing.Color groupColour = Utils.GetBlendedColor(high, low, index);
+
+                List<CarboElement> elements = grp.AllElements;
+                foreach (CarboElement cel in elements)
+                {
+                    cel.r = groupColour.R;
+                    cel.g = groupColour.G;
+                    cel.b = groupColour.B;
+                }
+            }
+
+            //MessageBox.Show(list);
+        }
+
 
         public void CreateElementHeat()
         {
@@ -338,6 +390,45 @@ namespace CarboLifeAPI.Data
                 }
             }
             
+            //MessageBox.Show(list);
+
+        }
+        public void CreateElementHeatNorm()
+        {
+            //string list = "List: " + Environment.NewLine;
+            List<CarboGroup> groupList = getGroupList.ToList();
+            List<CarboElement> allElements = new List<CarboElement>();
+
+            //Write all EC into the elements:
+            foreach (CarboGroup group in groupList)
+            {
+                foreach (CarboElement carEl in group.AllElements)
+                {
+                    carEl.EC = (carEl.Volume * group.Density * group.ECI);
+                    allElements.Add(carEl);
+                }
+            }
+
+            List<CarboElement> sortedElements = allElements.OrderBy(o => o.EC).ToList();
+
+            double low = 0;
+            double high = sortedElements.Count -1;
+
+            foreach (CarboGroup grp in getGroupList)
+            {
+                List<CarboElement> elements = grp.AllElements;
+                foreach (CarboElement cel in elements)
+                {
+                    int index = sortedElements.IndexOf(cel);
+
+                    System.Drawing.Color groupColour = Utils.GetBlendedColor(high, low, index);
+
+                    cel.r = groupColour.R;
+                    cel.g = groupColour.G;
+                    cel.b = groupColour.B;
+                }
+            }
+
             //MessageBox.Show(list);
 
         }

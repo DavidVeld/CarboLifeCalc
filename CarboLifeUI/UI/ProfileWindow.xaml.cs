@@ -31,7 +31,7 @@ namespace CarboLifeUI.UI
         List<Profile> profileList;
 
         public bool isAccepted;
-
+        public double convertionFact;
 
         public ProfileWindow(CarboDatabase materialDatabase, CarboGroup myConcreteGroup)
         {
@@ -42,6 +42,7 @@ namespace CarboLifeUI.UI
             profileGroup.Category = "Floor";
             profileGroup.Description = "Metal deck / Profile";
             InitializeComponent();
+            convertionFact = 1;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -134,12 +135,12 @@ namespace CarboLifeUI.UI
                     double stlWeightPerM2 = selectedProfile.steel * 7850;
 
 
-                    lbl_CalcCon.Content = conVolPerM2 + " m³/m² x " + area + " m²";
-                    lbl_CalcSteel.Content = Math.Round(stlWeightPerM2,2) + " kg/m² x " + area + " m²";
-
                     txt_ConcreteVolume.Text = Convert.ToString(Math.Round((conVolPerM2 * area),2));
                     txt_SteelVolume.Text = Convert.ToString(Math.Round(((stlWeightPerM2 * area) / 7850), 2));
 
+                    convertionFact = (conVolPerM2 * area) / volume;
+                    lbl_CalcCon.Content = Math.Round(conVolPerM2,2) + " m³/m² x " + Math.Round(area,2) + " m² Convertion = *" + Math.Round(convertionFact,2);
+                    lbl_CalcSteel.Content = Math.Round(stlWeightPerM2,2) + " kg/m² x " + Math.Round(area,2) + " m²";
 
                 }
             }
@@ -150,7 +151,8 @@ namespace CarboLifeUI.UI
             isAccepted = true;
             CarboMaterial material = materials.GetExcactMatch(cbb_ProfileMaterial.Text);
 
-            concreteGroup.Volume = Utils.ConvertMeToDouble(txt_ConcreteVolume.Text);
+            //concreteGroup.Volume = Utils.ConvertMeToDouble(txt_ConcreteVolume.Text);
+            concreteGroup.Correction = "*" + Math.Round(convertionFact, 3).ToString();
             concreteGroup.Description += " - Corrected volume";
 
             profileGroup.Volume = Utils.ConvertMeToDouble(txt_SteelVolume.Text);

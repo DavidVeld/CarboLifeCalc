@@ -311,33 +311,15 @@ namespace CarboLifeUI.UI
         private void Mnu_Metaldeck_Click(object sender, RoutedEventArgs e)
         {
             CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
-            bool fieldready = false;
 
             if (carboGroup != null)
             {
-                if (carboGroup.AllElements.Count > 0)
-                {
-                    MessageBoxResult result = MessageBox.Show("To apply a profile decking to this item you need to trucate all elements", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        CarboLifeProject.PurgeElements(carboGroup);
-                        fieldready = true;
-                    }
-                }
-                else
-                {
-                    fieldready = true;
-                }
-
-                if (fieldready == true)
-                {
                     ProfileWindow ProfileWindowWindow = new ProfileWindow(CarboLifeProject.CarboDatabase, carboGroup);
                     ProfileWindowWindow.ShowDialog();
 
-                    if (ProfileWindowWindow.isAccepted == true)
-                    {
-                        CarboLifeProject.AddGroup(ProfileWindowWindow.profileGroup);
-                    }
+                if (ProfileWindowWindow.isAccepted == true)
+                {
+                    CarboLifeProject.AddGroup(ProfileWindowWindow.profileGroup);
                 }
             }
             SortData();

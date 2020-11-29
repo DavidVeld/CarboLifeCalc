@@ -24,8 +24,6 @@ namespace CarboLifeUI.UI
     {
         internal bool isAccepted;
 
-        public double Total { get; internal set; }
-
         public HeatMapBuilder()
         {
             InitializeComponent();
@@ -33,7 +31,6 @@ namespace CarboLifeUI.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            txt_Value.Text = Total.ToString();
             rad_Bymaterial.IsChecked = true;
         }
 
@@ -61,7 +58,14 @@ namespace CarboLifeUI.UI
 
         private void rad_ByElement_Click(object sender, RoutedEventArgs e)
         {
-            lbl_Text.Content = "The heatmap will be based on " + Environment.NewLine + "the individual element's embodied carbon";
+            lbl_Text.Content = "The heatmap will be based on " + Environment.NewLine + "the embodied carbon per element";
+        }
+
+        private void btn_Info_Click(object sender, RoutedEventArgs e)
+        {
+            string info = "A normalized heatmap will distribute the embodied carbon values more evenly over the available range of colours. This is useful when you want to show the contrast between elements if there are some great extremes in your data. You cannot however use the colouring as an index for your values.";
+            CarboInfoBox infoBox = new CarboInfoBox(info, 400, 200);
+            infoBox.ShowDialog();
         }
     }
 }
