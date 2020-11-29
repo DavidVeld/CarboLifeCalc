@@ -31,6 +31,7 @@ Roadmap:
 3. Carbon sequestering calculator in the material editor
 
 Updates as per build 29.11.2020:
+
 Metal deck uses convertion value, and will thus keep the elements associated with them. 
 Heatmaps can now be normalized.
 
