@@ -29,11 +29,18 @@ Roadmap:
 1. Improved material Database
 2. Load materials from an on-line database, use material editor to save and sync to template & share online.
 3. Carbon sequestering calculator in the material editor
+4. Better B1-B7 analysis
+5. Better A5 calculation
+6. Improved C1-C4 calculation
+7. Interface improvements.
+8. Material Mapping
+9. Write values into Revit Elements
+10. Easy sync materials with template and vice versa.
 
 Updates as per build 29.11.2020:
 
-Metal deck uses convertion value, and will thus keep the elements associated with them. 
-Heatmaps can now be normalized.
+1. Metal deck uses convertion value, and will thus keep the elements associated with them. 
+2. Heatmaps can now be normalized.
 
 Updates as per build 25.11.2020:
 
