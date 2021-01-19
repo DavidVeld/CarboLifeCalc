@@ -221,9 +221,11 @@ namespace CarboLifeUI.UI
             if (IsRevit == true)
             {
                 HeatMapBuilder heatmapBuilder = new HeatMapBuilder(importData, createHeatmap);
+                //heatmapBuilder.importData = importData;
+                //heatmapBuilder.createHeatmap = createHeatmap;
 
                 heatmapBuilder.ShowDialog();
-                heatmapBuilder.importData = importData;
+
 
                 if (heatmapBuilder.isAccepted == true)
                 {
@@ -246,10 +248,22 @@ namespace CarboLifeUI.UI
 
                     }
 
-                    chx_AcceptHeatmap.Visibility = Visibility.Visible;
-                    chx_AcceptHeatmap.IsChecked = true;
-                    lbl_AcceptHeatmap.Visibility = Visibility.Visible;
-                    createHeatmap = true;
+                    if (heatmapBuilder.createHeatmap == true)
+                    {
+                        chx_AcceptHeatmap.Visibility = Visibility.Visible;
+                        chx_AcceptHeatmap.IsChecked = true;
+                        lbl_AcceptHeatmap.Visibility = Visibility.Visible;
+                        createHeatmap = true;
+                    }
+                    else
+                    {
+                        chx_AcceptHeatmap.Visibility = Visibility.Hidden;
+                        chx_AcceptHeatmap.IsChecked = false;
+                        lbl_AcceptHeatmap.Visibility = Visibility.Hidden;
+                        createHeatmap = false;
+                    }
+
+
 
                     if(heatmapBuilder.importData == true)
                     {

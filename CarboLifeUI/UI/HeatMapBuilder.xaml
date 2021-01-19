@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="600" MinWidth="500" MinHeight="450" Width="500" Height="450"  Loaded="Window_Loaded" Background="WhiteSmoke">
+             d:DesignHeight="475" d:DesignWidth="600" MinWidth="500" MinHeight="475" Width="500" Height="475"  Loaded="Window_Loaded" Background="WhiteSmoke">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -73,12 +73,12 @@
 
                 <Label Name="lbl_Text" Grid.Column="2" Grid.Row="6" Margin="5,0,5,0" Content="{Binding Path=SelectedRadButton, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource bigStyle}" BorderBrush="Black" BorderThickness="1"/>
 
-                <Label Grid.Column="1" Margin="0,7,0,0" Grid.Row="4" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1" >Colour:</Label>
-                <Button Name="btn_Low" Grid.Row="4" Grid.Column="2" Margin="77,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Lime"  IsEnabled="True" Click="btn_Low_Click">Low</Button>
-                <Button Name="btn_Mid" Grid.Row="4" Grid.Column="2" Margin="130,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Orange" IsEnabled="True" Click="btn_Mid_Click">Mid</Button>
-                <Button Name="btn_High" Grid.Row="4" Grid.Column="2" Margin="184,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Red" IsEnabled="True" Click="btn_High_Click">High</Button>
+                <Label Grid.Column="1" Margin="0,7,0,0" Grid.Row="4" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1" >Colours:</Label>
+                <Button Name="btn_Low" Grid.Row="4" Grid.Column="2" Margin="-105,4,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Lime"  IsEnabled="True" Click="btn_Low_Click">Low</Button>
+                <Button Name="btn_Mid" Grid.Row="4" Grid.Column="2" Margin="0,4,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Orange" IsEnabled="True" Click="btn_Mid_Click">Mid</Button>
+                <Button Name="btn_High" Grid.Row="4" Grid.Column="2" Margin="105,4,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Red" IsEnabled="True" Click="btn_High_Click">High</Button>
                 <Button Name="btn_MinOut" Grid.Row="4" Grid.Column="2" Margin="5,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="CornflowerBlue"  IsEnabled="True" Content="Min" Click="btn_MinOut_Click" />
-                <Button Name="btn_MaxOut" Grid.Row="4" Grid.Column="2" Margin="249,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Purple" IsEnabled="True" Click="btn_MaxOut_Click" Content="High"/>
+                <Button Name="btn_MaxOut" Grid.Row="4" Grid.Column="2" Margin="0,7,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Purple" IsEnabled="True" Click="btn_MaxOut_Click" Content="High"/>
                 <Label Grid.Column="1" Grid.Row="3" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1" Content="Standard deviation:"/>
 
 

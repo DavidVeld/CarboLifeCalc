@@ -33,7 +33,7 @@ namespace CarboLifeUI.UI
 
         internal double standardDev;
         internal bool importData;
-        private bool createHeatmap;
+        internal bool createHeatmap;
 
         public HeatMapBuilder()
         {
@@ -50,7 +50,6 @@ namespace CarboLifeUI.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            rad_Bymaterial.IsChecked = true;
 
             minOutColour = HeatMapBuilderUtils.Session_minOutColour;
             if (minOutColour.A > 0)
@@ -103,6 +102,8 @@ namespace CarboLifeUI.UI
             chx_ImportValuesToRevit.IsChecked = importData;
             chx_CreateHeatmap.IsChecked = createHeatmap;
 
+            rad_Bymaterial.IsChecked = true;
+
             UpdateRange();
         }
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
@@ -115,6 +116,9 @@ namespace CarboLifeUI.UI
             HeatMapBuilderUtils.Session_minRangeColour = ConvertToColor(btn_Low.Background);
             HeatMapBuilderUtils.Session_midRangeColour = ConvertToColor(btn_Mid.Background);
             HeatMapBuilderUtils.Session_maxRangeColour = ConvertToColor(btn_High.Background);
+
+            importData = chx_ImportValuesToRevit.IsChecked.Value;
+            createHeatmap = chx_CreateHeatmap.IsChecked.Value;
 
             this.Close();
         }
@@ -135,11 +139,11 @@ namespace CarboLifeUI.UI
 
         private void rad_Bymaterial_Click(object sender, RoutedEventArgs e)
         {
-            lbl_Text.Content = "The heatmap will be based on " + Environment.NewLine + "the material density (Intensity map) based on kg CO2 per kg";
+            lbl_Text.Content = "The heatmap will be based on " + Environment.NewLine + "the material density (Intensity map) " + Environment.NewLine + "based on kg CO2 per kg";
         }
         private void rad_Bymaterial2_Click(object sender, RoutedEventArgs e)
         {
-            lbl_Text.Content = "The heatmap will be based on " + Environment.NewLine + "the material density (Intensity map) based on kg CO2 per m³";
+            lbl_Text.Content = "The heatmap will be based on " + Environment.NewLine + "the material density (Intensity map) " + Environment.NewLine + "based on kg CO2 per m³";
         }
         private void rad_ByGroup_Click(object sender, RoutedEventArgs e)
         {
