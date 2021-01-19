@@ -363,46 +363,67 @@ namespace CarboLifeAPI
             return value;
         }
 
-        public static Color GetBlendedColor(double max, double min, double value)
+        public static Color GetBlendedColor(double max, double min, double value, Color minRangeColour, Color midRangeColour, Color maxRangeColour)
         {
-            //Normalize the range;
-            if (min < 0)
+            try
             {
-                max = max + (min * -1);
-                value = value + (min * -1);
-                min = 0;
-            }
-            else if(min > 0)
+                //Normalize the range;
+                if (min < 0)
                 {
-                max = max - min;
-                value = value - min;
-                min = 0;
+                    max = max + (min * -1);
+                    value = value + (min * -1);
+                    min = 0;
+                }
+                else if (min > 0)
+                {
+                    max = max - min;
+                    value = value - min;
+                    min = 0;
+                }
+
+                double total = max - min;
+
+                /*
+                if (total >= 0)
+                    total = 1;
+                */
+
+                double x = value / total;
+                x = 1 - x;
+                Color myColor = GetBlendedColor(Convert.ToInt32(x * 100), minRangeColour, midRangeColour, maxRangeColour);
+
+                //int f = 255;
+                /*
+                byte r = Convert.ToByte(verifyByte(2.0f * x, 254));
+                byte g = Convert.ToByte(verifyByte(2.0f * (1 - x),254));
+                byte b = 0;
+
+
+                Color myColor = Color.FromRgb(r,g, b);
+                */
+                return myColor;
+            }
+            catch(Exception ex)
+            {
+                return Color.FromArgb((int)Math.Round(0.0), (int)Math.Round(0.0), (int)Math.Round(0.0));
             }
 
-            double total = max - min;
 
-            double x = value / total;
-            x = 1 - x;
-            Color myColor = GetBlendedColor(Convert.ToInt32(x*100));
-
-            //int f = 255;
-            /*
-            byte r = Convert.ToByte(verifyByte(2.0f * x, 254));
-            byte g = Convert.ToByte(verifyByte(2.0f * (1 - x),254));
-            byte b = 0;
-
-
-            Color myColor = Color.FromRgb(r,g, b);
-            */
-
-            return myColor;
         }
 
-        public static System.Drawing.Color GetBlendedColor(int percentage)
+        public static System.Drawing.Color GetBlendedColor(int percentage, Color minRangeColour, Color midRangeColour, Color maxRangeColour)
         {
+            
+            if (percentage < 50)
+                return Interpolate(maxRangeColour, midRangeColour, percentage / 50.0);
+            return Interpolate(midRangeColour, minRangeColour, (percentage - 50) / 50.0);
+            
+            //OLD
+            /*
             if (percentage < 50)
                 return Interpolate(System.Drawing.Color.Red, System.Drawing.Color.Yellow, percentage / 50.0);
             return Interpolate(Color.Yellow, Color.Lime, (percentage - 50) / 50.0);
+            */
         }
 
         private static System.Drawing.Color Interpolate(System.Drawing.Color color1, System.Drawing.Color color2, double fraction)

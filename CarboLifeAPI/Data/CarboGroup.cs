@@ -184,10 +184,12 @@ namespace CarboLifeAPI.Data
                     Volume = 0;
                     foreach (CarboElement ce in AllElements)
                     {
+                        ce.Calculate(Material);
                         Volume += ce.Volume;
                     }
                 }
             }
+
             Volume = Math.Round(Volume, 2);
 
             //Calculate the real volume based on a correction if required. 

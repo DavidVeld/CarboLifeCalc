@@ -71,6 +71,27 @@ namespace CarboLifeAPI.Data
             return newGroup;
         }
 
+        internal void clearHeatmapAndValues()
+        {
+            foreach (CarboGroup grp in getGroupList)
+            {
+                try
+                {
+                    List<CarboElement> elements = grp.AllElements;
+                    foreach (CarboElement cel in elements)
+                    {
+                        cel.r = 0;
+                        cel.g = 0;
+                        cel.b = 0;
+                    }
+                }
+                catch(Exception ex)
+                {
+
+                }
+            }
+        }
+
         public void SetGroups(ObservableCollection<CarboGroup> groupList)
         {
             this.groupList = groupList;
@@ -235,205 +256,8 @@ namespace CarboLifeAPI.Data
             //Values should return now;
             return valueList;
         }
-        /// <summary>
-        /// Creates a heatmap in the elements 
-        /// </summary>
-        /// <param name="v">1 = material, 2=Group, 3=Elements</param>
-        public void CreateMaterialHeat()
-        {
-                string list = "List: " + Environment.NewLine;
-                List<CarboMaterial> materialList = getUsedmaterials();
-                //By Material
-                List<CarboMaterial> SortedMatList = materialList.OrderBy(o => o.ECI).ToList();
-
-                double low = SortedMatList[0].ECI;
-                double high = SortedMatList[SortedMatList.Count - 1].ECI;
-
-                foreach (CarboGroup grp in getGroupList)
-                {
-                    System.Drawing.Color groupColour = Utils.GetBlendedColor(high, low, grp.Material.ECI);
-
-                    List<CarboElement> elements = grp.AllElements;
-                    foreach (CarboElement cel in elements)
-                    {
-                        cel.r = groupColour.R;
-                        cel.g = groupColour.G;
-                        cel.b = groupColour.B;
-                    }
-                }
-
-             //   MessageBox.Show(list);
-        }
-
-        public void CreateMaterialHeatNorm()
-        {
-
-            string list = "List: " + Environment.NewLine;
-            List<CarboMaterial> materialList = getUsedmaterials();
-            //By Material
-            List<CarboMaterial> SortedMatList = materialList.OrderBy(o => o.ECI).ToList();
-
-            int low = 0; //l0wst value
-            int high = SortedMatList.Count - 1; //highest index
-
-            foreach (CarboGroup grp in getGroupList)
-            {
-                CarboMaterial material = grp.Material;
-                int index = SortedMatList.IndexOf(material);
-
-                System.Drawing.Color groupColour = Utils.GetBlendedColor(high, low, index);
-
-                List<CarboElement> elements = grp.AllElements;
-                foreach (CarboElement cel in elements)
-                {
-                    cel.r = groupColour.R;
-                    cel.g = groupColour.G;
-                    cel.b = groupColour.B;
-                }
-            }
-
-            //   MessageBox.Show(list);
-        }
-
-        public void CreateGroupHeat()
-        {
-            string list = "List: " + Environment.NewLine;
-            List<CarboGroup> groupList = getGroupList.ToList();
-            //By Material
-            List<CarboGroup> SortedgroupList = groupList.OrderBy(o => o.EC).ToList();
-
-            /*
-            foreach (CarboGroup group in SortedgroupList)
-            {
-                list += group.Category + " : " + group.EC + Environment.NewLine;
-            }
-*/
-            double low = SortedgroupList[0].EC;
-            double high = SortedgroupList[SortedgroupList.Count - 1].EC;
-
-            foreach (CarboGroup grp in getGroupList)
-            {
-                System.Drawing.Color groupColour = Utils.GetBlendedColor(high, low, grp.EC);
-
-                List<CarboElement> elements = grp.AllElements;
-                foreach (CarboElement cel in elements)
-                {
-                    cel.r = groupColour.R;
-                    cel.g = groupColour.G;
-                    cel.b = groupColour.B;
-                }
-            }
-
-            //MessageBox.Show(list);
-        }
-
-        public void CreateGroupHeatNorm()
-        {
-            string list = "List: " + Environment.NewLine;
-            List<CarboGroup> groupList = getGroupList.ToList();
-            //By Material
-            List<CarboGroup> SortedgroupList = groupList.OrderBy(o => o.EC).ToList();
-
-            double low = 0;
-            double high = SortedgroupList.Count -1;
-
-            foreach (CarboGroup grp in getGroupList)
-            {
-                int index = SortedgroupList.IndexOf(grp);
-
-                System.Drawing.Color groupColour = Utils.GetBlendedColor(high, low, index);
-
-                List<CarboElement> elements = grp.AllElements;
-                foreach (CarboElement cel in elements)
-                {
-                    cel.r = groupColour.R;
-                    cel.g = groupColour.G;
-                    cel.b = groupColour.B;
-                }
-            }
-
-            //MessageBox.Show(list);
-        }
-
-
-        public void CreateElementHeat()
-        {
-            //string list = "List: " + Environment.NewLine;
-            List<CarboGroup> groupList = getGroupList.ToList();
-            List<CarboElement> allElements = new List<CarboElement>();
-
-            //Write all EC into the elements:
-            foreach (CarboGroup group in groupList)
-            {
-                foreach (CarboElement carEl in group.AllElements)
-                {
-                    carEl.EC = (carEl.Volume * group.Density * group.ECI);
-                    allElements.Add(carEl);
-                }
-            }
-
-            List<CarboElement> sortedElements = allElements.OrderBy(o => o.EC).ToList();
-
-            double low = sortedElements[0].EC;
-            double high = sortedElements[sortedElements.Count - 1].EC;
-
-            foreach (CarboGroup grp in getGroupList)
-            {
-                List<CarboElement> elements = grp.AllElements;
-                foreach (CarboElement cel in elements)
-                {
-                    System.Drawing.Color groupColour = Utils.GetBlendedColor(high, low, cel.EC);
-
-                    cel.r = groupColour.R;
-                    cel.g = groupColour.G;
-                    cel.b = groupColour.B;
-                }
-            }
-            
-            //MessageBox.Show(list);
-
-        }
-        public void CreateElementHeatNorm()
-        {
-            //string list = "List: " + Environment.NewLine;
-            List<CarboGroup> groupList = getGroupList.ToList();
-            List<CarboElement> allElements = new List<CarboElement>();
-
-            //Write all EC into the elements:
-            foreach (CarboGroup group in groupList)
-            {
-                foreach (CarboElement carEl in group.AllElements)
-                {
-                    carEl.EC = (carEl.Volume * group.Density * group.ECI);
-                    allElements.Add(carEl);
-                }
-            }
-
-            List<CarboElement> sortedElements = allElements.OrderBy(o => o.EC).ToList();
-
-            double low = 0;
-            double high = sortedElements.Count -1;
-
-            foreach (CarboGroup grp in getGroupList)
-            {
-                List<CarboElement> elements = grp.AllElements;
-                foreach (CarboElement cel in elements)
-                {
-                    int index = sortedElements.IndexOf(cel);
-
-                    System.Drawing.Color groupColour = Utils.GetBlendedColor(high, low, index);
-
-                    cel.r = groupColour.R;
-                    cel.g = groupColour.G;
-                    cel.b = groupColour.B;
-                }
-            }
-
-            //MessageBox.Show(list);
-
-        }
-
-        private List<CarboMaterial> getUsedmaterials()
+        
+        internal List<CarboMaterial> getUsedmaterials()
         {
             List<CarboMaterial> result = new List<CarboMaterial>();
 
@@ -516,7 +340,7 @@ namespace CarboLifeAPI.Data
             //EE = 0;
             
             EC = 0;
-            //This Will calculate all totals;
+            //This Will calculate all totals and set all the individual element values;
             foreach(CarboGroup cg in groupList)
             {
                 cg.CalculateTotals();
@@ -525,15 +349,179 @@ namespace CarboLifeAPI.Data
                 EC += cg.EC;
                 
             }
+
             foreach (CarboGroup cg in groupList)
             {
                 cg.SetPercentageOf(EC);
             }
 
+            //Set element totals
+            setElementotals();
+
             //Set A5 based on value;
             //1.400tCO2e/£100k
             A5 = 1.400 * (Value / 100000);
                        
+        }
+
+        private void setElementotals()
+        {
+            List<CarboElement> elementbuffer = getTemporaryElementListWithTotals();
+
+            //Now Imprint them into the elements totals
+            bool okSet = false;
+            foreach (CarboGroup cg in groupList)
+            {
+                if (cg.AllElements != null)
+                {
+                    if (cg.AllElements.Count > 0)
+                    {
+                        for (int i = 0; i<=cg.AllElements.Count - 1; i++)
+                        {
+                            CarboElement ce = cg.AllElements[i];
+                            ce = addBufferToElements(elementbuffer, ce, out okSet);
+                        }
+                    }
+                }
+            }
+            if (okSet == false) ;
+                //MessageBox.Show("Elements processed");
+
+        }
+
+        /// <summary>
+        /// Returns a full list of elements with their Revit element totals, usefull if elements are constructred using layer or parts. This is a copy f the elements containing their id's and total mass, volue EC and ECi values.
+        /// </summary>
+        /// <returns></returns>
+        public List<CarboElement> getTemporaryElementListWithTotals()
+        {
+            //Cnstruct the buffer file
+            List<CarboElement> elementbuffer = new List<CarboElement>();
+
+            //First Count the totals
+            bool ok = false;
+
+            foreach (CarboGroup cg in groupList)
+            {
+                if (cg.AllElements != null)
+                {
+                    if (cg.AllElements.Count > 0)
+                    {
+                        foreach (CarboElement ce in cg.AllElements)
+                        {
+                            elementbuffer = addToBuffer(elementbuffer, ce, out ok);
+                        }
+                    }
+                }
+            }
+            
+            return elementbuffer;
+
+        }
+
+        private CarboElement addBufferToElements(List<CarboElement> elementbuffer, CarboElement cElement, out bool ok)
+        {
+            ok = false;
+
+            if (elementbuffer != null)
+            {
+                if (elementbuffer.Count > 0)
+                {
+                    //searc the buffer for the right totals
+                    foreach (CarboElement buffer_CE in elementbuffer)
+                    {
+                        try
+                        {
+                            if (buffer_CE.Id == cElement.Id)
+                            {
+                                //Set the values;
+                                cElement.EC_Total = buffer_CE.EC_Total;
+                                cElement.ECI_Total = buffer_CE.ECI_Total;
+                                cElement.Volume_Total = buffer_CE.Volume_Total;
+                                ok = true;
+                                break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            ok = false;
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                }
+            }
+            return cElement;
+        }
+
+
+        private List<CarboElement> addToBuffer(List<CarboElement> elementbuffer, CarboElement cElement, out bool ok)
+        {
+            bool isUnique = true;
+            ok = false;
+
+            if (elementbuffer != null)
+            {
+                    foreach(CarboElement buffer_CE in elementbuffer)
+                    {
+                        try
+                        {
+                            if (buffer_CE.Id == cElement.Id)
+                            {
+                                //Merge Elements
+                                //double density = buffer_CE.EC_Total / (buffer_CE.Volume * buffer_CE.ECI_Total);
+                                double volume_Total = buffer_CE.Volume + cElement.Volume;
+                                double mass_Total = buffer_CE.Mass + cElement.Mass;
+                                double mass_TotalCheck = (buffer_CE.EC / buffer_CE.ECI) + (cElement.EC / cElement.ECI);
+
+                                //double Density_Total = mass_Total / volume_Total;
+
+                                double EC_Total = buffer_CE.EC_Total + cElement.EC;
+                                //Calculate combined ECI.
+                                double ECI_Total = EC_Total / mass_Total;
+
+                                //Total EC:
+                                buffer_CE.EC_Total = EC_Total;
+                                //Total Volume
+                                buffer_CE.Volume_Total = volume_Total;
+                                //Total ECI
+                                buffer_CE.ECI_Total = ECI_Total;
+                                //mass Total
+                                buffer_CE.Mass = mass_Total;
+                                //Density Total
+                                // n/a
+
+                                isUnique = false;
+                                ok = true;
+                                break;
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            ok = false;
+                            MessageBox.Show(ex.Message);
+
+                        }
+                    }
+                    //The element doesnt exist yet in the list; add to the list as a new element.
+                    if (isUnique == true)
+                    {
+                        CarboElement newElement = new CarboElement();
+                        newElement.Id = cElement.Id;
+                        newElement.Volume = cElement.Volume;
+
+                        newElement.ECI_Total = cElement.ECI;
+                        newElement.EC_Total = cElement.EC;
+                        newElement.Volume_Total = cElement.Volume;
+
+                        newElement.Mass = cElement.Mass;
+                        
+                        elementbuffer.Add(newElement);
+                        ok = true;
+                    }
+                
+            }
+
+            return elementbuffer;
         }
 
         public void GenerateDummyList()
@@ -752,7 +740,6 @@ namespace CarboLifeAPI.Data
                 {
                     XmlSerializer ser = new XmlSerializer(typeof(CarboProject));
                     CarboProject bufferproject;
-
 
                     using (FileStream fs = new FileStream(myPath, FileMode.Open))
                     {

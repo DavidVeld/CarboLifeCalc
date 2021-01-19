@@ -34,6 +34,7 @@ namespace CarboLifeUI.UI
         /// If a heat map will be created after exit;
         /// </summary>
         public bool createHeatmap {get; set;}
+        public bool importData { get; set; }
 
         //public CarboDatabase carboDataBase { get; set; }
         public CarboLifeMainWindow()
@@ -219,32 +220,30 @@ namespace CarboLifeUI.UI
             IsRevit = true;
             if (IsRevit == true)
             {
-                HeatMapBuilder heatmapBuilder = new HeatMapBuilder();
+                HeatMapBuilder heatmapBuilder = new HeatMapBuilder(importData, createHeatmap);
 
                 heatmapBuilder.ShowDialog();
+                heatmapBuilder.importData = importData;
+
                 if (heatmapBuilder.isAccepted == true)
                 {
                     MessageBox.Show("The heatmap data will be stored within the calculation, once you close the application, Revit will colour in your view.", "Warning", MessageBoxButton.OK);
                     if (heatmapBuilder.rad_Bymaterial.IsChecked == true)
                     {
-                        if(heatmapBuilder.chx_Norm.IsChecked == true)
-                            carboLifeProject.CreateMaterialHeatNorm();
-                        else
-                            carboLifeProject.CreateMaterialHeat();
+                        carboLifeProject = HeatMapBuilderUtils.CreateIntensityHeatMap(carboLifeProject, heatmapBuilder.minOutColour, heatmapBuilder.maxOutColour, heatmapBuilder.minRangeColour, heatmapBuilder.midRangeColour, heatmapBuilder.maxRangeColour, heatmapBuilder.standardDev);
+                    }
+                    else if (heatmapBuilder.rad_Bymaterial2.IsChecked == true)
+                    {
+                        carboLifeProject = HeatMapBuilderUtils.CreateIntensityHeatMapVolume(carboLifeProject, heatmapBuilder.minOutColour, heatmapBuilder.maxOutColour, heatmapBuilder.minRangeColour, heatmapBuilder.midRangeColour, heatmapBuilder.maxRangeColour, heatmapBuilder.standardDev);
                     }
                     else if(heatmapBuilder.rad_ByGroup.IsChecked == true)
                     {
-                        if (heatmapBuilder.chx_Norm.IsChecked == true)
-                            carboLifeProject.CreateGroupHeatNorm();
-                        else
-                            carboLifeProject.CreateGroupHeat();
+                        carboLifeProject = HeatMapBuilderUtils.CreateByGroupHeatMap(carboLifeProject, heatmapBuilder.minOutColour, heatmapBuilder.maxOutColour, heatmapBuilder.minRangeColour, heatmapBuilder.midRangeColour, heatmapBuilder.maxRangeColour, heatmapBuilder.standardDev);
                     }
                     else if (heatmapBuilder.rad_ByElement.IsChecked == true)
                     {
-                        if (heatmapBuilder.chx_Norm.IsChecked == true)
-                            carboLifeProject.CreateElementHeatNorm();
-                        else
-                            carboLifeProject.CreateElementHeat();
+                        carboLifeProject = HeatMapBuilderUtils.CreateByElementHeatMap(carboLifeProject, heatmapBuilder.minOutColour, heatmapBuilder.maxOutColour, heatmapBuilder.minRangeColour, heatmapBuilder.midRangeColour, heatmapBuilder.maxRangeColour, heatmapBuilder.standardDev);
+
                     }
 
                     chx_AcceptHeatmap.Visibility = Visibility.Visible;
@@ -252,7 +251,22 @@ namespace CarboLifeUI.UI
                     lbl_AcceptHeatmap.Visibility = Visibility.Visible;
                     createHeatmap = true;
 
+                    if(heatmapBuilder.importData == true)
+                    {
+                        importData = true;
+                    }
+                    else
+                    {
+                        importData = false;
+                    }
 
+                }
+                else
+                {
+                    chx_AcceptHeatmap.Visibility = Visibility.Visible;
+                    chx_AcceptHeatmap.IsChecked = true;
+                    lbl_AcceptHeatmap.Visibility = Visibility.Visible;
+                    createHeatmap = true;
                 }
             }
             else

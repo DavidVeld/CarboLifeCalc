@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -143,7 +144,7 @@ namespace CarboLifeRevit
                 //Create a visual
                 if(carboCalcProgram.createHeatmap == true)
                 {
-                    CreateHeatMap(doc, carboCalcProgram.carboLifeProject);
+                    CreateHeatMap(app, carboCalcProgram.carboLifeProject);
                 }
             }
 
@@ -165,11 +166,16 @@ namespace CarboLifeRevit
             }
         }
 
-        private static void CreateHeatMap(Document doc, CarboProject carboLifeProject)
+        private static void CreateHeatMap(UIApplication app, CarboProject carboLifeProject)
         {
+            UIDocument uidoc = app.ActiveUIDocument;
+            Document doc = uidoc.Document;
+
             using (Transaction t = new Transaction(doc, "Create Heatmap"))
             {
                 t.Start();
+
+
 
                 FilteredElementCollector elements = new FilteredElementCollector(doc);
                 FillPatternElement solidFillPattern = elements.OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>().First(a => a.GetFillPattern().IsSolidFill);
@@ -207,7 +213,15 @@ namespace CarboLifeRevit
                          if(elementcheck != null)
                         {
                             doc.ActiveView.SetElementOverrides(id, ogs);
+
+                        Parameter carboPar = elementcheck.LookupParameter("EmbodiedCarbon");
+                            if (carboPar != null)
+                                carboPar.Set(ce.EC_Total);
+                            else
+                                CreateParameter(app, elementcheck);
+
                         }
+
                     }
                     catch(Exception ex)
                     {
@@ -216,6 +230,64 @@ namespace CarboLifeRevit
                 }
                 t.Commit();
             }
+        }
+
+        private static void CreateParameter(UIApplication app, Element element)
+        {
+            // Create Room Shared Parameter Routine: -->
+            // 1: Check whether the Room shared parameter("External Room ID") has been defined.
+            // 2: Share parameter file locates under sample directory of this .dll module.
+            // 3: Add a group named "SDKSampleRoomScheduleGroup".
+            // 4: Add a shared parameter named "External Room ID" to "Rooms" category, which is visible.
+            //    The "External Room ID" parameter will be used to map to spreadsheet based room ID(which is unique)
+
+            try
+            {
+                // create shared parameter file
+                String modulePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                String paramFile = modulePath + "\\CarbonSharedParams.txt";
+                if (File.Exists(paramFile))
+                {
+                    File.Delete(paramFile);
+                }
+                FileStream fs = File.Create(paramFile);
+                fs.Close();
+
+                // cache application handle
+                Autodesk.Revit.ApplicationServices.Application revitApp = app.Application;
+
+                // prepare shared parameter file
+                app.Application.SharedParametersFilename = paramFile;
+
+                // open shared parameter file
+                DefinitionFile parafile = revitApp.OpenSharedParameterFile();
+
+                // create a group
+                DefinitionGroup apiGroup = parafile.Groups.Create("CarbonSharedParamsGroup");
+
+                // create a visible "External Room ID" of text type.
+                ExternalDefinitionCreationOptions ExternalDefinitionCreationOptions = new ExternalDefinitionCreationOptions("EmbodiedCarbon", ParameterType.Number);
+                Definition roomSharedParamDef = apiGroup.Definitions.Create(ExternalDefinitionCreationOptions);
+
+                    // get Rooms category
+
+                //Category roomCat = app.ActiveUIDocument.Document.Settings.Categories.get_Item(BuiltInCategory.OST_Rooms);
+                Category category = element.Category;
+
+                CategorySet categories = revitApp.Create.NewCategorySet();
+                categories.Insert(category);
+
+                // insert the new parameter
+                InstanceBinding binding = revitApp.Create.NewInstanceBinding(categories);
+                app.ActiveUIDocument.Document.ParameterBindings.Insert(roomSharedParamDef, binding);
+                //return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to create shared parameter: " + ex.Message);
+            }
+
+
         }
 
         private static double getFloorarea(Element el)

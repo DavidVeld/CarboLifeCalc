@@ -91,6 +91,7 @@
     <Compile Include="UtilClasses\VehicleAndFuel.cs" />
     <Compile Include="Utils\CarboDataPoint.cs" />
     <Compile Include="Utils\ReadWriteCsv.cs" />
+    <Compile Include="Utils\HeatMapBuilderUtils.cs" />
     <Compile Include="Utils\ReportBuilder.cs" />
     <Compile Include="Utils\StringToFormula.cs" />
     <Compile Include="Utils\Utils.cs" />
