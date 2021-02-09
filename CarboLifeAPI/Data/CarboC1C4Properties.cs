@@ -40,9 +40,9 @@ namespace CarboLifeAPI.Data
         public double other { get; set; }
 
         //Total
-        public string calcResult { get; set; }
+        [NonSerialized]
+        public string calcResult;
         public double value { get; set; }
-
 
         public CarboC1C4Properties()
         {

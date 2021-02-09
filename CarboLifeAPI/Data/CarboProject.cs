@@ -704,21 +704,24 @@ namespace CarboLifeAPI.Data
 
         public void UpdateMaterial(CarboGroup TargetGroup, CarboMaterial NewMaterial)
         {
-            foreach(CarboGroup cg in groupList)
+            if (NewMaterial != null)
             {
-                // Update selected group per se. 
-                // 
-                if(cg.Id == TargetGroup.Id)
+                foreach (CarboGroup cg in groupList)
                 {
-                    cg.MaterialName = NewMaterial.Name;
-                    cg.Material = NewMaterial;
-                }
+                    // Update selected group per se. 
+                    // 
+                    if (cg.Id == TargetGroup.Id)
+                    {
+                        cg.MaterialName = NewMaterial.Name;
+                        cg.Material = NewMaterial;
+                    }
 
-                //Update all idential materials
-                if (cg.Material.Id == NewMaterial.Id)
-                {
-                    cg.MaterialName = NewMaterial.Name;
-                    cg.Material = NewMaterial;
+                    //Update all idential materials
+                    if (cg.Material.Id == NewMaterial.Id)
+                    {
+                        cg.MaterialName = NewMaterial.Name;
+                        cg.Material = NewMaterial;
+                    }
                 }
             }
         }

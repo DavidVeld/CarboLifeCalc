@@ -316,6 +316,33 @@ namespace CarboLifeAPI.Data
                 MessageBox.Show(name + " deleted.", "Deleted", MessageBoxButton.OK);
         }
 
+        public void deleteMaterial(string name)
+        {
+            //string name = "";
+            bool ok = false;
+
+            try
+            {
+                for (int i = CarboMaterialList.Count - 1; i >= 0; i--)
+                {
+                    if (CarboMaterialList[i].Name == name)
+                    {
+                        CarboMaterialList.RemoveAt(i);
+                        ok = true;
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Warning", MessageBoxButton.OK);
+
+            }
+
+            if (ok == true)
+                MessageBox.Show(name + " deleted.", "Deleted", MessageBoxButton.OK);
+        }
+
         /// <summary>
         /// Will update one database without the other, no elements will be deleted.
         /// </summary>
@@ -326,7 +353,7 @@ namespace CarboLifeAPI.Data
             try
             {
                 //Loop though all materials and update the current ones
-                for (int i = userMaterials.CarboMaterialList.Count - 1; i > 0; i--)
+                for (int i = userMaterials.CarboMaterialList.Count - 1; i >= 0; i--)
                 {
                     CarboMaterial newcarboMaterial = userMaterials.CarboMaterialList[i];
                     bool matchfound = false;
@@ -361,8 +388,23 @@ namespace CarboLifeAPI.Data
             //success:
             return true;
         }
+        /// <summary>
+        /// Creates a copy of the class and all its materials
+        /// </summary>
+        /// <returns>CarboDatabase</returns>
+        public CarboDatabase Copy()
+        {
+            CarboDatabase copy = new CarboDatabase();
 
+            foreach(CarboMaterial cm in this.CarboMaterialList)
+            {
+                CarboMaterial newcarboMaterial = new CarboMaterial();
+                newcarboMaterial.Copy(cm);
+                copy.AddMaterial(newcarboMaterial);
+            }
 
+            return copy;
 
+        }
     }
 }

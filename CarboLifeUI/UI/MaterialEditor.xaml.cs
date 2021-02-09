@@ -120,58 +120,60 @@ namespace CarboLifeUI.UI
 
         private void UpdateMaterialSettings()
         {
-            selectedMaterial.CalculateTotals();
-
-            txt_Name.Text = selectedMaterial.Name;
-            txt_Description.Text = selectedMaterial.Description;
-            cbb_Category.Text = selectedMaterial.Category;
-            txt_Density.Text = selectedMaterial.Density.ToString();
-            txt_ECI.Text = selectedMaterial.ECI.ToString();
-            txt_EPDLink.Text = selectedMaterial.EPDurl;
-
-            chx_A4_Manual.IsChecked = selectedMaterial.ECI_A4_Override;
-            chx_A5_Manual.IsChecked = selectedMaterial.ECI_A5_Override;
-            chx_B1_B5_Manual.IsChecked = selectedMaterial.ECI_B1B5_Override;
-            chx_C1_C4_Manual.IsChecked = selectedMaterial.ECI_C1C4_Override;
-            chx_D_Manual.IsChecked = selectedMaterial.ECI_D_Override;
-
-
-            //Materials
-            SetA1A3();
-            //Construction
-            SetA4();
-            //Transport
-            SetA5();
-            //Transport
-            SetB1B5();
-            //End of Life
-            SetC1C4();
-            //End of Life
-            SetD();
-
-            string calc = "";
-
-            calc = "B1B5 x (A1-A3 + A4 + A5 + B1-B5 + C1-C4 + ECI_D) = ECI Total" + Environment.NewLine;
-            calc += Math.Round(Utils.ConvertMeToDouble(selectedMaterial.ECI_B1B5.ToString()),4) + 
-                " x (" + Math.Round(Utils.ConvertMeToDouble(txt_A1_A3.Text),4) +
-                " + "+ Math.Round(Utils.ConvertMeToDouble(txt_A4.Text),4) + 
-                " + " + Math.Round(Utils.ConvertMeToDouble(txt_A5.Text), 4) + 
-                " + " + Math.Round(Utils.ConvertMeToDouble(txt_C1_C4.Text), 4) + 
-                " + " + Math.Round(Utils.ConvertMeToDouble(txt_D.Text), 4) + 
-                " ) = " + Math.Round(Utils.ConvertMeToDouble(txt_ECI.Text), 5);
-            Calc.Content = calc;
-
-            chk_Locked.IsChecked = selectedMaterial.isLocked;
-
-            if(selectedMaterial.isLocked == true)
+            if (selectedMaterial != null)
             {
-                grd_Edit.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                grd_Edit.Visibility = Visibility.Visible;
-            }
+                selectedMaterial.CalculateTotals();
 
+                txt_Name.Text = selectedMaterial.Name;
+                txt_Description.Text = selectedMaterial.Description;
+                cbb_Category.Text = selectedMaterial.Category;
+                txt_Density.Text = selectedMaterial.Density.ToString();
+                txt_ECI.Text = selectedMaterial.ECI.ToString();
+                txt_EPDLink.Text = selectedMaterial.EPDurl;
+
+                chx_A4_Manual.IsChecked = selectedMaterial.ECI_A4_Override;
+                chx_A5_Manual.IsChecked = selectedMaterial.ECI_A5_Override;
+                chx_B1_B5_Manual.IsChecked = selectedMaterial.ECI_B1B5_Override;
+                chx_C1_C4_Manual.IsChecked = selectedMaterial.ECI_C1C4_Override;
+                chx_D_Manual.IsChecked = selectedMaterial.ECI_D_Override;
+
+
+                //Materials
+                SetA1A3();
+                //Construction
+                SetA4();
+                //Transport
+                SetA5();
+                //Transport
+                SetB1B5();
+                //End of Life
+                SetC1C4();
+                //End of Life
+                SetD();
+
+                string calc = "";
+
+                calc = "B1B5 x (A1-A3 + A4 + A5 + B1-B5 + C1-C4 + ECI_D) = ECI Total" + Environment.NewLine;
+                calc += Math.Round(Utils.ConvertMeToDouble(selectedMaterial.ECI_B1B5.ToString()), 4) +
+                    " x (" + Math.Round(Utils.ConvertMeToDouble(txt_A1_A3.Text), 4) +
+                    " + " + Math.Round(Utils.ConvertMeToDouble(txt_A4.Text), 4) +
+                    " + " + Math.Round(Utils.ConvertMeToDouble(txt_A5.Text), 4) +
+                    " + " + Math.Round(Utils.ConvertMeToDouble(txt_C1_C4.Text), 4) +
+                    " + " + Math.Round(Utils.ConvertMeToDouble(txt_D.Text), 4) +
+                    " ) = " + Math.Round(Utils.ConvertMeToDouble(txt_ECI.Text), 5);
+                Calc.Content = calc;
+
+                chk_Locked.IsChecked = selectedMaterial.isLocked;
+
+                if (selectedMaterial.isLocked == true)
+                {
+                    grd_Edit.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    grd_Edit.Visibility = Visibility.Visible;
+                }
+            }
         }
 
         private void SetA1A3()
@@ -519,7 +521,9 @@ namespace CarboLifeUI.UI
                 selectedMaterial.ECI_C1C4 = Utils.ConvertMeToDouble(txt_C1_C4.Text);
                 selectedMaterial.ECI_D = Utils.ConvertMeToDouble(txt_D.Text);
                 */
+
             }
+
             UpdateMaterialSettings();
             RefreshMaterialList();
             selectMaterial(txt_Name.Text);
@@ -833,8 +837,6 @@ namespace CarboLifeUI.UI
                     selectedMaterial.ECI_C1C4 = C14;
                     selectedMaterial.ECI_D = D;
 
-
-
                 }
             }
             UpdateMaterialSettings();
@@ -844,6 +846,17 @@ namespace CarboLifeUI.UI
         private void btn_OpenLink_Click(object sender, RoutedEventArgs e)
         {
             Utils.Openlink(txt_EPDLink.Text);
+        }
+
+        private void btn_Sync_Click(object sender, RoutedEventArgs e)
+        {
+            SyncMaterialsWindow materialnsSyncWindow = new SyncMaterialsWindow(returnedDatabase.Copy());
+            materialnsSyncWindow.ShowDialog();
+            if (materialnsSyncWindow.isAccepted == true)
+                returnedDatabase = materialnsSyncWindow.projectDatabase;
+
+            RefreshMaterialList();
+
         }
     }
 }

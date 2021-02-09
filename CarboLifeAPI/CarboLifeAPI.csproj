@@ -90,6 +90,7 @@
     <Compile Include="UtilClasses\EoLElement.cs" />
     <Compile Include="UtilClasses\VehicleAndFuel.cs" />
     <Compile Include="Utils\CarboDataPoint.cs" />
+    <Compile Include="Utils\CarboCalcTextUtils.cs" />
     <Compile Include="Utils\ReadWriteCsv.cs" />
     <Compile Include="Utils\HeatMapBuilderUtils.cs" />
     <Compile Include="Utils\ReportBuilder.cs" />

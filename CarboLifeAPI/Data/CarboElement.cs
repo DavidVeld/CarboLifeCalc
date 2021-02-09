@@ -30,6 +30,7 @@ namespace CarboLifeAPI.Data
         public double EC_Total { get; set; }
         public double Volume_Total { get; set; }
 
+        [Obsolete]
         public CarboMaterial Material {get;set; }
 
         public CarboElement()
@@ -65,7 +66,7 @@ namespace CarboLifeAPI.Data
         {
             if(material != null)
             {
-                //This calculation can be made;
+                ///This calculation can be made;
                 ECI = material.ECI;
                 EC = material.ECI * (material.Density * Volume);
                 Mass = material.Density * Volume;
