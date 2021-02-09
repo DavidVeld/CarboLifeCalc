@@ -5,7 +5,7 @@ Status: Work in Good Progress
 
 Current Build for testing download link: (29-11-2020)
 
-https://drive.google.com/file/d/17uIFbTSbfsG_X2998hce9dCGmg_sUr8P/view?usp=sharing
+https://drive.google.com/file/d/1W8pboSt65k_g3eWFbqFkMYgf_uinYVnx/view?usp=sharing
 
 The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design. 
 As a standalone application you can set quantities and materials,  or you can use a 3d model from Revit to import your building into the calculator. Your revit materials will automatically be mapped to to the CarboLifeCalc's own, thus giving you an instant result on the building's embodied carbon.
