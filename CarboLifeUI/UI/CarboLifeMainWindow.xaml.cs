@@ -196,7 +196,7 @@ namespace CarboLifeUI.UI
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Do you want to save your project? ", "Warning", MessageBoxButton.YesNo);
+            MessageBoxResult result = MessageBox.Show("Do you want to save your project? ", "Warning", MessageBoxButton.YesNoCancel);
 
             if (result == MessageBoxResult.Yes)
             {
@@ -209,9 +209,19 @@ namespace CarboLifeUI.UI
                         MessageBox.Show("Project Saved");
                     }
                 }
+                else
+                {
+                    MessageBox.Show("Please save your project first using save as...", "Warning", MessageBoxButton.OK);
+                    e.Cancel = true;
+                }
+            }
+            else if(result == MessageBoxResult.Cancel)
+            {
+                e.Cancel = true;
             }
             else
             {
+                //Closes window
             }
         }
 
@@ -306,6 +316,12 @@ namespace CarboLifeUI.UI
             else
                 createHeatmap = false;
 
+        }
+
+        private void mnu_Activate_Click(object sender, RoutedEventArgs e)
+        {
+            RevitActivator revitActivator = new RevitActivator();
+            revitActivator.ShowDialog();
         }
     }
 }

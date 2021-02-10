@@ -72,5 +72,11 @@ namespace CarboLifeCalc
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            CarboLifeUI.UI.RevitActivator revitActivator = new RevitActivator();
+            revitActivator.ShowDialog();
+        }
     }
 }

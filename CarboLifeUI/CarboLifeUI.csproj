@@ -96,6 +96,9 @@
       <DependentUpon>CarboInfoBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DataSource\SumValues.cs" />
+    <Compile Include="UI\RevitActivator.xaml.cs">
+      <DependentUpon>RevitActivator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\SyncMaterialsWindow.xaml.cs">
       <DependentUpon>SyncMaterialsWindow.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\CarboInfoBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\RevitActivator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
