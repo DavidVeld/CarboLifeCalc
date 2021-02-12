@@ -38,7 +38,7 @@
                 <MenuItem Name="mnu_saveProject" Header="Save Project" Click="Mnu_saveProject_Click"/>
                 <MenuItem Name="mnu_saveDataBase" Header="Save Project as..." Click="Mnu_saveDataBase_Click"/>
                 <Separator></Separator>
-                <MenuItem Name="mnu_openDataBasemanager" Header="Manage Database" Click="Mnu_openDataBasemanager_Click"/>
+                <MenuItem Name="mnu_openDataBasemanager" Header="Manage Database" Click="Mnu_openDataBasemanager_Click" Visibility="Hidden"/>
                 <Separator></Separator>
                 <MenuItem Name="mnu_BuildReport" Header="Save as Report" Click="mnu_BuildReport_Click"/>
 

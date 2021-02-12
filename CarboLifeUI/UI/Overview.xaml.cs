@@ -135,9 +135,16 @@ namespace CarboLifeUI.UI
                     txt_Desctiption.Text = CarboLifeProject.Description;
 
                     txt_Area.Text = CarboLifeProject.Area.ToString();
+                    
+                    //A5
                     txt_Value.Text = CarboLifeProject.Value.ToString();
+                    txt_ValueA5Fact.Text = CarboLifeProject.A5Factor.ToString();
 
                     txt_SocialCost.Text = CarboLifeProject.SocialCost.ToString();
+
+                    //C1
+                    txt_DemoArea.Text = CarboLifeProject.demoArea.ToString();
+                    txt_DemoC1Fact.Text = CarboLifeProject.C1Factor.ToString();
 
                     //Totals
                     refreshSumary();
@@ -154,8 +161,6 @@ namespace CarboLifeUI.UI
             if (CarboLifeProject != null)
             {
                 cnv_Totals.Children.Clear();
-
-
 
                 TextBlock summaryText = new TextBlock();
                 summaryText.Text = CarboLifeProject.getSummaryText(true, true, true, true);
@@ -189,8 +194,15 @@ namespace CarboLifeUI.UI
 
             CarboLifeProject.SocialCost = CarboLifeAPI.Utils.ConvertMeToDouble(txt_SocialCost.Text);
             CarboLifeProject.Area = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Area.Text);
-            CarboLifeProject.Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
             CarboLifeProject.SocialCost = CarboLifeAPI.Utils.ConvertMeToDouble(txt_SocialCost.Text);
+            //A5
+            CarboLifeProject.Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
+            CarboLifeProject.A5Factor = CarboLifeAPI.Utils.ConvertMeToDouble(txt_ValueA5Fact.Text);
+
+            //C1
+            CarboLifeProject.demoArea = CarboLifeAPI.Utils.ConvertMeToDouble(txt_DemoArea.Text);
+            CarboLifeProject.C1Factor = CarboLifeAPI.Utils.ConvertMeToDouble(txt_DemoC1Fact.Text);
+
             CarboLifeProject.CalculateProject();
 
         }

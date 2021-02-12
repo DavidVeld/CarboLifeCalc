@@ -86,7 +86,6 @@ namespace CarboLifeUI.UI
                 DataScreen.Visibility = Visibility.Hidden;
                 DataScreen.Visibility = Visibility.Visible;
             }
-
         }
 
         private void Mnu_saveDataBase_Click(object sender, RoutedEventArgs e)

@@ -26,11 +26,21 @@ namespace CarboLifeAPI.Data
         //Calculated Values
         public double EE { get; set; }
         public double EC { get; set; }
+
         public double Value { get; set; }
         public double Area { get; set; }
+        public double demoArea { get; set; }
+        public double C1Factor { get; set; }
+        public double A5Factor { get; set; }
+
         public string filePath { get; set; }
-        //Project based value
-        public double A5 { get; set; }
+        
+        //Global Calculations:
+        public double A5Global { get; set; }
+        public double C1Global { get; set; }
+        //Absolute total including Global Values
+        public double ECTotal { get; set; }
+
 
         public List<CarboLevel> carboLevelList { get; set; }
 
@@ -108,10 +118,18 @@ namespace CarboLifeAPI.Data
             carboLevelList = new List<CarboLevel>();
 
             Name = "New Project";
-            Number = "00000";
-            Category = "";
+            Number = "000000";
+            Category = "A building";
             Description = "New Project";
             SocialCost = 0;
+            //C1 Global
+            demoArea = 0;
+            C1Global = 0;
+            C1Factor = 3.40; // kg CO2 per m2
+            //A5 Global
+            Value = 0;
+            A5Global = 0;
+            A5Factor = 1400; //kg CO2 per vaue
         }
         public void CreateGroups()
         {
@@ -179,15 +197,16 @@ namespace CarboLifeAPI.Data
             {
                 CarboDataPoint cb_A1A3 = new CarboDataPoint("A1 A3",0);
                 CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
-                CarboDataPoint cb_A5 = new CarboDataPoint("A5", this.A5);
+                CarboDataPoint cb_A5 = new CarboDataPoint("A5", this.A5Global);
                 //CarboDataPoint cb_B1B5 = new CarboDataPoint("B1 B5", 0);
                 CarboDataPoint cb_C1C4 = new CarboDataPoint("C1 C4", 0);
+                CarboDataPoint cb_C1 = new CarboDataPoint("C1", this.C1Global);
                 CarboDataPoint cb_D = new CarboDataPoint("D", 0);
 
                 valueList.Add(cb_A1A3);
                 valueList.Add(cb_A4);
                 valueList.Add(cb_A5);
-                //valueList.Add(cb_B1B5);
+                valueList.Add(cb_C1);
                 valueList.Add(cb_C1C4);
                 valueList.Add(cb_D);
                                
@@ -284,7 +303,7 @@ namespace CarboLifeAPI.Data
         public double getTotalEC() 
         {
             double totalMaterials = getTotalsGroup().EC;
-            double totalA5 = A5;
+            double totalA5 = A5Global;
             double totalTotal = totalMaterials + totalA5;
             
             return totalTotal;
@@ -302,33 +321,49 @@ namespace CarboLifeAPI.Data
             string result = "";
 
             double totalMaterials = getTotalsGroup().EC;
-            double totalA5 = A5;
-            double totalTotal = totalMaterials + totalA5;
+            double globalA5 = A5Global;
+            double globalC1 = C1Global;
+            double totalTotal = totalMaterials + globalA5 + globalC1;
 
             if (materials == true)
                 result += "Total, material specific: " + Math.Round(totalMaterials, 2) + " MtCO2e " + Environment.NewLine;
             if (globals == true)
-                result += "Total, global project specific (A5): " + Math.Round(totalA5, 2) + " MtCO2e" + Environment.NewLine;
+                result += "Total, global project specific (A5): " + Math.Round(globalA5, 2) + " MtCO2e" + Environment.NewLine;
             
-            if(totalA5 == 0)
-                result += "(No project value to base A5 emissions )" + Environment.NewLine;
+            if(globalA5 == 0)
+                result += "(No project values to calculate A5 emissions )" + Environment.NewLine;
+            //C1
+            if (globalC1 == 0)
+                result += "(No demolition estimation in project )" + Environment.NewLine;
+            else
+            {
+                //result += "Total, global demolition value (C1): " + Math.Round(demoArea, 2) + " m² x " +  Math.Round(C1Factor, 2) + " kgCO2e/m² / 1000 = " + Math.Round(globalC1, 2) + " MtCO2e"  + Environment.NewLine;
+                result += "Total, global demolition value (C1): " + Math.Round(globalC1, 2) + " MtCO2e" + Environment.NewLine;
 
-            result += "Total: " + Math.Round(totalTotal, 2) + " MtCO2e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine + Environment.NewLine;
+            }
+            result += Environment.NewLine;
+            //Totals:
+            result += "Total CO2e = " + "Total materials" + " + A5 Global " + " + C1 Global " + Environment.NewLine;
+
+            result += "Total CO2e = " + Math.Round(totalMaterials, 2) + " + " + Math.Round(globalA5, 2) + " + " + Math.Round(globalC1, 2) + Environment.NewLine;
+
+
+            result += "Total CO2e = " + Math.Round(totalTotal, 2) + " MtCO2e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine + Environment.NewLine;
             if (Area > 0)
             {
-                result += "Total: " + Math.Round(totalTotal / Area, 2) + " MtCO2e/m² (Metric tons of carbon dioxide equivalent)" + Environment.NewLine;
+                result += "OR " + Math.Round(totalTotal / Area, 2) + " MtCO2e/m² (Metric tons of carbon dioxide equivalent per square meter)" + Environment.NewLine;
             }
 
             result += Environment.NewLine;
 
             if (materials == true)
                 result += "This equals to: " + Math.Round(totalTotal / 68.5, 2) + " average car emission per year. (UK)" + Environment.NewLine + Environment.NewLine;
-            if (materials == true)
-                result += "This requires " + Math.Round(totalTotal / 0.0217724, 0) + " trees to exists a year" + Environment.NewLine;
+            
+            //if (materials == true)
+                //result += "This requires " + Math.Round(totalTotal / 0.0217724, 0) + " trees to exists a year" + Environment.NewLine;
 
             double socialcost = (totalTotal * SocialCost);
 
-            result += Environment.NewLine;
             result += "The Social Carbon Costs are: " + Math.Round(socialcost, 2) + " $/£/€ total" + Environment.NewLine + Environment.NewLine;
 
 
@@ -340,14 +375,13 @@ namespace CarboLifeAPI.Data
             //EE = 0;
             
             EC = 0;
+            ECTotal = 0;
             //This Will calculate all totals and set all the individual element values;
-            foreach(CarboGroup cg in groupList)
+            foreach (CarboGroup cg in groupList)
             {
                 cg.CalculateTotals();
-
                 //EE += cg.EE;
                 EC += cg.EC;
-                
             }
 
             foreach (CarboGroup cg in groupList)
@@ -360,8 +394,12 @@ namespace CarboLifeAPI.Data
 
             //Set A5 based on value;
             //1.400tCO2e/£100k
-            A5 = 1.400 * (Value / 100000);
-                       
+            A5Global = (A5Factor * (Value / 100000)) / 1000;
+            
+            C1Global = (demoArea * C1Factor) / 1000;
+
+            ECTotal = EC + A5Global + C1Global;
+
         }
 
         private void setElementotals()
