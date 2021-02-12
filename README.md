@@ -35,7 +35,7 @@ Roadmap:
 7. Interface improvements.
 8. Material Mapping
 
-Upcates as per build 09.02.29
+Upcates as per build 09.02.2021
 1. Improved heatmap creator
 2. Ability to write total carbon into the elements
 3. Simple Syncronizing ability with the template added to the material editor
