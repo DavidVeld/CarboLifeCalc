@@ -33,18 +33,18 @@
         <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource baseStyleTitle}">Material Editor</Label>
         <Label Grid.Column="1" Margin="10,0,10,0" Grid.Row="2" Height="27" VerticalAlignment="Top"  Style="{StaticResource bigStyle}">Material Category:</Label>
 
-        <ComboBox Name="cbb_Categories" Grid.Column="1" Grid.Row="2" Margin="10,25,10,0" Height="30" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="Cbb_Categories_DropDownClosed" ></ComboBox>
+        <ComboBox Name="cbb_Categories" Grid.Column="1" Grid.Row="2" Margin="10,25,10,0" Height="30" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyleLight}" DropDownClosed="Cbb_Categories_DropDownClosed" ></ComboBox>
 
         <Label Grid.Column="1" Margin="10,58,10,0" Grid.Row="2" Height="27" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource bigStyle}">Search:</Label>
         <TextBox Name="txt_Search" Grid.Column="1" Grid.Row="2" Margin="10,85,10,0" Height="30" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" TextChanged="Txt_Search_TextChanged"></TextBox>
 
 
-        <ListView Name="liv_materialList" Grid.Column="1" Grid.Row="2" Margin="10,120,10,10" SelectionChanged="Liv_materialList_SelectionChanged">
+        <ListView Name="liv_materialList" Grid.Column="1" Grid.Row="2" Margin="10,120,10,10" SelectionChanged="Liv_materialList_SelectionChanged" FontFamily="Segoe UI" FontSize="11" Background="White">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
-                    <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="ECI" Width="90" DisplayMemberBinding="{Binding ECI}"/>
-                    <GridViewColumn Header="Category" Width="100" DisplayMemberBinding="{Binding Category}"/>
+                    <GridViewColumn Header="Name" Width="190" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="ECI" Width="80" DisplayMemberBinding="{Binding Path=ECI, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                    <GridViewColumn Header="Category" Width="97" DisplayMemberBinding="{Binding Category}"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -81,7 +81,7 @@
                 <Button Name="btn_EditDescription"  Grid.Row="2" Grid.Column="3" Height="25" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_EditDescription_Click" >Edit...</Button>
 
                 <Label Grid.Column="1" Grid.Row="3" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Margin="0,5,0,0">Category:</Label>
-                <ComboBox Name="cbb_Category"  Grid.Column="2" Grid.Row="3" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
+                <ComboBox Name="cbb_Category"  Grid.Column="2" Grid.Row="3" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource ComboBoxFlatStyleLight}" ></ComboBox>
                 <Button Name="btn_AddCategory"  Grid.Row="3" Grid.Column="3" Height="26" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_AddCategory_Click" >Add...</Button>
 
                 <Label Grid.Column="1" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Margin="0,5,0,0">Density:</Label>

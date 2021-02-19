@@ -25,7 +25,7 @@
             <RowDefinition Height="28"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="28"/>
+            <RowDefinition Height="31"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
@@ -44,15 +44,15 @@
         <Label Grid.Column="4" Grid.Row="2" Grid.ColumnSpan="1" Style="{StaticResource baseStyleBold}">Template Materials</Label>
 
         <Label Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="1" Style="{StaticResource baseStyleLabel}">...t</Label>
-        <TextBox Name="txt_path" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="1" Margin="5,2,137,2"  Height="26"  Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>
-        <Button Name="btn_OpenFrom" Grid.Row="3" Grid.Column="4" Margin="0,2,70,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="65" Height="26" Style="{StaticResource ButtonStyle}" Content="Open" Click="btn_OpenFrom_Click"></Button>
-        <Button Name="btn_OpenOnline" Grid.Row="3" Grid.Column="4" Margin="0,2,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="65" Height="26" Style="{StaticResource ButtonStyle}" Content="Online"></Button>
+        <ComboBox Name="cbb_DataBases" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="1" Margin="5,0,160,2"  Height="28"  Style="{StaticResource  ComboBoxFlatStyleLight}" IsReadOnly="True" DropDownClosed="cbb_DataBases_DropDownClosed"></ComboBox>
+        <Button Name="btn_OpenFrom" Grid.Row="3" Grid.Column="4" Margin="0,1,83,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Open..."  Click="btn_OpenFrom_Click"></Button>
+        <Button Name="btn_OpenOnline" Grid.Row="3" Grid.Column="4" Margin="0,1,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Get Online.." Click="btn_OpenOnline_Click"></Button>
 
         <ListView Name="liv_CurrentMaterials" Grid.Column="2" Grid.Row="4" Margin="5,0,5,10" Background="White">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
                     <GridViewColumn Header="Name" Width="175" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="ECI" Width="75" DisplayMemberBinding="{Binding ECI}"/>
+                    <GridViewColumn Header="ECI" Width="50" DisplayMemberBinding="{Binding Path=ECI, StringFormat=N3}"/>
                     <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Category}"/>
                 </GridView>
             </ListView.View>
@@ -62,7 +62,7 @@
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
                     <GridViewColumn Header="Name" Width="175" DisplayMemberBinding="{Binding Name}"/>
-                    <GridViewColumn Header="ECI" Width="75" DisplayMemberBinding="{Binding ECI}"/>
+                    <GridViewColumn Header="ECI" Width="50" DisplayMemberBinding="{Binding Path=ECI, StringFormat=N3}"/>
                     <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Category}"/>
                 </GridView>
             </ListView.View>
@@ -71,8 +71,11 @@
         <Button Name="btn_SyncTo" Grid.Row="4" Grid.Column="3" Margin="0,150,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="65" Height="30" Style="{StaticResource ButtonStyle}" Content="Sync-&gt;" Click="btn_SyncTo_Click" ></Button>
         <Button Name="btn_SyncFrom" Grid.Row="4" Grid.Column="3" Margin="0,185,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="65" Height="30" Style="{StaticResource ButtonStyle}" Content="&lt;-Sync" Click="btn_SyncFrom_Click"></Button>
         <Button Name="btn_Replace" Grid.Row="4" Grid.Column="3" Margin="0,220,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="65" Height="30" Style="{StaticResource ButtonStyle}" Content="Replace-&gt;" Click="btn_Replace_Click"></Button>
-        
+        <Button Name="btn_ReplaceProject" Grid.Row="4" Grid.Column="3" Margin="0,255,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="65" Height="30" Style="{StaticResource ButtonStyle}" Content="&lt;-Replace" Click="btn_ReplaceProject_Click"></Button>
+
         <Button Name="btn_Delete" Grid.Row="5" Grid.Column="4" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Height="30" Style="{StaticResource ButtonStyle}" Content="Delete" Click="btn_Delete_Click"></Button>
+        <Button Name="btn_Save" Grid.Row="5" Grid.Column="4" Margin="75,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Height="30" Style="{StaticResource ButtonStyle}" Content="Save" Click="btn_Save_Click"></Button>
+        <Button Name="btn_SaveAs" Grid.Row="5" Grid.Column="4" Margin="145,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Height="30" Style="{StaticResource ButtonStyle}" Content="Save As..." Click="btn_SaveAs_Click"></Button>
 
         <Button Name="btn_Accept" Grid.Row="6" Grid.Column="4" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
         <Button Name="btn_Cancel" Grid.Row="6" Grid.Column="4" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>

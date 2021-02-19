@@ -123,6 +123,7 @@ namespace CarboLifeAPI.Data
 
             materialA1A3Properties = new A1A3Element();
             materiaA4Properties = new CarboA4Properties();
+            materiaA4Properties.calculate();
             materialA5Properties = new CarboA5Properties();
             materialB1B5Properties = new CarboB1B5Properties();
             materialC1C4Properties = new CarboC1C4Properties();

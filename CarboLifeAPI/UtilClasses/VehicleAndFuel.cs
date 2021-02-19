@@ -20,12 +20,12 @@ namespace CarboLifeAPI.Data
 
         public Vehicle()
         {
-            name = "";
-            maxVolume = 0;
-            maxLoad = 0;
-            kmPer = 0;
-            carboCostNew = 0;
-            totalDistance = 0;
+            name = "Truck";
+            maxVolume = 96;
+            maxLoad = 22000;
+            kmPer = 3.85;
+            carboCostNew = 280000;
+            totalDistance = 250000;
             defaultFuel = "Diesel";
             description = "An unspecified Vehicle";
         }
@@ -41,9 +41,9 @@ namespace CarboLifeAPI.Data
 
         public Fuel()
         {
-            name = "";
-            emission = 1;
-            production = 1;
+            name = "Diesel";
+            emission = 2.62;
+            production = 0.4;
             unit = "l";
         }
     }

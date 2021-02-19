@@ -69,7 +69,7 @@
 
         </DVC:Chart>
 -->
-        <lvc:PieChart Name="pie_Chart1" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="2,2,2,2" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" LegendLocation="Right">
+        <lvc:PieChart Name="pie_Chart1" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="2,2,2,2" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
             <lvc:PieChart.ChartLegend>
                 <lvc:DefaultLegend BulletSize="20" Background="Red" Margin="0,0,0,0" HorizontalAlignment="Left" />
             </lvc:PieChart.ChartLegend>
@@ -77,12 +77,12 @@
                 <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender"/>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
-        <lvc:PieChart Name="pie_Chart2"  Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Margin="2,2,2,2" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" LegendLocation="Right" InnerRadius="75">
+        <lvc:PieChart Name="pie_Chart2"  Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Margin="2,2,2,2" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" LegendLocation="Right" FontWeight="Light"  InnerRadius="75">
             <lvc:PieChart.ChartLegend>
-                <lvc:DefaultLegend BulletSize="20" Background="Red" Margin="0,0,0,0" HorizontalAlignment="Left" />
+                <lvc:DefaultLegend BulletSize="20" Background="Red" Margin="0,0,0,0" HorizontalAlignment="Left" Foreground="Black" />
             </lvc:PieChart.ChartLegend>
             <lvc:PieChart.DataTooltip>
-                <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender"/>
+                <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender" FontStyle="Normal" Foreground="Black"/>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
 

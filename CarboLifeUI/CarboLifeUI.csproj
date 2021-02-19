@@ -57,6 +57,9 @@
     <OutputPath>bin\x64\Debug Revit\</OutputPath>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\ico_CarboLife.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
@@ -96,8 +99,14 @@
       <DependentUpon>CarboInfoBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DataSource\SumValues.cs" />
+    <Compile Include="UI\OnlineMaterialPicker.xaml.cs">
+      <DependentUpon>OnlineMaterialPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\RevitActivator.xaml.cs">
       <DependentUpon>RevitActivator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MaterialMapper.xaml.cs">
+      <DependentUpon>MaterialMapper.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\SyncMaterialsWindow.xaml.cs">
       <DependentUpon>SyncMaterialsWindow.xaml</DependentUpon>
@@ -173,7 +182,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UI\OnlineMaterialPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UI\RevitActivator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\MaterialMapper.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -258,6 +275,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\ico_CarboLife.ico" />
     <Content Include="UI\refreshicon.png" />
     <None Include="img\refreshicon.png" />
     <None Include="Resources\refreshicon.png">

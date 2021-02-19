@@ -85,6 +85,7 @@
     <Compile Include="Data\CarboC1C4Properties.cs" />
     <Compile Include="Data\CarboProperty.cs" />
     <Compile Include="Data\CarboGroupSettings.cs" />
+    <Compile Include="Data\CarboMapElement.cs" />
     <Compile Include="UtilClasses\A1A3Collection.cs" />
     <Compile Include="UtilClasses\CarboLevel.cs" />
     <Compile Include="UtilClasses\EoLElement.cs" />

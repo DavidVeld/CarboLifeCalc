@@ -6,7 +6,7 @@
     <!-- DATAGRID VIEWER -->
 
     <Style x:Key="DataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}"  >
-        <Setter Property="Background" Value="White"></Setter>
+        <Setter Property="Background" Value="#ffcdab"></Setter>
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="MinWidth" Value="0" />
         <Setter Property="MinHeight" Value="28" />
@@ -32,6 +32,9 @@
         <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DataGridColumnHeaderStyle}"></Setter>
         <Setter Property="CellStyle" Value="{DynamicResource DataGridDataStyle}"></Setter>
         <Setter Property="RowHeaderWidth" Value="0"></Setter>
+        <Setter Property="BorderThickness" Value="2"></Setter>
+        <Setter Property="BorderBrush" Value="#222"></Setter>
+
     </Style>
  
 

@@ -22,31 +22,29 @@ namespace CarboLifeAPI.Data
         public string Category { get; set; }
         public string Description { get; set; }
         public double SocialCost { get; set; }
-
         //Calculated Values
         public double EE { get; set; }
         public double EC { get; set; }
-
         public double Value { get; set; }
         public double Area { get; set; }
         public double demoArea { get; set; }
         public double C1Factor { get; set; }
         public double A5Factor { get; set; }
-
         public string filePath { get; set; }
-        
-        //Global Calculations:
+                //Global Calculations:
         public double A5Global { get; set; }
         public double C1Global { get; set; }
         //Absolute total including Global Values
         public double ECTotal { get; set; }
-
-
+        /// <summary>
+        /// This is the materialmap that can be used to map the materials.
+        /// </summary>
+        public List<CarboMapElement> carboMaterialMap  { get; set; }
         public List<CarboLevel> carboLevelList { get; set; }
 
         private ObservableCollection<CarboElement> elementList;
-        private ObservableCollection<CarboGroup> groupList;
 
+        private ObservableCollection<CarboGroup> groupList;
         public ObservableCollection<CarboElement> getAllElements
         {
             get { return elementList; }
@@ -56,7 +54,6 @@ namespace CarboLifeAPI.Data
 
             get {return groupList;}
         }
-
         public CarboGroup getTotalsGroup()
         {
             CarboGroup newGroup = new CarboGroup();
@@ -80,7 +77,6 @@ namespace CarboLifeAPI.Data
 
             return newGroup;
         }
-
         internal void clearHeatmapAndValues()
         {
             foreach (CarboGroup grp in getGroupList)
@@ -101,12 +97,10 @@ namespace CarboLifeAPI.Data
                 }
             }
         }
-
         public void SetGroups(ObservableCollection<CarboGroup> groupList)
         {
             this.groupList = groupList;
         }
-
         public CarboProject()
         {
 
@@ -140,26 +134,110 @@ namespace CarboLifeAPI.Data
             this.groupList = CarboElementImporter.GroupElementsAdvanced(this.elementList, groupSettings.groupCategory, groupSettings.groupSubCategory, groupSettings.groupType, groupSettings.groupMaterial, groupSettings.groupSubStructure, groupSettings.groupDemolition, CarboDatabase, groupSettings.uniqueTypeNames);
             CalculateProject();
         }
-
         public void UpdateAllMaterials()
         {
             List<string> updatedmaterials = new List<string>();
-            foreach(CarboGroup gr in this.groupList)
-            {
-                CarboMaterial cm = CarboDatabase.GetExcactMatch(gr.Material.Name);
-                if (cm != null)
+                foreach (CarboGroup gr in this.groupList)
                 {
-                    if (cm.ECI != gr.ECI)
+                try
+                {
+                    CarboMaterial cm = CarboDatabase.GetExcactMatch(gr.Material.Name);
+                    if (cm != null)
                     {
-                        //The material has been changed, update required. 
-                        gr.Material = cm;
-                        gr.RefreshValuesFromElements();
-                        gr.CalculateTotals();
-                        updatedmaterials.Add(gr.MaterialName);
+                        if (cm.ECI != gr.ECI)
+                        {
+                            //The material has been changed, update required. 
+                            gr.Material = cm;
+                            gr.RefreshValuesFromElements();
+                            gr.CalculateTotals();
+                            updatedmaterials.Add(gr.MaterialName);
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
+        /// <summary>
+        /// After creating a mapping list, you can use this method to update all map all the groups in a project.
+        /// </summary>
+        public void mapAllMaterials()
+        {
+            if (carboMaterialMap != null)
+            {
+                if (carboMaterialMap.Count > 0)
+                {
+                    foreach (CarboGroup gr in this.groupList)
+                    {
+                        try
+                        {
+                            //MApping only works where elements are imported from Revit and the group contains elements
+                            if (gr.AllElements != null && gr.AllElements.Count > 0)
+                            {
+                                //First see if a change is required;
+                                //Find the map file of this group using a single element in the group;
+                                CarboMapElement mapElement = GetMapItem(gr.AllElements[0].MaterialName, gr.Category);
+                                if (mapElement != null)
+                                {
+                                    //Get the material from the mapping name;
+                                    CarboMaterial cm = CarboDatabase.GetExcactMatch(mapElement.carboNAME);
+
+                                    if (cm != null)
+                                    {
+                                        //see if the material need changing;
+                                        if (cm.Name != gr.MaterialName)
+                                        {
+                                            //Only update if the mapping file suggest a change.
+                                            gr.Material = cm;
+                                            gr.RefreshValuesFromElements();
+                                            gr.CalculateTotals();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please setup your material map first.");
+            }
+        }
+
+        private CarboMapElement GetMapItem(string materialName, string category)
+        {
+            CarboMapElement result = null;
+
+            if (carboMaterialMap != null)
+            {
+                if (carboMaterialMap.Count > 0)
+                {
+                    foreach (CarboMapElement mapE in carboMaterialMap)
+                    {
+                        try
+                        {
+                            if(mapE.category == category && mapE.revitName == materialName)
+                            {
+                                return mapE;
+                            }
+                        }
+                        catch
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
 
         public List<CarboDataPoint> getTotals(string value)
         {
@@ -275,7 +353,6 @@ namespace CarboLifeAPI.Data
             //Values should return now;
             return valueList;
         }
-        
         internal List<CarboMaterial> getUsedmaterials()
         {
             List<CarboMaterial> result = new List<CarboMaterial>();
@@ -299,7 +376,10 @@ namespace CarboLifeAPI.Data
             }
             return result;
         }
-
+        /// <summary>
+        /// Returns the toal EC including the global values
+        /// </summary>
+        /// <returns></returns>
         public double getTotalEC() 
         {
             double totalMaterials = getTotalsGroup().EC;
@@ -308,14 +388,16 @@ namespace CarboLifeAPI.Data
             
             return totalTotal;
         }
-
+        /// <summary>
+        /// Returns the total social carbon costs
+        /// </summary>
+        /// <returns></returns>
         public double getTotalSocialCost()
         {
             double result = getTotalEC() * SocialCost;
 
             return result;
         }
-
         public string getSummaryText(bool materials, bool globals, bool cars, bool trees)
         {
             string result = "";
@@ -326,9 +408,9 @@ namespace CarboLifeAPI.Data
             double totalTotal = totalMaterials + globalA5 + globalC1;
 
             if (materials == true)
-                result += "Total, material specific: " + Math.Round(totalMaterials, 2) + " MtCO2e " + Environment.NewLine;
+                result += "Total material specific: " + Math.Round(totalMaterials, 2) + " MtCO2e " + Environment.NewLine;
             if (globals == true)
-                result += "Total, global project specific (A5): " + Math.Round(globalA5, 2) + " MtCO2e" + Environment.NewLine;
+                result += "Total global project specific (A5): " + Math.Round(globalA5, 2) + " MtCO2e" + Environment.NewLine;
             
             if(globalA5 == 0)
                 result += "(No project values to calculate A5 emissions )" + Environment.NewLine;
@@ -338,7 +420,7 @@ namespace CarboLifeAPI.Data
             else
             {
                 //result += "Total, global demolition value (C1): " + Math.Round(demoArea, 2) + " m² x " +  Math.Round(C1Factor, 2) + " kgCO2e/m² / 1000 = " + Math.Round(globalC1, 2) + " MtCO2e"  + Environment.NewLine;
-                result += "Total, global demolition value (C1): " + Math.Round(globalC1, 2) + " MtCO2e" + Environment.NewLine;
+                result += "Total global demolition value (C1): " + Math.Round(globalC1, 2) + " MtCO2e" + Environment.NewLine;
 
             }
             result += Environment.NewLine;
@@ -456,7 +538,6 @@ namespace CarboLifeAPI.Data
             return elementbuffer;
 
         }
-
         private CarboElement addBufferToElements(List<CarboElement> elementbuffer, CarboElement cElement, out bool ok)
         {
             ok = false;
@@ -490,8 +571,6 @@ namespace CarboLifeAPI.Data
             }
             return cElement;
         }
-
-
         private List<CarboElement> addToBuffer(List<CarboElement> elementbuffer, CarboElement cElement, out bool ok)
         {
             bool isUnique = true;
@@ -561,7 +640,6 @@ namespace CarboLifeAPI.Data
 
             return elementbuffer;
         }
-
         public void GenerateDummyList()
         {
             //Create a large list of dummy elements;
@@ -595,7 +673,6 @@ namespace CarboLifeAPI.Data
 
             CalculateProject();
         }
-
         public void Audit()
         {
             //Check if all groups have unique Id;
@@ -626,7 +703,6 @@ namespace CarboLifeAPI.Data
                 }
             }
         }
-
         public ObservableCollection<CarboGroup> GetGroupsWithoutElements()
         {
             ObservableCollection<CarboGroup> result = new ObservableCollection<CarboGroup>();
@@ -639,7 +715,6 @@ namespace CarboLifeAPI.Data
 
             return result;
         }
-
         public bool CreateNewGroup(string category = "")
         {
             bool result = false;
@@ -655,7 +730,6 @@ namespace CarboLifeAPI.Data
 
             return result;
         }
-
         public void AddGroups(ObservableCollection<CarboGroup> groupList)
         {
             foreach(CarboGroup cg in groupList)
@@ -663,7 +737,6 @@ namespace CarboLifeAPI.Data
                 AddGroup(cg);
             }
         }
-
         private int getNewId()
         {
             int id = 0;
@@ -676,7 +749,6 @@ namespace CarboLifeAPI.Data
             }
             return id + 1;
         }
-
         public void UpdateGroup(CarboGroup carboGroup)
         {
             foreach (CarboGroup cg in groupList)
@@ -694,7 +766,6 @@ namespace CarboLifeAPI.Data
                 }
             }
         }
-
         public void DuplicateGroup(CarboGroup carboGroup)
         {
             CarboGroup newCarboGroup = new CarboGroup();
@@ -709,7 +780,6 @@ namespace CarboLifeAPI.Data
             newCarboGroup.setMaterial(carboGroup.Material);
             AddGroup(newCarboGroup);
         }
-
         public void PurgeElements(CarboGroup carboGroup)
         {
             foreach (CarboGroup cg in groupList)
@@ -720,7 +790,6 @@ namespace CarboLifeAPI.Data
                 }
             }
         }
-
         public bool AddGroup(CarboGroup newGroup)
         {
             bool result = false;
@@ -739,7 +808,6 @@ namespace CarboLifeAPI.Data
             return result;
 
         }
-
         public void UpdateMaterial(CarboGroup TargetGroup, CarboMaterial NewMaterial)
         {
             if (NewMaterial != null)
@@ -766,13 +834,12 @@ namespace CarboLifeAPI.Data
         public void DeleteGroup(CarboGroup groupToDelete)
         {
             groupList.Remove(groupToDelete);
+            CalculateProject();
         }
-
         public void AddElement(CarboElement carboElement)
         {
             elementList.Add(carboElement);
         }
-
         public CarboProject DeSerializeXML(string myPath)
         { 
             if (File.Exists(myPath))

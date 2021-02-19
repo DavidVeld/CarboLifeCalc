@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,13 +29,14 @@ namespace CarboLifeUI.UI
         public string sourcePath;
         public CarboDatabase projectDatabase;
         private CarboDatabase templateDatabase;
-
         public SyncMaterialsWindow(CarboDatabase returnedDatabase)
         {
             this.projectDatabase = returnedDatabase;
-            CarboProject templateProject = new CarboProject();
+            isAccepted = false;
             sourcePath = "";
-            templateDatabase = templateProject.CarboDatabase;
+
+            //CarboProject templateProject = new CarboProject();
+            //templateDatabase = templateProject.CarboDatabase;
 
             InitializeComponent();
 
@@ -42,12 +44,54 @@ namespace CarboLifeUI.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            loadProjectMaterials();
+            
+            UpdateCombobox();
+            cbb_DataBases.Text = "Template";
+            setPath();
+
+            refreshProjectMaterials();
             loadTemplateMaterials();
+
+           // UpdateCombobox();
         }
+
+        private void UpdateCombobox()
+        {
+            //CLS
+            cbb_DataBases.ItemsSource = null;
+            cbb_DataBases.Items.Clear();
+
+            //Get all file sin online folder:
+            string onlinePath = Utils.getAssemblyPath() + "\\" + "db\\online\\";
+            string[] files = Directory.GetFiles(onlinePath);
+
+            cbb_DataBases.Items.Add("Template");
+            foreach(string file in files)
+                cbb_DataBases.Items.Add(System.IO.Path.GetFileNameWithoutExtension(file));
+
+         }
 
         private void loadTemplateMaterials()
         {
+            try
+            {
+                if (File.Exists(sourcePath))
+                {
+                    templateDatabase = new CarboDatabase();
+                    CarboDatabase buffer = new CarboDatabase();
+                    templateDatabase = buffer.DeSerializeXML(sourcePath).Copy();
+                }
+                refreshTemplateMaterials();
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void refreshTemplateMaterials()
+        {
+           
             if (templateDatabase != null)
             {
                 liv_TemplateMaterials.Items.Clear();
@@ -67,7 +111,7 @@ namespace CarboLifeUI.UI
             }
         }
 
-        private void loadProjectMaterials()
+        private void refreshProjectMaterials()
         {
             if (projectDatabase != null)
             {
@@ -137,60 +181,51 @@ namespace CarboLifeUI.UI
                 MessageBoxResult result = System.Windows.MessageBox.Show("Please select a material to syncronise", "Computer says no", MessageBoxButton.YesNo);
             }
 
-            loadTemplateMaterials();
-            loadProjectMaterials();
+            refreshTemplateMaterials();
+            refreshProjectMaterials();
         }
 
         private void btn_OpenFrom_Click(object sender, RoutedEventArgs e)
         {
             string name = "";
             try
-            {
-                MessageBoxResult result = System.Windows.MessageBox.Show("Do you want to open a project to load or save materials to / from ?", "Warning", MessageBoxButton.YesNo);
+            { 
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "xml files (*.xml)|*.xml";
 
-                if (result == MessageBoxResult.Yes)
+                var path = openFileDialog.ShowDialog();
+                if (openFileDialog.FileName != "")
                 {
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+                    FileInfo finfo = new FileInfo(openFileDialog.FileName);
 
-                    var path = openFileDialog.ShowDialog();
                     if (openFileDialog.FileName != "")
                     {
-                        FileInfo finfo = new FileInfo(openFileDialog.FileName);
-
-                        if (openFileDialog.FileName != "")
-                        {
-                            name = openFileDialog.FileName;
-                            CarboDatabase userprojects = new CarboDatabase();
-
-                            CarboDatabase buffer = userprojects.DeSerializeXML(name);
-
-                            if (buffer != null)
-                            {
-                                templateDatabase = buffer;
-                            }
-                        }
-                        sourcePath = name;
-                    }
-                    else
-                    {
-                        //reload the template
-                        sourcePath = "";
+                        name = openFileDialog.FileName;
                         CarboDatabase userprojects = new CarboDatabase();
-                        CarboDatabase buffer = userprojects.DeSerializeXML(sourcePath);
+
+                        CarboDatabase buffer = userprojects.DeSerializeXML(name);
+
                         if (buffer != null)
                         {
                             templateDatabase = buffer;
                         }
                     }
+
+                    cbb_DataBases.Items.Add(name);
+                    cbb_DataBases.Text = name;
+                    setPath();
+                }
+                else
+                {
+
                 }
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show(ex.ToString());
             }
-            loadTemplateMaterials();
-            txt_path.Text = sourcePath;
+            refreshTemplateMaterials();
+            //txt_path.Text = sourcePath;
         }
 
         private void btn_SyncFrom_Click(object sender, RoutedEventArgs e)
@@ -225,8 +260,8 @@ namespace CarboLifeUI.UI
                 MessageBoxResult result = System.Windows.MessageBox.Show("Please select a material to syncronise", "Computer says no", MessageBoxButton.YesNo);
             }
 
-            loadTemplateMaterials();
-            loadProjectMaterials();
+            refreshTemplateMaterials();
+            refreshProjectMaterials();
         }
 
         private void btn_Delete_Click(object sender, RoutedEventArgs e)
@@ -239,12 +274,12 @@ namespace CarboLifeUI.UI
 
                     if (cm != null)
                     {
-                        MessageBoxResult result = System.Windows.MessageBox.Show("Do you want to delete" + cm.Name +  " from the template?", "Warning", MessageBoxButton.YesNo);
+                       // MessageBoxResult result = System.Windows.MessageBox.Show("Do you want to delete" + cm.Name, "Warning", MessageBoxButton.YesNo);
 
-                        if (result == MessageBoxResult.Yes)
-                        {
+                        //if (result == MessageBoxResult.Yes)
+                        //{
                             templateDatabase.deleteMaterial(cm.Name);
-                        }
+                        //}
                     }
                 }
                 catch (Exception ex)
@@ -256,9 +291,10 @@ namespace CarboLifeUI.UI
             {
                 MessageBoxResult result = System.Windows.MessageBox.Show("Please select one material to delete", "Computer says no", MessageBoxButton.YesNo);
             }
+            //SaveFileDialog();
 
-            loadTemplateMaterials();
-            loadProjectMaterials();
+            refreshTemplateMaterials();
+            refreshProjectMaterials();
         }
 
         private void btn_Replace_Click(object sender, RoutedEventArgs e)
@@ -286,8 +322,159 @@ namespace CarboLifeUI.UI
                 System.Windows.MessageBox.Show(ex.ToString());
             }
 
+            refreshTemplateMaterials();
+            refreshProjectMaterials();
+        }
+
+        private void btn_OpenOnline_Click(object sender, RoutedEventArgs e)
+        {
+            //
+            OnlineMaterialPicker onlinePicker = new OnlineMaterialPicker();
+            onlinePicker.ShowDialog();
+            string lastdownloadedfile = "";
+            if (onlinePicker.isAccepted == true && onlinePicker.selectionList != null && onlinePicker.selectionList.Count > 0)
+            {
+
+                //Download location
+                foreach (string file in onlinePicker.selectionList)
+                {
+                    //download each selected item
+                    string filetarget = Utils.getAssemblyPath() + "\\db\\online\\" + file;
+                    string filename = System.IO.Path.GetFileNameWithoutExtension(filetarget);
+                    try
+                    {
+                        if (File.Exists(filetarget))
+                            File.Delete(filetarget);
+
+                        using (WebClient wc = new WebClient())
+                        {
+                            //wc.DownloadProgressChanged += wc_DownloadProgressChanged;
+                            wc.DownloadFileAsync(
+                                // Param1 = Link of file
+                                new System.Uri("http://davidveld.nl/data/" + file),
+                                // Param2 = Path to save
+                                filetarget
+                            );
+                            //lastdownloadedfile = System.IO.Path.GetFileNameWithoutExtension(filetarget);
+                            wc.Dispose();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show("Was not able to download file!" + Environment.NewLine + ex.Message);
+                    }
+                }
+
+                UpdateCombobox();
+                /*
+                //wait 1 second;
+                System.Threading.Thread.Sleep(500);
+                
+                string fileName = "";
+                int fileExtPos = fileName.LastIndexOf(".");
+                if (fileExtPos >= 0)
+                    fileName = fileName.Substring(0, fileExtPos);
+
+                if (File.Exists(lastdownloadedfile))
+                {
+                    sourcePath = lastdownloadedfile;
+                    cbb_DataBases.Text = fileName;
+
+                    CarboDatabase userprojects = new CarboDatabase();
+                    CarboDatabase buffer = userprojects.DeSerializeXML(lastdownloadedfile);
+
+                    if (buffer != null)
+                    {
+                        templateDatabase = buffer;
+                    }
+                }
+                */
+            }
+        }
+
+        private void cbb_DataBases_DropDownClosed(object sender, EventArgs e)
+        {
+            setPath();
             loadTemplateMaterials();
-            loadProjectMaterials();
+        }
+
+        private void setPath()
+        {
+            string selectedItem = cbb_DataBases.Text;
+            sourcePath = "";
+
+            if (File.Exists(selectedItem))
+            {
+                //This is a project file
+                sourcePath = selectedItem;
+            }
+            else if(selectedItem == "Template")
+            {
+                // This is the template use build-in path:
+                sourcePath = Utils.getAssemblyPath() + "\\db\\UserMaterials.xml";
+            }
+            else
+            {
+                //this is an online material:
+                sourcePath = Utils.getAssemblyPath() + "\\db\\online\\" + selectedItem + ".xml";
+            }
+
+            if(!(File.Exists(sourcePath)))
+            {
+                System.Windows.MessageBox.Show("There was an error loading file: " + Environment.NewLine + sourcePath);
+            }
+        }
+
+        private void btn_Save_Click(object sender, RoutedEventArgs e)
+        {
+            if(File.Exists(sourcePath))
+                templateDatabase.SerializeXML(sourcePath);
+            else
+                System.Windows.MessageBox.Show("There was an error saving to file: " + Environment.NewLine + sourcePath);
+        }
+
+        private void btn_ReplaceProject_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = System.Windows.MessageBox.Show("Do you want to replace all materials in the PROJECT with template materials?", "Warning", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    CarboDatabase buffer = new CarboDatabase();
+
+                    buffer = templateDatabase.Copy();
+
+                    if (buffer.CarboMaterialList.Count == templateDatabase.CarboMaterialList.Count)
+                    {
+                        projectDatabase.CarboMaterialList.Clear();
+                        projectDatabase.CarboMaterialList = new List<CarboMaterial>();
+                        projectDatabase = buffer;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString());
+            }
+
+            refreshTemplateMaterials();
+            refreshProjectMaterials();
+        }
+
+        private void btn_SaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "xml files (*.xml)|*.xml";
+
+            var path = saveFileDialog.ShowDialog();
+            if (saveFileDialog.FileName != "")
+            {
+                templateDatabase.SerializeXML(saveFileDialog.FileName);
+                cbb_DataBases.Items.Add(saveFileDialog.FileName);
+                cbb_DataBases.Text = saveFileDialog.FileName;
+                setPath();
+            }
         }
     }
 }

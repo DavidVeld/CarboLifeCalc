@@ -30,7 +30,6 @@ namespace CarboLifeAPI.Data
         public double EC_Total { get; set; }
         public double Volume_Total { get; set; }
 
-        [Obsolete]
         public CarboMaterial Material {get;set; }
 
         public CarboElement()

@@ -102,10 +102,15 @@ namespace CarboLifeUI.UI
                         {
                             Title = ppin.Name,
                             Values = new ChartValues<double> { Math.Round(ppin.Value,0) },
-                            PushOut = 5,
+                            PushOut = 2,
                             DataLabels = true,
                             LabelPoint = labelPoint   
+                            
                         };
+                        newSeries.Foreground = Brushes.Black;
+                        newSeries.FontWeight = FontWeights.Normal;
+                        newSeries.FontStyle = FontStyles.Normal;
+                        newSeries.FontSize = 12;
 
                         pieMaterialSeries.Add(newSeries);
 
@@ -117,10 +122,15 @@ namespace CarboLifeUI.UI
                         {
                             Title = ppin.Name,
                             Values = new ChartValues<double> { Math.Round(ppin.Value, 0) },
-                            PushOut = 5,
+                            PushOut = 2,
                             DataLabels = true,
                             LabelPoint = labelPoint
                         };
+
+                        newSeries.Foreground = Brushes.Black;
+                        newSeries.FontWeight = FontWeights.Normal;
+                        newSeries.FontStyle = FontStyles.Normal;
+                        newSeries.FontSize = 12;
 
                         pieLifeSeries.Add(newSeries);
 
@@ -164,7 +174,8 @@ namespace CarboLifeUI.UI
 
                 TextBlock summaryText = new TextBlock();
                 summaryText.Text = CarboLifeProject.getSummaryText(true, true, true, true);
-                    
+                summaryText.FontStyle = FontStyles.Normal;
+                summaryText.FontWeight = FontWeights.Light;
 
                 summaryText.Foreground = Brushes.Black;
                 summaryText.TextWrapping = TextWrapping.WrapWithOverflow;

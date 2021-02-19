@@ -144,20 +144,44 @@ namespace CarboLifeUI.UI
 
         private void Btn_Material_Click(object sender, RoutedEventArgs e)
         {
-            CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
-            if (carboGroup != null)
+            if (dgv_Overview.SelectedItems.Count > 0)
             {
-                MaterialEditor materialEditor = new MaterialEditor(carboGroup.Material.Name, CarboLifeProject.CarboDatabase);
-                materialEditor.ShowDialog();
-
-                if(materialEditor.acceptNew == true)
+                try
                 {
-                    CarboLifeProject.CarboDatabase = materialEditor.returnedDatabase;
+                    var selectedItems = dgv_Overview.SelectedItems;
+                    IList<CarboGroup> selectedGroups = new List<CarboGroup>();
 
-                    CarboLifeProject.UpdateMaterial(carboGroup, materialEditor.selectedMaterial);
+                    // ... Add all Names to a List.
+                    foreach (var item in selectedItems)
+                    {
+                        CarboGroup cg = item as CarboGroup;
+                        selectedGroups.Add(cg);
+                    }
+
+                    if (selectedGroups.Count > 0)
+                    {
+                        CarboGroup carboGroup = selectedGroups[0];
+
+                        MaterialEditor materialEditor = new MaterialEditor(carboGroup.Material.Name, CarboLifeProject.CarboDatabase);
+                        materialEditor.ShowDialog();
+
+                        if (materialEditor.acceptNew == true)
+                        {
+                            CarboLifeProject.CarboDatabase = materialEditor.returnedDatabase;
+
+                            foreach (CarboGroup cg in selectedGroups)
+                            {
+                                CarboLifeProject.UpdateMaterial(cg, materialEditor.selectedMaterial);
+                            }
+                        }
+                    }
                 }
-
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
+
             CarboLifeProject.CalculateProject();
             refreshData();
 
@@ -557,6 +581,17 @@ namespace CarboLifeUI.UI
                 double value = Utils.ConvertMeToDouble(tb.Text);
 
                 tb.Text = Math.Round(value, 2).ToString() + " % ";
+            }
+        }
+
+        private void mnu_MapElements_Click(object sender, RoutedEventArgs e)
+        {
+            MaterialMapper materialMapper = new MaterialMapper(this.CarboLifeProject);
+            materialMapper.ShowDialog();
+            if(materialMapper.isAccepted == true)
+            {
+                this.CarboLifeProject.carboMaterialMap = materialMapper.mappinglist;
+                this.CarboLifeProject.mapAllMaterials();
             }
         }
     }

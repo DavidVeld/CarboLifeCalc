@@ -1,0 +1,64 @@
+﻿<Window x:Class="CarboLifeUI.UI.OnlineMaterialPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarboLifeUI.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400" MinWidth="400" MinHeight="300" Width="400" Height="300"  Loaded="Window_Loaded" Title="Import from the Internet">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="MyStyles.xaml">
+                </ResourceDictionary>
+                <ResourceDictionary Source="MyDataGrid.xaml"/>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleBold}">Import:</Label>
+
+        <ListBox Name="lb_Selection" HorizontalContentAlignment="Stretch" Grid.Column="2" Grid.Row="2" Margin="2,2,2,2" Background="White" Visibility="Visible" IsEnabled="True" SelectionMode="Multiple">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True" >
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                    <Style.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+                        <!-- Background of selected item when focussed -->
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightCyan"/>
+                        <!-- Background of selected item when not focussed -->
+                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="LightGray" />
+                    </Style.Resources>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+
+        <Button Name="btn_Accept" Grid.Row="3" Grid.Column="2" Margin="0,5,85,5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="102" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
+        <Button Name="btn_Cancel" Grid.Row="3" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
+
+    </Grid>
+</Window>

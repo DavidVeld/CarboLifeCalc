@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarboLifeUI.UI
 {
+    [Obsolete]
     public class MaterialList : List<String>
     {
         public MaterialList()
