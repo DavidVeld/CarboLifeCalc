@@ -17,7 +17,6 @@ namespace CarboLifeAPI
         (a1, a2) => Math.Pow(a1, a2)
     };
 
-
         public double Eval(string expression)
         {
             List<string> tokens = getTokens(expression);

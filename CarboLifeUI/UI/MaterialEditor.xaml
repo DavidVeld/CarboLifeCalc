@@ -81,7 +81,7 @@
                 <Button Name="btn_EditDescription"  Grid.Row="2" Grid.Column="3" Height="25" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_EditDescription_Click" >Edit...</Button>
 
                 <Label Grid.Column="1" Grid.Row="3" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Margin="0,5,0,0">Category:</Label>
-                <ComboBox Name="cbb_Category"  Grid.Column="2" Grid.Row="3" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource ComboBoxFlatStyleLight}" ></ComboBox>
+                <ComboBox Name="cbb_Category"  Grid.Column="2" Grid.Row="3" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
                 <Button Name="btn_AddCategory"  Grid.Row="3" Grid.Column="3" Height="26" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_AddCategory_Click" >Add...</Button>
 
                 <Label Grid.Column="1" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Margin="0,5,0,0">Density:</Label>
@@ -101,6 +101,7 @@
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
+                    <RowDefinition Height="32"/>
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="32"/>
@@ -166,9 +167,13 @@
                 <TextBox Name="txt_D"  Grid.Row="7" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_D_TextChanged" Text="{Binding Text, Delay=1000}" ></TextBox>
                 <Button Name="btn_D"  Grid.Row="7" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_D_Click">Edit...</Button>
 
-                <Label Name="Calc" Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="5"  Margin="0,5,0,0" Style="{StaticResource bigStyle}" Grid.RowSpan="3">[CALC]</Label>
+                <Label  Grid.Row="8" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource InfoLabel}" MouseDown="Label_MouseDown">Mix:</Label>
+                <TextBox Name="txt_Mix_Setting"  Grid.Row="8" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="False" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_Setting_TextChanged"></TextBox>
+                <TextBox Name="txt_Mix"  Grid.Row="8" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_TextChanged" Text="{Binding Text, Delay=1000}" ></TextBox>
+                <Button Name="btn_Mix"  Grid.Row="8" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Mix_Click">Calc...</Button>
 
-                <GroupBox Grid.Row="8" Grid.Column="1" Background="White" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="5" Header="Total" Style="{StaticResource baseStyleBold}">
+
+                <GroupBox Grid.Row="9" Grid.Column="1" Background="White" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="5" Header="Total" Style="{StaticResource baseStyleBold}">
                     <Grid Background="White">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -186,9 +191,11 @@
                         <TextBox Name="txt_ECI" Grid.Column="2" Grid.Row="8"  Height="27" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>
                     </Grid>
                 </GroupBox>
+                
+                <Label Name="Calc" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="5"  Margin="0,5,0,0" Style="{StaticResource bigStyle}" Grid.RowSpan="3">[CALC]</Label>
 
-                <Button Name="btn_Apply"  Grid.Row="12" Grid.Column="4" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="Btn_Apply_Click">Apply</Button>
-                <Button Name="btn_FromEPD"  Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="btn_FromEPD_Click">From EPD...</Button>
+                <Button Name="btn_Apply"  Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="Btn_Apply_Click">Apply</Button>
+                <Button Name="btn_FromEPD"  Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="btn_FromEPD_Click">From EPD...</Button>
 
             </Grid>
         </GroupBox>

@@ -125,6 +125,7 @@ namespace CarboLifeAPI.Data
             A5Global = 0;
             A5Factor = 1400; //kg CO2 per vaue
         }
+       
         public void CreateGroups()
         {
             //get default group settings;
@@ -134,6 +135,9 @@ namespace CarboLifeAPI.Data
             this.groupList = CarboElementImporter.GroupElementsAdvanced(this.elementList, groupSettings.groupCategory, groupSettings.groupSubCategory, groupSettings.groupType, groupSettings.groupMaterial, groupSettings.groupSubStructure, groupSettings.groupDemolition, CarboDatabase, groupSettings.uniqueTypeNames);
             CalculateProject();
         }
+        /// <summary>
+        /// Update all the groups with the current materials in the database.
+        /// </summary>
         public void UpdateAllMaterials()
         {
             List<string> updatedmaterials = new List<string>();
@@ -237,8 +241,6 @@ namespace CarboLifeAPI.Data
             }
             return result;
         }
-
-
         public List<CarboDataPoint> getTotals(string value)
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
@@ -353,6 +355,9 @@ namespace CarboLifeAPI.Data
             //Values should return now;
             return valueList;
         }
+
+
+
         internal List<CarboMaterial> getUsedmaterials()
         {
             List<CarboMaterial> result = new List<CarboMaterial>();
@@ -486,6 +491,7 @@ namespace CarboLifeAPI.Data
 
         private void setElementotals()
         {
+            //Generate a new ALL elements list from the calculated values in the Groups
             List<CarboElement> elementbuffer = getTemporaryElementListWithTotals();
 
             //Now Imprint them into the elements totals
@@ -510,7 +516,7 @@ namespace CarboLifeAPI.Data
         }
 
         /// <summary>
-        /// Returns a full list of elements with their Revit element totals, usefull if elements are constructred using layer or parts. This is a copy f the elements containing their id's and total mass, volue EC and ECi values.
+        /// Returns a full list of elements with their Revit element totals, usefull if elements are constructred using layer or parts. This is a copy 0f the elements containing their id's and total mass, volue EC and ECi values.
         /// </summary>
         /// <returns></returns>
         public List<CarboElement> getTemporaryElementListWithTotals()
@@ -538,6 +544,36 @@ namespace CarboLifeAPI.Data
             return elementbuffer;
 
         }
+        /// <summary>
+        /// Get a list of all the elemetns from the Groups, these contain all the calculated and cumulitive data 
+        /// </summary>
+        /// <returns></returns>
+        internal IEnumerable<CarboElement> getElementsFromGroups()
+        {
+            List<CarboElement> elementbuffer = new List<CarboElement>();
+            List<CarboElement> SortedList = new List<CarboElement>();
+
+            foreach (CarboGroup cg in groupList)
+            {
+                if (cg.AllElements != null)
+                {
+                    if (cg.AllElements.Count > 0)
+                    {
+                        foreach (CarboElement ce in cg.AllElements)
+                        {
+                            elementbuffer.Add(ce);
+                        }
+                    }
+                }
+            }
+
+            if(elementbuffer.Count > 0)
+                SortedList = elementbuffer.OrderBy(o => o.Id).ToList();
+
+            return SortedList;
+
+        }
+
         private CarboElement addBufferToElements(List<CarboElement> elementbuffer, CarboElement cElement, out bool ok)
         {
             ok = false;

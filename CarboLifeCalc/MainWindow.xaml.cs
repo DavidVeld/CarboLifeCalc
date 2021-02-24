@@ -68,7 +68,7 @@ namespace CarboLifeCalc
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+                openFileDialog.Filter = "Carbo Project File (*.xml)|*.xml|All files (*.*)|*.*";
 
                 var path = openFileDialog.ShowDialog();
 

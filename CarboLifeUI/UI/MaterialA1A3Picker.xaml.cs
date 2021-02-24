@@ -158,39 +158,11 @@ namespace CarboLifeUI.UI
         private void Cbb_Categories_DropDownClosed(object sender, EventArgs e)
         {
             loadPossibleElements();
-/*
-            lib_Materials.ItemsSource = null;
-            lib_Materials.Items.Clear();
-
-            foreach (A1A3List list in a1a3Collection.a1a3List)
-            {
-
-                if(cbb_Group.Text == list.Name)
-                {
-                    foreach (A1A3Element a1a3Element in list.Elements)
-                    {
-                        if (a1a3Element.Category == cbb_Categories.Text || 
-                            cbb_Categories.Text == "" || 
-                            cbb_Categories.Text == "All")
-                        {
-                            if (a1a3Element.Name.Contains(txt_Search.Text) ||
-                                txt_Search.Text == "")
-                            {
-                                lib_Materials.Items.Add(a1a3Element);
-                            }
-                        }
-                    }
-
-                    break;
-                }
-            }
-            */
         }
 
         private void cbb_Group_DropDownClosed(object sender, EventArgs e)
         {
             string selectedGroup = cbb_Group.Text;
-            //A1A3List selectedList = a1a3Collection.GetA1A3List(selectedGroup);
 
             List<string> categoryList = a1a3Collection.GetCategoryList(selectedGroup);
 

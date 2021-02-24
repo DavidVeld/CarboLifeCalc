@@ -58,6 +58,20 @@ namespace CarboLifeAPI
             }
         }
 
+        public static void CheckUserMaterials()
+        {
+            string pathDatabase = Utils.getAssemblyPath() + "\\db\\";
+            string bufferPath = pathDatabase + "MaterialBuffer.cxml";
+            string targetPath = pathDatabase + "UserMaterials.cxml";
+            if (!(File.Exists(targetPath)))
+            {
+                if (File.Exists(bufferPath))
+                {
+                    File.Copy(bufferPath, targetPath);
+                }
+            }
+        }
+
         public static int CalcLevenshteinDistance(string a, string b)
         {
             if (String.IsNullOrEmpty(a) || String.IsNullOrEmpty(b)) return 999;

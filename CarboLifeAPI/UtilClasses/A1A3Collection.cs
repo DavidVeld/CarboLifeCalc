@@ -16,9 +16,11 @@ namespace CarboLifeAPI.Data
         public A1A3Collection()
         {
             a1a3List = new List<A1A3List>();
-            //LoadAll();
         }
 
+        /// <summary>
+        /// Reads the csv files from the local path.
+        /// </summary>
         public void LoadAll()
         {
             string myPath = Utils.getAssemblyPath() + "\\data\\A1A3Tables\\";

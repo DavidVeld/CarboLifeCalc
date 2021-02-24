@@ -71,7 +71,7 @@ namespace CarboLifeAPI
 
             if (report != "")
             {
-                using (StreamWriter sw = new StreamWriter(reportpath))
+                using (StreamWriter sw = new StreamWriter(reportpath,false,Encoding.GetEncoding("Windows-1252")))
                 {
                     sw.WriteLine(report);
                     sw.Close();
@@ -91,7 +91,7 @@ namespace CarboLifeAPI
         {
             string html = "<H1><B>" + "Material Properties" + "</B></H1><BR>" + System.Environment.NewLine;
 
-            html += "<TABLE border=1 cellpadding=0 cellspacing=0>";
+            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1250>";
 
             html += "<TR></TR>";
             //ResultTable in a table
@@ -101,19 +101,22 @@ namespace CarboLifeAPI
                 //Write Headers:
 
                 html += "<TR>" + System.Environment.NewLine;
-                html += "<TD width=" + 50 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 50 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 200 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 200 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 50 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
                 
                 html += "<TD width=" + 50 + "><B>" + "Density" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 50 + "><B>" + "ECI" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "ECI" + "</B></TD>" + System.Environment.NewLine;
 
-                html += "<TD width=" + 50 + "><B>" + "ECI A1-A3" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 50 + "><B>" + "ECI A4" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 50 + "><B>" + "ECI A5" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 50 + "><B>" + "ECI B1-B5" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 50 + "><B>" + "ECI C1-C4" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "EA1-A3" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "A4" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "A5" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "B1-B5" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "C1-C4" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 50 + "><B>" + "D" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "Mix" + "</B></TD>" + System.Environment.NewLine;
+
 
                 html += "</TR>" + System.Environment.NewLine;
                 //UNITS
@@ -124,7 +127,9 @@ namespace CarboLifeAPI
 
                 html += "<TD align='middle'><B>" + "kg/m³" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD align='middle'><B>" + "kgCo<SUB>2</SUB>/kg" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='middle'><B>" + "kgCo<SUB>2</SUB>/m³" + "</B></TD>" + System.Environment.NewLine;
 
+                html += "<TD align='middle'><B>" + "kgCo<SUB>2</SUB>/kg" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD align='middle'><B>" + "kgCo<SUB>2</SUB>/kg" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD align='middle'><B>" + "kgCo<SUB>2</SUB>/kg" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD align='middle'><B>" + "kgCo<SUB>2</SUB>/kg" + "</B></TD>" + System.Environment.NewLine;
@@ -155,6 +160,7 @@ namespace CarboLifeAPI
 
                         html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Density, 2) + "</td>" + System.Environment.NewLine;
                         html += "<TD align='left' valign='middle'>" + Math.Round(cbg.ECI, 2) + "</td>" + System.Environment.NewLine;
+                        html += "<TD align='left' valign='middle'>" + Math.Round(cbg.getVolumeECI, 2) + "</td>" + System.Environment.NewLine;
 
                         html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Material.ECI_A1A3, 2) + "</td>" + System.Environment.NewLine;
                         html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Material.ECI_A4, 2) + "</td>" + System.Environment.NewLine;
@@ -162,7 +168,8 @@ namespace CarboLifeAPI
                         html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Material.ECI_B1B5, 2) + "</td>" + System.Environment.NewLine;
                         html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Material.ECI_C1C4, 2) + "</td>" + System.Environment.NewLine;
                         html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Material.ECI_D, 2) + "</td>" + System.Environment.NewLine;
-                        
+                        html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Material.ECI_Mix, 2) + "</td>" + System.Environment.NewLine;
+
                         html += "</TR>" + System.Environment.NewLine;
                     }
                 }
@@ -180,7 +187,7 @@ namespace CarboLifeAPI
 
             string html = "<H1><B>" + "Embodied Carbon Calculation Groups:" + "</B></H1><BR>" + System.Environment.NewLine;
             
-            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=850>";
+            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1250>";
             
             html += "<TR></TR>";
             //ResultTable in a table
@@ -199,8 +206,20 @@ namespace CarboLifeAPI
                 html += "<TD width=" + 50 + "><B>" + "Mass" + "</B></TD>" + System.Environment.NewLine;
 
                 html += "<TD width=" + 50 + "><B>" + "ECI" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "ECI" + "</B></TD>" + System.Environment.NewLine;
+
                 html += "<TD width=" + 50 + "><B>" + "EC" + "</B></TD>" + System.Environment.NewLine;
+
                 html += "<TD width=" + 50 + "><B>" + "Total" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD width=" + 50 + "><B>" + "A1-A3" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "A4" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "A5" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "B1-B5" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "C1-C4" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "D" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 50 + "><B>" + "Mix" + "</B></TD>" + System.Environment.NewLine;
+
 
                 html += "</TR>" + System.Environment.NewLine;
                 //UNITS
@@ -214,8 +233,19 @@ namespace CarboLifeAPI
                 html += "<TD align='left'><B>" + "kg" + "</B></TD>" + System.Environment.NewLine;
 
                 html += "<TD align='left'><B>" + "kgCO<SUB>2</SUB>/kg" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "kgCO<SUB>2</SUB>/m³" + "</B></TD>" + System.Environment.NewLine;
+
                 html += "<TD align='left'><B>" + "tCO<SUB>2</SUB>" + "</B></TD>" + System.Environment.NewLine;
+
                 html += "<TD align='left'><B>" + "%" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD align='left'><B>" + "CO<SUB>2</SUB>" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "CO<SUB>2</SUB>" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "CO<SUB>2</SUB>" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "CO<SUB>2</SUB>" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "CO<SUB>2</SUB>" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "CO<SUB>2</SUB>" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "CO<SUB>2</SUB>" + "</B></TD>" + System.Environment.NewLine;
 
                 html += "</TR>" + System.Environment.NewLine;
 
@@ -245,8 +275,20 @@ namespace CarboLifeAPI
                     html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Mass,2) + "</td>" + System.Environment.NewLine;
 
                     html += "<TD align='left' valign='middle'>" + Math.Round(cbg.ECI,2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round((cbg.getVolumeECI), 2) + "</td>" + System.Environment.NewLine;
+
                     html += "<TD align='left' valign='middle'>" + Math.Round(cbg.EC,2) + "</td>" + System.Environment.NewLine;
+
                     html += "<TD align='left' valign='middle'>" + Math.Round(cbg.PerCent,2) + "</td>" + System.Environment.NewLine;
+
+                    //Per Group
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_A1A3 * cbg.Mass,3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_A4 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_A5 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_B1B5 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_C1C4 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_D * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_Mix * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
 
                     html += "</TR>" + System.Environment.NewLine;
 
@@ -276,10 +318,21 @@ namespace CarboLifeAPI
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
 
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + totalGroup.EC + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "100 %" + "</B></TD>" + System.Environment.NewLine;
+
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+
 
             html += "</TR>" + System.Environment.NewLine;
             return html;

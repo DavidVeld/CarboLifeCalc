@@ -191,7 +191,7 @@ namespace CarboLifeUI.UI
             try
             { 
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "xml files (*.xml)|*.xml";
+                openFileDialog.Filter = "Carbo Material Data Files (*.cxml)|*.cxml";
 
                 var path = openFileDialog.ShowDialog();
                 if (openFileDialog.FileName != "")
@@ -411,12 +411,12 @@ namespace CarboLifeUI.UI
             else if(selectedItem == "Template")
             {
                 // This is the template use build-in path:
-                sourcePath = Utils.getAssemblyPath() + "\\db\\UserMaterials.xml";
+                sourcePath = Utils.getAssemblyPath() + "\\db\\UserMaterials.cxml";
             }
             else
             {
                 //this is an online material:
-                sourcePath = Utils.getAssemblyPath() + "\\db\\online\\" + selectedItem + ".xml";
+                sourcePath = Utils.getAssemblyPath() + "\\db\\online\\" + selectedItem + ".cxml";
             }
 
             if(!(File.Exists(sourcePath)))
@@ -465,7 +465,7 @@ namespace CarboLifeUI.UI
         private void btn_SaveAs_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "xml files (*.xml)|*.xml";
+            saveFileDialog.Filter = "Carbo Material Data Files (*.cxml)|*.cxml";
 
             var path = saveFileDialog.ShowDialog();
             if (saveFileDialog.FileName != "")

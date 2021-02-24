@@ -12,6 +12,7 @@ namespace CarboLifeAPI.Data
 
     public class CarboMaterial
     {
+
         /// <summary>
         /// Unique Identifier
         /// </summary>
@@ -47,6 +48,11 @@ namespace CarboLifeAPI.Data
         public double ECI { get; set; }
 
         /// <summary>
+        /// Total ECI kgCO2e/m³
+        /// </summary>
+        public double getVolumeECI { get { return Density * ECI; } }
+
+        /// <summary>
         /// Fabrication kgCO2e/kg
         /// </summary>
         public double ECI_A1A3 { get; set; }
@@ -70,6 +76,10 @@ namespace CarboLifeAPI.Data
         /// SUPPLEMENTARY INFORMATION BEYOND THE PROJECT LIFE CYCLE kgCO2e/kg
         /// </summary>
         public double ECI_D { get; set; }
+        /// <summary>
+        /// This is a value you can add to mix another materials totals into this.
+        /// </summary>
+        public double ECI_Mix { get; set; }
 
         /// <summary>
         /// Used to protect data
@@ -102,6 +112,7 @@ namespace CarboLifeAPI.Data
         public bool ECI_C1C4_Override { get; set; }
         public bool ECI_D_Override { get; set; }
 
+        public string ECI_Mix_Info { get; set; }
 
         public CarboMaterial()
         {
@@ -117,6 +128,9 @@ namespace CarboLifeAPI.Data
             ECI_B1B5 = 1;
             ECI_C1C4 = 1;
             ECI_D = 1;
+
+            ECI_Mix = 0;
+            ECI_Mix_Info = "";
 
             isLocked = false;
             //Properties = new List<CarboProperty>();
@@ -212,52 +226,9 @@ namespace CarboLifeAPI.Data
             }
 
 
-            ECI = ECI_B1B5 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_C1C4 + ECI_D);
+            ECI = ECI_B1B5 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_C1C4 + ECI_D + ECI_Mix);
         }
 
-        /*
-        public void SetProperty(string properyName, string propertyValue)
-        {
-            CarboProperty cpnew = new CarboProperty
-            {
-                PropertyName = properyName,
-                Value = propertyValue
-            };
-            bool isUnique = true;
-
-            foreach(CarboProperty cp in Properties)
-            {
-                if(cp.PropertyName == cpnew.PropertyName)
-                {
-                    cp.Value = cpnew.Value;
-                    isUnique = false;
-                    break;
-                }
-            }
-            if(isUnique == true)
-            {
-                Properties.Add(cpnew);
-            }
-        }
-        public CarboProperty GetCarboProperty(string propertyName)
-        {
-            CarboProperty result = null;
-
-            foreach (CarboProperty cp in Properties)
-            {
-                if (cp.PropertyName == propertyName)
-                {
-                    result = cp;
-                    break;
-                }
-            }
-            if(result == null)
-            {
-                result = new CarboProperty();
-            }
-            return result;
-        }
-        */
         internal void Copy(CarboMaterial cmNew)
         {
             var type = typeof(CarboMaterial);

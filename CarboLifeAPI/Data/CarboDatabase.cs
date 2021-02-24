@@ -161,9 +161,9 @@ namespace CarboLifeAPI.Data
             if (!(File.Exists(myPath)))
             {
                 if (fileName == "")
-                    fileName = "db\\UserMaterials.xml";
+                    fileName = "db\\UserMaterials.cxml";
                 else
-                    fileName = fileName + ".xml";
+                    fileName = fileName + ".cxml";
 
             myPath = Utils.getAssemblyPath() + "\\" + fileName;
 
@@ -188,14 +188,15 @@ namespace CarboLifeAPI.Data
         public CarboDatabase DeSerializeXML(string fileName)
         {
             string myPath = fileName;
+            Utils.CheckUserMaterials();
 
             //if its a relative path use:
             if (!(File.Exists(myPath)))
                 {
                 if (fileName == "")
-                    fileName = "db\\UserMaterials.xml";
+                    fileName = "db\\UserMaterials.cxml";
                 else
-                    fileName = fileName + ".xml";
+                    fileName = fileName + ".cxml";
 
             myPath = Utils.getAssemblyPath() + "\\" + fileName;
             }

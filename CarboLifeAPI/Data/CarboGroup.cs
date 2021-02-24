@@ -36,7 +36,13 @@ namespace CarboLifeAPI.Data
 
         public bool isDemolished { get; set; }
         public bool isSubstructure { get; set; }
-
+        public double getVolumeECI
+        {
+            get
+            {
+                return Density * ECI;
+            }
+        }
 
         public CarboGroup()
         {

@@ -117,7 +117,9 @@ namespace CarboLifeUI.UI
                 UpdateMaterialSettings();
             }
         }
-
+        /// <summary>
+        /// Updates the details to the selected material
+        /// </summary>
         private void UpdateMaterialSettings()
         {
             if (selectedMaterial != null)
@@ -150,16 +152,19 @@ namespace CarboLifeUI.UI
                 SetC1C4();
                 //End of Life
                 SetD();
+                //Mix
+                SetMix();
 
                 string calc = "";
 
-                calc = "B1B5 x (A1-A3 + A4 + A5 + B1-B5 + C1-C4 + ECI_D) = ECI Total" + Environment.NewLine;
+                calc = "B1B5 x (A1-A3 + A4 + A5 + B1-B5 + C1-C4 + ECI_D + ECI_Mix) = ECI Total" + Environment.NewLine;
                 calc += Math.Round(Utils.ConvertMeToDouble(selectedMaterial.ECI_B1B5.ToString()), 4) +
                     " x (" + Math.Round(Utils.ConvertMeToDouble(txt_A1_A3.Text), 4) +
                     " + " + Math.Round(Utils.ConvertMeToDouble(txt_A4.Text), 4) +
                     " + " + Math.Round(Utils.ConvertMeToDouble(txt_A5.Text), 4) +
                     " + " + Math.Round(Utils.ConvertMeToDouble(txt_C1_C4.Text), 4) +
                     " + " + Math.Round(Utils.ConvertMeToDouble(txt_D.Text), 4) +
+                    " + " + Math.Round(Utils.ConvertMeToDouble(txt_Mix.Text), 4) +
                     " ) = " + Math.Round(Utils.ConvertMeToDouble(txt_ECI.Text), 5);
                 Calc.Content = calc;
 
@@ -174,6 +179,17 @@ namespace CarboLifeUI.UI
                     grd_Edit.Visibility = Visibility.Visible;
                 }
             }
+        }
+
+        private void SetMix()
+        {
+            txt_Mix_Setting.Text = selectedMaterial.ECI_Mix_Info;
+            txt_Mix_Setting.IsReadOnly = false;
+            txt_Mix_Setting.Foreground = Brushes.Black;
+
+            txt_Mix.Text = Math.Round(selectedMaterial.ECI_Mix, 2).ToString();
+            txt_Mix.Foreground = Brushes.Black;
+            txt_Mix.IsReadOnly = false;
         }
 
         private void SetA1A3()
@@ -740,6 +756,19 @@ namespace CarboLifeUI.UI
 
         }
 
+        private async void txt_Mix_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length)
+            {
+                selectedMaterial.ECI_Mix = Utils.ConvertMeToDouble(txt_Mix.Text);
+                UpdateMaterialSettings();
+            }
+        }
+
         private void btn_EditDescription_Click(object sender, RoutedEventArgs e)
         {
             DescriptionEditor editor = new DescriptionEditor(txt_Description.Text);
@@ -857,6 +886,43 @@ namespace CarboLifeUI.UI
 
             RefreshMaterialList();
 
+        }
+
+        private void btn_Mix_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedMaterial != null)
+            {
+                MaterialAddMix materialmixer = new MaterialAddMix(returnedDatabase, selectedMaterial.Density);
+                materialmixer.ShowDialog();
+                if (materialmixer.isAccepted == true)
+                {
+                    selectedMaterial.ECI_Mix = materialmixer.valueToBeMixed;
+                    selectedMaterial.ECI_Mix_Info = materialmixer.selectedMaterialDescription;
+                }
+                UpdateMaterialSettings();
+            }
+
+        }
+
+
+
+        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            CarboInfoBox infoBox = new CarboInfoBox("The mix parameter allows you to combine your material's embodied carbon with another. Examples are reinforcement or additives into concrete. Another option would be nails and screws into timber structure.");
+            infoBox.ShowDialog();
+        }
+
+        private async void txt_Mix_Setting_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length)
+            {
+                selectedMaterial.ECI_Mix_Info = tb.Text;
+                UpdateMaterialSettings();
+            }
         }
     }
 }

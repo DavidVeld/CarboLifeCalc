@@ -173,6 +173,7 @@ namespace CarboLifeUI.UI
                             {
                                 CarboLifeProject.UpdateMaterial(cg, materialEditor.selectedMaterial);
                             }
+                            CarboLifeProject.UpdateAllMaterials();
                         }
                     }
                 }
@@ -542,7 +543,7 @@ namespace CarboLifeUI.UI
 
         private void mnu_Export_Click(object sender, RoutedEventArgs e)
         {
-
+            //DataExportUtils.ExportToExcel(this.CarboLifeProject);
         }
 
         private void RoundValue(object sender, RoutedEventArgs e)

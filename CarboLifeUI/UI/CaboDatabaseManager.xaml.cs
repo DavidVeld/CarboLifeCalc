@@ -24,6 +24,7 @@ namespace CarboLifeUI.UI
     /// <summary>
     /// Interaction logic for CaboDatabaseManager.xaml
     /// </summary>
+    [Obsolete]
     public partial class CaboDatabaseManager : Window
     {
         public CarboDatabase UserMaterials;

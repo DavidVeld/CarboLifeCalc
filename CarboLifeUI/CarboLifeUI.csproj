@@ -99,8 +99,14 @@
       <DependentUpon>CarboInfoBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DataSource\SumValues.cs" />
+    <Compile Include="UI\ExportPicker.xaml.cs">
+      <DependentUpon>ExportPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\OnlineMaterialPicker.xaml.cs">
       <DependentUpon>OnlineMaterialPicker.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MaterialAddMix.xaml.cs">
+      <DependentUpon>MaterialAddMix.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\RevitActivator.xaml.cs">
       <DependentUpon>RevitActivator.xaml</DependentUpon>
@@ -182,7 +188,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UI\ExportPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UI\OnlineMaterialPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\MaterialAddMix.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -4,9 +4,11 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,9 +38,21 @@ namespace CarboLifeUI.UI
         public bool createHeatmap {get; set;}
         public bool importData { get; set; }
 
+        //For async excel exporter:
+        public string ExcelExportPath { get; private set; }
+        public bool ExportExcel_Completed { get; private set; }
+        public bool ExcelExportResult { get; private set; }
+        public bool ExcelExportElements { get; private set; }
+        public bool ExcelExportMaterials { get; private set; }
+
+        /////////////
+
         //public CarboDatabase carboDataBase { get; set; }
         public CarboLifeMainWindow()
         {
+            //UserMaterials
+            Utils.CheckUserMaterials();
+
             IsRevit = false;
             carboLifeProject = new CarboProject();
             InitializeComponent();
@@ -46,6 +60,8 @@ namespace CarboLifeUI.UI
 
         public CarboLifeMainWindow(CarboProject myProject)
         {
+            Utils.CheckUserMaterials();
+
             carboLifeProject = myProject;
             IsRevit = false;
             //carboDataBase = carboDataBase.DeSerializeXML("");
@@ -64,6 +80,9 @@ namespace CarboLifeUI.UI
                 File.Delete(logPath);
 
             Utils.WriteToLog("New Log Started: " + carboLifeProject.Name);
+
+            //Create a usermaterial file;
+
         }
 
         internal CarboProject getCarbonLifeProject()
@@ -74,26 +93,12 @@ namespace CarboLifeUI.UI
                 return null;
         }
 
-        private void Mnu_openDataBasemanager_Click(object sender, RoutedEventArgs e)
-        {
-            CaboDatabaseManager dataBaseManager = new CaboDatabaseManager(carboLifeProject.CarboDatabase);
-            dataBaseManager.ShowDialog();
-
-            if (dataBaseManager.isOk == true)
-            {
-                carboLifeProject.CarboDatabase = dataBaseManager.UserMaterials;
-                carboLifeProject.UpdateAllMaterials();
-                DataScreen.Visibility = Visibility.Hidden;
-                DataScreen.Visibility = Visibility.Visible;
-            }
-        }
-
         private void Mnu_saveDataBase_Click(object sender, RoutedEventArgs e)
         {
             //Create a File and save it as a xml file
             SaveFileDialog saveDialog = new SaveFileDialog();
             saveDialog.Title = "Specify path";
-            saveDialog.Filter = "XML Files|*.xml";
+            saveDialog.Filter = "Carbo Life Project File|*.xml";
             saveDialog.FilterIndex = 2;
             saveDialog.RestoreDirectory = true;
 
@@ -117,7 +122,7 @@ namespace CarboLifeUI.UI
                 try
                 {
                     OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+                    openFileDialog.Filter = "Carbo Life Project File (*.xml)|*.xml|All files (*.*)|*.*";
 
                     var path = openFileDialog.ShowDialog();
 
@@ -129,11 +134,10 @@ namespace CarboLifeUI.UI
                         carboLifeProject = buffer.DeSerializeXML(openFileDialog.FileName);
 
                         carboLifeProject.Audit();
-
+                        carboLifeProject.CalculateProject();
+                        
                         tab_Main.Visibility = Visibility.Hidden;
                         tab_Main.Visibility = Visibility.Visible;
-
-
 
                     }
                 }
@@ -180,7 +184,10 @@ namespace CarboLifeUI.UI
         private void mnu_BuildReport_Click(object sender, RoutedEventArgs e)
         {
             if (carboLifeProject != null)
-                CarboLifeAPI.ReportBuilder.CreateReport(carboLifeProject);
+            {
+                carboLifeProject.CalculateProject();
+                ReportBuilder.CreateReport(carboLifeProject);
+            }
         }
 
         private void mnu_CloseMe_Click(object sender, RoutedEventArgs e)
@@ -321,6 +328,102 @@ namespace CarboLifeUI.UI
         {
             RevitActivator revitActivator = new RevitActivator();
             revitActivator.ShowDialog();
+        }
+
+        private void mnu_ExportToExcel_Click(object sender, RoutedEventArgs e)
+        {
+            ExportPicker exportMenu = new ExportPicker();
+            exportMenu.ShowDialog();
+
+
+
+            if (exportMenu.isAccepted == true)
+            {
+
+             ExcelExportResult = exportMenu.results;
+             ExcelExportElements = exportMenu.elements;
+             ExcelExportMaterials = exportMenu.materials;
+
+                //Async Attempt 2:
+
+                if (carboLifeProject != null)
+                {
+                    carboLifeProject.CalculateProject();
+
+                    //int ProgressToBeupdated = 100;
+
+                    ExcelExportPath = DataExportUtils.GetSaveAsLocation();
+
+
+                    if (ExcelExportPath != null && ExcelExportPath != "")
+                    {
+                        BackgroundWorker ExportThread = new BackgroundWorker();
+                        ExportThread.WorkerReportsProgress = true;
+                        ExportThread.DoWork += ExportThread_DoWork;
+                        ExportThread.ProgressChanged += ExportThreadProgressChanged;
+                        ExportThread.RunWorkerCompleted += ExportThreadCompleted;
+                        ExportThread.RunWorkerAsync(new object());
+                    }
+                    else
+                    {
+                        MessageBox.Show("The file is open by another process, or cannot be openend, please specify another location");
+                    }
+                }
+            }
+        }
+        void ExportThread_DoWork(object sender, DoWorkEventArgs e)
+        {
+            if (ExcelExportPath != null || ExcelExportPath != "")
+            {
+                ExportExcel_Completed = false;
+
+                BackgroundWorker ExportFile = new BackgroundWorker();
+                ExportFile.WorkerReportsProgress = true;
+                ExportFile.DoWork += ExportFile_DoWork;
+                ExportFile.RunWorkerCompleted += ExportFile_Completed;
+                ExportFile.RunWorkerAsync(new object());
+
+                while (ExportExcel_Completed == false)
+                {
+                    for (int i = 0; i < 100; i++)
+                    {
+                        Thread.Sleep(100);
+                        (sender as BackgroundWorker).ReportProgress(i);
+                        if (i == 99)
+                            i = 0;
+                        if (ExportExcel_Completed == true)
+                            break;
+                    }
+                }
+            }
+            //pgr_Exporter.Value = 0;
+            //end export thread
+        }
+
+        private void ExportThreadCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            pgr_Exporter.Value = 0;
+
+            if (File.Exists(ExcelExportPath))
+            {
+                System.Windows.MessageBox.Show("Excel export succesful, click OK to open!", "Success!", MessageBoxButton.OK);
+                System.Diagnostics.Process.Start(ExcelExportPath);
+            }
+
+        }
+        void ExportThreadProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            pgr_Exporter.Value = e.ProgressPercentage;
+        }
+
+        //The file works:
+        private void ExportFile_Completed(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ExportExcel_Completed = true;
+        }
+        private void ExportFile_DoWork(object sender, DoWorkEventArgs e)
+        {
+            DataExportUtils.ExportToExcel(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials);
         }
     }
 }
