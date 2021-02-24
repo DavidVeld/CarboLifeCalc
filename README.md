@@ -1,11 +1,11 @@
 # CarboLifeCalc
-A Quick-Action Carbon full life calculator using Revit material quantities.
+A Quick-Action Carbon Whole Life Carbon Assessment calculator using Revit material quantities.
 
 Status: Work in Good Progress
 
-Current Build for testing download link: (29-11-2020)
+Current Build for testing download link: (19-02-2021)
 
-https://drive.google.com/file/d/1W8pboSt65k_g3eWFbqFkMYgf_uinYVnx/view?usp=sharing
+https://drive.google.com/file/d/1eY9nnfB2W0z1shmlO2qAG-OPjSUeJquP/view?usp=sharing
 
 The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design. 
 As a standalone application you can set quantities and materials,  or you can use a 3d model from Revit to import your building into the calculator. Your revit materials will automatically be mapped to to the CarboLifeCalc's own, thus giving you an instant result on the building's embodied carbon.
@@ -31,14 +31,21 @@ Roadmap:
 3. Carbon sequestering calculator in the material editor
 4. Better B1-B7 analysis
 5. Better A5 calculation
-6. Improved C1-C4 calculation
+6. Improved C1-C4 calculation (Added in build 19.02.2021)
 7. Interface improvements.
-8. Material Mapping
+8. Material Mapping           (Added in build 19.02.2021)
+9. Installer
 
-Upcates as per build 09.02.2021
+Updates as per build 19.02.2021
+1. Improved sync, including online sync options
+2. Direct access to material editor froun splash screen
+3. Material Mapping now possible
+
+Updates as per build 09.02.2021
 1. Improved heatmap creator
 2. Ability to write total carbon into the elements
 3. Simple Syncronizing ability with the template added to the material editor
+4. Activate Revit addins within tool.
 
 Updates as per build 29.11.2020:
 
