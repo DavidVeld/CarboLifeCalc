@@ -91,7 +91,7 @@ namespace CarboLifeUI.UI
             }
             else
             {
-                MessageBox.Show("The intalltion folder for the addins cannot be found in: " + path + Environment.NewLine + "Please make sure you have Revit and the required versions installed", "Computer sais no", MessageBoxButton.OK);
+                MessageBox.Show("The installation folder for the addins cannot be found in: " + path + Environment.NewLine + "Please make sure you have Revit and the required versions installed", "Computer sais no", MessageBoxButton.OK);
             }
             
             ///2019

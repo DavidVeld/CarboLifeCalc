@@ -50,7 +50,7 @@ namespace CarboLifeAPI.Data
         /// <summary>
         /// Total ECI kgCO2e/m³
         /// </summary>
-        public double getVolumeECI { get { return Density * ECI; } }
+        public double getVolumeECI { get { return Density * ECI; } set { } }
 
         /// <summary>
         /// Fabrication kgCO2e/kg
