@@ -19,10 +19,10 @@ Heatmaps:
 https://youtu.be/O0gkl9B8Mvw
 
 Screenshots:
-
-![alt text](http://www.davidveld.nl/img/CarboCalc1.jpg)
-![alt text](http://www.davidveld.nl/img/CarboCalc2.jpg)
-![alt text](http://www.davidveld.nl/img/CarboCalc3.jpg)
+![alt text](https://www.davidveld.nl/img/carbocalc/bim1.jpg)
+![alt text](https://www.davidveld.nl/img/CarboCalc1.jpg)
+![alt text](https://www.davidveld.nl/img/CarboCalc2.jpg)
+![alt text](https://www.davidveld.nl/img/CarboCalc3.jpg)
 
 Roadmap:
 
