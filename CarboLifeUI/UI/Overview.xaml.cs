@@ -172,18 +172,33 @@ namespace CarboLifeUI.UI
             {
                 cnv_Totals.Children.Clear();
 
+                TextBlock TotalText = new TextBlock();
+                TotalText.Text = "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " MtCO2e";
+                TotalText.FontStyle = FontStyles.Normal;
+                TotalText.FontWeight = FontWeights.Bold;
+
+                TotalText.Foreground = Brushes.Black;
+                TotalText.TextWrapping = TextWrapping.WrapWithOverflow;
+                TotalText.VerticalAlignment = VerticalAlignment.Top;
+                TotalText.FontSize = 16;
+
+                Canvas.SetLeft(TotalText, 5);
+                Canvas.SetTop(TotalText, 5);
+                cnv_Totals.Children.Add(TotalText);
+
+
                 TextBlock summaryText = new TextBlock();
                 summaryText.Text = CarboLifeProject.getSummaryText(true, true, true, true);
                 summaryText.FontStyle = FontStyles.Normal;
-                summaryText.FontWeight = FontWeights.Light;
+                summaryText.FontWeight = FontWeights.Normal;
 
                 summaryText.Foreground = Brushes.Black;
                 summaryText.TextWrapping = TextWrapping.WrapWithOverflow;
                 summaryText.VerticalAlignment = VerticalAlignment.Top;
-                summaryText.FontSize = 16;
+                summaryText.FontSize = 13;
 
                 Canvas.SetLeft(summaryText, 5);
-                Canvas.SetTop(summaryText, 5);
+                Canvas.SetTop(summaryText, 25);
                 cnv_Totals.Children.Add(summaryText);
             }
 

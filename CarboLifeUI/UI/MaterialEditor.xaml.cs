@@ -618,44 +618,62 @@ namespace CarboLifeUI.UI
 
         private void chx_A1_A3_Manual_Click(object sender, RoutedEventArgs e)
         {
-            selectedMaterial.ECI_A1A3_Override = chx_A1_A3_Manual.IsChecked.Value;
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.ECI_A1A3_Override = chx_A1_A3_Manual.IsChecked.Value;
 
-            UpdateMaterialSettings();   
+                UpdateMaterialSettings();
+            }
         }
 
         private void chx_A4_Manual_Click(object sender, RoutedEventArgs e)
         {
-            selectedMaterial.ECI_A4_Override = chx_A4_Manual.IsChecked.Value;
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.ECI_A4_Override = chx_A4_Manual.IsChecked.Value;
 
-            UpdateMaterialSettings();
+                UpdateMaterialSettings();
+            }
         }
 
         private void chx_A5_Manual_Click(object sender, RoutedEventArgs e)
         {
-            selectedMaterial.ECI_A5_Override = chx_A5_Manual.IsChecked.Value;
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.ECI_A5_Override = chx_A5_Manual.IsChecked.Value;
 
-            UpdateMaterialSettings();
+                UpdateMaterialSettings();
+            }
         }
 
         private void chx_B1_B5_Manual_Click(object sender, RoutedEventArgs e)
         {
-            selectedMaterial.ECI_B1B5_Override = chx_B1_B5_Manual.IsChecked.Value;
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.ECI_B1B5_Override = chx_B1_B5_Manual.IsChecked.Value;
 
-            UpdateMaterialSettings();
+                UpdateMaterialSettings();
+            }
         }
 
         private void chx_C1_C4_Manual_Click(object sender, RoutedEventArgs e)
         {
-            selectedMaterial.ECI_C1C4_Override = chx_C1_C4_Manual.IsChecked.Value;
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.ECI_C1C4_Override = chx_C1_C4_Manual.IsChecked.Value;
 
-            UpdateMaterialSettings();
+                UpdateMaterialSettings();
+            }
         }
 
         private void chx_D_Manual_Click(object sender, RoutedEventArgs e)
         {
-            selectedMaterial.ECI_D_Override = chx_D_Manual.IsChecked.Value;
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.ECI_D_Override = chx_D_Manual.IsChecked.Value;
 
-            UpdateMaterialSettings();
+                UpdateMaterialSettings();
+            }
         }
 
         private async void txt_A1_A3_TextChanged(object sender, TextChangedEventArgs e)
@@ -855,7 +873,6 @@ namespace CarboLifeUI.UI
                     selectedMaterial.ECI_C1C4_Override = true;
                     selectedMaterial.ECI_D_Override = true;
 
-
                     selectedMaterial.ECI_A1A3 = A1A3;
                     selectedMaterial.ECI_A4 = A4;
                     selectedMaterial.ECI_A5 = A5;
@@ -865,6 +882,8 @@ namespace CarboLifeUI.UI
 
                     selectedMaterial.ECI_C1C4 = C14;
                     selectedMaterial.ECI_D = D;
+
+                    selectedMaterial.EPDurl = epdForm.txt_EPDLink.Text;
 
                 }
             }
@@ -901,10 +920,7 @@ namespace CarboLifeUI.UI
                 }
                 UpdateMaterialSettings();
             }
-
         }
-
-
 
         private void Label_MouseDown(object sender, MouseButtonEventArgs e)
         {

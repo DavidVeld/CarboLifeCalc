@@ -36,7 +36,8 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Construction (A5) - TBC</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Construction (A5) - WIP</Label>
+        <Label Grid.Column="2" Margin="0,1,0,0" Grid.Row="2" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">This value is work in progress, please specify a value below. </Label>
 
         <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="4" Header="Result:" Style="{StaticResource baseStyleBold}">
             <Grid>

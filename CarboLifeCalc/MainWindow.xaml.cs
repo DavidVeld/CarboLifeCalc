@@ -34,7 +34,6 @@ namespace CarboLifeCalc
         private void btn_Launch_Click(object sender, RoutedEventArgs e)
         {
             CarboProject newProject = new CarboProject();
-
             Dispatcher.BeginInvoke(new Action(() => OpenProject(newProject)), DispatcherPriority.ContextIdle, null);
         }
 

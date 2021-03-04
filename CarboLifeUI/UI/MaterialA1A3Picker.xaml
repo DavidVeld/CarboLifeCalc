@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="750" Width="750" Height="400" MinWidth="750" MinHeight="400" Loaded="Window_Loaded">
+             d:DesignHeight="650" d:DesignWidth="1024" Width="1024" Height="650" MinWidth="1024" MinHeight="650" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -55,7 +55,7 @@
                       BorderBrush="Black" BorderThickness="1" SelectionChanged="lib_Materials_SelectionChanged" Visibility="Visible" >
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
-                    <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Name" Width="350" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="ECI (A1>A3)" Width="200" DisplayMemberBinding="{Binding ECI_A1A3}" />
                 </GridView>
             </ListView.View>

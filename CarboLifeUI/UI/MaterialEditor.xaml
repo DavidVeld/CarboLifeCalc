@@ -149,7 +149,7 @@
                 <TextBox Name="txt_A5"  Grid.Row="4" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_A5_TextChanged"></TextBox>
                 <Button Name="btn_A5"  Grid.Row="4" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A5_Click">Edit...</Button>
 
-                <Label  Grid.Row="5" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Life (B1-B5) (TBC):</Label>
+                <Label  Grid.Row="5" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Life (B1-B5) (WIP):</Label>
                 <TextBox Name="txt_B1_B5_Setting"  Grid.Row="5" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="True" Style="{StaticResource flatTextBox}"></TextBox>
                 <CheckBox x:Name="chx_B1_B5_Manual" Grid.Row="5" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_B1_B5_Manual_Click"></CheckBox>
                 <TextBox Name="txt_B1_B5"  Grid.Row="5" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_B1_B5_TextChanged"></TextBox>

@@ -28,14 +28,12 @@ namespace CarboLifeUI.UI
         public DataViewer()
         {
             InitializeComponent();
-
         }
 
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             try
             { 
-                
                 DependencyObject parent = VisualTreeHelper.GetParent(this);
                 Window parentWindow = Window.GetWindow(parent);
                 CarboLifeMainWindow mainViewer = parentWindow as CarboLifeMainWindow;
@@ -46,16 +44,8 @@ namespace CarboLifeUI.UI
                 if (CarboLifeProject != null)
                 {
                     //A project Is loaded, Proceed to next
-
                     SetupInterFace();
                 }
-
-
-                //Rebuild the materialList
-
-
-
-
             }
             catch (Exception ex)
             {
@@ -103,10 +93,15 @@ namespace CarboLifeUI.UI
 
         private void Btn_Calculate_Click(object sender, RoutedEventArgs e)
         {
+            Calculate();
+        }
+
+        private void Calculate()
+        {
             CarboLifeProject.CalculateProject();
             refreshData();
         }
-        
+
         private void Btn_Delete_Click(object sender, RoutedEventArgs e)
         {
             CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
@@ -239,7 +234,6 @@ namespace CarboLifeUI.UI
 
                 if (t != null)
                 {
-
                     //Corrections:
                     if (dgc.Header.ToString().StartsWith("Correction"))
                     {
@@ -254,9 +248,11 @@ namespace CarboLifeUI.UI
                     {
                         if(carboGroup.AllElements.Count > 0)
                         {
-                            MessageBox.Show("The volume is calculated using the element volumes extracted from the 3D model, you need to purge the elements before overriding the volume");
+                            MessageBox.Show("The volume of this group is calculated using the element volumes extracted from the 3D model," + Environment.NewLine + " you need to purge the elements before overriding the volume");
                             carboGroup.CalculateTotals();
-                            btn_Calculate.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                            //btn_Calculate.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                            //System.Threading.Thread.Sleep(500);
+                            //Calculate();
                         }
                     }
                 }
@@ -541,11 +537,6 @@ namespace CarboLifeUI.UI
             }
         }
 
-        private void mnu_Export_Click(object sender, RoutedEventArgs e)
-        {
-            //DataExportUtils.ExportToExcel(this.CarboLifeProject);
-        }
-
         private void RoundValue(object sender, RoutedEventArgs e)
         {
             TextBlock tb = ((TextBlock)sender);
@@ -557,19 +548,6 @@ namespace CarboLifeUI.UI
 
                 tb.Text = Math.Round(value,2).ToString();
             }
-        }
-
-        Color GetColor(Int32 rangeStart /*Complete Red*/, Int32 rangeEnd /*Complete Green*/, Int32 actualValue)
-        {
-            if (rangeStart >= rangeEnd) return Colors.Black;
-
-            Int32 max = rangeEnd - rangeStart; // make the scale start from 0
-            Int32 value = actualValue - rangeStart; // adjust the value accordingly
-
-            Int32 green = (255 * value) / max; // calculate green (the closer the value is to max, the greener it gets)
-            Int32 red = 255 - green; // set red as inverse of green
-
-            return Color.FromRgb((Byte)red, (Byte)green, (Byte)0);
         }
 
         private void PercentValue(object sender, RoutedEventArgs e)
@@ -595,5 +573,70 @@ namespace CarboLifeUI.UI
                 this.CarboLifeProject.mapAllMaterials();
             }
         }
+
+        private void btn_OpenMaterialEditor_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //Check if a group has been selected:
+                CarboGroup PotentialSelectedCarboGroup = new CarboGroup();
+                PotentialSelectedCarboGroup.MaterialName = "";
+
+                if (dgv_Overview.SelectedItems.Count > 0)
+                {
+
+                    var selectedItems = dgv_Overview.SelectedItems;
+                    IList<CarboGroup> selectedGroups = new List<CarboGroup>();
+
+                    // ... Add all Names to a List.
+                    foreach (var item in selectedItems)
+                    {
+                        CarboGroup cg = item as CarboGroup;
+                        if(cg != null)
+                            selectedGroups.Add(cg);
+                    }
+
+                    if (selectedGroups.Count > 0)
+                    {
+                        PotentialSelectedCarboGroup = selectedGroups[0];
+                    }
+                }
+
+                if (CarboLifeProject.CarboDatabase.CarboMaterialList.Count > 0)
+                {
+                    CarboMaterial carbomat = CarboLifeProject.CarboDatabase.CarboMaterialList[0];
+
+                    if (PotentialSelectedCarboGroup.MaterialName != "")
+                    {
+                        //A group with a valid material was selected
+                        carbomat = PotentialSelectedCarboGroup.Material;
+                    }
+
+                    if (carbomat == null)
+                        carbomat = new CarboMaterial();
+
+                    MaterialEditor materialEditor = new MaterialEditor(carbomat.Name, CarboLifeProject.CarboDatabase);
+                    materialEditor.ShowDialog();
+
+                    if (materialEditor.acceptNew == true)
+                    {
+                        CarboLifeProject.CarboDatabase = materialEditor.returnedDatabase;
+
+                        CarboLifeProject.UpdateAllMaterials();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("There were no materials found in the project, please re-create your project");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            CarboLifeProject.CalculateProject();
+            refreshData();
+        }
+
     }
 }

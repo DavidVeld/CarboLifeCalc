@@ -152,8 +152,14 @@ namespace CarboLifeAPI.Data
                         {
                             //The material has been changed, update required. 
                             gr.Material = cm;
-                            gr.RefreshValuesFromElements();
+
+                            if (gr.AllElements.Count > 0)
+                            {
+                                gr.RefreshValuesFromElements();
+                            }
+
                             gr.CalculateTotals();
+
                             updatedmaterials.Add(gr.MaterialName);
                         }
                     }

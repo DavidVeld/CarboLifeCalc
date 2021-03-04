@@ -14,7 +14,8 @@ namespace CarboLifeAPI.Data
         public double IncinerationP { get; set; }
         public double Landfill { get; set; }
         public double LandfillP { get; set; }
-
+        public double reuse { get; set; }
+        public double reuseP { get; set; }
         public EoLElement()
         {
             Material = "";
@@ -22,7 +23,9 @@ namespace CarboLifeAPI.Data
             IncinerationP = 0;
             Landfill = 0;
             LandfillP = 0;
-        }
+            reuse = 0;
+            reuseP = 0;
+    }
 
         public void Calculate()
         {

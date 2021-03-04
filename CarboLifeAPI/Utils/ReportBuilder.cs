@@ -56,32 +56,44 @@ namespace CarboLifeAPI
                     return;
                 }
             }
+            else if (Path == "")
+            {
+                //The dialog box was cancelled;
+                return;
+            }
 
             //EXPORT IMAGES HERE:
 
 
             //HTML WRITING;
-            report = writeHeader(carboProject);
-
-            report += writeReportTable(carboProject);
-
-            report += writeMaterialTable(carboProject);
-
-            report += closeHTML();
-
-            if (report != "")
+            try
             {
-                using (StreamWriter sw = new StreamWriter(reportpath,false,Encoding.GetEncoding("Windows-1252")))
+                report = writeHeader(carboProject);
+
+                report += writeReportTable(carboProject);
+
+                report += writeMaterialTable(carboProject);
+
+                report += closeHTML();
+
+                if (report != "")
                 {
-                    sw.WriteLine(report);
-                    sw.Close();
+                    using (StreamWriter sw = new StreamWriter(reportpath, false, Encoding.GetEncoding("Windows-1252")))
+                    {
+                        sw.WriteLine(report);
+                        sw.Close();
+                    }
+                }
+
+                if (File.Exists(reportpath))
+                {
+                    System.Windows.MessageBox.Show("Report succesfully created!", "Success!", MessageBoxButton.OK);
+                    System.Diagnostics.Process.Start(reportpath);
                 }
             }
-
-            if (File.Exists(reportpath))
+            catch(Exception ex)
             {
-                System.Windows.MessageBox.Show("Report succesfully created!", "Success!", MessageBoxButton.OK);
-                System.Diagnostics.Process.Start(reportpath);
+                MessageBox.Show(ex.Message);
             }
             //VOID
 

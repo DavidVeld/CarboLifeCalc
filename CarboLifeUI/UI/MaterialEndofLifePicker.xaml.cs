@@ -85,6 +85,8 @@ namespace CarboLifeUI.UI
                     double incP = Utils.ConvertMeToDouble(dr[2].ToString());
                     double landf = Utils.ConvertMeToDouble(dr[3].ToString());
                     double landfP = Utils.ConvertMeToDouble(dr[4].ToString());
+                    double reuse = Utils.ConvertMeToDouble(dr[5].ToString());
+                    double reuseP = Utils.ConvertMeToDouble(dr[6].ToString());
 
                     newElement.Material = material;
 
@@ -92,6 +94,8 @@ namespace CarboLifeUI.UI
                     newElement.IncinerationP = incP;
                     newElement.Landfill = landf;
                     newElement.LandfillP = landfP;
+                    newElement.reuse = reuse;
+                    newElement.reuseP = reuseP;
 
                     result.Add(newElement);
                 }
@@ -178,6 +182,8 @@ namespace CarboLifeUI.UI
                 eolProperties.c4incfV = Math.Round(selectedMaterial.Incineration, 3);
                 eolProperties.c4landfP = Math.Round(selectedMaterial.LandfillP, 3);
                 eolProperties.c4landfV = Math.Round(selectedMaterial.Landfill, 3);
+                eolProperties.c4reUseV = Math.Round(selectedMaterial.reuse, 3);
+                eolProperties.c4reUseP = Math.Round(selectedMaterial.reuseP, 3);
 
                 eolProperties.calculate();
                 loadSettings();

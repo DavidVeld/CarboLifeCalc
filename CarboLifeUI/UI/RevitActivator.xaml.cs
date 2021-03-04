@@ -16,10 +16,13 @@ namespace CarboLifeUI.UI
         bool ok2019;
         bool ok2020;
         bool ok2021;
+        bool ok2022;
+
 
         bool has2019;
         bool has2020;
         bool has2021;
+        bool has2022;
 
 
         public RevitActivator()
@@ -39,12 +42,12 @@ namespace CarboLifeUI.UI
             ok2019 = false;
             ok2020 = false;
             ok2021 = false;
+            ok2022 = false;
 
             has2019 = false;
             has2020 = false;
             has2021 = false;
-
-
+            has2022 = false;
 
 
             if (Directory.Exists(path))
@@ -70,8 +73,10 @@ namespace CarboLifeUI.UI
                         if (str.Contains("2021"))
                             has2021 = true;
 
+                        if (str.Contains("2022"))
+                            has2022 = true;
 
-                        if(has2019 == true && exists == true)
+                        if (has2019 == true && exists == true)
                         {
                             ok2019 = true;
                         }
@@ -85,13 +90,18 @@ namespace CarboLifeUI.UI
                         {
                             ok2021 = true;
                         }
+
+                        if (has2022 == true && exists == true)
+                        {
+                            ok2022 = true;
+                        }
                     }
                 }
 
             }
             else
             {
-                MessageBox.Show("The installation folder for the addins cannot be found in: " + path + Environment.NewLine + "Please make sure you have Revit and the required versions installed", "Computer sais no", MessageBoxButton.OK);
+                MessageBox.Show("The installation folder for the addins cannot be found in: " + path + Environment.NewLine + "Please make sure you have Revit and the required versions installed", "Computer says no", MessageBoxButton.OK);
             }
             
             ///2019
@@ -190,6 +200,38 @@ namespace CarboLifeUI.UI
                 lbl_2021.Content = "2021 Not Found";
 
             }
+
+            ///2022
+            if (has2022 == true)
+            {
+                //Folder is present
+                if (ok2022 == true)
+                {
+                    //addin is installed
+                    chx_2022.IsChecked = true;
+                    //chx_2022.IsEnabled = false;
+                    lbl_2022.Foreground = Brushes.Green;
+                    lbl_2022.Content = "2022 Activated";
+
+                }
+                else
+                {
+                    //addin is not installed
+                    chx_2022.IsChecked = false;
+                    chx_2022.IsEnabled = true;
+                    lbl_2022.Foreground = Brushes.Black;
+                    lbl_2022.Content = "2022 Not Installed";
+
+                }
+            }
+            else
+            {
+                //revit version not found
+                chx_2022.IsEnabled = false;
+                lbl_2022.Foreground = Brushes.Gray;
+                lbl_2022.Content = "2022 Not Found";
+
+            }
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -240,6 +282,14 @@ namespace CarboLifeUI.UI
                         {
                             if (File.Exists(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2021 + "\\CarboLifeCalc.addin"))
                                 File.Delete(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2021 + "\\CarboLifeCalc.addin");
+                        }
+
+                        if (chx_2021.IsChecked == true)
+                            CopyFile(filePath, "2022");
+                        else
+                        {
+                            if (File.Exists(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2022 + "\\CarboLifeCalc.addin"))
+                                File.Delete(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2022 + "\\CarboLifeCalc.addin");
                         }
 
                         //deletebuffer
