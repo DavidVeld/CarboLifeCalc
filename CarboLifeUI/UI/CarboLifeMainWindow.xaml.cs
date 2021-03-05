@@ -335,8 +335,6 @@ namespace CarboLifeUI.UI
             ExportPicker exportMenu = new ExportPicker();
             exportMenu.ShowDialog();
 
-
-
             if (exportMenu.isAccepted == true)
             {
 
@@ -353,7 +351,6 @@ namespace CarboLifeUI.UI
                     //int ProgressToBeupdated = 100;
 
                     ExcelExportPath = DataExportUtils.GetSaveAsLocation();
-
 
                     if (ExcelExportPath != null && ExcelExportPath != "")
                     {

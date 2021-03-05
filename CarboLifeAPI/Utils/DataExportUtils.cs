@@ -21,7 +21,6 @@ namespace CarboLifeAPI
         public static int i;
 
         static string reportpath;
-
         public static string GetSaveAsLocation()
         {
             //Create a File and save it as a HTML File
@@ -34,8 +33,8 @@ namespace CarboLifeAPI
             saveDialog.ShowDialog();
 
             string path = saveDialog.FileName;
-            //reportpath = Path;
 
+            //Check if the file can be read and written to.
             if (File.Exists(path))
             {
                 FileInfo fileInfo = new FileInfo(path);
@@ -44,16 +43,12 @@ namespace CarboLifeAPI
                 if (isInUse == true)
                     return null;
             }
-            else
-            {
-                return null;
-            }
 
-            //If this part is reached; return a valid path;
+
+            //If this part is reached; return the valid path;
             return path;
 
         }
-
         private static bool IsFileLocked(FileInfo file)
         {
             try
