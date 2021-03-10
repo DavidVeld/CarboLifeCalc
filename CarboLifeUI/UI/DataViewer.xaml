@@ -56,8 +56,8 @@
             </MenuItem>
             <MenuItem Header="Actions" Background="Transparent"  VerticalAlignment="Top" Style="{StaticResource baseStyleLabel}"  Height="26" Margin="0,2,0,0">
                 <Separator></Separator>
-                <MenuItem Name="mnu_Reinforce" Header="Create Reinfocement from selected..." Click="Mnu_Reinforce_Click"/>
-                <MenuItem Name="mnu_Metaldeck" Header="Apply a Profile to Group..." Click="Mnu_Metaldeck_Click" />
+                <MenuItem Name="mnu_Reinforce" Header="Reinforce/Mix selected..." Click="Mnu_Reinforce_Click"/>
+                <MenuItem Name="mnu_Metaldeck" Header="Apply a Profile correction..." Click="Mnu_Metaldeck_Click" />
                 <Separator></Separator>
                 <MenuItem Name="mnu_PurgeElements" Header="Purge Elements from Group" Click="Mnu_PurgeElements_Click"/>
             </MenuItem>
@@ -67,17 +67,12 @@
                     <RotateTransform Angle="90" />
                 </Separator.LayoutTransform>
             </Separator>
-            
+
             <Button x:Name="btn_EditMaterial_V2" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="125" Height="24" Padding="5,0,5,0"
                     BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" 
-                    FontWeight="DemiBold" BorderThickness="0" Click="Btn_Material_Click" ToolTip="Edit the material of the selected group">
-                <StackPanel HorizontalAlignment="Stretch" Background="WhiteSmoke">
-                    <Image x:Name="img_editButton" HorizontalAlignment="Left"  Source="editicon.png" Height="18" Width="18"  Margin="0,1,0,0"/>
-                    <TextBlock HorizontalAlignment="Left" Width="120" Height="22" VerticalAlignment="Top" Margin="24,-19,-24,0" Text="Edit Material"  />
-                </StackPanel>
-            </Button>
+                    FontWeight="DemiBold" BorderThickness="1" Click="Btn_Material_Click" ToolTip="Edit the material of the selected group">Change Material</Button>
 
-            <Button x:Name="btn_OpenMaterialEditor" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="110" Height="24" Padding="5,0,5,0"
+            <Button x:Name="btn_OpenMaterialEditor" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top"  Width="110" Height="24" Padding="5,0,5,0"
                     BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" 
                     FontWeight="DemiBold" BorderThickness="1" Click="btn_OpenMaterialEditor_Click"  ToolTip="Open the material editor">Material Editor
             </Button>
@@ -129,7 +124,7 @@
 
         <DataGrid x:Name="dgv_Overview" Grid.Row="2" Grid.Column="1" 
                               Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="False" SelectionChanged="Dgv_Overview_SelectionChanged" 
-                  CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" HorizontalScrollBarVisibility="Hidden">
+                  CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" HorizontalScrollBarVisibility="Visible">
             <DataGrid.Resources>
                 <local:SumValues x:Key="SumValues"/>
             </DataGrid.Resources>
@@ -166,36 +161,39 @@
 
 
             <DataGrid.Columns>
+                <!--ID-->
                 <DataGridTextColumn MinWidth="50" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Hidden"/>
-
+                <!--Category-->
                 <DataGridTextColumn Width="1*" MinWidth="150" Header="Category &#x0a; " Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="False"/>
+                <!--Material-->
                 <DataGridTextColumn MinWidth="250" Header="Material &#x0a;" Binding="{Binding Path=MaterialName}" IsReadOnly="True" Visibility="Visible" Foreground="#000" FontWeight="DemiBold"/>
-
-
+                <!---Description-->
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Description &#x0a;" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="False"/>
-
-                <!--
-                <DataGridTemplateColumn Header="MaterialList" Width="100" Visibility="Hidden" >
+                <!--Volume-->
+                <DataGridTextColumn MinWidth="100" Header="Volume &#x0a;[m³]" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
+                
+                <!--- Advanced Fields -->
+                <!--Volume Correction -->
+                <DataGridTextColumn x:Name="column_Correction" MinWidth="100" Header="Correction &#x0a;[+-*/ Function] " Binding="{Binding Path=Correction, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
+                <!--Waste Correction -->
+                <DataGridTextColumn x:Name="column_Waste" MinWidth="100" Header="Waste  &#x0a; [%] " Binding="{Binding Path=Waste, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
+                <!--Additional Correction -->
+                <DataGridTextColumn x:Name="column_Addition" MinWidth="100" Header="Additional &#x0a;[kgCo2e/kg] " Binding="{Binding Path=Additional, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
+                <!--Total Volume-->
+                <!--<DataGridTextColumn x:Name="column_Volume"  MinWidth="100" Header="Total Volume &#x0a;[m³]" Binding="{Binding Path=TotalVolume, Mode=OneWay}" IsReadOnly="True" Visibility="Hidden"/>
+-->
+                <!--Total Volume 2-->
+                <DataGridTemplateColumn x:Name="column_Volume" Header="Total Volume &#x0a;[m³]" MinWidth="100" Width="1*" IsReadOnly="True"  Visibility="Visible">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=MaterialName}"/>
+                            <TextBlock Text="{Binding Path=TotalVolume, Mode=OneWay, UpdateSourceTrigger=LostFocus}" Background="LightGray"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                    <DataGridTemplateColumn.CellEditingTemplate>
-                        <DataTemplate>
-                            <ComboBox Height="22" SelectedItem="{Binding MaterialName}" ItemsSource="{StaticResource MaterialList}"></ComboBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
--->
-
-                <DataGridTextColumn MinWidth="100" Header="Volume &#x0a;[m³]" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
-                <DataGridTextColumn x:Name="column_Correction" MinWidth="75" Header="Correction &#x0a; " Binding="{Binding Path=Correction, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
-                <DataGridTextColumn x:Name="column_Volume"  MinWidth="100" Header="Total Volume &#x0a;[m³]" Binding="{Binding Path=TotalVolume, Mode=OneWay}" IsReadOnly="True" Visibility="Hidden"/>
 
 
-                <!--<DataGridTextColumn Width="1*" MinWidth="100" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True" Visibility="Hidden"/>-->
-
+                <!--END ANDVANCED OPTIONS-->
+                <!--Density-->
                 <DataGridTemplateColumn Header="Density &#x0a;[kg/m³]" Width="1*" MinWidth="80"  IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -204,51 +202,35 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-
-                <!--<DataGridTextColumn Width="1*" MinWidth="100" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True" Visibility="Hidden"/>-->
-
+                <!--Mass-->
                 <DataGridTemplateColumn Header="Mass &#x0a;[kg]" MinWidth="90" Width="1*" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=Mass, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray"/>
+                            <TextBlock Text="{Binding Path=Mass, Mode=OneWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!--<DataGridTextColumn MinWidth="75" Header="ECI (kgCo2/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True" Visibility="Hidden"/>-->
-                <!--Test to be used for all Double values-->
-                <DataGridTemplateColumn Header="CO2 Density &#x0a;[kgCo2e/kg]" Width="90" MinWidth="90"  IsReadOnly="True">
+                <!--CO2 Intensity-->
+                <DataGridTemplateColumn Header="CO2 Intensity &#x0a;[kgCo2e/kg]" Width="100" MinWidth="100"  IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=ECI, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray"/>
+                            <TextBlock Text="{Binding Path=ECI, Mode=OneWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!--<DataGridTextColumn MinWidth="75" Header="EE (GJ)" Binding="{Binding Path=EE}" IsReadOnly="True"  Visibility="Hidden"/>-->
-
-                <!--<DataGridTextColumn MinWidth="75" Header="EC (tCo2)" Binding="{Binding Path=EC}" IsReadOnly="True" Visibility="Hidden"/>-->
-                <DataGridTemplateColumn Header="Total &#x0a;[tCo2e]" Width="75" MinWidth="90"  IsReadOnly="True">
+                <!--CO2 Total-->
+                <DataGridTemplateColumn Header="Total &#x0a;[tCo2e]" Width="100" MinWidth="100"  IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=EC, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray" FontWeight="DemiBold"/>
+                            <TextBlock Text="{Binding Path=EC, Mode=OneWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray" FontWeight="DemiBold"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
+                <!--%-->
 
-                <!--
-                <DataGridTemplateColumn Header="%" Width="5*" MinWidth="100" IsReadOnly="True">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <ProgressBar Value="{Binding Path=PerCent, Mode=OneWay}" Minimum="0" Maximum="100" Background="LightGray" />
-                                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=PerCent}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
--->
                 <DataGridTemplateColumn Header="% &#x0a;" Width="5*" MinWidth="100" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -259,22 +241,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
-
-                <!--<DataGridTextColumn MinWidth="75" Header="ECI(kgCo2/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True" Visibility="Hidden"/>-->
-
-                <!--
-                                <DataGridComboBoxColumn
-                    Header="ComboboxColumn"
-                    ItemsSource="{DynamicResource ColourSource}"
-                    SelectedValueBinding="{Binding ColourId, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                    SelectedValuePath="Id"
-                    DisplayMemberPath="ColourString"
-                    >
-                </DataGridComboBoxColumn>
                 
-                -->
-
             </DataGrid.Columns>
         </DataGrid>
 

@@ -793,18 +793,41 @@ namespace CarboLifeAPI.Data
         }
         public void UpdateGroup(CarboGroup carboGroup)
         {
-            foreach (CarboGroup cg in groupList)
+            for (int i = 0; i < groupList.Count; i++)
             {
+                CarboGroup cg = groupList[i];
                 // Update selected group per se. 
                 // 
                 if (cg.Id == carboGroup.Id)
                 {
+                    cg.copyValues(carboGroup);
+                    /*
                     cg.Category = carboGroup.Category;
-                    cg.Correction = carboGroup.Correction;
-                    cg.Description = carboGroup.Description;
-                    cg.Volume = carboGroup.Volume;
                     cg.SubCategory = carboGroup.SubCategory;
+
+                    cg.Material = carboGroup.Material;
+                    cg.MaterialName = carboGroup.MaterialName;
+
+                    cg.AllElements = carboGroup.AllElements;
+
+                    cg.Volume = carboGroup.Volume;
+                    cg.TotalVolume = carboGroup.TotalVolume;
+                    cg.Additional = carboGroup.Additional;
+                    cg.Correction = carboGroup.Correction;
+                    cg.Density = carboGroup.Density;
+                    cg.Description = carboGroup.Description;
+                    cg.EC = carboGroup.EC;
+                    cg.ECI = carboGroup.ECI;
+                    cg.Id = carboGroup.Id;
+                    cg.Mass = carboGroup.Mass;
+
+                    cg.isDemolished = carboGroup.isDemolished;
+                    cg.isSubstructure = carboGroup.isSubstructure;
+
+                    cg.PerCent = carboGroup.PerCent;
+                    */
                     cg.CalculateTotals();
+                    break;
                 }
             }
         }

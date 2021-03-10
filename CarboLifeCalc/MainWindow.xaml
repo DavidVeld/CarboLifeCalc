@@ -45,7 +45,7 @@
         https://github.com/DavidVeld/CarboLifeCalc
         </Hyperlink>
         </TextBlock>
-        <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,100,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Build: February 2021.3</Label>
+        <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,100,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Build: March 2021.1</Label>
         <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,125,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Author: David In't Veld</Label>
 
 

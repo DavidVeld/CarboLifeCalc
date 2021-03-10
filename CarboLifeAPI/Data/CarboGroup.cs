@@ -18,7 +18,6 @@ namespace CarboLifeAPI.Data
         public string Description { get; set; }
         public double Volume { get; set; }
         public double TotalVolume { get; set; }
-        public string Correction { get; set; }
         //Calculated Values;
         public double Density { get; set; }
         public double Mass { get; set; }
@@ -29,6 +28,12 @@ namespace CarboLifeAPI.Data
         //public double EE { get; set; }
         public double EC { get; set; }
         public double PerCent { get; set; }
+
+        /// Advanced Values
+        public string Correction { get; set; }
+        public double Waste { get; set; }
+        public double Additional { get; set; }
+        public string AdditionalDescription { get; set; }
 
         public CarboMaterial Material {get;set;}
 
@@ -60,9 +65,13 @@ namespace CarboLifeAPI.Data
             ECI = 0;
             EC = 0;
 
+            Waste = 0;
+            Additional = 0;
+
             PerCent = 0;
             Material = new CarboMaterial();
             AllElements = new List<CarboElement>();
+
 
             isDemolished = false;
             isSubstructure = false;
@@ -180,7 +189,7 @@ namespace CarboLifeAPI.Data
             //Clear Values
             MaterialName = Material.Name;
             //EEI = Material.EEI;
-            ECI = Material.ECI;
+            ECI = Material.ECI + Additional;
             Density = Material.Density;
             
             if (AllElements != null)
@@ -196,7 +205,8 @@ namespace CarboLifeAPI.Data
                 }
             }
 
-            Volume = Math.Round(Volume, 2);
+            double wasteFact = 1 + (Waste / 100);
+            Volume = Math.Round(Volume, 3);
 
             //Calculate the real volume based on a correction if required. 
             if (Utils.isValidExpression(Correction) == true)
@@ -204,11 +214,11 @@ namespace CarboLifeAPI.Data
                 string volumeStr = Volume.ToString();
                 StringToFormula stf = new StringToFormula();
                 double result = stf.Eval(volumeStr + Correction);
-                TotalVolume = Math.Round(result,2);
+                TotalVolume = Math.Round((result * wasteFact), 2);
             }
             else
             {
-                TotalVolume = Volume;
+                TotalVolume = (Volume * wasteFact);
             }
             
 
@@ -231,16 +241,62 @@ namespace CarboLifeAPI.Data
         public CarboGroup Copy()
         {
             CarboGroup result = new CarboGroup();
+
             result.Category = this.Category;
             result.SubCategory = this.SubCategory;
+
             result.Material = this.Material;
             result.MaterialName = this.MaterialName;
-            result.AllElements = this.AllElements;
-            result.Volume = this.Volume;
 
-            result.RefreshValuesFromElements();
+            result.AllElements = this.AllElements;
+
+            result.Volume = this.Volume;
+            result.TotalVolume = this.TotalVolume;
+            result.Additional = this.Additional;
+            result.Correction = this.Correction;
+            result.Density = this.Density;
+            result.Description = this.Description;
+            result.EC = this.EC;
+            result.ECI = result.ECI;
+            result.Id = this.Id;
+            result.Mass = this.Mass;
+
+            result.isDemolished = this.isDemolished;
+            result.isSubstructure = this.isSubstructure;
+
+            result.PerCent = this.PerCent;
+
+            //result.RefreshValuesFromElements();
 
             return result;
+
+        }
+
+        internal void copyValues(CarboGroup carboGroup)
+        {
+            Category = carboGroup.Category;
+            SubCategory = carboGroup.SubCategory;
+
+            Material = carboGroup.Material;
+            MaterialName = carboGroup.MaterialName;
+
+            AllElements = carboGroup.AllElements ;
+
+            Volume = carboGroup.Volume;
+            TotalVolume = carboGroup.TotalVolume;
+            Additional = carboGroup.Additional;
+            Correction = carboGroup.Correction;
+            Density = carboGroup.Density;
+            Description = carboGroup.Description;
+            EC = carboGroup.EC;
+            ECI = carboGroup.ECI;
+            Id = carboGroup.Id;
+            Mass = carboGroup.Mass;
+
+            isDemolished = carboGroup.isDemolished;
+            isSubstructure = carboGroup.isSubstructure;
+
+            PerCent = carboGroup.PerCent;
 
         }
     }

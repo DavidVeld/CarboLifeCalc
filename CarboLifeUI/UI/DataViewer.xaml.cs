@@ -65,9 +65,9 @@ namespace CarboLifeUI.UI
                 string imgpath = System.IO.Path.GetDirectoryName(_path);
 
                 //Attempt1: edit button
-                BitmapImage bimg_edit = new BitmapImage(new Uri(imgpath + @"\img\editicon.png"));
-                ImageSource rcs = bimg_edit;
-                img_editButton.Source = rcs;
+                //BitmapImage bimg_edit = new BitmapImage(new Uri(imgpath + @"\img\editicon.png"));
+                //ImageSource rcs = bimg_edit;
+                //img_editButton.Source = rcs;
 
 
                 BitmapImage bimg_ref = new BitmapImage(new Uri(imgpath + @"\img\refreshicon.png"));
@@ -139,6 +139,7 @@ namespace CarboLifeUI.UI
 
         private void Btn_Material_Click(object sender, RoutedEventArgs e)
         {
+            /*
             if (dgv_Overview.SelectedItems.Count > 0)
             {
                 try
@@ -177,6 +178,48 @@ namespace CarboLifeUI.UI
                     MessageBox.Show(ex.Message);
                 }
             }
+            */
+
+            if (dgv_Overview.SelectedItems.Count > 0)
+            {
+                try
+                {
+                    //Select all the groups
+                    var selectedItems = dgv_Overview.SelectedItems;
+                    IList<CarboGroup> selectedGroups = new List<CarboGroup>();
+
+                    // ... Add all Names to a List.
+                    foreach (var item in selectedItems)
+                    {
+                        CarboGroup cg = item as CarboGroup;
+                        selectedGroups.Add(cg);
+                    }
+
+                    if (selectedGroups.Count > 0)
+                    {
+                        CarboGroup carboGroup = selectedGroups[0];
+
+                        MaterialSelector materialEditor = new MaterialSelector(carboGroup.Material.Name, CarboLifeProject.CarboDatabase);
+                        materialEditor.ShowDialog();
+                        //If okay change the materials and re-calculate project
+                        if (materialEditor.isAccepted == true)
+                        {
+                            foreach (CarboGroup cg in selectedGroups)
+                            {
+                                CarboLifeProject.UpdateMaterial(cg, materialEditor.selectedMaterial);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
+
+
+
 
             CarboLifeProject.CalculateProject();
             refreshData();
@@ -225,35 +268,85 @@ namespace CarboLifeUI.UI
 
         private void Dgv_Overview_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
-
-            if (carboGroup != null)
+            if (dgv_Overview != null)
             {
-                TextBox t = e.EditingElement as TextBox;
-                DataGridColumn dgc = e.Column;
+                CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
 
-                if (t != null)
+                if (carboGroup != null)
                 {
-                    //Corrections:
-                    if (dgc.Header.ToString().StartsWith("Correction"))
+                    TextBox t = e.EditingElement as TextBox;
+                    DataGridColumn dgc = e.Column;
+
+                    if (t != null)
                     {
-                        string textExpression = t.Text;
-                        if (Utils.isValidExpression(textExpression) == true)
+                        //Corrections:
+                        if (dgc.Header.ToString().StartsWith("Correction"))
                         {
-                            carboGroup.Correction = textExpression;
-                            CarboLifeProject.UpdateGroup(carboGroup);
+                            string textExpression = t.Text;
+                            if (Utils.isValidExpression(textExpression) == true)
+                            {
+                                carboGroup.Correction = textExpression;
+                                carboGroup.CalculateTotals();
+
+                                CarboLifeProject.UpdateGroup(carboGroup);
+
+                            }
                         }
-                    }
-                    if(dgc.Header.ToString().StartsWith("Volume"))
-                    {
-                        if(carboGroup.AllElements.Count > 0)
+                        if (dgc.Header.ToString().StartsWith("Volume"))
                         {
-                            MessageBox.Show("The volume of this group is calculated using the element volumes extracted from the 3D model," + Environment.NewLine + " you need to purge the elements before overriding the volume");
-                            carboGroup.CalculateTotals();
-                            //btn_Calculate.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                            //System.Threading.Thread.Sleep(500);
-                            //Calculate();
+                            if (carboGroup.AllElements.Count > 0)
+                            {
+                                MessageBox.Show("The volume of this group is calculated using the element volumes extracted from the 3D model," + Environment.NewLine + " you need to purge the elements before overriding the volume");
+                                carboGroup.CalculateTotals();
+                                CarboLifeProject.UpdateGroup(carboGroup);
+
+                                //System.Threading.Thread.Sleep(500);
+                                //Calculate();
+                            }
+                            else
+                            {
+                                double volumeEdit = Utils.ConvertMeToDouble(t.Text);
+                                if (volumeEdit != null)
+                                {
+                                    carboGroup.Volume = volumeEdit;
+
+                                    carboGroup.CalculateTotals();
+                                    CarboLifeProject.UpdateGroup(carboGroup);
+                                    //carboGroup.CalculateTotals();
+                                }
+                            }
                         }
+                        //Waste
+                        //Corrections:
+                        if (dgc.Header.ToString().StartsWith("Waste"))
+                        {
+                            double wastevalue = Utils.ConvertMeToDouble(t.Text);
+                            if (wastevalue != null)
+                            {
+                                carboGroup.Waste = wastevalue;
+
+                                carboGroup.CalculateTotals();
+                                CarboLifeProject.UpdateGroup(carboGroup);
+                                //carboGroup.CalculateTotals();
+                            }
+                        }
+                        //Additional:
+                        if (dgc.Header.ToString().StartsWith("Additional"))
+                        {
+                            double additional = Utils.ConvertMeToDouble(t.Text);
+                            if (additional != null)
+                            {
+                                carboGroup.Additional = additional;
+
+                                carboGroup.CalculateTotals();
+                                CarboLifeProject.UpdateGroup(carboGroup);
+                                //carboGroup.CalculateTotals();
+                            }
+                        }
+                        //The below triggers an error when switching cells too fast, no idea why need to resolve.
+                        //dgv_Overview.ItemsSource = null;
+                        //dgv_Overview.ItemsSource = CarboLifeProject.getGroupList;
+                        //SortData();
                     }
                 }
             }
@@ -320,7 +413,24 @@ namespace CarboLifeUI.UI
 
                     if (reinforementWindow.isAccepted == true)
                     {
-                        CarboLifeProject.AddGroup(reinforementWindow.reinforcementGroup);
+                        if (reinforementWindow.createNew == true)
+                        {
+                            CarboLifeProject.AddGroup(reinforementWindow.reinforcementGroup);
+                        }
+                        else
+                        {
+                            foreach (var item in selectedItems)
+                            {
+                                CarboGroup cg = item as CarboGroup;
+                                if (cg != null)
+                                {
+                                    cg.Additional = reinforementWindow.addtionalValue;
+                                    cg.AdditionalDescription = reinforementWindow.additionalDescription;
+                                }
+
+                            }
+                        }
+
                     }
                 }
             }
@@ -388,15 +498,20 @@ namespace CarboLifeUI.UI
         private void Btn_ShowHideCorrections_Click(object sender, RoutedEventArgs e)
         {
 
-            if (column_Volume.Visibility == Visibility.Hidden)
+            if (column_Correction.Visibility == Visibility.Hidden)
             {
-                column_Volume.Visibility = Visibility.Visible;
+                //column_Volume.Visibility = Visibility.Visible;
                 column_Correction.Visibility = Visibility.Visible;
+                column_Addition.Visibility = Visibility.Visible;
+                column_Waste.Visibility = Visibility.Visible;
+
             }
             else
             {
-                column_Volume.Visibility = Visibility.Hidden;
+               // column_Volume.Visibility = Visibility.Hidden;
                 column_Correction.Visibility = Visibility.Hidden;
+                column_Addition.Visibility = Visibility.Hidden;
+                column_Waste.Visibility = Visibility.Hidden;
             }
 
         }

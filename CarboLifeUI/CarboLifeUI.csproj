@@ -102,6 +102,9 @@
     <Compile Include="UI\ExportPicker.xaml.cs">
       <DependentUpon>ExportPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\MaterialSelector.xaml.cs">
+      <DependentUpon>MaterialSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\OnlineMaterialPicker.xaml.cs">
       <DependentUpon>OnlineMaterialPicker.xaml</DependentUpon>
     </Compile>
@@ -189,6 +192,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\ExportPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\MaterialSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

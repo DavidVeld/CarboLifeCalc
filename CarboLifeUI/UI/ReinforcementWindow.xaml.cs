@@ -24,12 +24,15 @@ namespace CarboLifeUI.UI
         public CarboDatabase materials;
         public CarboGroup concreteGroup;
         public CarboGroup reinforcementGroup;
+        public double addtionalValue;
+        public string additionalDescription;
 
         public bool isAccepted;
-
+        public bool createNew;
         public ReinforcementWindow(CarboDatabase materialDatabase, CarboGroup myConcreteGroup)
         {
             isAccepted = false;
+            createNew = false;
             materials = materialDatabase;
             concreteGroup = myConcreteGroup;
             reinforcementGroup = new CarboGroup();
@@ -38,23 +41,26 @@ namespace CarboLifeUI.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (CarboMaterial cm in materials.CarboMaterialList)
+            //Get a clean material list:
+            if (materials.CarboMaterialList != null && materials.CarboMaterialList.Count > 0)
             {
-                if (cm.Category == "Steel" ||
-                    cm.Name.Contains("reinforcement") ||
-                    cm.Name.Contains("rebar"))
+                List<CarboMaterial> sortedMaterialList = materials.CarboMaterialList.OrderBy(o => o.Name).ToList();
+
+                foreach (CarboMaterial cm in sortedMaterialList)
                 {
                     cbb_ReinforcementMaterial.Items.Add(cm.Name);
                 }
-            }
-            if(cbb_ReinforcementMaterial.Items.Count <= 0)
-            {
-                MessageBox.Show("No rebar or steel materials found in database, please create one and try again");
-            }
-            cbb_ReinforcementMaterial.SelectedItem = cbb_ReinforcementMaterial.Items[0];
-            txt_Volume.Text = concreteGroup.Volume.ToString();
 
-            refreshInterface();
+                cbb_ReinforcementMaterial.SelectedItem = cbb_ReinforcementMaterial.Items[0];
+                txt_Volume.Text = concreteGroup.Volume.ToString();
+                rd_Insert.IsChecked = true;
+                refreshInterface();
+            }
+            else
+            {
+                MessageBox.Show("No materials found in database, please create some and try again");
+                this.Close();
+            }
         }
 
 
@@ -65,12 +71,18 @@ namespace CarboLifeUI.UI
             double density = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Density.Text);
 
 
+
             if (material != null && txt_Volume.Text != "" && txt_Density.Text != "")
             {
 
                 reinforcementGroup = calculateRebar(material, reinforcementGroup, volume, density);
+
+                addtionalValue = calculateMixedMaterial(material, concreteGroup.Density, density);
+                additionalDescription = reinforcementGroup.Description;
+
                 txt_VolumeRebar.Text = reinforcementGroup.Volume.ToString();
                 txt_WeightRebar.Text = reinforcementGroup.Mass.ToString();
+                txt_MixResult.Text = Math.Round(addtionalValue,3).ToString();
             }
             
         }
@@ -91,13 +103,23 @@ namespace CarboLifeUI.UI
             reinforcementGroup.ECI =  material.ECI;
 
             reinforcementGroup.Description = "Reinforcement of: " + volume + "m³ " +  "/ With: " + density + " kg/m³ Reinforcement";
-
+           
             return reinforcementGroup;
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = true;
+
+            if(rd_NewGroup.IsChecked.Value == true)
+            {
+                createNew = true;
+            }
+            else
+            {
+                createNew = false;
+            }
+
             this.Close();
         }
 
@@ -116,5 +138,21 @@ namespace CarboLifeUI.UI
         {
             refreshInterface();
         }
+
+        private double calculateMixedMaterial(CarboMaterial material, double densityBase, double densityToMix)
+        {
+            double result = 0;
+            try
+            {
+                 result = (densityToMix * material.ECI) / densityBase;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+
+            return result;
+        }
+
     }
 }

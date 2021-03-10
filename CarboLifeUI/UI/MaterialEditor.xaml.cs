@@ -27,31 +27,21 @@ namespace CarboLifeUI.UI
     {
         public bool acceptNew;
 
-        //private CarboMaterial originalMaterial;
-        //private CarboDatabase originalDatabase;
-        //private CarboDatabase baseMaterials;
-
-
         public CarboMaterial selectedMaterial;
         public CarboDatabase returnedDatabase;
 
-        public MaterialEditor(string materialName, CarboDatabase database)
+        public MaterialEditor(string selectedMaterialName, CarboDatabase database)
         {
-            //originalMaterial = material;
-            //selectedMaterial = material;
             try
             {
                 //originalDatabase = database;
                 returnedDatabase = database;
-                selectedMaterial = database.GetExcactMatch(materialName);
+                selectedMaterial = database.GetExcactMatch(selectedMaterialName);
                 if (selectedMaterial == null)
                 {
                     MessageBox.Show("This material could not be found in the database, the closest match will now be found");
-                    selectedMaterial = database.getClosestMatch(materialName);
+                    selectedMaterial = database.getClosestMatch(selectedMaterialName);
                 }
-
-                //baseMaterials = new CarboDatabase();
-                //baseMaterials = baseMaterials.DeSerializeXML("db\\BaseMaterials");
 
                 acceptNew = false;
             }
@@ -72,6 +62,7 @@ namespace CarboLifeUI.UI
         {
             List<string> materialCategories = new List<string>();
             materialCategories = returnedDatabase.getCategoryList();
+            materialCategories.Sort();
 
             foreach (string cat in materialCategories)
             {
