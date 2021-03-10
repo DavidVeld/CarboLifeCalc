@@ -27,12 +27,14 @@ Screenshots:
 Roadmap:
 
 1. Installer
-2. Improve material Database
-4. Improve B1-B7 analysis
-5. Improve A5 calculation
-6. Improve C1-C4 calculation
-7. Carbon sequestering calculator in the material editor
-8. Record movie to explain working of addin
+2. Update a project with new elements from Revit
+3. Add a waste factor to group
+4. Improve material database
+5. Improve B1-B7 analysis
+6. Improve A5 calculation
+7. Improve C1-C4 calculation
+8. Carbon sequestering calculator in the material editor
+9. Record movie to explain working of addin
 
 Updates as per build 24.02.2021
 1.Bugs in material editor 
