@@ -3,9 +3,9 @@ A Quick-Action Carbon Whole Life Carbon Assessment calculator using Revit materi
 
 Status: Work in Good Progress
 
-Current Build for testing download link: (24-02-2021)
+Current Build for testing download link: (15-03-2021)
 
-https://drive.google.com/file/d/1NEKF-DdsKTnAmczon9c3Z26oZCT7K9sG/view?usp=sharing
+https://drive.google.com/file/d/1uH7d4axtyb70D-U0QhDMairfdnuqLc4T/view?usp=sharing
 
 The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design. 
 As a standalone application you can set quantities and materials,  or you can use a 3d model from Revit to import your building into the calculator. Your revit materials will automatically be mapped to to the CarboLifeCalc's own, thus giving you an instant result on the building's embodied carbon.
@@ -27,21 +27,29 @@ Screenshots:
 Roadmap:
 
 1. Installer
-2. Update a project with new elements from Revit
+2. Bug fixing
+3. Update a project with new elements from Revit
+4. Carbon sequestering calculator in the material editor
+5. Record movie to explain working of addin
+6. Project compare interface
+7. Improved graphics for overview
+
+Updates as per build 15.03.2021
+1. Bugs in material editor 
 3. Add a waste factor to group
-4. Improve material database
-5. Improve B1-B7 analysis
-6. Improve A5 calculation
-7. Improve C1-C4 calculation
-8. Carbon sequestering calculator in the material editor
-9. Record movie to explain working of addin
+4. B4 now works per group as well as per material
+5. Improve material database
+6. Improve B1-B7 analysis
+7. Improve A5 calculation
+8. Improve C1-C4 calculation
+9. Reinforcement can be written into existing groups, in the material or as seperate elements
 
 Updates as per build 24.02.2021
 1.Bugs in material editor 
-2.Allowance to mix a material into another, for reinforcement or steel fixings in timber
-3.HTML Report exporter updated
-4.Export the entire project into excel
-5.Load materials from an on-line database, use material editor to save and sync to template & share online. 
+3.Allowance to mix a material into another, for reinforcement or steel fixings in timber
+4.HTML Report exporter updated
+5.Export the entire project into excel
+6.Load materials from an on-line database, use material editor to save and sync to template & share online. 
 
 Updates as per build 19.02.2021
 1. Improved sync, including online sync options
