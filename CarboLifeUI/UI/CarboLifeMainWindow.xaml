@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Carbo Life Calculator"
-             d:DesignHeight="780" d:DesignWidth="1200" MinWidth="1200" MinHeight="780" Width="1200" Height="780" Closing="Window_Closing">
+             d:DesignHeight="820" d:DesignWidth="1200" MinWidth="1200" MinHeight="820" Width="1200" Height="820" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -83,7 +83,7 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
-                    <local:DataViewer x:Name="DataScreen" Grid.Row="1" Grid.Column="1" Visibility="Visible" ></local:DataViewer>
+                    <local:DataViewer x:Name="DataScreen" Grid.Row="1" Grid.Column="1" Visibility="Visible"></local:DataViewer>
                 </Grid>
             </TabItem>
             <TabItem Header="Graphs" Visibility="Hidden"></TabItem>

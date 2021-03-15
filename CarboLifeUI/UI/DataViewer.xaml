@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="900" IsVisibleChanged="UserControl_IsVisibleChanged" Background="WhiteSmoke">
+             d:DesignHeight="400" d:DesignWidth="1050" IsVisibleChanged="UserControl_IsVisibleChanged" Background="WhiteSmoke">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,13 +15,14 @@
             <local:MaterialList x:Key="MaterialList" />
 
         </ResourceDictionary>
-        
+
     </UserControl.Resources>
 
     <Grid Background="Transparent">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="32"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="30"/>
@@ -35,13 +36,13 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" Height="32" Margin="0,0,0,0" HorizontalAlignment="Stretch">
+        <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" Height="32" Margin="0,0,0,2" HorizontalAlignment="Stretch">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
                     <DockPanel HorizontalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            
+
             <MenuItem Header="Groups" Background="Transparent" Style="{StaticResource baseStyleLabel}" Height="26" Margin="0,2,0,0" VerticalAlignment="Top">
                 <MenuItem Name="mnu_NewGroup" Header="New Group" Click="Mnu_NewGroup_Click"/>
                 <MenuItem Name="mnu_DeleteGroup" Header="Delete Group" Click="Mnu_DeleteGroup_Click" />
@@ -54,28 +55,46 @@
 
 
             </MenuItem>
-            <MenuItem Header="Actions" Background="Transparent"  VerticalAlignment="Top" Style="{StaticResource baseStyleLabel}"  Height="26" Margin="0,2,0,0">
+            <MenuItem Header="Tools" Background="Transparent"  VerticalAlignment="Top" Style="{StaticResource baseStyleLabel}"  Height="26" Margin="0,2,0,0">
                 <Separator></Separator>
-                <MenuItem Name="mnu_Reinforce" Header="Reinforce/Mix selected..." Click="Mnu_Reinforce_Click"/>
+                <MenuItem Name="mnu_editadvanced" Header="Edit Advanced parameters" Click="btn_EditAdvanced_Click"/>
+                <MenuItem Name="mnu_Additional" Header="Reinforce/Mix selected..." Click="Mnu_Reinforce_Click"/>
                 <MenuItem Name="mnu_Metaldeck" Header="Apply a Profile correction..." Click="Mnu_Metaldeck_Click" />
                 <Separator></Separator>
                 <MenuItem Name="mnu_PurgeElements" Header="Purge Elements from Group" Click="Mnu_PurgeElements_Click"/>
             </MenuItem>
 
-            <Separator Background="Gray" Width="20" Height="2" BorderThickness="1" BorderBrush="Black">
+        </Menu>
+
+        <Menu Grid.Row="2" Grid.Column="1" Background="Transparent" Height="32" Margin="0,0,0,2" HorizontalAlignment="Stretch">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+
+            <Button x:Name="btn_EditMaterial_V2" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="125" Height="24" Padding="5,0,5,0"
+                    BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" Background="#ddd"
+                    FontWeight="DemiBold" BorderThickness="1" Click="Btn_Material_Click" ToolTip="Edit the material of the selected group">Change Material</Button>
+
+            <Button x:Name="btn_OpenMaterialEditor" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top"  Width="125" Height="24" Padding="5,0,5,0"
+                    BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" Background="#ddd"
+                    FontWeight="DemiBold" BorderThickness="1" Click="btn_OpenMaterialEditor_Click"  ToolTip="Open the material editor">Material Editor
+            </Button>
+            <Button x:Name="btn_EditAdvanced" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="160" Height="24" Padding="5,0,5,0"
+                    BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" Background="#ddd"
+                    FontWeight="DemiBold" BorderThickness="1" Click="btn_EditAdvanced_Click"  ToolTip="Edit the material of the selected group" Visibility="Visible">Edit Advanced Params</Button>
+            
+
+
+            <Separator Background="Gray" Width="20" Height="20" BorderThickness="2" BorderBrush="#000000">
                 <Separator.LayoutTransform>
                     <RotateTransform Angle="90" />
                 </Separator.LayoutTransform>
             </Separator>
 
-            <Button x:Name="btn_EditMaterial_V2" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="125" Height="24" Padding="5,0,5,0"
-                    BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" 
-                    FontWeight="DemiBold" BorderThickness="1" Click="Btn_Material_Click" ToolTip="Edit the material of the selected group">Change Material</Button>
-
-            <Button x:Name="btn_OpenMaterialEditor" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top"  Width="110" Height="24" Padding="5,0,5,0"
-                    BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" 
-                    FontWeight="DemiBold" BorderThickness="1" Click="btn_OpenMaterialEditor_Click"  ToolTip="Open the material editor">Material Editor
-            </Button>
+            <ToggleButton x:Name="btn_ShowHideCorrections" Content="Show / Hide Advanced" Width="180" Height="24" BorderBrush="#444" FontWeight="DemiBold"
+                          HorizontalAlignment="Right" Click="Btn_ShowHideCorrections_Click" FontFamily="Segoe UI" Background="WhiteSmoke"  FontSize="14" ToolTip="Add extra features to manipulate the dataset"/>
 
             <Button x:Name="btn_Calculate" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="110" Height="24" Padding="5,0,5,0"
                     BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" 
@@ -86,21 +105,12 @@
                 </StackPanel>
             </Button>
 
-            <Separator Background="Gray" Width="20" Height="2" BorderThickness="2" BorderBrush="#000000">
-                <Separator.LayoutTransform>
-                    <RotateTransform Angle="90" />
-                </Separator.LayoutTransform>
-            </Separator>
-
-            <ToggleButton x:Name="btn_ShowHideCorrections" Content="Advanced" Width="110" Height="24" BorderBrush="#444" FontWeight="DemiBold"
-                          HorizontalAlignment="Right" Click="Btn_ShowHideCorrections_Click" FontFamily="Segoe UI" Background="WhiteSmoke" FontSize="14" ToolTip="Add extra features to manipulate the dataset"/>
-            
             <Separator Background="Gray" Width="20" Height="2" BorderThickness="1" BorderBrush="#000000">
                 <Separator.LayoutTransform>
                     <RotateTransform Angle="90" />
                 </Separator.LayoutTransform>
             </Separator>
- 
+
             <StackPanel HorizontalAlignment="Right">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -122,14 +132,15 @@
 
         </Menu>
 
-        <DataGrid x:Name="dgv_Overview" Grid.Row="2" Grid.Column="1" 
+
+        <DataGrid x:Name="dgv_Overview" Grid.Row="3" Grid.Column="1" 
                               Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="False" SelectionChanged="Dgv_Overview_SelectionChanged" 
                   CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" HorizontalScrollBarVisibility="Visible">
             <DataGrid.Resources>
                 <local:SumValues x:Key="SumValues"/>
             </DataGrid.Resources>
 
-            
+
             <DataGrid.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.ContainerStyle>
@@ -171,7 +182,7 @@
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Description &#x0a;" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="False"/>
                 <!--Volume-->
                 <DataGridTextColumn MinWidth="100" Header="Volume &#x0a;[m³]" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
-                
+
                 <!--- Advanced Fields -->
                 <!--Volume Correction -->
                 <DataGridTextColumn x:Name="column_Correction" MinWidth="100" Header="Correction &#x0a;[+-*/ Function] " Binding="{Binding Path=Correction, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
@@ -179,6 +190,9 @@
                 <DataGridTextColumn x:Name="column_Waste" MinWidth="100" Header="Waste  &#x0a; [%] " Binding="{Binding Path=Waste, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
                 <!--Additional Correction -->
                 <DataGridTextColumn x:Name="column_Addition" MinWidth="100" Header="Additional &#x0a;[kgCo2e/kg] " Binding="{Binding Path=Additional, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
+                <!--Additional Correction -->
+                <DataGridTextColumn x:Name="column_B4" MinWidth="100" Header="Group [B4] &#x0a;[x build] " Binding="{Binding Path=B4Factor, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
+
                 <!--Total Volume-->
                 <!--<DataGridTextColumn x:Name="column_Volume"  MinWidth="100" Header="Total Volume &#x0a;[m³]" Binding="{Binding Path=TotalVolume, Mode=OneWay}" IsReadOnly="True" Visibility="Hidden"/>
 -->
@@ -241,14 +255,14 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
+
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Name="lbl_Total" Grid.Row="3" Grid.Column="1" Background="Transparent">TOTAL: xxx tCo2 (Recalculate to refresh)</Label>
+        <Label Name="lbl_Total" Grid.Row="4" Grid.Column="1" Background="Transparent">TOTAL: xxx tCo2 (Recalculate to refresh)</Label>
 
 
-        <Menu Grid.Row="4" Grid.Column="1" Background="Transparent" DockPanel.Dock="Top" >
+        <Menu Grid.Row="5" Grid.Column="1" Background="Transparent" >
             <Button x:Name="btn_Collaps" Width="35" Content="▼" HorizontalAlignment="Right" VerticalAlignment="Top"  Margin="0,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Collaps_Click"/>
             <MenuItem Name="mnu_EditElements" Header="Elements" Background="Transparent" Style="{StaticResource baseStyleLabel}" >
                 <MenuItem Name="mnu_MoveToNewGroup" Header="_To New Group" Click="Mnu_MoveToNewGroup_Click"/>
@@ -257,7 +271,7 @@
             </MenuItem>
         </Menu>
 
-        <DataGrid x:Name="dgv_Elements" Grid.Row="5" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible"></DataGrid>
+        <DataGrid x:Name="dgv_Elements" Grid.Row="6" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible"></DataGrid>
 
     </Grid>
 </UserControl>

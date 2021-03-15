@@ -407,6 +407,18 @@ namespace CarboLifeAPI
 
     }
 
+    public class LookupItem
+    {
+        public string name { get; set; }
+        public double value { get; set; }
+
+        public LookupItem()
+        {
+            name = "name";
+            value = 0;
+        }
+    }
+
 
 }
 

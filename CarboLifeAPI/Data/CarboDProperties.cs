@@ -23,10 +23,8 @@ namespace CarboLifeAPI.Data
         public CarboDProperties()
         {
             name = "";
-
             value = 0;
             calcResult = "";
-
         }
 
         public void calculate()

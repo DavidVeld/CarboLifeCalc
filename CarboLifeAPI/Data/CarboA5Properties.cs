@@ -18,7 +18,9 @@ namespace CarboLifeAPI.Data
        
         //Results
         public double value { get; set; }
-        public string calcResult { get; set; }
+
+        [NonSerialized]
+        public string calcResult;
 
         public CarboA5Properties()
         {

@@ -102,7 +102,7 @@ namespace CarboLifeUI.UI
             reinforcementGroup.Density =  material.Density;
             reinforcementGroup.ECI =  material.ECI;
 
-            reinforcementGroup.Description = "Reinforcement of: " + volume + "m³ " +  "/ With: " + density + " kg/m³ Reinforcement";
+            reinforcementGroup.Description = "Reinforcement of: " + volume + "m³ " +  " With: " + density + " kg/m³ Reinforcement";
            
             return reinforcementGroup;
         }

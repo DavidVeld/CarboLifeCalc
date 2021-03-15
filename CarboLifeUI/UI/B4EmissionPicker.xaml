@@ -1,0 +1,75 @@
+﻿<Window x:Class="CarboLifeUI.UI.B4EmissionPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarboLifeUI.UI"
+             mc:Ignorable="d" Title="Replace Emissions"  Height="300" MaxHeight="300"  MinHeight="300"  d:DesignWidth="700" MinWidth="700" Width="700" MaxWidth="700" Loaded="Window_Loaded" Background="WhiteSmoke">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="MyStyles.xaml">
+                </ResourceDictionary>
+                <ResourceDictionary Source="MyDataGrid.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Replace emissions [B4]</Label>
+
+        <TextBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" AcceptsReturn="True" IsReadOnly="True" Height="41" TextWrapping="Wrap">
+            The B4 value will multiply the entire Group's A1-C4 emissions by that factor.</TextBox>
+
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="3" Header="[B4] Replace emissions" Style="{StaticResource baseStyleBold}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Margin="0,1,475,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Component Lifespan:</Label>
+                <TextBox Name="txt_ComponentLifespan" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">year</Label>
+                <ComboBox Name="cbb_Type" Grid.Column="1" Margin="397,0,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="213"></ComboBox>
+
+
+                <Label Grid.Column="1" Margin="0,28,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Asset Ref. Period:</Label>
+                <TextBox Name="txt_AssetReferencePeriod" Grid.Column="1" Grid.Row="1" Margin="150,28,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>
+                <Label Grid.Column="1" Margin="230,28,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">year</Label>
+
+                <Label Grid.Column="1" Margin="0,55,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Factor:</Label>
+                <TextBox Name="txt_Value" Grid.Column="1" Grid.Row="1" Margin="150,55,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>
+                <Label Grid.Column="1" Margin="230,55,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">x Replaced</Label>
+
+            </Grid>
+        </GroupBox>
+
+        <Button Name="btn_Accept" Grid.Row="4" Grid.Column="2" Margin="0,6,85,5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
+        <Button Name="btn_Cancel" Grid.Row="4" Grid.Column="2" Margin="0,6,10,5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
+
+    </Grid>
+</Window>

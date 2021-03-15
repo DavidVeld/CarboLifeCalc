@@ -148,11 +148,12 @@ namespace CarboLifeUI.UI
 
                 string calc = "";
 
-                calc = "B1B5 x (A1-A3 + A4 + A5 + B1-B5 + C1-C4 + ECI_D + ECI_Mix) = ECI Total" + Environment.NewLine;
-                calc += Math.Round(Utils.ConvertMeToDouble(selectedMaterial.ECI_B1B5.ToString()), 4) +
+                calc = "B4 x (A1-A3 + A4 + A5 + B1-B7 + C1-C4 + D + Mix) = ECI Total" + Environment.NewLine;
+                calc += Math.Round(Utils.ConvertMeToDouble(selectedMaterial.materialB1B5Properties.B4.ToString()), 4) +
                     " x (" + Math.Round(Utils.ConvertMeToDouble(txt_A1_A3.Text), 4) +
                     " + " + Math.Round(Utils.ConvertMeToDouble(txt_A4.Text), 4) +
                     " + " + Math.Round(Utils.ConvertMeToDouble(txt_A5.Text), 4) +
+                    " + " + Math.Round(Utils.ConvertMeToDouble(txt_B1_B5.Text), 4) +
                     " + " + Math.Round(Utils.ConvertMeToDouble(txt_C1_C4.Text), 4) +
                     " + " + Math.Round(Utils.ConvertMeToDouble(txt_D.Text), 4) +
                     " + " + Math.Round(Utils.ConvertMeToDouble(txt_Mix.Text), 4) +
@@ -268,22 +269,29 @@ namespace CarboLifeUI.UI
 
                 txt_B1_B5_Setting.Text = "Manual";
                 txt_B1_B5.IsReadOnly = false;
+                txt_B4.IsReadOnly = false;
 
                 txt_B1_B5.Foreground = Brushes.Black;
+                txt_B4.Foreground = Brushes.Black;
+
             }
             else
             {
                 //Calculated
                 chx_B1_B5_Manual.IsChecked = false;
 
-                txt_B1_B5_Setting.Text = "Calculated";
+                txt_B1_B5_Setting.Text = "Design life: " + selectedMaterial.materialB1B5Properties.elementdesignlife.ToString();
+                
                 txt_B1_B5.IsReadOnly = true;
+                txt_B4.IsReadOnly = true;
 
                 txt_B1_B5.Foreground = Brushes.LightGray;
+                txt_B4.Foreground = Brushes.LightGray;
+
             }
 
             txt_B1_B5.Text = selectedMaterial.ECI_B1B5.ToString();
-
+            txt_B4.Text = selectedMaterial.materialB1B5Properties.B4.ToString();
         }
 
         private void SetC1C4()
@@ -470,7 +478,7 @@ namespace CarboLifeUI.UI
                 selectedMaterial.ECI_B1B5_Override = false;
 
                 selectedMaterial.materialB1B5Properties = materialLifePicker.materialB1B5Properties;
-                selectedMaterial.ECI_B1B5 = selectedMaterial.materialB1B5Properties.value;
+                selectedMaterial.ECI_B1B5 = selectedMaterial.materialB1B5Properties.totalValue;
             }
             UpdateMaterialSettings();
         }
@@ -730,7 +738,21 @@ namespace CarboLifeUI.UI
                 }
             }
         }
+        private async void txt_B4_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
 
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length)
+            {
+                if (selectedMaterial.ECI_B1B5_Override == true)
+                {
+                    selectedMaterial.materialB1B5Properties.B4 = Utils.ConvertMeToDouble(tb.Text);
+                    UpdateMaterialSettings();
+                }
+            }
+        }
         private async void txt_C1_C4_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
@@ -931,5 +953,7 @@ namespace CarboLifeUI.UI
                 UpdateMaterialSettings();
             }
         }
+
+
     }
 }

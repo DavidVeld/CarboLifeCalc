@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600" MinWidth="500" MinHeight="400" Width="500" Height="400"  Loaded="Window_Loaded">
+             d:DesignHeight="270" d:DesignWidth="500" MinWidth="500" MinHeight="270" Width="500" Height="270"  Loaded="Window_Loaded" Background="WhiteSmoke">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,7 +23,6 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="55"/>
-            <RowDefinition Height="130"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
@@ -36,10 +35,11 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Construction (A5) - WIP</Label>
-        <Label Grid.Column="2" Margin="0,1,0,0" Grid.Row="2" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">This value is work in progress, please specify a value below. </Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Construction [A5]</Label>
+        <TextBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" AcceptsReturn="True" IsReadOnly="True" Height="55" TextWrapping="Wrap">
+            Please specify a value below if known. [A5] is typically calculated using the project construction value. This can be specified in the project settings.</TextBox>
 
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="4" Header="Result:" Style="{StaticResource baseStyleBold}">
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="3" Header="Result:" Style="{StaticResource baseStyleBold}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
@@ -52,14 +52,14 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">CO2 per kg:</Label>
+                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">CO2 per kg:</Label>
                 <TextBox Name="txt_Value" Grid.Column="1" Grid.Row="1" Margin="125,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2/kg</Label>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2/kg</Label>
             </Grid>
         </GroupBox>
 
-        <Button Name="btn_Accept" Grid.Row="5" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
-        <Button Name="btn_Cancel" Grid.Row="5" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
+        <Button Name="btn_Accept" Grid.Row="4" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
+        <Button Name="btn_Cancel" Grid.Row="4" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
 
     </Grid>
-    </Window>
+</Window>

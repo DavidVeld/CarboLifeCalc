@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
-             mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="300" MinWidth="500" MinHeight="300" Width="500" Height="300"  Loaded="Window_Loaded">
+             mc:Ignorable="d" Title="Use Stage"  Height="800" MaxHeight="770"  MinHeight="770"  d:DesignWidth="700" MinWidth="700" Width="700" MaxWidth="700" Loaded="Window_Loaded" Background="WhiteSmoke">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -13,7 +12,6 @@
                     Source="MyStyles.xaml">
                 </ResourceDictionary>
                 <ResourceDictionary Source="MyDataGrid.xaml"/>
-
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -22,10 +20,16 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="170"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="70"/>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="65"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="45"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -36,9 +40,13 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Life Cycle (B1-B5)</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Use Stage (B1-B7) - WIP</Label>
 
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="2" Header="Input" Style="{StaticResource baseStyleBold}">
+        <TextBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" AcceptsReturn="True" IsReadOnly="True" Height="41" TextWrapping="Wrap">
+            The values below define the carbon emissions associated with the operational phase during the full lifespan of the asset. If a component needs replacing, the B4 value will multiply the entire A1-C4 by that factor.</TextBox>
+
+
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="3" Header="[B1] In use emissions" Style="{StaticResource baseStyleBold}" Grid.RowSpan="1">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
@@ -51,19 +59,15 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">LifeSpan:</Label>
-                <TextBox Name="txt_ReplaceValue" Grid.Column="1" Grid.Row="1" Margin="125,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="Txt_Value2_TextChanged"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Year</Label>
-
-                <Label Grid.Column="1" Margin="0,35,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Total Life:</Label>
-                <TextBox Name="txt_Life" Grid.Column="1" Grid.Row="1" Margin="125,35,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="Txt_Life_TextChanged"></TextBox>
-                <Label Grid.Column="1" Margin="230,35,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Year</Label>
+                <Label Grid.Column="1" Margin="0,1,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Emissions:</Label>
+                <TextBox Name="txt_B1Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B1Value_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2/kg</Label>
 
             </Grid>
         </GroupBox>
 
 
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="4" Header="Result" Style="{StaticResource baseStyleBold}">
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="4" Header="[B2] Maintenance emissions" Style="{StaticResource baseStyleBold}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
@@ -76,14 +80,129 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Factor:</Label>
-                <TextBox Name="txt_Value" Grid.Column="1" Grid.Row="1" Margin="125,1,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">x Replaced</Label>
+                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Emissions:</Label>
+                <TextBox Name="txt_B2Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B2Value_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
             </Grid>
         </GroupBox>
 
-        <Button Name="btn_Accept" Grid.Row="5" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
-        <Button Name="btn_Cancel" Grid.Row="5" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="5" Header="[B3] Repair emissions" Style="{StaticResource baseStyleBold}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Emissions:</Label>
+                <TextBox Name="txt_B3Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B3Value_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="6" Header="[B4] Replace emissions" Style="{StaticResource baseStyleBold}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="610" Margin="0,2,0,0" Grid.RowSpan="2">The B4 factor can best be assigned using the B4 factor in the advanced group factors.</Label>
+
+                <Label Grid.Column="1" Margin="0,23,475,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Asset Type:</Label>
+                <ComboBox Name="cbb_Type" Grid.Column="1" Margin="150,25,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="213" Text="WIP" IsEnabled="True" DropDownClosed="cbb_Type_DropDownClosed"></ComboBox>
+
+
+                <Label Grid.Column="1" Margin="0,53,475,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Component Lifespan:</Label>
+                <TextBox Name="txt_ComponentLifespan" Grid.Column="1" Grid.Row="1" Margin="150,52,0,0" Height="24" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_ComponentLifespan_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,53,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">year</Label>
+
+
+                <Label Grid.Column="1" Margin="0,80,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Asset Ref. Period:</Label>
+                <TextBox Name="txt_AssetReferencePeriod" Grid.Column="1" Grid.Row="1" Margin="150,79,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_AssetReferencePeriod_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,80,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">year</Label>
+
+                <Label Grid.Column="1" Margin="0,107,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Factor:</Label>
+                <TextBox Name="txt_B4Factor" Grid.Column="1" Grid.Row="1" Margin="150,107,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="True" Background="LightGray" TextChanged="txt_B4Factor_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,107,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">x Replaced</Label>
+
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="7" Header="[B5] Refurbishment emissions" Style="{StaticResource baseStyleBold}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Margin="0,1,505,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Emissions:</Label>
+                <TextBox Name="txt_B5Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B5Value_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="8" Header="[B6] Operational energy use" Style="{StaticResource baseStyleBold}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Margin="0,1,475,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Component Lifespan:</Label>
+                <TextBox Name="txt_B6Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B6Value_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="9" Header="[B7] Operational water use" Style="{StaticResource baseStyleBold}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Margin="0,1,475,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Component Lifespan:</Label>
+                <TextBox Name="txt_B7Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B7Value_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+
+            </Grid>
+        </GroupBox>
+        <Label Name="lbl_Calc" Grid.Column="2" Margin="0,1,160,0" Grid.Row="11" Height="37" VerticalAlignment="Top" Style="{StaticResource baseStyle}">[...]</Label>
+
+
+        <Button Name="btn_Accept" Grid.Row="11" Grid.Column="2" Margin="0,6,85,5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
+        <Button Name="btn_Cancel" Grid.Row="11" Grid.Column="2" Margin="0,6,10,5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
 
     </Grid>
 </Window>

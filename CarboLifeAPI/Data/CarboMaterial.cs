@@ -164,7 +164,7 @@ namespace CarboLifeAPI.Data
             ECI_A1A3 = 0;
             ECI_A4 = 0;
             ECI_A5 = 0;
-            ECI_B1B5 = 1;
+            ECI_B1B5 = 0;
             ECI_C1C4 = 0;
             ECI_D = 0;
             isLocked = false;
@@ -210,7 +210,7 @@ namespace CarboLifeAPI.Data
             if (ECI_B1B5_Override == false)
             {
                 materialB1B5Properties.calculate();
-                ECI_B1B5 = materialB1B5Properties.value;
+                ECI_B1B5 = materialB1B5Properties.totalValue;
             }
 
             if (ECI_C1C4_Override == false)
@@ -225,8 +225,11 @@ namespace CarboLifeAPI.Data
                 ECI_D = materialDProperties.value;
             }
 
+            //The main calc to do them all 
+            if (materialB1B5Properties.B4 == null)
+                materialB1B5Properties.B4 = 1;
 
-            ECI = ECI_B1B5 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_C1C4 + ECI_D + ECI_Mix);
+            ECI = materialB1B5Properties.B4 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_B1B5 + ECI_C1C4 + ECI_D + ECI_Mix);
         }
 
         internal void Copy(CarboMaterial cmNew)

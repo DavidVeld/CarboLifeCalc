@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Carbo Life: Reinforcement"
-             d:DesignHeight="475"  Height="475" MaxHeight="475"  MinHeight="475"  d:DesignWidth="500" MinWidth="500" Width="500" MaxWidth="500" Loaded="Window_Loaded">
+             d:DesignHeight="485"  Height="485" MaxHeight="485"  MinHeight="485"  d:DesignWidth="500" MinWidth="500" Width="500" MaxWidth="500" Loaded="Window_Loaded" Background="WhiteSmoke">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -37,7 +37,7 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Reinforcement</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Reinforcement / Mix in material</Label>
 
         <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="2" Header="Input" Style="{StaticResource baseStyleBold}">
             <Grid>
@@ -52,7 +52,7 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,0,285,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Volume to Reinforce:</Label>
+                <Label Grid.Column="1" Margin="0,0,285,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Volume to mix:</Label>
                 <TextBox Name="txt_Volume" Grid.Column="1" Grid.Row="1" Margin="135,0,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" TextChanged="Txt_Search_TextChanged" IsReadOnly="True"></TextBox>
                 <Label Grid.Column="1" Margin="236,0,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m³</Label>
             </Grid>

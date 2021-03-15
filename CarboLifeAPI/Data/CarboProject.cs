@@ -27,12 +27,13 @@ namespace CarboLifeAPI.Data
         public double EC { get; set; }
         public double Value { get; set; }
         public double Area { get; set; }
+        public string filePath { get; set; }
+        
+        //Global Calculations:
+        public double A5Global { get; set; }
+        public double A5Factor { get; set; }
         public double demoArea { get; set; }
         public double C1Factor { get; set; }
-        public double A5Factor { get; set; }
-        public string filePath { get; set; }
-                //Global Calculations:
-        public double A5Global { get; set; }
         public double C1Global { get; set; }
         //Absolute total including Global Values
         public double ECTotal { get; set; }
@@ -395,7 +396,8 @@ namespace CarboLifeAPI.Data
         {
             double totalMaterials = getTotalsGroup().EC;
             double totalA5 = A5Global;
-            double totalTotal = totalMaterials + totalA5;
+            double totalC1 = C1Global;
+            double totalTotal = totalMaterials + totalA5 + totalC1;
             
             return totalTotal;
         }

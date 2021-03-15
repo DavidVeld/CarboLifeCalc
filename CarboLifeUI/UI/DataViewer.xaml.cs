@@ -291,6 +291,13 @@ namespace CarboLifeUI.UI
                                 CarboLifeProject.UpdateGroup(carboGroup);
 
                             }
+                            else
+                            {
+                                carboGroup.Correction = "";
+                                carboGroup.CalculateTotals();
+
+                                CarboLifeProject.UpdateGroup(carboGroup);
+                            }
                         }
                         if (dgc.Header.ToString().StartsWith("Volume"))
                         {
@@ -337,6 +344,20 @@ namespace CarboLifeUI.UI
                             if (additional != null)
                             {
                                 carboGroup.Additional = additional;
+
+                                carboGroup.CalculateTotals();
+                                CarboLifeProject.UpdateGroup(carboGroup);
+                                //carboGroup.CalculateTotals();
+                            }
+                        }
+
+                        //B4:
+                        if (dgc.Header.ToString().StartsWith("Group"))
+                        {
+                            double b4 = Utils.ConvertMeToDouble(t.Text);
+                            if (b4 != null)
+                            {
+                                carboGroup.B4Factor = b4;
 
                                 carboGroup.CalculateTotals();
                                 CarboLifeProject.UpdateGroup(carboGroup);
@@ -504,6 +525,7 @@ namespace CarboLifeUI.UI
                 column_Correction.Visibility = Visibility.Visible;
                 column_Addition.Visibility = Visibility.Visible;
                 column_Waste.Visibility = Visibility.Visible;
+                column_B4.Visibility = Visibility.Visible;
 
             }
             else
@@ -512,6 +534,7 @@ namespace CarboLifeUI.UI
                 column_Correction.Visibility = Visibility.Hidden;
                 column_Addition.Visibility = Visibility.Hidden;
                 column_Waste.Visibility = Visibility.Hidden;
+                column_B4.Visibility = Visibility.Hidden;
             }
 
         }
@@ -753,5 +776,28 @@ namespace CarboLifeUI.UI
             refreshData();
         }
 
+        private void btn_EditAdvanced_Click(object sender, RoutedEventArgs e)
+        {
+
+            CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+
+            if (carboGroup != null)
+            {
+                GroupAdvancedEditor advancedEditor = new GroupAdvancedEditor(carboGroup, CarboLifeProject.CarboDatabase);
+                advancedEditor.ShowDialog();
+
+                if (advancedEditor.isAccepted == true)
+                {
+                    carboGroup = advancedEditor.group;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a group");
+            }
+
+            CarboLifeProject.CalculateProject();
+            refreshData();
+        }
     }
 }

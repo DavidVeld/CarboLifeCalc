@@ -102,6 +102,12 @@
     <Compile Include="UI\ExportPicker.xaml.cs">
       <DependentUpon>ExportPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\GroupAdvancedEditor.xaml.cs">
+      <DependentUpon>GroupAdvancedEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\B4EmissionPicker.xaml.cs">
+      <DependentUpon>B4EmissionPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\MaterialSelector.xaml.cs">
       <DependentUpon>MaterialSelector.xaml</DependentUpon>
     </Compile>
@@ -192,6 +198,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\ExportPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\GroupAdvancedEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\B4EmissionPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

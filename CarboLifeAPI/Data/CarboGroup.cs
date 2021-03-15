@@ -29,12 +29,34 @@ namespace CarboLifeAPI.Data
         public double EC { get; set; }
         public double PerCent { get; set; }
 
-        /// Advanced Values
+        // Advanced Values
+        /// <summary>
+        /// A volume correcting value
+        /// </summary>
         public string Correction { get; set; }
+        public string CorrectionDescription { get; set; }
+        /// <summary>
+        /// The faste factor
+        /// </summary>
         public double Waste { get; set; }
+        public string WasteDescription { get; set; }
+        /// <summary>
+        /// Any additional embodied carbon in this group
+        /// </summary>
         public double Additional { get; set; }
         public string AdditionalDescription { get; set; }
+        /// <summary>
+        /// The replacement value factor
+        /// </summary>
+        public double B4Factor { get; set; }
+        public string B4Description { get; set; }
 
+        public double ComponentLifePeriod { get; set; }
+        public double AssetLifePeriod { get; set; }
+
+        /// <summary>
+        /// The group material
+        ///</summary>
         public CarboMaterial Material {get;set;}
 
         public List<CarboElement> AllElements { get; set; }
@@ -56,7 +78,6 @@ namespace CarboLifeAPI.Data
             Category = "";
             SubCategory = "";
             Description = "";
-            Correction = "";
 
             Volume = 0;
             Density = 0;
@@ -65,13 +86,24 @@ namespace CarboLifeAPI.Data
             ECI = 0;
             EC = 0;
 
+            //Correction Formula
+            Correction = "";
+            CorrectionDescription = "";
+            //Waste
             Waste = 0;
+            WasteDescription = "";
+            //Additional
             Additional = 0;
+            AdditionalDescription = "";
+            //B4
+            B4Factor = 1;
+            ComponentLifePeriod = 50;
+            AssetLifePeriod = 50;
+            B4Description = "";
 
             PerCent = 0;
             Material = new CarboMaterial();
             AllElements = new List<CarboElement>();
-
 
             isDemolished = false;
             isSubstructure = false;
@@ -129,7 +161,23 @@ namespace CarboLifeAPI.Data
             //EE = ee;
             EC = ec;
 
+            //Correction Formula
+            Correction = "";
+            CorrectionDescription = "";
+            //Waste
+            Waste = 0;
+            WasteDescription = "";
+            //Additional
+            Additional = 0;
+            AdditionalDescription = "";
+            //B4
+            B4Factor = 1;
+            ComponentLifePeriod = 50;
+            AssetLifePeriod = 50;
+            B4Description = "";
+
             PerCent = 0;
+
             Material = new CarboMaterial();
             AllElements = new List<CarboElement>();
         }
@@ -158,6 +206,21 @@ namespace CarboLifeAPI.Data
             ECI = 0;
             //EE = 0;
             EC = 0;
+
+            //Correction Formula
+            Correction = "";
+            CorrectionDescription = "";
+            //Waste
+            Waste = 0;
+            WasteDescription = "";
+            //Additional
+            Additional = 0;
+            AdditionalDescription = "";
+            //B4
+            B4Factor = 1;
+            ComponentLifePeriod = 50;
+            AssetLifePeriod = 50;
+            B4Description = "";
 
             PerCent = 0;
             Material = new CarboMaterial();
@@ -214,11 +277,11 @@ namespace CarboLifeAPI.Data
                 string volumeStr = Volume.ToString();
                 StringToFormula stf = new StringToFormula();
                 double result = stf.Eval(volumeStr + Correction);
-                TotalVolume = Math.Round((result * wasteFact), 2);
+                TotalVolume = Math.Round((B4Factor *(result * wasteFact)), 3);
             }
             else
             {
-                TotalVolume = (Volume * wasteFact);
+                TotalVolume = Math.Round(B4Factor * (Volume * wasteFact),3);
             }
             
 
@@ -261,12 +324,25 @@ namespace CarboLifeAPI.Data
             result.Id = this.Id;
             result.Mass = this.Mass;
 
+            //Correction Formula
+            result.Correction = this.Correction;
+            result.CorrectionDescription = this.CorrectionDescription;
+            //Waste
+            result.Waste = this.Waste;
+            result.WasteDescription = this.WasteDescription;
+            //Additional
+            result.Additional = this.Additional;
+            result.AdditionalDescription = this.AdditionalDescription;
+            //B4
+            result.B4Factor = this.B4Factor;
+            result.ComponentLifePeriod = this.ComponentLifePeriod;
+            result.AssetLifePeriod = this.AssetLifePeriod;
+            result.B4Description = this.B4Description;
+
             result.isDemolished = this.isDemolished;
             result.isSubstructure = this.isSubstructure;
 
             result.PerCent = this.PerCent;
-
-            //result.RefreshValuesFromElements();
 
             return result;
 

@@ -1,0 +1,164 @@
+﻿<Window x:Class="CarboLifeUI.UI.GroupAdvancedEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarboLifeUI.UI"
+             mc:Ignorable="d" Title="Advanced Property Editor"
+             d:DesignHeight="670"  Height="670" MaxHeight="670"  MinHeight="670"  d:DesignWidth="700" MinWidth="700" Width="700" MaxWidth="700" Loaded="Window_Loaded" Background="WhiteSmoke">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="MyStyles.xaml">
+                </ResourceDictionary>
+                <ResourceDictionary Source="MyDataGrid.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="170"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="42"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Advanced Group Properties Editor</Label>
+
+        <TextBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="2"  Style="{StaticResource baseStyle}" AcceptsReturn="True" IsReadOnly="True" TextWrapping="Wrap" >
+            This window allows you to edit the advanced parameters of the group in more detail.</TextBox>
+
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="3" Header="Volume Correction Factor" Style="{StaticResource baseStyleBold}" Grid.RowSpan="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Margin="5,1,5,0" Grid.Row="1" Style="{StaticResource baseStyle}" >This is a free-to-use conversion of the volume. Use: [ * / + - ] to convert the volume to a total volume.</Label>
+
+                <Label Grid.Column="1" Margin="0,24,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Formula:</Label>
+                <TextBox Name="txt_Formula" Grid.Column="1" Grid.Row="1" Margin="135,24,0,0" Height="25" Width="160" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_Formula_TextChanged"></TextBox>
+                <Label Name="lbl_FormulaSample" Grid.Column="1" Margin="313,22,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}"></Label>
+
+                <Label Grid.Column="1" Margin="0,45,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Description:</Label>
+                <TextBox Name="txt_FormulaDescription"  Grid.Column="1" Margin="135,50,5,0" Grid.Row="1" Style="{StaticResource flatTextBox}" AcceptsReturn="True" TextChanged="txt_FormulaDescription_TextChanged" >...</TextBox>
+
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="4" Header="Waste factor" Style="{StaticResource baseStyleBold}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="610" Margin="0,2,0,0" Grid.RowSpan="2">The waste factor will increase the total vlume value, typically add 5-10% to your materials.</Label>
+
+
+                <Label Grid.Column="1" Margin="0,25,475,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Waste Item:</Label>
+                <ComboBox Name="cbb_WasteItem" Grid.Column="1" Margin="135,25,0,0" Grid.Row="1" Height="23" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="480" DropDownClosed="cbb_WasteItem_DropDownClosed"></ComboBox>
+
+                <Label Grid.Column="1" Margin="0,45,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Waste Factor:</Label>
+                <TextBox Name="txt_WasteFactor" Grid.Column="1" Grid.Row="1" Margin="135,50,0,0" Height="25" Width="90" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_WasteFactor_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,50,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">%</Label>
+
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="5" Header="Additional ECI value" Style="{StaticResource baseStyleBold}" Grid.RowSpan="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="610" Margin="0,2,0,0" Grid.RowSpan="2">You can add an additional group specific value here that will be added to the A1-D range</Label>
+
+
+                <Label Grid.Column="1" Margin="0,23,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Value:</Label>
+                <TextBox Name="txt_AdditionalValue" Grid.Column="1" Grid.Row="1" Margin="135,23,0,0" Height="25" Width="173" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_AdditionalValue_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="313,23,231,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+
+                <Button Name="btn_EditAdditional" Grid.Column="1" Margin="389,23,158,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="btn_EditAdditional_Click" Visibility="Visible">Calculate...</Button>
+
+
+                <Label Grid.Column="1" Margin="0,45,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Description:</Label>
+                <TextBox Name="txt_AdditionalDescription"  Grid.Column="1" Margin="135,50,5,0" Grid.Row="1" Style="{StaticResource flatTextBox}" AcceptsReturn="True" TextChanged="txt_AdditionalDescription_TextChanged">...</TextBox>
+
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="6" Header="[B4] Group Value" Style="{StaticResource baseStyleBold}" Grid.RowSpan="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="610" Margin="0,2,0,0" Grid.RowSpan="2">The B4 factor will multiply the entire A1-D range</Label>
+
+                <Label Grid.Column="1" Margin="0,23,475,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Asset Type:</Label>
+                <ComboBox Name="cbb_Type" Grid.Column="1" Margin="150,25,0,0" Grid.Row="1" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="213" Text="WIP" IsEnabled="True" DropDownClosed="cbb_Type_DropDownClosed"></ComboBox>
+
+
+                <Label Grid.Column="1" Margin="0,53,475,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Component Lifespan:</Label>
+                <TextBox Name="txt_ComponentLifespan" Grid.Column="1" Grid.Row="1" Margin="150,52,0,0" Height="24" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_ComponentLifespan_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,53,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">year</Label>
+
+
+                <Label Grid.Column="1" Margin="0,80,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Asset Ref. Period:</Label>
+                <TextBox Name="txt_AssetReferencePeriod" Grid.Column="1" Grid.Row="1" Margin="150,79,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_AssetReferencePeriod_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,80,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">year</Label>
+
+                <Label Grid.Column="1" Margin="0,107,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Factor:</Label>
+                <TextBox Name="txt_B4Factor" Grid.Column="1" Grid.Row="1" Margin="150,107,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="True" Background="LightGray" TextChanged="txt_B4Factor_TextChanged"></TextBox>
+                <Label Grid.Column="1" Margin="230,107,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">x Replaced</Label>
+            </Grid>
+        </GroupBox>
+
+        <Button Name="btn_Accept" Grid.Row="8" Grid.Column="2" Margin="0,6,85,5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
+        <Button Name="btn_Cancel" Grid.Row="8" Grid.Column="2" Margin="0,6,10,5" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
+
+    </Grid>
+</Window>
