@@ -30,7 +30,6 @@ Screenshots:
 
 Roadmap:
 
-1. Installer
 2. Bug fixing
 3. Update a project with new elements from Revit
 4. Carbon sequestering calculator in the material editor
@@ -39,7 +38,8 @@ Roadmap:
 7. Improved graphics for overview
 
 Updates as per build 15.03.2021
-1. Bugs in material editor 
+1. Installer
+2. Bugs in material editor 
 3. Add a waste factor to group
 4. B4 now works per group as well as per material
 5. Improve material database
