@@ -30,12 +30,12 @@ Screenshots:
 
 #Roadmap:
 
-1. Bug fixing
-2. Update a project with new elements from Revit
-3. Carbon sequestering calculator in the material editor
-4. Record movie to explain working of addin
+1. Bug fixing (on-going, please supply feedback)
+2. Update a project with new elements from Revit (Added in code 17.03.21)
+3. Carbon sequestering calculator in the material editor (Low priority)
+4. Record movie + Help files to explain working of addin
 5. Project compare interface
-6. Improved graphics for overview
+6. Improved graphics for overview (Low priority)
 
 Updates as per build 15.03.2021
 1. Installer
