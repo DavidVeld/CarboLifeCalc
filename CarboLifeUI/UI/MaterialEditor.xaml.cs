@@ -890,8 +890,9 @@ namespace CarboLifeUI.UI
                     selectedMaterial.ECI_A4 = A4;
                     selectedMaterial.ECI_A5 = A5;
 
-                    //WIP
-                    selectedMaterial.ECI_B1B5 = 1;
+                    //B1-B7
+                    selectedMaterial.ECI_B1B5 = B17;
+                    selectedMaterial.materialB1B5Properties.B4 = 1;
 
                     selectedMaterial.ECI_C1C4 = C14;
                     selectedMaterial.ECI_D = D;

@@ -56,7 +56,7 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="5,1,5,0" Grid.Row="1" Style="{StaticResource baseStyle}" >This is a free-to-use conversion of the volume. Use: [ * / + - ] to convert the volume to a total volume.</Label>
+                <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="1" Style="{StaticResource baseStyle}" >A conversion of the volume. Use: [ * / + - ] to convert the volume to into total volume.</Label>
 
                 <Label Grid.Column="1" Margin="0,24,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Formula:</Label>
                 <TextBox Name="txt_Formula" Grid.Column="1" Grid.Row="1" Margin="135,24,0,0" Height="25" Width="160" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_Formula_TextChanged"></TextBox>
@@ -81,7 +81,7 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="610" Margin="0,2,0,0" Grid.RowSpan="2">The waste factor will increase the total vlume value, typically add 5-10% to your materials.</Label>
+                <Label Grid.Column="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Width="610" Margin="0,0,0,0" Grid.RowSpan="2">The waste factor will increase the total vlume value, typically add 5-10% to your materials.</Label>
 
 
                 <Label Grid.Column="1" Margin="0,25,475,0" Grid.Row="1" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Waste Item:</Label>

@@ -51,8 +51,8 @@
         <Label Grid.Column="1" Margin="0,20,10,0" Grid.Row="5" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">All elements higher = super struture and below = sub structure</Label>
 
         <ComboBox Name="cbb_Levels" Grid.Column="2" Grid.Row="5" Margin="0,46,5,0" Height="25" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}"></ComboBox>
-        <CheckBox Name="chk_ImportDemolished" IsEnabled="True" Grid.Column="2" Grid.Row="6" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource allbuttons}">Include Demolished Elements</CheckBox>
-        <CheckBox Name="chk_ImportExisting" IsEnabled="True" Grid.Column="2" Grid.Row="6" Margin="0,25,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource allbuttons}">Include Existing Elements</CheckBox>
+        <CheckBox Name="chk_ImportDemolished" IsEnabled="True" Grid.Column="2" Grid.Row="6" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include Demolished Elements</CheckBox>
+        <CheckBox Name="chk_ImportExisting" IsEnabled="True" Grid.Column="2" Grid.Row="6" Margin="0,25,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include Existing Elements</CheckBox>
 
         <Button Name="btn_ImportClose" Grid.Row="8" Grid.Column="2" Margin="0,0,225,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_ImportClose_Click">Import Now</Button>
         <Button Name="btn_OkClose" Grid.Row="8" Grid.Column="2" Margin="0,0,115,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_OkClose_Click" >Ok / Close</Button>

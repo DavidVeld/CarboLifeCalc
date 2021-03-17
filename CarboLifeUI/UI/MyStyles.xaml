@@ -60,7 +60,7 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
-        <Setter Property="FontWeight" Value="DemiBold" />
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Background" Value="Transparent"/>
     </Style>
 

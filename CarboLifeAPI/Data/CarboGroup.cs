@@ -223,6 +223,9 @@ namespace CarboLifeAPI.Data
             B4Description = "";
 
             PerCent = 0;
+
+            //get the material
+
             Material = new CarboMaterial();
             Material = carboElement.Material;
 

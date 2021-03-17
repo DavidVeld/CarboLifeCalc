@@ -37,6 +37,8 @@ namespace CarboLifeUI.UI
 
         public HeatMapBuilder()
         {
+            this.importData = true;
+            this.createHeatmap = true;
             InitializeComponent();
         }
 

@@ -36,7 +36,7 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" Height="32" Margin="0,0,0,2" HorizontalAlignment="Stretch">
+        <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" Height="32" Margin="0,0,0,2" HorizontalAlignment="Left">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
                     <DockPanel HorizontalAlignment="Stretch"/>

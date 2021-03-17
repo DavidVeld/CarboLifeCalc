@@ -17,13 +17,17 @@ namespace CarboLifeRevit
 {
     public class CarboLifeRevitImport
     {
-        public static void ImportElements(UIApplication app, CarboRevitImportSettings settings)
+        public static void ImportElements(UIApplication app, CarboRevitImportSettings settings, string updatePath)
         {
             UIDocument uidoc = app.ActiveUIDocument;
             Document doc = uidoc.Document;
 
             string MyAssemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string MyAssemblyDir = Path.GetDirectoryName(MyAssemblyPath);
+            bool updateFile = false;
+
+            if (File.Exists(updatePath))
+                updateFile = true;
 
             CarboProject myProject = new CarboProject();
 
@@ -127,15 +131,36 @@ namespace CarboLifeRevit
             }
 
             #endregion
+            //All element have been mapped, here the code will be split between an update or a new one.
 
             if (myProject.getAllElements.Count > 0)
             {
-                myProject.CreateGroups();
+                CarboProject projectToOpen = new CarboProject();
+
+                if (updateFile == false)
+                {
+                    myProject.CreateGroups();
+                    projectToOpen = myProject;
+                }
+                else //upadte an existing file:
+                {
+                    
+                    CarboProject projectToUpdate = new CarboProject();
+
+                    CarboProject buffer = new CarboProject();
+                    projectToUpdate = buffer.DeSerializeXML(updatePath);
+
+                    projectToUpdate.Audit();
+                    projectToUpdate.UpdateProject(myProject);
+                    projectToUpdate.CalculateProject();
+
+                    projectToOpen = projectToUpdate;
+                }
 
                 double areaMSqr = Math.Round((area * (0.3048 * 0.3048)),2);
-                myProject.Area = areaMSqr;
+                projectToOpen.Area = areaMSqr;
 
-                CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(myProject);
+                CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(projectToOpen);
                 carboCalcProgram.IsRevit = true;
 
                 AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);

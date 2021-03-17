@@ -28,11 +28,12 @@ namespace CarboLifeRevit
                 bool setIsDemolished;
                 bool setIsSubstructure;
                 bool setIsExisting;
+                int layernr;
 
                 // Material material = doc.GetElement(materialIds) as Material;
                 //Id:
                 setId = el.Id.IntegerValue;
-
+                
                 //Name (Type)
                 ElementId elId = el.GetTypeId();
                 ElementType type = doc.GetElement(elId) as ElementType;
@@ -162,7 +163,6 @@ namespace CarboLifeRevit
             }
 
         }
-
         private static string getValueFromList(Element el, ElementType type, string searchString, Document doc)
         {
             string result = "";

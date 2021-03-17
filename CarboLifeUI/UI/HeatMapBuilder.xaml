@@ -58,8 +58,8 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Name="chx_CreateHeatmap" Grid.Column="2" Margin="-15,2,0,0" Grid.Row="1" Grid.ColumnSpan="3" FontSize="14" FontFamily="Calibri" IsChecked="False" Height="25" VerticalAlignment="Top">Create Heatmap when closing window</CheckBox>
-                <CheckBox Name="chx_ImportValuesToRevit" Grid.Column="2" Margin="-15,25,0,0" Grid.Row="1" Grid.ColumnSpan="4" FontSize="14" FontFamily="Calibri" IsChecked="False" Height="25" VerticalAlignment="Top">Import Embodied Carbon values to Revit Elements</CheckBox>
+                <CheckBox Name="chx_CreateHeatmap" Grid.Column="2" Margin="-15,2,0,0" Grid.Row="1" Grid.ColumnSpan="3" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top">Create Heatmap when closing window</CheckBox>
+                <CheckBox Name="chx_ImportValuesToRevit" Grid.Column="2" Margin="-15,25,0,0" Grid.Row="1" Grid.ColumnSpan="4" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top">Import Embodied Carbon values to Revit Elements</CheckBox>
 
                 <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1">Heatmap Type:</Label>
                 <RadioButton Name="rad_Bymaterial" Grid.Column="2" Margin="5,0,0,14" Grid.Row="2" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top" Click="rad_Bymaterial_Click" >By Material [kgCO2/kg]</RadioButton>

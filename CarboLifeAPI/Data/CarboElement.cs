@@ -32,6 +32,9 @@ namespace CarboLifeAPI.Data
 
         public CarboMaterial Material {get;set; }
 
+        [NonSerialized]
+        ///This field is used when revit updates a model, improvements for multibuildps are required
+        public bool isUpdated;
         public CarboElement()
         {
             Id = -999;
@@ -52,6 +55,7 @@ namespace CarboLifeAPI.Data
             ECI_Total = 0;
             EC_Total = 0;
             Volume_Total = 0;
+            isUpdated = false;
         }
 
         public void setMaterial(CarboMaterial carboMaterial)

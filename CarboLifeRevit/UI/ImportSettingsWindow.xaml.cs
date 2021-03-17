@@ -45,9 +45,9 @@ namespace CarboLifeRevit
             categorylist.Add("(Revit) Category");
             categorylist.Add("Type Comment");
             categorylist.Add("Family Name");
-            categorylist.Add("Level");
-            categorylist.Add("CarboLifeCategory");
-            categorylist.Add("");
+            //categorylist.Add("Level");
+            //categorylist.Add("CarboLifeCategory");
+            //categorylist.Add("");
 
             foreach (string str in categorylist)
             {

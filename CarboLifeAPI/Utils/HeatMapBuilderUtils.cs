@@ -100,7 +100,7 @@ namespace CarboLifeAPI
         + "maxRange: " + maxRange + Environment.NewLine
         + "minRange: " + minRange + Environment.NewLine;
 
-            MessageBox.Show(text);
+            //MessageBox.Show(text);
             //This should be embedded in a single iteration
             //maxRange = valueRangelist.Max();
             // minRange = valueRangelist.Min();
@@ -201,7 +201,7 @@ namespace CarboLifeAPI
         + "maxRange: " + maxRange + Environment.NewLine
         + "minRange: " + minRange + Environment.NewLine;
 
-            MessageBox.Show(text);
+            //MessageBox.Show(text);
             //This should be embedded in a single iteration
             //maxRange = valueRangelist.Max();
             // minRange = valueRangelist.Min();
@@ -301,7 +301,7 @@ namespace CarboLifeAPI
         + "maxRange: " + maxRange + Environment.NewLine
         + "minRange: " + minRange + Environment.NewLine;
 
-            MessageBox.Show(text);
+            //MessageBox.Show(text);
 
             foreach (CarboGroup grp in carboProject.getGroupList)
             {
@@ -343,7 +343,6 @@ namespace CarboLifeAPI
                     }
                 }
             }
-
             return carboProject;
 
         }
@@ -401,7 +400,7 @@ namespace CarboLifeAPI
             +"maxRange: " + maxRange + Environment.NewLine
             + "minRange: " + minRange + Environment.NewLine;
 
-            MessageBox.Show(text);
+            //MessageBox.Show(text);
             //This should be embedded in a single iteration
             //maxRange = valueRangelist.Max();
             // minRange = valueRangelist.Min();
@@ -444,7 +443,6 @@ namespace CarboLifeAPI
                     }
                 }
             }
-
             return carboProject;
         }
     }

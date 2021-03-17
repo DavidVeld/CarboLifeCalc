@@ -298,10 +298,13 @@ namespace CarboLifeUI.UI
                     lbl_AcceptHeatmap.Visibility = Visibility.Visible;
                     createHeatmap = true;
                 }
+
+                MessageBox.Show("Success! The heatmap will be applied one you close the window", "Success");
+
             }
             else
             {
-                MessageBox.Show("This feature is available once you launch the program from Autodesk Revit");
+                MessageBox.Show("This option is available once you launch the program from Autodesk Revit");
             }
         }
 

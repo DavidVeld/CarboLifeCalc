@@ -226,7 +226,7 @@ namespace CarboLifeAPI.Data
             }
 
             //The main calc to do them all 
-            if (materialB1B5Properties.B4 == null)
+            if (materialB1B5Properties.B4 == 0)
                 materialB1B5Properties.B4 = 1;
 
             ECI = materialB1B5Properties.B4 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_B1B5 + ECI_C1C4 + ECI_D + ECI_Mix);

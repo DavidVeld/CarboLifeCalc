@@ -171,6 +171,296 @@ namespace CarboLifeAPI.Data
                 }
             }
         }
+
+        /// <summary>
+        /// Updates the project with the elements insi
+        /// </summary>
+        /// <param name="newProject"></param>
+        public void UpdateProject(CarboProject projectWithElements)
+        {
+            int totalNewElements;
+            int totalOldElements;
+            int updatedElements = 0;
+            int newElementsInGroup = 0;
+            int newElementsWithNoGroup = 0;
+            int deletedElements = 0;
+            int deletedGroups = 0;
+
+            //Replace All Elements iterate though each element in the new list and the following things can happen:
+            // 0. Elements that dont exist in the old file need to be deleted. This will be done first to schrink the search table
+            // 1. The item was found (id match and material match) the volumes are then replaced
+            // 2. The element wasnt found, and thus it needs to be added to a group, or a new group will be made for it.
+            // 4. cleanup, groups without elements, that had elements before will need to be deleted.
+            // 5. compound elements need to be reviewed for the future, as they can be trcky to deal with atm.
+
+            totalNewElements = projectWithElements.elementList.Count;
+            totalOldElements = this.elementList.Count;
+
+            //Clear the project so we can track the updates.
+            foreach (CarboElement ce in elementList)
+            {
+                ce.isUpdated = false;
+            }
+            foreach (CarboGroup cg in getGroupList)
+            {
+                if (cg.AllElements.Count > 0)
+                {
+                    foreach (CarboElement ce in cg.AllElements)
+                    {
+                        ce.isUpdated = false;
+                    }
+                }
+            }
+
+            //1 Update similar elements and flag the ones that are done.
+            for (int i = projectWithElements.elementList.Count - 1; i >= 0; i--)
+            {
+                CarboElement ceNew = projectWithElements.elementList[i] as CarboElement;
+                if (ceNew != null)
+                {
+                    bool isfoundinGroup = false;
+                    //bool isfoundinElementList = false;
+
+                    //Check and update the groups: the groups
+                    isfoundinGroup = updateinGroups(ceNew);
+
+                    //if the element was found and updated, 
+                    if (isfoundinGroup == true)
+                    {
+                        //remove from list, it has been done;
+                        updatedElements++;
+                        projectWithElements.elementList.RemoveAt(i);
+                        //ceNew.isUpdated = true;
+                    }
+                }
+
+            }
+
+            //Elements that wern't flagged in the new list must be new, they need to be added to the right group.
+            for (int i = projectWithElements.elementList.Count - 1; i >= 0; i--)
+            {
+                CarboElement ceNew = projectWithElements.elementList[i] as CarboElement;
+                if (ceNew != null)
+                {
+                    //each element will be assesed individually.
+                    //Look through the element list:
+                    if (ceNew.isUpdated == false)
+                    {
+                        bool insertedinGroup = false;
+
+                        //Check and update the groups: the groups
+                        insertedinGroup = insertinGroups(ceNew);
+
+                        if (insertedinGroup == true)
+                        {
+                            //The element was found in an existing group and was updated
+                            newElementsInGroup++;
+                            projectWithElements.elementList.RemoveAt(i);
+                        }
+                        else
+                        {
+                            //Elements that wern't flagged in the new list must need their own new group;
+                            //A new group need to be made for this element;
+                            newElementsWithNoGroup++;
+
+                            this.NewGroup(ceNew);
+                            projectWithElements.elementList.RemoveAt(i);
+
+                        }
+                    }
+                }
+            }
+
+            //Remove all the elements in groups that werent updated, and delete the groups if empty
+            for (int i = this.groupList.Count - 1; i >= 0; i--)
+            {
+                CarboGroup group = this.groupList[i] as CarboGroup;
+                
+                if(group != null)
+                {
+                    bool deletegroup = false;
+
+                    if (group.AllElements.Count > 0)
+                    {
+                        for (int j = group.AllElements.Count - 1; j >= 0; j--)
+                        {
+                            CarboElement ce = group.AllElements[j] as CarboElement;
+                            if (ce != null)
+                            {
+                                if (ce.isUpdated == false)
+                                {
+                                    //We found a element that doesnt exist anymore
+                                    group.AllElements.RemoveAt(j);
+                                    deletedElements++;
+                                }
+                            }
+                        }
+                        //if the group is empty after all the elemetns are deleted, remove the group;
+                        if(group.AllElements.Count == 0)
+                        {
+                            deletegroup = true;
+                        }
+                    }
+
+                    if (deletegroup == true)
+                    {
+                        this.groupList.RemoveAt(i);
+                        deletedGroups++;
+                    }
+
+                }
+            }
+
+            //Update the element list;
+            this.elementList = projectWithElements.elementList;
+
+            string message =
+                "Project updated: " + Environment.NewLine +
+                "Old nr of elements: " + totalOldElements + Environment.NewLine +
+                "New nr of elements: " + totalNewElements + Environment.NewLine +
+                "Nr of elements updated: " + updatedElements + Environment.NewLine +
+                "Nr of elements added to groups: " + newElementsInGroup + Environment.NewLine +
+                "Nr of elements added to new groups: " + newElementsWithNoGroup + Environment.NewLine +
+                "Elements deleted: " + deletedElements + Environment.NewLine +
+                "Groups deleted: " + deletedGroups + Environment.NewLine;
+
+            MessageBox.Show(message, "Results", MessageBoxButton.OK);
+        }
+
+        private void NewGroup(CarboElement ceNew)
+        {
+            try
+            {
+                ceNew.isUpdated = true;
+                CarboGroup newGroup = new CarboGroup(ceNew);
+
+                CarboMaterial closestGroupMaterial = CarboDatabase.getClosestMatch(ceNew.MaterialName);
+                //cg.MaterialName = closestGroupMaterial.Name;
+                newGroup.setMaterial(closestGroupMaterial);
+                closestGroupMaterial.CalculateTotals();
+
+                this.AddGroup(newGroup);
+            }
+            catch (Exception ex)
+            { }
+        }
+
+        private bool insertinGroups(CarboElement ceNew)
+        {
+            bool result = false;
+
+            foreach (CarboGroup cg in getGroupList)
+            {
+                if (cg.AllElements.Count > 0)
+                {
+                    foreach (CarboElement ceOld in cg.AllElements)
+                    {
+                        //to be added, the category, subcategory & materialname need to be identical
+                        if (
+                            ceOld.Category == ceNew.Category &&
+                            ceOld.SubCategory == ceNew.SubCategory &&
+                             ceOld.MaterialName == ceNew.MaterialName
+                             )
+                        {
+                            //A match was found, check the materials
+                            ceNew.isUpdated = true;
+                            cg.AllElements.Add(ceNew);
+
+                            return true;
+                            //break;
+                        }
+                    }
+                }
+            }
+            //element is not found this will be put in a new group;
+            return result;
+
+        }
+
+        [Obsolete]
+        private bool updateinElementList(CarboElement ceNew)
+        {
+            bool result = false;
+            //check all existing elements for its 
+            foreach (CarboElement ceOld in elementList)
+            {
+                bool isSimilar = isElementSimilar(ceOld, ceNew);
+                if (ceOld.Id == ceNew.Id && ceOld.MaterialName == ceNew.MaterialName && ceOld.isUpdated == false)
+                {
+                    //A match was found, update the element
+
+                        //These two match, we can update the volume
+                        ceOld.Volume = ceNew.Volume;
+                        ceOld.Volume_Total = 0;
+                        //not sure about the below:
+                        ceOld.Category = ceNew.Category;
+                        ceOld.Category = ceNew.SubCategory;
+
+                        //Set Flags
+                        ceOld.isUpdated = true;
+
+                        return true;
+                }
+            }
+            //element is not found 
+            return result;
+        }
+
+
+
+
+        private bool updateinGroups(CarboElement ceNew)
+        {
+            bool result = false;
+
+            foreach (CarboGroup cg in getGroupList)
+            {
+                if (cg.AllElements.Count > 0)
+                {
+                    foreach (CarboElement ceOld in cg.AllElements)
+                    {
+                        bool isSimilar = isElementSimilar(ceOld, ceNew);
+
+                        if (isSimilar == true)
+                        {
+                            //A match was found, check the materials
+
+                            ceOld.Volume = ceNew.Volume;
+                            ceOld.Volume_Total = 0;
+                            //not sure about the below:
+                            //ceOld.Category = ceNew.Category;
+                            //ceOld.SubCategory = ceNew.SubCategory;
+
+                            //Set Flags
+                            ceOld.isUpdated = true;
+
+                            //Dont go looking for more elements
+                            return true;
+                            //break;
+                        }
+                    }
+                    //group found, don't go looking for more groups
+                }
+            }
+            //element is not found 
+            return result;
+        }
+
+        private bool isElementSimilar(CarboElement ceOld, CarboElement ceNew)
+        {
+            bool result = false;
+
+            if (ceOld.Id == ceNew.Id &&
+                ceOld.MaterialName == ceNew.MaterialName &&
+                ceOld.isUpdated == false)
+            {
+                return true;
+
+            }
+            return result;
+        }
+
+
         /// <summary>
         /// After creating a mapping list, you can use this method to update all map all the groups in a project.
         /// </summary>
@@ -713,8 +1003,6 @@ namespace CarboLifeAPI.Data
                 elementList.Add(carboLifeElement);
             }
 
-            //groupList = CarboElementImporter.GroupElementsAdvanced(getAllElements, CarboDatabase, "");
-
             CalculateProject();
         }
         public void Audit()
@@ -803,31 +1091,7 @@ namespace CarboLifeAPI.Data
                 if (cg.Id == carboGroup.Id)
                 {
                     cg.copyValues(carboGroup);
-                    /*
-                    cg.Category = carboGroup.Category;
-                    cg.SubCategory = carboGroup.SubCategory;
 
-                    cg.Material = carboGroup.Material;
-                    cg.MaterialName = carboGroup.MaterialName;
-
-                    cg.AllElements = carboGroup.AllElements;
-
-                    cg.Volume = carboGroup.Volume;
-                    cg.TotalVolume = carboGroup.TotalVolume;
-                    cg.Additional = carboGroup.Additional;
-                    cg.Correction = carboGroup.Correction;
-                    cg.Density = carboGroup.Density;
-                    cg.Description = carboGroup.Description;
-                    cg.EC = carboGroup.EC;
-                    cg.ECI = carboGroup.ECI;
-                    cg.Id = carboGroup.Id;
-                    cg.Mass = carboGroup.Mass;
-
-                    cg.isDemolished = carboGroup.isDemolished;
-                    cg.isSubstructure = carboGroup.isSubstructure;
-
-                    cg.PerCent = carboGroup.PerCent;
-                    */
                     cg.CalculateTotals();
                     break;
                 }

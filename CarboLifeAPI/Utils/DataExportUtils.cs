@@ -106,83 +106,106 @@ namespace CarboLifeAPI
             xlWorkSheet = (Excel.Worksheet)xlApp.Worksheets.Add();
             if (xlWorkSheet != null)
             {
-                xlWorkSheet.Name = "GroupData";
+                    xlWorkSheet.Name = "GroupData";
 
-                row = 1;
-                col = 1;
+                    row = 1;
+                    col = 1;
 
-                xlWorkSheet.Cells[row, col] = "Category";
-                xlWorkSheet.Cells[row + 1, col] = "";
+                    xlWorkSheet.Cells[row, col] = "Category";
+                    xlWorkSheet.Cells[row + 1, col] = "";
 
-                xlWorkSheet.Cells[row, col + 1] = "Material";
-                xlWorkSheet.Cells[row + 1, col + 1] = "";
+                    xlWorkSheet.Cells[row, col + 1] = "Material";
+                    xlWorkSheet.Cells[row + 1, col + 1] = "";
 
-                xlWorkSheet.Cells[row, col + 2] = "Description";
-                xlWorkSheet.Cells[row + 1, col + 2] = "";
+                    xlWorkSheet.Cells[row, col + 2] = "Description";
+                    xlWorkSheet.Cells[row + 1, col + 2] = "";
 
-                xlWorkSheet.Cells[row, col + 3] = "Volume";
-                xlWorkSheet.Cells[row + 1, col + 3] = "m³";
+                    xlWorkSheet.Cells[row, col + 3] = "Total Volume";
+                    xlWorkSheet.Cells[row + 1, col + 3] = "m³";
 
-                xlWorkSheet.Cells[row, col + 4] = "Density";
-                xlWorkSheet.Cells[row + 1, col + 4] = "kg/m³";
+                    xlWorkSheet.Cells[row, col + 4] = "Density";
+                    xlWorkSheet.Cells[row + 1, col + 4] = "kg/m³";
 
-                xlWorkSheet.Cells[row, col + 5] = "Mass";
-                xlWorkSheet.Cells[row + 1, col + 5] = "kg";
+                    xlWorkSheet.Cells[row, col + 5] = "Mass";
+                    xlWorkSheet.Cells[row + 1, col + 5] = "kg";
 
-                xlWorkSheet.Cells[row, col + 6] = "ECI";
-                xlWorkSheet.Cells[row + 1, col + 6] = "kgCO2e/kg";
+                    xlWorkSheet.Cells[row, col + 6] = "ECI";
+                    xlWorkSheet.Cells[row + 1, col + 6] = "kgCO2e/kg";
 
-                xlWorkSheet.Cells[row, col + 7] = "EC";
-                xlWorkSheet.Cells[row + 1, col + 7] = "tCO2e";
+                    xlWorkSheet.Cells[row, col + 7] = "EC";
+                    xlWorkSheet.Cells[row + 1, col + 7] = "tCO2e";
 
-                xlWorkSheet.Cells[row, col + 8] = "Total";
-                xlWorkSheet.Cells[row + 1, col + 8] = "%";
+                    xlWorkSheet.Cells[row, col + 8] = "Total";
+                    xlWorkSheet.Cells[row + 1, col + 8] = "%";
 
-                xlWorkSheet.Cells[row, col + 9] = "A1-A3";
-                xlWorkSheet.Cells[row + 1, col + 9] = "tCO2e";
+                    xlWorkSheet.Cells[row, col + 9] = "A1-A3";
+                    xlWorkSheet.Cells[row + 1, col + 9] = "tCO2e";
 
-                xlWorkSheet.Cells[row, col + 10] = "A4";
-                xlWorkSheet.Cells[row + 1, col + 10] = "tCO2e";
+                    xlWorkSheet.Cells[row, col + 10] = "A4";
+                    xlWorkSheet.Cells[row + 1, col + 10] = "tCO2e";
 
-                xlWorkSheet.Cells[row, col + 11] = "A5";
-                xlWorkSheet.Cells[row + 1, col + 11] = "tCO2e";
+                    xlWorkSheet.Cells[row, col + 11] = "A5";
+                    xlWorkSheet.Cells[row + 1, col + 11] = "tCO2e";
 
-                xlWorkSheet.Cells[row, col + 12] = "B1-B5";
-                xlWorkSheet.Cells[row + 1, col + 12] = "tCO2e";
+                    xlWorkSheet.Cells[row, col + 12] = "B1-B5";
+                    xlWorkSheet.Cells[row + 1, col + 12] = "tCO2e";
 
-                xlWorkSheet.Cells[row, col + 13] = "C1-C4";
-                xlWorkSheet.Cells[row + 1, col + 13] = "tCO2e";
+                    xlWorkSheet.Cells[row, col + 13] = "C1-C4";
+                    xlWorkSheet.Cells[row + 1, col + 13] = "tCO2e";
 
-                xlWorkSheet.Cells[row, col + 14] = "D";
-                xlWorkSheet.Cells[row + 1, col + 14] = "tCO2e";
+                    xlWorkSheet.Cells[row, col + 14] = "D";
+                    xlWorkSheet.Cells[row + 1, col + 14] = "tCO2e";
 
-                xlWorkSheet.Cells[row, col + 15] = "Mix";
-                xlWorkSheet.Cells[row + 1, col + 15] = "tCO2e";
+                    xlWorkSheet.Cells[row, col + 15] = "Mix";
+                    xlWorkSheet.Cells[row + 1, col + 15] = "tCO2e";
 
-                row++;
-                i++;
+                    //Advanced
+                    xlWorkSheet.Cells[row, col + 16] = "[Formula]";
+                    xlWorkSheet.Cells[row + 1, col + 16] = "";
 
-                foreach (CarboGroup grp in carboProject.getGroupList)
+                    xlWorkSheet.Cells[row, col + 17] = "[Waste]";
+                    xlWorkSheet.Cells[row + 1, col + 17] = "%";
+
+                    xlWorkSheet.Cells[row, col + 18] = "[B4]";
+                    xlWorkSheet.Cells[row + 1, col + 18] = "x";
+
+                    xlWorkSheet.Cells[row, col + 19] = "[Additional]";
+                    xlWorkSheet.Cells[row + 1, col + 19] = "kgCO2e/kg";
+
+                    xlWorkSheet.Cells[row, col + 20] = "Base Volume";
+                    xlWorkSheet.Cells[row + 1, col + 20] = "m³";
+                    row++;
+                    i++;
+
+                    foreach (CarboGroup grp in carboProject.getGroupList)
                 {
                     row++;
 
                     xlWorkSheet.Cells[row, col] = grp.Category;
                     xlWorkSheet.Cells[row, col + 1] = grp.MaterialName;
                     xlWorkSheet.Cells[row, col + 2] = grp.Description;
-                    xlWorkSheet.Cells[row, col + 3] = grp.Volume;
+                    xlWorkSheet.Cells[row, col + 3] = grp.TotalVolume;
                     xlWorkSheet.Cells[row, col + 4] = grp.Density;
                     xlWorkSheet.Cells[row, col + 5] = grp.Mass;
                     xlWorkSheet.Cells[row, col + 6] = grp.ECI;
                     xlWorkSheet.Cells[row, col + 7] = grp.EC;
                     xlWorkSheet.Cells[row, col + 8] = grp.PerCent;
-                    xlWorkSheet.Cells[row, col + 9] = (grp.Material.ECI_A1A3 * grp.Mass) / 1000;
-                    xlWorkSheet.Cells[row, col + 10] = (grp.Material.ECI_A4 * grp.Mass) / 1000;
-                    xlWorkSheet.Cells[row, col + 11] = (grp.Material.ECI_A5 * grp.Mass) / 1000;
-                    xlWorkSheet.Cells[row, col + 12] = (grp.Material.ECI_B1B5);
-                    xlWorkSheet.Cells[row, col + 13] = (grp.Material.ECI_C1C4 * grp.Mass) / 1000;
-                    xlWorkSheet.Cells[row, col + 14] = (grp.Material.ECI_D * grp.Mass) / 1000;
-                    xlWorkSheet.Cells[row, col + 15] = (grp.Material.ECI_Mix * grp.Mass) / 1000;
-                    i++;
+                    xlWorkSheet.Cells[row, col + 9] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_A1A3 * grp.Mass)) / 1000;
+                    xlWorkSheet.Cells[row, col + 10] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_A4 * grp.Mass)) / 1000;
+                    xlWorkSheet.Cells[row, col + 11] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_A5 * grp.Mass)) / 1000;
+                    xlWorkSheet.Cells[row, col + 12] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_B1B5)) / 1000;
+                    xlWorkSheet.Cells[row, col + 13] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_C1C4 * grp.Mass)) / 1000;
+                    xlWorkSheet.Cells[row, col + 14] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_D * grp.Mass)) / 1000;
+                    xlWorkSheet.Cells[row, col + 15] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_Mix * grp.Mass)) / 1000;
+
+                    xlWorkSheet.Cells[row, col + 16] = grp.Correction;
+                    xlWorkSheet.Cells[row, col + 17] = grp.Waste;
+                    xlWorkSheet.Cells[row, col + 18] = grp.B4Factor;
+                    xlWorkSheet.Cells[row, col + 19] = grp.Additional;
+                    xlWorkSheet.Cells[row, col + 20] = grp.Volume;
+
+
+                        i++;
                 }
                 //Totals
                 row++;
