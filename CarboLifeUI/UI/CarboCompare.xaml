@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="CarboLifeUI.UI.CarboCompare"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarboLifeUI.UI"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="667
+             " d:DesignWidth="1160" IsVisibleChanged="UserControl_IsVisibleChanged">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MyStyles.xaml"/>
+                <ResourceDictionary Source="MyDataGrid.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="65"/>
+
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+
+
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource baseStyleTitle}">Compare Projects</Label>
+
+        <GroupBox Grid.Column="1" Grid.Row="2" Margin="0,0,10,0" Header="Projects" Style="{StaticResource baseStyleBold}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <CheckBox Name="chx_Project0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="5,0,5,2"  Height="26" IsChecked="True" Checked="chx_Project0_Checked">Current Project</CheckBox>
+
+                <ListView Name="liv_Projects" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Margin="5,0">
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="False">
+                            <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
+                            <GridViewColumn Header="EC" Width="80" DisplayMemberBinding="{Binding Path=EC, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Button Name="btn_Add"  Grid.Column="1" Grid.Row="5"  Margin="0,6,96,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Add..." Click="btn_Add_Click" ></Button>
+                <Button Name="btn_Remove"  Grid.Column="1" Grid.Row="5"  Margin="0,6,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Remove..." Click="btn_Remove_Click"></Button>
+
+            </Grid>
+
+
+        </GroupBox>
+
+
+
+        <lvc:CartesianChart Name="barchart" Grid.Column="2" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="Compare Materials" 
+                          Labels="{Binding Labels}" 
+                          Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" />
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Carbon Intensity" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
+
+        <Label Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="5,2,778,5"  Height="28" Style="{StaticResource baseStyleLabel}">Compare:</Label>
+
+        <ComboBox Name="cbb_GraphType" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="84,4,527,5"  Height="26"  Style="{StaticResource  ComboBoxFlatStyleLight}" IsReadOnly="True" DropDownClosed="cbb_GraphType_DropDownClosed"></ComboBox>
+
+
+    </Grid>
+</UserControl>

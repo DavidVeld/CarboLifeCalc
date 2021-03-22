@@ -135,7 +135,6 @@ namespace CarboLifeUI.UI
             return result;
         }
 
-
         public static Point Rotate(this Point pt, double angle, Point center)
         {
             Vector v = new Vector(pt.X - center.X, pt.Y - center.Y).Rotate(angle);

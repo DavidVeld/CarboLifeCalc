@@ -12,8 +12,6 @@
                 <ResourceDictionary Source="MyStyles.xaml"/>
                 <ResourceDictionary Source="MyDataGrid.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <local:MaterialList x:Key="MaterialList" />
-
         </ResourceDictionary>
 
     </UserControl.Resources>

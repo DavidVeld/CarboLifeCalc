@@ -86,7 +86,21 @@
                     <local:DataViewer x:Name="DataScreen" Grid.Row="1" Grid.Column="1" Visibility="Visible"></local:DataViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Graphs" Visibility="Hidden"></TabItem>
+            <TabItem Header="Compare Projects" Visibility="Visible">
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+                    <local:CarboCompare x:Name="Panel_Compare" Grid.Row="1" Grid.Column="1" Visibility="Visible" ></local:CarboCompare>
+                </Grid>
+            </TabItem>
             <TabItem Header="All Data" Visibility="Hidden"></TabItem>
 
         </TabControl>

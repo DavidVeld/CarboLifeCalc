@@ -75,69 +75,16 @@ namespace CarboLifeUI.UI
             {
                 if (CarboLifeProject != null)
                 {
-                    //cnv_Summary.Children.Clear();
-                    List<CarboDataPoint> PieceListMaterial = new List<CarboDataPoint>();
-                    List<CarboDataPoint> PieceListLifePoint = new List<CarboDataPoint>();
 
-                    //List<KeyValuePair<string, double>> valueListMaterial = new List<KeyValuePair<string, double>>();
-                    //List<KeyValuePair<string, double>> valueListLifePoint = new List<KeyValuePair<string, double>>();
+                    SeriesCollection pieMaterialSeries = GraphBuilder.GetPieChartMaterials(CarboLifeProject);
 
-                    PieceListMaterial = CarboLifeProject.getTotals("Material");
-                    PieceListLifePoint = CarboLifeProject.getTotals("");
+                    SeriesCollection pieLifeSeries = GraphBuilder.GetPieChartTotals(CarboLifeProject);
+
+                    if(pieMaterialSeries != null)
+                        pie_Chart1.Series = pieMaterialSeries;
                     
-                    PieceListMaterial = PieceListMaterial.OrderByDescending(o => o.Value).ToList();
-
-                    Style st = new Style();
-
-
-                    Func<ChartPoint, string> labelPoint = chartPoint =>
-    string.Format("{0} tCO2 ({1:P})", chartPoint.Y, chartPoint.Participation);
-
-                    SeriesCollection pieMaterialSeries = new SeriesCollection();
-                    SeriesCollection pieLifeSeries = new SeriesCollection();
-
-                    foreach (CarboDataPoint ppin in PieceListMaterial)
-                    {
-                        PieSeries newSeries = new PieSeries
-                        {
-                            Title = ppin.Name,
-                            Values = new ChartValues<double> { Math.Round(ppin.Value,0) },
-                            PushOut = 2,
-                            DataLabels = true,
-                            LabelPoint = labelPoint   
-                            
-                        };
-                        newSeries.Foreground = Brushes.Black;
-                        newSeries.FontWeight = FontWeights.Normal;
-                        newSeries.FontStyle = FontStyles.Normal;
-                        newSeries.FontSize = 12;
-
-                        pieMaterialSeries.Add(newSeries);
-
-                    }
-
-                    foreach (CarboDataPoint ppin in PieceListLifePoint)
-                    {
-                        PieSeries newSeries = new PieSeries
-                        {
-                            Title = ppin.Name,
-                            Values = new ChartValues<double> { Math.Round(ppin.Value, 0) },
-                            PushOut = 2,
-                            DataLabels = true,
-                            LabelPoint = labelPoint
-                        };
-
-                        newSeries.Foreground = Brushes.Black;
-                        newSeries.FontWeight = FontWeights.Normal;
-                        newSeries.FontStyle = FontStyles.Normal;
-                        newSeries.FontSize = 12;
-
-                        pieLifeSeries.Add(newSeries);
-
-                    }
-
-                    pie_Chart1.Series = pieMaterialSeries;
-                    pie_Chart2.Series = pieLifeSeries;
+                    if(pieLifeSeries != null)
+                        pie_Chart2.Series = pieLifeSeries;
                     
                     txt_ProjectName.Text = CarboLifeProject.Name;
                     txt_Number.Text = CarboLifeProject.Number;

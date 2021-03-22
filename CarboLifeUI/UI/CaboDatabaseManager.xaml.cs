@@ -429,7 +429,7 @@ namespace CarboLifeUI.UI
                 if (result == MessageBoxResult.Yes)
                 {
                     OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "xml files (*.xml)|*.xml|All files (*.*)|*.*";
+                    openFileDialog.Filter = "xml files (*.cxml)|*.cxml|All files (*.*)|*.*";
 
                     var path = openFileDialog.ShowDialog();
                     FileInfo finfo = new FileInfo(openFileDialog.FileName);

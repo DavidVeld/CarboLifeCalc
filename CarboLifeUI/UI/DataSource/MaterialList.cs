@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace CarboLifeUI.UI
 {
     [Obsolete]
-    public class MaterialList : List<String>
+    public class MaterialLists : List<String>
     {
-        public MaterialList()
+        public MaterialLists()
         {
             this.Add("Timber");
             this.Add("Metal");

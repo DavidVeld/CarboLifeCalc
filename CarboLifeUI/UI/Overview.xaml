@@ -13,8 +13,6 @@
                 <ResourceDictionary Source="MyStyles.xaml"/>
                 <ResourceDictionary Source="MyDataGrid.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <local:MaterialList x:Key="MaterialList" />
-
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -34,7 +32,7 @@
 
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="1" Grid.Row="2" Style="{StaticResource baseStyleTitle}">Summary</Label>
+        <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource baseStyleTitle}">Project Overview</Label>
         <Label Name="lbl_Values" Grid.Column="1" Grid.Row="2" Style="{StaticResource baseStyleLabel}" Margin="0,30,10,0">-</Label>
 
         <!-- <Canvas Name="cnv_Summary" Grid.Column="1" Grid.Row="2" Visibility="Visible" Margin="0,0,0,0">

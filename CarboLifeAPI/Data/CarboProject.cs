@@ -55,6 +55,8 @@ namespace CarboLifeAPI.Data
 
             get {return groupList;}
         }
+        //System field
+        public bool justSaved;
         public CarboGroup getTotalsGroup()
         {
             CarboGroup newGroup = new CarboGroup();
@@ -125,8 +127,9 @@ namespace CarboLifeAPI.Data
             Value = 0;
             A5Global = 0;
             A5Factor = 1400; //kg CO2 per vaue
+
+            justSaved = false;
         }
-       
         public void CreateGroups()
         {
             //get default group settings;
@@ -324,6 +327,8 @@ namespace CarboLifeAPI.Data
                 "Elements deleted: " + deletedElements + Environment.NewLine +
                 "Groups deleted: " + deletedGroups + Environment.NewLine;
 
+            justSaved = false;
+
             MessageBox.Show(message, "Results", MessageBoxButton.OK);
         }
 
@@ -365,6 +370,7 @@ namespace CarboLifeAPI.Data
                             //A match was found, check the materials
                             ceNew.isUpdated = true;
                             cg.AllElements.Add(ceNew);
+                            justSaved = false;
 
                             return true;
                             //break;
@@ -373,6 +379,8 @@ namespace CarboLifeAPI.Data
                 }
             }
             //element is not found this will be put in a new group;
+            justSaved = false;
+
             return result;
 
         }
@@ -398,16 +406,14 @@ namespace CarboLifeAPI.Data
 
                         //Set Flags
                         ceOld.isUpdated = true;
+                    justSaved = false;
 
-                        return true;
+                    return true;
                 }
             }
             //element is not found 
             return result;
         }
-
-
-
 
         private bool updateinGroups(CarboElement ceNew)
         {
@@ -443,6 +449,7 @@ namespace CarboLifeAPI.Data
                 }
             }
             //element is not found 
+            justSaved = false;
             return result;
         }
 
@@ -538,12 +545,12 @@ namespace CarboLifeAPI.Data
             }
             return result;
         }
-        public List<CarboDataPoint> getTotals(string value)
+        public List<CarboDataPoint> getMaterialTotals()
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
-
-            if (value != "")
+            try
             {
+
                 foreach (CarboGroup CarboGroup in this.groupList)
                 {
 
@@ -569,33 +576,56 @@ namespace CarboLifeAPI.Data
                         valueList.Add(newelement);
                 }
             }
-            //Would be Per life
-            else
+            catch
             {
-                CarboDataPoint cb_A1A3 = new CarboDataPoint("A1 A3",0);
+                return null;
+            }
+            
+            //Values should return now;
+            return valueList;
+        }
+        /// <summary>
+        /// Returns a list of the project totals (9 items)
+        /// A1-A3, A4, A5 (Material), A5(Global), B1-B7, C1-C4, C1(Global), D, Additional)
+        /// These are net values(based on the corrected converted Total Volume
+        /// </summary>
+        /// <returns>Returns a list of the project totals (9 items)</returns>
+        public List<CarboDataPoint> getPhaseTotals()
+        {
+            List<CarboDataPoint> valueList = new List<CarboDataPoint>();
+            try
+            {
+                CarboDataPoint cb_A1A3 = new CarboDataPoint("A1-A3", 0);
                 CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
-                CarboDataPoint cb_A5 = new CarboDataPoint("A5", this.A5Global);
-                //CarboDataPoint cb_B1B5 = new CarboDataPoint("B1 B5", 0);
-                CarboDataPoint cb_C1C4 = new CarboDataPoint("C1 C4", 0);
-                CarboDataPoint cb_C1 = new CarboDataPoint("C1", this.C1Global);
+                CarboDataPoint cb_A5 = new CarboDataPoint("A5(Material)",0);
+                CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global);
+                CarboDataPoint cb_B1B5 = new CarboDataPoint("B1-B7", 0);
+                CarboDataPoint cb_C1C4 = new CarboDataPoint("C1-C4", 0);
+                CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global);
                 CarboDataPoint cb_D = new CarboDataPoint("D", 0);
+                CarboDataPoint Added = new CarboDataPoint("Additional", 0);
+
 
                 valueList.Add(cb_A1A3);
                 valueList.Add(cb_A4);
                 valueList.Add(cb_A5);
-                valueList.Add(cb_C1);
+                valueList.Add(cb_A5Global);
+                valueList.Add(cb_B1B5);
                 valueList.Add(cb_C1C4);
+                valueList.Add(cb_C1Global);
                 valueList.Add(cb_D);
-                               
+                valueList.Add(Added);
+
 
                 foreach (CarboGroup CarboGroup in this.groupList)
                 {
-                    double ECI_A1A3 = CarboGroup.Material.ECI_A1A3 * CarboGroup.Mass;
-                    double ECI_A4 = CarboGroup.Material.ECI_A4 * CarboGroup.Mass;
-                    double ECI_A5 = CarboGroup.Material.ECI_A5 * CarboGroup.Mass;
-                    //double ECI_B1B5 = CarboGroup.Material.ECI_B1B5;
-                    double ECI_C1C4 = CarboGroup.Material.ECI_C1C4 * CarboGroup.Mass;
-                    double ECI_D = CarboGroup.Material.ECI_D * CarboGroup.Mass;
+                    double ECI_A1A3 = CarboGroup.getTotalA1A3;
+                    double ECI_A4 = CarboGroup.getTotalA4;
+                    double ECI_A5 = CarboGroup.getTotalA5;
+                    double ECI_B1B7 = CarboGroup.getTotalB1B7;
+                    double ECI_C1C4 = CarboGroup.getTotalC1C4;
+                    double ECI_D = CarboGroup.getTotalD;
+                    double ECI_Add = CarboGroup.getTotalMix;
 
                     if (valueList.Count > 0)
                     {
@@ -603,7 +633,7 @@ namespace CarboLifeAPI.Data
                         {
                             string ppName = pp.Name;
 
-                            if (ppName == "A1 A3")
+                            if (ppName == "A1-A3")
                             {
                                 pp.Value += ECI_A1A3;
                             }
@@ -615,17 +645,21 @@ namespace CarboLifeAPI.Data
                             {
                                 pp.Value += ECI_A5;
                             }
-                            //else if (ppName == "B1 B5")
-                            //{
-                            //    pp.Value += ECI_B1B5;
-                            //}
-                            else if (ppName == "C1 C4")
+                            else if (ppName == "B1-B7")
+                            {
+                                pp.Value += ECI_B1B7;
+                            }
+                            else if (ppName == "C1-C4")
                             {
                                 pp.Value += ECI_C1C4;
                             }
                             else if (ppName == "D")
                             {
                                 pp.Value += ECI_D;
+                            }
+                            else if (ppName == "Additional")
+                            {
+                                pp.Value += ECI_Add;
                             }
                             else
                             {
@@ -636,19 +670,11 @@ namespace CarboLifeAPI.Data
 
                 }
             }
-
-     
-            //ValidateData
-            foreach(CarboDataPoint cp in valueList)
+            catch
             {
-                if (cp.Value < 0)
-                {
-                    cp.Value = cp.Value * -1;
-                    cp.Name = cp.Name + "[NEGATIVE]";
-                }
-
+                return null;
             }
-            
+
             //Values should return now;
             return valueList;
         }
@@ -785,6 +811,8 @@ namespace CarboLifeAPI.Data
 
             ECTotal = EC + A5Global + C1Global;
 
+            justSaved = false;
+
         }
 
         private void setElementotals()
@@ -903,6 +931,8 @@ namespace CarboLifeAPI.Data
                     }
                 }
             }
+            justSaved = false;
+
             return cElement;
         }
         private List<CarboElement> addToBuffer(List<CarboElement> elementbuffer, CarboElement cElement, out bool ok)
@@ -971,6 +1001,7 @@ namespace CarboLifeAPI.Data
                     }
                 
             }
+            justSaved = false;
 
             return elementbuffer;
         }
@@ -1034,6 +1065,8 @@ namespace CarboLifeAPI.Data
                     idnr++;
                 }
             }
+            justSaved = false;
+
         }
         public ObservableCollection<CarboGroup> GetGroupsWithoutElements()
         {
@@ -1060,6 +1093,8 @@ namespace CarboLifeAPI.Data
 
             AddGroup(newGroup);
 
+            justSaved = false;
+
             return result;
         }
         public void AddGroups(ObservableCollection<CarboGroup> groupList)
@@ -1068,6 +1103,8 @@ namespace CarboLifeAPI.Data
             {
                 AddGroup(cg);
             }
+
+            justSaved = false;
         }
         private int getNewId()
         {
@@ -1099,17 +1136,14 @@ namespace CarboLifeAPI.Data
         }
         public void DuplicateGroup(CarboGroup carboGroup)
         {
-            CarboGroup newCarboGroup = new CarboGroup();
-            newCarboGroup.Id = getNewId();
-            newCarboGroup.TrucateElements();
-            newCarboGroup.Description = carboGroup.Description  + "- Copy";
-            newCarboGroup.Category = carboGroup.Category;
-            newCarboGroup.SubCategory = carboGroup.SubCategory;
-            newCarboGroup.Volume = carboGroup.Volume;
-            newCarboGroup.Density = carboGroup.Density;
-            newCarboGroup.Material = carboGroup.Material;
-            newCarboGroup.setMaterial(carboGroup.Material);
+            CarboGroup newCarboGroup = carboGroup.Copy();
+            newCarboGroup.Copy();
+            newCarboGroup.Description +=  "- Copy";
+
             AddGroup(newCarboGroup);
+
+            justSaved = false;
+
         }
         public void PurgeElements(CarboGroup carboGroup)
         {
@@ -1135,6 +1169,7 @@ namespace CarboLifeAPI.Data
                 MessageBox.Show("new group already exists");
                 return false;
             }
+            justSaved = false;
 
             return result;
 
@@ -1161,6 +1196,9 @@ namespace CarboLifeAPI.Data
                     }
                 }
             }
+
+            justSaved = false;
+
         }
         public void DeleteGroup(CarboGroup groupToDelete)
         {
@@ -1170,6 +1208,7 @@ namespace CarboLifeAPI.Data
         public void AddElement(CarboElement carboElement)
         {
             elementList.Add(carboElement);
+            justSaved = false;
         }
         public CarboProject DeSerializeXML(string myPath)
         { 
@@ -1183,6 +1222,7 @@ namespace CarboLifeAPI.Data
                     using (FileStream fs = new FileStream(myPath, FileMode.Open))
                     {
                         bufferproject = ser.Deserialize(fs) as CarboProject;
+                        bufferproject.justSaved = false;
                     }
                     bufferproject.filePath = myPath;
                      return bufferproject;
@@ -1207,6 +1247,7 @@ namespace CarboLifeAPI.Data
                 {
                     ser.Serialize(fs, this);
                 }
+                justSaved = true;
                 return true;
 
             }

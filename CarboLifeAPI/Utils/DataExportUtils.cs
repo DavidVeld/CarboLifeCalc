@@ -371,7 +371,7 @@ namespace CarboLifeAPI
                     xlWorkSheet3.Cells[row, col + 9] = "A5";
                     xlWorkSheet3.Cells[row + 1, col + 9] = "kgCO2e/kg";
 
-                    xlWorkSheet3.Cells[row, col + 10] = "B";
+                    xlWorkSheet3.Cells[row, col + 10] = "B1-B7";
                     xlWorkSheet3.Cells[row + 1, col + 10] = "kgCO2e/kg";
 
                     xlWorkSheet3.Cells[row, col + 11] = "C1-C4";
@@ -382,6 +382,9 @@ namespace CarboLifeAPI
 
                     xlWorkSheet3.Cells[row, col + 13] = "Mix";
                     xlWorkSheet3.Cells[row + 1, col + 13] = "kgCO2e/kg";
+
+                    xlWorkSheet3.Cells[row, col + 14] = "B4";
+                    xlWorkSheet3.Cells[row + 1, col + 14] = "factor";
 
                     row++;
 
@@ -405,6 +408,8 @@ namespace CarboLifeAPI
                         xlWorkSheet3.Cells[row, col + 11] = material.ECI_C1C4;
                         xlWorkSheet3.Cells[row, col + 12] = material.ECI_D;
                         xlWorkSheet3.Cells[row, col + 13] = material.ECI_Mix;
+                        xlWorkSheet3.Cells[row, col + 14] = material.materialB1B5Properties.B4;
+
                     }
 
                     xlWorkSheet3.Columns[1].ColumnWidth = 15;

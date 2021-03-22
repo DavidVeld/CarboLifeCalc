@@ -71,6 +71,63 @@ namespace CarboLifeAPI.Data
             }
         }
 
+        public double getTotalA1A3
+        {
+            get
+            {
+                return (Mass * Material.ECI_A1A3 * Material.materialB1B5Properties.B4);
+            }
+        }
+
+        public double getTotalA4
+        {
+            get
+            {
+                return (Mass * Material.ECI_A4 * Material.materialB1B5Properties.B4);
+            }
+        }
+
+        public double getTotalA5
+        {
+            get
+            {
+                return (Mass * Material.ECI_A5 * Material.materialB1B5Properties.B4);
+            }
+        }
+
+        public double getTotalB1B7
+        {
+            get
+            {
+                return (Mass * Material.ECI_B1B5 * Material.materialB1B5Properties.B4);
+            }
+        }
+
+        public double getTotalC1C4
+        {
+            get
+            {
+                return (Mass * Material.ECI_C1C4 * Material.materialB1B5Properties.B4);
+            }
+        }
+
+        public double getTotalD
+        {
+            get
+            {
+                return (Mass * Material.ECI_D * Material.materialB1B5Properties.B4);
+            }
+        }
+
+        public double getTotalMix
+        {
+            get
+            {
+                return (Mass * Material.ECI_Mix * Material.materialB1B5Properties.B4);
+            }
+        }
+
+
         public CarboGroup()
         {
             Id = -999;
@@ -108,7 +165,6 @@ namespace CarboLifeAPI.Data
             isDemolished = false;
             isSubstructure = false;
         }
-
         internal void RefreshValuesFromElements()
         {
             //Reset Material Values;
@@ -144,7 +200,6 @@ namespace CarboLifeAPI.Data
             Mass = Material.Density * Volume;
 
         }
-
         public CarboGroup(int id, string materialName, string category, string description, double volume, double density, double mass, double eei, double eci, double ee, double ec)
         {
             Id = id;
@@ -181,14 +236,12 @@ namespace CarboLifeAPI.Data
             Material = new CarboMaterial();
             AllElements = new List<CarboElement>();
         }
-
         internal void setMaterial(CarboMaterial material)
         {
             this.MaterialName = material.Name;
             this.Material = material;
             CalculateTotals();
         }
-
         public CarboGroup(CarboElement carboElement)
         {
             Id = -999;
@@ -235,7 +288,6 @@ namespace CarboLifeAPI.Data
             isDemolished = carboElement.isDemolished;
             isSubstructure = carboElement.isSubstructure;
         }
-
         internal void SetPercentageOf(double eCTotal)
         {
             if (EC > 0)
@@ -248,7 +300,6 @@ namespace CarboLifeAPI.Data
                 PerCent = 0;
             }
         }
-
         public void CalculateTotals()
         {
             Material.CalculateTotals();
@@ -288,13 +339,12 @@ namespace CarboLifeAPI.Data
             }
             
 
-            //Calculate Valuesl
+            //Calculate corrected mass
             Mass = TotalVolume * Density;
-            //EE = Mass * EEI;
+            //EC = Total corrected Mass * EE;I
             EC = (Mass * ECI) / 1000;
 
         }
-
         internal void TrucateElements()
         {
             if(AllElements.Count > 0)
@@ -303,7 +353,6 @@ namespace CarboLifeAPI.Data
                 AllElements.Clear();
             }
         }
-
         public CarboGroup Copy()
         {
             CarboGroup result = new CarboGroup();
@@ -350,7 +399,6 @@ namespace CarboLifeAPI.Data
             return result;
 
         }
-
         internal void copyValues(CarboGroup carboGroup)
         {
             Category = carboGroup.Category;

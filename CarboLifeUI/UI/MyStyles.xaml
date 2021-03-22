@@ -475,7 +475,7 @@
         <Setter Property="FocusVisualStyle" Value="{StaticResource CheckBoxFocusVisual}"/>
         <Setter Property="Foreground" Value="#000000"/>
         <Setter Property="Background" Value="#ffffff"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="13"/>
         <Setter Property="FontWeight" Value="DemiBold"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
@@ -500,7 +500,7 @@
                                                     Data="M 0 0 L 0 10 L 10 10 L 10 0 L 0 0" />
                             </Border>
                         </BulletDecorator.Bullet>
-                        <ContentPresenter Margin="8,0,0,0"
+                        <ContentPresenter Margin="8,-8,0,0"
                             VerticalAlignment="Center"
                             HorizontalAlignment="Left"
                             RecognizesAccessKey="True"/>

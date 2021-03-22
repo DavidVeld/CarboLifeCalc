@@ -181,7 +181,7 @@ namespace CarboLifeUI.UI
                     },
                     StackMode = StackMode.Values,
                     DataLabels = true,
-                                        Title = "A4"
+                    Title = "A4"
                 },
                 new StackedColumnSeries
                 {
