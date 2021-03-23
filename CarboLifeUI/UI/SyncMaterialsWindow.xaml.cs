@@ -150,7 +150,6 @@ namespace CarboLifeUI.UI
 
         private void btn_SyncTo_Click(object sender, RoutedEventArgs e)
         {
-            string name = "";
             if (liv_CurrentMaterials.SelectedItems.Count > 0)
             {
                 try
@@ -328,10 +327,8 @@ namespace CarboLifeUI.UI
 
         private void btn_OpenOnline_Click(object sender, RoutedEventArgs e)
         {
-            //
             OnlineMaterialPicker onlinePicker = new OnlineMaterialPicker();
             onlinePicker.ShowDialog();
-            string lastdownloadedfile = "";
             if (onlinePicker.isAccepted == true && onlinePicker.selectionList != null && onlinePicker.selectionList.Count > 0)
             {
 
@@ -351,7 +348,7 @@ namespace CarboLifeUI.UI
                             //wc.DownloadProgressChanged += wc_DownloadProgressChanged;
                             wc.DownloadFileAsync(
                                 // Param1 = Link of file
-                                new System.Uri("http://davidveld.nl/data/" + file),
+                                new System.Uri("https://davidveld.nl/data/" + file),
                                 // Param2 = Path to save
                                 filetarget
                             );

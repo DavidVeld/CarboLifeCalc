@@ -32,7 +32,7 @@ namespace CarboLifeAPI.Data
             try
             {
             }
-            catch (Exception ex)
+            catch
             { 
             }
         }

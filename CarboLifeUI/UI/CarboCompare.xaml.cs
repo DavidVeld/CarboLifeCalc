@@ -92,13 +92,16 @@ namespace CarboLifeUI.UI
             {
                 if (CarboLifeProject != null)
                 {
+                    chx_Project0.Content = CarboLifeProject.Name + " (Current) " + Environment.NewLine + Math.Round(CarboLifeProject.ECTotal,2) + " kgCO2";
+
+
                     if (liv_Projects != null)
                     {
                         liv_Projects.ItemsSource = null;
                         liv_Projects.ItemsSource = projectListToCompareTo;
-
                     }
                     SeriesCollection currentProjectSeriesCollection = new SeriesCollection();
+
                     if (chx_Project0.IsChecked == true)
                     {
                         currentProjectSeriesCollection = GraphBuilder.BuildComparingTotalsBarGraph(CarboLifeProject, projectListToCompareTo);
@@ -106,15 +109,28 @@ namespace CarboLifeUI.UI
                     else
                     {
                         currentProjectSeriesCollection = GraphBuilder.BuildComparingTotalsBarGraph(null, projectListToCompareTo);
-
                     }
 
+                    Func<double, string> Formatter = value => value + " kgCO2";
+
+                    //Build the labels
+                    List<string> projectlist = new List<string>();
+
+                    if (chx_Project0.IsChecked == true)
+                        projectlist.Add("Current");
+
+                    foreach(CarboProject cp in projectListToCompareTo)
+                    {
+                        projectlist.Add(cp.Name);
+                    }
+                    //Labels = null;
+                    Labels = projectlist.ToArray();
+
+                    barchart.SeriesColors = GraphBuilder.getColours();
                     barchart.Series = currentProjectSeriesCollection;
 
-                    Func<double, string> Formatter = value => value + " kgCO2/kg";
                     DataContext = this;
 
-                    Labels = new[] { "Current", "Selected" };
                 }
             }
             catch (Exception ex)
@@ -203,9 +219,17 @@ namespace CarboLifeUI.UI
                 setProject(clp);
         }
 
-        private void chx_Project0_Checked(object sender, RoutedEventArgs e)
+        private void btn_Refresh_Click(object sender, RoutedEventArgs e)
         {
             RefreshInterFace();
+        }
+
+        private void chx_Project0_Click(object sender, RoutedEventArgs e)
+        {
+            if (CarboLifeProject != null)
+            {
+                RefreshInterFace();
+            }
         }
     }
 }

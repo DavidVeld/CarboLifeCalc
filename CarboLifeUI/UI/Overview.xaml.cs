@@ -80,12 +80,19 @@ namespace CarboLifeUI.UI
 
                     SeriesCollection pieLifeSeries = GraphBuilder.GetPieChartTotals(CarboLifeProject);
 
-                    if(pieMaterialSeries != null)
+                    if (pieMaterialSeries != null)
+                    {
                         pie_Chart1.Series = pieMaterialSeries;
-                    
-                    if(pieLifeSeries != null)
+                        pie_Chart1.SeriesColors = GraphBuilder.getColours();
+
+                    }
+
+                    if (pieLifeSeries != null)
+                    {
                         pie_Chart2.Series = pieLifeSeries;
-                    
+                        pie_Chart2.SeriesColors = GraphBuilder.getColours();
+
+                    }
                     txt_ProjectName.Text = CarboLifeProject.Name;
                     txt_Number.Text = CarboLifeProject.Number;
                     txt_Category.Text = CarboLifeProject.Category;

@@ -196,7 +196,7 @@ namespace CarboLifeAPI
                 }
                 html += "</TABLE>";
             }
-            catch (Exception ex)
+            catch
             {
             }
 
@@ -338,7 +338,7 @@ namespace CarboLifeAPI
 
                 html += "</TABLE>";
             }
-            catch (Exception ex)
+            catch
             {
             }
 
@@ -423,7 +423,7 @@ namespace CarboLifeAPI
                 html += "<H3>" + carboProject.getSummaryText(true,true,true,true) + "</H3>" + System.Environment.NewLine;
 
             }
-            catch (Exception ex)
+            catch
             {
             }
 
@@ -493,7 +493,7 @@ namespace CarboLifeAPI
                 html += "</BODY></HTML>";
 
             }
-            catch (Exception ex)
+            catch
             {
             }
 

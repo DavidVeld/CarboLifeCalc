@@ -157,7 +157,7 @@ namespace CarboLifeAPI
                     table.Rows.Add(values);
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 //MessageBox.Show(ex.Message);
             }

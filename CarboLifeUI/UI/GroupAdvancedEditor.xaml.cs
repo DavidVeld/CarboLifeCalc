@@ -212,7 +212,7 @@ namespace CarboLifeUI.UI
                         group.WasteDescription = selectedValue.name;
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     group.Waste = 0;
                     group.WasteDescription = "";
@@ -344,7 +344,7 @@ namespace CarboLifeUI.UI
                         group.B4Description = selectedValue.name;
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     group.ComponentLifePeriod = 0;
                     group.B4Description = "";

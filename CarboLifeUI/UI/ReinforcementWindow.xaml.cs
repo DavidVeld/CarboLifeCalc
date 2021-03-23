@@ -146,7 +146,7 @@ namespace CarboLifeUI.UI
             {
                  result = (densityToMix * material.ECI) / densityBase;
             }
-            catch (Exception ex)
+            catch
             {
                 return 0;
             }

@@ -63,12 +63,12 @@ namespace CarboLifeUI.UI
 
             //Full list to compare to:
             List<CarboProject> fullProjectListToCompareTo = new List<CarboProject>();
-            bool hasCurrent = false;
+            //bool hasCurrent = false;
 
             if (project != null)
             {
                 fullProjectListToCompareTo.Add(project);
-                hasCurrent = true;
+                //hasCurrent = true;
             }
             foreach (CarboProject projectToCompare in projectListToCompareTo)
             {
@@ -127,7 +127,7 @@ namespace CarboLifeUI.UI
 
                 //loop though
                 // i is nr type of information extracted
-                for (int i = 0; i < 8; i++)
+                for (int i = 0; i < 9; i++)
                 {
                     StackedColumnSeries newSeries = new StackedColumnSeries();
 
@@ -136,23 +136,61 @@ namespace CarboLifeUI.UI
                     //get all Values from all loaded projects
                     foreach (List<CarboDataPoint> dataPointList in pointList)
                     {
-                        Values.Add(dataPointList[i].Value / 1000);
+                        Values.Add(Math.Round((dataPointList[i].Value / 1000),2));
                     }
 
                     newSeries.Title = pointList[0][i].Name;
                     newSeries.Values = Values;
-
+                    newSeries.StackMode = StackMode.Values;
+                    newSeries.DataLabels = true;
+                    newSeries.Foreground = Brushes.White;
+                    //newSeries.Fill = Brushes.Black;
                     result.Add(newSeries);
 
                 }
 
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }
             return result;
 
+        }
+
+        internal static ColorsCollection getColours()
+        {
+
+            ColorsCollection result = new ColorsCollection();
+
+            Color c1 = new Color { A = 255, R = 100, G = 130, B = 185 }; //A1-A3 (Blue tone)
+            Color c2 = new Color { A = 255, R = 180, G = 150, B = 100 }; //A4 (Brown tone)
+            Color c3 = new Color { A = 255, R = 164, G = 180, B = 100 }; //A5 (0) (Yellowish)
+            Color c4 = new Color { A = 255, R = 210, G = 210, B = 60 }; //A5 Global (Bright yellow)
+            Color c5 = new Color { A = 255, R = 150, G = 150, B = 150 }; //B (0)
+            Color c6 = new Color { A = 255, R = 190, G = 88, B = 90 }; //C (Red)
+            Color c7 = new Color { A = 255, R = 200, G = 60, B = 60 }; //C Global (Red)
+            Color c8 = new Color { A = 210, R = 210, G = 205, B = 60 }; //D (Blue)
+            Color c9 = new Color { A = 255, R = 50, G = 50, B = 50 };  //Added
+            Color c10 = new Color { A = 255, R = 160, G = 100, B = 175 };//Extra
+
+
+            result.Add(c1);
+            result.Add(c2);
+            result.Add(c3);
+            result.Add(c4);
+            result.Add(c5);
+            result.Add(c6);
+            result.Add(c7);
+            result.Add(c8);
+            result.Add(c9);
+            result.Add(c10);
+
+
+
+
+
+            return result;
         }
 
 

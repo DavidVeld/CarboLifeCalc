@@ -46,7 +46,7 @@
                     <RowDefinition Height="10"/>
                     <RowDefinition Height="35"/>
                     <RowDefinition Height="35"/>
-                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="200"/>
                     <RowDefinition Height="35"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
@@ -56,40 +56,41 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Name="chx_Project0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="5,0,5,2"  Height="26" IsChecked="True" Checked="chx_Project0_Checked">Current Project</CheckBox>
+                <CheckBox Name="chx_Project0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="0,5,5,2"  Height="26" IsChecked="True" Click="chx_Project0_Click">Current Project</CheckBox>
 
-                <ListView Name="liv_Projects" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Margin="5,0">
+                <Label Grid.Column="1" Grid.Row="3" Margin="0,5,5,2"  Style="{StaticResource baseStyle}">List of project to compare to:</Label>
+                <ListView Name="liv_Projects" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Margin="0,0">
                     <ListView.View>
                         <GridView AllowsColumnReorder="False">
                             <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}"/>
-                            <GridViewColumn Header="EC" Width="80" DisplayMemberBinding="{Binding Path=EC, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                            <GridViewColumn Header="Total EC" Width="90" DisplayMemberBinding="{Binding Path=ECTotal, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button Name="btn_Add"  Grid.Column="1" Grid.Row="5"  Margin="0,6,96,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Add..." Click="btn_Add_Click" ></Button>
-                <Button Name="btn_Remove"  Grid.Column="1" Grid.Row="5"  Margin="0,6,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Remove..." Click="btn_Remove_Click"></Button>
+                <Button Name="btn_Add"  Grid.Column="1" Grid.Row="5"  Margin="0,6,96,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Add..." Click="btn_Add_Click" ></Button>
+                <Button Name="btn_Remove"  Grid.Column="1" Grid.Row="5"  Margin="80,6,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Remove..." Click="btn_Remove_Click"></Button>
 
             </Grid>
 
 
         </GroupBox>
 
-
-
         <lvc:CartesianChart Name="barchart" Grid.Column="2" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Compare Materials" 
+                <lvc:Axis Title="Compare Projects" 
                           Labels="{Binding Labels}" 
                           Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" />
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Carbon Intensity" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                <lvc:Axis Title="Carbon Totals" LabelFormatter="{Binding Formatter}"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 
-        <Label Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="5,2,778,5"  Height="28" Style="{StaticResource baseStyleLabel}">Compare:</Label>
 
+        <Label Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="5,2,778,5"  Height="28" Style="{StaticResource baseStyleLabel}">Compare:</Label>
         <ComboBox Name="cbb_GraphType" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="84,4,527,5"  Height="26"  Style="{StaticResource  ComboBoxFlatStyleLight}" IsReadOnly="True" DropDownClosed="cbb_GraphType_DropDownClosed"></ComboBox>
+
+        <Button Name="btn_Refresh"  Grid.Column="1" Grid.Row="3"  Margin="0,6,96,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Refresh" Click="btn_Refresh_Click" ></Button>
 
 
     </Grid>

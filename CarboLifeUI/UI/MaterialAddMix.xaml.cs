@@ -102,7 +102,7 @@ namespace CarboLifeUI.UI
                     }
                 }
             }
-            catch(Exception ex)
+            catch
             {
 //
             }

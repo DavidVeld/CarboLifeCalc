@@ -143,7 +143,7 @@ namespace CarboLifeUI.UI
                     Buildgraph();
                 }
             }
-            catch(Exception ex)
+            catch
             {
 
             }

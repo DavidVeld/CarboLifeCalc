@@ -28,7 +28,7 @@ namespace CarboLifeRevit
 
             if (File.Exists(updatePath))
                 updateFile = true;
-
+            //Create a new project
             CarboProject myProject = new CarboProject();
 
             myProject.Name = doc.ProjectInformation.Name.Trim();
@@ -79,7 +79,7 @@ namespace CarboLifeRevit
 
 
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         IdsNotFound.Add(name);
 
@@ -248,7 +248,7 @@ namespace CarboLifeRevit
                         }
 
                     }
-                    catch(Exception ex)
+                    catch
                     {
 
                     }

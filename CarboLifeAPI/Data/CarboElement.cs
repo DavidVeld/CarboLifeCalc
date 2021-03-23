@@ -11,11 +11,16 @@ namespace CarboLifeAPI.Data
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        //Imported Material Name
         public string MaterialName { get; set; }
+        //Matched To Material Name
+        public string CarboMaterialName { get; set; }
+
         public string Category { get; set; }
         public string SubCategory { get; set; }
         public double Volume { get; set; }
         public double Mass { get; set; }
+        public double Density { get; set; }
         public double Level { get; set; }
         public bool isDemolished { get; set; }
         public bool isExisting { get; set; }
@@ -29,7 +34,7 @@ namespace CarboLifeAPI.Data
         public double ECI_Total { get; set; }
         public double EC_Total { get; set; }
         public double Volume_Total { get; set; }
-
+       
         public CarboMaterial Material {get;set; }
 
         [NonSerialized]
@@ -58,6 +63,8 @@ namespace CarboLifeAPI.Data
             isUpdated = false;
         }
 
+        //
+        [Obsolete("Would like to get rid of this")]
         public void setMaterial(CarboMaterial carboMaterial)
         {
             this.Material = carboMaterial;
@@ -65,6 +72,7 @@ namespace CarboLifeAPI.Data
             ECI = carboMaterial.ECI;
         }
 
+        [Obsolete("Would like to get rid of this")]
         internal void Calculate(CarboMaterial material)
         {
             if(material != null)
@@ -76,5 +84,6 @@ namespace CarboLifeAPI.Data
             }
 
         }
+        //
     }
 }

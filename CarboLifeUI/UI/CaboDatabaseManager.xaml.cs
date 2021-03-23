@@ -497,7 +497,7 @@ namespace CarboLifeUI.UI
 
         private void mnu_OpenDataFrom(object sender, RoutedEventArgs e)
         {
-            string name = "";
+            //string name = "";
 
             try
             {

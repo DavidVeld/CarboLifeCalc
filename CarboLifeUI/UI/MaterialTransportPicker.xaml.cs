@@ -236,8 +236,9 @@ namespace CarboLifeUI.UI
                         loadSettings();
                     }
                 }
-                catch (Exception ex)
-                { }
+                catch
+                { 
+                }
             }
         }
 
@@ -257,7 +258,7 @@ namespace CarboLifeUI.UI
                         loadSettings();
                     }
                 }
-                catch(Exception ex)
+                catch
                 { }
             }
 
@@ -345,7 +346,7 @@ namespace CarboLifeUI.UI
                     a4Properties.calculate();
                     loadSettings();
                 }
-                catch (Exception ex)
+                catch
                 { }
             }
         }

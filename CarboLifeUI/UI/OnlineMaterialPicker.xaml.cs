@@ -62,9 +62,9 @@ namespace CarboLifeUI.UI
                     MessageBox.Show("No Online Database found, please make sure you are connected to the internet");
                 }
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("Error while loading menu");
+                MessageBox.Show("Error: " + ex.Message) ;
             }
 
         }

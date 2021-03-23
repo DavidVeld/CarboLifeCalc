@@ -173,8 +173,9 @@ namespace CarboLifeAPI.Data
                 this.value = total;
                 this.calcResult = calcResult;
             }
-            catch (Exception ex)
-            { }
+            catch
+            { 
+            }
         }
     }
 }

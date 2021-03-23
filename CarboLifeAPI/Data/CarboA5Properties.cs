@@ -45,7 +45,7 @@ namespace CarboLifeAPI.Data
 
                 this.calcResult = calcResult;
             }
-            catch (Exception ex)
+            catch
             { }
         }
     }

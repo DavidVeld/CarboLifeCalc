@@ -313,7 +313,7 @@ namespace CarboLifeUI.UI
                             else
                             {
                                 double volumeEdit = Utils.ConvertMeToDouble(t.Text);
-                                if (volumeEdit != null)
+                                if (volumeEdit != 0)
                                 {
                                     carboGroup.Volume = volumeEdit;
 
@@ -328,7 +328,7 @@ namespace CarboLifeUI.UI
                         if (dgc.Header.ToString().StartsWith("Waste"))
                         {
                             double wastevalue = Utils.ConvertMeToDouble(t.Text);
-                            if (wastevalue != null)
+                            if (wastevalue != 0)
                             {
                                 carboGroup.Waste = wastevalue;
 
@@ -341,7 +341,7 @@ namespace CarboLifeUI.UI
                         if (dgc.Header.ToString().StartsWith("Additional"))
                         {
                             double additional = Utils.ConvertMeToDouble(t.Text);
-                            if (additional != null)
+                            if (additional != 0)
                             {
                                 carboGroup.Additional = additional;
 
@@ -355,7 +355,7 @@ namespace CarboLifeUI.UI
                         if (dgc.Header.ToString().StartsWith("Group"))
                         {
                             double b4 = Utils.ConvertMeToDouble(t.Text);
-                            if (b4 != null)
+                            if (b4 != 0)
                             {
                                 carboGroup.B4Factor = b4;
 

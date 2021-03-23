@@ -309,7 +309,7 @@ namespace CarboLifeUI.UI
                         materialB1B5Properties.assetType = selectedValue.name;
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     materialB1B5Properties.elementdesignlife = 50;
                     materialB1B5Properties.buildingdesignlife = 50;

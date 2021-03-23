@@ -28,7 +28,7 @@ namespace CarboLifeRevit
                 bool setIsDemolished;
                 bool setIsSubstructure;
                 bool setIsExisting;
-                int layernr;
+                //int layernr;
 
                 // Material material = doc.GetElement(materialIds) as Material;
                 //Id:
@@ -42,9 +42,7 @@ namespace CarboLifeRevit
                 //MaterialName
                 setMaterialName = doc.GetElement(materialIds).Name.ToString();
                 CarboMaterial carboMaterial = new CarboMaterial(setMaterialName);
-                
-
-
+               
                 //GetDensity
                 Parameter paramMaterial = el.get_Parameter(BuiltInParameter.STRUCTURAL_MATERIAL_PARAM);
                 if (paramMaterial != null)
@@ -156,7 +154,7 @@ namespace CarboLifeRevit
                     return null;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 //TaskDialog.Show("Error", ex.Message);
                 return null;

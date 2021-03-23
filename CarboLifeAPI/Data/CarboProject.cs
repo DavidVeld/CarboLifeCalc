@@ -94,9 +94,8 @@ namespace CarboLifeAPI.Data
                         cel.b = 0;
                     }
                 }
-                catch(Exception ex)
+                catch
                 {
-
                 }
             }
         }
@@ -346,8 +345,9 @@ namespace CarboLifeAPI.Data
 
                 this.AddGroup(newGroup);
             }
-            catch (Exception ex)
-            { }
+            catch
+            { 
+            }
         }
 
         private bool insertinGroups(CarboElement ceNew)
@@ -836,9 +836,6 @@ namespace CarboLifeAPI.Data
                     }
                 }
             }
-            if (okSet == false) ;
-                //MessageBox.Show("Elements processed");
-
         }
 
         /// <summary>
@@ -1237,10 +1234,30 @@ namespace CarboLifeAPI.Data
         }
         public bool SerializeXML(string myPath)
         {
-            bool result = false;
-            //this.filePath = "";
             try
             {
+                //clear all the results from all the elemtns
+                /* This needs to be tested before:
+                foreach(CarboElement el in getAllElements)
+                {
+                    //el.Material = null;
+                }
+                */
+                foreach(CarboGroup grp in groupList)
+                {
+                    if (grp.AllElements.Count > 0)
+                    {
+                        foreach (CarboElement el in grp.AllElements)
+                        {
+                            if(el.Material != null)
+                                el.Material.materiaA4Properties.calcResult = "";
+                        }
+                    }
+
+                    grp.Material.materiaA4Properties.calcResult = "";
+
+                }
+
                 XmlSerializer ser = new XmlSerializer(typeof(CarboProject));
 
                 using (FileStream fs = new FileStream(myPath, FileMode.Create))
@@ -1256,11 +1273,6 @@ namespace CarboLifeAPI.Data
                 System.Windows.MessageBox.Show(ex.Message);
                 return false;
             }
-
         }
-
-
-
-
     }
 }

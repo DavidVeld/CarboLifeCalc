@@ -155,7 +155,7 @@ namespace CarboLifeAPI.Data
                 this.calcResult = calcResult;
                 this.value = costTotal;
             }
-            catch (Exception ex)
+            catch
             { }
         }
     }
