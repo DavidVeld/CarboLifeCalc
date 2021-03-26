@@ -20,7 +20,7 @@ namespace CarboLifeRevit
             {
                 int setId;
                 string setName;
-                string setMaterialName;
+                string setImportedMaterialName;
                 string setCategory;
                 string setSubCategory;
                 double setVolume;
@@ -40,8 +40,9 @@ namespace CarboLifeRevit
                 setName = type.Name;
 
                 //MaterialName
-                setMaterialName = doc.GetElement(materialIds).Name.ToString();
-                CarboMaterial carboMaterial = new CarboMaterial(setMaterialName);
+                setImportedMaterialName = doc.GetElement(materialIds).Name.ToString();
+
+                //CarboMaterial carboMaterial = new CarboMaterial(setMaterialName);
                
                 //GetDensity
                 Parameter paramMaterial = el.get_Parameter(BuiltInParameter.STRUCTURAL_MATERIAL_PARAM);
@@ -57,7 +58,7 @@ namespace CarboLifeRevit
                             if (paramDensity != null)
                             {
                                 double density = paramDensity.AsDouble();
-                                carboMaterial.Density = density;
+                                newCarboElement.Density = density;
                             }
                         }
                     }
@@ -135,11 +136,11 @@ namespace CarboLifeRevit
 
                 newCarboElement.Id = setId;
                 newCarboElement.Name = setName;
-                newCarboElement.MaterialName = setMaterialName;
+                newCarboElement.MaterialName = setImportedMaterialName;
                 newCarboElement.Category = setCategory;
                 newCarboElement.SubCategory = setSubCategory;
                 newCarboElement.Volume = Math.Round(setVolume, 4);
-                newCarboElement.Material = carboMaterial;
+                //newCarboElement.Material = carboMaterial; Material removed
                 newCarboElement.Level = Math.Round(setLevel,3);
                 newCarboElement.isDemolished = setIsDemolished;
                 newCarboElement.isExisting = setIsExisting;
@@ -206,7 +207,6 @@ namespace CarboLifeRevit
             return result;
 
         }
-
         public static bool isElementReal(Element el)
         {
             bool result = false;

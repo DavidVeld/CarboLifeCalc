@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -41,8 +42,17 @@ namespace CarboLifeUI.UI
             {
                 string url = "https://www.davidveld.nl/ping.php";
 
+                //var client = new WebClient();
+               // var text = client.DownloadString(url);
+
+               // HttpClient d = new HttpClient();
+               // var response2 = d.GetAsync(url).Result;
+
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.UserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36";
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+
 
                 if (response != null)
                 {

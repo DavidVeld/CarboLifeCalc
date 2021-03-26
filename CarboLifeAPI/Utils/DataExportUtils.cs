@@ -43,6 +43,10 @@ namespace CarboLifeAPI
                 if (isInUse == true)
                     return null;
             }
+            else
+            {
+                return null;
+            }
 
 
             //If this part is reached; return the valid path;
@@ -211,16 +215,18 @@ namespace CarboLifeAPI
                 row++;
                 xlWorkSheet.Cells[row, col + 7].Formula = string.Format("=SUM(H3:H{0})", (row - 1));
                 xlWorkSheet.Cells[row, col + 8].Formula = string.Format("=SUM(I3:I{0})", (row - 1));
-                xlWorkSheet.Cells[row, col + 9].Formula = string.Format("=SUM(J4:J{0})", (row - 1));
+                xlWorkSheet.Cells[row, col + 9].Formula = string.Format("=SUM(J3:J{0})", (row - 1));
                 xlWorkSheet.Cells[row, col + 10].Formula = string.Format("=SUM(K3:K{0})", (row - 1));
                 xlWorkSheet.Cells[row, col + 11].Formula = string.Format("=SUM(L3:L{0})", (row - 1));
-                //xlWorkSheet.Cells[row, col + 12].Formula = string.Format("=SUM(M3:M{0})", (row - 1));
+                xlWorkSheet.Cells[row, col + 12].Formula = string.Format("=SUM(M3:M{0})", (row - 1));
                 xlWorkSheet.Cells[row, col + 13].Formula = string.Format("=SUM(N3:N{0})", (row - 1));
                 xlWorkSheet.Cells[row, col + 14].Formula = string.Format("=SUM(O3:O{0})", (row - 1));
                 xlWorkSheet.Cells[row, col + 15].Formula = string.Format("=SUM(P3:P{0})", (row - 1));
+                xlWorkSheet.Cells[row, col + 15].Formula = string.Format("=SUM(U3:P{0})", (row - 1));
 
-                //Format the table
-                xlWorkSheet.Columns[1].ColumnWidth = 20;
+
+                    //Format the table
+                    xlWorkSheet.Columns[1].ColumnWidth = 20;
                 xlWorkSheet.Columns[2].ColumnWidth = 40;
                 xlWorkSheet.Columns[3].ColumnWidth = 40;
 
@@ -433,7 +439,160 @@ namespace CarboLifeAPI
 
         }
 
+        public static void ExportComaringGraphs(CarboProject carboLifeProject, List<CarboProject> projectListToCompareTo)
+        {
+
+            //Check if user has excel
+            string path = GetSaveAsLocation();
+
+            if (path != null)
+            {
+                Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+                if (xlApp == null)
+                {
+                    System.Windows.MessageBox.Show("You need to have excel installed to continue", "Computer says no", MessageBoxButton.OK);
+                    return;
+                }
+
+                if (carboLifeProject != null)
+                    projectListToCompareTo.Insert(0, carboLifeProject);
+
+                CreateTotalsExcelFile(projectListToCompareTo, xlApp, path);
+
+                if (File.Exists(path))
+                {
+                    System.Windows.MessageBox.Show("Excel export succesful, click OK to open!", "Success!", MessageBoxButton.OK);
+                    System.Diagnostics.Process.Start(path);
+                }
+
+            }
+
+        }
+
+        private static void CreateTotalsExcelFile(List<CarboProject> projectList, Excel.Application xlApp, string path)
+        {
+            int row = 1;
+            int col = 1;
+
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet;
+
+            xlApp.DisplayAlerts = false;
+
+            object misValue = System.Reflection.Missing.Value;
+
+            xlWorkBook = xlApp.Workbooks.Add(misValue);
+
+            //Add the durrent 
+
+            try
+            {
+
+                xlWorkSheet = (Excel.Worksheet)xlApp.Worksheets.Add();
+                if (xlWorkSheet != null)
+                {
+                    xlWorkSheet.Name = "Comparing Table";
+
+                    row = 1;
+                    col = 1;
+
+                    /////////////////////
+                    ///Headers
+                    ///
+                    xlWorkSheet.Cells[row, col] = "Project Nr";
+                    xlWorkSheet.Cells[row + 1, col] = "";
+
+                    xlWorkSheet.Cells[row, col + 1] = "Project Name";
+                    xlWorkSheet.Cells[row + 1, col + 1] = "";
+
+                    xlWorkSheet.Cells[row, col + 2] = "Total EC";
+                    xlWorkSheet.Cells[row + 1, col + 2] = "tCO2e";
+
+                    xlWorkSheet.Cells[row, col + 3] = "A1-A3";
+                    xlWorkSheet.Cells[row + 1, col + 3] = "tCO2e";
+
+                    xlWorkSheet.Cells[row, col + 4] = "A4";
+                    xlWorkSheet.Cells[row + 1, col + 4] = "tCO2e";
+
+                    xlWorkSheet.Cells[row, col + 5] = "A5 (Material)";
+                    xlWorkSheet.Cells[row + 1, col + 5] = "tCO2e";
+
+                    xlWorkSheet.Cells[row, col + 6] = "A5 (Global)";
+                    xlWorkSheet.Cells[row + 1, col + 6] = "tCO2e";
+
+                    xlWorkSheet.Cells[row, col + 7] = "B1-B7";
+                    xlWorkSheet.Cells[row + 1, col + 7] = "tCO2e";
+
+                    xlWorkSheet.Cells[row, col + 8] = "C1-C4";
+                    xlWorkSheet.Cells[row + 1, col + 8] = "tCO2e";
+
+                    xlWorkSheet.Cells[row, col + 9] = "C1 (Global)";
+                    xlWorkSheet.Cells[row + 1, col + 9] = "tCO2e";
+
+                    xlWorkSheet.Cells[row, col + 10] = "D";
+                    xlWorkSheet.Cells[row + 1, col + 10] = "tCO2e";
+
+                    xlWorkSheet.Cells[row, col + 11] = "Additional";
+                    xlWorkSheet.Cells[row + 1, col + 11] = "tCO2e";
+
+                    //Advanced
+
+                    row++;
+                    i++;
+
+                    foreach (CarboProject cp in projectList)
+                    {
+
+                        List<CarboDataPoint> listofPoints = cp.getPhaseTotals();
+                        //pointList.Add(listofPoints);
+
+                        row++;
+
+                        xlWorkSheet.Cells[row, col] = cp.Number;
+                        xlWorkSheet.Cells[row, col + 1] = cp.Name;
+                        xlWorkSheet.Cells[row, col + 2] = cp.getTotalEC();
+                        xlWorkSheet.Cells[row, col + 3] = listofPoints[0].Value / 1000;
+                        xlWorkSheet.Cells[row, col + 4] = listofPoints[1].Value / 1000;
+                        xlWorkSheet.Cells[row, col + 5] = listofPoints[2].Value / 1000;
+                        xlWorkSheet.Cells[row, col + 6] = listofPoints[3].Value / 1000;
+                        xlWorkSheet.Cells[row, col + 7] = listofPoints[4].Value / 1000;
+                        xlWorkSheet.Cells[row, col + 8] = listofPoints[5].Value / 1000;
+                        xlWorkSheet.Cells[row, col + 9] = listofPoints[6].Value / 1000;
+                        xlWorkSheet.Cells[row, col + 10] = listofPoints[7].Value / 1000;
+                        xlWorkSheet.Cells[row, col + 11] = listofPoints[8].Value / 1000;
+
+                        i++;
+                    }
+
+
+                    //Format the table
+                    xlWorkSheet.Columns[1].ColumnWidth = 30;
+                    xlWorkSheet.Columns[2].ColumnWidth = 40;
+                    xlWorkSheet.Columns[3].ColumnWidth = 30;
+
+                    Marshal.ReleaseComObject(xlWorkSheet);
+
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        ////////////////////
+        ///Save File
+        xlWorkBook.SaveAs(path, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+            xlWorkBook.Close(true, misValue, misValue);
+            xlApp.Quit();
+
+            Marshal.ReleaseComObject(xlWorkBook);
+            Marshal.ReleaseComObject(xlApp);
+
+        }
+
+
+
     }
+
 
     public class LookupItem
     {

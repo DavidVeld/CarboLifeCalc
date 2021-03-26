@@ -42,7 +42,7 @@ namespace CarboLifeRevit
 
             if (selectionList.Count == 0)
             {
-                //No elements are selected: 
+                //No elements are selected, all elements will be parsed
                 View activeView = doc.ActiveView;
 
                 FilteredElementCollector coll = new FilteredElementCollector(app.ActiveUIDocument.Document, activeView.Id);
@@ -62,10 +62,10 @@ namespace CarboLifeRevit
 
                     try
                     {
-
                         if (CarboRevitUtils.isElementReal(el) == true)
                         {
                             ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
+
                             foreach (ElementId materialIds in MaterialIds)
                             {
                                 CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, settings);
@@ -86,6 +86,7 @@ namespace CarboLifeRevit
                         //TaskDialog.Show("Error", ex.Message);
                     }
 
+                }
                     if(IdsNotFound.Count > 0)
                     {
                         string message = "One or more elements weren't processed, most likely because they didn't contain any volume the element ids of these elements are: ";
@@ -97,8 +98,6 @@ namespace CarboLifeRevit
 
                         MessageBox.Show(message, "Warning", MessageBoxButton.OK);
                     }
-                }
-
 
             }
             else
@@ -115,12 +114,13 @@ namespace CarboLifeRevit
                             foreach (ElementId materialIds in MaterialIds)
                             {
                                 CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, settings);
-                            }
 
+                                if (carboElement != null)
+                                    myProject.AddElement(carboElement);
+                            }
                             //See if is floor(then count area)
                             area += getFloorarea(el);
                         }
-
                     }
                 }
                 catch (Exception ex)
@@ -131,14 +131,15 @@ namespace CarboLifeRevit
             }
 
             #endregion
-            //All element have been mapped, here the code will be split between an update or a new one.
 
+            //All element have been mapped, here the code will be split between an update or a new one.
             if (myProject.getAllElements.Count > 0)
             {
                 CarboProject projectToOpen = new CarboProject();
 
                 if (updateFile == false)
                 {
+                    //Create groups from all the individual elements
                     myProject.CreateGroups();
                     projectToOpen = myProject;
                 }

@@ -34,7 +34,7 @@
         <Menu Grid.Row="1" Grid.Column="1"
               Background="White" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Loaded="Menu_Loaded">
             <MenuItem Header="File" Background="White" Style="{StaticResource baseStyleLabel}">
-                <MenuItem Name="mnu_openDataBase" Header="Open Project" Click="Mnu_openDataBase_Click"/>
+                <MenuItem Name="mnu_openDataBase" Header="Open Project..." Click="Mnu_openDataBase_Click"/>
                 <MenuItem Name="mnu_saveProject" Header="Save Project" Click="Mnu_saveProject_Click"/>
                 <MenuItem Name="mnu_saveDataBase" Header="Save Project as..." Click="Mnu_saveDataBase_Click"/>
                 <Separator></Separator>

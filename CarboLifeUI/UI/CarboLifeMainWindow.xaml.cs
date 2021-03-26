@@ -98,7 +98,7 @@ namespace CarboLifeUI.UI
             //Create a File and save it as a xml file
             SaveFileDialog saveDialog = new SaveFileDialog();
             saveDialog.Title = "Specify path";
-            saveDialog.Filter = "Carbo Life Project File|*.xml";
+            saveDialog.Filter = "Carbo Life Project File(*.clcx)| *.clcx | Carbo Life Project File(*.xml) | *.xml";
             saveDialog.FilterIndex = 2;
             saveDialog.RestoreDirectory = true;
 
@@ -164,7 +164,7 @@ namespace CarboLifeUI.UI
                 try
                 {
                     OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "Carbo Life Project File (*.xml)|*.xml|All files (*.*)|*.*";
+                    openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|Carbo Life Project File (*.xml)| *.xml|All files (*.*)|*.*";
 
                     var path = openFileDialog.ShowDialog();
 

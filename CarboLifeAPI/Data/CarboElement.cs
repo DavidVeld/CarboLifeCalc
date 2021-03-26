@@ -35,7 +35,8 @@ namespace CarboLifeAPI.Data
         public double EC_Total { get; set; }
         public double Volume_Total { get; set; }
        
-        public CarboMaterial Material {get;set; }
+
+        //public CarboMaterial Material {get;set; }
 
         [NonSerialized]
         ///This field is used when revit updates a model, improvements for multibuildps are required
@@ -51,7 +52,7 @@ namespace CarboLifeAPI.Data
             Level = 0;
             isDemolished = false;
             isExisting = false;
-            Material = new CarboMaterial();
+            //Material = new CarboMaterial(); removed 23.03.21
             r = 0;
             g = 0;
             b = 0;
@@ -63,16 +64,15 @@ namespace CarboLifeAPI.Data
             isUpdated = false;
         }
 
-        //
-        [Obsolete("Would like to get rid of this")]
+        
         public void setMaterial(CarboMaterial carboMaterial)
         {
-            this.Material = carboMaterial;
+            //this.Material = carboMaterial;
             MaterialName = carboMaterial.Name;
+            Density = carboMaterial.Density;
             ECI = carboMaterial.ECI;
         }
-
-        [Obsolete("Would like to get rid of this")]
+        
         internal void Calculate(CarboMaterial material)
         {
             if(material != null)
@@ -84,6 +84,6 @@ namespace CarboLifeAPI.Data
             }
 
         }
-        //
+        
     }
 }

@@ -345,6 +345,9 @@ namespace CarboLifeUI.UI
 
                         using (WebClient wc = new WebClient())
                         {
+                            //request.UserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36";
+                            wc.Headers.Add("user-agent", @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36");
+                            
                             //wc.DownloadProgressChanged += wc_DownloadProgressChanged;
                             wc.DownloadFileAsync(
                                 // Param1 = Link of file
@@ -388,7 +391,6 @@ namespace CarboLifeUI.UI
                 */
             }
         }
-
         private void cbb_DataBases_DropDownClosed(object sender, EventArgs e)
         {
             setPath();

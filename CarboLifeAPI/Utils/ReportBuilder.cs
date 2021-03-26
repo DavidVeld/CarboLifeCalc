@@ -17,7 +17,7 @@ namespace CarboLifeAPI
     {
         static string report;
         static string reportpath;
-        static string imgPath;
+        //static string imgPath;
 
         public static void CreateReport(CarboProject carboProject)
         {

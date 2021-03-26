@@ -175,7 +175,7 @@ namespace CarboLifeAPI.Data
         }
 
         /// <summary>
-        /// Updates the project with the elements insi
+        /// Updates the project with the elements inside another carbogroup
         /// </summary>
         /// <param name="newProject"></param>
         public void UpdateProject(CarboProject projectWithElements)
@@ -265,7 +265,14 @@ namespace CarboLifeAPI.Data
                             //A new group need to be made for this element;
                             newElementsWithNoGroup++;
 
+
                             this.NewGroup(ceNew);
+
+                            //The materialname was given by the elements, the values now need to be matched with a own one.
+                            //cg.MaterialName = closestGroupMaterial.Name;
+                            //cg.setMaterial(closestGroupMaterial);
+
+
                             projectWithElements.elementList.RemoveAt(i);
 
                         }
@@ -545,6 +552,28 @@ namespace CarboLifeAPI.Data
             }
             return result;
         }
+
+        /// <summary>
+        /// Resets all the isupadtedflags in all the elements and groups, usefull if you want to make precise selections
+        /// </summary>
+        public void ResetElementFlags()
+        {
+            foreach(CarboElement ce in elementList)
+            {
+                ce.isUpdated = false;
+            }
+            foreach(CarboGroup cg in groupList)
+            {
+                if(cg.AllElements.Count > 0)
+                {
+                    foreach (CarboElement ce in cg.AllElements)
+                    {
+                        ce.isUpdated = false;
+                    }
+                }
+            }
+        }
+
         public List<CarboDataPoint> getMaterialTotals()
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
@@ -589,7 +618,7 @@ namespace CarboLifeAPI.Data
         /// A1-A3, A4, A5 (Material), A5(Global), B1-B7, C1-C4, C1(Global), D, Additional)
         /// These are net values(based on the corrected converted Total Volume
         /// </summary>
-        /// <returns>Returns a list of the project totals (9 items)</returns>
+        /// <returns>Returns a list of the project totals (9 items) in kgCO2</returns>
         public List<CarboDataPoint> getPhaseTotals()
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
@@ -598,13 +627,12 @@ namespace CarboLifeAPI.Data
                 CarboDataPoint cb_A1A3 = new CarboDataPoint("A1-A3", 0);
                 CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
                 CarboDataPoint cb_A5 = new CarboDataPoint("A5(Material)",0);
-                CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global);
+                CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
                 CarboDataPoint cb_B1B5 = new CarboDataPoint("B1-B7", 0);
                 CarboDataPoint cb_C1C4 = new CarboDataPoint("C1-C4", 0);
-                CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global);
+                CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
                 CarboDataPoint cb_D = new CarboDataPoint("D", 0);
                 CarboDataPoint Added = new CarboDataPoint("Additional", 0);
-
 
                 valueList.Add(cb_A1A3);
                 valueList.Add(cb_A4);
@@ -616,16 +644,15 @@ namespace CarboLifeAPI.Data
                 valueList.Add(cb_D);
                 valueList.Add(Added);
 
-
                 foreach (CarboGroup CarboGroup in this.groupList)
                 {
-                    double ECI_A1A3 = CarboGroup.getTotalA1A3;
-                    double ECI_A4 = CarboGroup.getTotalA4;
-                    double ECI_A5 = CarboGroup.getTotalA5;
-                    double ECI_B1B7 = CarboGroup.getTotalB1B7;
-                    double ECI_C1C4 = CarboGroup.getTotalC1C4;
-                    double ECI_D = CarboGroup.getTotalD;
-                    double ECI_Add = CarboGroup.getTotalMix;
+                    double EC_A1A3 = CarboGroup.getTotalA1A3;
+                    double EC_A4 = CarboGroup.getTotalA4;
+                    double EC_A5 = CarboGroup.getTotalA5;
+                    double EC_B1B7 = CarboGroup.getTotalB1B7;
+                    double EC_C1C4 = CarboGroup.getTotalC1C4;
+                    double EC_D = CarboGroup.getTotalD;
+                    double EC_Add = CarboGroup.getTotalMix;
 
                     if (valueList.Count > 0)
                     {
@@ -635,31 +662,31 @@ namespace CarboLifeAPI.Data
 
                             if (ppName == "A1-A3")
                             {
-                                pp.Value += ECI_A1A3;
+                                pp.Value += EC_A1A3;
                             }
                             else if (ppName == "A4")
                             {
-                                pp.Value += ECI_A4;
+                                pp.Value += EC_A4;
                             }
-                            else if (ppName == "A5")
+                            else if (ppName == "A5(Material)")
                             {
-                                pp.Value += ECI_A5;
+                                pp.Value += EC_A5;
                             }
                             else if (ppName == "B1-B7")
                             {
-                                pp.Value += ECI_B1B7;
+                                pp.Value += EC_B1B7;
                             }
                             else if (ppName == "C1-C4")
                             {
-                                pp.Value += ECI_C1C4;
+                                pp.Value += EC_C1C4;
                             }
                             else if (ppName == "D")
                             {
-                                pp.Value += ECI_D;
+                                pp.Value += EC_D;
                             }
                             else if (ppName == "Additional")
                             {
-                                pp.Value += ECI_Add;
+                                pp.Value += EC_Add;
                             }
                             else
                             {
@@ -1026,7 +1053,8 @@ namespace CarboLifeAPI.Data
                 carboLifeElement.Volume = volume;
                 carboLifeElement.Category = category;
                 carboLifeElement.SubCategory = "";
-                carboLifeElement.Material = new CarboMaterial(materialName);
+                carboLifeElement.Density = 1000;
+                //carboLifeElement.Material = new CarboMaterial(materialName);
 
                 elementList.Add(carboLifeElement);
             }
@@ -1236,28 +1264,11 @@ namespace CarboLifeAPI.Data
         {
             try
             {
-                //clear all the results from all the elemtns
-                /* This needs to be tested before:
-                foreach(CarboElement el in getAllElements)
-                {
-                    //el.Material = null;
-                }
-                */
                 foreach(CarboGroup grp in groupList)
                 {
-                    if (grp.AllElements.Count > 0)
-                    {
-                        foreach (CarboElement el in grp.AllElements)
-                        {
-                            if(el.Material != null)
-                                el.Material.materiaA4Properties.calcResult = "";
-                        }
-                    }
-
                     grp.Material.materiaA4Properties.calcResult = "";
-
                 }
-
+                
                 XmlSerializer ser = new XmlSerializer(typeof(CarboProject));
 
                 using (FileStream fs = new FileStream(myPath, FileMode.Create))

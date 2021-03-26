@@ -136,15 +136,17 @@ namespace CarboLifeUI.UI
                     //get all Values from all loaded projects
                     foreach (List<CarboDataPoint> dataPointList in pointList)
                     {
-                        Values.Add(Math.Round((dataPointList[i].Value / 1000),2));
+                        Values.Add(Math.Round((dataPointList[i].Value / 1000),1));
                     }
 
                     newSeries.Title = pointList[0][i].Name;
                     newSeries.Values = Values;
                     newSeries.StackMode = StackMode.Values;
                     newSeries.DataLabels = true;
-                    newSeries.Foreground = Brushes.White;
-                    //newSeries.Fill = Brushes.Black;
+                    newSeries.Foreground = Brushes.Black;
+                    //newSeries.Width = 100;
+                    newSeries.MaxColumnWidth = 50;
+                    newSeries.LabelsPosition = BarLabelPosition.Perpendicular;
                     result.Add(newSeries);
 
                 }
@@ -220,7 +222,7 @@ namespace CarboLifeUI.UI
                 }
 
 
-                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO2 ({1:P})", chartPoint.Y, chartPoint.Participation);
+                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO2", chartPoint.Y, chartPoint.Participation);
 
 
                 foreach (CarboDataPoint ppin in PieceListLifePoint)
@@ -229,7 +231,7 @@ namespace CarboLifeUI.UI
                     {
                         Title = ppin.Name,
                         Values = new ChartValues<double> { Math.Round(ppin.Value / 1000, 0) },
-                        PushOut = 2,
+                        PushOut = 1,
                         DataLabels = true,
                         LabelPoint = labelPoint
                     };
@@ -258,7 +260,7 @@ namespace CarboLifeUI.UI
             try
             {
                 List<CarboDataPoint> PieceListMaterial = new List<CarboDataPoint>();
-                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO2 ({1:P})", chartPoint.Y, chartPoint.Participation);
+                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO2", chartPoint.Y, chartPoint.Participation);
 
                 PieceListMaterial = carboLifeProject.getMaterialTotals();
 
@@ -296,7 +298,7 @@ namespace CarboLifeUI.UI
                     {
                         Title = ppin.Name,
                         Values = new ChartValues<double> { Math.Round(ppin.Value, 0) },
-                        PushOut = 2,
+                        PushOut = 1,
                         DataLabels = true,
                         LabelPoint = labelPoint
 

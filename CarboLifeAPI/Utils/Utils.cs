@@ -240,7 +240,7 @@ namespace CarboLifeAPI
                     return true;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return false;
             }
@@ -417,7 +417,7 @@ namespace CarboLifeAPI
                 */
                 return myColor;
             }
-            catch(Exception ex)
+            catch
             {
                 return Color.FromArgb((int)Math.Round(0.0), (int)Math.Round(0.0), (int)Math.Round(0.0));
             }

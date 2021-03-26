@@ -544,55 +544,61 @@ namespace CarboLifeUI.UI
             //IList<DataGridCellInfo> selectedElementList = dgv_Elements.SelectedCells;
             try
             {
-            List<CarboElement> selectedCarboElementList = new List<CarboElement>();
+                List<CarboElement> selectedCarboElementList = new List<CarboElement>();
                 selectedCarboElementList = dgv_Elements.SelectedItems.Cast<CarboElement>().ToList();
 
                     if (selectedCarboElementList.Count > 0)
+                {
+                    CarboGroup selectedCarboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+
+                    //Reset all findme flags.
+                    CarboLifeProject.ResetElementFlags();
+
+        //Flag the elements that require updating
+                    foreach (CarboElement ce in selectedCarboElementList)
                     {
-                        CarboGroup selectedCarboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+                        ce.isUpdated = true;
+                    }
 
-                        int carbogroupId = selectedCarboGroup.Id;
-                        List<CarboElement> allCarboElementList = selectedCarboGroup.AllElements;
+                    int carbogroupId = selectedCarboGroup.Id;
+                    List<CarboElement> allCarboElementList = selectedCarboGroup.AllElements;
+                    CarboGroup newGroup = selectedCarboGroup.Copy();
 
-                        CarboGroup newGroup = new CarboGroup();
-                        newGroup.AllElements = selectedCarboElementList;
-                        newGroup.Category = selectedCarboGroup.Category;
-                        newGroup.SubCategory = selectedCarboGroup.SubCategory;
-                        newGroup.Description = "A new Group";
-                        newGroup.Material = allCarboElementList[0].Material;
-                        newGroup.MaterialName = allCarboElementList[0].MaterialName;
-
+                    //move all elements to the new group
+                    newGroup.AllElements = selectedCarboElementList;
+                    newGroup.Description = "A new Group";
 
                     int delcounter = 0;
 
-                        foreach (CarboElement ce in selectedCarboElementList)
+                    //remove the old ones from the list
+                    foreach (CarboElement ce in selectedCarboElementList)
+                    {
+                        for (int i = 0; i >= 0; i--)
                         {
-                            for (int i = 0; i >= 0; i--)
+                            CarboElement oldce = allCarboElementList[i];
+                            if (oldce.isUpdated == true)
                             {
-                                CarboElement oldce = allCarboElementList[i];
-                                if (ce.Id == oldce.Id)
-                                {
-                                    allCarboElementList.RemoveAt(i);
-                                    delcounter++;
-                                }
+                                allCarboElementList.RemoveAt(i);
+                                delcounter++;
                             }
-
                         }
-                        //Now there should be two lists, one with the selcted items and one without.
-                        foreach (CarboGroup cg in CarboLifeProject.getGroupList)
-                        {
-                            if (cg.Id == carbogroupId)
-                                cg.AllElements = allCarboElementList;
-                        }
-                        CarboLifeProject.AddGroup(newGroup);
 
-                        MessageBox.Show(delcounter + " Elements moved to new group", "Warning", MessageBoxButton.OK);
+                    }
+                    //Now there should be two lists, one with the selcted items and one without.
+                    foreach (CarboGroup cg in CarboLifeProject.getGroupList)
+                    {
+                        if (cg.Id == carbogroupId)
+                            cg.AllElements = allCarboElementList;
+                    }
+                    CarboLifeProject.AddGroup(newGroup);
+
+                    MessageBox.Show(delcounter + " Elements moved to new group", "Message", MessageBoxButton.OK);
 
                     CarboLifeProject.CalculateProject();
                     refreshData();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Warning", MessageBoxButton.OK);
             }

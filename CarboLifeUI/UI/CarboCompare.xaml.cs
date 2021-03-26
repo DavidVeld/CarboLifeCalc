@@ -101,7 +101,6 @@ namespace CarboLifeUI.UI
                         liv_Projects.ItemsSource = projectListToCompareTo;
                     }
                     SeriesCollection currentProjectSeriesCollection = new SeriesCollection();
-
                     if (chx_Project0.IsChecked == true)
                     {
                         currentProjectSeriesCollection = GraphBuilder.BuildComparingTotalsBarGraph(CarboLifeProject, projectListToCompareTo);
@@ -177,7 +176,7 @@ namespace CarboLifeUI.UI
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Project File (*.xml)|*.xml|All files (*.*)|*.*";
+                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|Carbo Life Project File (*.xml)| *.xml|All files (*.*)|*.*";
 
                 var path = openFileDialog.ShowDialog();
 
@@ -230,6 +229,11 @@ namespace CarboLifeUI.UI
             {
                 RefreshInterFace();
             }
+        }
+
+        private void btn_Export_Click(object sender, RoutedEventArgs e)
+        {
+            DataExportUtils.ExportComaringGraphs(CarboLifeProject, projectListToCompareTo);
         }
     }
 }

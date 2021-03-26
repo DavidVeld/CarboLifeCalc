@@ -240,6 +240,8 @@ namespace CarboLifeAPI.Data
         {
             this.MaterialName = material.Name;
             this.Material = material;
+            this.Density = material.Density;
+
             CalculateTotals();
         }
         public CarboGroup(CarboElement carboElement)
@@ -280,7 +282,7 @@ namespace CarboLifeAPI.Data
             //get the material
 
             Material = new CarboMaterial();
-            Material = carboElement.Material;
+            //Material = carboElement.Material; removed from CarboElement
 
             AllElements = new List<CarboElement>();
 

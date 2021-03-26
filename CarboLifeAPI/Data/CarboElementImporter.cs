@@ -39,13 +39,14 @@ namespace CarboLifeAPI.Data
         {
             ObservableCollection<CarboGroup> result = new ObservableCollection<CarboGroup>();
 
+            //First we build groups based on the import settings
             foreach (CarboElement ce in carboElementList)
             {
                 result = AddToCarboGroup(result, ce, groupCategory, groupSubCategory, groupType, groupMaterial, groupSubStructure, groupDemolition, uniqueTypeNames);
             }
-
-
+            //Now we map the importedMaterialParameter to one in our own database;
             result = mapGroupMaterials(result, materialData);
+            //Recalculate the entire thing
             result = RefreshValues(result);
             return result;
         }
@@ -144,11 +145,9 @@ namespace CarboLifeAPI.Data
                         matchUniqueType = false;
                     }
                     //Ignore switch:
-
                     containsRelavantName = CaseInsensitiveContains(carboElement.Name, str_trimmed);
-
-
                 }
+
                 //see if item contains unique groupname;
                 //at the end of this loop we know that this group contains a type name that needs to be separated.
                 //So the element can be added to this group:
@@ -276,7 +275,7 @@ namespace CarboLifeAPI.Data
 
             newGroup.Id = idbase + id;
             newGroup.MaterialName = carboElement.MaterialName;
-            newGroup.Density = carboElement.Material.Density;
+            newGroup.Density = carboElement.Density;
             newGroup.Description = "A new group";
 
             newGroup.Material.Name = carboElement.MaterialName;
@@ -312,6 +311,7 @@ namespace CarboLifeAPI.Data
             {
                 foreach (CarboGroup cg in group)
                 {
+                    //The materialname was given by the elements, the values now need to be matched with a own one.
                     CarboMaterial closestGroupMaterial = materialData.getClosestMatch(cg.MaterialName);
                     //cg.MaterialName = closestGroupMaterial.Name;
                     cg.setMaterial(closestGroupMaterial);

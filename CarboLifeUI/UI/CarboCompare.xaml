@@ -69,6 +69,7 @@
                 </ListView>
                 <Button Name="btn_Add"  Grid.Column="1" Grid.Row="5"  Margin="0,6,96,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Add..." Click="btn_Add_Click" ></Button>
                 <Button Name="btn_Remove"  Grid.Column="1" Grid.Row="5"  Margin="80,6,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Remove..." Click="btn_Remove_Click"></Button>
+                <Button Name="btn_Export"  Grid.Column="1" Grid.Row="5"  Margin="160,6,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Export..." Click="btn_Export_Click"></Button>
 
             </Grid>
 
