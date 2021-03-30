@@ -29,11 +29,16 @@ Screenshots:
 ![alt text](https://www.davidveld.nl/img/CarboCalc3.png)
 ![alt text](https://www.davidveld.nl/img/CarboCalc4.png)
 
-#Roadmap:
-1. Bug fixing (on-going, please supply feedback)
-2. Carbon sequestering calculator in the material editor (Low priority)
-3. Record movie + Help files to explain working of addin
-4. Project compare interface
+#Roadmap (essential for release):
+1. Increase database with more materials.
+2. Bug fixing (on-going, please supply feedback)
+3. Full review of all functions and windows.
+4. Record movie + Help docs to explain working of addin
+
+#Roadmap (Future):
+1. Carbon sequestering calculator (Fun, but low priority)
+2. Project compare interface added graphs
+3. Link into grasshopper and/or Tekla
 
 Updates as per build 29.03.2021
 1. Compare projects tab
