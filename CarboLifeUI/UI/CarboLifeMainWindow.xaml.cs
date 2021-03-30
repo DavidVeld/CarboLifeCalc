@@ -95,10 +95,16 @@ namespace CarboLifeUI.UI
 
         private void Mnu_saveDataBase_Click(object sender, RoutedEventArgs e)
         {
+            SaveFileAs();
+        }
+
+        private void SaveFileAs()
+        {
+
             //Create a File and save it as a xml file
             SaveFileDialog saveDialog = new SaveFileDialog();
             saveDialog.Title = "Specify path";
-            saveDialog.Filter = "Carbo Life Project File(*.clcx)| *.clcx | Carbo Life Project File(*.xml) | *.xml";
+            saveDialog.Filter = "All files (*.*)|*.*| Carbo Life Project File(*.clcx) | *.clcx";
             saveDialog.FilterIndex = 2;
             saveDialog.RestoreDirectory = true;
 
@@ -164,7 +170,7 @@ namespace CarboLifeUI.UI
                 try
                 {
                     OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|Carbo Life Project File (*.xml)| *.xml|All files (*.*)|*.*";
+                    openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
 
                     var path = openFileDialog.ShowDialog();
 
@@ -202,8 +208,11 @@ namespace CarboLifeUI.UI
                 {
                     MessageBox.Show("Project Saved");
                     carboLifeProject.justSaved = true;
-                
                 }
+            }
+            else
+            {
+                SaveFileAs();
             }
         }
 

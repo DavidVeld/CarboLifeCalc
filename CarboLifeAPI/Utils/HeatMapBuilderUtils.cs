@@ -91,6 +91,10 @@ namespace CarboLifeAPI
                     if (value < minRange)
                         minRange = value;
                 }
+                else
+                {
+                    double v = value;
+                }
             }
             string text = "Setting Values:" + Environment.NewLine
             + "mean: " + mean + Environment.NewLine
