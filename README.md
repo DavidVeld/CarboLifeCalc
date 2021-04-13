@@ -23,7 +23,7 @@ Heatmaps:
 https://youtu.be/O0gkl9B8Mvw
 
 Screenshots:
-![alt text](https://www.davidveld.nl/img/carbocalc/carbocalc/bim1.jpg)
+![alt text](https://www.davidveld.nl/img/carbocalc/bim1.jpg)
 ![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc1.png)
 ![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc2.png)
 ![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc3.png)
