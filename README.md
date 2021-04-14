@@ -1,15 +1,20 @@
 # CarboLifeCalc
-A Quick-Action Carbon Whole Life Carbon Assessment calculator using Revit material quantities.
+A Quick-Action Whole Life Embodied Carbon calculator using Revit material quantities and according to EN 15978:2011
 
 Status: Work in Good Progress
 
-Current Build for testing download link: (15-03-2021)
+Current Build for testing download link: (14.04.2021)
 
-Zip:
-https://drive.google.com/file/d/1uH7d4axtyb70D-U0QhDMairfdnuqLc4T/view?usp=sharing
 
-Installer:
-https://drive.google.com/file/d/11fARKfv_IilLaR9W-Rrg_xY4yoGYQ4aC/view?usp=sharing
+Zip (build 14.04.2021)
+https://drive.google.com/file/d/1qxSjf1k6pYhFyYFTFObMKpRUudDs2oip/view?usp=sharing
+
+Installer (build 29.03.2021):
+https://drive.google.com/file/d/1O9SX8WvsPEKANdLFMFTDLDRpRttyFQoQ/view?usp=sharing
+
+
+For Help and quick guide please see:
+https://github.com/DavidVeld/CarboLifeCalc/wiki
 
 The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design. 
 As a standalone application you can set quantities and materials,  or you can use a 3d model from Revit to import your building into the calculator. Your revit materials will automatically be mapped to to the CarboLifeCalc's own, thus giving you an instant result on the building's embodied carbon.
@@ -24,19 +29,32 @@ https://youtu.be/O0gkl9B8Mvw
 
 Screenshots:
 ![alt text](https://www.davidveld.nl/img/carbocalc/bim1.jpg)
-![alt text](https://www.davidveld.nl/img/CarboCalc1.png)
-![alt text](https://www.davidveld.nl/img/CarboCalc2.png)
-![alt text](https://www.davidveld.nl/img/CarboCalc3.png)
-![alt text](https://www.davidveld.nl/img/CarboCalc4.png)
+![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc1.png)
+![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc2.png)
+![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc3.png)
+![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc4.png)
 
-#Roadmap:
+#Roadmap (essential for release):
+1. Increase database with more materials.
+2. Bug fixing (on-going, please supply feedback)
+3. Full review of all functions and windows.
+4. Record movie + Help docs to explain working of addin
 
-1. Bug fixing (on-going, please supply feedback)
-2. Update a project with new elements from Revit (Added in code 17.03.21)
-3. Carbon sequestering calculator in the material editor (Low priority)
-4. Record movie + Help files to explain working of addin
-5. Project compare interface
-6. Improved graphics for overview (Low priority)
+#Roadmap (Future):
+1. Carbon sequestering calculator (Fun, but low priority)
+2. Project compare interface added graphs
+3. Link into grasshopper and/or Tekla
+
+Updates as per build 14.04.2021 (Zip oply)
+1. Rounding error fixed in graph 
+2. Moved user materials to AppData Folder (Test)
+
+Updates as per build 29.03.2021
+1. Compare projects tab
+2. Update projects from Revit
+3. Improved graphics for overview 
+4. Bug fixes
+5. Reduced file size when saving projects imported from Revit
 
 Updates as per build 15.03.2021
 1. Installer
