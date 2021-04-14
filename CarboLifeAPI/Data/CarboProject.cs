@@ -786,10 +786,10 @@ namespace CarboLifeAPI.Data
             result += "Total CO2e = " + Math.Round(totalMaterials, 2) + " + " + Math.Round(globalA5, 2) + " + " + Math.Round(globalC1, 2) + Environment.NewLine;
 
 
-            result += "Total CO2e = " + Math.Round(totalTotal, 2) + " MtCO2e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine + Environment.NewLine;
+            result += "Total CO2e = " + Math.Round(totalTotal, 2) + " tCO2e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine + Environment.NewLine;
             if (Area > 0)
             {
-                result += "OR " + Math.Round(totalTotal / Area, 2) + " MtCO2e/m² (Metric tons of carbon dioxide equivalent per square meter)" + Environment.NewLine;
+                result += "OR " + Math.Round(totalTotal / Area, 2) + " tCO2e/m² (Metric tons of carbon dioxide equivalent per square meter)" + Environment.NewLine;
             }
 
             result += Environment.NewLine;
@@ -797,8 +797,8 @@ namespace CarboLifeAPI.Data
             if (materials == true)
                 result += "This equals to: " + Math.Round(totalTotal / 68.5, 2) + " average car emission per year. (UK)" + Environment.NewLine + Environment.NewLine;
             
-            //if (materials == true)
-                //result += "This requires " + Math.Round(totalTotal / 0.0217724, 0) + " trees to exists a year" + Environment.NewLine;
+            if (trees == true)
+                result += "This requires " + Math.Round((totalTotal / 180)/4440, 0) + " Trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
 
             double socialcost = (totalTotal * SocialCost);
 

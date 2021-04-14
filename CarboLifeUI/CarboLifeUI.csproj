@@ -99,6 +99,9 @@
       <DependentUpon>CarboInfoBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DataSource\SumValues.cs" />
+    <Compile Include="UI\CarboAbout.xaml.cs">
+      <DependentUpon>CarboAbout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ExportPicker.xaml.cs">
       <DependentUpon>ExportPicker.xaml</DependentUpon>
     </Compile>
@@ -197,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\CarboInfoBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\CarboAbout.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -318,6 +325,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\ico_CarboLife.ico" />
+    <None Include="Resources\Logo128.jpg" />
     <Content Include="UI\refreshicon.png" />
     <None Include="img\refreshicon.png" />
     <None Include="Resources\refreshicon.png">

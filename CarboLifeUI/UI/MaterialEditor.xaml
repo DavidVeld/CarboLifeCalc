@@ -195,7 +195,7 @@
                     </Grid>
                 </GroupBox>
 
-                <Label Name="Calc" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="5"  Margin="0,5,0,0" Style="{StaticResource bigStyle}" Grid.RowSpan="3">[CALC]</Label>
+                <Label Name="Calc" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="5"  Margin="0,5,0,0" Style="{StaticResource bigStyle}" Grid.RowSpan="3" Visibility="Hidden">[CALC]</Label>
 
                 <Button Name="btn_Apply"  Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="Btn_Apply_Click">Apply</Button>
                 <Button Name="btn_FromEPD"  Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="btn_FromEPD_Click">From EPD...</Button>

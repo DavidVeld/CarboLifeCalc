@@ -235,7 +235,9 @@ namespace CarboLifeUI.UI
 
         private void Mnu_About_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This program was written by David In't Veld, and is provided AS IS. Any further queries contact me on: https://github.com/DavidVeld", "About Carbo Life Calculator",MessageBoxButton.OK,MessageBoxImage.Information);
+            //MessageBox.Show("This program was written by David In't Veld, and is provided AS IS. Any further queries contact me on: https://github.com/DavidVeld", "About Carbo Life Calculator",MessageBoxButton.OK,MessageBoxImage.Information);
+            CarboAbout aboutWindow = new CarboAbout();
+            aboutWindow.ShowDialog();
         }
 
         private void mnu_BuildReport_Click(object sender, RoutedEventArgs e)
@@ -254,7 +256,7 @@ namespace CarboLifeUI.UI
 
         private void mnu_Help_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Help files tbc, please visit www.davidveld.nl/carbocalc for resources and updates ", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBoxResult result = MessageBox.Show("Please visit https://github.com/DavidVeld/CarboLifeCalc for resources and updates ", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

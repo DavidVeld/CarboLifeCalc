@@ -410,7 +410,8 @@ namespace CarboLifeUI.UI
             else if(selectedItem == "Template")
             {
                 // This is the template use build-in path:
-                sourcePath = Utils.getAssemblyPath() + "\\db\\UserMaterials.cxml";
+                //sourcePath = Utils.getAssemblyPath() + "\\db\\UserMaterials.cxml";
+                sourcePath = Utils.getTemplateFolder();
             }
             else
             {

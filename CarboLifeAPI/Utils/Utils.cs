@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Drawing;
+using System.Windows;
 
 namespace CarboLifeAPI
 {
@@ -58,6 +59,9 @@ namespace CarboLifeAPI
             }
         }
 
+        /// <summary>
+        /// Sets and prepares the usermaterials
+        /// </summary>
         public static void CheckUserMaterials()
         {
             string pathDatabase = Utils.getAssemblyPath() + "\\db\\";
@@ -70,6 +74,30 @@ namespace CarboLifeAPI
                     File.Copy(bufferPath, targetPath);
                 }
             }
+
+            //All userfiles need to move to the local folder:
+            string appdatafolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\";
+            string TemplateFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\UserMaterials.cxml";
+
+            try
+            {
+                //Directory
+                if (!Directory.Exists(appdatafolder))
+                    Directory.CreateDirectory(appdatafolder);
+
+                if (!(File.Exists(appdatafolder + "UserMaterials.cxml")))
+                {
+                    if (File.Exists(bufferPath))
+                    {
+                        File.Copy(bufferPath, appdatafolder + "UserMaterials.cxml");
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
 
         public static int CalcLevenshteinDistance(string a, string b)
@@ -182,6 +210,23 @@ namespace CarboLifeAPI
 
         }
 
+        public static string getTemplateFolder()
+        {
+            try
+            {
+                string folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\UserMaterials.cxml";
+
+                if (File.Exists(folder))
+                    return folder;
+                else
+                    return "";
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+            return "";
+        }
 
         public static void CopyAll<T>(T source, T target)
         {
@@ -248,6 +293,7 @@ namespace CarboLifeAPI
 
         public static void WriteToLog(string text)
         {
+            /*
             string fileName = "db\\log.txt";
 
             string myPath = Utils.getAssemblyPath() + "\\" + fileName;
@@ -257,7 +303,7 @@ namespace CarboLifeAPI
             {
                 sw.WriteLine(timeStamp + " :: " + text);
             }
-
+            */
         }
 
         public static void Openlink(string text)

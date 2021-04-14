@@ -45,8 +45,10 @@
         https://github.com/DavidVeld/CarboLifeCalc
         </Hyperlink>
         </TextBlock>
-        <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,100,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Build: March 2021.2</Label>
-        <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,125,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Author: David In't Veld</Label>
+        <Label Grid.Column="3" Grid.Row="2" Width="362" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,74,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Embodied Carbon Calculator to EN 15978:2011</Label>
+
+        <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Build: April 2021.1</Label>
+        <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,145,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Author: David In't Veld</Label>
 
 
     </Grid>

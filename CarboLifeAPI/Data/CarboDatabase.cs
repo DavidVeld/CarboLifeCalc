@@ -165,7 +165,13 @@ namespace CarboLifeAPI.Data
                 else
                     fileName = fileName + ".cxml";
 
-            myPath = Utils.getAssemblyPath() + "\\" + fileName;
+                myPath = Utils.getAssemblyPath() + "\\" + fileName;
+
+                //override if file exists on userfolder;
+                string TemplateFile = Utils.getTemplateFolder();
+
+                if (File.Exists(TemplateFile))
+                    myPath = TemplateFile;
 
             }
 
@@ -199,6 +205,13 @@ namespace CarboLifeAPI.Data
                     fileName = fileName + ".cxml";
 
             myPath = Utils.getAssemblyPath() + "\\" + fileName;
+
+                //override if file exists on userfolder;
+                string TemplateFile = Utils.getTemplateFolder();  
+
+                if (File.Exists(TemplateFile))
+                    myPath = TemplateFile;
+                
             }
             //Reatemp
 

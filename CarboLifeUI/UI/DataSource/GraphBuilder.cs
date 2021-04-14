@@ -230,7 +230,7 @@ namespace CarboLifeUI.UI
                     PieSeries newSeries = new PieSeries
                     {
                         Title = ppin.Name,
-                        Values = new ChartValues<double> { Math.Round(ppin.Value / 1000, 0) },
+                        Values = new ChartValues<double> { Math.Round(ppin.Value / 1000, 2) },
                         PushOut = 1,
                         DataLabels = true,
                         LabelPoint = labelPoint
@@ -297,7 +297,7 @@ namespace CarboLifeUI.UI
                     PieSeries newSeries = new PieSeries
                     {
                         Title = ppin.Name,
-                        Values = new ChartValues<double> { Math.Round(ppin.Value, 0) },
+                        Values = new ChartValues<double> { Math.Round(ppin.Value, 2) },
                         PushOut = 1,
                         DataLabels = true,
                         LabelPoint = labelPoint

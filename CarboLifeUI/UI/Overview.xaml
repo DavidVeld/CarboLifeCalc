@@ -146,21 +146,21 @@
                 <Label Grid.Column="3" Margin="3,0,0,0" Grid.Row="5"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m²</Label>
 
                 <Label Grid.Column="1" Grid.Row="6"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Total Demolished Area:</Label>
-                <TextBox Name="txt_DemoArea" Grid.Column="2" Grid.Row="6" Margin="5,0,205,1" Height="27" Style="{StaticResource flatTextBox}" ></TextBox>
+                <TextBox Name="txt_DemoArea" Grid.Column="2" Grid.Row="6" Margin="5,0,0,1" Width="110" HorizontalAlignment="Left"  Height="27" Style="{StaticResource flatTextBox}" ></TextBox>
                 <Label Grid.Column="2" Margin="118,27,0,0" Grid.Row="5"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Grid.RowSpan="2">m² x</Label>
                 <TextBox Name="txt_DemoC1Fact" Grid.Column="2" Grid.Row="6" Margin="211,1,5,1" Height="27" Style="{StaticResource flatTextBox}" ></TextBox>
                 <Label Grid.Column="3" Margin="3,0,0,0" Grid.Row="6"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2/m²</Label>
 
 
                 <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="7"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Total Project Value:</Label>
-                <TextBox Name="txt_Value" Grid.Column="2" Grid.Row="7" Margin="5,0,205,1" Height="27"  Style="{StaticResource flatTextBox}" ></TextBox>
+                <TextBox Name="txt_Value" Grid.Column="2" Grid.Row="7" Margin="5,0,0,1" Width="110" HorizontalAlignment="Left" Height="27"  Style="{StaticResource flatTextBox}" ></TextBox>
                 <Label Grid.Column="2" Margin="118,0,0,0" Grid.Row="7"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Grid.RowSpan="2">$/£/€ x</Label>
                 <TextBox Name="txt_ValueA5Fact" Grid.Column="2" Grid.Row="7" Margin="211,0,5,0" Height="27" Style="{StaticResource flatTextBox}" ></TextBox>
                 <Label Grid.Column="3" Margin="3,0,0,0" Grid.Row="7" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2/($/£/€)</Label>
 
 
                 <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="8"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Social Carbon Cost:</Label>
-                <TextBox Name="txt_SocialCost" Grid.Column="2" Grid.Row="8" Margin="5,0,205,0" Height="27"  Style="{StaticResource flatTextBox}" ></TextBox>
+                <TextBox Name="txt_SocialCost" Grid.Column="2" Grid.Row="8" Margin="5,0,0,1" Width="110" HorizontalAlignment="Left" Height="27"  Style="{StaticResource flatTextBox}" ></TextBox>
                 <Label Grid.Column="2" Margin="118,0,37,0" Grid.Row="8"   Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">$/£/€ per tCO2</Label>
 
                 <Button Name="btn_SaveInfo" Grid.Column="3" Grid.Row="8"   Height="28" Width="70"  Margin="5,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="left" Style="{StaticResource ButtonStyle}" Click="Btn_SaveInfo_Click">Apply</Button>
