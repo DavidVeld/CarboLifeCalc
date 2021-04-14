@@ -3,13 +3,13 @@ A Quick-Action Whole Life Embodied Carbon calculator using Revit material quanti
 
 Status: Work in Good Progress
 
-Current Build for testing download link: (29-03-2021)
+Current Build for testing download link: (14.04.2021)
 
 
-Zip:
-https://drive.google.com/file/d/1eNCnWJnYox0k9aozBqOvWGL4W2Wqw0HL/view?usp=sharing
+Zip (build 14.04.2021)
+https://drive.google.com/file/d/1qxSjf1k6pYhFyYFTFObMKpRUudDs2oip/view?usp=sharing
 
-Installer:
+Installer (build 29.03.2021):
 https://drive.google.com/file/d/1O9SX8WvsPEKANdLFMFTDLDRpRttyFQoQ/view?usp=sharing
 
 
@@ -44,6 +44,10 @@ Screenshots:
 1. Carbon sequestering calculator (Fun, but low priority)
 2. Project compare interface added graphs
 3. Link into grasshopper and/or Tekla
+
+Updates as per build 14.04.2021 (Zip oply)
+1. Rounding error fixed in graph 
+2. Moved user materials to AppData Folder (Test)
 
 Updates as per build 29.03.2021
 1. Compare projects tab
