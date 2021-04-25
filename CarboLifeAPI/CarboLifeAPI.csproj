@@ -86,6 +86,7 @@
     <Compile Include="Data\CarboProperty.cs" />
     <Compile Include="Data\CarboGroupSettings.cs" />
     <Compile Include="Data\CarboMapElement.cs" />
+    <Compile Include="Data\CarboSettings.cs" />
     <Compile Include="UtilClasses\A1A3Collection.cs" />
     <Compile Include="UtilClasses\CarboLevel.cs" />
     <Compile Include="UtilClasses\EoLElement.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Utils\DataExportUtils.cs" />
     <Compile Include="Utils\ReportBuilder.cs" />
     <Compile Include="Utils\StringToFormula.cs" />
+    <Compile Include="Utils\PathUtils.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

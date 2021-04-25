@@ -45,7 +45,8 @@ namespace CarboLifeAPI
             }
             else
             {
-                return null;
+                //This is a new file
+                return path;
             }
 
 
@@ -222,7 +223,7 @@ namespace CarboLifeAPI
                 xlWorkSheet.Cells[row, col + 13].Formula = string.Format("=SUM(N3:N{0})", (row - 1));
                 xlWorkSheet.Cells[row, col + 14].Formula = string.Format("=SUM(O3:O{0})", (row - 1));
                 xlWorkSheet.Cells[row, col + 15].Formula = string.Format("=SUM(P3:P{0})", (row - 1));
-                xlWorkSheet.Cells[row, col + 15].Formula = string.Format("=SUM(U3:P{0})", (row - 1));
+               // xlWorkSheet.Cells[row, col + 15].Formula = string.Format("=SUM(U3:P{0})", (row - 1));
 
 
                     //Format the table

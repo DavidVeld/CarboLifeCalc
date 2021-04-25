@@ -41,7 +41,7 @@
                 <Image Grid.Column="2" Grid.Row="2" Width="128" Margin="0,30,0,0" Height="128" HorizontalAlignment="Center" VerticalAlignment="Top" Source="pack://siteoforigin:,,,/Resources/Logo128.jpg" ></Image>
                 <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" FontFamily="Segoe UI" FontSize="22" Foreground="#FFB21616">Carbo Life Calc</Label>
                 <TextBlock Grid.Column="3" Grid.Row="2" Width="250" Height="19" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,0,0">
-            <Hyperlink NavigateUri="https://github.com/DavidVeld/CarboLifeCalc">
+            <Hyperlink NavigateUri="https://github.com/DavidVeld/CarboLifeCalc"  RequestNavigate="Hyperlink_RequestNavigate">
         https://github.com/DavidVeld/CarboLifeCalc
         </Hyperlink>
                 </TextBlock>

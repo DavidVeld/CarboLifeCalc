@@ -36,7 +36,7 @@ namespace CarboLifeAPI.Data
             description = "";
 
             distanceToSite = 50;
-            materialDensity = 0;
+            materialDensity = 500;
             emptyRun = 80;
             emptyReturn = true;
 
@@ -45,6 +45,8 @@ namespace CarboLifeAPI.Data
 
             calcResult = "";
             value = 0;
+
+            calculate();
         }
 
         public void calculate()

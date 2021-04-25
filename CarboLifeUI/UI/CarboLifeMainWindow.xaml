@@ -50,8 +50,8 @@
 
             </MenuItem>
             <MenuItem Header="Help" Background="White" Style="{StaticResource baseStyleLabel}">
-                <MenuItem Name="mnu_Help" Header="Help" Click="mnu_Help_Click" />
-                <MenuItem Name="mnu_About" Header="About..." Click="Mnu_About_Click" />
+               <!-- <MenuItem Name="mnu_Help" Header="Help" Click="mnu_Help_Click" /> -->
+                <MenuItem Name="mnu_About" Header="Help &amp; About..." Click="Mnu_About_Click" />
             </MenuItem>
         </Menu>
 

@@ -362,6 +362,11 @@ namespace CarboLifeAPI
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
 
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+
+            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + totalGroup.EC + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "100 %" + "</B></TD>" + System.Environment.NewLine;
 
@@ -414,13 +419,17 @@ namespace CarboLifeAPI
                 html += "<H2>Description: " + carboProject.Description + "</H2>" + System.Environment.NewLine;
                 html += "<H2>Value: £ " + carboProject.Value + " </H2>" + System.Environment.NewLine;
                 html += "<H2>Area: " + carboProject.Area + " m²</H2>" + System.Environment.NewLine;
-                html += "<H2>" + Math.Round(carboProject.getTotalEC(), 2) + " tCO<SUB>2</SUB></H2>" + System.Environment.NewLine;
-                html += "<H2>" + Math.Round((carboProject.getTotalEC()/carboProject.Area), 2) + " tCO<SUB>2</SUB>/m²</H2>" + System.Environment.NewLine;
+                html += "<H2>Total Embodied Carbon: " + Math.Round(carboProject.getTotalEC(), 2) + " tCO<SUB>2</SUB></H2>" + System.Environment.NewLine;
+                html += "<H2>Total Embodied Carbon / m<SUP>2</SUP>: " + Math.Round((carboProject.getTotalEC()/carboProject.Area), 2) + " tCO<SUB>2</SUB>/m²</H2>" + System.Environment.NewLine;
 
                 html += "<H2>Category: " + carboProject.Category + "</H2>" + System.Environment.NewLine;
                 html += "<H2>Export Date: " + DateTime.Today.ToShortDateString() + "</H2>" + System.Environment.NewLine;
 
-                html += "<H3>" + carboProject.getSummaryText(true,true,true,true) + "</H3>" + System.Environment.NewLine;
+                string Summarytext = carboProject.getSummaryText(true, true, true, true);
+                Summarytext = Summarytext.Replace(System.Environment.NewLine, "<BR>"); //add a line terminating ;
+
+
+                html += "<H3>" + Summarytext + "</H3>" + System.Environment.NewLine;
 
             }
             catch

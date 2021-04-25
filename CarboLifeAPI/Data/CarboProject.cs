@@ -106,6 +106,7 @@ namespace CarboLifeAPI.Data
         public CarboProject()
         {
 
+
             CarboDatabase = new CarboDatabase();
             CarboDatabase = CarboDatabase.DeSerializeXML("");
 
@@ -126,7 +127,7 @@ namespace CarboLifeAPI.Data
             Value = 0;
             A5Global = 0;
             A5Factor = 1400; //kg CO2 per vaue
-
+            SocialCost = 50;
             justSaved = false;
         }
         public void CreateGroups()
@@ -764,9 +765,9 @@ namespace CarboLifeAPI.Data
             double totalTotal = totalMaterials + globalA5 + globalC1;
 
             if (materials == true)
-                result += "Total material specific: " + Math.Round(totalMaterials, 2) + " MtCO2e " + Environment.NewLine;
+                result += "Total material specific: " + Math.Round(totalMaterials, 2) + " tCO2e " + Environment.NewLine;
             if (globals == true)
-                result += "Total global project specific (A5): " + Math.Round(globalA5, 2) + " MtCO2e" + Environment.NewLine;
+                result += "Total global project specific (A5): " + Math.Round(globalA5, 2) + " tCO2e" + Environment.NewLine;
             
             if(globalA5 == 0)
                 result += "(No project values to calculate A5 emissions )" + Environment.NewLine;
@@ -775,8 +776,8 @@ namespace CarboLifeAPI.Data
                 result += "(No demolition estimation in project )" + Environment.NewLine;
             else
             {
-                //result += "Total, global demolition value (C1): " + Math.Round(demoArea, 2) + " m² x " +  Math.Round(C1Factor, 2) + " kgCO2e/m² / 1000 = " + Math.Round(globalC1, 2) + " MtCO2e"  + Environment.NewLine;
-                result += "Total global demolition value (C1): " + Math.Round(globalC1, 2) + " MtCO2e" + Environment.NewLine;
+                //result += "Total, global demolition value (C1): " + Math.Round(demoArea, 2) + " m² x " +  Math.Round(C1Factor, 2) + " kgCO2e/m² / 1000 = " + Math.Round(globalC1, 2) + " tCO2e"  + Environment.NewLine;
+                result += "Total global demolition value (C1): " + Math.Round(globalC1, 2) + " tCO2e" + Environment.NewLine;
 
             }
             result += Environment.NewLine;
@@ -795,10 +796,10 @@ namespace CarboLifeAPI.Data
             result += Environment.NewLine;
 
             if (materials == true)
-                result += "This equals to: " + Math.Round(totalTotal / 68.5, 2) + " average car emission per year. (UK)" + Environment.NewLine + Environment.NewLine;
+                result += "This equals to: " + Math.Round(totalTotal / 68.5, 2) + " average car emission per year. (UK)" + Environment.NewLine;
             
             if (trees == true)
-                result += "This requires " + Math.Round((totalTotal / 180)/4440, 0) + " Trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
+                result += "This requires " + Math.Round((totalTotal / 180) * 4440, 0) + " Trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
 
             double socialcost = (totalTotal * SocialCost);
 

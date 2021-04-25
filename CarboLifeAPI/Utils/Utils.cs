@@ -125,9 +125,10 @@ namespace CarboLifeAPI
 
         public static string getAssemblyPath()
         {
-            string _path = Assembly.GetExecutingAssembly().Location;
-            string myPath = Path.GetDirectoryName(_path);
-            return myPath;
+            return PathUtils.getAssemblyPath();
+            //string _path = Assembly.GetExecutingAssembly().Location;
+            //string myPath = Path.GetDirectoryName(_path);
+            //return myPath;
         }
 
         public static DataTable ToDataTables(CarboMaterial material)
@@ -227,6 +228,25 @@ namespace CarboLifeAPI
             }
             return "";
         }
+
+        public static string getDataBasePath()
+        {
+            try
+            {
+                string folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\UserMaterials.cxml";
+
+                if (File.Exists(folder))
+                    return folder;
+                else
+                    return "";
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+            return "";
+        }
+
 
         public static void CopyAll<T>(T source, T target)
         {

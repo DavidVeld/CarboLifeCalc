@@ -120,7 +120,7 @@ namespace CarboLifeAPI.Data
             Name = "";
             Category = "";
             Description = "";
-            Density = 1;
+            Density = 500;
             ECI = 1;
             ECI_A1A3 = 1;
             ECI_A4 = 1;
