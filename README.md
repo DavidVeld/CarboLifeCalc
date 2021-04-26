@@ -1,5 +1,5 @@
 # CarboLifeCalc
-A Quick-Action Whole Life Embodied Carbon calculator using Revit material quantities and according to EN 15978:2011
+A Quick-Action Whole Life Embodied Carbon calculator using Revit material quantities 
 
 Status: Work in Good Progress
 
@@ -16,7 +16,8 @@ https://drive.google.com/file/d/1O9SX8WvsPEKANdLFMFTDLDRpRttyFQoQ/view?usp=shari
 For Help and quick guide please see:
 https://github.com/DavidVeld/CarboLifeCalc/wiki
 
-The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design. 
+The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design
+according to EN 15978:2011.
 As a standalone application you can set quantities and materials,  or you can use a 3d model from Revit to import your building into the calculator. Your revit materials will automatically be mapped to to the CarboLifeCalc's own, thus giving you an instant result on the building's embodied carbon.
 
 Videos:
