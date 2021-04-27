@@ -168,7 +168,7 @@ namespace CarboLifeAPI.Data
                 myPath = Utils.getAssemblyPath() + "\\" + fileName;
 
                 //override if file exists on userfolder;
-                string TemplateFile = Utils.getTemplateFolder();
+                string TemplateFile = PathUtils.getTemplateFolder();
 
                 if (File.Exists(TemplateFile))
                     myPath = TemplateFile;
@@ -194,7 +194,7 @@ namespace CarboLifeAPI.Data
         public CarboDatabase DeSerializeXML(string fileName)
         {
             string myPath = fileName;
-            Utils.CheckUserMaterials();
+            PathUtils.CheckFileLocations();
 
             //if its a relative path use:
             if (!(File.Exists(myPath)))
@@ -207,7 +207,7 @@ namespace CarboLifeAPI.Data
             myPath = Utils.getAssemblyPath() + "\\" + fileName;
 
                 //override if file exists on userfolder;
-                string TemplateFile = Utils.getTemplateFolder();  
+                string TemplateFile = PathUtils.getTemplateFolder();  
 
                 if (File.Exists(TemplateFile))
                     myPath = TemplateFile;

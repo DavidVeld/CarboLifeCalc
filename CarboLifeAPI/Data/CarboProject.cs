@@ -52,7 +52,6 @@ namespace CarboLifeAPI.Data
         }
         public ObservableCollection<CarboGroup> getGroupList
         {
-
             get {return groupList;}
         }
         //System field
@@ -105,7 +104,8 @@ namespace CarboLifeAPI.Data
         }
         public CarboProject()
         {
-
+            //UserPaths
+            PathUtils.CheckFileLocations();
 
             CarboDatabase = new CarboDatabase();
             CarboDatabase = CarboDatabase.DeSerializeXML("");
@@ -118,23 +118,26 @@ namespace CarboLifeAPI.Data
             Number = "000000";
             Category = "A building";
             Description = "New Project";
-            SocialCost = 0;
             //C1 Global
             demoArea = 0;
             C1Global = 0;
             C1Factor = 3.40; // kg CO2 per m2
             //A5 Global
-            Value = 0;
             A5Global = 0;
             A5Factor = 1400; //kg CO2 per vaue
+            //Social
             SocialCost = 50;
+            //Other
             justSaved = false;
+            //Totals
+            Value = 0;
+
         }
         public void CreateGroups()
         {
             //get default group settings;
-            CarboGroupSettings groupSettings = new CarboGroupSettings();
-            groupSettings = groupSettings.DeSerializeXML();
+            CarboSettings groupSettings = new CarboSettings().Load();
+            //groupSettings = groupSettings.DeSerializeXML();
 
             this.groupList = CarboElementImporter.GroupElementsAdvanced(this.elementList, groupSettings.groupCategory, groupSettings.groupSubCategory, groupSettings.groupType, groupSettings.groupMaterial, groupSettings.groupSubStructure, groupSettings.groupDemolition, CarboDatabase, groupSettings.uniqueTypeNames);
             CalculateProject();
@@ -198,6 +201,17 @@ namespace CarboLifeAPI.Data
 
             totalNewElements = projectWithElements.elementList.Count;
             totalOldElements = this.elementList.Count;
+
+            //Update the element list;
+            this.elementList = new ObservableCollection<CarboElement>();
+            foreach (CarboElement ce in projectWithElements.elementList)
+            {
+                CarboElement ceNew = new CarboElement();
+                ceNew = ce.CopyMe();
+                this.elementList.Add(ceNew);
+            }
+
+            //this.elementList = new List<CarboElement>(projectWithElements.elementList);
 
             //Clear the project so we can track the updates.
             foreach (CarboElement ce in elementList)
@@ -317,12 +331,10 @@ namespace CarboLifeAPI.Data
                         this.groupList.RemoveAt(i);
                         deletedGroups++;
                     }
-
                 }
             }
 
-            //Update the element list;
-            this.elementList = projectWithElements.elementList;
+            //getElementsFromGroups;
 
             string message =
                 "Project updated: " + Environment.NewLine +
@@ -790,7 +802,7 @@ namespace CarboLifeAPI.Data
             result += "Total CO2e = " + Math.Round(totalTotal, 2) + " tCO2e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine + Environment.NewLine;
             if (Area > 0)
             {
-                result += "OR " + Math.Round(totalTotal / Area, 2) + " tCO2e/m² (Metric tons of carbon dioxide equivalent per square meter)" + Environment.NewLine;
+                result += "OR " + Math.Round(totalTotal / Area, 3) + " tCO2e/m² (Metric tons of carbon dioxide equivalent per square meter)" + Environment.NewLine;
             }
 
             result += Environment.NewLine;
@@ -899,7 +911,7 @@ namespace CarboLifeAPI.Data
         /// Get a list of all the elemetns from the Groups, these contain all the calculated and cumulitive data 
         /// </summary>
         /// <returns></returns>
-        internal IEnumerable<CarboElement> getElementsFromGroups()
+        public IEnumerable<CarboElement> getElementsFromGroups()
         {
             List<CarboElement> elementbuffer = new List<CarboElement>();
             List<CarboElement> SortedList = new List<CarboElement>();

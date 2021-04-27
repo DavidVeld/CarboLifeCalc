@@ -31,17 +31,16 @@ namespace CarboLifeRevit
 
         public CarboRevitImportSettings DeSerializeXML()
         {
-            string fileName = "db\\RevitImportSettings.xml";
-            string myPath = Utils.getAssemblyPath() + "\\" + fileName;
+            string importSettingsPath  = PathUtils.getRevitImportSettingspath();
 
-            if (File.Exists(fileName))
+            if (File.Exists(importSettingsPath))
             {
                 try
                 {
                     XmlSerializer ser = new XmlSerializer(typeof(CarboRevitImportSettings));
                     CarboRevitImportSettings bufferproject;
 
-                    using (FileStream fs = new FileStream(myPath, FileMode.Open))
+                    using (FileStream fs = new FileStream(importSettingsPath, FileMode.Open))
                     {
                         bufferproject = ser.Deserialize(fs) as CarboRevitImportSettings;
                     }
@@ -63,17 +62,14 @@ namespace CarboLifeRevit
         }
         public bool SerializeXML()
         {
-
-            string fileName = "db\\RevitImportSettings.xml";
-
-            string myPath = Utils.getAssemblyPath() + "\\" + fileName;
+            string importSettingsPath = PathUtils.getRevitImportSettingspath();
 
             bool result = false;
             try
             {
                 XmlSerializer ser = new XmlSerializer(typeof(CarboRevitImportSettings));
 
-                using (FileStream fs = new FileStream(myPath, FileMode.Create))
+                using (FileStream fs = new FileStream(importSettingsPath, FileMode.Create))
                 {
                     ser.Serialize(fs, this);
                 }

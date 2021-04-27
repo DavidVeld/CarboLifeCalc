@@ -27,9 +27,9 @@ namespace CarboLifeUI.UI
         public ObservableCollection<CarboElement> carboElementList;
         public ObservableCollection<CarboGroup> carboGroupList;
         public CarboDatabase materialData;
-        public CarboGroupSettings carboGroupSettings;
+        public CarboSettings carboGroupSettings;
 
-        public GroupWindow(ObservableCollection<CarboElement> elementList, CarboDatabase userMaterialData, CarboGroupSettings groupSettings)
+        public GroupWindow(ObservableCollection<CarboElement> elementList, CarboDatabase userMaterialData, CarboSettings groupSettings)
         {
             dialogOk = false;
             carboElementList = elementList;
@@ -107,7 +107,8 @@ namespace CarboLifeUI.UI
             carboGroupSettings.groupuniqueTypeNames = chk_GroupUniqueTypes.IsChecked.Value;
             carboGroupSettings.uniqueTypeNames = txt_SpecialTypes.Text;
 
-            carboGroupSettings.SerializeXML();
+            //Save the settings
+            carboGroupSettings.Save();
 
             this.Close();
         }

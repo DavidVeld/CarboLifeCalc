@@ -231,10 +231,12 @@ namespace CarboLifeUI.UI
             MessageBoxResult result = MessageBox.Show("Regrouping the set can remove any groups that you have created thus far, do you want to proceed?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
             if (result == MessageBoxResult.Yes)
             {
-                CarboGroupSettings groupSettings = new CarboGroupSettings();
-                groupSettings = groupSettings.DeSerializeXML();
+                CarboSettings settings = new CarboSettings().Load();
 
-                GroupWindow importGroupWindow = new GroupWindow(CarboLifeProject.getAllElements, CarboLifeProject.CarboDatabase, groupSettings);
+                //CarboGroupSettings groupSettings = new CarboGroupSettings();
+                //groupSettings = groupSettings.DeSerializeXML();
+
+                GroupWindow importGroupWindow = new GroupWindow(CarboLifeProject.getAllElements, CarboLifeProject.CarboDatabase, settings);
                 importGroupWindow.ShowDialog();
                 if (importGroupWindow.dialogOk == true)
                 {

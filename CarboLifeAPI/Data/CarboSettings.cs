@@ -12,28 +12,52 @@ namespace CarboLifeAPI.Data
     [Serializable]
     public class CarboSettings
     {
-        public string DataBasePath { get; set; }
-        public string UserPath { get; set; }
+        public string templatePath { get; set; }
+        public bool groupCategory { get; set; }
+        public bool groupSubCategory { get; set; }
+        public bool groupType { get; set; }
+        public bool groupMaterial { get; set; }
+        public bool groupSubStructure { get; set; }
+        public bool groupDemolition { get; set; }
+        public bool groupuniqueTypeNames { get; set; }
 
+        public string uniqueTypeNames { get; set; }
         public CarboSettings()
         {
-            DataBasePath = "Local";
-            UserPath = "Local";
+            templatePath = "Local";
+            groupCategory = true;
+            groupSubCategory = false;
+            groupType = false;
+            groupMaterial = true;
+            groupSubStructure = true;
+            groupDemolition = false;
+            groupuniqueTypeNames = false;
+            uniqueTypeNames = "";
         }
 
-        public CarboSettings DeSerializeXML()
+        public CarboSettings Load()
         {
-            string fileName = "db\\CarboSettings.xml";
-            string myPath = Utils.getAssemblyPath() + "\\" + fileName;
+            return DeSerializeXML();
+        }
 
-            if (File.Exists(fileName))
+        public bool Save()
+        {
+            return SerializeXML();
+        }
+
+        private CarboSettings DeSerializeXML()
+        {
+
+            string mySettingsPath = PathUtils.getSettingsFilePath();
+
+            if (File.Exists(mySettingsPath))
             {
                 try
                 {
                     XmlSerializer ser = new XmlSerializer(typeof(CarboSettings));
                     CarboSettings bufferproject;
 
-                    using (FileStream fs = new FileStream(myPath, FileMode.Open))
+                    using (FileStream fs = new FileStream(mySettingsPath, FileMode.Open))
                     {
                         bufferproject = ser.Deserialize(fs) as CarboSettings;
                     }
@@ -53,19 +77,19 @@ namespace CarboLifeAPI.Data
                 return newsettings;
             }
         }
-        public bool SerializeXML()
+        private bool SerializeXML()
         {
 
-            string fileName = "db\\CarboSettings.xml";
+            string mySettingsPath = PathUtils.getSettingsFilePath();
 
-            string myPath = Utils.getAssemblyPath() + "\\" + fileName;
+            //string myPath = Utils.getAssemblyPath() + "\\" + fileName;
 
             bool result = false;
             try
             {
                 XmlSerializer ser = new XmlSerializer(typeof(CarboSettings));
 
-                using (FileStream fs = new FileStream(myPath, FileMode.Create))
+                using (FileStream fs = new FileStream(mySettingsPath, FileMode.Create))
                 {
                     ser.Serialize(fs, this);
                 }

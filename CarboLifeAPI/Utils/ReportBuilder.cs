@@ -420,7 +420,7 @@ namespace CarboLifeAPI
                 html += "<H2>Value: £ " + carboProject.Value + " </H2>" + System.Environment.NewLine;
                 html += "<H2>Area: " + carboProject.Area + " m²</H2>" + System.Environment.NewLine;
                 html += "<H2>Total Embodied Carbon: " + Math.Round(carboProject.getTotalEC(), 2) + " tCO<SUB>2</SUB></H2>" + System.Environment.NewLine;
-                html += "<H2>Total Embodied Carbon / m<SUP>2</SUP>: " + Math.Round((carboProject.getTotalEC()/carboProject.Area), 2) + " tCO<SUB>2</SUB>/m²</H2>" + System.Environment.NewLine;
+                html += "<H2>Total Embodied Carbon / m<SUP>2</SUP>: " + Math.Round((carboProject.getTotalEC()/carboProject.Area), 3) + " tCO<SUB>2</SUB>/m²</H2>" + System.Environment.NewLine;
 
                 html += "<H2>Category: " + carboProject.Category + "</H2>" + System.Environment.NewLine;
                 html += "<H2>Export Date: " + DateTime.Today.ToShortDateString() + "</H2>" + System.Environment.NewLine;

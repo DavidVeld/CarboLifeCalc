@@ -173,7 +173,10 @@ namespace CarboLifeRevit
                     CreateHeatMap(app, carboCalcProgram.carboLifeProject);
                 }
             }
-
+            else
+            {
+                MessageBox.Show("No elements could be found to be calculated, please make sure you have a 3D view active and the building volume is clearly visible ", "Warning", MessageBoxButton.OK);
+            }
             //When assembly cant be find bind to current
             System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
             {
@@ -206,7 +209,9 @@ namespace CarboLifeRevit
                 FilteredElementCollector elements = new FilteredElementCollector(doc);
                 FillPatternElement solidFillPattern = elements.OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>().First(a => a.GetFillPattern().IsSolidFill);
 
-                foreach (CarboElement ce in carboLifeProject.getAllElements)
+                List<CarboElement> elementsFromGroups = carboLifeProject.getElementsFromGroups().ToList();
+
+                foreach (CarboElement ce in elementsFromGroups)
                 {
                     ElementId id = new ElementId(ce.Id);
                     ElementId patid = solidFillPattern.Id; //Solid

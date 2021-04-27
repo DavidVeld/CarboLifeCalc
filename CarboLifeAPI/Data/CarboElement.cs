@@ -85,5 +85,38 @@ namespace CarboLifeAPI.Data
 
         }
         
+        internal CarboElement CopyMe()
+        {
+            CarboElement clone = new CarboElement();
+
+            clone.Id = this.Id;
+            clone.Name = this.Name;
+            //Imported Material Name
+            clone.MaterialName = this.MaterialName;
+            //Matched To Material Name
+            clone.CarboMaterialName = this.CarboMaterialName;
+
+            clone.Category = this.Category;
+            clone.SubCategory = this.SubCategory;
+            clone.Volume = this.Volume;
+            clone.Mass = this.Mass;
+            clone.Density = this.Density;
+            clone.Level = this.Level;
+            clone.isDemolished = this.isDemolished;
+            clone.isExisting = this.isExisting;
+            clone.isSubstructure = this.isSubstructure;
+
+            clone.r = this.r;
+            clone.g = this.g;
+            clone.b = this.b;
+            clone.ECI = this.ECI;
+            clone.EC = this.EC;
+            clone.ECI_Total = this.ECI_Total;
+            clone.EC_Total = this.EC_Total;
+            clone.Volume_Total = this.Volume_Total;
+
+            return clone;
+        }
+
     }
 }

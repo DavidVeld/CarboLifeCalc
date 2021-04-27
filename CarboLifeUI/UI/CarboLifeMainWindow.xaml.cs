@@ -50,8 +50,8 @@ namespace CarboLifeUI.UI
         //public CarboDatabase carboDataBase { get; set; }
         public CarboLifeMainWindow()
         {
-            //UserMaterials
-            Utils.CheckUserMaterials();
+            //UserPaths
+            PathUtils.CheckFileLocations();
 
             IsRevit = false;
             carboLifeProject = new CarboProject();
@@ -60,7 +60,8 @@ namespace CarboLifeUI.UI
 
         public CarboLifeMainWindow(CarboProject myProject)
         {
-            Utils.CheckUserMaterials();
+            //UserPaths
+            PathUtils.CheckFileLocations();
 
             carboLifeProject = myProject;
             IsRevit = false;
@@ -73,6 +74,7 @@ namespace CarboLifeUI.UI
         private void Menu_Loaded(object sender, RoutedEventArgs e)
         {
             //Delete log
+            /*
             string fileName = "db\\log.txt";
             string logPath = Utils.getAssemblyPath() + "\\" + fileName;
 
@@ -80,7 +82,7 @@ namespace CarboLifeUI.UI
                 File.Delete(logPath);
 
             Utils.WriteToLog("New Log Started: " + carboLifeProject.Name);
-
+            */
             //Create a usermaterial file;
 
         }
@@ -93,60 +95,32 @@ namespace CarboLifeUI.UI
                 return null;
         }
 
+        /// <summary>
+        /// SaveAs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Mnu_saveDataBase_Click(object sender, RoutedEventArgs e)
         {
             SaveFileAs();
         }
-
-        private void SaveFileAs()
-        {
-
-            //Create a File and save it as a xml file
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Title = "Specify path";
-            saveDialog.Filter = "All files (*.*)|*.*| Carbo Life Project File(*.clcx) | *.clcx";
-            saveDialog.FilterIndex = 2;
-            saveDialog.RestoreDirectory = true;
-
-            saveDialog.ShowDialog();
-
-            string Path = saveDialog.FileName;
-            if (Path != "")
-            {
-                bool ok = carboLifeProject.SerializeXML(Path);
-                if (ok == true)
-                {
-                    MessageBox.Show("Project Saved");
-                    carboLifeProject.justSaved = true;
-                }
-            }
-        }
-
-        private void Mnu_openDataBase_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Start A new Project
+        /// </summary>
+        private void mnu_newProject_Click(object sender, RoutedEventArgs e)
         {
             bool fileSaved = false;
 
+            //This bit is a verification code, to make sure the user is given the opportunity to save teh work before continuing:
             if (carboLifeProject.justSaved == false)
             {
-
                 MessageBoxResult result = MessageBox.Show("Do you want to save your project first?", "Warning", MessageBoxButton.YesNoCancel);
                 if (result == MessageBoxResult.Yes)
                 {
-                    string Path = carboLifeProject.filePath;
-                    if (File.Exists(Path))
-                    {
-                        bool ok = carboLifeProject.SerializeXML(Path);
-                        if (ok == true)
-                        {
-                            MessageBox.Show("Project Saved");
-                            //the file was saved
-                            fileSaved = true;
-                        }
-                        else
-                        {
-                            MessageBox.Show("There was a problem while saving the file, please use save-as to re-save your file.");
-                        }
-                    }
+                    if (carboLifeProject.filePath == "")
+                        fileSaved = SaveFileAs();
+                    else
+                        fileSaved = SaveFile(carboLifeProject.filePath);
                 }
                 else if (result == MessageBoxResult.No)
                 {
@@ -164,6 +138,60 @@ namespace CarboLifeUI.UI
                 //The file was already saved
                 fileSaved = true;
             }
+            //
+            //the file is either saved, or used didnt want to save:
+            if (fileSaved == true)
+            {
+                try
+                {
+                    carboLifeProject = new CarboProject();
+
+                    carboLifeProject.Audit();
+                    carboLifeProject.CalculateProject();
+                    carboLifeProject.justSaved = false;
+
+                    tab_Main.Visibility = Visibility.Hidden;
+                    tab_Main.Visibility = Visibility.Visible;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        private void Mnu_openDataBase_Click(object sender, RoutedEventArgs e)
+        {
+            bool fileSaved = false;
+
+            //This bit is a verification code, to make sure the user is given the opportunity to save teh work before continuing:
+            if (carboLifeProject.justSaved == false)
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to save your project first?", "Warning", MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (carboLifeProject.filePath == "")
+                        fileSaved = SaveFileAs();
+                    else
+                        fileSaved = SaveFile(carboLifeProject.filePath);
+                }
+                else if (result == MessageBoxResult.No)
+                {
+                    //The user didnt want to save
+                    fileSaved = true;
+                }
+                else
+                {
+                    //the user cancels
+                    fileSaved = false;
+                }
+            }
+            else
+            {
+                //The file was already saved
+                fileSaved = true;
+            }
+            //
             //the file is either saved, or used didnt want to save:
             if (fileSaved == true)
             {
@@ -183,11 +211,11 @@ namespace CarboLifeUI.UI
 
                         carboLifeProject.Audit();
                         carboLifeProject.CalculateProject();
-                        carboLifeProject.justSaved = true;
 
                         tab_Main.Visibility = Visibility.Hidden;
                         tab_Main.Visibility = Visibility.Visible;
 
+                        carboLifeProject.justSaved = true;
                     }
                 }
                 catch (Exception ex)
@@ -200,20 +228,79 @@ namespace CarboLifeUI.UI
 
         private void Mnu_saveProject_Click(object sender, RoutedEventArgs e)
         {
-            string Path = carboLifeProject.filePath;
-            if(File.Exists(Path))
+            string path = carboLifeProject.filePath;
+            if(File.Exists(path))
             {
-                bool ok = carboLifeProject.SerializeXML(Path);
-                if (ok == true)
-                {
-                    MessageBox.Show("Project Saved");
-                    carboLifeProject.justSaved = true;
-                }
+                SaveFile(path);
             }
             else
             {
                 SaveFileAs();
             }
+        }
+
+        /// <summary>
+        /// Saves the file
+        /// </summary>
+        /// <param name="path">the path to the Carbo Life Project File</param>
+        private bool SaveFile(string path, bool newFile = false)
+        {
+            try
+            {
+                if (File.Exists(path) || newFile == true)
+                {
+                    bool ok = carboLifeProject.SerializeXML(path);
+                    if (ok == true)
+                    {
+                        MessageBox.Show("Project Saved");
+                        carboLifeProject.justSaved = true;
+                        
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("There was a problem while saving the file, please use save-as to re-save your file.");
+                        return false;
+                    }
+                }
+                else
+                {
+                    //if the user saves the file, all is good
+                    bool ok = SaveFileAs();
+                    return ok;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+        private bool SaveFileAs()
+        {
+            bool result = false;
+
+            //Create a File and save it as a xml file
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Title = "Specify path";
+            saveDialog.Filter = "All files (*.*)|*.*| Carbo Life Project File(*.clcx) | *.clcx";
+            saveDialog.FilterIndex = 2;
+            saveDialog.RestoreDirectory = true;
+
+            saveDialog.ShowDialog();
+
+            string Path = saveDialog.FileName;
+            if (Path != "")
+            {                
+                //is true when succesfull
+                result = SaveFile(Path, true);
+            }
+            else
+            {
+                result = false;
+            }
+
+            return result;
         }
 
         //When assembly cant be find bind to current
@@ -326,7 +413,7 @@ namespace CarboLifeUI.UI
 
                 if (heatmapBuilder.isAccepted == true)
                 {
-                    MessageBox.Show("The heatmap data will be stored within the calculation, once you close the application, Revit will colour in your view.", "Warning", MessageBoxButton.OK);
+                    //MessageBox.Show("The heatmap data will be stored within the calculation, once you close the application, Revit will colour in your view.", "Warning", MessageBoxButton.OK);
                     if (heatmapBuilder.rad_Bymaterial.IsChecked == true)
                     {
                         carboLifeProject = HeatMapBuilderUtils.CreateIntensityHeatMap(carboLifeProject, heatmapBuilder.minOutColour, heatmapBuilder.maxOutColour, heatmapBuilder.minRangeColour, heatmapBuilder.midRangeColour, heatmapBuilder.maxRangeColour, heatmapBuilder.standardDev);
@@ -506,5 +593,12 @@ namespace CarboLifeUI.UI
         {
             DataExportUtils.ExportToExcel(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials);
         }
+
+        private void mnu_Settings_Click(object sender, RoutedEventArgs e)
+        {
+            CarboSettingsMenu settingsWindow = new CarboSettingsMenu();
+            settingsWindow.ShowDialog();
+        }
+
     }
 }

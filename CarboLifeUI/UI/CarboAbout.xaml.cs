@@ -65,5 +65,24 @@ namespace CarboLifeUI.UI
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
         }
+
+        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://circularecology.com"));
+        }
+
+        private void Label_MouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/"));
+
+        
+        }
+
+        private void Label_MouseDown_2(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(""));
+
+            //
+        }
     }
 }

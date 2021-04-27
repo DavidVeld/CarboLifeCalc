@@ -56,6 +56,14 @@ namespace CarboLifeCalc
             {
                 MaterialEditor mateditor = new MaterialEditor(cd.CarboMaterialList[0].Name, cd);
                 mateditor.ShowDialog();
+
+                if (mateditor.acceptNew == true)
+                {
+                    CarboDatabase database = mateditor.returnedDatabase;
+                    database.SerializeXML("");
+                }
+
+
             }
             else
             {
@@ -78,6 +86,7 @@ namespace CarboLifeCalc
 
                     CarboProject buffer = new CarboProject();
                     newProject = buffer.DeSerializeXML(openFileDialog.FileName);
+                    newProject.justSaved = true;
 
                     Dispatcher.BeginInvoke(new Action(() => OpenProject(newProject)), DispatcherPriority.ContextIdle, null);
 
@@ -104,6 +113,11 @@ namespace CarboLifeCalc
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            CarboLifeAPI.PathUtils.CheckFileLocations();
         }
     }
 }

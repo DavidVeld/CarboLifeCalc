@@ -104,6 +104,27 @@
     <Style TargetType="{x:Type TabControl}" BasedOn="{StaticResource baseStyle}"></Style>
     <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource MenuItemMarkup}"></Style>
 
+    
+    <!---Hyperlinks-->
+    
+    <Style x:Key="{x:Type Hyperlink}" TargetType="{x:Type Hyperlink}">
+        <Setter Property="Foreground" Value="#FFB21616"/>
+    <Setter Property="TextDecorations" Value="Underline"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+             <Setter Property="Foreground" Value="Red"/>
+        </Trigger>
+        <Trigger Property="IsEnabled" Value="False">
+             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+        </Trigger>
+        <Trigger Property="IsEnabled" Value="True">
+            <Setter Property="Cursor" Value="Hand"/>
+        </Trigger>
+    </Style.Triggers>
+</Style>
+    
     <!-- ComboBox, RadioButton, CheckBox, etc... -->
 
     <Style x:Key="Flat">

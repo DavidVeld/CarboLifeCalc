@@ -59,47 +59,6 @@ namespace CarboLifeAPI
             }
         }
 
-        /// <summary>
-        /// Sets and prepares the usermaterials
-        /// </summary>
-        public static void CheckUserMaterials()
-        {
-            string pathDatabase = Utils.getAssemblyPath() + "\\db\\";
-            string bufferPath = pathDatabase + "MaterialBuffer.cxml";
-            string targetPath = pathDatabase + "UserMaterials.cxml";
-            if (!(File.Exists(targetPath)))
-            {
-                if (File.Exists(bufferPath))
-                {
-                    File.Copy(bufferPath, targetPath);
-                }
-            }
-
-            //All userfiles need to move to the local folder:
-            string appdatafolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\";
-            string TemplateFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\UserMaterials.cxml";
-
-            try
-            {
-                //Directory
-                if (!Directory.Exists(appdatafolder))
-                    Directory.CreateDirectory(appdatafolder);
-
-                if (!(File.Exists(appdatafolder + "UserMaterials.cxml")))
-                {
-                    if (File.Exists(bufferPath))
-                    {
-                        File.Copy(bufferPath, appdatafolder + "UserMaterials.cxml");
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-        }
-
         public static int CalcLevenshteinDistance(string a, string b)
         {
             if (String.IsNullOrEmpty(a) || String.IsNullOrEmpty(b)) return 999;
@@ -209,42 +168,6 @@ namespace CarboLifeAPI
             }
             return result;
 
-        }
-
-        public static string getTemplateFolder()
-        {
-            try
-            {
-                string folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\UserMaterials.cxml";
-
-                if (File.Exists(folder))
-                    return folder;
-                else
-                    return "";
-            }
-            catch (Exception ex)
-            {
-                return "";
-            }
-            return "";
-        }
-
-        public static string getDataBasePath()
-        {
-            try
-            {
-                string folder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\UserMaterials.cxml";
-
-                if (File.Exists(folder))
-                    return folder;
-                else
-                    return "";
-            }
-            catch (Exception ex)
-            {
-                return "";
-            }
-            return "";
         }
 
 

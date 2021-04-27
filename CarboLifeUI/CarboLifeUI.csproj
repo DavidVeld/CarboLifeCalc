@@ -92,6 +92,9 @@
     <Compile Include="UI\CaboDatabaseManager.xaml.cs">
       <DependentUpon>CaboDatabaseManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\CarboSettingsMenu.xaml.cs">
+      <DependentUpon>CarboSettingsMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\CarboLifeMainWindow.xaml.cs">
       <DependentUpon>CarboLifeMainWindow.xaml</DependentUpon>
     </Compile>
@@ -194,6 +197,10 @@
     <Page Include="UI\CaboDatabaseManager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\CarboSettingsMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\CarboLifeMainWindow.xaml">
       <SubType>Designer</SubType>

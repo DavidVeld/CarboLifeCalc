@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 namespace CarboLifeUI
 {
     [Serializable]
+    [Obsolete("This class should be removed, all settings go to CarboSettings Class")]
     public class CarboGroupSettings
     {
         public bool groupCategory { get; set; }

@@ -62,7 +62,7 @@ namespace CarboLifeUI.UI
             cbb_DataBases.Items.Clear();
 
             //Get all file sin online folder:
-            string onlinePath = Utils.getAssemblyPath() + "\\" + "db\\online\\";
+            string onlinePath = PathUtils.getDownloadedPath();
             string[] files = Directory.GetFiles(onlinePath);
 
             cbb_DataBases.Items.Add("Template");
@@ -336,7 +336,7 @@ namespace CarboLifeUI.UI
                 foreach (string file in onlinePicker.selectionList)
                 {
                     //download each selected item
-                    string filetarget = Utils.getAssemblyPath() + "\\db\\online\\" + file;
+                    string filetarget = PathUtils.getDownloadedPath() + file;
                     string filename = System.IO.Path.GetFileNameWithoutExtension(filetarget);
                     try
                     {
@@ -366,29 +366,7 @@ namespace CarboLifeUI.UI
                 }
 
                 UpdateCombobox();
-                /*
-                //wait 1 second;
-                System.Threading.Thread.Sleep(500);
-                
-                string fileName = "";
-                int fileExtPos = fileName.LastIndexOf(".");
-                if (fileExtPos >= 0)
-                    fileName = fileName.Substring(0, fileExtPos);
 
-                if (File.Exists(lastdownloadedfile))
-                {
-                    sourcePath = lastdownloadedfile;
-                    cbb_DataBases.Text = fileName;
-
-                    CarboDatabase userprojects = new CarboDatabase();
-                    CarboDatabase buffer = userprojects.DeSerializeXML(lastdownloadedfile);
-
-                    if (buffer != null)
-                    {
-                        templateDatabase = buffer;
-                    }
-                }
-                */
             }
         }
         private void cbb_DataBases_DropDownClosed(object sender, EventArgs e)
@@ -411,12 +389,12 @@ namespace CarboLifeUI.UI
             {
                 // This is the template use build-in path:
                 //sourcePath = Utils.getAssemblyPath() + "\\db\\UserMaterials.cxml";
-                sourcePath = Utils.getTemplateFolder();
+                sourcePath = PathUtils.getTemplateFolder();
             }
             else
             {
                 //this is an online material:
-                sourcePath = Utils.getAssemblyPath() + "\\db\\online\\" + selectedItem + ".cxml";
+                sourcePath = PathUtils.getDownloadedPath() + selectedItem + ".cxml";
             }
 
             if(!(File.Exists(sourcePath)))

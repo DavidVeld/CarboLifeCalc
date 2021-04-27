@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CarboLifeCalc"
         mc:Ignorable="d"
-        Title="Carbon Life Calculator" Height="450" Width="800">
+        Title="Carbon Life Calculator" Height="450" Width="800" Loaded="Window_Loaded" >
 
     <Window.Resources>
         <ResourceDictionary>
@@ -47,11 +47,11 @@
         </TextBlock>
         <Label Grid.Column="3" Grid.Row="2" Width="362" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,74,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Embodied Carbon Calculator to EN 15978:2011</Label>
 
-        <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Build: April 2021.1</Label>
+        <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Build: V 0.90</Label>
         <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,145,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Author: David In't Veld</Label>
 
-        <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Width="682" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">[Files]</Label>
-        <Button Name="btn_Files" Grid.Column="3" Grid.Row="3" Width="75" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,0,10,10" Click="Addin_Click"  Style="{StaticResource ButtonStyle}">Change...</Button>
+        <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Width="682" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" FontFamily="Segoe UI" FontSize="14" Visibility="Hidden" Foreground="#000" FontWeight="Light">[Files]</Label>
+        <Button Name="btn_Files" Grid.Column="3" Grid.Row="3" Width="75" Height="28" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,0,10,10" Click="Addin_Click" Visibility="Hidden" Style="{StaticResource ButtonStyle}">Change...</Button>
 
 
     </Grid>
