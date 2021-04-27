@@ -1,0 +1,13 @@
+Material,Incineration,IncinerationP,Landfill,LandfillP,Reuse,ReuseP
+Aluminium Global,0,0,0.013,15,0.005,85
+Aluminium UK,0,0,0.013,4,0.005,96
+Concrete,0,0,0.013,25,0.005,75
+Copper Global,0,0,0.013,35,0.005,65
+Copper UK,0,0,0.013,35,0.005,65
+Generic,0,0,0.013,50,0.005,50
+Steel Global,0,0,0.013,15,0.005,85
+Steel UK,0,0,0.013,4,0.005,96
+Timber Reuse,0,0,0,0,0.005,100
+Timber Recycled,0,0,0,0,1.67,100
+Timber Mostly Incinerated (Default),1.64,75,2.15,25,0.005,0
+Timber Mostly Landfill ,1.64,25,2.15,75,0.005,0

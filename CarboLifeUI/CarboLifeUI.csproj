@@ -331,10 +331,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\ico_CarboLife.ico" />
-    <None Include="Resources\Logo128.jpg" />
+    <Content Include="Resources\ico_CarboLife.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Logo128.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="UI\refreshicon.png" />
-    <None Include="img\refreshicon.png" />
+    <None Include="img\refreshicon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\refreshicon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
