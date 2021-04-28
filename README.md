@@ -6,10 +6,15 @@ Status: Work in Good Progress
 Current Build for testing download link: (14.04.2021)
 
 (build 28.04.2021)
+
 Zip 
+
 https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/280428.-.Build.For.Testing.zip
+
 Installer:
+
 https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/CarboLifeCalcInstaller.msi
+
 
 For help and quick guide please see:
 https://github.com/DavidVeld/CarboLifeCalc/wiki
