@@ -200,8 +200,8 @@ namespace CarboLifeAPI
             }
             catch (Exception ex)
             {
-                return "";
                 MessageBox.Show(ex.Message);
+                return "";
             }
             //return "";
         }

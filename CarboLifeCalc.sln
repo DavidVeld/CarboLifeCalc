@@ -23,42 +23,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENCE.txt = LICENCE.txt
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SystemFiles", "SystemFiles", "{3DCA4381-17BE-40DD-A070-03ADA637A936}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{FD539E1F-6F8F-42FB-A30E-86C208597ABC}"
-	ProjectSection(SolutionItems) = preProject
-		SystemFiles\data\Eol.csv = SystemFiles\data\Eol.csv
-		SystemFiles\data\Fuel.csv = SystemFiles\data\Fuel.csv
-		SystemFiles\data\IstructE.csv = SystemFiles\data\IstructE.csv
-		SystemFiles\data\Profiles.csv = SystemFiles\data\Profiles.csv
-		SystemFiles\data\Transport.csv = SystemFiles\data\Transport.csv
-		SystemFiles\data\Use.csv = SystemFiles\data\Use.csv
-		SystemFiles\data\Waste.csv = SystemFiles\data\Waste.csv
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "A1A3Tables", "A1A3Tables", "{10A6AA24-A998-4BDA-828D-1101DD063930}"
-	ProjectSection(SolutionItems) = preProject
-		SystemFiles\data\A1A3Tables\ECI.csv = SystemFiles\data\A1A3Tables\ECI.csv
-		SystemFiles\data\A1A3Tables\IstructE.csv = SystemFiles\data\A1A3Tables\IstructE.csv
-		SystemFiles\data\A1A3Tables\User.csv = SystemFiles\data\A1A3Tables\User.csv
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "db", "db", "{C436382F-4A56-4E2F-827B-1A2C1E96DA89}"
-	ProjectSection(SolutionItems) = preProject
-		SystemFiles\db\CarboSettings.xml = SystemFiles\db\CarboSettings.xml
-		SystemFiles\db\MaterialBuffer.cxml = SystemFiles\db\MaterialBuffer.cxml
-		SystemFiles\db\RevitImportSettings.xml = SystemFiles\db\RevitImportSettings.xml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{1D0EE158-3DDB-4368-9AC9-AF594CFF6F3E}"
-	ProjectSection(SolutionItems) = preProject
-		SystemFiles\img\editicon.png = SystemFiles\img\editicon.png
-		SystemFiles\img\ico_CarboLife32.jpg = SystemFiles\img\ico_CarboLife32.jpg
-		SystemFiles\img\ico_CarboLifeSettings32.jpg = SystemFiles\img\ico_CarboLifeSettings32.jpg
-		SystemFiles\img\ico_UpdateCarboLife32.jpg = SystemFiles\img\ico_UpdateCarboLife32.jpg
-		SystemFiles\img\refreshicon.png = SystemFiles\img\refreshicon.png
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -120,12 +84,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{FD539E1F-6F8F-42FB-A30E-86C208597ABC} = {3DCA4381-17BE-40DD-A070-03ADA637A936}
-		{10A6AA24-A998-4BDA-828D-1101DD063930} = {FD539E1F-6F8F-42FB-A30E-86C208597ABC}
-		{C436382F-4A56-4E2F-827B-1A2C1E96DA89} = {3DCA4381-17BE-40DD-A070-03ADA637A936}
-		{1D0EE158-3DDB-4368-9AC9-AF594CFF6F3E} = {3DCA4381-17BE-40DD-A070-03ADA637A936}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E0F232E6-1D3A-474E-B85C-D30658741AA4}
