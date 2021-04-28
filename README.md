@@ -5,15 +5,13 @@ Status: Work in Good Progress
 
 Current Build for testing download link: (14.04.2021)
 
+(build 28.04.2021)
+Zip 
+https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/280428.-.Build.For.Testing.zip
+Installer:
+https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/CarboLifeCalcInstaller.msi
 
-Zip (build 14.04.2021)
-https://drive.google.com/file/d/1qxSjf1k6pYhFyYFTFObMKpRUudDs2oip/view?usp=sharing
-
-Installer (build 29.03.2021):
-https://drive.google.com/file/d/1O9SX8WvsPEKANdLFMFTDLDRpRttyFQoQ/view?usp=sharing
-
-
-For Help and quick guide please see:
+For help and quick guide please see:
 https://github.com/DavidVeld/CarboLifeCalc/wiki
 
 The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design
@@ -45,6 +43,13 @@ Screenshots:
 1. Carbon sequestering calculator (Fun, but low priority)
 2. Project compare interface added graphs
 3. Link into grasshopper and/or Tekla
+
+Updates as per build 28.04.2021
+1. Moved user materials to AppData Folder
+2. Fixed Save and Open 
+3. Material Template can now be shared among multiple PCs
+4. Bugs 
+5. Links to resources and additional information added
 
 Updates as per build 14.04.2021 (Zip oply)
 1. Rounding error fixed in graph 
