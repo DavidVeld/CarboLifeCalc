@@ -220,7 +220,7 @@ namespace CarboLifeUI.UI
         
         private void GroupBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            CarboInfoBox infoBox = new CarboInfoBox("Only use this value for a demolished material, use section C4 for end of life values of a new material. 3.4 kgCO2/m2 is recommended by RICS guidelines unless specified data is available");
+            CarboInfoBox infoBox = new CarboInfoBox("Only use this value for a demolished material, use section C4 for end of life values of a new material. 3.4 kgCO₂/m2 is recommended by RICS guidelines unless specified data is available");
             infoBox.Show();
         }
 

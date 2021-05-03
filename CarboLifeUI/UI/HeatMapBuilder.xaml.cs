@@ -141,11 +141,11 @@ namespace CarboLifeUI.UI
 
         private void rad_Bymaterial_Click(object sender, RoutedEventArgs e)
         {
-            lbl_Text.Content = "The heatmap will be based on " + Environment.NewLine + "the material density (Intensity map) " + Environment.NewLine + "based on kg CO2 per kg";
+            lbl_Text.Content = "The heatmap will be based on " + Environment.NewLine + "the material density (Intensity map) " + Environment.NewLine + "based on kg CO₂ per kg";
         }
         private void rad_Bymaterial2_Click(object sender, RoutedEventArgs e)
         {
-            lbl_Text.Content = "The heatmap will be based on " + Environment.NewLine + "the material density (Intensity map) " + Environment.NewLine + "based on kg CO2 per m³";
+            lbl_Text.Content = "The heatmap will be based on " + Environment.NewLine + "the material density (Intensity map) " + Environment.NewLine + "based on kg CO₂ per m³";
         }
         private void rad_ByGroup_Click(object sender, RoutedEventArgs e)
         {

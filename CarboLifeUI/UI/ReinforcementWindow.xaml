@@ -106,7 +106,7 @@
                 
                 <Label Grid.Column="1" Margin="270,0,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m³</Label>
                 <Label Grid.Column="1" Margin="270,32,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kg</Label>
-                <Label Grid.Column="1" Margin="270,64,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+                <Label Grid.Column="1" Margin="270,64,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
 
 
             </Grid>

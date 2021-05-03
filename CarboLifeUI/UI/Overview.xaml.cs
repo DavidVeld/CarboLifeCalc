@@ -127,7 +127,7 @@ namespace CarboLifeUI.UI
                 cnv_Totals.Children.Clear();
 
                 TextBlock TotalText = new TextBlock();
-                TotalText.Text = "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO2e";
+                TotalText.Text = "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e";
                 TotalText.FontStyle = FontStyles.Normal;
                 TotalText.FontWeight = FontWeights.Bold;
 

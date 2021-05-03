@@ -1,4 +1,4 @@
-Id,Name,Description,Category,Density,ECI_A1A3
+ï»¿Id,Name,Description,Category,Density,ECI_A1A3
 4000,Unreinforced  C30/37  UK average ready mixed concrete EPDa (35% cement replacement),Unreinforced  C30/37  UK average ready mixed concrete EPDa (35% cement replacement),Concrete,2400,0.103
 4001,Unreinforced  C32/40  25% GGBS cement replacementb,Unreinforced  C32/40  25% GGBS cement replacementb,Concrete,2400,0.12
 4002,Unreinforced  C32/40  50% GGBS cement replacement,Unreinforced  C32/40  50% GGBS cement replacement,Concrete,2400,0.089
@@ -10,7 +10,7 @@ Id,Name,Description,Category,Density,ECI_A1A3
 4008,1 : 4 cement: sand mixc with CEM I cement,1 : 4 cement: sand mixc with CEM I cement,Concrete,2400,0.163
 4009,1 : 4 cement: sand mix with average UK cement mixd,1 : 4 cement: sand mix with average UK cement mixd,Concrete,2400,0.149
 4010,Unreinforced  C40/50 with average UK cement mix,Unreinforced  C40/50 with average UK cement mix,Concrete,2400,0.178
-4011,Reinforced  150mm prestressed hollow core slab: British Precast Flooring Federation average EPD,Reinforced  150mm prestressed hollow core slab: British Precast Flooring Federation average EPD  50.2kgCO2e/m2,Concrete,2000,0.166
+4011,Reinforced  150mm prestressed hollow core slab: British Precast Flooring Federation average EPD,Reinforced  150mm prestressed hollow core slab: British Precast Flooring Federation average EPD  50.2kgCOâ‚‚e/m2,Concrete,2000,0.166
 4012,Reinforcement   UK Average,UK: UK CARES Sector Average EPD,Steel,7850,0.76
 4013,Reinforcement   Worldwide,Worldwide: Worldsteel LCI study data  world average,Steel,7850,1.99
 4014,PT Strands,Assume the same as reinforcement bars,Steel,7850,0.76
@@ -18,16 +18,16 @@ Id,Name,Description,Category,Density,ECI_A1A3
 4016,Hollow Sections  UK,UK hollow sections: TATA EPD,Steel,7850,2.5
 4017,Europe average,Europe (excl. UK): Bauforumstahle average EPD,Steel,7850,1.13
 4018,World average,Worldwide: Worldsteel LCI study data  world average,Steel,7850,1.55
-4019,Plates  UK,UK: Assume the same as ‘structural sections — UK open sections’,Steel,7850,0.76
+4019,Plates  UK,UK: Assume the same as â€˜structural sections â€” UK open sectionsâ€™,Steel,7850,0.76
 4020,Plates  Europe,Europe (excl. UK): Bauforumstahl average EPD,Steel,7850,1.13
 4021,Plates  Global,Worldwide: Worldsteel LCI study data,Steel,7850,2.46
-4022,Tata Comflor  UK,UK: TATA Comflor® EPD,Steel,7850,2.74
+4022,Tata Comflor  UK,UK: TATA ComflorÂ® EPD,Steel,7850,2.74
 4023,PPA  Europe,Europe: PPA Europe EPD,Steel,7850,2.36
 4024,Galvanised steel  Global,Worldwide: Worldsteel LCI study data  hot dip galvanised steel  world average,Steel,7850,2.76
 4025,Lightweight Blocks,Lightweight (AAC) blocks,Brick & Stone,2000,0.28
 4026,Generic Blocks,Dense blocks,Brick & Stone,2000,0.093
 4027,Generic Brick,UK: BDA generic brick,Brick & Stone,2000,0.213
-4028,Brick wall with mortar 1 : 4 CEM I,Brick wall with mortar 1 : 4 CEM I cement: sand mix 38.0kgCO2e/m2,Brick & Stone,2000,0.19
+4028,Brick wall with mortar 1 : 4 CEM I,Brick wall with mortar 1 : 4 CEM I cement: sand mix 38.0kgCOâ‚‚e/m2,Brick & Stone,2000,0.19
 4029,Granite,Granite,Brick & Stone,2600,0.7
 4030,Limestone,Limestone,Brick & Stone,2200,0.09
 4031,Sandstone,Sandstone,Brick & Stone,2300,0.06

@@ -190,10 +190,10 @@ namespace CarboLifeUI.UI
 
             //Load Fuel Settings
             cbb_Fuel.Text = a4Properties.vehicleFuel.name;
-            txt_FuelCo2.Text = a4Properties.vehicleFuel.emission.ToString();
+            txt_FuelCO2.Text = a4Properties.vehicleFuel.emission.ToString();
             txt_FuelProductionCO2.Text = a4Properties.vehicleFuel.production.ToString();
-            lbl_perUnit1.Content = "kgCO2/" + a4Properties.vehicleFuel.unit;
-            lbl_perUnit2.Content = "kgCO2/" + a4Properties.vehicleFuel.unit;
+            lbl_perUnit1.Content = "kgCO₂/" + a4Properties.vehicleFuel.unit;
+            lbl_perUnit2.Content = "kgCO₂/" + a4Properties.vehicleFuel.unit;
 
             txt_Calculation.Text = a4Properties.calcResult;
             txt_Value.Text = a4Properties.value.ToString();
@@ -407,7 +407,7 @@ namespace CarboLifeUI.UI
             }
         }
 
-        private async void txt_FuelCo2_TextChanged(object sender, TextChangedEventArgs e)
+        private async void txt_FuelCO2_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;

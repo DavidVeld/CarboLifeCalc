@@ -47,7 +47,7 @@
 
             <MenuItem Header="Revit" Background="White" Style="{StaticResource baseStyleLabel}">
                 <MenuItem Name="mnu_Heatmap" Header="Create Heatmap Colours" Click="mnu_Heatmap_Click" />
-                <MenuItem Name="mnu_Activate" Header="Activate Revit Addin" Click="mnu_Activate_Click" />
+                <!--<MenuItem Name="mnu_Activate" Header="Activate Revit Addin" Click="mnu_Activate_Click" />-->
 
             </MenuItem>
             <MenuItem Header="Help" Background="White" Style="{StaticResource baseStyleLabel}">

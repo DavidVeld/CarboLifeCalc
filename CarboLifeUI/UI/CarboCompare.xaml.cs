@@ -92,7 +92,7 @@ namespace CarboLifeUI.UI
             {
                 if (CarboLifeProject != null)
                 {
-                    chx_Project0.Content = CarboLifeProject.Name + " (Current) " + Environment.NewLine + Math.Round(CarboLifeProject.ECTotal,2) + " kgCO2";
+                    chx_Project0.Content = CarboLifeProject.Name + " (Current) " + Environment.NewLine + Math.Round(CarboLifeProject.ECTotal,2) + " kgCO₂";
 
 
                     if (liv_Projects != null)
@@ -110,7 +110,7 @@ namespace CarboLifeUI.UI
                         currentProjectSeriesCollection = GraphBuilder.BuildComparingTotalsBarGraph(null, projectListToCompareTo);
                     }
 
-                    Func<double, string> Formatter = value => value + " kgCO2";
+                    Func<double, string> Formatter = value => value + " kgCO₂";
 
                     //Build the labels
                     List<string> projectlist = new List<string>();

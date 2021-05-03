@@ -458,6 +458,8 @@ namespace CarboLifeUI.UI
                         importData = false;
                     }
 
+                    MessageBox.Show("Success! The heatmap will be applied one you close the window", "Success");
+
                 }
                 else
                 {
@@ -467,7 +469,6 @@ namespace CarboLifeUI.UI
                     createHeatmap = true;
                 }
 
-                MessageBox.Show("Success! The heatmap will be applied one you close the window", "Success");
 
             }
             else

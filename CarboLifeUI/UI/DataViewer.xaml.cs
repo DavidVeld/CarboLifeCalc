@@ -131,7 +131,7 @@ namespace CarboLifeUI.UI
                 totals = 0;
             }
 
-            lbl_Total.Content = "TOTAL: " + Math.Round(totals,2) + " tCo2";
+            lbl_Total.Content = "TOTAL: " + Math.Round(totals,2) + " tCO₂";
 
 
             SortData();

@@ -112,7 +112,7 @@
 
                 <Label Grid.Column="1" Grid.Row="5" Height="28"  Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">ECI:</Label>
                 <TextBox Name="txt_A1A3" Grid.Column="2" Grid.Row="5" Height="26" Style="{StaticResource flatTextBox}"></TextBox>
-                <Label Grid.Column="3" Grid.Row="5" Height="28"  Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+                <Label Grid.Column="3" Grid.Row="5" Height="28"  Margin="0,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
 
                 <CheckBox Name="chk_Locked" Grid.Column="2" Grid.Row="6" Height="25" VerticalAlignment="Center" Visibility="Hidden">Lock Material</CheckBox>
 

@@ -115,7 +115,7 @@ namespace CarboLifeUI.UI
                         lbl_Thickness.Foreground = Brushes.Black;
                         lbl_ThicknessUnit.Foreground = Brushes.Black;
 
-                        lbl_Unit.Content = "eCO2/m²";
+                        lbl_Unit.Content = "eCO₂/m²";
                     }
                     else
                     {
@@ -128,7 +128,7 @@ namespace CarboLifeUI.UI
                         lbl_Thickness.Foreground = Brushes.LightGray;
                         lbl_ThicknessUnit.Foreground = Brushes.LightGray;
 
-                        lbl_Unit.Content = "eCO2/m³";
+                        lbl_Unit.Content = "eCO₂/m³";
                     }
                 }
             }

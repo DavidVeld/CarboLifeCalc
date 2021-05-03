@@ -158,7 +158,7 @@ namespace CarboLifeUI.UI
                 + materialB1B5Properties.B5 + " + "
                 + materialB1B5Properties.B6 + " + "
                 + materialB1B5Properties.B7 + ") = "
-                + Math.Round(materialB1B5Properties.totalValue * materialB1B5Properties.B4,3 ) + " kgCO2/kg ";
+                + Math.Round(materialB1B5Properties.totalValue * materialB1B5Properties.B4,3 ) + " kgCO₂/kg ";
 
             txt_B4Factor.Text = materialB1B5Properties.B4.ToString();
             txt_AssetReferencePeriod.Text = materialB1B5Properties.buildingdesignlife.ToString();

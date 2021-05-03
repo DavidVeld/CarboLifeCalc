@@ -76,8 +76,8 @@
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="1*" MinWidth="90" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
 
-                <DataGridTextColumn MinWidth="100" Header="ECI(kgCo2/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="100" Header="EC (tCo2)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="ECI(kgCO₂/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="EC (tCO₂)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
 
             </DataGrid.Columns>
         </DataGrid>

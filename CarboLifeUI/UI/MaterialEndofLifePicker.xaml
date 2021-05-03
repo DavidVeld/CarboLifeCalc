@@ -81,12 +81,12 @@
                     <TextBox Name="txt_C1Thickness"  Grid.Column="2" Grid.Row="1"  Height="26" Margin="0,2" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" Width="61" TextChanged="txt_C1Thickness_TextChanged"></TextBox>
                     <Label Grid.Column="2" Margin="60,1,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kg/m2</Label>
                     <TextBox Name="txt_C1BaseValue" Grid.Column="2" Grid.Row="1" Margin="112,1,0,0" Height="26" Width="82" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_C1BaseValue_TextChanged"></TextBox>
-                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="1"  Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/m2</Label>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="1"  Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂e/m2</Label>
 
 
                     <Label Grid.Column="1" Grid.Row="2" Margin="0,1,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Value:</Label>
                     <TextBox Name="txt_C1Value"  Grid.Column="2" Grid.Row="2"  Height="26" Margin="0,2" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" Width="194" IsReadOnly="True" TextChanged="txt_C1Value_TextChanged"></TextBox>
-                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="2" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="2" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂e/kg</Label>
 
                 </Grid>
             </GroupBox>
@@ -112,7 +112,7 @@
                     
                     <Label Grid.Column="1" Grid.Row="2" Margin="0,1,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Default Value:</Label>
                     <TextBox Name="txt_C2Value"  Grid.Column="2" Grid.Row="2"  Height="26" Margin="0,2" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" Width="185" TextChanged="txt_C2Value_TextChanged"></TextBox>
-                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="2" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="2" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂e/kg</Label>
   
 
                 </Grid>
@@ -136,7 +136,7 @@
 
                     <Label Grid.Column="1" Grid.Row="1" Margin="0,1,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">Default Value:</Label>
                     <TextBox Name="txt_C3Value"  Grid.Column="2" Grid.Row="1"  Height="28" Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" Width="185" TextChanged="txt_C3Value_TextChanged"></TextBox>
-                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+                    <Label Grid.Column="2" Margin="195,1,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂e/kg</Label>
 
                 </Grid>
             </GroupBox>
@@ -170,20 +170,20 @@
                     <TextBox Name="txt_landfillP" Grid.Column="2" Grid.Row="2" Margin="0,1,0,0" Height="26" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_landfillP_TextChanged"></TextBox>
                     <Label Grid.Column="2" Margin="50,1,0,0" Grid.Row="2" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">% of</Label>
                     <TextBox Name="txt_landfillValue" Grid.Column="2" Grid.Row="2" Margin="85,1,0,0" Height="26" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_landfillValue_TextChanged" ></TextBox>
-                    <Label Grid.Column="2" Margin="190,1,0,0" Grid.Row="2" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+                    <Label Grid.Column="2" Margin="190,1,0,0" Grid.Row="2" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂e/kg</Label>
 
                     <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="3" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">% Incinerator:</Label>
                     <TextBox Name="txt_incineratedP" Grid.Column="2" Grid.Row="3" Margin="0,1,0,0" Height="26" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False"  TextChanged="txt_incineratedP_TextChanged"></TextBox>
                     <Label Grid.Column="2" Margin="50,1,0,0" Grid.Row="3" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">% of</Label>
                     <TextBox Name="txt_incineratedValue" Grid.Column="2" Grid.Row="3" Margin="85,1,0,0" Height="26" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_incineratedValue_TextChanged"></TextBox>
-                    <Label Grid.Column="2" Margin="190,1,0,0" Grid.Row="3" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+                    <Label Grid.Column="2" Margin="190,1,0,0" Grid.Row="3" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂e/kg</Label>
 
 
                     <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="4" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">% Reused:</Label>
                     <TextBox Name="txt_reusedP" Grid.Column="2" Grid.Row="4" Margin="0,1,0,0" Height="26" Width="50" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" IsEnabled="True" TextChanged="txt_reusedP_TextChanged"></TextBox>
                     <Label Grid.Column="2" Margin="50,1,0,0" Grid.Row="4" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">% of</Label>
                     <TextBox Name="txt_reusedValue" Grid.Column="2" Grid.Row="4" Margin="85,1,0,0" Height="26" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False"  TextChanged="txt_reusedValue_TextChanged"></TextBox>
-                    <Label Grid.Column="2" Margin="190,1,0,0" Grid.Row="4" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+                    <Label Grid.Column="2" Margin="190,1,0,0" Grid.Row="4" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂e/kg</Label>
 
                     <Label Name="lbl_CheckPercent" Grid.Column="1" Margin="0,1,0,0" Grid.Row="6" Grid.ColumnSpan="2" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2"></Label>
 
@@ -211,7 +211,7 @@
 
                     <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Value:</Label>
                     <TextBox Name="txt_additional" Grid.Column="2" Grid.Row="1" Margin="0,1,0,0" Height="28" Width="185" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_additional_TextChanged"/>
-                    <Label Grid.Column="2" Margin="190,1,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2e/kg</Label>
+                    <Label Grid.Column="2" Margin="190,1,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂e/kg</Label>
 
                 </Grid>
             </GroupBox>
@@ -241,7 +241,7 @@
 
                 <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="3"  Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Value per kg:</Label>
                 <TextBox Name="txt_Value" Grid.Column="2" Grid.Row="3" Margin="5,0,0,0"  Height="28" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"></TextBox>
-                <Label Grid.Column="2" Margin="170,0,0,0" Grid.Row="3"  Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2/kg</Label>
+                <Label Grid.Column="2" Margin="170,0,0,0" Grid.Row="3"  Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
             </Grid>
         </GroupBox>
         <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="btn_Calculate_Click" HorizontalContentAlignment="Center">Calculate</Button>

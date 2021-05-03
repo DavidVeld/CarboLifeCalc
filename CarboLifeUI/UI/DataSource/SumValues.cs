@@ -37,12 +37,12 @@ namespace CarboLifeUI.UI
                         totalPC += gr.PerCent;
                     }
                 }
-                //Total: {0} tCo2
+                //Total: {0} tCO₂
 
                 string totECstr = Math.Round(totalEC, 4).ToString();
                 string totPerCstr = Math.Round(totalPC, 2).ToString();
 
-                result = totECstr + " tCo2 / " + totPerCstr + " % ";
+                result = totECstr + " tCO₂ / " + totPerCstr + " % ";
 
             }
             catch (Exception ex)

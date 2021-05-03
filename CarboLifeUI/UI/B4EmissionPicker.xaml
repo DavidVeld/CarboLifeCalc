@@ -35,7 +35,7 @@
 
         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Replace emissions [B4]</Label>
 
-        <TextBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" AcceptsReturn="True" IsReadOnly="True" Height="41" TextWrapping="Wrap">
+        <TextBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" AcceptsReturn="True" IsReadOnly="True" Height="41" TextWrapping="Wrap" Width="642">
             The B4 value will multiply the entire Group's A1-C4 emissions by that factor.</TextBox>
 
         <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="3" Header="[B4] Replace emissions" Style="{StaticResource baseStyleBold}">

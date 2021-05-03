@@ -41,7 +41,7 @@ namespace CarboLifeAPI.Data
                 //double conversion = 1;
 
                 calcResult += "A5 calculation to be implemented " + System.Environment.NewLine;
-                calcResult += "Set Value by user as: " + value + "kgCo2/kg" + System.Environment.NewLine; 
+                calcResult += "Set Value by user as: " + value + "kgCO₂/kg" + System.Environment.NewLine; 
 
                 this.calcResult = calcResult;
             }

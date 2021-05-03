@@ -121,10 +121,10 @@ namespace CarboLifeAPI.Data
             //C1 Global
             demoArea = 0;
             C1Global = 0;
-            C1Factor = 3.40; // kg CO2 per m2
+            C1Factor = 3.40; // kg CO₂ per m2
             //A5 Global
             A5Global = 0;
-            A5Factor = 1400; //kg CO2 per vaue
+            A5Factor = 1400; //kg CO₂ per vaue
             //Social
             SocialCost = 50;
             //Other
@@ -631,7 +631,7 @@ namespace CarboLifeAPI.Data
         /// A1-A3, A4, A5 (Material), A5(Global), B1-B7, C1-C4, C1(Global), D, Additional)
         /// These are net values(based on the corrected converted Total Volume
         /// </summary>
-        /// <returns>Returns a list of the project totals (9 items) in kgCO2</returns>
+        /// <returns>Returns a list of the project totals (9 items) in kgCO₂</returns>
         public List<CarboDataPoint> getPhaseTotals()
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
@@ -777,9 +777,9 @@ namespace CarboLifeAPI.Data
             double totalTotal = totalMaterials + globalA5 + globalC1;
 
             if (materials == true)
-                result += "Total material specific: " + Math.Round(totalMaterials, 2) + " tCO2e " + Environment.NewLine;
+                result += "Total material specific: " + Math.Round(totalMaterials, 2) + " tCO₂e " + Environment.NewLine;
             if (globals == true)
-                result += "Total global project specific (A5): " + Math.Round(globalA5, 2) + " tCO2e" + Environment.NewLine;
+                result += "Total global project specific (A5): " + Math.Round(globalA5, 2) + " tCO₂e" + Environment.NewLine;
             
             if(globalA5 == 0)
                 result += "(No project values to calculate A5 emissions )" + Environment.NewLine;
@@ -788,21 +788,21 @@ namespace CarboLifeAPI.Data
                 result += "(No demolition estimation in project )" + Environment.NewLine;
             else
             {
-                //result += "Total, global demolition value (C1): " + Math.Round(demoArea, 2) + " m² x " +  Math.Round(C1Factor, 2) + " kgCO2e/m² / 1000 = " + Math.Round(globalC1, 2) + " tCO2e"  + Environment.NewLine;
-                result += "Total global demolition value (C1): " + Math.Round(globalC1, 2) + " tCO2e" + Environment.NewLine;
+                //result += "Total, global demolition value (C1): " + Math.Round(demoArea, 2) + " m² x " +  Math.Round(C1Factor, 2) + " kgCO₂e/m² / 1000 = " + Math.Round(globalC1, 2) + " tCO₂e"  + Environment.NewLine;
+                result += "Total global demolition value (C1): " + Math.Round(globalC1, 2) + " tCO₂e" + Environment.NewLine;
 
             }
             result += Environment.NewLine;
             //Totals:
-            result += "Total CO2e = " + "Total materials" + " + A5 Global " + " + C1 Global " + Environment.NewLine;
+            result += "Total CO₂e = " + "Total materials" + " + A5 Global " + " + C1 Global " + Environment.NewLine;
 
-            result += "Total CO2e = " + Math.Round(totalMaterials, 2) + " + " + Math.Round(globalA5, 2) + " + " + Math.Round(globalC1, 2) + Environment.NewLine;
+            result += "Total CO₂e = " + Math.Round(totalMaterials, 2) + " + " + Math.Round(globalA5, 2) + " + " + Math.Round(globalC1, 2) + Environment.NewLine;
 
 
-            result += "Total CO2e = " + Math.Round(totalTotal, 2) + " tCO2e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine + Environment.NewLine;
+            result += "Total CO₂e = " + Math.Round(totalTotal, 2) + " tCO₂e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine + Environment.NewLine;
             if (Area > 0)
             {
-                result += "OR " + Math.Round(totalTotal / Area, 3) + " tCO2e/m² (Metric tons of carbon dioxide equivalent per square meter)" + Environment.NewLine;
+                result += "OR " + Math.Round(totalTotal / Area, 3) + " tCO₂e/m² (Metric tons of carbon dioxide equivalent per square meter)" + Environment.NewLine;
             }
 
             result += Environment.NewLine;
@@ -844,7 +844,7 @@ namespace CarboLifeAPI.Data
             setElementotals();
 
             //Set A5 based on value;
-            //1.400tCO2e/£100k
+            //1.400tCO₂e/£100k
             A5Global = (A5Factor * (Value / 100000)) / 1000;
             
             C1Global = (demoArea * C1Factor) / 1000;

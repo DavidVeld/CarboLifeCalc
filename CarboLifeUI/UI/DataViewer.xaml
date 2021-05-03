@@ -187,7 +187,7 @@
                 <!--Waste Correction -->
                 <DataGridTextColumn x:Name="column_Waste" MinWidth="100" Header="Waste  &#x0a; [%] " Binding="{Binding Path=Waste, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
                 <!--Additional Correction -->
-                <DataGridTextColumn x:Name="column_Addition" MinWidth="100" Header="Additional &#x0a;[kgCo2e/kg] " Binding="{Binding Path=Additional, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
+                <DataGridTextColumn x:Name="column_Addition" MinWidth="100" Header="Additional &#x0a;[kgCO₂e/kg] " Binding="{Binding Path=Additional, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
                 <!--Additional Correction -->
                 <DataGridTextColumn x:Name="column_B4" MinWidth="100" Header="Group [B4] &#x0a;[x build] " Binding="{Binding Path=B4Factor, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
 
@@ -223,8 +223,8 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!--CO2 Intensity-->
-                <DataGridTemplateColumn Header="CO2 Intensity &#x0a;[kgCo2e/kg]" Width="100" MinWidth="100"  IsReadOnly="True">
+                <!--CO₂ Intensity-->
+                <DataGridTemplateColumn Header="CO₂ Intensity &#x0a;[kgCO₂e/kg]" Width="100" MinWidth="100"  IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=ECI, Mode=OneWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray"/>
@@ -232,8 +232,8 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!--CO2 Total-->
-                <DataGridTemplateColumn Header="Total &#x0a;[tCo2e]" Width="100" MinWidth="100"  IsReadOnly="True">
+                <!--CO₂ Total-->
+                <DataGridTemplateColumn Header="Total &#x0a;[tCO₂e]" Width="100" MinWidth="100"  IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=EC, Mode=OneWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray" FontWeight="DemiBold"/>
@@ -257,7 +257,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Name="lbl_Total" Grid.Row="4" Grid.Column="1" Background="Transparent">TOTAL: xxx tCo2 (Recalculate to refresh)</Label>
+        <Label Name="lbl_Total" Grid.Row="4" Grid.Column="1" Background="Transparent">TOTAL: xxx tCO₂ (Recalculate to refresh)</Label>
 
 
         <Menu Grid.Row="5" Grid.Column="1" Background="Transparent" >

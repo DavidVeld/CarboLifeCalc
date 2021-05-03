@@ -135,34 +135,34 @@ namespace CarboLifeAPI
                     xlWorkSheet.Cells[row + 1, col + 5] = "kg";
 
                     xlWorkSheet.Cells[row, col + 6] = "ECI";
-                    xlWorkSheet.Cells[row + 1, col + 6] = "kgCO2e/kg";
+                    xlWorkSheet.Cells[row + 1, col + 6] = "kgCO₂e/kg";
 
                     xlWorkSheet.Cells[row, col + 7] = "EC";
-                    xlWorkSheet.Cells[row + 1, col + 7] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 7] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 8] = "Total";
                     xlWorkSheet.Cells[row + 1, col + 8] = "%";
 
                     xlWorkSheet.Cells[row, col + 9] = "A1-A3";
-                    xlWorkSheet.Cells[row + 1, col + 9] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 9] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 10] = "A4";
-                    xlWorkSheet.Cells[row + 1, col + 10] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 10] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 11] = "A5";
-                    xlWorkSheet.Cells[row + 1, col + 11] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 11] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 12] = "B1-B5";
-                    xlWorkSheet.Cells[row + 1, col + 12] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 12] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 13] = "C1-C4";
-                    xlWorkSheet.Cells[row + 1, col + 13] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 13] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 14] = "D";
-                    xlWorkSheet.Cells[row + 1, col + 14] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 14] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 15] = "Mix";
-                    xlWorkSheet.Cells[row + 1, col + 15] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 15] = "tCO₂e";
 
                     //Advanced
                     xlWorkSheet.Cells[row, col + 16] = "[Formula]";
@@ -175,7 +175,7 @@ namespace CarboLifeAPI
                     xlWorkSheet.Cells[row + 1, col + 18] = "x";
 
                     xlWorkSheet.Cells[row, col + 19] = "[Additional]";
-                    xlWorkSheet.Cells[row + 1, col + 19] = "kgCO2e/kg";
+                    xlWorkSheet.Cells[row + 1, col + 19] = "kgCO₂e/kg";
 
                     xlWorkSheet.Cells[row, col + 20] = "Base Volume";
                     xlWorkSheet.Cells[row + 1, col + 20] = "m³";
@@ -282,16 +282,16 @@ namespace CarboLifeAPI
                     xlWorkSheet2.Cells[row + 1, col + 10] = "";
 
                     xlWorkSheet2.Cells[row, col + 11] = "ECI";
-                    xlWorkSheet2.Cells[row + 1, col + 11] = "kgCO2e/kg";
+                    xlWorkSheet2.Cells[row + 1, col + 11] = "kgCO₂e/kg";
 
                     xlWorkSheet2.Cells[row, col + 12] = "EC";
-                    xlWorkSheet2.Cells[row + 1, col + 12] = "kgCO2e";
+                    xlWorkSheet2.Cells[row + 1, col + 12] = "kgCO₂e";
 
                     xlWorkSheet2.Cells[row, col + 13] = "ECI Cumulative";
-                    xlWorkSheet2.Cells[row + 1, col + 13] = "kgCO2e/kg";
+                    xlWorkSheet2.Cells[row + 1, col + 13] = "kgCO₂e/kg";
 
                     xlWorkSheet2.Cells[row, col + 14] = "EC Cumulative";
-                    xlWorkSheet2.Cells[row + 1, col + 14] = "kgCO2e";
+                    xlWorkSheet2.Cells[row + 1, col + 14] = "kgCO₂e";
 
                     xlWorkSheet2.Cells[row, col + 15] = "Volume Cumulative";
                     xlWorkSheet2.Cells[row + 1, col + 15] = "m³";
@@ -364,31 +364,31 @@ namespace CarboLifeAPI
                     xlWorkSheet3.Cells[row + 1, col + 4] = "kg/m³";
 
                     xlWorkSheet3.Cells[row, col + 5] = "ECI";
-                    xlWorkSheet3.Cells[row + 1, col + 5] = "kgCO2e/kg";
+                    xlWorkSheet3.Cells[row + 1, col + 5] = "kgCO₂e/kg";
 
                     xlWorkSheet3.Cells[row, col + 6] = "ECI Volume";
-                    xlWorkSheet3.Cells[row + 1, col + 6] = "kgCO2e/n³";
+                    xlWorkSheet3.Cells[row + 1, col + 6] = "kgCO₂e/n³";
 
                     xlWorkSheet3.Cells[row, col + 7] = "A1-A3";
-                    xlWorkSheet3.Cells[row + 1, col + 7] = "kgCO2e/kg";
+                    xlWorkSheet3.Cells[row + 1, col + 7] = "kgCO₂e/kg";
 
                     xlWorkSheet3.Cells[row, col + 8] = "A4";
-                    xlWorkSheet3.Cells[row + 1, col + 8] = "kgCO2e/kg";
+                    xlWorkSheet3.Cells[row + 1, col + 8] = "kgCO₂e/kg";
 
                     xlWorkSheet3.Cells[row, col + 9] = "A5";
-                    xlWorkSheet3.Cells[row + 1, col + 9] = "kgCO2e/kg";
+                    xlWorkSheet3.Cells[row + 1, col + 9] = "kgCO₂e/kg";
 
                     xlWorkSheet3.Cells[row, col + 10] = "B1-B7";
-                    xlWorkSheet3.Cells[row + 1, col + 10] = "kgCO2e/kg";
+                    xlWorkSheet3.Cells[row + 1, col + 10] = "kgCO₂e/kg";
 
                     xlWorkSheet3.Cells[row, col + 11] = "C1-C4";
-                    xlWorkSheet3.Cells[row + 1, col + 11] = "kgCO2e/kg";
+                    xlWorkSheet3.Cells[row + 1, col + 11] = "kgCO₂e/kg";
 
                     xlWorkSheet3.Cells[row, col + 12] = "D";
-                    xlWorkSheet3.Cells[row + 1, col + 12] = "kgCO2e/kg";
+                    xlWorkSheet3.Cells[row + 1, col + 12] = "kgCO₂e/kg";
 
                     xlWorkSheet3.Cells[row, col + 13] = "Mix";
-                    xlWorkSheet3.Cells[row + 1, col + 13] = "kgCO2e/kg";
+                    xlWorkSheet3.Cells[row + 1, col + 13] = "kgCO₂e/kg";
 
                     xlWorkSheet3.Cells[row, col + 14] = "B4";
                     xlWorkSheet3.Cells[row + 1, col + 14] = "factor";
@@ -507,34 +507,34 @@ namespace CarboLifeAPI
                     xlWorkSheet.Cells[row + 1, col + 1] = "";
 
                     xlWorkSheet.Cells[row, col + 2] = "Total EC";
-                    xlWorkSheet.Cells[row + 1, col + 2] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 2] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 3] = "A1-A3";
-                    xlWorkSheet.Cells[row + 1, col + 3] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 3] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 4] = "A4";
-                    xlWorkSheet.Cells[row + 1, col + 4] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 4] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 5] = "A5 (Material)";
-                    xlWorkSheet.Cells[row + 1, col + 5] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 5] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 6] = "A5 (Global)";
-                    xlWorkSheet.Cells[row + 1, col + 6] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 6] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 7] = "B1-B7";
-                    xlWorkSheet.Cells[row + 1, col + 7] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 7] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 8] = "C1-C4";
-                    xlWorkSheet.Cells[row + 1, col + 8] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 8] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 9] = "C1 (Global)";
-                    xlWorkSheet.Cells[row + 1, col + 9] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 9] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 10] = "D";
-                    xlWorkSheet.Cells[row + 1, col + 10] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 10] = "tCO₂e";
 
                     xlWorkSheet.Cells[row, col + 11] = "Additional";
-                    xlWorkSheet.Cells[row + 1, col + 11] = "tCO2e";
+                    xlWorkSheet.Cells[row + 1, col + 11] = "tCO₂e";
 
                     //Advanced
 

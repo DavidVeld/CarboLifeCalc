@@ -95,13 +95,13 @@
                 <Label Name="lbl_Current" Grid.Column="1" Margin="0,10,0,0" Grid.Row="1" Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Name Current Material</Label>
                 <Label Grid.Column="1" Margin="0,3,163,0" Grid.Row="2" Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Embodied Carbon current:</Label>
                 <TextBox Name="txt_CurrentValue" Grid.Column="1" Grid.Row="2" Margin="170,4,0,0" Height="25" VerticalContentAlignment="Center" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" Background="White" Foreground="Brown"  IsReadOnly="True"/>
-                <Label Grid.Column="1" Margin="230,3,0,0" Grid.Row="2" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Grid.RowSpan="2" Grid.ColumnSpan="2">kgCO2/kg</Label>
+                <Label Grid.Column="1" Margin="230,3,0,0" Grid.Row="2" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Grid.RowSpan="2" Grid.ColumnSpan="2">kgCO₂/kg</Label>
 
                 <Label Name="lbl_Selectedname" Grid.Column="1" Margin="0,9,0,0" Grid.Row="3" Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Name Current Material</Label>
 
                 <Label Grid.Column="1" Margin="0,5,163,0" Grid.Row="4" Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Embodied Carbon selected:</Label>
                 <TextBox Name="txt_SelectedValue" Grid.Column="1" Grid.Row="4" Margin="170,3,0,0" Height="28" Width="60" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True" Foreground="Brown" Background="White" Grid.RowSpan="2"/>
-                <Label Grid.Column="1" Margin="230,3,0,0" Grid.Row="4" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Grid.RowSpan="2">kgCO2/kg</Label>
+                <Label Grid.Column="1" Margin="230,3,0,0" Grid.Row="4" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Grid.RowSpan="2">kgCO₂/kg</Label>
 
                 <lvc:CartesianChart Name="barchart" Grid.Column="1" Margin="0,3,0,0" Grid.Row="5" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
                     <lvc:CartesianChart.AxisX>

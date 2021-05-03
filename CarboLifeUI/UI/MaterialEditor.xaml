@@ -128,7 +128,7 @@
 
                 <Label  Grid.ColumnSpan="2"  Grid.Row="1" Grid.Column="2" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Description</Label>
                 <Label  Grid.ColumnSpan="2"  Grid.Row="1" Grid.Column="4" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Override</Label>
-                <Label  Grid.ColumnSpan="2"  Grid.Row="1" Grid.Column="3" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Value |kgCo2/kg|</Label>
+                <Label  Grid.ColumnSpan="2"  Grid.Row="1" Grid.Column="3" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Value |kgCO₂/kg|</Label>
 
 
                 <Label  Grid.Row="2" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Production [A1-A3]:</Label>
@@ -189,7 +189,7 @@
                             <ColumnDefinition Width="35"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Total kgCo2 per kg:</Label>
+                        <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Total kgCO₂ per kg:</Label>
                         <CheckBox x:Name="chx_Total_Manual" Grid.Row="8" Grid.Column="3" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" IsEnabled="False" Visibility="Hidden" ></CheckBox>
                         <TextBox Name="txt_ECI" Grid.Column="2" Grid.Row="8"  Height="27" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>
                     </Grid>

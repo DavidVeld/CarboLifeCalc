@@ -80,7 +80,7 @@ namespace CarboLifeUI.UI
 
 
                     TextBlock tb = new TextBlock();
-                    tb.Text = pcp.Name + " - " + Math.Round(pcp.Value / 1000,2) + " tCo2 = " + Math.Round(valuePerCent,2) + " %";
+                    tb.Text = pcp.Name + " - " + Math.Round(pcp.Value / 1000,2) + " tCO₂ = " + Math.Round(valuePerCent,2) + " %";
 
                     tb.Foreground = Brushes.Black;
                     tb.TextWrapping = TextWrapping.WrapWithOverflow;
@@ -99,7 +99,7 @@ namespace CarboLifeUI.UI
                 //Write The max values
 
                 TextBlock tbtotal = new TextBlock();
-                tbtotal.Text = "Total: " + " - " + Math.Round(total / 1000,2) + " tCo2 = " + "100.00" + " %";
+                tbtotal.Text = "Total: " + " - " + Math.Round(total / 1000,2) + " tCO₂ = " + "100.00" + " %";
 
                 tbtotal.Foreground = Brushes.Black;
                 tbtotal.TextWrapping = TextWrapping.WrapWithOverflow;

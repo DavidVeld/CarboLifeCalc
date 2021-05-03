@@ -61,7 +61,7 @@
 
                 <Label Grid.Column="1" Margin="0,1,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Emissions:</Label>
                 <TextBox Name="txt_B1Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B1Value_TextChanged"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCo2/kg</Label>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
 
             </Grid>
         </GroupBox>
@@ -82,7 +82,7 @@
 
                 <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Emissions:</Label>
                 <TextBox Name="txt_B2Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B2Value_TextChanged"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
             </Grid>
         </GroupBox>
 
@@ -101,7 +101,7 @@
 
                 <Label Grid.Column="1" Margin="0,1,300,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Emissions:</Label>
                 <TextBox Name="txt_B3Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B3Value_TextChanged"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
             </Grid>
         </GroupBox>
 
@@ -155,7 +155,7 @@
 
                 <Label Grid.Column="1" Margin="0,1,505,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Emissions:</Label>
                 <TextBox Name="txt_B5Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="70" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B5Value_TextChanged"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
             </Grid>
         </GroupBox>
 
@@ -174,7 +174,7 @@
 
                 <Label Grid.Column="1" Margin="0,1,475,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Component Lifespan:</Label>
                 <TextBox Name="txt_B6Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B6Value_TextChanged"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
 
             </Grid>
         </GroupBox>
@@ -194,7 +194,7 @@
 
                 <Label Grid.Column="1" Margin="0,1,475,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Component Lifespan:</Label>
                 <TextBox Name="txt_B7Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B7Value_TextChanged"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO2/kg</Label>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
 
             </Grid>
         </GroupBox>

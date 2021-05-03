@@ -243,7 +243,7 @@ namespace CarboLifeUI.UI
 
             Labels = new[] { "Current", "Selected" };
 
-            Func<double, string> Formatter = value => value + " kgCO2/kg";
+            Func<double, string> Formatter = value => value + " kgCO₂/kg";
             DataContext = this;
 
             barchart.Series = compareBar;

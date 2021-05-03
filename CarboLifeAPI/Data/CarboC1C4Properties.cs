@@ -90,14 +90,14 @@ namespace CarboLifeAPI.Data
 
             try
             {
-                calcResult += "This calculation create a CO2 per kg value based on the given parameters." + System.Environment.NewLine + System.Environment.NewLine;
+                calcResult += "This calculation create a CO₂ per kg value based on the given parameters." + System.Environment.NewLine + System.Environment.NewLine;
                 calcResult += System.Environment.NewLine;
 
                 if (c1Value != 0)
                 {
                     calcResult += "[C1] Demolition carbon cost: " + System.Environment.NewLine;
                    // calcResult += System.Environment.NewLine;
-                    calcResult += c1BaseValue + "kgCo2e/m2  x " + c1density + "kg/m2 = " + c4incResult + " kgCO2/kg " + System.Environment.NewLine;
+                    calcResult += c1BaseValue + "kgCO₂e/m2  x " + c1density + "kg/m2 = " + c4incResult + " kgCO₂/kg " + System.Environment.NewLine;
                     calcResult += System.Environment.NewLine;
                 }
 
@@ -106,7 +106,7 @@ namespace CarboLifeAPI.Data
                 {
                     calcResult += "[C2] Transport carbon cost: " + System.Environment.NewLine;
                     //calcResult += System.Environment.NewLine;
-                    calcResult += c2Value + " kgCo2e/m2 " + System.Environment.NewLine;
+                    calcResult += c2Value + " kgCO₂e/m2 " + System.Environment.NewLine;
                     calcResult += System.Environment.NewLine;
                 }
 
@@ -114,7 +114,7 @@ namespace CarboLifeAPI.Data
                 {
                     calcResult += "[C3]  Waste Processing carbon costs: " + System.Environment.NewLine;
                     //calcResult += System.Environment.NewLine;
-                    calcResult += "Waste Processing cost are set as: " + c3Value + " kgCO2/kg " + System.Environment.NewLine;
+                    calcResult += "Waste Processing cost are set as: " + c3Value + " kgCO₂/kg " + System.Environment.NewLine;
                     calcResult += System.Environment.NewLine;
                 }
 
@@ -122,18 +122,18 @@ namespace CarboLifeAPI.Data
                 {
                     calcResult += "[C4] Disposal carbon costs: " + System.Environment.NewLine;
                     //calcResult += System.Environment.NewLine;
-                    calcResult += "[C4] Incinerator costs is: " + c4incfV + " x " + c4incfP + " % = " + c4incResult + " kgCO2/kg " + System.Environment.NewLine;
-                    calcResult += "[C4] Landfill costs is: " + c4landfV + " x " + c4landfP + " % = " + c4lanfResult + " kgCO2/kg " + System.Environment.NewLine;
-                    calcResult += "[C4] Re-use costs is: " + c4reUseV + " x " + c4reUseP + " % = " + c4reUseResult + " kgCO2/kg " + System.Environment.NewLine;
+                    calcResult += "[C4] Incinerator costs is: " + c4incfV + " x " + c4incfP + " % = " + c4incResult + " kgCO₂/kg " + System.Environment.NewLine;
+                    calcResult += "[C4] Landfill costs is: " + c4landfV + " x " + c4landfP + " % = " + c4lanfResult + " kgCO₂/kg " + System.Environment.NewLine;
+                    calcResult += "[C4] Re-use costs is: " + c4reUseV + " x " + c4reUseP + " % = " + c4reUseResult + " kgCO₂/kg " + System.Environment.NewLine;
                     calcResult += System.Environment.NewLine;
-                    calcResult += "[C4] total cost is: " + c4incResult + " + " + c4lanfResult + " + " + c4reUseResult + " = " + c4value + " kgCO2/kg " + System.Environment.NewLine;
+                    calcResult += "[C4] total cost is: " + c4incResult + " + " + c4lanfResult + " + " + c4reUseResult + " = " + c4value + " kgCO₂/kg " + System.Environment.NewLine;
 
                     calcResult += System.Environment.NewLine;
                 }
 
                 if (c3Value != 0)
                 {
-                    calcResult += "Additional costs are (please specify in descrition otherwise leave as 0): " + other + " kgCO2/kg " + System.Environment.NewLine;
+                    calcResult += "Additional costs are (please specify in descrition otherwise leave as 0): " + other + " kgCO₂/kg " + System.Environment.NewLine;
                     calcResult += System.Environment.NewLine;
                 }
 
@@ -141,7 +141,7 @@ namespace CarboLifeAPI.Data
                 calcResult += "Total costs are: " + "[C1]" + " + " + "[C2]" + " + " + "[C3]" + " + " + "[C4]" + " + " + "[Additional]" + System.Environment.NewLine;
 
                 calcResult += "Total costs are: " + c1Value + " + " + c2Value + " + " + c3Value + " + " + c4value + " + " + other + System.Environment.NewLine;
-                calcResult += "= " + costTotal + " kgCO2/kg " + System.Environment.NewLine;
+                calcResult += "= " + costTotal + " kgCO₂/kg " + System.Environment.NewLine;
                 
                 if(c1Value > 1 && c4value > 1)
                 {

@@ -43,37 +43,37 @@ namespace CarboLifeAPI.Data
         /// </summary>
         public double Density { get; set; }
         /// <summary>
-        /// Total ECI kgCO2e/kg
+        /// Total ECI kgCO₂e/kg
         /// </summary>
         public double ECI { get; set; }
 
         /// <summary>
-        /// Total ECI kgCO2e/m³
+        /// Total ECI kgCO₂e/m³
         /// </summary>
         public double getVolumeECI { get { return Density * ECI; } set { } }
 
         /// <summary>
-        /// Fabrication kgCO2e/kg
+        /// Fabrication kgCO₂e/kg
         /// </summary>
         public double ECI_A1A3 { get; set; }
         /// <summary>
-        /// Transport kgCO2e/kg
+        /// Transport kgCO₂e/kg
         /// </summary>
         public double ECI_A4 { get; set; }
         /// <summary>
-        /// Construction kgCO2e/kg
+        /// Construction kgCO₂e/kg
         /// </summary>
         public double ECI_A5 { get; set; }
         /// <summary>
-        /// Life kgCO2e/kg
+        /// Life kgCO₂e/kg
         /// </summary>
         public double ECI_B1B5 { get; set; }
         /// <summary>
-        /// End of Life kgCO2e/kg
+        /// End of Life kgCO₂e/kg
         /// </summary>
         public double ECI_C1C4 { get; set; }
         /// <summary>
-        /// SUPPLEMENTARY INFORMATION BEYOND THE PROJECT LIFE CYCLE kgCO2e/kg
+        /// SUPPLEMENTARY INFORMATION BEYOND THE PROJECT LIFE CYCLE kgCO₂e/kg
         /// </summary>
         public double ECI_D { get; set; }
         /// <summary>

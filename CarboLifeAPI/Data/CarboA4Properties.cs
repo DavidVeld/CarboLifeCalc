@@ -147,30 +147,30 @@ namespace CarboLifeAPI.Data
                 calcResult += "Vehicle Fuel Consumption" + System.Environment.NewLine;
 
                 calcResult += "The vehicle consumes: " + vehicleSettings.kmPer + " " + vehicleFuel.unit + "/km" + System.Environment.NewLine;
-                calcResult += "Carbon contents of " + vehicleFuel.name + " = " + vehicleFuel.emission + " CO2/" + vehicleFuel.unit + System.Environment.NewLine;
+                calcResult += "Carbon contents of " + vehicleFuel.name + " = " + vehicleFuel.emission + " CO₂/" + vehicleFuel.unit + System.Environment.NewLine;
                 // double emmissionPerkm = (vehicleFuel.emission * 1000) / vehicleSettings.kmPer;
 
-                calcResult += "We will therfore use: (" + vehicleFuel.emission + " CO2/" + vehicleFuel.unit + " x 1000) /" + vehicleSettings.kmPer + " km/" + vehicleFuel.unit + " = " + emmissionPerkm + " gCO2/km"  + System.Environment.NewLine;
+                calcResult += "We will therfore use: (" + vehicleFuel.emission + " CO₂/" + vehicleFuel.unit + " x 1000) /" + vehicleSettings.kmPer + " km/" + vehicleFuel.unit + " = " + emmissionPerkm + " gCO₂/km"  + System.Environment.NewLine;
 
-                calcResult += "To Produce one " + vehicleFuel.unit  + " of " + vehicleFuel.name + " you need: " + vehicleFuel.production + " CO2/" + vehicleFuel.unit + System.Environment.NewLine;
-                calcResult += "We will therfore use: (" + vehicleFuel.production + " CO2/" + vehicleFuel.unit + " x 1000) /" + vehicleSettings.kmPer + " km/" + vehicleFuel.unit + " = " + productionPerkm + " gCO2/km" + System.Environment.NewLine;
-                calcResult += emmissionPerkm + " + " + productionPerkm + " = " + totalFuelEmissionPerkm + " gCO2/km" + System.Environment.NewLine;
-                calcResult += totalFuelEmissionPerkm + " gCO2/km x " + totaldistance + " km = " + totalFuelEmission + " gCO2/trip" + System.Environment.NewLine;
-                calcResult += totalFuelEmission + " / " + "1000" + "  = " + totalFuelEmissionkg + " kgCO2/trip" + System.Environment.NewLine;
-                calcResult += totalFuelEmissionkg + " kgCO2/trip / " + loadPerTrip + " kg = " + totalFuelEmissionPerkg + " gCO2/kg" + System.Environment.NewLine;
+                calcResult += "To Produce one " + vehicleFuel.unit  + " of " + vehicleFuel.name + " you need: " + vehicleFuel.production + " CO₂/" + vehicleFuel.unit + System.Environment.NewLine;
+                calcResult += "We will therfore use: (" + vehicleFuel.production + " CO₂/" + vehicleFuel.unit + " x 1000) /" + vehicleSettings.kmPer + " km/" + vehicleFuel.unit + " = " + productionPerkm + " gCO₂/km" + System.Environment.NewLine;
+                calcResult += emmissionPerkm + " + " + productionPerkm + " = " + totalFuelEmissionPerkm + " gCO₂/km" + System.Environment.NewLine;
+                calcResult += totalFuelEmissionPerkm + " gCO₂/km x " + totaldistance + " km = " + totalFuelEmission + " gCO₂/trip" + System.Environment.NewLine;
+                calcResult += totalFuelEmission + " / " + "1000" + "  = " + totalFuelEmissionkg + " kgCO₂/trip" + System.Environment.NewLine;
+                calcResult += totalFuelEmissionkg + " kgCO₂/trip / " + loadPerTrip + " kg = " + totalFuelEmissionPerkg + " gCO₂/kg" + System.Environment.NewLine;
 
                 calcResult += System.Environment.NewLine;
                 calcResult += "Build cost" + System.Environment.NewLine;
                 calcResult += "Each vehicle needs to be build, and therfor its cabon costs need to be included" + System.Environment.NewLine;
-                calcResult += "Total carbon costs are estimated to be: " + totalBuildcost  + " kgCO2" + System.Environment.NewLine;
+                calcResult += "Total carbon costs are estimated to be: " + totalBuildcost  + " kgCO₂" + System.Environment.NewLine;
                 calcResult += "On average this vehicle will go for: " + totalBuildDistance + " km" + System.Environment.NewLine;
-                calcResult += "Per km: " + totalBuildcost + " / " + totalBuildDistance + " = " + buildCostperKm + " kgCO2/km" + System.Environment.NewLine;
-                calcResult += "Total emission per trip: " + buildCostperKm + " x " + totaldistance + " = " + buildCostTotal + " kgCO2/km" + System.Environment.NewLine;
-                calcResult += "Total emission per kg: " + buildCostTotal + " / " + loadPerTrip + " = " + buildCostperKg + " kgCO2/km" + System.Environment.NewLine;
+                calcResult += "Per km: " + totalBuildcost + " / " + totalBuildDistance + " = " + buildCostperKm + " kgCO₂/km" + System.Environment.NewLine;
+                calcResult += "Total emission per trip: " + buildCostperKm + " x " + totaldistance + " = " + buildCostTotal + " kgCO₂/km" + System.Environment.NewLine;
+                calcResult += "Total emission per kg: " + buildCostTotal + " / " + loadPerTrip + " = " + buildCostperKg + " kgCO₂/km" + System.Environment.NewLine;
 
                 calcResult += System.Environment.NewLine;
 
-                calcResult += "Total emission per kg: " + totalFuelEmissionkg + " / " + buildCostperKg + " = " + total + " kgCO2/kg" + System.Environment.NewLine;
+                calcResult += "Total emission per kg: " + totalFuelEmissionkg + " / " + buildCostperKg + " = " + total + " kgCO₂/kg" + System.Environment.NewLine;
 
                 this.value = total;
                 this.calcResult = calcResult;

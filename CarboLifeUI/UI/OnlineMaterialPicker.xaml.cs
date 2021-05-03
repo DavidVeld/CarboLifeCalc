@@ -40,9 +40,14 @@ namespace CarboLifeUI.UI
         {
             try
             {
+                ServicePointManager.Expect100Continue = true;
+                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
                 string url = "https://www.davidveld.nl/ping.php";
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+
                 request.UserAgent = @"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36";
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
