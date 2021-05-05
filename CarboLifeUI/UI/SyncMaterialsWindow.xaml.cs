@@ -265,6 +265,9 @@ namespace CarboLifeUI.UI
 
         private void btn_Delete_Click(object sender, RoutedEventArgs e)
         {
+                bool deletedSucces = false;
+            int count = 0;
+
             if (liv_TemplateMaterials.SelectedItems.Count == 1)
             {
                 try
@@ -273,24 +276,52 @@ namespace CarboLifeUI.UI
 
                     if (cm != null)
                     {
-                       // MessageBoxResult result = System.Windows.MessageBox.Show("Do you want to delete" + cm.Name, "Warning", MessageBoxButton.YesNo);
+                        deletedSucces = templateDatabase.deleteMaterial(cm.Name);
 
-                        //if (result == MessageBoxResult.Yes)
-                        //{
-                            templateDatabase.deleteMaterial(cm.Name);
-                        //}
+                        if (deletedSucces == true)
+                            count++;
                     }
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show(ex.ToString());
+                    System.Windows.MessageBox.Show(ex.ToString()); 
+                    deletedSucces = false;
                 }
             }
             else
             {
-                MessageBoxResult result = System.Windows.MessageBox.Show("Please select one material to delete", "Computer says no", MessageBoxButton.YesNo);
+                for(int i = liv_TemplateMaterials.SelectedItems.Count; i > 0; i--)
+                {
+                    try
+                    {
+                        CarboMaterial cm = liv_TemplateMaterials.SelectedItems[i-1] as CarboMaterial;
+                        deletedSucces = templateDatabase.deleteMaterial(cm.Name);
+
+                        if (deletedSucces == true)
+                            count++;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show(ex.ToString());
+                        deletedSucces = false;
+                    }
+                }
+
+
+               // MessageBoxResult result = System.Windows.MessageBox.Show("Please select one material to delete", "Computer says no", MessageBoxButton.YesNo);
             }
-            //SaveFileDialog();
+            if (count == 1)
+            {
+                System.Windows.MessageBox.Show(count + " element deleted.", "Success", MessageBoxButton.OK);
+            }
+            else if(count > 1)
+            {
+                System.Windows.MessageBox.Show(count + " elements deleted.", "Success", MessageBoxButton.OK);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show(0 + "elements deleted.", "Not a success", MessageBoxButton.OK);
+            }
 
             refreshTemplateMaterials();
             refreshProjectMaterials();

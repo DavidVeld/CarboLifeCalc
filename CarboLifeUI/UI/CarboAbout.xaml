@@ -43,14 +43,19 @@
         <Label Grid.Column="3" Grid.Row="2" Width="362" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,45,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Embodied Carbon Calculator to EN 15978:2011</Label>
         <Label Grid.Column="3" Grid.Row="2" Width="325" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="242,20,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light" Grid.ColumnSpan="2">Build: V 0.90</Label>
 
-        <TextBlock Grid.Column="3" Grid.Row="2" Width="527" Height="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,75,0,0">
+        <TextBlock Grid.Column="3" Grid.Row="2" Width="527" Height="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,70,0,0">Help and updates:
             <Hyperlink NavigateUri="https://github.com/DavidVeld/CarboLifeCalc"  RequestNavigate="Hyperlink_RequestNavigate" FontFamily="Segoe UI" FontSize="12">
         https://github.com/DavidVeld/CarboLifeCalc
         </Hyperlink>
         </TextBlock>
-        <Label Grid.Column="3" Grid.Row="2" Width="325" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,93,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Author: David In't Veld</Label>
+        <TextBlock Grid.Column="3" Grid.Row="2" Width="527" Height="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,110,0,0">Contact: 
+            <Hyperlink NavigateUri="https://davidveld.nl/carbocalc.php"  RequestNavigate="Hyperlink_RequestNavigate" FontFamily="Segoe UI" FontSize="12">
+        https://davidveld.nl/carbocalc
+        </Hyperlink>
+        </TextBlock>
+        <Label Grid.Column="3" Grid.Row="2" Width="325" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,87,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Author: David In't Veld</Label>
         
-        <Label Grid.Column="3" Grid.Row="2" Width="325" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,128,0,0" FontFamily="Segoe UI" FontSize="15" Foreground="#000" FontWeight="DemiBold">Resources:</Label>
+        <Label Grid.Column="3" Grid.Row="2" Width="325" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,132,0,0" FontFamily="Segoe UI" FontSize="15" Foreground="#000" FontWeight="DemiBold">Resources:</Label>
 
 
         <TextBlock Grid.Column="3" Grid.Row="2" Width="268" Height="19" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,160,0,0" FontFamily="Segoe UI" FontSize="14">ICE Data:

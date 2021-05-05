@@ -864,41 +864,44 @@ namespace CarboLifeUI.UI
 
         private void btn_FromEPD_Click(object sender, RoutedEventArgs e)
         {
-            MaterialMyEPD epdForm = new MaterialMyEPD(selectedMaterial.Density, txt_EPDLink.Text);
-            epdForm.ShowDialog();
-            if (epdForm.isAccepted == true)
+            if (selectedMaterial != null)
             {
-                MessageBoxResult result = MessageBox.Show("Do you want to update values based in EPD input? " + Environment.NewLine + "This will override your current settings", "Warning", MessageBoxButton.OKCancel);
-                if(result == MessageBoxResult.OK)
+                MaterialMyEPD epdForm = new MaterialMyEPD(selectedMaterial.Density, txt_EPDLink.Text);
+                epdForm.ShowDialog();
+                if (epdForm.isAccepted == true)
                 {
-                    double A1A3 = epdForm.getA1A3();
-                    double A4 = epdForm.kgA4;
-                    double A5 = epdForm.kgA5;
-                    double B17 = epdForm.kgB17;
-                    double C14 = epdForm.getC14();
-                    double D = epdForm.kgD;
+                    MessageBoxResult result = MessageBox.Show("Do you want to update values based in EPD input? " + Environment.NewLine + "This will override your current settings", "Warning", MessageBoxButton.OKCancel);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        double A1A3 = epdForm.getA1A3();
+                        double A4 = epdForm.kgA4;
+                        double A5 = epdForm.kgA5;
+                        double B17 = epdForm.kgB17;
+                        double C14 = epdForm.getC14();
+                        double D = epdForm.kgD;
 
-                    //Override the material properties
-                    selectedMaterial.ECI_A1A3_Override = true;
-                    selectedMaterial.ECI_A4_Override = true;
-                    selectedMaterial.ECI_A5_Override = true;
-                    selectedMaterial.ECI_B1B5_Override = true;
-                    selectedMaterial.ECI_C1C4_Override = true;
-                    selectedMaterial.ECI_D_Override = true;
+                        //Override the material properties
+                        selectedMaterial.ECI_A1A3_Override = true;
+                        selectedMaterial.ECI_A4_Override = true;
+                        selectedMaterial.ECI_A5_Override = true;
+                        selectedMaterial.ECI_B1B5_Override = true;
+                        selectedMaterial.ECI_C1C4_Override = true;
+                        selectedMaterial.ECI_D_Override = true;
 
-                    selectedMaterial.ECI_A1A3 = A1A3;
-                    selectedMaterial.ECI_A4 = A4;
-                    selectedMaterial.ECI_A5 = A5;
+                        selectedMaterial.ECI_A1A3 = A1A3;
+                        selectedMaterial.ECI_A4 = A4;
+                        selectedMaterial.ECI_A5 = A5;
 
-                    //B1-B7
-                    selectedMaterial.ECI_B1B5 = B17;
-                    selectedMaterial.materialB1B5Properties.B4 = 1;
+                        //B1-B7
+                        selectedMaterial.ECI_B1B5 = B17;
+                        selectedMaterial.materialB1B5Properties.B4 = 1;
 
-                    selectedMaterial.ECI_C1C4 = C14;
-                    selectedMaterial.ECI_D = D;
+                        selectedMaterial.ECI_C1C4 = C14;
+                        selectedMaterial.ECI_D = D;
 
-                    selectedMaterial.EPDurl = epdForm.txt_EPDLink.Text;
+                        selectedMaterial.EPDurl = epdForm.txt_EPDLink.Text;
 
+                    }
                 }
             }
             UpdateMaterialSettings();

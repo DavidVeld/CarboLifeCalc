@@ -48,7 +48,7 @@ namespace CarboLifeAPI.Data
         {
             propertyName = "";
 
-            c1density = 1;
+            c1density = 0;
             c1BaseValue = 3.40;
             c1Value = 0;
 
@@ -57,15 +57,15 @@ namespace CarboLifeAPI.Data
 
             c3Value = 0;
 
-            c4DisposalName = "";
-            c4landfP = 0;
-            c4landfV = 0;
+            c4DisposalName = "Generic";
+            c4landfP = 50;
+            c4landfV = 0.013;
 
             c4incfP = 0;
             c4incfV = 0;
 
-            c4reUseP = 0;
-            c4reUseV = 0;
+            c4reUseP = 50;
+            c4reUseV = 0.005;
 
             value = 0;
             calcResult = "";

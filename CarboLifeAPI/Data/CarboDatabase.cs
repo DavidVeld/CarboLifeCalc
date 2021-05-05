@@ -330,10 +330,10 @@ namespace CarboLifeAPI.Data
                 MessageBox.Show(name + " deleted.", "Deleted", MessageBoxButton.OK);
         }
 
-        public void deleteMaterial(string name)
+        public bool deleteMaterial(string name)
         {
             //string name = "";
-            bool ok = false;
+            bool result = false;
 
             try
             {
@@ -342,7 +342,7 @@ namespace CarboLifeAPI.Data
                     if (CarboMaterialList[i].Name == name)
                     {
                         CarboMaterialList.RemoveAt(i);
-                        ok = true;
+                        result = true;
                         break;
                     }
                 }
@@ -353,8 +353,7 @@ namespace CarboLifeAPI.Data
 
             }
 
-            if (ok == true)
-                MessageBox.Show(name + " deleted.", "Deleted", MessageBoxButton.OK);
+            return result;
         }
 
         /// <summary>
