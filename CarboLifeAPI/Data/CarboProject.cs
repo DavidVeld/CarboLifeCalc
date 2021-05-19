@@ -808,7 +808,7 @@ namespace CarboLifeAPI.Data
             result += Environment.NewLine;
 
             if (materials == true)
-                result += "This equals to: " + Math.Round(totalTotal / 68.5, 2) + " average car emission per year. (UK)" + Environment.NewLine;
+                result += "This equals to: " + Math.Round(totalTotal / 1.40, 2) + " average car emission per year (1.40 tCO2/car). (UK)" + Environment.NewLine;
             
             if (trees == true)
                 result += "This requires " + Math.Round((totalTotal / 180) * 4440, 0) + " Trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;

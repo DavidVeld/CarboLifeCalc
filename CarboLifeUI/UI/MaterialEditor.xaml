@@ -170,7 +170,7 @@
                 <TextBox Name="txt_D"  Grid.Row="7" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_D_TextChanged" Text="{Binding Text, Delay=1000}" ></TextBox>
                 <Button Name="btn_D"  Grid.Row="7" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_D_Click">Edit...</Button>
 
-                <Label  Grid.Row="8" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource InfoLabel}" MouseDown="Label_MouseDown">Mix:</Label>
+                <Label  Grid.Row="8" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource InfoLabel}" MouseDown="Label_MouseDown">Additional:</Label>
                 <TextBox Name="txt_Mix_Setting"  Grid.Row="8" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="False" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_Setting_TextChanged"></TextBox>
                 <TextBox Name="txt_Mix"  Grid.Row="8" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_TextChanged" Text="{Binding Text, Delay=1000}" ></TextBox>
                 <Button Name="btn_Mix"  Grid.Row="8" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Mix_Click">Calc...</Button>

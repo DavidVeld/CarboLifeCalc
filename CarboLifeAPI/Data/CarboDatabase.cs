@@ -175,15 +175,21 @@ namespace CarboLifeAPI.Data
 
             }
 
-
-            XmlSerializer ser = new XmlSerializer(typeof(CarboDatabase));
-
-            using (FileStream fs = new FileStream(myPath, FileMode.Create))
+            try
             {
-                ser.Serialize(fs, this);
+                XmlSerializer ser = new XmlSerializer(typeof(CarboDatabase));
+
+                using (FileStream fs = new FileStream(myPath, FileMode.Create))
+                {
+                    ser.Serialize(fs, this);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
 
-            ///MessageBox.Show("Database saved to: " + myPath);
+            MessageBox.Show("Database saved to: " + myPath);
 
         }
         /// <summary>
