@@ -3,23 +3,20 @@ A Quick-Action Whole Life Embodied Carbon calculator using Revit material quanti
 
 Status: Work in Good Progress
 
-Current Build for testing download link: (14.04.2021)
+Current Build for testing download link: (14.04.2021)  
+(build 28.04.2021)  
 
-(build 28.04.2021)
-
-Zip 
-
+Zip:  
 https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/280428.-.Build.For.Testing.zip
 
-Installer:
-
+Installer:  
 https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/CarboLifeCalcInstaller.msi
 
 
-For help and quick guide please see:
+For help and quick guide please see:  
 https://github.com/DavidVeld/CarboLifeCalc/wiki
-Help documentation (formatted file)
-https://docs.google.com/document/d/1GYLwmTcpT5jkmyQ_4SL-qiN8FXuy7iRxKTsO1islQsI/edit?usp=sharing
+Help documentation (formatted file)  
+https://drive.google.com/file/d/1Omg-_2WtXjBDKgRInD4yzH7YDLlE1Hy1/view?usp=sharing
 
 The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design
 according to EN 15978:2011.
@@ -60,16 +57,16 @@ Updates as per build 28.04.2021
 4. Bugs 
 5. Links to resources and additional information added
 
-Updates as per build 14.04.2021 (Zip oply)
-1. Rounding error fixed in graph 
-2. Moved user materials to AppData Folder (Test)
+Updates as per build 14.04.2021 (Zip oply)  
+1. Rounding error fixed in graph   
+2. Moved user materials to AppData Folder (Test)  
 
 Updates as per build 29.03.2021
-1. Compare projects tab
-2. Update projects from Revit
-3. Improved graphics for overview 
-4. Bug fixes
-5. Reduced file size when saving projects imported from Revit
+1. Compare projects tab  
+2. Update projects from Revit  
+3. Improved graphics for overview  
+4. Bug fixes  
+5. Reduced file size when saving projects imported from Revit  
 
 Updates as per build 15.03.2021
 1. Installer
