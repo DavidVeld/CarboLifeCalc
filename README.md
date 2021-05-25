@@ -19,9 +19,9 @@ https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/CarboLif
 
 
 For help and quick guide please see:  
-https://github.com/DavidVeld/CarboLifeCalc/wiki
-Help documentation (formatted file)  
-https://drive.google.com/file/d/1Omg-_2WtXjBDKgRInD4yzH7YDLlE1Hy1/view?usp=sharing
+https://github.com/DavidVeld/CarboLifeCalc/wiki  
+Help documentation (formatted pdf):  
+https://drive.google.com/file/d/1Omg-_2WtXjBDKgRInD4yzH7YDLlE1Hy1/view?usp=sharing  
 
 Videos:  
 Installation and demonstration:
