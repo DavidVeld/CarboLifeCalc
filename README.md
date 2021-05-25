@@ -18,6 +18,8 @@ https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/CarboLif
 
 For help and quick guide please see:
 https://github.com/DavidVeld/CarboLifeCalc/wiki
+Help documentation (formatted file)
+https://docs.google.com/document/d/1GYLwmTcpT5jkmyQ_4SL-qiN8FXuy7iRxKTsO1islQsI/edit?usp=sharing
 
 The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design
 according to EN 15978:2011.
@@ -30,6 +32,8 @@ https://youtu.be/pJJy4qMkvHk
 
 Heatmaps:
 https://youtu.be/O0gkl9B8Mvw
+
+
 
 Screenshots:
 ![alt text](https://www.davidveld.nl/img/carbocalc/bim1.jpg)
