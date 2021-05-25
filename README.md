@@ -80,11 +80,11 @@ Updates as per build 15.03.2021
 9. Reinforcement can be written into existing groups, in the material or as seperate elements
 
 Updates as per build 24.02.2021  
-1.Bugs in material editor  
-2.Allowance to mix a material into another, for reinforcement or steel fixings in timber  
-4.HTML Report exporter updated  
-5.Export the entire project into excel  
-6.Load materials from an on-line database, use material editor to save and sync to template & share online.   
+1. Bugs in material editor  
+2. Allowance to mix a material into another, for reinforcement or steel fixings in timber  
+4. HTML Report exporter updated  
+5. Export the entire project into excel  
+6. Load materials from an on-line database, use material editor to save and sync to template & share online.   
 
 Updates as per build 19.02.2021
 1. Improved sync, including online sync options
