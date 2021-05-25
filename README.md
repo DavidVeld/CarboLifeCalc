@@ -1,5 +1,10 @@
 # CarboLifeCalc
-A Quick-Action Whole Life Embodied Carbon calculator using Revit material quantities 
+Carbo Life Calculator is an embodied carbon calculator for the build
+environment. The application transforms quantities of materials, from
+Revit, or manually specified to calculate the embodied carbon. Carbo
+Life Calculator will automatically find available embodied carbon data
+from EPDs or various databases and map these to your design. Thus
+giving you almost instantaneous results.
 
 Status: Work in Good Progress
 
@@ -18,16 +23,11 @@ https://github.com/DavidVeld/CarboLifeCalc/wiki
 Help documentation (formatted file)  
 https://drive.google.com/file/d/1Omg-_2WtXjBDKgRInD4yzH7YDLlE1Hy1/view?usp=sharing
 
-The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design
-according to EN 15978:2011.
-As a standalone application you can set quantities and materials,  or you can use a 3d model from Revit to import your building into the calculator. Your revit materials will automatically be mapped to to the CarboLifeCalc's own, thus giving you an instant result on the building's embodied carbon.
-
-Videos:
-
+Videos:  
 Installation and demonstration:
 https://youtu.be/pJJy4qMkvHk
 
-Heatmaps:
+Heatmaps:  
 https://youtu.be/O0gkl9B8Mvw
 
 
@@ -79,12 +79,12 @@ Updates as per build 15.03.2021
 8. Improve C1-C4 calculation
 9. Reinforcement can be written into existing groups, in the material or as seperate elements
 
-Updates as per build 24.02.2021
-1.Bugs in material editor
-2.Allowance to mix a material into another, for reinforcement or steel fixings in timber
-4.HTML Report exporter updated
-5.Export the entire project into excel
-6.Load materials from an on-line database, use material editor to save and sync to template & share online. 
+Updates as per build 24.02.2021  
+1.Bugs in material editor  
+2.Allowance to mix a material into another, for reinforcement or steel fixings in timber  
+4.HTML Report exporter updated  
+5.Export the entire project into excel  
+6.Load materials from an on-line database, use material editor to save and sync to template & share online.   
 
 Updates as per build 19.02.2021
 1. Improved sync, including online sync options
