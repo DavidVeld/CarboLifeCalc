@@ -445,28 +445,28 @@ namespace CarboLifeAPI
 
             html += "<STYLE type=\"text/css\">" + System.Environment.NewLine;
 
-            html += "table {font-family:Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "table {font-family:Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "margin-left:20px;" +
                         "border:#000 1px solid; }" +
                         System.Environment.NewLine;
 
-            html += "td {font-family:Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "td {font-family:Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
-                        "font-size:12px;" +
+                        "font-size:16px;" +
                         "background:#fff;" +
                         "margin:12px;" +
                         "border:#000 0px solid; }" +
                         System.Environment.NewLine;
 
-            html += "h1 {font-family:Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "h1 {font-family:Ubuntu, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
-                        "font-size:24px;" +
+                        "font-size:36px;" +
                         "text-shadow: 1px 1px 0px #fff;" +
                         "margin-left:20px;" +
                         "border:#000 0px solid; }" +
                         System.Environment.NewLine;
 
-            html += "h2 {font-family:Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "h2 {font-family:Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
                         "font-size:16px;" +
                         "text-shadow: 1px 1px 0px #fff;" +
@@ -474,9 +474,9 @@ namespace CarboLifeAPI
                         "border:#000 0px solid; }" +
                         System.Environment.NewLine;
 
-            html += "h3 {font-family:Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "h3 {font-family:Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
-                        "font-size:12px;" +
+                        "font-size:16px;" +
                         "text-shadow: 1px 1px 0px #fff;" +
                         "margin-left:20px;" +
                         "border:#000 0px solid; }" +

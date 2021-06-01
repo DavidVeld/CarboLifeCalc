@@ -1,35 +1,41 @@
 # CarboLifeCalc
-A Quick-Action Whole Life Embodied Carbon calculator using Revit material quantities 
+
+
+
+![alt text](https://www.davidveld.nl/img/carbocalc/LogoCLC.png)
+
+Carbo Life Calculator is an embodied carbon calculator for the build
+environment. The application transforms quantities of materials, from
+Revit, or manually specified to calculate the embodied carbon. Carbo
+Life Calculator will automatically find available embodied carbon data
+from EPDs or various databases and map these to your design. Thus
+giving you almost instantaneous results.
 
 Status: Work in Good Progress
 
-Current Build for testing download link: (14.04.2021)
+Current Build for testing download link: (14.04.2021)  
+(build 28.04.2021)  
 
-(build 28.04.2021)
-
-Zip 
-
+Zip:  
 https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/280428.-.Build.For.Testing.zip
 
-Installer:
-
+Installer:  
 https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/CarboLifeCalcInstaller.msi
 
 
-For help and quick guide please see:
-https://github.com/DavidVeld/CarboLifeCalc/wiki
+For help and quick guide please see:  
+https://github.com/DavidVeld/CarboLifeCalc/wiki  
+Help documentation (formatted pdf):  
+https://drive.google.com/file/d/1Omg-_2WtXjBDKgRInD4yzH7YDLlE1Hy1/view?usp=sharing  
 
-The current version holds a solid set of tools to use EPDs (Environmental Product Declarations) or customised materials to calculate embodied carbon in a building design
-according to EN 15978:2011.
-As a standalone application you can set quantities and materials,  or you can use a 3d model from Revit to import your building into the calculator. Your revit materials will automatically be mapped to to the CarboLifeCalc's own, thus giving you an instant result on the building's embodied carbon.
-
-Videos:
-
+Videos:  
 Installation and demonstration:
 https://youtu.be/pJJy4qMkvHk
 
-Heatmaps:
+Heatmaps:  
 https://youtu.be/O0gkl9B8Mvw
+
+
 
 Screenshots:
 ![alt text](https://www.davidveld.nl/img/carbocalc/bim1.jpg)
@@ -56,16 +62,16 @@ Updates as per build 28.04.2021
 4. Bugs 
 5. Links to resources and additional information added
 
-Updates as per build 14.04.2021 (Zip oply)
-1. Rounding error fixed in graph 
-2. Moved user materials to AppData Folder (Test)
+Updates as per build 14.04.2021 (Zip oply)  
+1. Rounding error fixed in graph   
+2. Moved user materials to AppData Folder (Test)  
 
 Updates as per build 29.03.2021
-1. Compare projects tab
-2. Update projects from Revit
-3. Improved graphics for overview 
-4. Bug fixes
-5. Reduced file size when saving projects imported from Revit
+1. Compare projects tab  
+2. Update projects from Revit  
+3. Improved graphics for overview  
+4. Bug fixes  
+5. Reduced file size when saving projects imported from Revit  
 
 Updates as per build 15.03.2021
 1. Installer
@@ -78,12 +84,12 @@ Updates as per build 15.03.2021
 8. Improve C1-C4 calculation
 9. Reinforcement can be written into existing groups, in the material or as seperate elements
 
-Updates as per build 24.02.2021
-1.Bugs in material editor
-2.Allowance to mix a material into another, for reinforcement or steel fixings in timber
-4.HTML Report exporter updated
-5.Export the entire project into excel
-6.Load materials from an on-line database, use material editor to save and sync to template & share online. 
+Updates as per build 24.02.2021  
+1. Bugs in material editor  
+2. Allowance to mix a material into another, for reinforcement or steel fixings in timber  
+4. HTML Report exporter updated  
+5. Export the entire project into excel  
+6. Load materials from an on-line database, use material editor to save and sync to template & share online.   
 
 Updates as per build 19.02.2021
 1. Improved sync, including online sync options
@@ -103,3 +109,5 @@ Updates as per build 29.11.2020:
 Updates as per build 25.11.2020:
 1. EPD import possibility, using a new menu to convert volume based data to mass based data used in CarboLifeCalc
 2. Feedback calculation results back into Revit to visualise the embodied carbon using a colour override.
+
+![alt text](https://www.davidveld.nl/img/carbocalc/DVLogo256.jpg)

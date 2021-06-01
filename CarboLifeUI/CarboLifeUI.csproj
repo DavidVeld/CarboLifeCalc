@@ -331,6 +331,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\DVLogo256.jpg" />
     <Content Include="Resources\ico_CarboLife.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

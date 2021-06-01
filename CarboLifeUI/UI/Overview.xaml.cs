@@ -26,7 +26,7 @@ namespace CarboLifeUI.UI
     public partial class Overview : UserControl
     {
         public CarboProject CarboLifeProject;
-
+        string summaryTextMemory = "";
         public Overview()
         {
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
@@ -125,9 +125,12 @@ namespace CarboLifeUI.UI
             if (CarboLifeProject != null)
             {
                 cnv_Totals.Children.Clear();
+                summaryTextMemory = "";
+
 
                 TextBlock TotalText = new TextBlock();
                 TotalText.Text = "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e";
+                summaryTextMemory += TotalText.Text + Environment.NewLine;
                 TotalText.FontStyle = FontStyles.Normal;
                 TotalText.FontWeight = FontWeights.Bold;
 
@@ -143,6 +146,7 @@ namespace CarboLifeUI.UI
 
                 TextBlock summaryText = new TextBlock();
                 summaryText.Text = CarboLifeProject.getSummaryText(true, true, true, true);
+                summaryTextMemory += summaryText.Text;
                 summaryText.FontStyle = FontStyles.Normal;
                 summaryText.FontWeight = FontWeights.Normal;
 
@@ -223,6 +227,22 @@ namespace CarboLifeUI.UI
             if (editor.isAccepted == true)
             {
                 txt_Desctiption.Text = editor.description;
+            }
+        }
+
+        private void btn_EditDescription_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (CarboLifeProject != null && summaryTextMemory != "")
+                {
+                    Clipboard.SetText(summaryTextMemory);
+                    MessageBox.Show("Text copied to clipboard", "Friendly Message", MessageBoxButton.OK);
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK);
             }
         }
     }

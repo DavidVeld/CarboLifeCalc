@@ -76,8 +76,8 @@
                     FontWeight="DemiBold" BorderThickness="1" Click="Btn_Material_Click" ToolTip="Edit the material of the selected group">Change Material</Button>
 
             <Button x:Name="btn_OpenMaterialEditor" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Top"  Width="125" Height="24" Padding="5,0,5,0"
-                    BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" Background="#ddd"
-                    FontWeight="DemiBold" BorderThickness="1" Click="btn_OpenMaterialEditor_Click"  ToolTip="Open the material editor">Material Editor
+                    BorderBrush="#444" BorderThickness="0" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" Background="#ddd"
+                    FontWeight="DemiBold" Click="btn_OpenMaterialEditor_Click"  ToolTip="Open the material editor">Material Editor
             </Button>
             <Button x:Name="btn_EditAdvanced" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="160" Height="24" Padding="5,0,5,0"
                     BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" Background="#ddd"
