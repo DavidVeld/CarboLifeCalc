@@ -1,4 +1,9 @@
 # CarboLifeCalc
+
+
+
+![alt text](https://www.davidveld.nl/img/carbocalc/LogoCLC.png)
+
 Carbo Life Calculator is an embodied carbon calculator for the build
 environment. The application transforms quantities of materials, from
 Revit, or manually specified to calculate the embodied carbon. Carbo
@@ -104,3 +109,5 @@ Updates as per build 29.11.2020:
 Updates as per build 25.11.2020:
 1. EPD import possibility, using a new menu to convert volume based data to mass based data used in CarboLifeCalc
 2. Feedback calculation results back into Revit to visualise the embodied carbon using a colour override.
+
+![alt text](https://www.davidveld.nl/img/carbocalc/DVLogo256.jpg)
