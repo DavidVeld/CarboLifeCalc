@@ -25,31 +25,44 @@ namespace CarboLifeRevit
 
             //Create  A button
             PushButton pB_CarboCalc = CarboCalcPanel.AddItem(new PushButtonData("CarboLifeCalc", "New Project", MyAssemblyPath, "CarboLifeRevit.CarboLifeCalc")) as PushButton;
-
-            Uri img_CarboCalc = new Uri(MyAssemblyDir + @"\img\ico_CarboLife32.jpg");
+            //LImage
+            Uri img_CarboCalc = new Uri(MyAssemblyDir + @"\img\ico_CarboLife32.png");
             BitmapImage limg_CarboCalc = new BitmapImage(img_CarboCalc);
+            //SImahe
+            Uri imgsmll_CarboCalc = new Uri(MyAssemblyDir + @"\img\ico_CarboLife16.png");
+            BitmapImage smllimg_CarboCalc = new BitmapImage(imgsmll_CarboCalc);
+
             pB_CarboCalc.LargeImage = limg_CarboCalc;
-            pB_CarboCalc.Image = limg_CarboCalc;
+            pB_CarboCalc.Image = smllimg_CarboCalc;
             pB_CarboCalc.SetContextualHelp(contextualHelp);
             pB_CarboCalc.ToolTip = "Create a new Carbo Calc Project using the BIM model";
 
-            PushButton pB_ImportCarboCalc = CarboCalcPanel.AddItem(new PushButtonData("Import CarboLife Calc", "Update Project", MyAssemblyPath, "CarboLifeRevit.CarboLifeCalcUpdate")) as PushButton;
 
-            Uri img_CarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_UpdateCarboLife32.jpg");
+            PushButton pB_ImportCarboCalc = CarboCalcPanel.AddItem(new PushButtonData("Import CarboLife Calc", "Update Project", MyAssemblyPath, "CarboLifeRevit.CarboLifeCalcUpdate")) as PushButton;
+            //LImage
+            Uri img_CarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_UpdateCarboLife32.png");
             BitmapImage limg_CarboCalc2 = new BitmapImage(img_CarboCalc2);
+            //SImahe
+            Uri imgsmll_CarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_UpdateCarboLife16.png");
+            BitmapImage smllimg_CarboCalc2 = new BitmapImage(imgsmll_CarboCalc2);
+
             pB_ImportCarboCalc.LargeImage = limg_CarboCalc2;
-            pB_ImportCarboCalc.Image = limg_CarboCalc2;
+            pB_ImportCarboCalc.Image = smllimg_CarboCalc2;
             pB_ImportCarboCalc.SetContextualHelp(contextualHelp);
             pB_ImportCarboCalc.ToolTip = "Update an existing Carbo Life Calc Project using the BIM model";
 
             PushButton pB_CarboCalcPlus = CarboCalcPanel.AddItem(new PushButtonData("CarboLifeCalcSettings", "Settings", MyAssemblyPath, "CarboLifeRevit.CarboLifeCalcPlus")) as PushButton;
-
-            Uri img_CarboImport = new Uri(MyAssemblyDir + @"\img\ico_CarboLifeSettings32.jpg");
+            //LImage
+            Uri img_CarboImport = new Uri(MyAssemblyDir + @"\img\ico_CarboLifeSettings32.png");
             BitmapImage limg_CarboImport = new BitmapImage(img_CarboImport);
+            //SImahe
+            Uri imgsmll_CarboImport = new Uri(MyAssemblyDir + @"\img\ico_CarboLifeSettings16.png");
+            BitmapImage smllimg_CarboImport = new BitmapImage(imgsmll_CarboImport);
+
             pB_CarboCalcPlus.LargeImage = limg_CarboImport;
-            pB_CarboCalcPlus.Image = limg_CarboImport;
-            pB_CarboCalc.SetContextualHelp(contextualHelp);
-            pB_CarboCalc.ToolTip = "Advanced export settings";
+            pB_CarboCalcPlus.Image = smllimg_CarboImport;
+            pB_CarboCalcPlus.SetContextualHelp(contextualHelp);
+            pB_CarboCalcPlus.ToolTip = "Advanced export settings";
 
 
             return Result.Succeeded;
