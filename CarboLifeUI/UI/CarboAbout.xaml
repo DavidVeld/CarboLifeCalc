@@ -39,7 +39,7 @@
         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Style="{StaticResource baseStyleTitle}">About / Credits / Sources</Label>
 
         <Image Grid.Column="2" Grid.Row="2" Width="128" Margin="12,20,10,0" Height="128" HorizontalAlignment="Center" VerticalAlignment="Top" Source="pack://siteoforigin:,,,/Resources/Logo128.jpg" ></Image>
-        <Image Grid.Column="3" Grid.Row="2" Width="128" Margin="424,265,0,0" Height="53" HorizontalAlignment="Center" VerticalAlignment="Top" Source="pack://siteoforigin:,,,/Resources/DVLogo256.jpg" Grid.RowSpan="2" />
+        <Image Grid.Column="3" Grid.Row="2" Width="128" Margin="5,5,5,5" Height="53" HorizontalAlignment="Right" VerticalAlignment="Bottom" Source="pack://siteoforigin:,,,/Resources/DVLogo256.jpg" Grid.RowSpan="2" />
 
         <Label Grid.Column="3" Grid.Row="2" Width="249" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" FontFamily="Segoe UI" FontSize="22" Foreground="#FFB21616">Carbo Life Calculator</Label>
         <Label Grid.Column="3" Grid.Row="2" Width="362" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,45,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Embodied Carbon Calculator to EN 15978:2011</Label>
@@ -81,6 +81,11 @@
         </Hyperlink>
         </TextBlock>
 
+        <TextBlock Grid.Column="3" Grid.Row="2" Width="527" Height="19" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,240,0,0" FontFamily="Segoe UI" FontSize="14">Logo Design Paola Ferrarotti:
+            <Hyperlink NavigateUri="https://www.bandiera.co.uk"  RequestNavigate="Hyperlink_RequestNavigate"  FontFamily="Segoe UI" FontSize="12">
+        https://www.bandiera.co.uk
+        </Hyperlink>
+        </TextBlock>
         <Button Name="btn_Accept" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Ok, Thanks</Button>
 
     </Grid>

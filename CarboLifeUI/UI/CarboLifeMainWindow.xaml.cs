@@ -254,7 +254,7 @@ namespace CarboLifeUI.UI
                     {
                         MessageBox.Show("Project Saved");
                         carboLifeProject.justSaved = true;
-                        
+                        carboLifeProject.filePath = path;
                         return true;
                     }
                     else
@@ -371,6 +371,12 @@ namespace CarboLifeUI.UI
                             fileSaved = false;
                             e.Cancel = true; //do not close window
                         }
+                    }
+                    else
+                    {
+                        bool ok = SaveFileAs();
+                        if (ok == true)
+                            fileSaved = true;
                     }
                 }
                 else if (result == MessageBoxResult.No)
