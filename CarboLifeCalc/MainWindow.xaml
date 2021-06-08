@@ -36,7 +36,7 @@
         <Button Name="btn_Launch" Grid.Column="1" Grid.Row="2" Width="150" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,10,10" Click="btn_Launch_Click" Style="{StaticResource ButtonStyle}">Launch...</Button>
         <Button Name="btn_Open" Grid.Column="1" Grid.Row="2" Width="150" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,50,10,10" Click="btn_Open_Click" Style="{StaticResource ButtonStyle}">Open Project...</Button>
         <Button Name="btn_Materials" Grid.Column="1" Grid.Row="2" Width="150" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,90,10,10" Click="btn_Materials_Click" Style="{StaticResource ButtonStyle}" Visibility="Visible">Material Editor...</Button>
-        <Button Name="btn_Addin" Grid.Column="1" Grid.Row="2" Width="150" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,130,10,10" Click="Addin_Click"  Style="{StaticResource ButtonStyle}">Activate Revit Addin...</Button>
+        <Button Name="btn_Addin" Visibility="Hidden" Grid.Column="1" Grid.Row="2" Width="150" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,130,10,10" Click="Addin_Click"  Style="{StaticResource ButtonStyle}">Activate Revit Addin...</Button>
 
         <Image Grid.Column="2" Grid.Row="2" Width="128" Margin="0,30,0,0" Height="128" HorizontalAlignment="Center" VerticalAlignment="Top" Source="pack://siteoforigin:,,,/Resources/Logo128.jpg" ></Image>
         <Image Grid.Column="3" Grid.Row="3" Width="128" Margin="249,42,5,0" Height="53" HorizontalAlignment="Center" VerticalAlignment="Top" Source="pack://siteoforigin:,,,/Resources/DVLogo256.jpg" />
@@ -51,7 +51,7 @@
 
         <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Build: V 0.90</Label>
         <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" Margin="0,281,10,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light" Grid.RowSpan="2">Author: David In't Veld</Label>
-        <TextBlock Grid.Column="3" Grid.Row="3" Width="160" Height="19" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,20,10,0" FontSize="14"  FontFamily="Segoe UI" TextAlignment="Right">
+        <TextBlock Grid.Column="3" Grid.Row="3" Width="160" Height="19" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,19,10,0" FontSize="14"  FontFamily="Segoe UI" TextAlignment="Right">
             <Hyperlink NavigateUri="https://www.davidveld.nl" RequestNavigate="Hyperlink_RequestNavigate" FontSize="14"  FontFamily="Segoe UI">
         https://www.davidveld.nl
         </Hyperlink>

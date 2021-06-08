@@ -4,24 +4,20 @@
 
 ![alt text](https://www.davidveld.nl/img/carbocalc/LogoCLC.png)
 
-Carbo Life Calculator is an embodied carbon calculator for the build
-environment. The application transforms quantities of materials, from
-Revit, or manually specified to calculate the embodied carbon. Carbo
-Life Calculator will automatically find available embodied carbon data
-from EPDs or various databases and map these to your design. Thus
-giving you almost instantaneous results.
+Carbo Life Calculator is an embodied carbon calculator for the built environment. The application transforms quantities of materials into embodied carbon. Carbo Life Calculator uses available embodied carbon data from EPDs or various databases and maps these to your design. Thus giving you almost instantaneous results.
+
+Carbo Life Calc is a tool that offers users a free and open-source solution to calculate the embodied carbon of a building design. It's designed to link into Autodesk Revit. Making this tool freely available for all will be key in creating awareness in the built environment.
+
 
 Status: Work in Good Progress
 
-Current Build for testing download link: (14.04.2021)  
-(build 28.04.2021)  
+(build V0.90 02.06.2021)  
 
 Zip:  
-https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/280428.-.Build.For.Testing.zip
+https://github.com/DavidVeld/CarboLifeCalc/releases/download/V0.90/CarboLifeCalcV0.90_GitHub.zip  
 
 Installer:  
-https://github.com/DavidVeld/CarboLifeCalc/releases/download/2021.04.28/CarboLifeCalcInstaller.msi
-
+https://github.com/DavidVeld/CarboLifeCalc/releases/download/V0.90/CarboLifeCalcInstaller.msi  
 
 For help and quick guide please see:  
 https://github.com/DavidVeld/CarboLifeCalc/wiki  
@@ -29,8 +25,8 @@ Help documentation (formatted pdf):
 https://drive.google.com/file/d/1Omg-_2WtXjBDKgRInD4yzH7YDLlE1Hy1/view?usp=sharing  
 
 Videos:  
-Installation and demonstration:
-https://youtu.be/pJJy4qMkvHk
+Quick demonstration:
+https://youtu.be/5_pjdKm7b3w
 
 Heatmaps:  
 https://youtu.be/O0gkl9B8Mvw

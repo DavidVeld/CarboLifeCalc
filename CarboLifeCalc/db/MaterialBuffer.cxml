@@ -2,7 +2,7 @@
 <CarboDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CarboMaterials>
     <CarboMaterial>
-      <Id>21963</Id>
+      <Id>26789</Id>
       <Name>Metal - Steel Generic</Name>
       <Category>Steel</Category>
       <Description>A "generic" non-recycled metal</Description>
@@ -13,7 +13,7 @@
       <ECI_A1A3>2.45</ECI_A1A3>
       <ECI_A4>0.036147186147186143</ECI_A4>
       <ECI_A5>0.025</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.01917643447461629</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -101,9 +101,9 @@ Set Value by user as: 0.025kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -160,24 +160,24 @@ The vehicle will be fully loaded using: 22000 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
-78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 22000 kg = 0.0035655253837072 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 100 km = 78441.5584415584 gCO2/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO2/trip
+78.4415584415584 kgCO2/trip / 22000 kg = 0.0035655253837072 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
-Total emission per kg: 112 / 22000 = 0.00509090909090909 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 100 = 112 kgCO2/km
+Total emission per kg: 112 / 22000 = 0.00509090909090909 kgCO2/km
 
-Total emission per kg: 78.4415584415584 / 0.00509090909090909 = 0.00865643447461629 kgCO₂/kg
+Total emission per kg: 78.4415584415584 / 0.00509090909090909 = 0.00865643447461629 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -222,7 +222,7 @@ Total emission per kg: 78.4415584415584 / 0.00509090909090909 = 0.00865643447461
         <name />
         <value>0</value>
         <calcResult>B1-B5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
       </materialDProperties>
       <ECI_A1A3_Override>false</ECI_A1A3_Override>
@@ -234,7 +234,7 @@ Set Value by user as: 0kgCO₂/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>25551</Id>
+      <Id>24901</Id>
       <Name>Masonry - Brick - EDP</Name>
       <Category>Bricks &amp; Block</Category>
       <Description>This is a material based on the generic brick EPD from brick.org.uk
@@ -246,7 +246,7 @@ The material is with mortar allowance (Approx 13%)</Description>
       <ECI_A1A3>0.213</ECI_A1A3>
       <ECI_A4>0.008026</ECI_A4>
       <ECI_A5>0.011466</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.004481</ECI_C1C4>
       <ECI_D>-0.016</ECI_D>
       <ECI_Mix>0.09</ECI_Mix>
@@ -270,7 +270,7 @@ Transport Load = 22000 x 80 %
 The vehicle WILL return to its starting point empty
 The total distance = 100 km
 Summary: we are going to drive a  using Diesel 100 km 
-A full  can carry ∞ m3 (untill max load is reached)
+A full  can carry Infinity m3 (untill max load is reached)
 Or 0 kg (untill max volume is reached)
 We will use the volume capacity as a maximum threshold
 The vehicle will be fully loaded using: 96 m³
@@ -285,7 +285,7 @@ We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/
 680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
 784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
 78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 0 kg = ∞ gCO₂/kg
+78.4415584415584 kgCO₂/trip / 0 kg = Infinity gCO₂/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
@@ -293,9 +293,9 @@ Total carbon costs are estimated to be: 280000 kgCO₂
 On average this vehicle will go for: 250000 km
 Per km: 280000 / 250000 = 1.12 kgCO₂/km
 Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
-Total emission per kg: 112 / 0 = ∞ kgCO₂/km
+Total emission per kg: 112 / 0 = Infinity kgCO₂/km
 
-Total emission per kg: 78.4415584415584 / ∞ = ∞ kgCO₂/kg
+Total emission per kg: 78.4415584415584 / Infinity = Infinity kgCO₂/kg
 </calcResult>
         <name />
         <description />
@@ -323,7 +323,7 @@ Total emission per kg: 78.4415584415584 / ∞ = ∞ kgCO₂/kg
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -334,9 +334,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -402,13 +402,13 @@ This element will therefor be : 1times replaced.
       <ECI_A1A3_Override>true</ECI_A1A3_Override>
       <ECI_A4_Override>true</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>true</ECI_C1C4_Override>
       <ECI_D_Override>true</ECI_D_Override>
       <ECI_Mix_Info>Concrete - Mortar(0.13 m³/m³)</ECI_Mix_Info>
     </CarboMaterial>
     <CarboMaterial>
-      <Id>23915</Id>
+      <Id>25400</Id>
       <Name>Concrete - Mortar</Name>
       <Category>Cement</Category>
       <Description>No description provided</Description>
@@ -419,7 +419,7 @@ This element will therefor be : 1times replaced.
       <ECI_A1A3>0.200194065</ECI_A1A3>
       <ECI_A4>0.010820543093270366</ECI_A4>
       <ECI_A5>0.002</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.0398205430932704</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -484,7 +484,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
           <carboCostNew>280000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -496,7 +496,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -507,9 +507,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -566,24 +566,24 @@ The vehicle will be fully loaded using: 17600 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
-78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 17600 kg = 0.004456906729634 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 100 km = 78441.5584415584 gCO2/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO2/trip
+78.4415584415584 kgCO2/trip / 17600 kg = 0.004456906729634 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
-Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 100 = 112 kgCO2/km
+Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO2/km
 
-Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO₂/kg
+Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -599,7 +599,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -638,30 +638,30 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>27503</Id>
+      <Id>20383</Id>
       <Name>Concrete - Reinforced Concrete</Name>
       <Category>Concrete</Category>
       <Description>No description provided</Description>
       <EPDurl />
       <Density>2400</Density>
-      <ECI>0.08575505488888889</ECI>
-      <getVolumeECI>205.81213173333333</getVolumeECI>
-      <ECI_A1A3>0.053834916</ECI_A1A3>
+      <ECI>0.18192013888888889</ECI>
+      <getVolumeECI>436.60833333333335</getVolumeECI>
+      <ECI_A1A3>0.15</ECI_A1A3>
       <ECI_A4>0.020920138888888891</ECI_A4>
       <ECI_A5>0.002</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.009</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
       <isLocked>false</isLocked>
       <materialA1A3Properties>
-        <Id>2398</Id>
-        <Group>ECI</Group>
+        <Id>4010</Id>
+        <Group>IstructE</Group>
         <Category>Concrete</Category>
-        <Name>Concrete-By Cementitious Content with ggbs 50% : 200  kg total cementitious content per m3 concrete</Name>
-        <Description>These mixtures were modelled with some ggbs as cement replacement, e.g. 300 kg per m3 equals the total cementitious content. The % ggbs replacement rate is applied to this amount.</Description>
+        <Name>Unreinforced  C40/50 with average UK cement mix</Name>
+        <Description>Unreinforced  C40/50 with average UK cement mix</Description>
         <Density>2400</Density>
-        <ECI_A1A3>0.053834916</ECI_A1A3>
+        <ECI_A1A3>0.178</ECI_A1A3>
       </materialA1A3Properties>
       <materiaA4Properties>
         <calcResult>Calculation to get transport value: 
@@ -715,7 +715,7 @@ Total emission per kg: 201.333333333333 / 0.0078125 = 0.0209201388888889 kgCO₂
           <carboCostNew>150000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic concrete truck, a truck with a capacity of 8m�. It produces about 900g of CO₂ per km, Using 4.50 l/km. </description>
+          <description>A generic concrete truck, a truck with a capacity of 8m�. It produces about 900g of CO2 per km, Using 4.50 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -727,7 +727,7 @@ Total emission per kg: 201.333333333333 / 0.0078125 = 0.0209201388888889 kgCO₂
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -738,9 +738,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -817,7 +817,7 @@ Total costs are: 0 + 0 + 0 + 0.009 + 0
         <value>0</value>
         <calcResult />
       </materialDProperties>
-      <ECI_A1A3_Override>false</ECI_A1A3_Override>
+      <ECI_A1A3_Override>true</ECI_A1A3_Override>
       <ECI_A4_Override>false</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
       <ECI_B1B5_Override>false</ECI_B1B5_Override>
@@ -826,7 +826,7 @@ Total costs are: 0 + 0 + 0 + 0.009 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>25867</Id>
+      <Id>28988</Id>
       <Name>Concrete - Screed</Name>
       <Category>Cement</Category>
       <Description>A 1:3 cement:sand screed</Description>
@@ -837,7 +837,7 @@ Total costs are: 0 + 0 + 0 + 0.009 + 0
       <ECI_A1A3>0.200194065</ECI_A1A3>
       <ECI_A4>0.010820543093270366</ECI_A4>
       <ECI_A5>0</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.0198205430932704</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -902,7 +902,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
           <carboCostNew>280000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -920,14 +920,14 @@ Set Value by user as: 0kgCO₂/kg
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
+        <elementdesignlife>50</elementdesignlife>
         <buildingdesignlife>1</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
+One element of this material will last: 50 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -936,7 +936,7 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
@@ -979,24 +979,24 @@ The vehicle will be fully loaded using: 17600 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
-78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 17600 kg = 0.004456906729634 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 100 km = 78441.5584415584 gCO2/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO2/trip
+78.4415584415584 kgCO2/trip / 17600 kg = 0.004456906729634 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
-Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 100 = 112 kgCO2/km
+Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO2/km
 
-Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO₂/kg
+Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -1012,7 +1012,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -1045,13 +1045,13 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_A1A3_Override>false</ECI_A1A3_Override>
       <ECI_A4_Override>false</ECI_A4_Override>
       <ECI_A5_Override>false</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>false</ECI_C1C4_Override>
       <ECI_D_Override>false</ECI_D_Override>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>29455</Id>
+      <Id>26795</Id>
       <Name>Concrete - Mass Concrete</Name>
       <Category>Concrete</Category>
       <Description>A Generic - CEM II Mass concrete infill</Description>
@@ -1062,7 +1062,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_A1A3>0.097099819</ECI_A1A3>
       <ECI_A4>0.023726851851851853</ECI_A4>
       <ECI_A5>0.01</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.0386410861865407</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -1128,7 +1128,7 @@ Total emission per kg: 201.333333333333 / 0.00625 = 0.0237268518518519 kgCO₂/k
           <carboCostNew>90000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO₂ per km, Using 4.00 l/km. </description>
+          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2 per km, Using 4.00 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -1140,7 +1140,7 @@ Total emission per kg: 201.333333333333 / 0.00625 = 0.0237268518518519 kgCO₂/k
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -1151,9 +1151,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -1210,24 +1210,24 @@ The vehicle will be fully loaded using: 17600 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 200 km = 156883.116883117 gCO₂/trip
-156883.116883117 / 1000  = 156.883116883117 kgCO₂/trip
-156.883116883117 kgCO₂/trip / 17600 kg = 0.008913813459268 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 200 km = 156883.116883117 gCO2/trip
+156883.116883117 / 1000  = 156.883116883117 kgCO2/trip
+156.883116883117 kgCO2/trip / 17600 kg = 0.008913813459268 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 200 = 224 kgCO₂/km
-Total emission per kg: 224 / 17600 = 0.0127272727272727 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 200 = 224 kgCO2/km
+Total emission per kg: 224 / 17600 = 0.0127272727272727 kgCO2/km
 
-Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.0216410861865407 kgCO₂/kg
+Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.0216410861865407 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -1282,7 +1282,7 @@ Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.021641086186540
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>23043</Id>
+      <Id>22729</Id>
       <Name>Site - Asphalt</Name>
       <Category>Asphalt</Category>
       <Description>No description provided</Description>
@@ -1292,7 +1292,7 @@ Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.021641086186540
       <ECI_A1A3>53.19358873</ECI_A1A3>
       <ECI_A4>0.027116402116402115</ECI_A4>
       <ECI_A5>0.025</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>5.335</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -1358,7 +1358,7 @@ Total emission per kg: 201.333333333333 / 0.00714285714285714 = 0.02711640211640
           <carboCostNew>90000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO₂ per km, Using 4.00 l/km. </description>
+          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2 per km, Using 4.00 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -1370,7 +1370,7 @@ Total emission per kg: 201.333333333333 / 0.00714285714285714 = 0.02711640211640
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -1381,9 +1381,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 50 year
 The building is intended to last: 50year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name>50 Years design life </name>
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -1469,7 +1469,7 @@ Total costs are: 0 + 0 + 0 + 5.335 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>21407</Id>
+      <Id>24242</Id>
       <Name>Timber - Structural Timber C24</Name>
       <Category>Timber</Category>
       <Description>No description provided</Description>
@@ -1479,7 +1479,7 @@ Total costs are: 0 + 0 + 0 + 5.335 + 0
       <ECI_A1A3>-1.291860682</ECI_A1A3>
       <ECI_A4>0.1102092352092352</ECI_A4>
       <ECI_A5>0</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>1.5574693034238489</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -1557,18 +1557,20 @@ Total emission per kg: 313.766233766234 / 0.0648148148148148 = 0.110209235209235
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
+        <elementdesignlife>50</elementdesignlife>
         <buildingdesignlife>1</buildingdesignlife>
-        <calcResult>B1-B5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+        <calcResult>B1-B5 calculation:
+One element of this material will last: 50 year
+The building is intended to last: 1year
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -1577,7 +1579,7 @@ Set Value by user as: 0kgCO₂/kg
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
@@ -1624,24 +1626,24 @@ The vehicle will be fully loaded using: 22000 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 300 km = 235324.675324675 gCO₂/trip
-235324.675324675 / 1000  = 235.324675324675 kgCO₂/trip
-235.324675324675 kgCO₂/trip / 22000 kg = 0.0106965761511216 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 300 km = 235324.675324675 gCO2/trip
+235324.675324675 / 1000  = 235.324675324675 kgCO2/trip
+235.324675324675 kgCO2/trip / 22000 kg = 0.0106965761511216 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 300 = 336 kgCO₂/km
-Total emission per kg: 336 / 22000 = 0.0152727272727273 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 300 = 336 kgCO2/km
+Total emission per kg: 336 / 22000 = 0.0152727272727273 kgCO2/km
 
-Total emission per kg: 235.324675324675 / 0.0152727272727273 = 0.0259693034238489 kgCO₂/kg
+Total emission per kg: 235.324675324675 / 0.0152727272727273 = 0.0259693034238489 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -1686,29 +1688,30 @@ Total emission per kg: 235.324675324675 / 0.0152727272727273 = 0.025969303423848
         <name />
         <value>0</value>
         <calcResult>B1-B5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
       </materialDProperties>
       <ECI_A1A3_Override>false</ECI_A1A3_Override>
       <ECI_A4_Override>false</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>false</ECI_C1C4_Override>
       <ECI_D_Override>false</ECI_D_Override>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>24995</Id>
+      <Id>20654</Id>
       <Name>Timber - Glulam</Name>
       <Category>Timber</Category>
       <Description />
+      <EPDurl />
       <Density>500</Density>
       <ECI>0.38611400258034034</ECI>
       <getVolumeECI>193.05700129017018</getVolumeECI>
       <ECI_A1A3>-0.895743464</ECI_A1A3>
       <ECI_A4>0.030716380393799751</ECI_A4>
       <ECI_A5>0.02</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>1.2311410861865406</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -1785,7 +1788,7 @@ Total emission per kg: 235.324675324675 / 0.0180645161290323 = 0.030716380393799
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -1796,9 +1799,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 50 year
 The building is intended to last: 50year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name>50 Years design life </name>
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -1807,7 +1810,7 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
@@ -1850,24 +1853,24 @@ The vehicle will be fully loaded using: 17600 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 200 km = 156883.116883117 gCO₂/trip
-156883.116883117 / 1000  = 156.883116883117 kgCO₂/trip
-156.883116883117 kgCO₂/trip / 17600 kg = 0.008913813459268 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 200 km = 156883.116883117 gCO2/trip
+156883.116883117 / 1000  = 156.883116883117 kgCO2/trip
+156.883116883117 kgCO2/trip / 17600 kg = 0.008913813459268 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 200 = 224 kgCO₂/km
-Total emission per kg: 224 / 17600 = 0.0127272727272727 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 200 = 224 kgCO2/km
+Total emission per kg: 224 / 17600 = 0.0127272727272727 kgCO2/km
 
-Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.0216410861865407 kgCO₂/kg
+Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.0216410861865407 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -1922,7 +1925,7 @@ Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.021641086186540
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>28583</Id>
+      <Id>29613</Id>
       <Name>Metal - Reinforcement</Name>
       <Category>Steel</Category>
       <Description>A generic reinforcement material</Description>
@@ -1933,7 +1936,7 @@ Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.021641086186540
       <ECI_A1A3>1.99</ECI_A1A3>
       <ECI_A4>0.023083825265643447</ECI_A4>
       <ECI_A5>0</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.0226328689492326</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -1943,7 +1946,7 @@ Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.021641086186540
         <Group>ECI</Group>
         <Category>Steel</Category>
         <Name>Steel : Steel, Rebar</Name>
-        <Description>World average steel. For European rebar see seperate data. A steel reinforcing bar is rolled on a hot rolling mill. It can be found on the market for direct use or is further processed into finished products by the manufacturers. This product is used to strengthen concrete in highway and building construction also as primary product for the wire rod process. System expansion was used on the steel, e.g. for blast furnace slag and other co-products. The influence of system expansion to the GWP for steel products is 3 to 7% lower GWP.  Contact Worldsteel for more information. At an EOL recovery rate of 85%. Module D impact of -0.79 kg CO₂e per kg ('-' magnitude is a benefit, '+' magnitude a burden). This gives a net life cycle inc Mod D, of 1.2 kg CO₂e per kg.</Description>
+        <Description>World average steel. For European rebar see seperate data. A steel reinforcing bar is rolled on a hot rolling mill. It can be found on the market for direct use or is further processed into finished products by the manufacturers. This product is used to strengthen concrete in highway and building construction also as primary product for the wire rod process. System expansion was used on the steel, e.g. for blast furnace slag and other co-products. The influence of system expansion to the GWP for steel products is 3 to 7% lower GWP.  Contact Worldsteel for more information. At an EOL recovery rate of 85%. Module D impact of -0.79 kg CO2e per kg ('-' magnitude is a benefit, '+' magnitude a burden). This gives a net life cycle inc Mod D, of 1.2 kg CO2e per kg.</Description>
         <Density>7850</Density>
         <ECI_A1A3>1.99</ECI_A1A3>
       </materialA1A3Properties>
@@ -2021,9 +2024,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 50 year
 The building is intended to last: 50year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name>50 Years design life </name>
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -2075,24 +2078,24 @@ The vehicle will be fully loaded using: 22000 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 200 km = 156883.116883117 gCO₂/trip
-156883.116883117 / 1000  = 156.883116883117 kgCO₂/trip
-156.883116883117 kgCO₂/trip / 22000 kg = 0.0071310507674144 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 200 km = 156883.116883117 gCO2/trip
+156883.116883117 / 1000  = 156.883116883117 kgCO2/trip
+156.883116883117 kgCO2/trip / 22000 kg = 0.0071310507674144 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 200 = 224 kgCO₂/km
-Total emission per kg: 224 / 22000 = 0.0101818181818182 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 200 = 224 kgCO2/km
+Total emission per kg: 224 / 22000 = 0.0101818181818182 kgCO2/km
 
-Total emission per kg: 156.883116883117 / 0.0101818181818182 = 0.0173128689492326 kgCO₂/kg
+Total emission per kg: 156.883116883117 / 0.0101818181818182 = 0.0173128689492326 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -2147,7 +2150,7 @@ Total emission per kg: 156.883116883117 / 0.0101818181818182 = 0.017312868949232
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>26947</Id>
+      <Id>27065</Id>
       <Name>Timber - Plywood</Name>
       <Category>Timber</Category>
       <Description>No description provided</Description>
@@ -2158,7 +2161,7 @@ Total emission per kg: 156.883116883117 / 0.0101818181818182 = 0.017312868949232
       <ECI_A1A3>-0.933068403</ECI_A1A3>
       <ECI_A4>0.025515660809778455</ECI_A4>
       <ECI_A5>0</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>1.2717088744588745</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -2205,9 +2208,9 @@ Total carbon costs are estimated to be: 75000 kgCO₂
 On average this vehicle will go for: 250000 km
 Per km: 75000 / 250000 = 0.3 kgCO₂/km
 Total emission per trip: 0.3 x 300 = 90 kgCO₂/km
-Total emission per kg: 90 / 12750 = 0.00705882352941176 kgCO₂/km
+Total emission per kg: 90 / 12750 = 0.00705882352941177 kgCO₂/km
 
-Total emission per kg: 235.324675324675 / 0.00705882352941176 = 0.0255156608097785 kgCO₂/kg
+Total emission per kg: 235.324675324675 / 0.00705882352941177 = 0.0255156608097785 kgCO₂/kg
 </calcResult>
         <name>Truck</name>
         <description />
@@ -2235,7 +2238,7 @@ Total emission per kg: 235.324675324675 / 0.00705882352941176 = 0.02551566080977
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0.025kgCO₂/kg
+Set Value by user as: 0.025kgCo2/kg
 </calcResult>
         <name>Calculated</name>
         <value>0.025</value>
@@ -2246,9 +2249,9 @@ Set Value by user as: 0.025kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 50 year
 The building is intended to last: 50year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name>50 Years design life </name>
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -2304,24 +2307,24 @@ The vehicle will be fully loaded using: 15000 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 200 km = 156883.116883117 gCO₂/trip
-156883.116883117 / 1000  = 156.883116883117 kgCO₂/trip
-156.883116883117 kgCO₂/trip / 15000 kg = 0.0104588744588745 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 200 km = 156883.116883117 gCO2/trip
+156883.116883117 / 1000  = 156.883116883117 kgCO2/trip
+156.883116883117 kgCO2/trip / 15000 kg = 0.0104588744588745 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 75000 kgCO₂
+Total carbon costs are estimated to be: 75000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 75000 / 250000 = 0.3 kgCO₂/km
-Total emission per trip: 0.3 x 200 = 60 kgCO₂/km
-Total emission per kg: 60 / 15000 = 0.004 kgCO₂/km
+Per km: 75000 / 250000 = 0.3 kgCO2/km
+Total emission per trip: 0.3 x 200 = 60 kgCO2/km
+Total emission per kg: 60 / 15000 = 0.004 kgCO2/km
 
-Total emission per kg: 156.883116883117 / 0.004 = 0.0144588744588745 kgCO₂/kg
+Total emission per kg: 156.883116883117 / 0.004 = 0.0144588744588745 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -2366,7 +2369,7 @@ Total emission per kg: 156.883116883117 / 0.004 = 0.0144588744588745 kgCO₂/kg
         <name>Enhanced value</name>
         <value>0</value>
         <calcResult>B1-B5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
       </materialDProperties>
       <ECI_A1A3_Override>false</ECI_A1A3_Override>
@@ -2378,19 +2381,19 @@ Set Value by user as: 0kgCO₂/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>20535</Id>
+      <Id>26193</Id>
       <Name>Timber - Wood for Good EPD</Name>
       <Category>Timber</Category>
       <Description>Values based on Wood for Good EPD
-https://woodforgood.com/assets/Downloads/EPD/BREGENEPD000124.pdf</Description>
-      <EPDurl />
+</Description>
+      <EPDurl>https://woodforgood.com/assets/Downloads/EPD/BREGENEPD000124.pdf</EPDurl>
       <Density>480</Density>
       <ECI>0.26895615899999981</ECI>
       <getVolumeECI>129.0989563199999</getVolumeECI>
       <ECI_A1A3>-1.486430063</ECI_A1A3>
       <ECI_A4>0.016200418</ECI_A4>
       <ECI_A5>0.086638831</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>1.652546973</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -2468,7 +2471,7 @@ Total emission per kg: 313.766233766234 / 0.0648148148148148 = 0.110209235209235
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -2477,7 +2480,7 @@ Set Value by user as: 0kgCO₂/kg
         <elementdesignlife>1</elementdesignlife>
         <buildingdesignlife>1</buildingdesignlife>
         <calcResult>B1-B5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <B1>0</B1>
@@ -2535,24 +2538,24 @@ The vehicle will be fully loaded using: 22000 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 300 km = 235324.675324675 gCO₂/trip
-235324.675324675 / 1000  = 235.324675324675 kgCO₂/trip
-235.324675324675 kgCO₂/trip / 22000 kg = 0.0106965761511216 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 300 km = 235324.675324675 gCO2/trip
+235324.675324675 / 1000  = 235.324675324675 kgCO2/trip
+235.324675324675 kgCO2/trip / 22000 kg = 0.0106965761511216 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 300 = 336 kgCO₂/km
-Total emission per kg: 336 / 22000 = 0.0152727272727273 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 300 = 336 kgCO2/km
+Total emission per kg: 336 / 22000 = 0.0152727272727273 kgCO2/km
 
-Total emission per kg: 235.324675324675 / 0.0152727272727273 = 0.0259693034238489 kgCO₂/kg
+Total emission per kg: 235.324675324675 / 0.0152727272727273 = 0.0259693034238489 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -2597,7 +2600,7 @@ Total emission per kg: 235.324675324675 / 0.0152727272727273 = 0.025969303423848
         <name />
         <value>0</value>
         <calcResult>B1-B5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
       </materialDProperties>
       <ECI_A1A3_Override>true</ECI_A1A3_Override>
@@ -2609,20 +2612,20 @@ Set Value by user as: 0kgCO₂/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>28899</Id>
+      <Id>27105</Id>
       <Name>Plywood - WISA EPD (No C4)</Name>
       <Category>Timber</Category>
       <Description>Values based on WISA Provided EPD
 WISA Spruce plywood, uncoated
-https://www.wisaplywood.com/siteassets/documents/certificates/rts-epd-21-19_upm_plywood_wisa_spruce__uncoated_signed.pdf</Description>
-      <EPDurl />
+</Description>
+      <EPDurl>https://www.wisaplywood.com/siteassets/documents/certificates/rts-epd-21-19_upm_plywood_wisa_spruce__uncoated_signed.pdf</EPDurl>
       <Density>480</Density>
       <ECI>0.368416667</ECI>
       <getVolumeECI>176.84000016</getVolumeECI>
       <ECI_A1A3>-1.352458333</ECI_A1A3>
       <ECI_A4>0.078541667</ECI_A4>
       <ECI_A5>0.090833333</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>1.5514999999999999</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -2654,11 +2657,11 @@ The vehicle will be fully loaded using: 0 kg
 Vehicle Fuel Consumption
 The vehicle consumes: 0 l/km
 Carbon contents of  = 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
 To Produce one l of  you need: 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
-∞ + ∞ = ∞ gCO₂/km
-∞ gCO₂/km x 0 km = NaN gCO₂/trip
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
+Infinity + Infinity = Infinity gCO₂/km
+Infinity gCO₂/km x 0 km = NaN gCO₂/trip
 NaN / 1000  = NaN kgCO₂/trip
 NaN kgCO₂/trip / 0 kg = NaN gCO₂/kg
 
@@ -2698,7 +2701,7 @@ Total emission per kg: NaN / NaN = NaN kgCO₂/kg
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -2709,9 +2712,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -2791,13 +2794,13 @@ Total costs are: 0 + 0 + 0 + 1.5515 + 0
       <ECI_A1A3_Override>true</ECI_A1A3_Override>
       <ECI_A4_Override>true</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>false</ECI_B1B5_Override>
+      <ECI_B1B5_Override>true</ECI_B1B5_Override>
       <ECI_C1C4_Override>false</ECI_C1C4_Override>
       <ECI_D_Override>false</ECI_D_Override>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>22487</Id>
+      <Id>22605</Id>
       <Name>Stora Enso CLT EPD</Name>
       <Category>Timber</Category>
       <Description>CLT Values based on Stora Enso's EPD
@@ -2808,7 +2811,7 @@ https://www.storaenso.com/-/media/documents/download-center/certificates/wood-pr
       <ECI_A1A3>-1.472916667</ECI_A1A3>
       <ECI_A4>0.08</ECI_A4>
       <ECI_A5>0.030833333</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>1.592879167</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -2840,11 +2843,11 @@ The vehicle will be fully loaded using: 0 kg
 Vehicle Fuel Consumption
 The vehicle consumes: 0 l/km
 Carbon contents of  = 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
 To Produce one l of  you need: 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
-∞ + ∞ = ∞ gCO₂/km
-∞ gCO₂/km x 0 km = NaN gCO₂/trip
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
+Infinity + Infinity = Infinity gCO₂/km
+Infinity gCO₂/km x 0 km = NaN gCO₂/trip
 NaN / 1000  = NaN kgCO₂/trip
 NaN kgCO₂/trip / 0 kg = NaN gCO₂/kg
 
@@ -2884,7 +2887,7 @@ Total emission per kg: NaN / NaN = NaN kgCO₂/kg
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -2909,16 +2912,16 @@ This element will therefor be : 1times replaced.
         <assetType />
       </materialB1B5Properties>
       <materialC1C4Properties>
-        <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
+        <calcResult>This calculation create a CO2 per kg value based on the given parameters.
 
 
 [C1] Demolition carbon cost: 
-3.4kgCO₂e/m2  x 1kg/m2 = 0 kgCO₂/kg 
+3.4kgCo2e/m2  x 1kg/m2 = 0 kgCO2/kg 
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
 Total costs are: 3.4 + 0 + 0 + 0 + 0
-= 3.4 kgCO₂/kg 
+= 3.4 kgCO2/kg 
 </calcResult>
         <propertyName />
         <c1density>1</c1density>
@@ -2979,7 +2982,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>26075</Id>
+      <Id>28702</Id>
       <Name>Timber - CLT</Name>
       <Category>Timber</Category>
       <Description>CLT Values based on Stora Enso's EPD
@@ -2991,7 +2994,7 @@ https://www.storaenso.com/-/media/documents/download-center/certificates/wood-pr
       <ECI_A1A3>-1.472916667</ECI_A1A3>
       <ECI_A4>0.08</ECI_A4>
       <ECI_A5>0.030833333</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>1.592879167</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -3023,11 +3026,11 @@ The vehicle will be fully loaded using: 0 kg
 Vehicle Fuel Consumption
 The vehicle consumes: 0 l/km
 Carbon contents of  = 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
 To Produce one l of  you need: 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
-∞ + ∞ = ∞ gCO₂/km
-∞ gCO₂/km x 0 km = NaN gCO₂/trip
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
+Infinity + Infinity = Infinity gCO₂/km
+Infinity gCO₂/km x 0 km = NaN gCO₂/trip
 NaN / 1000  = NaN kgCO₂/trip
 NaN kgCO₂/trip / 0 kg = NaN gCO₂/kg
 
@@ -3067,7 +3070,7 @@ Total emission per kg: NaN / NaN = NaN kgCO₂/kg
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -3092,16 +3095,16 @@ This element will therefor be : 1times replaced.
         <assetType />
       </materialB1B5Properties>
       <materialC1C4Properties>
-        <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
+        <calcResult>This calculation create a CO2 per kg value based on the given parameters.
 
 
 [C1] Demolition carbon cost: 
-3.4kgCO₂e/m2  x 1kg/m2 = 0 kgCO₂/kg 
+3.4kgCo2e/m2  x 1kg/m2 = 0 kgCO2/kg 
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
 Total costs are: 3.4 + 0 + 0 + 0 + 0
-= 3.4 kgCO₂/kg 
+= 3.4 kgCO2/kg 
 </calcResult>
         <propertyName />
         <c1density>1</c1density>
@@ -3162,17 +3165,18 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>24438</Id>
+      <Id>26207</Id>
       <Name>Glass - General</Name>
       <Category>Other</Category>
-      <Description>General Values for Glass</Description>
+      <Description>Generic Values for Glass</Description>
+      <EPDurl />
       <Density>2500</Density>
       <ECI>2.4660038605367967</ECI>
       <getVolumeECI>6165.0096513419912</getVolumeECI>
       <ECI_A1A3>1.436967064</ECI_A1A3>
       <ECI_A4>0.0090367965367965358</ECI_A4>
       <ECI_A5>0.02</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>1</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -3255,14 +3259,14 @@ Set Value by user as: 0.02kgCO₂/kg
         <value>0.02</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
-        <buildingdesignlife>1</buildingdesignlife>
+        <elementdesignlife>50</elementdesignlife>
+        <buildingdesignlife>50</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
-The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+One element of this material will last: 50 year
+The building is intended to last: 50year
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -3271,7 +3275,7 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Glazed cladding/Curtain walling</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
@@ -3348,7 +3352,7 @@ Total costs are: 0 + 0 + 0 + 1 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>28026</Id>
+      <Id>27843</Id>
       <Name>Insulation - Rockwool</Name>
       <Category>Other</Category>
       <Description>Based on EDP
@@ -3359,7 +3363,7 @@ https://www.rockwool.com/siteassets/o2-rockwool/documentation/epd/rockwool-stone
       <ECI_A1A3>0.885135135</ECI_A1A3>
       <ECI_A4>0.287162162</ECI_A4>
       <ECI_A5>0.202702703</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.005060811</ECI_C1C4>
       <ECI_D>-0.005236486</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -3391,11 +3395,11 @@ The vehicle will be fully loaded using: 0 kg
 Vehicle Fuel Consumption
 The vehicle consumes: 0 l/km
 Carbon contents of  = 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
 To Produce one l of  you need: 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
-∞ + ∞ = ∞ gCO₂/km
-∞ gCO₂/km x 0 km = NaN gCO₂/trip
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
+Infinity + Infinity = Infinity gCO₂/km
+Infinity gCO₂/km x 0 km = NaN gCO₂/trip
 NaN / 1000  = NaN kgCO₂/trip
 NaN kgCO₂/trip / 0 kg = NaN gCO₂/kg
 
@@ -3435,20 +3439,20 @@ Total emission per kg: NaN / NaN = NaN kgCO₂/kg
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
-        <buildingdesignlife>1</buildingdesignlife>
+        <elementdesignlife>50</elementdesignlife>
+        <buildingdesignlife>50</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
-The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+One element of this material will last: 50 year
+The building is intended to last: 50year
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -3457,19 +3461,19 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
-        <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
+        <calcResult>This calculation create a CO2 per kg value based on the given parameters.
 
 
 [C1] Demolition carbon cost: 
-3.4kgCO₂e/m2  x 1kg/m2 = 0 kgCO₂/kg 
+3.4kgCo2e/m2  x 1kg/m2 = 0 kgCO2/kg 
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
 Total costs are: 3.4 + 0 + 0 + 0 + 0
-= 3.4 kgCO₂/kg 
+= 3.4 kgCO2/kg 
 </calcResult>
         <propertyName />
         <c1density>1</c1density>
@@ -3530,7 +3534,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>21614</Id>
+      <Id>25153</Id>
       <Name>Aluminum - Generic</Name>
       <Category>Steel</Category>
       <Description>Generic Aluminium Material</Description>
@@ -3541,7 +3545,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_A1A3>6.668717531</ECI_A1A3>
       <ECI_A4>0.021641086186540731</ECI_A4>
       <ECI_A5>0.02</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.00195</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -3551,7 +3555,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
         <Group>ECI</Group>
         <Category>Aluminium</Category>
         <Name>Aluminium General, European Mix, Inc Imports</Name>
-        <Description>This data has been derived from the world aluminium LCA's. They have produced LCA reports for Europe, North America and worldwide aluminium. Modelled at worldwide average scrap input of 31%, to avoid market distortions. Modelled with 25.6% extrusions, 55.7% rolled and 18.7% castings. Based upon European production and the import of aluminium consumed in Europe. Module D = -3.13 kg CO₂e per unit. EOL recovery rate of 95%, based upon DU Telft study of European construction sector. With a 2% material loss yield on the scrap recovered.</Description>
+        <Description>This data has been derived from the world aluminium LCA's. They have produced LCA reports for Europe, North America and worldwide aluminium. Modelled at worldwide average scrap input of 31%, to avoid market distortions. Modelled with 25.6% extrusions, 55.7% rolled and 18.7% castings. Based upon European production and the import of aluminium consumed in Europe. Module D = -3.13 kg CO2e per unit. EOL recovery rate of 95%, based upon DU Telft study of European construction sector. With a 2% material loss yield on the scrap recovered.</Description>
         <Density>2700</Density>
         <ECI_A1A3>6.668717531</ECI_A1A3>
       </materialA1A3Properties>
@@ -3618,7 +3622,7 @@ Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.021641086186540
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -3629,9 +3633,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -3717,7 +3721,7 @@ Total costs are: 0 + 0 + 0 + 0.00195 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>29978</Id>
+      <Id>27352</Id>
       <Name>Concrete - Precast</Name>
       <Category>Concrete</Category>
       <Description>No description provided</Description>
@@ -3728,7 +3732,7 @@ Total costs are: 0 + 0 + 0 + 0.00195 + 0
       <ECI_A1A3>0.248989145</ECI_A1A3>
       <ECI_A4>0.021641086186540731</ECI_A4>
       <ECI_A5>0.02</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.0526103896103896</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -3805,7 +3809,7 @@ Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.021641086186540
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -3816,9 +3820,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -3875,24 +3879,24 @@ The vehicle will be fully loaded using: 8000 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 200 km = 156883.116883117 gCO₂/trip
-156883.116883117 / 1000  = 156.883116883117 kgCO₂/trip
-156.883116883117 kgCO₂/trip / 8000 kg = 0.0196103896103896 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 200 km = 156883.116883117 gCO2/trip
+156883.116883117 / 1000  = 156.883116883117 kgCO2/trip
+156.883116883117 kgCO2/trip / 8000 kg = 0.0196103896103896 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 60000 kgCO₂
+Total carbon costs are estimated to be: 60000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 60000 / 250000 = 0.24 kgCO₂/km
-Total emission per trip: 0.24 x 200 = 48 kgCO₂/km
-Total emission per kg: 48 / 8000 = 0.006 kgCO₂/km
+Per km: 60000 / 250000 = 0.24 kgCO2/km
+Total emission per trip: 0.24 x 200 = 48 kgCO2/km
+Total emission per kg: 48 / 8000 = 0.006 kgCO2/km
 
-Total emission per kg: 156.883116883117 / 0.006 = 0.0256103896103896 kgCO₂/kg
+Total emission per kg: 156.883116883117 / 0.006 = 0.0256103896103896 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -3947,17 +3951,18 @@ Total emission per kg: 156.883116883117 / 0.006 = 0.0256103896103896 kgCO₂/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>23566</Id>
+      <Id>25114</Id>
       <Name>Timber Generic</Name>
       <Category>Timber</Category>
       <Description>No description provided</Description>
+      <EPDurl />
       <Density>480</Density>
       <ECI>0.37581785663308409</ECI>
       <getVolumeECI>180.39257118388036</getVolumeECI>
       <ECI_A1A3>-1.291860682</ECI_A1A3>
       <ECI_A4>0.1102092352092352</ECI_A4>
       <ECI_A5>0</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>1.5574693034238489</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -4035,7 +4040,7 @@ Total emission per kg: 313.766233766234 / 0.0648148148148148 = 0.110209235209235
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -4044,7 +4049,7 @@ Set Value by user as: 0kgCO₂/kg
         <elementdesignlife>1</elementdesignlife>
         <buildingdesignlife>1</buildingdesignlife>
         <calcResult>B1-B5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <B1>0</B1>
@@ -4102,24 +4107,24 @@ The vehicle will be fully loaded using: 22000 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 300 km = 235324.675324675 gCO₂/trip
-235324.675324675 / 1000  = 235.324675324675 kgCO₂/trip
-235.324675324675 kgCO₂/trip / 22000 kg = 0.0106965761511216 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 300 km = 235324.675324675 gCO2/trip
+235324.675324675 / 1000  = 235.324675324675 kgCO2/trip
+235.324675324675 kgCO2/trip / 22000 kg = 0.0106965761511216 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 300 = 336 kgCO₂/km
-Total emission per kg: 336 / 22000 = 0.0152727272727273 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 300 = 336 kgCO2/km
+Total emission per kg: 336 / 22000 = 0.0152727272727273 kgCO2/km
 
-Total emission per kg: 235.324675324675 / 0.0152727272727273 = 0.0259693034238489 kgCO₂/kg
+Total emission per kg: 235.324675324675 / 0.0152727272727273 = 0.0259693034238489 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -4164,7 +4169,7 @@ Total emission per kg: 235.324675324675 / 0.0152727272727273 = 0.025969303423848
         <name />
         <value>0</value>
         <calcResult>B1-B5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
       </materialDProperties>
       <ECI_A1A3_Override>false</ECI_A1A3_Override>
@@ -4176,7 +4181,7 @@ Set Value by user as: 0kgCO₂/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>21930</Id>
+      <Id>22335</Id>
       <Name>Concrete - Metaldeck</Name>
       <Category>Concrete</Category>
       <Description>No description provided</Description>
@@ -4187,7 +4192,7 @@ Set Value by user as: 0kgCO₂/kg
       <ECI_A1A3>0.053834916</ECI_A1A3>
       <ECI_A4>0.020920138888888891</ECI_A4>
       <ECI_A5>0.02</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.578</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -4253,7 +4258,7 @@ Total emission per kg: 201.333333333333 / 0.0078125 = 0.0209201388888889 kgCO₂
           <carboCostNew>150000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic concrete truck, a truck with a capacity of 8m�. It produces about 900g of CO₂ per km, Using 4.50 l/km. </description>
+          <description>A generic concrete truck, a truck with a capacity of 8m�. It produces about 900g of CO2 per km, Using 4.50 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -4265,20 +4270,20 @@ Total emission per kg: 201.333333333333 / 0.0078125 = 0.0209201388888889 kgCO₂
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
-        <buildingdesignlife>1</buildingdesignlife>
+        <elementdesignlife>50</elementdesignlife>
+        <buildingdesignlife>50</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
-The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+One element of this material will last: 50 year
+The building is intended to last: 50year
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -4287,7 +4292,7 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
@@ -4364,7 +4369,7 @@ Total costs are: 0 + 0 + 0 + 0.578 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>25518</Id>
+      <Id>28431</Id>
       <Name>Concrete - Water resistent</Name>
       <Category>Concrete</Category>
       <Description>No description provided</Description>
@@ -4375,7 +4380,7 @@ Total costs are: 0 + 0 + 0 + 0.578 + 0
       <ECI_A1A3>0.053834916</ECI_A1A3>
       <ECI_A4>0.020920138888888891</ECI_A4>
       <ECI_A5>0.02</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.0069999999999999993</ECI_C1C4>
       <ECI_D>0.2</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -4441,7 +4446,7 @@ Total emission per kg: 201.333333333333 / 0.0078125 = 0.0209201388888889 kgCO₂
           <carboCostNew>150000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic concrete truck, a truck with a capacity of 8m�. It produces about 900g of CO₂ per km, Using 4.50 l/km. </description>
+          <description>A generic concrete truck, a truck with a capacity of 8m�. It produces about 900g of CO2 per km, Using 4.50 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -4453,7 +4458,7 @@ Total emission per kg: 201.333333333333 / 0.0078125 = 0.0209201388888889 kgCO₂
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -4464,9 +4469,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -4552,18 +4557,18 @@ Total costs are: 0 + 0 + 0 + 0.007 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>29106</Id>
+      <Id>20940</Id>
       <Name>Concrete - CEM Free</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl />
       <Density>2400</Density>
-      <ECI>0.46280519480519478</ECI>
-      <getVolumeECI>1110.7324675324674</getVolumeECI>
-      <ECI_A1A3>0.2</ECI_A1A3>
+      <ECI>0.28280519480519478</ECI>
+      <getVolumeECI>678.73246753246747</getVolumeECI>
+      <ECI_A1A3>0.02</ECI_A1A3>
       <ECI_A4>0.012805194805194802</ECI_A4>
       <ECI_A5>0</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.25</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -4650,9 +4655,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -4664,16 +4669,16 @@ This element will therefor be : 1times replaced.
         <assetType />
       </materialB1B5Properties>
       <materialC1C4Properties>
-        <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
+        <calcResult>This calculation create a CO2 per kg value based on the given parameters.
 
 
 [C1] Demolition carbon cost: 
-3.4kgCO₂e/m2  x 1kg/m2 = 0 kgCO₂/kg 
+3.4kgCo2e/m2  x 1kg/m2 = 0 kgCO2/kg 
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
 Total costs are: 3.4 + 0 + 0 + 0 + 0
-= 3.4 kgCO₂/kg 
+= 3.4 kgCO2/kg 
 </calcResult>
         <propertyName />
         <c1density>1</c1density>
@@ -4734,7 +4739,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>27470</Id>
+      <Id>23265</Id>
       <Name>Masonry - FOAMGLAS - EPD</Name>
       <Category>Bricks &amp; Block</Category>
       <Description>T4+ Class FOAMGLAS based on EPD</Description>
@@ -4745,7 +4750,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_A1A3>1.32</ECI_A1A3>
       <ECI_A4>0.0168</ECI_A4>
       <ECI_A5>0.0121</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.0135</ECI_C1C4>
       <ECI_D>-0.00536</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -4777,11 +4782,11 @@ The vehicle will be fully loaded using: 0 kg
 Vehicle Fuel Consumption
 The vehicle consumes: 0 l/km
 Carbon contents of  = 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
 To Produce one l of  you need: 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
-∞ + ∞ = ∞ gCO₂/km
-∞ gCO₂/km x 0 km = NaN gCO₂/trip
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
+Infinity + Infinity = Infinity gCO₂/km
+Infinity gCO₂/km x 0 km = NaN gCO₂/trip
 NaN / 1000  = NaN kgCO₂/trip
 NaN kgCO₂/trip / 0 kg = NaN gCO₂/kg
 
@@ -4821,20 +4826,20 @@ Total emission per kg: NaN / NaN = NaN kgCO₂/kg
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
-        <buildingdesignlife>1</buildingdesignlife>
+        <elementdesignlife>50</elementdesignlife>
+        <buildingdesignlife>50</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
-The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+One element of this material will last: 50 year
+The building is intended to last: 50year
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -4843,19 +4848,19 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
-        <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
+        <calcResult>This calculation create a CO2 per kg value based on the given parameters.
 
 
 [C1] Demolition carbon cost: 
-3.4kgCO₂e/m2  x 1kg/m2 = 0 kgCO₂/kg 
+3.4kgCo2e/m2  x 1kg/m2 = 0 kgCO2/kg 
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
 Total costs are: 3.4 + 0 + 0 + 0 + 0
-= 3.4 kgCO₂/kg 
+= 3.4 kgCO2/kg 
 </calcResult>
         <propertyName />
         <c1density>1</c1density>
@@ -4910,13 +4915,13 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_A1A3_Override>true</ECI_A1A3_Override>
       <ECI_A4_Override>true</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>true</ECI_C1C4_Override>
       <ECI_D_Override>true</ECI_D_Override>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>21058</Id>
+      <Id>28741</Id>
       <Name>Hardcore</Name>
       <Category>Stone</Category>
       <Description />
@@ -4927,7 +4932,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_A1A3>0.05</ECI_A1A3>
       <ECI_A4>0</ECI_A4>
       <ECI_A5>0.05</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -4960,11 +4965,11 @@ The vehicle will be fully loaded using: 0 kg
 Vehicle Fuel Consumption
 The vehicle consumes: 0 l/km
 Carbon contents of  = 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
 To Produce one l of  you need: 1 CO₂/l
-We will therfore use: (1 CO₂/l x 1000) /0 km/l = ∞ gCO₂/km
-∞ + ∞ = ∞ gCO₂/km
-∞ gCO₂/km x 0 km = NaN gCO₂/trip
+We will therfore use: (1 CO₂/l x 1000) /0 km/l = Infinity gCO₂/km
+Infinity + Infinity = Infinity gCO₂/km
+Infinity gCO₂/km x 0 km = NaN gCO₂/trip
 NaN / 1000  = NaN kgCO₂/trip
 NaN kgCO₂/trip / 0 kg = NaN gCO₂/kg
 
@@ -5004,7 +5009,7 @@ Total emission per kg: NaN / NaN = NaN kgCO₂/kg
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
@@ -5015,9 +5020,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -5029,16 +5034,16 @@ This element will therefor be : 1times replaced.
         <assetType />
       </materialB1B5Properties>
       <materialC1C4Properties>
-        <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
+        <calcResult>This calculation create a CO2 per kg value based on the given parameters.
 
 
 [C1] Demolition carbon cost: 
-3.4kgCO₂e/m2  x 1kg/m2 = 0 kgCO₂/kg 
+3.4kgCo2e/m2  x 1kg/m2 = 0 kgCO2/kg 
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
 Total costs are: 3.4 + 0 + 0 + 0 + 0
-= 3.4 kgCO₂/kg 
+= 3.4 kgCO2/kg 
 </calcResult>
         <propertyName />
         <c1density>1</c1density>
@@ -5099,7 +5104,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>24646</Id>
+      <Id>29141</Id>
       <Name>Site - Sand</Name>
       <Category>Aggregates and Sand</Category>
       <Description />
@@ -5110,7 +5115,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_A1A3>0.007469645</ECI_A1A3>
       <ECI_A4>0.010820543093270366</ECI_A4>
       <ECI_A5>0</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.57857054309327038</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -5175,7 +5180,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
           <carboCostNew>280000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -5193,14 +5198,14 @@ Set Value by user as: 0kgCO₂/kg
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
-        <buildingdesignlife>1</buildingdesignlife>
+        <elementdesignlife>50</elementdesignlife>
+        <buildingdesignlife>50</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
-The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+One element of this material will last: 50 year
+The building is intended to last: 50year
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -5209,7 +5214,7 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
@@ -5257,24 +5262,24 @@ The vehicle will be fully loaded using: 17600 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
-78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 17600 kg = 0.004456906729634 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 100 km = 78441.5584415584 gCO2/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO2/trip
+78.4415584415584 kgCO2/trip / 17600 kg = 0.004456906729634 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
-Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 100 = 112 kgCO2/km
+Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO2/km
 
-Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO₂/kg
+Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -5290,7 +5295,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -5329,7 +5334,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>23010</Id>
+      <Id>25216</Id>
       <Name>Masonry Brick - Generic</Name>
       <Category>Bricks &amp; Block</Category>
       <Description>A Generic Brick material with mortar</Description>
@@ -5340,7 +5345,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_A1A3>0.213</ECI_A1A3>
       <ECI_A4>0.010820543093270366</ECI_A4>
       <ECI_A5>0.005</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.0198205430932704</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0.03</ECI_Mix>
@@ -5405,7 +5410,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
           <carboCostNew>280000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -5417,20 +5422,20 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
+        <elementdesignlife>50</elementdesignlife>
         <buildingdesignlife>1</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
+One element of this material will last: 50 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -5439,7 +5444,7 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
@@ -5482,24 +5487,24 @@ The vehicle will be fully loaded using: 17600 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
-78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 17600 kg = 0.004456906729634 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 100 km = 78441.5584415584 gCO2/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO2/trip
+78.4415584415584 kgCO2/trip / 17600 kg = 0.004456906729634 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
-Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 100 = 112 kgCO2/km
+Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO2/km
 
-Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO₂/kg
+Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -5548,13 +5553,13 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_A1A3_Override>false</ECI_A1A3_Override>
       <ECI_A4_Override>false</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>false</ECI_C1C4_Override>
       <ECI_D_Override>true</ECI_D_Override>
       <ECI_Mix_Info>Concrete - Mortar(0.15 m³/m³)</ECI_Mix_Info>
     </CarboMaterial>
     <CarboMaterial>
-      <Id>26598</Id>
+      <Id>29303</Id>
       <Name>Concrete - Ready Mix - Tarmac EPD</Name>
       <Category>Concrete</Category>
       <Description>This is a Ready mix concrete based on Tarmac's EPD</Description>
@@ -5565,7 +5570,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_A1A3>0.131666666666667</ECI_A1A3>
       <ECI_A4>0.00154166666666667</ECI_A4>
       <ECI_A5>0.0007625</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.01451</ECI_C1C4>
       <ECI_D>-0.00405833333333333</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -5589,7 +5594,7 @@ Transport Load = 22000 x 80 %
 The vehicle WILL return to its starting point empty
 The total distance = 100 km
 Summary: we are going to drive a  using Diesel 100 km 
-A full  can carry ∞ m3 (untill max load is reached)
+A full  can carry Infinity m3 (untill max load is reached)
 Or 0 kg (untill max volume is reached)
 We will use the volume capacity as a maximum threshold
 The vehicle will be fully loaded using: 96 m³
@@ -5604,7 +5609,7 @@ We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/
 680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
 784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
 78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 0 kg = ∞ gCO₂/kg
+78.4415584415584 kgCO₂/trip / 0 kg = Infinity gCO₂/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
@@ -5612,9 +5617,9 @@ Total carbon costs are estimated to be: 280000 kgCO₂
 On average this vehicle will go for: 250000 km
 Per km: 280000 / 250000 = 1.12 kgCO₂/km
 Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
-Total emission per kg: 112 / 0 = ∞ kgCO₂/km
+Total emission per kg: 112 / 0 = Infinity kgCO₂/km
 
-Total emission per kg: 78.4415584415584 / ∞ = ∞ kgCO₂/kg
+Total emission per kg: 78.4415584415584 / Infinity = Infinity kgCO₂/kg
 </calcResult>
         <name />
         <description />
@@ -5642,20 +5647,20 @@ Total emission per kg: 78.4415584415584 / ∞ = ∞ kgCO₂/kg
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
+        <elementdesignlife>50</elementdesignlife>
         <buildingdesignlife>1</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
+One element of this material will last: 50 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -5664,19 +5669,19 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
-        <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
+        <calcResult>This calculation create a CO2 per kg value based on the given parameters.
 
 
 [C1] Demolition carbon cost: 
-3.4kgCO₂e/m2  x 1kg/m2 = 0 kgCO₂/kg 
+3.4kgCo2e/m2  x 1kg/m2 = 0 kgCO2/kg 
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
 Total costs are: 3.4 + 0 + 0 + 0 + 0
-= 3.4 kgCO₂/kg 
+= 3.4 kgCO2/kg 
 </calcResult>
         <propertyName />
         <c1density>1</c1density>
@@ -5731,13 +5736,13 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_A1A3_Override>true</ECI_A1A3_Override>
       <ECI_A4_Override>true</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>true</ECI_C1C4_Override>
       <ECI_D_Override>true</ECI_D_Override>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>24962</Id>
+      <Id>22891</Id>
       <Name>Concrete - C32/40 - 70% GGBS</Name>
       <Category>Concrete</Category>
       <Description>A concrete mix based on ECI Tables, but using a 
@@ -5749,7 +5754,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_A1A3>0.063414755</ECI_A1A3>
       <ECI_A4>0.011863425925925927</ECI_A4>
       <ECI_A5>0.0007625</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.015656434474616288</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -5815,7 +5820,7 @@ Total emission per kg: 100.666666666667 / 0.003125 = 0.0118634259259259 kgCO₂/
           <carboCostNew>90000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO₂ per km, Using 4.00 l/km. </description>
+          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2 per km, Using 4.00 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -5827,20 +5832,20 @@ Total emission per kg: 100.666666666667 / 0.003125 = 0.0118634259259259 kgCO₂/
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
+        <elementdesignlife>50</elementdesignlife>
         <buildingdesignlife>1</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
+One element of this material will last: 50 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -5849,7 +5854,7 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
@@ -5892,24 +5897,24 @@ The vehicle will be fully loaded using: 22000 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
-78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 22000 kg = 0.0035655253837072 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 100 km = 78441.5584415584 gCO2/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO2/trip
+78.4415584415584 kgCO2/trip / 22000 kg = 0.0035655253837072 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
-Total emission per kg: 112 / 22000 = 0.00509090909090909 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 100 = 112 kgCO2/km
+Total emission per kg: 112 / 22000 = 0.00509090909090909 kgCO2/km
 
-Total emission per kg: 78.4415584415584 / 0.00509090909090909 = 0.00865643447461629 kgCO₂/kg
+Total emission per kg: 78.4415584415584 / 0.00509090909090909 = 0.00865643447461629 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -5958,13 +5963,13 @@ Total emission per kg: 78.4415584415584 / 0.00509090909090909 = 0.00865643447461
       <ECI_A1A3_Override>false</ECI_A1A3_Override>
       <ECI_A4_Override>false</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>false</ECI_C1C4_Override>
       <ECI_D_Override>true</ECI_D_Override>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>28550</Id>
+      <Id>23971</Id>
       <Name>Concrete - C32/40 - 50% GGBS</Name>
       <Category>Concrete</Category>
       <Description>A concrete mix based on ECI Tables, but using a 
@@ -5976,7 +5981,7 @@ Total emission per kg: 78.4415584415584 / 0.00509090909090909 = 0.00865643447461
       <ECI_A1A3>0.088802017</ECI_A1A3>
       <ECI_A4>0.00154166666666667</ECI_A4>
       <ECI_A5>0.0007625</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.0178205430932704</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -6001,7 +6006,7 @@ Transport Load = 22000 x 80 %
 The vehicle WILL return to its starting point empty
 The total distance = 100 km
 Summary: we are going to drive a  using Diesel 100 km 
-A full  can carry ∞ m3 (untill max load is reached)
+A full  can carry Infinity m3 (untill max load is reached)
 Or 0 kg (untill max volume is reached)
 We will use the volume capacity as a maximum threshold
 The vehicle will be fully loaded using: 96 m³
@@ -6016,7 +6021,7 @@ We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/
 680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
 784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
 78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 0 kg = ∞ gCO₂/kg
+78.4415584415584 kgCO₂/trip / 0 kg = Infinity gCO₂/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
@@ -6024,9 +6029,9 @@ Total carbon costs are estimated to be: 280000 kgCO₂
 On average this vehicle will go for: 250000 km
 Per km: 280000 / 250000 = 1.12 kgCO₂/km
 Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
-Total emission per kg: 112 / 0 = ∞ kgCO₂/km
+Total emission per kg: 112 / 0 = Infinity kgCO₂/km
 
-Total emission per kg: 78.4415584415584 / ∞ = ∞ kgCO₂/kg
+Total emission per kg: 78.4415584415584 / Infinity = Infinity kgCO₂/kg
 </calcResult>
         <name />
         <description />
@@ -6054,20 +6059,20 @@ Total emission per kg: 78.4415584415584 / ∞ = ∞ kgCO₂/kg
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
-        <buildingdesignlife>1</buildingdesignlife>
+        <elementdesignlife>50</elementdesignlife>
+        <buildingdesignlife>50</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
-The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+One element of this material will last: 50 year
+The building is intended to last: 50year
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -6076,7 +6081,7 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
@@ -6119,24 +6124,24 @@ The vehicle will be fully loaded using: 17600 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
-78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 17600 kg = 0.004456906729634 gCO₂/kg
+Carbon contents of Diesel = 2.62 CO2/l
+We will therfore use: (2.62 CO2/l x 1000) /3.85 km/l = 680.51948051948 gCO2/km
+To Produce one l of Diesel you need: 0.4 CO2/l
+We will therfore use: (0.4 CO2/l x 1000) /3.85 km/l = 103.896103896104 gCO2/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO2/km
+784.415584415584 gCO2/km x 100 km = 78441.5584415584 gCO2/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO2/trip
+78.4415584415584 kgCO2/trip / 17600 kg = 0.004456906729634 gCO2/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 280000 kgCO₂
+Total carbon costs are estimated to be: 280000 kgCO2
 On average this vehicle will go for: 250000 km
-Per km: 280000 / 250000 = 1.12 kgCO₂/km
-Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
-Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO₂/km
+Per km: 280000 / 250000 = 1.12 kgCO2/km
+Total emission per trip: 1.12 x 100 = 112 kgCO2/km
+Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO2/km
 
-Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO₂/kg
+Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO2/kg
 </calcResult>
           <name>Manual</name>
           <description />
@@ -6152,7 +6157,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -6185,13 +6190,13 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_A1A3_Override>false</ECI_A1A3_Override>
       <ECI_A4_Override>true</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>false</ECI_C1C4_Override>
       <ECI_D_Override>true</ECI_D_Override>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>22138</Id>
+      <Id>23201</Id>
       <Name>Metal - Tata Steel - Hollow Sections EPD</Name>
       <Category>Steel</Category>
       <Description>Metal Hollow Section Based on Tata Steel EPD</Description>
@@ -6202,7 +6207,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_A1A3>2.5</ECI_A1A3>
       <ECI_A4>0.010820543093270366</ECI_A4>
       <ECI_A5>0</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.0138161</ECI_C1C4>
       <ECI_D>-1.53</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -6266,7 +6271,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
           <carboCostNew>280000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -6278,20 +6283,20 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
-        <buildingdesignlife>1</buildingdesignlife>
+        <elementdesignlife>50</elementdesignlife>
+        <buildingdesignlife>50</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
-The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+One element of this material will last: 50 year
+The building is intended to last: 50year
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -6300,19 +6305,19 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
-        <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
+        <calcResult>This calculation create a CO2 per kg value based on the given parameters.
 
 
 [C1] Demolition carbon cost: 
-3.4kgCO₂e/m2  x 1kg/m2 = 0 kgCO₂/kg 
+3.4kgCo2e/m2  x 1kg/m2 = 0 kgCO2/kg 
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
 Total costs are: 3.4 + 0 + 0 + 0 + 0
-= 3.4 kgCO₂/kg 
+= 3.4 kgCO2/kg 
 </calcResult>
         <propertyName />
         <c1density>1</c1density>
@@ -6367,26 +6372,26 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_A1A3_Override>true</ECI_A1A3_Override>
       <ECI_A4_Override>false</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>true</ECI_C1C4_Override>
       <ECI_D_Override>true</ECI_D_Override>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>20502</Id>
+      <Id>24843</Id>
       <Name>Concrete - C40/50 - 50% GGBS</Name>
       <Category>Concrete</Category>
       <Description>A concrete mix based on ECI Tables, but using a 
 50% GGBS cement mix for C40/50</Description>
       <EPDurl />
       <Density>2400</Density>
-      <ECI>0.12167260575993706</ECI>
-      <getVolumeECI>292.01425382384895</getVolumeECI>
+      <ECI>0.11950849714128295</ECI>
+      <getVolumeECI>286.8203931390791</getVolumeECI>
       <ECI_A1A3>0.101547896</ECI_A1A3>
       <ECI_A4>0.00154166666666667</ECI_A4>
       <ECI_A5>0.0007625</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
-      <ECI_C1C4>0.0178205430932704</ECI_C1C4>
+      <ECI_B1B5>0</ECI_B1B5>
+      <ECI_C1C4>0.015656434474616288</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
       <isLocked>false</isLocked>
@@ -6410,7 +6415,7 @@ Transport Load = 22000 x 80 %
 The vehicle WILL return to its starting point empty
 The total distance = 100 km
 Summary: we are going to drive a  using Diesel 100 km 
-A full  can carry ∞ m3 (untill max load is reached)
+A full  can carry Infinity m3 (untill max load is reached)
 Or 0 kg (untill max volume is reached)
 We will use the volume capacity as a maximum threshold
 The vehicle will be fully loaded using: 96 m³
@@ -6425,7 +6430,7 @@ We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/
 680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
 784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
 78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 0 kg = ∞ gCO₂/kg
+78.4415584415584 kgCO₂/trip / 0 kg = Infinity gCO₂/kg
 
 Build cost
 Each vehicle needs to be build, and therfor its cabon costs need to be included
@@ -6433,9 +6438,9 @@ Total carbon costs are estimated to be: 280000 kgCO₂
 On average this vehicle will go for: 250000 km
 Per km: 280000 / 250000 = 1.12 kgCO₂/km
 Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
-Total emission per kg: 112 / 0 = ∞ kgCO₂/km
+Total emission per kg: 112 / 0 = Infinity kgCO₂/km
 
-Total emission per kg: 78.4415584415584 / ∞ = ∞ kgCO₂/kg
+Total emission per kg: 78.4415584415584 / Infinity = Infinity kgCO₂/kg
 </calcResult>
         <name />
         <description />
@@ -6463,20 +6468,20 @@ Total emission per kg: 78.4415584415584 / ∞ = ∞ kgCO₂/kg
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
+        <elementdesignlife>50</elementdesignlife>
         <buildingdesignlife>1</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
+One element of this material will last: 50 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -6485,14 +6490,14 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
 
 
 [C2] Transport carbon cost: 
-0.0108205430932704 kgCO₂e/m2 
+0.00865643447461629 kgCO₂e/m2 
 
 [C4] Disposal carbon costs: 
 [C4] Incinerator costs is: 0 x 0 % = 0 kgCO₂/kg 
@@ -6503,8 +6508,8 @@ This element will therefor be : 1times replaced.
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
-Total costs are: 0 + 0.0108205430932704 + 0 + 0.007 + 0
-= 0.0178205430932704 kgCO₂/kg 
+Total costs are: 0 + 0.00865643447461629 + 0 + 0.007 + 0
+= 0.0156564344746163 kgCO₂/kg 
 </calcResult>
         <propertyName />
         <c1density>0</c1density>
@@ -6526,7 +6531,7 @@ Total costs are: 0 + 0.0108205430932704 + 0 + 0.007 + 0
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -6536,7 +6541,7 @@ Total costs are: 0 + 0.0108205430932704 + 0 + 0.007 + 0
           </vehicleFuel>
           <value>0.010820543093270366</value>
         </c2Properties>
-        <c2Value>0.0108205430932704</c2Value>
+        <c2Value>0.00865643447461629</c2Value>
         <c3Value>0</c3Value>
         <c4DisposalName>Concrete</c4DisposalName>
         <c4landfP>25</c4landfP>
@@ -6549,7 +6554,7 @@ Total costs are: 0 + 0.0108205430932704 + 0 + 0.007 + 0
         <c4reUseV>0.005</c4reUseV>
         <c4reUseResult>0</c4reUseResult>
         <other>0</other>
-        <value>0.0178205430932704</value>
+        <value>0.015656434474616288</value>
       </materialC1C4Properties>
       <materialDProperties>
         <name />
@@ -6559,13 +6564,13 @@ Total costs are: 0 + 0.0108205430932704 + 0 + 0.007 + 0
       <ECI_A1A3_Override>false</ECI_A1A3_Override>
       <ECI_A4_Override>true</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>false</ECI_C1C4_Override>
       <ECI_D_Override>true</ECI_D_Override>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>24090</Id>
+      <Id>26480</Id>
       <Name>Concrete - C40/50 - 70% GGBS</Name>
       <Category>Concrete</Category>
       <Description>A concrete mix based on ECI Tables, but using a 
@@ -6577,7 +6582,7 @@ Total costs are: 0 + 0.0108205430932704 + 0 + 0.007 + 0
       <ECI_A1A3>0.071890992</ECI_A1A3>
       <ECI_A4>0.011863425925925927</ECI_A4>
       <ECI_A5>0.0007625</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.015656434474616288</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -6643,7 +6648,7 @@ Total emission per kg: 100.666666666667 / 0.003125 = 0.0118634259259259 kgCO₂/
           <carboCostNew>90000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO₂ per km, Using 4.00 l/km. </description>
+          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2 per km, Using 4.00 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -6655,20 +6660,20 @@ Total emission per kg: 100.666666666667 / 0.003125 = 0.0118634259259259 kgCO₂/
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
+        <elementdesignlife>50</elementdesignlife>
         <buildingdesignlife>1</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
+One element of this material will last: 50 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -6677,7 +6682,7 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
@@ -6751,13 +6756,13 @@ Total costs are: 0 + 0.00865643447461629 + 0 + 0.007 + 0
       <ECI_A1A3_Override>false</ECI_A1A3_Override>
       <ECI_A4_Override>false</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>false</ECI_C1C4_Override>
       <ECI_D_Override>true</ECI_D_Override>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>27678</Id>
+      <Id>21249</Id>
       <Name>Metal - Galvanised Steel</Name>
       <Category>Steel</Category>
       <Description>A generic hot rolled galvanised steel beam</Description>
@@ -6768,7 +6773,7 @@ Total costs are: 0 + 0.00865643447461629 + 0 + 0.007 + 0
       <ECI_A1A3>2.76</ECI_A1A3>
       <ECI_A4>0.010820543093270366</ECI_A4>
       <ECI_A5>0</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.011</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0</ECI_Mix>
@@ -6778,7 +6783,7 @@ Total costs are: 0 + 0.00865643447461629 + 0 + 0.007 + 0
         <Group>ECI</Group>
         <Category>Steel</Category>
         <Name>Steel : Steel, hot-dip galvanized steel</Name>
-        <Description>World average steel. Obtained by passing cold rolled coil through a molten zinc bath, in order to coat the steel with a thin layer of zinc to provide corrosion resistance. It can be found on the market in coil or in sheets and is further processed into finished products by the manufacturers. Hot Dip Galvanized Steel features excellent forming properties, paintability, weldability, and is suitable for fabrication by forming, pressing and bending. Applications include domestic applications, building applications (e.g. wall elements, roofing applications), automotive applications (e.g. body in white for vehicles underbody auto parts), lighting fixtures, drums and various kinds of sections applications, profiled sheets, etc. Typical thickness between 0.3 - 3 mm. Typical width between 600 - 2100 mm. System expansion was used on the steel, e.g. for blast furnace slag and other co-products. The influence of system expansion to the GWP for steel products is 3 to 7% lower GWP.  Contact Worldsteel for more information. At an EOL recovery rate of 85%. Module D impact of -1.32 kg CO₂e per kg ('-' magnitude is a benefit, '+' magnitude a burden). This gives a net life cycle inc Mod D, of 1.44 kg CO₂e per kg.</Description>
+        <Description>World average steel. Obtained by passing cold rolled coil through a molten zinc bath, in order to coat the steel with a thin layer of zinc to provide corrosion resistance. It can be found on the market in coil or in sheets and is further processed into finished products by the manufacturers. Hot Dip Galvanized Steel features excellent forming properties, paintability, weldability, and is suitable for fabrication by forming, pressing and bending. Applications include domestic applications, building applications (e.g. wall elements, roofing applications), automotive applications (e.g. body in white for vehicles underbody auto parts), lighting fixtures, drums and various kinds of sections applications, profiled sheets, etc. Typical thickness between 0.3 - 3 mm. Typical width between 600 - 2100 mm. System expansion was used on the steel, e.g. for blast furnace slag and other co-products. The influence of system expansion to the GWP for steel products is 3 to 7% lower GWP.  Contact Worldsteel for more information. At an EOL recovery rate of 85%. Module D impact of -1.32 kg CO2e per kg ('-' magnitude is a benefit, '+' magnitude a burden). This gives a net life cycle inc Mod D, of 1.44 kg CO2e per kg.</Description>
         <Density>7850</Density>
         <ECI_A1A3>2.76</ECI_A1A3>
       </materialA1A3Properties>
@@ -6833,7 +6838,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
           <carboCostNew>280000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -6856,9 +6861,9 @@ Set Value by user as: 0kgCO₂/kg
         <calcResult>B1-B5 calculation:
 One element of this material will last: 1 year
 The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>1 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -6949,7 +6954,7 @@ Total costs are: 0 + 0 + 0.002 + 0.009 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>26042</Id>
+      <Id>26853</Id>
       <Name>Masonry Blockwork - High Density</Name>
       <Category>Bricks &amp; Block</Category>
       <Description>A Generic Brick material with mortar</Description>
@@ -6960,7 +6965,7 @@ Total costs are: 0 + 0 + 0.002 + 0.009 + 0
       <ECI_A1A3>0.09308795</ECI_A1A3>
       <ECI_A4>0.010820543093270366</ECI_A4>
       <ECI_A5>0.005</ECI_A5>
-      <ECI_B1B5>1</ECI_B1B5>
+      <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.0198205430932704</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Mix>0.02</ECI_Mix>
@@ -7025,7 +7030,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
           <carboCostNew>280000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -7037,20 +7042,20 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
+Set Value by user as: 0kgCo2/kg
 </calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>
       <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
-        <buildingdesignlife>1</buildingdesignlife>
+        <elementdesignlife>50</elementdesignlife>
+        <buildingdesignlife>50</buildingdesignlife>
         <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
-The building is intended to last: 1year
-This element will therefor be : 1times replaced.
+One element of this material will last: 50 year
+The building is intended to last: 50year
+This element will therefor be : 1 time(s) created.
 </calcResult>
-        <name />
+        <name>50 years design life , 1 time(s) created</name>
         <B1>0</B1>
         <B2>0</B2>
         <B3>0</B3>
@@ -7059,7 +7064,7 @@ This element will therefor be : 1times replaced.
         <B6>0</B6>
         <B7>0</B7>
         <totalValue>0</totalValue>
-        <assetType />
+        <assetType>Structure</assetType>
       </materialB1B5Properties>
       <materialC1C4Properties>
         <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
@@ -7133,10 +7138,676 @@ Total costs are: 0 + 0.0108205430932704 + 0 + 0.009 + 0
       <ECI_A1A3_Override>false</ECI_A1A3_Override>
       <ECI_A4_Override>false</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
-      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
       <ECI_C1C4_Override>false</ECI_C1C4_Override>
       <ECI_D_Override>true</ECI_D_Override>
       <ECI_Mix_Info>Concrete - Mortar(0.15 m³/m³)</ECI_Mix_Info>
+    </CarboMaterial>
+    <CarboMaterial>
+      <Id>22303</Id>
+      <Name>Polystyrene</Name>
+      <Category>Other</Category>
+      <Description />
+      <EPDurl>https://www.isover.se/sites/isover.se/files/assets/documents/epd_xps.pdf</EPDurl>
+      <Density>33.7</Density>
+      <ECI>4.7145400593471765</ECI>
+      <getVolumeECI>158.87999999999985</getVolumeECI>
+      <ECI_A1A3>2.80118694362018</ECI_A1A3>
+      <ECI_A4>0.0839762611275964</ECI_A4>
+      <ECI_A5>0</ECI_A5>
+      <ECI_B1B5>0</ECI_B1B5>
+      <ECI_C1C4>3.39970326409495</ECI_C1C4>
+      <ECI_D>-1.57032640949555</ECI_D>
+      <ECI_Mix>0</ECI_Mix>
+      <isLocked>false</isLocked>
+      <materialA1A3Properties>
+        <Id>2548</Id>
+        <Group>ECI</Group>
+        <Category>Other</Category>
+        <Name>Insulation : Polystyrene</Name>
+        <Description>see plastics</Description>
+        <Density>0</Density>
+        <ECI_A1A3>3.43</ECI_A1A3>
+      </materialA1A3Properties>
+      <materiaA4Properties>
+        <calcResult>Calculation to get transport value: 
+Distance to site = 50
+Material Density = 32
+Empty run =80
+
+Transport Density = 32 x 80 % 
+Transport Load = 22000 x 80 % 
+The vehicle WILL return to its starting point empty
+The total distance = 100 km
+Summary: we are going to drive a  using Diesel 100 km 
+A full  can carry 859.375 m3 (untill max load is reached)
+Or 2457.6 kg (untill max volume is reached)
+We will use the volume capacity as a maximum threshold
+The vehicle will be fully loaded using: 96 m³
+The vehicle be carrying: 2457.6 kg/trip
+
+Vehicle Fuel Consumption
+The vehicle consumes: 3.85 l/km
+Carbon contents of Diesel = 2.62 CO₂/l
+We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
+To Produce one l of Diesel you need: 0.4 CO₂/l
+We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
+784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
+78.4415584415584 kgCO₂/trip / 2457.6 kg = 0.0319179518398268 gCO₂/kg
+
+Build cost
+Each vehicle needs to be build, and therfor its cabon costs need to be included
+Total carbon costs are estimated to be: 280000 kgCO₂
+On average this vehicle will go for: 250000 km
+Per km: 280000 / 250000 = 1.12 kgCO₂/km
+Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
+Total emission per kg: 112 / 2457.6 = 0.0455729166666667 kgCO₂/km
+
+Total emission per kg: 78.4415584415584 / 0.0455729166666667 = 0.0774908685064935 kgCO₂/kg
+</calcResult>
+        <name />
+        <description />
+        <distanceToSite>50</distanceToSite>
+        <materialDensity>32</materialDensity>
+        <emptyRun>80</emptyRun>
+        <emptyReturn>true</emptyReturn>
+        <vehicleSettings>
+          <name>Truck</name>
+          <maxVolume>96</maxVolume>
+          <maxLoad>22000</maxLoad>
+          <kmPer>3.85</kmPer>
+          <carboCostNew>280000</carboCostNew>
+          <totalDistance>250000</totalDistance>
+          <defaultFuel>Diesel</defaultFuel>
+          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m³. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+        </vehicleSettings>
+        <vehicleFuel>
+          <name>Diesel</name>
+          <emission>2.62</emission>
+          <production>0.4</production>
+          <unit>l</unit>
+        </vehicleFuel>
+        <value>0.07749086850649349</value>
+      </materiaA4Properties>
+      <materialA5Properties>
+        <calcResult>A5 calculation to be implemented 
+Set Value by user as: 0.01kgCO₂/kg
+</calcResult>
+        <name>Calculated</name>
+        <value>0.01</value>
+      </materialA5Properties>
+      <materialB1B5Properties>
+        <elementdesignlife>50</elementdesignlife>
+        <buildingdesignlife>50</buildingdesignlife>
+        <calcResult>B1-B5 calculation:
+One element of this material will last: 50 year
+The building is intended to last: 50year
+This element will therefor be : 1 time(s) created.
+</calcResult>
+        <name>50 years design life , 1 time(s) created</name>
+        <B1>0</B1>
+        <B2>0</B2>
+        <B3>0</B3>
+        <B4>1</B4>
+        <B5>0</B5>
+        <B6>0</B6>
+        <B7>0</B7>
+        <totalValue>0</totalValue>
+        <assetType />
+      </materialB1B5Properties>
+      <materialC1C4Properties>
+        <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
+
+
+[C4] Disposal carbon costs: 
+[C4] Incinerator costs is: 3.43 x 0 % = 0 kgCO₂/kg 
+[C4] Landfill costs is: 0.013 x 50 % = 0.0065 kgCO₂/kg 
+[C4] Re-use costs is: 0.005 x 50 % = 0.0025 kgCO₂/kg 
+
+[C4] total cost is: 0 + 0.0065 + 0.0025 = 0.009 kgCO₂/kg 
+
+[C4] Disposal carbon costs: 
+Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
+Total costs are: 0 + 0 + 0 + 0.009 + 0
+= 0.009 kgCO₂/kg 
+</calcResult>
+        <propertyName />
+        <c1density>0</c1density>
+        <c1BaseValue>3.4</c1BaseValue>
+        <c1Value>0</c1Value>
+        <c2Properties>
+          <calcResult>Calculation to get transport value: 
+Distance to site = 50
+Material Density = 500
+Empty run =80
+
+Transport Density = 500 x 80 % 
+Transport Load = 22000 x 80 % 
+The vehicle WILL return to its starting point empty
+The total distance = 100 km
+Summary: we are going to drive a  using Diesel 100 km 
+A full  can carry 55 m3 (untill max load is reached)
+Or 38400 kg (untill max volume is reached)
+We will use the load capacity as a maximum threshold
+The vehicle will be fully loaded using: 17600 kg
+
+Vehicle Fuel Consumption
+The vehicle consumes: 3.85 l/km
+Carbon contents of Diesel = 2.62 CO₂/l
+We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
+To Produce one l of Diesel you need: 0.4 CO₂/l
+We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
+784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
+78.4415584415584 kgCO₂/trip / 17600 kg = 0.004456906729634 gCO₂/kg
+
+Build cost
+Each vehicle needs to be build, and therfor its cabon costs need to be included
+Total carbon costs are estimated to be: 280000 kgCO₂
+On average this vehicle will go for: 250000 km
+Per km: 280000 / 250000 = 1.12 kgCO₂/km
+Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
+Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO₂/km
+
+Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO₂/kg
+</calcResult>
+          <name>Manual</name>
+          <description />
+          <distanceToSite>50</distanceToSite>
+          <materialDensity>500</materialDensity>
+          <emptyRun>80</emptyRun>
+          <emptyReturn>true</emptyReturn>
+          <vehicleSettings>
+            <name>Truck</name>
+            <maxVolume>96</maxVolume>
+            <maxLoad>22000</maxLoad>
+            <kmPer>3.85</kmPer>
+            <carboCostNew>280000</carboCostNew>
+            <totalDistance>250000</totalDistance>
+            <defaultFuel>Diesel</defaultFuel>
+            <description>An unspecified Vehicle</description>
+          </vehicleSettings>
+          <vehicleFuel>
+            <name>Diesel</name>
+            <emission>2.62</emission>
+            <production>0.4</production>
+            <unit>l</unit>
+          </vehicleFuel>
+          <value>0.010820543093270366</value>
+        </c2Properties>
+        <c2Value>0</c2Value>
+        <c3Value>0</c3Value>
+        <c4DisposalName>Generic</c4DisposalName>
+        <c4landfP>50</c4landfP>
+        <c4landfV>0.013</c4landfV>
+        <c4lanfResult>0</c4lanfResult>
+        <c4incfP>0</c4incfP>
+        <c4incfV>3.43</c4incfV>
+        <c4incResult>0</c4incResult>
+        <c4reUseP>50</c4reUseP>
+        <c4reUseV>0.005</c4reUseV>
+        <c4reUseResult>0</c4reUseResult>
+        <other>0</other>
+        <value>0.009</value>
+      </materialC1C4Properties>
+      <materialDProperties>
+        <name />
+        <value>0</value>
+        <calcResult />
+      </materialDProperties>
+      <ECI_A1A3_Override>true</ECI_A1A3_Override>
+      <ECI_A4_Override>true</ECI_A4_Override>
+      <ECI_A5_Override>true</ECI_A5_Override>
+      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_C1C4_Override>true</ECI_C1C4_Override>
+      <ECI_D_Override>true</ECI_D_Override>
+      <ECI_Mix_Info />
+    </CarboMaterial>
+    <CarboMaterial>
+      <Id>24255</Id>
+      <Name>Plasterboard - Generic</Name>
+      <Category>Other</Category>
+      <Description>A generic plasterboard material</Description>
+      <EPDurl />
+      <Density>640</Density>
+      <ECI>0.42064108618654072</ECI>
+      <getVolumeECI>269.21029515938608</getVolumeECI>
+      <ECI_A1A3>0.39</ECI_A1A3>
+      <ECI_A4>0.021641086186540731</ECI_A4>
+      <ECI_A5>0</ECI_A5>
+      <ECI_B1B5>0</ECI_B1B5>
+      <ECI_C1C4>0.009</ECI_C1C4>
+      <ECI_D>0</ECI_D>
+      <ECI_Mix>0</ECI_Mix>
+      <isLocked>false</isLocked>
+      <materialA1A3Properties>
+        <Id>2608</Id>
+        <Group>ECI</Group>
+        <Category>Other</Category>
+        <Name>Plaster : Plasterboard</Name>
+        <Description>See Ref [WRAP] for further info on GWP data, including disposal impacts which are significant for Plasterboard.</Description>
+        <Density>640</Density>
+        <ECI_A1A3>0.39</ECI_A1A3>
+      </materialA1A3Properties>
+      <materiaA4Properties>
+        <calcResult>Calculation to get transport value: 
+Distance to site = 100
+Material Density = 640
+Empty run =80
+
+Transport Density = 640 x 80 % 
+Transport Load = 22000 x 80 % 
+The vehicle WILL return to its starting point empty
+The total distance = 200 km
+Summary: we are going to drive a  using Diesel 200 km 
+A full  can carry 42.96875 m3 (untill max load is reached)
+Or 49152 kg (untill max volume is reached)
+We will use the load capacity as a maximum threshold
+The vehicle will be fully loaded using: 17600 kg
+
+Vehicle Fuel Consumption
+The vehicle consumes: 3.85 l/km
+Carbon contents of Diesel = 2.62 CO₂/l
+We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
+To Produce one l of Diesel you need: 0.4 CO₂/l
+We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
+784.415584415584 gCO₂/km x 200 km = 156883.116883117 gCO₂/trip
+156883.116883117 / 1000  = 156.883116883117 kgCO₂/trip
+156.883116883117 kgCO₂/trip / 17600 kg = 0.008913813459268 gCO₂/kg
+
+Build cost
+Each vehicle needs to be build, and therfor its cabon costs need to be included
+Total carbon costs are estimated to be: 280000 kgCO₂
+On average this vehicle will go for: 250000 km
+Per km: 280000 / 250000 = 1.12 kgCO₂/km
+Total emission per trip: 1.12 x 200 = 224 kgCO₂/km
+Total emission per kg: 224 / 17600 = 0.0127272727272727 kgCO₂/km
+
+Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.0216410861865407 kgCO₂/kg
+</calcResult>
+        <name />
+        <description />
+        <distanceToSite>100</distanceToSite>
+        <materialDensity>640</materialDensity>
+        <emptyRun>80</emptyRun>
+        <emptyReturn>true</emptyReturn>
+        <vehicleSettings>
+          <name>Truck</name>
+          <maxVolume>96</maxVolume>
+          <maxLoad>22000</maxLoad>
+          <kmPer>3.85</kmPer>
+          <carboCostNew>280000</carboCostNew>
+          <totalDistance>250000</totalDistance>
+          <defaultFuel>Diesel</defaultFuel>
+          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m³. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+        </vehicleSettings>
+        <vehicleFuel>
+          <name>Diesel</name>
+          <emission>2.62</emission>
+          <production>0.4</production>
+          <unit>l</unit>
+        </vehicleFuel>
+        <value>0.021641086186540731</value>
+      </materiaA4Properties>
+      <materialA5Properties>
+        <calcResult>A5 calculation to be implemented 
+Set Value by user as: 0kgCO₂/kg
+</calcResult>
+        <name />
+        <value>0</value>
+      </materialA5Properties>
+      <materialB1B5Properties>
+        <elementdesignlife>50</elementdesignlife>
+        <buildingdesignlife>50</buildingdesignlife>
+        <calcResult>B1-B5 calculation:
+One element of this material will last: 50 year
+The building is intended to last: 50year
+This element will therefor be : 1 time(s) created.
+</calcResult>
+        <name>50 years design life , 1 time(s) created</name>
+        <B1>0</B1>
+        <B2>0</B2>
+        <B3>0</B3>
+        <B4>1</B4>
+        <B5>0</B5>
+        <B6>0</B6>
+        <B7>0</B7>
+        <totalValue>0</totalValue>
+        <assetType />
+      </materialB1B5Properties>
+      <materialC1C4Properties>
+        <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
+
+
+[C4] Disposal carbon costs: 
+[C4] Incinerator costs is: 0.39 x 0 % = 0 kgCO₂/kg 
+[C4] Landfill costs is: 0.013 x 50 % = 0.0065 kgCO₂/kg 
+[C4] Re-use costs is: 0.005 x 50 % = 0.0025 kgCO₂/kg 
+
+[C4] total cost is: 0 + 0.0065 + 0.0025 = 0.009 kgCO₂/kg 
+
+[C4] Disposal carbon costs: 
+Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
+Total costs are: 0 + 0 + 0 + 0.009 + 0
+= 0.009 kgCO₂/kg 
+</calcResult>
+        <propertyName />
+        <c1density>0</c1density>
+        <c1BaseValue>3.4</c1BaseValue>
+        <c1Value>0</c1Value>
+        <c2Properties>
+          <calcResult>Calculation to get transport value: 
+Distance to site = 50
+Material Density = 500
+Empty run =80
+
+Transport Density = 500 x 80 % 
+Transport Load = 22000 x 80 % 
+The vehicle WILL return to its starting point empty
+The total distance = 100 km
+Summary: we are going to drive a  using Diesel 100 km 
+A full  can carry 55 m3 (untill max load is reached)
+Or 38400 kg (untill max volume is reached)
+We will use the load capacity as a maximum threshold
+The vehicle will be fully loaded using: 17600 kg
+
+Vehicle Fuel Consumption
+The vehicle consumes: 3.85 l/km
+Carbon contents of Diesel = 2.62 CO₂/l
+We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
+To Produce one l of Diesel you need: 0.4 CO₂/l
+We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
+784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
+78.4415584415584 kgCO₂/trip / 17600 kg = 0.004456906729634 gCO₂/kg
+
+Build cost
+Each vehicle needs to be build, and therfor its cabon costs need to be included
+Total carbon costs are estimated to be: 280000 kgCO₂
+On average this vehicle will go for: 250000 km
+Per km: 280000 / 250000 = 1.12 kgCO₂/km
+Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
+Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO₂/km
+
+Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO₂/kg
+</calcResult>
+          <name>Manual</name>
+          <description />
+          <distanceToSite>50</distanceToSite>
+          <materialDensity>500</materialDensity>
+          <emptyRun>80</emptyRun>
+          <emptyReturn>true</emptyReturn>
+          <vehicleSettings>
+            <name>Truck</name>
+            <maxVolume>96</maxVolume>
+            <maxLoad>22000</maxLoad>
+            <kmPer>3.85</kmPer>
+            <carboCostNew>280000</carboCostNew>
+            <totalDistance>250000</totalDistance>
+            <defaultFuel>Diesel</defaultFuel>
+            <description>An unspecified Vehicle</description>
+          </vehicleSettings>
+          <vehicleFuel>
+            <name>Diesel</name>
+            <emission>2.62</emission>
+            <production>0.4</production>
+            <unit>l</unit>
+          </vehicleFuel>
+          <value>0.010820543093270366</value>
+        </c2Properties>
+        <c2Value>0</c2Value>
+        <c3Value>0</c3Value>
+        <c4DisposalName>Generic</c4DisposalName>
+        <c4landfP>50</c4landfP>
+        <c4landfV>0.013</c4landfV>
+        <c4lanfResult>0</c4lanfResult>
+        <c4incfP>0</c4incfP>
+        <c4incfV>0.39</c4incfV>
+        <c4incResult>0</c4incResult>
+        <c4reUseP>50</c4reUseP>
+        <c4reUseV>0.005</c4reUseV>
+        <c4reUseResult>0</c4reUseResult>
+        <other>0</other>
+        <value>0.009</value>
+      </materialC1C4Properties>
+      <materialDProperties>
+        <name />
+        <value>0</value>
+        <calcResult />
+      </materialDProperties>
+      <ECI_A1A3_Override>false</ECI_A1A3_Override>
+      <ECI_A4_Override>false</ECI_A4_Override>
+      <ECI_A5_Override>false</ECI_A5_Override>
+      <ECI_B1B5_Override>false</ECI_B1B5_Override>
+      <ECI_C1C4_Override>false</ECI_C1C4_Override>
+      <ECI_D_Override>false</ECI_D_Override>
+      <ECI_Mix_Info />
+    </CarboMaterial>
+    <CarboMaterial>
+      <Id>25891</Id>
+      <Name>Plasterboard - EPD</Name>
+      <Category>Other</Category>
+      <Description>This plasterboard material is based on a EPD</Description>
+      <EPDurl>https://www.british-gypsum.com/~/media/Files/British-Gypsum/LCA/EPD-12-5mm-Gyproc-WallBoard.pdf</EPDurl>
+      <Density>500</Density>
+      <ECI>0.27862755555555557</ECI>
+      <getVolumeECI>139.31377777777777</getVolumeECI>
+      <ECI_A1A3>0.224</ECI_A1A3>
+      <ECI_A4>0.00653037037037037</ECI_A4>
+      <ECI_A5>0.0298666666666667</ECI_A5>
+      <ECI_B1B5>0</ECI_B1B5>
+      <ECI_C1C4>0.0200201481481481</ECI_C1C4>
+      <ECI_D>-0.00178962962962963</ECI_D>
+      <ECI_Mix>0</ECI_Mix>
+      <isLocked>false</isLocked>
+      <materialA1A3Properties>
+        <Id>0</Id>
+        <Category />
+        <Name />
+        <Description />
+        <Density>0</Density>
+        <ECI_A1A3>0</ECI_A1A3>
+      </materialA1A3Properties>
+      <materiaA4Properties>
+        <calcResult>Calculation to get transport value: 
+Distance to site = 50
+Material Density = 500
+Empty run =80
+
+Transport Density = 500 x 80 % 
+Transport Load = 22000 x 80 % 
+The vehicle WILL return to its starting point empty
+The total distance = 100 km
+Summary: we are going to drive a  using Diesel 100 km 
+A full  can carry 55 m3 (untill max load is reached)
+Or 38400 kg (untill max volume is reached)
+We will use the load capacity as a maximum threshold
+The vehicle will be fully loaded using: 17600 kg
+
+Vehicle Fuel Consumption
+The vehicle consumes: 3.85 l/km
+Carbon contents of Diesel = 2.62 CO₂/l
+We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
+To Produce one l of Diesel you need: 0.4 CO₂/l
+We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
+784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
+78.4415584415584 kgCO₂/trip / 17600 kg = 0.004456906729634 gCO₂/kg
+
+Build cost
+Each vehicle needs to be build, and therfor its cabon costs need to be included
+Total carbon costs are estimated to be: 280000 kgCO₂
+On average this vehicle will go for: 250000 km
+Per km: 280000 / 250000 = 1.12 kgCO₂/km
+Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
+Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO₂/km
+
+Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO₂/kg
+</calcResult>
+        <name />
+        <description />
+        <distanceToSite>50</distanceToSite>
+        <materialDensity>500</materialDensity>
+        <emptyRun>80</emptyRun>
+        <emptyReturn>true</emptyReturn>
+        <vehicleSettings>
+          <name>Truck</name>
+          <maxVolume>96</maxVolume>
+          <maxLoad>22000</maxLoad>
+          <kmPer>3.85</kmPer>
+          <carboCostNew>280000</carboCostNew>
+          <totalDistance>250000</totalDistance>
+          <defaultFuel>Diesel</defaultFuel>
+          <description>An unspecified Vehicle</description>
+        </vehicleSettings>
+        <vehicleFuel>
+          <name>Diesel</name>
+          <emission>2.62</emission>
+          <production>0.4</production>
+          <unit>l</unit>
+        </vehicleFuel>
+        <value>0.010820543093270366</value>
+      </materiaA4Properties>
+      <materialA5Properties>
+        <calcResult>A5 calculation to be implemented 
+Set Value by user as: 0kgCO₂/kg
+</calcResult>
+        <name />
+        <value>0</value>
+      </materialA5Properties>
+      <materialB1B5Properties>
+        <elementdesignlife>50</elementdesignlife>
+        <buildingdesignlife>50</buildingdesignlife>
+        <calcResult>B1-B5 calculation:
+One element of this material will last: 50 year
+The building is intended to last: 50year
+This element will therefor be : 1 time(s) created.
+</calcResult>
+        <name>50 years design life , 1 time(s) created</name>
+        <B1>0</B1>
+        <B2>0</B2>
+        <B3>0</B3>
+        <B4>1</B4>
+        <B5>0</B5>
+        <B6>0</B6>
+        <B7>0</B7>
+        <totalValue>0</totalValue>
+        <assetType />
+      </materialB1B5Properties>
+      <materialC1C4Properties>
+        <calcResult>This calculation create a CO₂ per kg value based on the given parameters.
+
+
+[C4] Disposal carbon costs: 
+[C4] Incinerator costs is: 0 x 0 % = 0 kgCO₂/kg 
+[C4] Landfill costs is: 0.013 x 50 % = 0.0065 kgCO₂/kg 
+[C4] Re-use costs is: 0.005 x 50 % = 0.0025 kgCO₂/kg 
+
+[C4] total cost is: 0 + 0.0065 + 0.0025 = 0.009 kgCO₂/kg 
+
+[C4] Disposal carbon costs: 
+Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
+Total costs are: 0 + 0 + 0 + 0.009 + 0
+= 0.009 kgCO₂/kg 
+</calcResult>
+        <propertyName />
+        <c1density>0</c1density>
+        <c1BaseValue>3.4</c1BaseValue>
+        <c1Value>0</c1Value>
+        <c2Properties>
+          <calcResult>Calculation to get transport value: 
+Distance to site = 50
+Material Density = 500
+Empty run =80
+
+Transport Density = 500 x 80 % 
+Transport Load = 22000 x 80 % 
+The vehicle WILL return to its starting point empty
+The total distance = 100 km
+Summary: we are going to drive a  using Diesel 100 km 
+A full  can carry 55 m3 (untill max load is reached)
+Or 38400 kg (untill max volume is reached)
+We will use the load capacity as a maximum threshold
+The vehicle will be fully loaded using: 17600 kg
+
+Vehicle Fuel Consumption
+The vehicle consumes: 3.85 l/km
+Carbon contents of Diesel = 2.62 CO₂/l
+We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
+To Produce one l of Diesel you need: 0.4 CO₂/l
+We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
+680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
+784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
+78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
+78.4415584415584 kgCO₂/trip / 17600 kg = 0.004456906729634 gCO₂/kg
+
+Build cost
+Each vehicle needs to be build, and therfor its cabon costs need to be included
+Total carbon costs are estimated to be: 280000 kgCO₂
+On average this vehicle will go for: 250000 km
+Per km: 280000 / 250000 = 1.12 kgCO₂/km
+Total emission per trip: 1.12 x 100 = 112 kgCO₂/km
+Total emission per kg: 112 / 17600 = 0.00636363636363636 kgCO₂/km
+
+Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.0108205430932704 kgCO₂/kg
+</calcResult>
+          <name />
+          <description />
+          <distanceToSite>50</distanceToSite>
+          <materialDensity>500</materialDensity>
+          <emptyRun>80</emptyRun>
+          <emptyReturn>true</emptyReturn>
+          <vehicleSettings>
+            <name>Truck</name>
+            <maxVolume>96</maxVolume>
+            <maxLoad>22000</maxLoad>
+            <kmPer>3.85</kmPer>
+            <carboCostNew>280000</carboCostNew>
+            <totalDistance>250000</totalDistance>
+            <defaultFuel>Diesel</defaultFuel>
+            <description>An unspecified Vehicle</description>
+          </vehicleSettings>
+          <vehicleFuel>
+            <name>Diesel</name>
+            <emission>2.62</emission>
+            <production>0.4</production>
+            <unit>l</unit>
+          </vehicleFuel>
+          <value>0.010820543093270366</value>
+        </c2Properties>
+        <c2Value>0</c2Value>
+        <c3Value>0</c3Value>
+        <c4DisposalName>Generic</c4DisposalName>
+        <c4landfP>50</c4landfP>
+        <c4landfV>0.013</c4landfV>
+        <c4lanfResult>0</c4lanfResult>
+        <c4incfP>0</c4incfP>
+        <c4incfV>0</c4incfV>
+        <c4incResult>0</c4incResult>
+        <c4reUseP>50</c4reUseP>
+        <c4reUseV>0.005</c4reUseV>
+        <c4reUseResult>0</c4reUseResult>
+        <other>0</other>
+        <value>0.009</value>
+      </materialC1C4Properties>
+      <materialDProperties>
+        <name />
+        <value>0</value>
+        <calcResult />
+      </materialDProperties>
+      <ECI_A1A3_Override>true</ECI_A1A3_Override>
+      <ECI_A4_Override>true</ECI_A4_Override>
+      <ECI_A5_Override>true</ECI_A5_Override>
+      <ECI_B1B5_Override>true</ECI_B1B5_Override>
+      <ECI_C1C4_Override>true</ECI_C1C4_Override>
+      <ECI_D_Override>true</ECI_D_Override>
+      <ECI_Mix_Info />
     </CarboMaterial>
   </CarboMaterials>
 </CarboDatabase>
