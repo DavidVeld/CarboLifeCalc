@@ -131,7 +131,8 @@ namespace CarboLifeAPI.Data
             justSaved = false;
             //Totals
             Value = 0;
-
+            //New projects don't need to be saved
+            justSaved = true;
         }
         public void CreateGroups()
         {
