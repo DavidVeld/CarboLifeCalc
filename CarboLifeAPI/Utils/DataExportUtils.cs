@@ -45,8 +45,11 @@ namespace CarboLifeAPI
             }
             else
             {
-                //This is a new file
-                return path;
+                if (path != "")
+                    //This is a new file
+                    return path;
+                else
+                    return null;
             }
 
 
