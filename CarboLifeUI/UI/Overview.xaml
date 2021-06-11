@@ -87,7 +87,7 @@
             <lvc:PieChart.Resources>
                 <Style TargetType="lvc:PieSeries">
                     <Setter Property="DataLabels" Value="True"></Setter>
-                    <Setter Property="LabelPosition" Value="OutsideSlice"></Setter>
+                    <Setter Property="LabelPosition" Value="InsideSlice"></Setter>
                 </Style>
             </lvc:PieChart.Resources>
             <lvc:PieChart.ChartLegend>

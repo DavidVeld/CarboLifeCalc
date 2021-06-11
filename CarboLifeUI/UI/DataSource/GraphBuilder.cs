@@ -211,6 +211,15 @@ namespace CarboLifeUI.UI
 
                 PieceListLifePoint = carboLifeProject.getPhaseTotals();
 
+                //Remove the zero's
+                for (int i = PieceListLifePoint.Count - 1; i >= 0; i--)
+                {
+                    CarboDataPoint cp = PieceListLifePoint[i] as CarboDataPoint;
+                    if(cp.Value == 0)
+                        PieceListLifePoint.RemoveAt(i);
+
+                }
+
                 //make positive if negative
                 foreach (CarboDataPoint cp in PieceListLifePoint)
                 {
@@ -266,8 +275,14 @@ namespace CarboLifeUI.UI
 
                 PieceListMaterial = PieceListMaterial.OrderByDescending(o => o.Value).ToList();
 
+                //int total = monValues.Sum(x => Convert.ToInt32(x));
+
+                double total = PieceListMaterial.Sum(x => x.Value);
+
+                //Old Code:
                 //if there are too many materials in the list combine any items over 8.
-                if(PieceListMaterial.Count > 8)
+                /*
+                if (PieceListMaterial.Count > 8)
                 {
                     CarboDataPoint otherPoint = new CarboDataPoint();
                     otherPoint.Name = "Miscellaneous";
@@ -280,9 +295,41 @@ namespace CarboLifeUI.UI
                     }
                     PieceListMaterial.Add(otherPoint);
                 }
+                */
+
+                //New Code: Trim all values below 5%, 
+                List<int> counter = new List<int>();
+
+                    CarboDataPoint otherPoint = new CarboDataPoint();
+                    otherPoint.Name = "Miscellaneous";
+
+                    for (int i = PieceListMaterial.Count - 1; i >= 0; i--)
+                    {
+                        CarboDataPoint cp = PieceListMaterial[i] as CarboDataPoint;
+                        double pecent = cp.Value / total;
+                        if (pecent <= 0.05 && pecent > 0)
+                        {
+                        //The item is too small for the graph:
+                            otherPoint.Value += cp.Value;
+                        counter.Add(i);
+                        }
+                    }
+
+                //If used, add to the list, only if more than one materials / elements were merged.
+                if (otherPoint.Value > 0 && counter.Count > 1)
+                {
+                    PieceListMaterial.Add(otherPoint);
+                    //Remove the items from the list
+                    foreach(int i in counter)
+                    {
+                        PieceListMaterial.RemoveAt(i);
+                    }
+                }
+
+                
 
                 //make positive if negative
-                foreach(CarboDataPoint cp in PieceListMaterial)
+                foreach (CarboDataPoint cp in PieceListMaterial)
                 {
                     if(cp.Value < 0)
                     {
