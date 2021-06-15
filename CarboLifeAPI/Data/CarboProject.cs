@@ -105,7 +105,7 @@ namespace CarboLifeAPI.Data
         public CarboProject()
         {
             //UserPaths
-            PathUtils.CheckFileLocations();
+            PathUtils.CheckFileLocationsNew();
 
             CarboDatabase = new CarboDatabase();
             CarboDatabase = CarboDatabase.DeSerializeXML("");
@@ -809,7 +809,7 @@ namespace CarboLifeAPI.Data
             result += Environment.NewLine;
 
             if (materials == true)
-                result += "This equals to: " + Math.Round(totalTotal / 1.40, 2) + " average car emission per year (1.40 tCO2/car). (UK)" + Environment.NewLine;
+                result += "This equals to: " + Math.Round(totalTotal / 1.40, 2) + " average car emission per year (1.40 tCO₂/car). (UK)" + Environment.NewLine;
             
             if (trees == true)
                 result += "This requires " + Math.Round((totalTotal / 180) * 4440, 0) + " Trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;

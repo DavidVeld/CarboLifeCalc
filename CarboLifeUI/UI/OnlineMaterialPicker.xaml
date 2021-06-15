@@ -34,7 +34,7 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleBold}">Import:</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleBold}">Select files to download:</Label>
 
         <ListBox Name="lb_Selection" HorizontalContentAlignment="Stretch" Grid.Column="2" Grid.Row="2" Margin="2,2,2,2" Background="White" Visibility="Visible" IsEnabled="True" SelectionMode="Multiple">
             <ListBox.ItemContainerStyle>

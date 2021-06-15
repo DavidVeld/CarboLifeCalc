@@ -32,8 +32,8 @@
 
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource baseStyleTitle}">Material Overview</Label>
-        <Label Grid.Column="2" Grid.Row="1" Style="{StaticResource baseStyleTitle}">Project Phase Overview</Label>
+        <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource baseStyleTitle}">Embodied Carbon per Material:</Label>
+        <Label Grid.Column="2" Grid.Row="1" Style="{StaticResource baseStyleTitle}">Embodied Carbon per Phase:</Label>
 
         <Label Name="lbl_Values" Grid.Column="1" Grid.Row="2" Style="{StaticResource baseStyleLabel}" Margin="0,30,10,0">-</Label>
 
@@ -69,7 +69,7 @@
 
         </DVC:Chart>
 -->
-        <lvc:PieChart Name="pie_Chart1" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="2,2,2,2" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
+        <lvc:PieChart Name="pie_Chart1" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,10,10,10" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
             <lvc:PieChart.Resources>
                 <Style TargetType="lvc:PieSeries">
                     <Setter Property="DataLabels" Value="True"></Setter>
@@ -83,11 +83,11 @@
                 <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender"/>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
-        <lvc:PieChart Name="pie_Chart2"  Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Margin="2,2,2,2" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" LegendLocation="Right" FontWeight="Light"  InnerRadius="75">
+        <lvc:PieChart Name="pie_Chart2"  Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,10,10,10" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" LegendLocation="Right" FontWeight="Light"  InnerRadius="75">
             <lvc:PieChart.Resources>
                 <Style TargetType="lvc:PieSeries">
                     <Setter Property="DataLabels" Value="True"></Setter>
-                    <Setter Property="LabelPosition" Value="InsideSlice"></Setter>
+                    <Setter Property="LabelPosition" Value="OutsideSlice"></Setter>
                 </Style>
             </lvc:PieChart.Resources>
             <lvc:PieChart.ChartLegend>

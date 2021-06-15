@@ -200,7 +200,7 @@ namespace CarboLifeAPI.Data
         public CarboDatabase DeSerializeXML(string fileName)
         {
             string myPath = fileName;
-            PathUtils.CheckFileLocations();
+            PathUtils.CheckFileLocationsNew();
 
             //if its a relative path use:
             if (!(File.Exists(myPath)))

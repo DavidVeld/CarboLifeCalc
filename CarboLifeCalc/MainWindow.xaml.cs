@@ -117,7 +117,7 @@ namespace CarboLifeCalc
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            CarboLifeAPI.PathUtils.CheckFileLocations();
+            CarboLifeAPI.PathUtils.CheckFileLocationsNew();
         }
     }
 }

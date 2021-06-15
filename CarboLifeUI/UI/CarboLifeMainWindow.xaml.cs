@@ -51,7 +51,7 @@ namespace CarboLifeUI.UI
         public CarboLifeMainWindow()
         {
             //UserPaths
-            PathUtils.CheckFileLocations();
+            PathUtils.CheckFileLocationsNew();
 
             IsRevit = false;
             carboLifeProject = new CarboProject();
@@ -61,7 +61,7 @@ namespace CarboLifeUI.UI
         public CarboLifeMainWindow(CarboProject myProject)
         {
             //UserPaths
-            PathUtils.CheckFileLocations();
+            PathUtils.CheckFileLocationsNew();
 
             carboLifeProject = myProject;
             IsRevit = false;

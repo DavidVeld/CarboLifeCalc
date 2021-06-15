@@ -26,6 +26,7 @@ namespace CarboLifeAPI
         /// <summary>
         /// Sets and prepares the usermaterials and settings File
         /// </summary>
+        [Obsolete]
         public static void CheckFileLocations()
         {
             string log = "";
@@ -58,7 +59,7 @@ namespace CarboLifeAPI
                 if (!Directory.Exists(appdatafolder))
                 {
                     //This must be the first time you load Carbo Life Calc, we will be copying the template file to:
-                    MessageBox.Show("Hi, this must be the first time you are using Carbo Life Calc, we will be copying a material template file to: " + appdatafolder, "Welcome", MessageBoxButton.OK);
+                    MessageBox.Show("Hi, this must be the first time you are using Carbo Life Calculator, I will now copy a material template file to: " + appdatafolder + Environment.NewLine + " This will be your default template file ", "Welcome", MessageBoxButton.OK);
                     Directory.CreateDirectory(appdatafolder);
                     Directory.CreateDirectory(appdatafolder + "\\online\\");
 
@@ -125,27 +126,119 @@ namespace CarboLifeAPI
 
         }
 
+
+        /// <summary>
+        /// Sets and prepares the usermaterials and settings File
+        /// </summary>
+        public static void CheckFileLocationsNew()
+        {
+            bool okSettingFile = false;
+            bool okTemplate = false;
+            bool okRevitSettingFile = false;
+            bool firstLaunch = false;
+
+            string log = "";
+
+            string pathDatabase = Utils.getAssemblyPath() + "\\db\\";
+
+            string bufferPath = pathDatabase + "MaterialBuffer.cxml";
+
+
+            //All the following three files bust be present:
+            string TemplateFile = pathDatabase + "UserMaterials.cxml";
+            string SettingsFile = pathDatabase + "CarboSettings.xml";
+            string RevitSettingsFile = pathDatabase  + "RevitImportSettings.xml";
+            //string GroupSettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\GroupSettings.xml";
+
+
+            try
+            {
+                //This bit will prevent the user files to be ever overwritten
+                if (!(File.Exists(TemplateFile)))
+                {
+                    //If we dont have a template, create one:
+                    if (File.Exists(bufferPath))
+                    {
+                        File.Copy(bufferPath, TemplateFile);
+                        okTemplate = true;
+                        firstLaunch = true;
+                    }
+                }
+
+                //SettingsFile
+                if (File.Exists(SettingsFile))
+                {
+                    okSettingFile = true;
+                }
+                else
+                {
+                    log += SettingsFile + " Not Found" + Environment.NewLine;
+                }
+
+                //Revit Import Settings
+                if (File.Exists(RevitSettingsFile))
+                {
+                    okRevitSettingFile = true;
+                }
+                else
+                {
+                    log += RevitSettingsFile + " Not Found" + Environment.NewLine;
+                }
+
+                //Set the path to the template, ONLY when it's the first launch.
+                if (firstLaunch == true)
+                {
+                    CarboSettings settings = new CarboSettings().Load();
+                    settings.templatePath = TemplateFile;
+                    settings.Save();
+                    log += "This is most likely the first time you launched Carbo Life Calculator, your template has been set as: " + settings.templatePath + Environment.NewLine
+                        + "Goto Help -> Settings... to change the location of your template file";
+                }
+
+                if (log != "")
+                {
+                    MessageBox.Show(log);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                log += "Error: " + ex.Message + Environment.NewLine;
+
+                MessageBox.Show(log);
+            }
+
+        }
+
+
         /// <summary>
         /// Finds the location of the Revit Import Settings File
         /// </summary>
         /// <returns>Revit Import Settings File path</returns>
-        public static string getRevitImportSettingspath()
+        public static string getRevitImportSettingspath(bool local = true)
         {
             //Finds and returns the revit import settings in the AppData folder, or in local if not found in Appdata.
 
             string myPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\RevitImportSettings.xml";
             string myLocalPath = getAssemblyPath() + "\\db\\" + "RevitImportSettings.xml";
 
-            if (File.Exists(myPath))
-                return myPath;
-            else if (File.Exists(myLocalPath))
-                return myLocalPath;
-            else
+            if (local == true)
             {
-                MessageBox.Show("Could not find a path reference to the RevitImportSettings.xml, you possibly have to re-install the software" + Environment.NewLine +
-                        "Target: " + myPath + Environment.NewLine +
-                        "Target: " + myLocalPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return "";
+                return myLocalPath;
+            }
+            else
+            { 
+                if (File.Exists(myPath))
+                    return myPath;
+                else if (File.Exists(myLocalPath))
+                    return myLocalPath;
+                else
+                {
+                    MessageBox.Show("Could not find a path reference to the RevitImportSettings.xml, you possibly have to re-install the software" + Environment.NewLine +
+                            "Target: " + myPath + Environment.NewLine +
+                            "Target: " + myLocalPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return "";
+                }
             }
         }
 
@@ -153,23 +246,29 @@ namespace CarboLifeAPI
         /// Finds the location of the Carbo Life Calculator Settings File
         /// </summary>
         /// <returns>Settings File path</returns>
-        internal static string getSettingsFilePath()
+        internal static string getSettingsFilePath(bool local = true)
         {
             //string fileName = "db\\CarboSettings.xml";
             string myPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\CarboSettings.xml";
             string myLocalPath = getAssemblyPath() + "\\db\\" + "CarboSettings.xml";
 
-
-            if (File.Exists(myPath))
-                return myPath;
-            else if (File.Exists(myLocalPath))
+            if (local == true)
+            {
                 return myLocalPath;
+            }
             else
             {
-                MessageBox.Show("Could not find a path reference to the CarboLifeCalculator Setting File, you possibly have to re-install the software" + Environment.NewLine +
-                        "Target: " + myPath + Environment.NewLine +
-                        "Target: " + myLocalPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return "";
+                if (File.Exists(myPath))
+                    return myPath;
+                else if (File.Exists(myLocalPath))
+                    return myLocalPath;
+                else
+                {
+                    MessageBox.Show("Could not find a path reference to the CarboLifeCalculator Setting File, you possibly have to re-install the software" + Environment.NewLine +
+                            "Target: " + myPath + Environment.NewLine +
+                            "Target: " + myLocalPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return "";
+                }
             }
         }
 
@@ -177,7 +276,7 @@ namespace CarboLifeAPI
         /// Finds the location of the Carbo Life Calculator Template File
         /// </summary>
         /// <returns>Template Path</returns>
-        public static string getTemplateFolder()
+        public static string getTemplateFolder(bool local = true)
         {
             try
             {
@@ -189,10 +288,16 @@ namespace CarboLifeAPI
                 if (File.Exists(templatetarget))
                     return templatetarget;
                 else if (File.Exists(myLocalPath))
+                {
+                    //Fix the setting;
+                    settings.templatePath = myLocalPath;
+                    settings.Save();
+                    MessageBox.Show("The template file could not be found at: " + templatetarget + Environment.NewLine + "The local template file will be used at: " + myLocalPath, "Warning", MessageBoxButton.OK);
                     return myLocalPath;
+                }
                 else
                 {
-                    MessageBox.Show("Could not find a path reference to the template file, you possibly have to re-install the software" + Environment.NewLine + 
+                    MessageBox.Show("Could not find a path reference to the template file, you possibly have to re-install the software" + Environment.NewLine +
                         "Target: " + templatetarget + Environment.NewLine +
                         "Target: " + myLocalPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return "";
@@ -207,10 +312,10 @@ namespace CarboLifeAPI
         }
 
         /// <summary>
-        /// Finds the location of the Carbo Life Calculator Downloaed Files Path
+        /// Finds the location of the Carbo Life Calculator Downloaded Files Path
         /// </summary>
         /// <returns>Download Path</returns>
-        public static string getDownloadedPath()
+        public static string getDownloadedPath(bool local = true)
         {
             //sourcePath = PathUtils.getDownloadedPath() + "\\db\\online\\" + selectedItem + ".cxml";
 
@@ -218,16 +323,23 @@ namespace CarboLifeAPI
             string myPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\online\\";
             string myLocalPath = getAssemblyPath() + "\\db\\online\\";
 
-            if (Directory.Exists(myPath))
-                return myPath;
-            else if (Directory.Exists(myLocalPath))
-                return myLocalPath;
-            else
+            if (local == true)
             {
-                MessageBox.Show("Could not find a path reference to the download path, you possibly have to re-install the software" + Environment.NewLine +
-                        "Target: " + myPath + Environment.NewLine +
-                        "Target: " + myLocalPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return "";
+                return myLocalPath;
+            }
+            else
+            { 
+                if (Directory.Exists(myPath))
+                    return myPath;
+                else if (Directory.Exists(myLocalPath))
+                    return myLocalPath;
+                else
+                {
+                    MessageBox.Show("Could not find a path reference to the download path, you possibly have to re-install the software" + Environment.NewLine +
+                            "Target: " + myPath + Environment.NewLine +
+                            "Target: " + myLocalPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return "";
+                }
             }
         }
     }
