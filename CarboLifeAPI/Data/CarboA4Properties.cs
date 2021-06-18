@@ -128,8 +128,8 @@ namespace CarboLifeAPI.Data
                 //
                 calcResult += "Summary: we are going to drive a " + name + " using " + vehicleFuel.name + " " + totaldistance + " km " + System.Environment.NewLine;
 
-                calcResult += "A full " + name + " can carry " + volumeFull + " m3 (untill max load is reached)" + System.Environment.NewLine;
-                calcResult += "Or " + weightFull + " kg (untill max volume is reached)" + System.Environment.NewLine;
+                calcResult += "A full " + name + " can carry " + volumeFull + " m³ (until max load is reached)" + System.Environment.NewLine;
+                calcResult += "Or " + weightFull + " kg (until max volume is reached)" + System.Environment.NewLine;
 
                 if (useVolume == true)
                 {
@@ -150,10 +150,10 @@ namespace CarboLifeAPI.Data
                 calcResult += "Carbon contents of " + vehicleFuel.name + " = " + vehicleFuel.emission + " CO₂/" + vehicleFuel.unit + System.Environment.NewLine;
                 // double emmissionPerkm = (vehicleFuel.emission * 1000) / vehicleSettings.kmPer;
 
-                calcResult += "We will therfore use: (" + vehicleFuel.emission + " CO₂/" + vehicleFuel.unit + " x 1000) /" + vehicleSettings.kmPer + " km/" + vehicleFuel.unit + " = " + emmissionPerkm + " gCO₂/km"  + System.Environment.NewLine;
+                calcResult += "We will therefore use: (" + vehicleFuel.emission + " CO₂/" + vehicleFuel.unit + " x 1000) /" + vehicleSettings.kmPer + " km/" + vehicleFuel.unit + " = " + emmissionPerkm + " gCO₂/km"  + System.Environment.NewLine;
 
                 calcResult += "To Produce one " + vehicleFuel.unit  + " of " + vehicleFuel.name + " you need: " + vehicleFuel.production + " CO₂/" + vehicleFuel.unit + System.Environment.NewLine;
-                calcResult += "We will therfore use: (" + vehicleFuel.production + " CO₂/" + vehicleFuel.unit + " x 1000) /" + vehicleSettings.kmPer + " km/" + vehicleFuel.unit + " = " + productionPerkm + " gCO₂/km" + System.Environment.NewLine;
+                calcResult += "We will therefore use: (" + vehicleFuel.production + " CO₂/" + vehicleFuel.unit + " x 1000) /" + vehicleSettings.kmPer + " km/" + vehicleFuel.unit + " = " + productionPerkm + " gCO₂/km" + System.Environment.NewLine;
                 calcResult += emmissionPerkm + " + " + productionPerkm + " = " + totalFuelEmissionPerkm + " gCO₂/km" + System.Environment.NewLine;
                 calcResult += totalFuelEmissionPerkm + " gCO₂/km x " + totaldistance + " km = " + totalFuelEmission + " gCO₂/trip" + System.Environment.NewLine;
                 calcResult += totalFuelEmission + " / " + "1000" + "  = " + totalFuelEmissionkg + " kgCO₂/trip" + System.Environment.NewLine;
@@ -161,7 +161,7 @@ namespace CarboLifeAPI.Data
 
                 calcResult += System.Environment.NewLine;
                 calcResult += "Build cost" + System.Environment.NewLine;
-                calcResult += "Each vehicle needs to be build, and therfor its cabon costs need to be included" + System.Environment.NewLine;
+                calcResult += "Each vehicle needs to be build, and therefore its carbon costs need to be included" + System.Environment.NewLine;
                 calcResult += "Total carbon costs are estimated to be: " + totalBuildcost  + " kgCO₂" + System.Environment.NewLine;
                 calcResult += "On average this vehicle will go for: " + totalBuildDistance + " km" + System.Environment.NewLine;
                 calcResult += "Per km: " + totalBuildcost + " / " + totalBuildDistance + " = " + buildCostperKm + " kgCO₂/km" + System.Environment.NewLine;

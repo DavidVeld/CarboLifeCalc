@@ -169,6 +169,11 @@ namespace CarboLifeAPI
                 if (File.Exists(SettingsFile))
                 {
                     okSettingFile = true;
+                    CarboSettings settings = new CarboSettings().Load();
+                    if (settings.firstLaunch == true)
+                    {
+                        firstLaunch = true;
+                    }
                 }
                 else
                 {
@@ -185,14 +190,21 @@ namespace CarboLifeAPI
                     log += RevitSettingsFile + " Not Found" + Environment.NewLine;
                 }
 
+                //If the app was downloaded from the Autodesk store we need to set the template file as it will always be part of the application:
+
+
                 //Set the path to the template, ONLY when it's the first launch.
                 if (firstLaunch == true)
                 {
                     CarboSettings settings = new CarboSettings().Load();
                     settings.templatePath = TemplateFile;
                     settings.Save();
-                    log += "This is most likely the first time you launched Carbo Life Calculator, your template has been set as: " + settings.templatePath + Environment.NewLine
-                        + "Goto Help -> Settings... to change the location of your template file";
+                    log += "Hi, this is most likely the first time you started Carbo Life Calculator. " + Environment.NewLine + " To store all your embodied carbon materials this program needs a template file." + Environment.NewLine + "This has been set to the following file: " + Environment.NewLine
+                        + settings.templatePath + Environment.NewLine 
+                        + "You are all good to go now, good luck!";
+
+                    settings.firstLaunch = false;
+                    settings.Save();
                 }
 
                 if (log != "")

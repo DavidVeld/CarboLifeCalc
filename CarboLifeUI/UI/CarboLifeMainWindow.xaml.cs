@@ -400,9 +400,24 @@ namespace CarboLifeUI.UI
 
 
             if (fileSaved == false)
-                e.Cancel = true; //do not close window, something went wrong, or user cancelled the exit
+                e.Cancel = true; //do not close window, something went wrong, or user canceled the exit
 
 
+
+            try
+            {
+            //Delete all the files in the online folder:
+            //Get all file sin online folder:
+            string onlinePath = PathUtils.getDownloadedPath();
+            string[] files = Directory.GetFiles(onlinePath);
+                
+                foreach (string file in files)
+                    File.Delete(file);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("While trying to delete downloaded files I ran into an error: " + Environment.NewLine + ex.Message);
+            }
         }
 
         private void mnu_Heatmap_Click(object sender, RoutedEventArgs e)

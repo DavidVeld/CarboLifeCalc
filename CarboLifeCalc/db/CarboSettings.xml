@@ -1,4 +1,14 @@
 <?xml version="1.0"?>
 <CarboSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <templatePath></templatePath>
+  <useLocal>true</useLocal>
+  <firstLaunch>true</firstLaunch>
+  <groupCategory>true</groupCategory>
+  <groupSubCategory>false</groupSubCategory>
+  <groupType>false</groupType>
+  <groupMaterial>true</groupMaterial>
+  <groupSubStructure>true</groupSubStructure>
+  <groupDemolition>false</groupDemolition>
+  <groupuniqueTypeNames>false</groupuniqueTypeNames>
+  <uniqueTypeNames />
 </CarboSettings>

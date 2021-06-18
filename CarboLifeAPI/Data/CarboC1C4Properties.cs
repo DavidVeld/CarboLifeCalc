@@ -133,7 +133,7 @@ namespace CarboLifeAPI.Data
 
                 if (c3Value != 0)
                 {
-                    calcResult += "Additional costs are (please specify in descrition otherwise leave as 0): " + other + " kgCO₂/kg " + System.Environment.NewLine;
+                    calcResult += "Additional costs are (please specify in description otherwise leave as 0): " + other + " kgCO₂/kg " + System.Environment.NewLine;
                     calcResult += System.Environment.NewLine;
                 }
 

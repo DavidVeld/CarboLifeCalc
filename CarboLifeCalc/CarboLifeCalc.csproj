@@ -169,6 +169,9 @@
     <Content Include="db\MaterialBuffer.cxml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="db\UserMaterials.cxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -254,7 +257,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="db\CarboSettings.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="db\RevitImportSettings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

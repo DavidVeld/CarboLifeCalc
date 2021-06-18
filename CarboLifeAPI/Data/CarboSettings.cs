@@ -14,6 +14,7 @@ namespace CarboLifeAPI.Data
     {
         public string templatePath { get; set; }
         public bool useLocal { get; set; }
+        public bool firstLaunch { get; set; }
         public bool groupCategory { get; set; }
         public bool groupSubCategory { get; set; }
         public bool groupType { get; set; }
@@ -27,6 +28,7 @@ namespace CarboLifeAPI.Data
         {
             templatePath = "Local";
             useLocal = true;
+            firstLaunch = true;
             groupCategory = true;
             groupSubCategory = false;
             groupType = false;

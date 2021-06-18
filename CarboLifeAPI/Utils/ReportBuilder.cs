@@ -58,7 +58,7 @@ namespace CarboLifeAPI
             }
             else if (Path == "")
             {
-                //The dialog box was cancelled;
+                //The dialog box was canceled;
                 return;
             }
 
@@ -87,7 +87,7 @@ namespace CarboLifeAPI
 
                 if (File.Exists(reportpath))
                 {
-                    System.Windows.MessageBox.Show("Report succesfully created!", "Success!", MessageBoxButton.OK);
+                    System.Windows.MessageBox.Show("Report successfully created!", "Success!", MessageBoxButton.OK);
                     System.Diagnostics.Process.Start(reportpath);
                 }
             }
@@ -218,9 +218,9 @@ namespace CarboLifeAPI
                 //Write Headers:
 
                 html += "<TR>" + System.Environment.NewLine;
-                html += "<TD width=" + 50 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 50 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 150 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 200 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 200 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
 
                 //Advanced settings
                 html += "<TD width=" + 50 + "><B>" + "Correction Formula" + "</B></TD>" + System.Environment.NewLine;

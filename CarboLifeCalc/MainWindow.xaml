@@ -49,7 +49,7 @@
         </TextBlock>
         <Label Grid.Column="3" Grid.Row="2" Width="362" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,74,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Embodied Carbon Calculator to EN 15978:2011</Label>
 
-        <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Build: V 0.91</Label>
+        <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Build: V 0.92</Label>
         <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" Margin="0,281,10,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light" Grid.RowSpan="2">Author: David In't Veld</Label>
         <TextBlock Grid.Column="3" Grid.Row="3" Width="160" Height="19" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,18,10,0" FontSize="14"  FontFamily="Segoe UI" TextAlignment="Right">
             <Hyperlink NavigateUri="https://www.davidveld.nl" RequestNavigate="Hyperlink_RequestNavigate" FontSize="14"  FontFamily="Segoe UI">

@@ -140,7 +140,7 @@ namespace CarboLifeRevit
                 newCarboElement.Category = setCategory;
                 newCarboElement.SubCategory = setSubCategory;
                 newCarboElement.Volume = Math.Round(setVolume, 4);
-                //newCarboElement.Material = carboMaterial; Material removed
+                //newCarboElement.Material = carboMaterial; //Material removed
                 newCarboElement.Level = Math.Round(setLevel,3);
                 newCarboElement.isDemolished = setIsDemolished;
                 newCarboElement.isExisting = setIsExisting;
@@ -207,6 +207,11 @@ namespace CarboLifeRevit
             return result;
 
         }
+        /// <summary>
+        /// Validates the elements and it's class;
+        /// </summary>
+        /// <param name="el"></param>
+        /// <returns></returns>
         public static bool isElementReal(Element el)
         {
             bool result = false;
@@ -217,7 +222,10 @@ namespace CarboLifeRevit
                 {
                     if (el.get_Geometry(new Options()) != null)
                     {
-                        result = true;
+                        //Check if not of any forbidden categories such as runs:
+                        string Typename = el.Category.Name;
+                        if(Typename != "Run")
+                            result = true;
                     }
                 }
             }
