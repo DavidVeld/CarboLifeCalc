@@ -2,7 +2,7 @@
 <CarboDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CarboMaterials>
     <CarboMaterial>
-      <Id>26789</Id>
+      <Id>26613</Id>
       <Name>Metal - Steel Generic</Name>
       <Category>Steel</Category>
       <Description>A "generic" non-recycled metal</Description>
@@ -38,24 +38,24 @@ Transport Load = 15000 x 80 %
 The vehicle WILL return to its starting point empty
 The total distance = 400 km
 Summary: we are going to drive a Truck using Diesel 400 km 
-A full Truck can carry 2.38853503184713 m3 (untill max load is reached)
-Or 345400 kg (untill max volume is reached)
+A full Truck can carry 2.38853503184713 m³ (until max load is reached)
+Or 345400 kg (until max volume is reached)
 We will use the load capacity as a maximum threshold
 The vehicle will be fully loaded using: 12000 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
 Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
+We will therefore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
 To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
+We will therefore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
 680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
 784.415584415584 gCO₂/km x 400 km = 313766.233766234 gCO₂/trip
 313766.233766234 / 1000  = 313.766233766234 kgCO₂/trip
 313.766233766234 kgCO₂/trip / 12000 kg = 0.0261471861471861 gCO₂/kg
 
 Build cost
-Each vehicle needs to be build, and therfor its cabon costs need to be included
+Each vehicle needs to be build, and therefore its carbon costs need to be included
 Total carbon costs are estimated to be: 75000 kgCO₂
 On average this vehicle will go for: 250000 km
 Per km: 75000 / 250000 = 0.3 kgCO₂/km
@@ -131,7 +131,7 @@ Waste Processing cost are set as: 0.01 kgCO₂/kg
 
 [C4] total cost is: 0 + 0.00052 + 0 = 0.00052 kgCO₂/kg 
 
-Additional costs are (please specify in descrition otherwise leave as 0): 0 kgCO₂/kg 
+Additional costs are (please specify in description otherwise leave as 0): 0 kgCO₂/kg 
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
@@ -234,7 +234,7 @@ Set Value by user as: 0kgCo2/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>24901</Id>
+      <Id>20201</Id>
       <Name>Masonry - Brick - EDP</Name>
       <Category>Bricks &amp; Block</Category>
       <Description>This is a material based on the generic brick EPD from brick.org.uk
@@ -408,7 +408,7 @@ This element will therefor be : 1 time(s) created.
       <ECI_Mix_Info>Concrete - Mortar(0.13 m³/m³)</ECI_Mix_Info>
     </CarboMaterial>
     <CarboMaterial>
-      <Id>25400</Id>
+      <Id>28565</Id>
       <Name>Concrete - Mortar</Name>
       <Category>Cement</Category>
       <Description>No description provided</Description>
@@ -638,7 +638,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>20383</Id>
+      <Id>22153</Id>
       <Name>Concrete - Reinforced Concrete</Name>
       <Category>Concrete</Category>
       <Description>No description provided</Description>
@@ -826,7 +826,7 @@ Total costs are: 0 + 0 + 0 + 0.009 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>28988</Id>
+      <Id>20517</Id>
       <Name>Concrete - Screed</Name>
       <Category>Cement</Category>
       <Description>A 1:3 cement:sand screed</Description>
@@ -1051,7 +1051,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>26795</Id>
+      <Id>24105</Id>
       <Name>Concrete - Mass Concrete</Name>
       <Category>Concrete</Category>
       <Description>A Generic - CEM II Mass concrete infill</Description>
@@ -1282,7 +1282,7 @@ Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.021641086186540
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>22729</Id>
+      <Id>27693</Id>
       <Name>Site - Asphalt</Name>
       <Category>Asphalt</Category>
       <Description>No description provided</Description>
@@ -1469,7 +1469,7 @@ Total costs are: 0 + 0 + 0 + 5.335 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>24242</Id>
+      <Id>26057</Id>
       <Name>Timber - Structural Timber C24</Name>
       <Category>Timber</Category>
       <Description>No description provided</Description>
@@ -1700,7 +1700,7 @@ Set Value by user as: 0kgCo2/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>20654</Id>
+      <Id>29645</Id>
       <Name>Timber - Glulam</Name>
       <Category>Timber</Category>
       <Description />
@@ -1925,7 +1925,7 @@ Total emission per kg: 156.883116883117 / 0.0127272727272727 = 0.021641086186540
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>29613</Id>
+      <Id>28008</Id>
       <Name>Metal - Reinforcement</Name>
       <Category>Steel</Category>
       <Description>A generic reinforcement material</Description>
@@ -2150,7 +2150,7 @@ Total emission per kg: 156.883116883117 / 0.0101818181818182 = 0.017312868949232
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>27065</Id>
+      <Id>21597</Id>
       <Name>Timber - Plywood</Name>
       <Category>Timber</Category>
       <Description>No description provided</Description>
@@ -2381,7 +2381,7 @@ Set Value by user as: 0kgCo2/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>26193</Id>
+      <Id>25185</Id>
       <Name>Timber - Wood for Good EPD</Name>
       <Category>Timber</Category>
       <Description>Values based on Wood for Good EPD
@@ -2612,7 +2612,7 @@ Set Value by user as: 0kgCo2/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>27105</Id>
+      <Id>23548</Id>
       <Name>Plywood - WISA EPD (No C4)</Name>
       <Category>Timber</Category>
       <Description>Values based on WISA Provided EPD
@@ -2800,7 +2800,7 @@ Total costs are: 0 + 0 + 0 + 1.5515 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>22605</Id>
+      <Id>27136</Id>
       <Name>Stora Enso CLT EPD</Name>
       <Category>Timber</Category>
       <Description>CLT Values based on Stora Enso's EPD
@@ -2982,7 +2982,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>28702</Id>
+      <Id>25500</Id>
       <Name>Timber - CLT</Name>
       <Category>Timber</Category>
       <Description>CLT Values based on Stora Enso's EPD
@@ -3165,7 +3165,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>26207</Id>
+      <Id>29088</Id>
       <Name>Glass - General</Name>
       <Category>Other</Category>
       <Description>Generic Values for Glass</Description>
@@ -3352,7 +3352,7 @@ Total costs are: 0 + 0 + 0 + 1 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>27843</Id>
+      <Id>22676</Id>
       <Name>Insulation - Rockwool</Name>
       <Category>Other</Category>
       <Description>Based on EDP
@@ -3534,7 +3534,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>25153</Id>
+      <Id>21040</Id>
       <Name>Aluminum - Generic</Name>
       <Category>Steel</Category>
       <Description>Generic Aluminium Material</Description>
@@ -3721,7 +3721,7 @@ Total costs are: 0 + 0 + 0 + 0.00195 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>27352</Id>
+      <Id>24628</Id>
       <Name>Concrete - Precast</Name>
       <Category>Concrete</Category>
       <Description>No description provided</Description>
@@ -3757,24 +3757,24 @@ Transport Load = 22000 x 80 %
 The vehicle WILL return to its starting point empty
 The total distance = 200 km
 Summary: we are going to drive a Truck 10t (4 wheel) using Diesel 200 km 
-A full Truck 10t (4 wheel) can carry 11.4583333333333 m3 (untill max load is reached)
-Or 184320 kg (untill max volume is reached)
+A full Truck 10t (4 wheel) can carry 11.4583333333333 m³ (until max load is reached)
+Or 184320 kg (until max volume is reached)
 We will use the load capacity as a maximum threshold
 The vehicle will be fully loaded using: 17600 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
 Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
+We will therefore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
 To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
+We will therefore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
 680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
 784.415584415584 gCO₂/km x 200 km = 156883.116883117 gCO₂/trip
 156883.116883117 / 1000  = 156.883116883117 kgCO₂/trip
 156.883116883117 kgCO₂/trip / 17600 kg = 0.008913813459268 gCO₂/kg
 
 Build cost
-Each vehicle needs to be build, and therfor its cabon costs need to be included
+Each vehicle needs to be build, and therefore its carbon costs need to be included
 Total carbon costs are estimated to be: 280000 kgCO₂
 On average this vehicle will go for: 250000 km
 Per km: 280000 / 250000 = 1.12 kgCO₂/km
@@ -3850,7 +3850,7 @@ Waste Processing cost are set as: 0.02 kgCO₂/kg
 
 [C4] total cost is: 0 + 0.00325 + 0.00375 = 0.007 kgCO₂/kg 
 
-Additional costs are (please specify in descrition otherwise leave as 0): 0 kgCO₂/kg 
+Additional costs are (please specify in description otherwise leave as 0): 0 kgCO₂/kg 
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
@@ -3951,7 +3951,7 @@ Total emission per kg: 156.883116883117 / 0.006 = 0.0256103896103896 kgCO2/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>25114</Id>
+      <Id>22992</Id>
       <Name>Timber Generic</Name>
       <Category>Timber</Category>
       <Description>No description provided</Description>
@@ -4181,7 +4181,7 @@ Set Value by user as: 0kgCo2/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>22335</Id>
+      <Id>26580</Id>
       <Name>Concrete - Metaldeck</Name>
       <Category>Concrete</Category>
       <Description>No description provided</Description>
@@ -4369,7 +4369,7 @@ Total costs are: 0 + 0 + 0 + 0.578 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>28431</Id>
+      <Id>20168</Id>
       <Name>Concrete - Water resistent</Name>
       <Category>Concrete</Category>
       <Description>No description provided</Description>
@@ -4557,189 +4557,7 @@ Total costs are: 0 + 0 + 0 + 0.007 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>20940</Id>
-      <Name>Concrete - CEM Free</Name>
-      <Category>Concrete</Category>
-      <Description />
-      <EPDurl />
-      <Density>2400</Density>
-      <ECI>0.28280519480519478</ECI>
-      <getVolumeECI>678.73246753246747</getVolumeECI>
-      <ECI_A1A3>0.02</ECI_A1A3>
-      <ECI_A4>0.012805194805194802</ECI_A4>
-      <ECI_A5>0</ECI_A5>
-      <ECI_B1B5>0</ECI_B1B5>
-      <ECI_C1C4>0.25</ECI_C1C4>
-      <ECI_D>0</ECI_D>
-      <ECI_Mix>0</ECI_Mix>
-      <isLocked>false</isLocked>
-      <materialA1A3Properties>
-        <Id>0</Id>
-        <Category />
-        <Name />
-        <Description />
-        <Density>0</Density>
-        <ECI_A1A3>0</ECI_A1A3>
-      </materialA1A3Properties>
-      <materiaA4Properties>
-        <calcResult>Calculation to get transport value: 
-Distance to site = 50
-Material Density = 2400
-Empty run =80
-
-Transport Density = 2400 x 80 % 
-Transport Load = 10000 x 80 % 
-The vehicle WILL return to its starting point empty
-The total distance = 100 km
-Summary: we are going to drive a  using Diesel 100 km 
-A full  can carry 5.20833333333333 m3 (untill max load is reached)
-Or 86400 kg (untill max volume is reached)
-We will use the load capacity as a maximum threshold
-The vehicle will be fully loaded using: 8000 kg
-
-Vehicle Fuel Consumption
-The vehicle consumes: 3.85 l/km
-Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
-To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
-680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
-784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
-78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
-78.4415584415584 kgCO₂/trip / 8000 kg = 0.0098051948051948 gCO₂/kg
-
-Build cost
-Each vehicle needs to be build, and therfor its cabon costs need to be included
-Total carbon costs are estimated to be: 60000 kgCO₂
-On average this vehicle will go for: 250000 km
-Per km: 60000 / 250000 = 0.24 kgCO₂/km
-Total emission per trip: 0.24 x 100 = 24 kgCO₂/km
-Total emission per kg: 24 / 8000 = 0.003 kgCO₂/km
-
-Total emission per kg: 78.4415584415584 / 0.003 = 0.0128051948051948 kgCO₂/kg
-</calcResult>
-        <name />
-        <description />
-        <distanceToSite>50</distanceToSite>
-        <materialDensity>2400</materialDensity>
-        <emptyRun>80</emptyRun>
-        <emptyReturn>true</emptyReturn>
-        <vehicleSettings>
-          <name>Truck 10t (4 wheel)</name>
-          <maxVolume>45</maxVolume>
-          <maxLoad>10000</maxLoad>
-          <kmPer>3.85</kmPer>
-          <carboCostNew>60000</carboCostNew>
-          <totalDistance>250000</totalDistance>
-          <defaultFuel>Diesel</defaultFuel>
-          <description>A 10t truck, a truck can have a max capacity of 10t and a capacity of between 80-100 m�.</description>
-        </vehicleSettings>
-        <vehicleFuel>
-          <name>Diesel</name>
-          <emission>2.62</emission>
-          <production>0.4</production>
-          <unit>l</unit>
-        </vehicleFuel>
-        <value>0.012805194805194802</value>
-      </materiaA4Properties>
-      <materialA5Properties>
-        <calcResult>A5 calculation to be implemented 
-Set Value by user as: 0kgCO₂/kg
-</calcResult>
-        <name />
-        <value>0</value>
-      </materialA5Properties>
-      <materialB1B5Properties>
-        <elementdesignlife>1</elementdesignlife>
-        <buildingdesignlife>1</buildingdesignlife>
-        <calcResult>B1-B5 calculation:
-One element of this material will last: 1 year
-The building is intended to last: 1year
-This element will therefor be : 1 time(s) created.
-</calcResult>
-        <name>1 years design life , 1 time(s) created</name>
-        <B1>0</B1>
-        <B2>0</B2>
-        <B3>0</B3>
-        <B4>1</B4>
-        <B5>0</B5>
-        <B6>0</B6>
-        <B7>0</B7>
-        <totalValue>0</totalValue>
-        <assetType />
-      </materialB1B5Properties>
-      <materialC1C4Properties>
-        <calcResult>This calculation create a CO2 per kg value based on the given parameters.
-
-
-[C1] Demolition carbon cost: 
-3.4kgCo2e/m2  x 1kg/m2 = 0 kgCO2/kg 
-
-[C4] Disposal carbon costs: 
-Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
-Total costs are: 3.4 + 0 + 0 + 0 + 0
-= 3.4 kgCO2/kg 
-</calcResult>
-        <propertyName />
-        <c1density>1</c1density>
-        <c1BaseValue>3.4</c1BaseValue>
-        <c1Value>3.4</c1Value>
-        <c2Properties>
-          <calcResult />
-          <name />
-          <description />
-          <distanceToSite>0</distanceToSite>
-          <materialDensity>0</materialDensity>
-          <emptyRun>80</emptyRun>
-          <emptyReturn>true</emptyReturn>
-          <vehicleSettings>
-            <name />
-            <maxVolume>0</maxVolume>
-            <maxLoad>0</maxLoad>
-            <kmPer>0</kmPer>
-            <carboCostNew>0</carboCostNew>
-            <totalDistance>0</totalDistance>
-            <defaultFuel>Diesel</defaultFuel>
-            <description>An unspecified Vehicle</description>
-          </vehicleSettings>
-          <vehicleFuel>
-            <name />
-            <emission>1</emission>
-            <production>1</production>
-            <unit>l</unit>
-          </vehicleFuel>
-          <value>0</value>
-        </c2Properties>
-        <c2Value>0</c2Value>
-        <c3Value>0</c3Value>
-        <c4DisposalName />
-        <c4landfP>0</c4landfP>
-        <c4landfV>0</c4landfV>
-        <c4lanfResult>0</c4lanfResult>
-        <c4incfP>0</c4incfP>
-        <c4incfV>0</c4incfV>
-        <c4incResult>0</c4incResult>
-        <c4reUseP>0</c4reUseP>
-        <c4reUseV>0</c4reUseV>
-        <c4reUseResult>0</c4reUseResult>
-        <other>0</other>
-        <value>3.4</value>
-      </materialC1C4Properties>
-      <materialDProperties>
-        <name />
-        <value>0</value>
-        <calcResult />
-      </materialDProperties>
-      <ECI_A1A3_Override>true</ECI_A1A3_Override>
-      <ECI_A4_Override>false</ECI_A4_Override>
-      <ECI_A5_Override>false</ECI_A5_Override>
-      <ECI_B1B5_Override>false</ECI_B1B5_Override>
-      <ECI_C1C4_Override>true</ECI_C1C4_Override>
-      <ECI_D_Override>false</ECI_D_Override>
-      <ECI_Mix_Info />
-    </CarboMaterial>
-    <CarboMaterial>
-      <Id>23265</Id>
+      <Id>22120</Id>
       <Name>Masonry - FOAMGLAS - EPD</Name>
       <Category>Bricks &amp; Block</Category>
       <Description>T4+ Class FOAMGLAS based on EPD</Description>
@@ -4921,7 +4739,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>28741</Id>
+      <Id>20484</Id>
       <Name>Hardcore</Name>
       <Category>Stone</Category>
       <Description />
@@ -5104,7 +4922,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>29141</Id>
+      <Id>24072</Id>
       <Name>Site - Sand</Name>
       <Category>Aggregates and Sand</Category>
       <Description />
@@ -5140,24 +4958,24 @@ Transport Load = 22000 x 80 %
 The vehicle WILL return to its starting point empty
 The total distance = 100 km
 Summary: we are going to drive a  using Diesel 100 km 
-A full  can carry 15.2777777777778 m3 (untill max load is reached)
-Or 138240 kg (untill max volume is reached)
+A full  can carry 15.2777777777778 m³ (until max load is reached)
+Or 138240 kg (until max volume is reached)
 We will use the load capacity as a maximum threshold
 The vehicle will be fully loaded using: 17600 kg
 
 Vehicle Fuel Consumption
 The vehicle consumes: 3.85 l/km
 Carbon contents of Diesel = 2.62 CO₂/l
-We will therfore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
+We will therefore use: (2.62 CO₂/l x 1000) /3.85 km/l = 680.51948051948 gCO₂/km
 To Produce one l of Diesel you need: 0.4 CO₂/l
-We will therfore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
+We will therefore use: (0.4 CO₂/l x 1000) /3.85 km/l = 103.896103896104 gCO₂/km
 680.51948051948 + 103.896103896104 = 784.415584415584 gCO₂/km
 784.415584415584 gCO₂/km x 100 km = 78441.5584415584 gCO₂/trip
 78441.5584415584 / 1000  = 78.4415584415584 kgCO₂/trip
 78.4415584415584 kgCO₂/trip / 17600 kg = 0.004456906729634 gCO₂/kg
 
 Build cost
-Each vehicle needs to be build, and therfor its cabon costs need to be included
+Each vehicle needs to be build, and therefore its carbon costs need to be included
 Total carbon costs are estimated to be: 280000 kgCO₂
 On average this vehicle will go for: 250000 km
 Per km: 280000 / 250000 = 1.12 kgCO₂/km
@@ -5233,7 +5051,7 @@ Waste Processing cost are set as: 0.025 kgCO₂/kg
 
 [C4] total cost is: 0.00525 + 0.5375 + 0 = 0.54275 kgCO₂/kg 
 
-Additional costs are (please specify in descrition otherwise leave as 0): 0 kgCO₂/kg 
+Additional costs are (please specify in description otherwise leave as 0): 0 kgCO₂/kg 
 
 [C4] Disposal carbon costs: 
 Total costs are: [C1] + [C2] + [C3] + [C4] + [Additional]
@@ -5334,7 +5152,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>25216</Id>
+      <Id>27660</Id>
       <Name>Masonry Brick - Generic</Name>
       <Category>Bricks &amp; Block</Category>
       <Description>A Generic Brick material with mortar</Description>
@@ -5559,7 +5377,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_Mix_Info>Concrete - Mortar(0.15 m³/m³)</ECI_Mix_Info>
     </CarboMaterial>
     <CarboMaterial>
-      <Id>29303</Id>
+      <Id>26024</Id>
       <Name>Concrete - Ready Mix - Tarmac EPD</Name>
       <Category>Concrete</Category>
       <Description>This is a Ready mix concrete based on Tarmac's EPD</Description>
@@ -5742,7 +5560,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>22891</Id>
+      <Id>29612</Id>
       <Name>Concrete - C32/40 - 70% GGBS</Name>
       <Category>Concrete</Category>
       <Description>A concrete mix based on ECI Tables, but using a 
@@ -5969,7 +5787,7 @@ Total emission per kg: 78.4415584415584 / 0.00509090909090909 = 0.00865643447461
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>23971</Id>
+      <Id>27975</Id>
       <Name>Concrete - C32/40 - 50% GGBS</Name>
       <Category>Concrete</Category>
       <Description>A concrete mix based on ECI Tables, but using a 
@@ -6196,7 +6014,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>23201</Id>
+      <Id>21564</Id>
       <Name>Metal - Tata Steel - Hollow Sections EPD</Name>
       <Category>Steel</Category>
       <Description>Metal Hollow Section Based on Tata Steel EPD</Description>
@@ -6378,7 +6196,7 @@ Total costs are: 3.4 + 0 + 0 + 0 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>24843</Id>
+      <Id>25152</Id>
       <Name>Concrete - C40/50 - 50% GGBS</Name>
       <Category>Concrete</Category>
       <Description>A concrete mix based on ECI Tables, but using a 
@@ -6570,7 +6388,7 @@ Total costs are: 0 + 0.00865643447461629 + 0 + 0.007 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>26480</Id>
+      <Id>23515</Id>
       <Name>Concrete - C40/50 - 70% GGBS</Name>
       <Category>Concrete</Category>
       <Description>A concrete mix based on ECI Tables, but using a 
@@ -6762,7 +6580,7 @@ Total costs are: 0 + 0.00865643447461629 + 0 + 0.007 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>21249</Id>
+      <Id>27103</Id>
       <Name>Metal - Galvanised Steel</Name>
       <Category>Steel</Category>
       <Description>A generic hot rolled galvanised steel beam</Description>
@@ -6954,7 +6772,7 @@ Total costs are: 0 + 0 + 0.002 + 0.009 + 0
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>26853</Id>
+      <Id>25467</Id>
       <Name>Masonry Blockwork - High Density</Name>
       <Category>Bricks &amp; Block</Category>
       <Description>A Generic Brick material with mortar</Description>
@@ -7144,7 +6962,7 @@ Total costs are: 0 + 0.0108205430932704 + 0 + 0.009 + 0
       <ECI_Mix_Info>Concrete - Mortar(0.15 m³/m³)</ECI_Mix_Info>
     </CarboMaterial>
     <CarboMaterial>
-      <Id>22303</Id>
+      <Id>29055</Id>
       <Name>Polystyrene</Name>
       <Category>Other</Category>
       <Description />
@@ -7367,7 +7185,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>24255</Id>
+      <Id>22643</Id>
       <Name>Plasterboard - Generic</Name>
       <Category>Other</Category>
       <Description>A generic plasterboard material</Description>
@@ -7589,7 +7407,7 @@ Total emission per kg: 78.4415584415584 / 0.00636363636363636 = 0.01082054309327
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>25891</Id>
+      <Id>21007</Id>
       <Name>Plasterboard - EPD</Name>
       <Category>Other</Category>
       <Description>This plasterboard material is based on a EPD</Description>

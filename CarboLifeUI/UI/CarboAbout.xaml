@@ -43,7 +43,7 @@
 
         <Label Grid.Column="3" Grid.Row="2" Width="249" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" FontFamily="Segoe UI" FontSize="22" Foreground="#FFB21616">Carbo Life Calculator</Label>
         <Label Grid.Column="3" Grid.Row="2" Width="362" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,45,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Embodied Carbon Calculator to EN 15978:2011</Label>
-        <Label Grid.Column="3" Grid.Row="2" Width="325" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="242,20,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light" Grid.ColumnSpan="2">Build: V 0.92</Label>
+        <Label Grid.Column="3" Grid.Row="2" Width="325" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="242,20,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light" Grid.ColumnSpan="2">Build: V 1.0.0</Label>
 
         <TextBlock Grid.Column="3" Grid.Row="2" Width="527" Height="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,70,0,0">Help and updates:
             <Hyperlink NavigateUri="https://github.com/DavidVeld/CarboLifeCalc"  RequestNavigate="Hyperlink_RequestNavigate" FontFamily="Segoe UI" FontSize="12">

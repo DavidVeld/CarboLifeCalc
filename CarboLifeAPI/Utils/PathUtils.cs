@@ -337,6 +337,9 @@ namespace CarboLifeAPI
 
             if (local == true)
             {
+                if (!Directory.Exists(myLocalPath))
+                    Directory.CreateDirectory(myLocalPath);
+
                 return myLocalPath;
             }
             else
@@ -352,6 +355,28 @@ namespace CarboLifeAPI
                             "Target: " + myLocalPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return "";
                 }
+            }
+        }
+
+        public static void CleanOnlineDir()
+        {
+            try
+            {
+                //Delete all the files in the online folder:
+                //Get all file sin online folder:
+                string onlinePath = PathUtils.getDownloadedPath();
+                string[] files = Directory.GetFiles(onlinePath);
+
+                foreach (string file in files)
+                    File.Delete(file);
+
+                if (Directory.Exists(onlinePath))
+                    Directory.Delete(onlinePath);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("While trying to delete downloaded files I ran into an error: " + Environment.NewLine + ex.Message);
             }
         }
     }

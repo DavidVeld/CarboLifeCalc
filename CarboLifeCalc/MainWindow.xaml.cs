@@ -119,5 +119,10 @@ namespace CarboLifeCalc
         {
             CarboLifeAPI.PathUtils.CheckFileLocationsNew();
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            CarboLifeAPI.PathUtils.CleanOnlineDir();
+        }
     }
 }
