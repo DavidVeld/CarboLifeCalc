@@ -11,13 +11,14 @@ Carbo Life Calc is a tool that offers users a free and open-source solution to c
 
 Status: Work in Good Progress
 
-(build V0.90 02.06.2021)  
+(build V1.0.0 01.07.21)  
 
 Zip:  
-https://github.com/DavidVeld/CarboLifeCalc/releases/download/V0.90/CarboLifeCalcV0.90_GitHub.zip  
-
+https://github.com/DavidVeld/CarboLifeCalc/releases/download/1.0.0/210701.V1.0.0.G.zip  
 Installer:  
-https://github.com/DavidVeld/CarboLifeCalc/releases/download/V0.90/CarboLifeCalcInstaller.msi  
+https://github.com/DavidVeld/CarboLifeCalc/releases/download/1.0.0/CarboLifeCalcInstaller.msi  
+From Autodesk App Store:  
+https://apps.autodesk.com/RVT/en/Detail/Index?id=5134144936403749174&appLang=en&os=Win64  
 
 For help and quick guide please see:  
 https://github.com/DavidVeld/CarboLifeCalc/wiki  
@@ -25,13 +26,10 @@ Help documentation (formatted pdf):
 https://drive.google.com/file/d/1Omg-_2WtXjBDKgRInD4yzH7YDLlE1Hy1/view?usp=sharing  
 
 Videos:  
-Quick demonstration:
-https://youtu.be/5_pjdKm7b3w
-
+Quick 5m long demo:  
+https://youtu.be/5_pjdKm7b3w  
 Heatmaps:  
-https://youtu.be/O0gkl9B8Mvw
-
-
+https://youtu.be/O0gkl9B8Mvw  
 
 Screenshots:
 ![alt text](https://www.davidveld.nl/img/carbocalc/bim1.jpg)
@@ -40,16 +38,19 @@ Screenshots:
 ![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc3.png)
 ![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc4.png)
 
-#Roadmap (essential for release):
+#Roadmap:
 1. Increase database with more materials.
 2. Bug fixing (on-going, please supply feedback)
-3. Full review of all functions and windows.
-4. Record movie + Help docs to explain working of addin
+3. Carbon sequestering calculator (Fun, but low priority)
+4. Project compare interface added graphs
+5. Link into grasshopper and/or Tekla
+6. Import from Excel
 
-#Roadmap (Future):
-1. Carbon sequestering calculator (Fun, but low priority)
-2. Project compare interface added graphs
-3. Link into grasshopper and/or Tekla
+Updates as per build V1.0.0 (01.07.21) 
+1. Graph improvements
+2. File handling improvements
+3. Messages and other bits.
+
 
 Updates as per build 28.04.2021
 1. Moved user materials to AppData Folder
