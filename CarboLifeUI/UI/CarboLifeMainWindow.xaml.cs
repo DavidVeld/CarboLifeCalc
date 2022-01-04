@@ -469,7 +469,7 @@ namespace CarboLifeUI.UI
 
                     }
 
-                    if (heatmapBuilder.createHeatmap == true)
+                    if (heatmapBuilder.createHeatmap == true || heatmapBuilder.importData == true)
                     {
                         chx_AcceptHeatmap.Visibility = Visibility.Visible;
                         chx_AcceptHeatmap.IsChecked = true;
@@ -495,15 +495,15 @@ namespace CarboLifeUI.UI
                         importData = false;
                     }
 
-                    MessageBox.Show("Success! The heatmap will be applied one you close the window", "Success");
+                    MessageBox.Show("Success! The heatmap and/or data import will be applied once you close Carbo life Calculator", "Success");
 
                 }
                 else
                 {
-                    chx_AcceptHeatmap.Visibility = Visibility.Visible;
-                    chx_AcceptHeatmap.IsChecked = true;
-                    lbl_AcceptHeatmap.Visibility = Visibility.Visible;
-                    createHeatmap = true;
+                    //chx_AcceptHeatmap.Visibility = Visibility.Visible;
+                    //chx_AcceptHeatmap.IsChecked = true;
+                    //lbl_AcceptHeatmap.Visibility = Visibility.Visible;
+                    //createHeatmap = true;
                 }
 
 
