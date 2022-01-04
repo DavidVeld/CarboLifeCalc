@@ -50,7 +50,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1">Explain:</Label>
-                <TextBox Name="txt_Description" Grid.Column="1" Grid.Row="1" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,4" AcceptsReturn="True"/>
+                <TextBox Name="txt_Description"  VerticalContentAlignment="Top"  Grid.Column="1" Grid.Row="1" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,4" AcceptsReturn="True"/>
 
 
             </Grid>

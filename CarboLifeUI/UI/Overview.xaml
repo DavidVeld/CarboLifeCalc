@@ -17,160 +17,128 @@
     </UserControl.Resources>
 
     <Grid Background="White">
-
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="1.5*"/>
-            <RowDefinition Height="1.4*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1.5*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource baseStyleTitle}">Embodied Carbon per Material:</Label>
-        <Label Grid.Column="2" Grid.Row="1" Style="{StaticResource baseStyleTitle}">Embodied Carbon per Phase:</Label>
+        <Label Grid.Column="1" Grid.Row="3" Style="{StaticResource formBoldTitleStyle}">Embodied Carbon per Material:</Label>
+        <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource formBoldTitleStyle}">Embodied Carbon per Phase:</Label>
+        <Label Grid.Column="2" Grid.Row="3" Style="{StaticResource formBoldTitleStyle}">Embodied Carbon Target Alignment</Label>
+        <Label Grid.Column="2" Name="lbl_Title" Grid.Row="1" Style="{StaticResource formBoldTitleStyle}">Overview</Label>
 
-        <Label Name="lbl_Values" Grid.Column="1" Grid.Row="2" Style="{StaticResource baseStyleLabel}" Margin="0,30,10,0">-</Label>
+        <!-- Cart Per Material-->
+        <Grid Background="White" Grid.Column="1" Grid.Row="4">
 
-        <!-- <Canvas Name="cnv_Summary" Grid.Column="1" Grid.Row="2" Visibility="Visible" Margin="0,0,0,0">
-            <Canvas.Background>
-                <DrawingBrush TileMode="Tile" Viewport="0,0,10,10" 
-                                     ViewportUnits="Absolute">
-                    <DrawingBrush.Drawing>
-                        <GeometryDrawing>
-                            <GeometryDrawing.Geometry>
-                                <RectangleGeometry Rect="0,0,5,5"/>
-                            </GeometryDrawing.Geometry>
-                            <GeometryDrawing.Pen>
-                                <Pen Brush="LightCoral" Thickness="0.1"/>
-                            </GeometryDrawing.Pen>
-                        </GeometryDrawing>
-                    </DrawingBrush.Drawing>
-                </DrawingBrush>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="1.5*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="10"/>
 
-            </Canvas.Background>
-            <Border x:Name="cborder" BorderBrush="Black" BorderThickness="2">
-            </Border>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+
+            <lvc:PieChart Name="pie_Chart1"  Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
+                <lvc:PieChart.Resources>
+                    <Style TargetType="lvc:PieSeries">
+                        <Setter Property="DataLabels" Value="True"></Setter>
+                        <Setter Property="LabelPosition" Value="OutsideSlice"></Setter>
+                    </Style>
+                </lvc:PieChart.Resources>
+                <lvc:PieChart.ChartLegend>
+                    <lvc:DefaultLegend BulletSize="20" Background="Red" Margin="0,0,0,0" HorizontalAlignment="Left" />
+                </lvc:PieChart.ChartLegend>
+                <lvc:PieChart.DataTooltip>
+                    <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender"/>
+                </lvc:PieChart.DataTooltip>
+            </lvc:PieChart>
+        </Grid>
         
-        </Canvas>
+        <!-- Cart 2 Per phase-->
+        <Grid Background="White" Grid.Column="1" Grid.Row="2">
 
-       <DVC:Chart  Name="chr_Pie" Title="By Material" Visibility="Hidden"
-		Grid.Column="2" Grid.Row="2" Margin="0,0,0,0" Background="White" Foreground="Black" BorderBrush="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="1.5*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
 
-            
-            <DVC:PieSeries DependentValuePath="Value" 
-		IndependentValuePath="Key" ItemsSource="{Binding}" 
-		IsSelectionEnabled="true" Background="White" Foreground="Black" BorderBrush="Black"  FontSize="16" FontFamily="Calibri" OpacityMask="White"/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
 
-        </DVC:Chart>
--->
-        <lvc:PieChart Name="pie_Chart1" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,10,10,10" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
-            <lvc:PieChart.Resources>
-                <Style TargetType="lvc:PieSeries">
-                    <Setter Property="DataLabels" Value="True"></Setter>
-                    <Setter Property="LabelPosition" Value="OutsideSlice"></Setter>
-                </Style>
-            </lvc:PieChart.Resources>
-            <lvc:PieChart.ChartLegend>
-                <lvc:DefaultLegend BulletSize="20" Background="Red" Margin="0,0,0,0" HorizontalAlignment="Left" />
-            </lvc:PieChart.ChartLegend>
-            <lvc:PieChart.DataTooltip>
-                <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender"/>
-            </lvc:PieChart.DataTooltip>
-        </lvc:PieChart>
-        <lvc:PieChart Name="pie_Chart2"  Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,10,10,10" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" LegendLocation="Right" FontWeight="Light"  InnerRadius="75">
-            <lvc:PieChart.Resources>
-                <Style TargetType="lvc:PieSeries">
-                    <Setter Property="DataLabels" Value="True"></Setter>
-                    <Setter Property="LabelPosition" Value="OutsideSlice"></Setter>
-                </Style>
-            </lvc:PieChart.Resources>
-            <lvc:PieChart.ChartLegend>
-                <lvc:DefaultLegend BulletSize="20" Background="Red" Margin="0,0,0,0" HorizontalAlignment="Left" Foreground="Black" />
-            </lvc:PieChart.ChartLegend>
-            <lvc:PieChart.DataTooltip>
-                <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender" FontStyle="Normal" Foreground="Black"/>
-            </lvc:PieChart.DataTooltip>
-        </lvc:PieChart>
+            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,10,10,10" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" LegendLocation="Right" FontWeight="Light"  InnerRadius="75" Visibility="Visible">
+                <lvc:PieChart.Resources>
+                    <Style TargetType="lvc:PieSeries">
+                        <Setter Property="DataLabels" Value="True"></Setter>
+                        <Setter Property="LabelPosition" Value="OutsideSlice"></Setter>
+                    </Style>
+                </lvc:PieChart.Resources>
+                <lvc:PieChart.ChartLegend>
+                    <lvc:DefaultLegend BulletSize="20" Background="Red" Margin="0,0,0,0" HorizontalAlignment="Left" Foreground="Black" />
+                </lvc:PieChart.ChartLegend>
+                <lvc:PieChart.DataTooltip>
+                    <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender" FontStyle="Normal" Foreground="Black"/>
+                </lvc:PieChart.DataTooltip>
+            </lvc:PieChart>
 
-        <!--
-                public string Name { get; set; }
-        public string Number { get; set; }
-        public string Category { get; set; }
-        public string Description { get; set; }
-        -->
-        <GroupBox Grid.Column="1" Margin="5,5,5,5" Grid.Row="3" Header="Project Settings" Style="{StaticResource bigStyle}">
-            <Grid Name="grd_Edit" Background="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition  Height="28" />
-                    <RowDefinition  Height="28" />
-                    <RowDefinition  Height="28" />
-                    <RowDefinition  Height="28" />
-                    <RowDefinition  Height="28" />
-                    <RowDefinition  Height="28" />
-                    <RowDefinition  Height="28" />
-                    <RowDefinition  Height="28" />
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="5"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="145"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="5"/>
-                </Grid.ColumnDefinitions>
+            <Label Grid.Column="2" Grid.Row="1" Margin="0,5,0,0" Style="{StaticResource formTitleStyle}">Include:</Label>
 
-                <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="1"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Project Name:</Label>
-                <TextBox Name="txt_ProjectName" Grid.Column="2" Grid.Row="1" Margin="5,0,5,0" Height="27" Style="{StaticResource flatTextBox}" ></TextBox>
+            <!--Settings-->
+            <CheckBox Name="chx_A1A3" Grid.Column="2" Grid.Row="2" Margin="0,5,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A1A3_Changed" Unchecked="chx_A1A3_Changed">A1-A3</CheckBox>
+            <CheckBox Name="chx_A4" Grid.Column="2" Grid.Row="2" Margin="0,25,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A4_Changed" Unchecked="chx_A4_Changed">A4</CheckBox>
+            <CheckBox Name="chx_A5" Grid.Column="2" Grid.Row="2" Margin="0,45,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A5_Changed" Unchecked="chx_A5_Changed">A5</CheckBox>
+            <CheckBox Name="chx_B1B7" Grid.Column="2" Grid.Row="2" Margin="0,65,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_B_Changed" Unchecked="chx_B_Changed">B1-B7</CheckBox>
+            <CheckBox Name="chx_C1C4" Grid.Column="2" Grid.Row="2" Margin="0,85,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_C_Changed" Unchecked="chx_C_Changed">C1-C4</CheckBox>
+            <CheckBox Name="chx_D" Grid.Column="2" Grid.Row="2" Margin="0,105,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_D_Changed" Unchecked="chx_D_Changed">D</CheckBox>
+            <CheckBox Name="chx_Added" Grid.Column="2" Grid.Row="2" Margin="0,125,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_Add_Changed" Unchecked="chx_Add_Changed">Additional</CheckBox>
+        </Grid>
 
-                <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="2"    Height="28"  Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Project Number:</Label>
-                <TextBox Name="txt_Number" Grid.Column="2" Grid.Row="2" Margin="5,0,5,0" Height="27" Style="{StaticResource flatTextBox}" ></TextBox>
+        <!--LEti / SCORS -->
+        <Grid Grid.Column="2" Margin="5,5,5,5" Grid.Row="4" Background="White">
 
-                <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="3"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Project Category:</Label>
-                <TextBox Name="txt_Category" Grid.Column="2" Grid.Row="3" Margin="5,0,5,0" Height="27" Style="{StaticResource flatTextBox}" ></TextBox>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="4"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Project Description:</Label>
-                <TextBox Name="txt_Desctiption" Grid.Column="2" Grid.Row="4" Margin="5,0,5,0" Height="27" Style="{StaticResource flatTextBox}"></TextBox>
-                <Button Name="btn_EditDescription"  Grid.Row="4" Grid.Column="3" Height="23" VerticalAlignment="Top" Width="40" Margin="5,3,0,2" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_EditDescription_Click" >Edit...</Button>
+            <Label Grid.Column="1" Margin="0,1,10,0" Grid.Row="1" Height="28" Grid.ColumnSpan="2" Width="180"  HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Building Type:</Label>
+            <ComboBox Name="cbb_BuildingType" Grid.Row="1" Margin="100,2,295,0" Height="25" Width="170" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_BuildingType_DropDownClosed"/>
+            <Label Margin="290,1,240,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">GAI:</Label>
+            <TextBox Name="txt_Area" Grid.Row="1" Margin="330,0,111,0" Height="30" Width="100" HorizontalAlignment="Left"  Style="{StaticResource flatTextBox}" TextChanged="txt_Area_TextChanged" />
+            <Label Margin="440,1,5,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">m²</Label>
 
 
-                <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="5"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Total Area:</Label>
-                <TextBox Name="txt_Area" Grid.Column="2" Grid.Row="5" Margin="5,0,5,0" Height="27" Style="{StaticResource flatTextBox}" ></TextBox>
-                <Label Grid.Column="3" Margin="3,0,0,0" Grid.Row="5"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m²</Label>
 
-                <Label Grid.Column="1" Grid.Row="6"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Total Demolished Area:</Label>
-                <TextBox Name="txt_DemoArea" Grid.Column="2" Grid.Row="6" Margin="5,0,0,1" Width="110" HorizontalAlignment="Left"  Height="27" Style="{StaticResource flatTextBox}" ></TextBox>
-                <Label Grid.Column="2" Margin="118,27,0,0" Grid.Row="5"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Grid.RowSpan="2">
-                    m² x
-                </Label>
-                <TextBox Name="txt_DemoC1Fact" Grid.Column="2" Grid.Row="6" Margin="211,1,5,1" Height="27" Style="{StaticResource flatTextBox}" ></TextBox>
-                <Label Grid.Column="3" Margin="3,0,0,0" Grid.Row="6" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/m²</Label>
-                <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="7"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Total Project Value:</Label>
-                <TextBox Name="txt_Value" Grid.Column="2" Grid.Row="7" Margin="5,0,0,1" Width="110" HorizontalAlignment="Left" Height="27"  Style="{StaticResource flatTextBox}" ></TextBox>
-                <Label Grid.Column="2" Margin="118,0,0,0" Grid.Row="7"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Grid.RowSpan="2">$/£/€
-                </Label>
-                <TextBox Name="txt_ValueA5Fact" Grid.Column="2" Grid.Row="7" Margin="211,0,5,0" Height="27" Style="{StaticResource flatTextBox}" ></TextBox>
-                <Label Grid.Column="3" Margin="3,0,0,0" Grid.Row="7" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/($/£/€)</Label>
+            <Canvas Name="cnv_Leti" Grid.Column="0" Margin="5,5,5,5" Grid.Row="2" Background="White"></Canvas>
 
+        </Grid>
 
-                <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="8"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Social Carbon Cost:</Label>
-                <TextBox Name="txt_SocialCost" Grid.Column="2" Grid.Row="8" Margin="5,0,0,1" Width="110" HorizontalAlignment="Left" Height="27"  Style="{StaticResource flatTextBox}" ></TextBox>
-                <Label Grid.Column="2" Margin="118,0,37,0" Grid.Row="8"   Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">$/£/€ per tCO₂</Label>
-
-                <Button Name="btn_SaveInfo" Grid.Column="3" Grid.Row="8"   Height="28" Width="70"  Margin="5,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="left" Style="{StaticResource ButtonStyle}" Click="Btn_SaveInfo_Click">Apply</Button>
-
-            </Grid>
-        </GroupBox>
-
-        <Canvas Name="cnv_Totals" Grid.Column="2" Margin="5,5,5,5" Grid.Row="3" Background="White"></Canvas>
-        <Button x:Name="btn_EditDescription_Copy"  Grid.Row="3" Grid.Column="2" Height="23" VerticalAlignment="Bottom" Width="75" Margin="5,3,0,0" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="btn_EditDescription_Copy_Click" Content="Copy Text" />
+<!-- text -->
+        <Canvas Name="cnv_Totals" Grid.Column="2"  Grid.Row="2" Margin="5,5,5,5" Background="White"></Canvas>
+        <Button x:Name="btn_EditDescription_Copy"  Grid.Column="2" Grid.Row="2" Height="23" VerticalAlignment="Bottom" Width="75" Margin="5,3,0,0" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="btn_EditDescription_Copy_Click" Content="Copy Text" />
 
     </Grid>
 </UserControl>

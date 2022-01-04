@@ -40,6 +40,18 @@ namespace CarboLifeAPI.Data
         /// <summary>
         /// This is the materialmap that can be used to map the materials.
         /// </summary>
+        /// 
+
+        //Calc Switches
+        public bool calculateA13 { get; set; }
+        public bool calculateA4 { get; set; }
+        public bool calculateA5 { get; set; }
+        public bool calculateB { get; set; }
+        public bool calculateC { get; set; }
+        public bool calculateD { get; set; }
+        public bool calculateAdd { get; set; }
+
+
         public List<CarboMapElement> carboMaterialMap  { get; set; }
         public List<CarboLevel> carboLevelList { get; set; }
 
@@ -69,6 +81,7 @@ namespace CarboLifeAPI.Data
             newGroup.EC = 0;
             newGroup.Id = getNewId();
             double totals = 0;
+
 
             foreach (CarboGroup cgr in getGroupList)
             {
@@ -118,6 +131,7 @@ namespace CarboLifeAPI.Data
             Number = "000000";
             Category = "A building";
             Description = "New Project";
+            Area = 1;
             //C1 Global
             demoArea = 0;
             C1Global = 0;
@@ -126,14 +140,27 @@ namespace CarboLifeAPI.Data
             A5Global = 0;
             A5Factor = 1400; //kg CO₂ per vaue
             //Social
-            SocialCost = 50;
+            SocialCost = 100;
             //Other
-            justSaved = false;
+
             //Totals
             Value = 0;
             //New projects don't need to be saved
             justSaved = true;
+
+            calculateA13 = true;
+            calculateA4 = true;
+            calculateA5 = true;
+            calculateB = false;
+            calculateC = true;
+            calculateD = false;
+            calculateAdd = false;
+
+
         }
+
+
+
         public void CreateGroups()
         {
             //get default group settings;
@@ -178,6 +205,8 @@ namespace CarboLifeAPI.Data
                 }
             }
         }
+
+
 
         /// <summary>
         /// Updates the project with the elements inside another carbogroup
@@ -633,7 +662,14 @@ namespace CarboLifeAPI.Data
         /// These are net values(based on the corrected converted Total Volume
         /// </summary>
         /// <returns>Returns a list of the project totals (9 items) in kgCO₂</returns>
-        public List<CarboDataPoint> getPhaseTotals()
+        public List<CarboDataPoint> getPhaseTotals(
+            bool f_A1A4 = true, 
+            bool f_A4 = true, 
+            bool f_A5= true, 
+            bool f_B1B5= true, 
+            bool f_C1C4 = true, 
+            bool f_D = true, 
+            bool f_Add = true)
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
             try
@@ -648,15 +684,31 @@ namespace CarboLifeAPI.Data
                 CarboDataPoint cb_D = new CarboDataPoint("D", 0);
                 CarboDataPoint Added = new CarboDataPoint("Additional", 0);
 
-                valueList.Add(cb_A1A3);
+                if(f_A1A4 == true)
+                    valueList.Add(cb_A1A3);
+
+                if(f_A4 == true)
                 valueList.Add(cb_A4);
-                valueList.Add(cb_A5);
-                valueList.Add(cb_A5Global);
-                valueList.Add(cb_B1B5);
-                valueList.Add(cb_C1C4);
-                valueList.Add(cb_C1Global);
-                valueList.Add(cb_D);
-                valueList.Add(Added);
+
+                if (f_A5 == true)
+                {
+                    valueList.Add(cb_A5);
+                    valueList.Add(cb_A5Global);
+                }
+                if(f_B1B5 == true)
+                    valueList.Add(cb_B1B5);
+
+                if (f_C1C4 == true)
+                {
+                    valueList.Add(cb_C1C4);
+                    valueList.Add(cb_C1Global);
+                }
+
+                if (f_D == true)
+                    valueList.Add(cb_D);
+
+                if (f_Add == true)
+                    valueList.Add(Added);
 
                 foreach (CarboGroup CarboGroup in this.groupList)
                 {
@@ -818,6 +870,136 @@ namespace CarboLifeAPI.Data
 
             result += "The Social Carbon Costs are: " + Math.Round(socialcost, 2) + " $/£/€ total" + Environment.NewLine + Environment.NewLine;
 
+
+            return result;
+        }
+
+        //This will attempt to create a calc for summary: 
+        public string getCalcText()
+        {
+            //Get the datavalues:
+            List<CarboDataPoint> PieceListLifePoint = new List<CarboDataPoint>();
+
+            //Get all data:
+            PieceListLifePoint = getPhaseTotals(calculateA13, 
+                calculateA4, 
+                calculateA5, 
+                calculateB, 
+                calculateC, 
+                calculateD, 
+                calculateAdd);
+
+            string result = "";
+
+            /*
+             *  CarboDataPoint cb_A1A3 = new CarboDataPoint("A1-A3", 0);
+                CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
+                CarboDataPoint cb_A5 = new CarboDataPoint("A5(Material)",0);
+                CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
+                CarboDataPoint cb_B1B5 = new CarboDataPoint("B1-B7", 0);
+                CarboDataPoint cb_C1C4 = new CarboDataPoint("C1-C4", 0);
+                CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
+                CarboDataPoint cb_D = new CarboDataPoint("D", 0);
+                CarboDataPoint Added = new CarboDataPoint("Additional", 0);
+            */
+
+            //Add A1-A5
+            result += "A1-A3 = ";
+            if (calculateA13 == true)
+            {
+                result += Utils.getString(PieceListLifePoint, "A1-A3");
+            }
+            else
+            {
+                result += Math.Round(0f, 1) + Environment.NewLine;
+            }
+
+            //A4
+            result += "A4 = ";
+            if (calculateA4 == true)
+            {
+                result += Utils.getString(PieceListLifePoint, "A4");
+            }
+            else
+            {
+                result += Math.Round(0f, 1) + Environment.NewLine;
+            }
+
+            //A5
+            result += "A5(Material) = ";
+            if (calculateA5 == true)
+            {
+                result += Utils.getString(PieceListLifePoint, "A5(Material)");
+            }
+            else
+            {
+                result += Math.Round(0f, 1) + Environment.NewLine;
+            }
+
+            result += "A5(Global) = ";
+            if (calculateA5 == true)
+            {
+                result += Utils.getString(PieceListLifePoint, "A5(Global)");
+            }
+            else
+            {
+                result += Math.Round(0f, 1) + Environment.NewLine;
+            }
+
+            //B
+            result += "B1-B7 = ";
+            if (calculateB == true)
+            {
+                result += Utils.getString(PieceListLifePoint, "B1-B7");
+            }
+            else
+            {
+                result += Math.Round(0f, 1) + Environment.NewLine;
+            }
+
+            //C
+            result += "C1-C4 = ";
+            if (calculateC == true)
+            {
+                result += Utils.getString(PieceListLifePoint, "C1-C4");
+            }
+            else
+            {
+                result += Math.Round(0f, 1) + Environment.NewLine;
+            }
+
+            //C
+            result += "C1(Global) = ";
+            if (calculateC == true)
+            {
+                result += Utils.getString(PieceListLifePoint, "C1(Global)");
+            }
+            else
+            {
+                result += Math.Round(0f, 1) + Environment.NewLine;
+            }
+
+            //D
+            result += "D = ";
+            if (calculateD == true)
+            {
+                result += Utils.getString(PieceListLifePoint, "D");
+            }
+            else
+            {
+                result += Math.Round(0f, 1) + Environment.NewLine;
+            }
+
+            //Add
+            result += "Additional = ";
+            if (calculateAdd == true)
+            {
+                result += Utils.getString(PieceListLifePoint, "Additional");
+            }
+            else
+            {
+                result += Math.Round(0f, 1) + Environment.NewLine;
+            }
 
             return result;
         }

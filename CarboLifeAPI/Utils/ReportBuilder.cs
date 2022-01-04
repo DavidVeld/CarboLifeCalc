@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace CarboLifeAPI
         static string reportpath;
         //static string imgPath;
 
-        public static void CreateReport(CarboProject carboProject)
+        public static void CreateReport(CarboProject carboProject, Bitmap chart1, Bitmap chart2, Bitmap ratingChart)
         {
             //Create a File and save it as a HTML File
             SaveFileDialog saveDialog = new SaveFileDialog();
@@ -63,7 +64,27 @@ namespace CarboLifeAPI
             }
 
             //EXPORT IMAGES HERE:
+            string ImgTag1 = "";
+            string ImgTag2 = "";
+            string ImgTag3 = "";
 
+            if (chart1 != null)
+            {
+                string piechart1_64 = ToBase64String(chart1);
+                ImgTag1 = getImageTag(piechart1_64, chart1.Width, chart1.Height, "PieChart1");
+            }
+
+            if (chart2 != null)
+            {
+                string piechart2_64 = ToBase64String(chart2);
+                ImgTag2 = getImageTag(piechart2_64, chart2.Width, chart2.Height, "PieChart1");
+            }
+
+            if (ratingChart != null)
+            {
+                string ratingChart64 = ToBase64String(ratingChart);
+                ImgTag3 = getImageTag(ratingChart64, ratingChart.Width, ratingChart.Height, "PieChart1");
+            }
 
             //HTML WRITING;
             try
@@ -74,7 +95,12 @@ namespace CarboLifeAPI
 
                 report += writeMaterialTable(carboProject);
 
+                report += ImgTag1;
+                report += ImgTag2;
+                report += ImgTag3;
+
                 report += closeHTML();
+
 
                 if (report != "")
                 {
@@ -97,6 +123,18 @@ namespace CarboLifeAPI
             }
             //VOID
 
+        }
+
+        private static string getImageTag(string imageAsString, int width, int height, string toolText)
+        {
+            string imgTag = string.Empty;
+
+            imgTag = "<img src=\"data:image/png;base64,";
+             imgTag += imageAsString + "\" ";
+            //imgTag += " width=\"" + width.ToString() + (char)34;
+            imgTag += " height=\"" + height.ToString() + (char)34 + "/>" + System.Environment.NewLine; 
+
+            return imgTag;
         }
 
         private static string writeMaterialTable(CarboProject carboProject)
@@ -445,12 +483,12 @@ namespace CarboLifeAPI
 
             html += "<STYLE type=\"text/css\">" + System.Environment.NewLine;
 
-            html += "table {font-family:Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "table {font-family:Artifakt Element, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "margin-left:20px;" +
                         "border:#000 1px solid; }" +
                         System.Environment.NewLine;
 
-            html += "td {font-family:Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "td {font-family:Artifakt Element, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
                         "font-size:16px;" +
                         "background:#fff;" +
@@ -458,7 +496,7 @@ namespace CarboLifeAPI
                         "border:#000 0px solid; }" +
                         System.Environment.NewLine;
 
-            html += "h1 {font-family:Ubuntu, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "h1 {font-family:Artifakt Element, Ubuntu, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
                         "font-size:36px;" +
                         "text-shadow: 1px 1px 0px #fff;" +
@@ -466,7 +504,7 @@ namespace CarboLifeAPI
                         "border:#000 0px solid; }" +
                         System.Environment.NewLine;
 
-            html += "h2 {font-family:Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "h2 {font-family:Artifakt Element, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
                         "font-size:16px;" +
                         "text-shadow: 1px 1px 0px #fff;" +
@@ -474,7 +512,7 @@ namespace CarboLifeAPI
                         "border:#000 0px solid; }" +
                         System.Environment.NewLine;
 
-            html += "h3 {font-family:Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "h3 {font-family:Artifakt Element, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
                         "font-size:16px;" +
                         "text-shadow: 1px 1px 0px #fff;" +
@@ -509,6 +547,32 @@ namespace CarboLifeAPI
             return html;
         }
         //Helpers:
+
+        public static string ToBase64String(this Bitmap bmp)
+        {
+            try
+            {
+                string base64String = string.Empty;
+
+                MemoryStream memoryStream = new MemoryStream();
+                bmp.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                memoryStream.Position = 0;
+                byte[] byteBuffer = memoryStream.ToArray();
+
+                memoryStream.Close();
+
+                base64String = Convert.ToBase64String(byteBuffer);
+                byteBuffer = null;
+
+                return base64String;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("There was an error while creating an embedded image: " + Environment.NewLine + ex.Message, "Error", MessageBoxButton.OK);
+                return "";
+            }
+        }
 
     }
 

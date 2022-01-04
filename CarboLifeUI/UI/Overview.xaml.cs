@@ -60,7 +60,24 @@ namespace CarboLifeUI.UI
                     RefreshInterFace();
                 }
 
-                //Rebuild the materialList
+                //CategoryList:
+                if (cbb_BuildingType.Items.Count == 0)
+                {
+                    cbb_BuildingType.Items.Clear();
+
+                    IList<LetiScore> letiList = new List<LetiScore>();
+
+                    letiList = ScorsIndicator.getLetiList();
+                    IList<string> typelist = letiList.Select(x => x.BuildingType).Distinct().ToList();
+
+                    foreach (string name in typelist)
+                    {
+                        cbb_BuildingType.Items.Add(name);
+                    }
+                }
+
+                cbb_BuildingType.SelectedItem = CarboLifeProject.Category;
+                txt_Area.Text = CarboLifeProject.Area.ToString();
 
             }
             catch (Exception ex)
@@ -77,8 +94,7 @@ namespace CarboLifeUI.UI
                 {
 
                     SeriesCollection pieMaterialSeries = GraphBuilder.GetPieChartMaterials(CarboLifeProject);
-
-                    SeriesCollection pieLifeSeries = GraphBuilder.GetPieChartTotals(CarboLifeProject);
+                    //SeriesCollection pieLifeSeries = GraphBuilder.GetPieChartTotals(CarboLifeProject);
 
                     if (pieMaterialSeries != null)
                     {
@@ -86,31 +102,30 @@ namespace CarboLifeUI.UI
                         pie_Chart1.SeriesColors = GraphBuilder.getColours();
 
                     }
-
+                    /*
                     if (pieLifeSeries != null)
                     {
                         pie_Chart2.Series = pieLifeSeries;
                         pie_Chart2.SeriesColors = GraphBuilder.getColours();
 
                     }
-                    txt_ProjectName.Text = CarboLifeProject.Name;
-                    txt_Number.Text = CarboLifeProject.Number;
-                    txt_Category.Text = CarboLifeProject.Category;
-                    txt_Desctiption.Text = CarboLifeProject.Description;
-
-                    txt_Area.Text = CarboLifeProject.Area.ToString();
-                    
-                    //A5
-                    txt_Value.Text = CarboLifeProject.Value.ToString();
-                    txt_ValueA5Fact.Text = CarboLifeProject.A5Factor.ToString();
-
-                    txt_SocialCost.Text = CarboLifeProject.SocialCost.ToString();
-
-                    //C1
-                    txt_DemoArea.Text = CarboLifeProject.demoArea.ToString();
-                    txt_DemoC1Fact.Text = CarboLifeProject.C1Factor.ToString();
-
+                    */
                     //Totals
+
+                    lbl_Title.Content = CarboLifeProject.Number + " - " + CarboLifeProject.Name + " Overview: ";
+
+                    chx_A1A3.IsChecked = CarboLifeProject.calculateA13;
+                    chx_A4.IsChecked = CarboLifeProject.calculateA4;
+                    chx_A5.IsChecked = CarboLifeProject.calculateA5;
+                    chx_B1B7.IsChecked = CarboLifeProject.calculateB;
+                    chx_C1C4.IsChecked = CarboLifeProject.calculateC;
+                    chx_D.IsChecked = CarboLifeProject.calculateD;
+                    chx_Added.IsChecked = CarboLifeProject.calculateAdd;
+
+
+
+                    RefreshLetiGraph();
+                    RefreshPhasePie();
                     refreshSumary();
                 }
             }
@@ -120,11 +135,45 @@ namespace CarboLifeUI.UI
             }
         }
 
+        private void RefreshLetiGraph()
+        {
+            cnv_Leti.Children.Clear();
+
+            if (CarboLifeProject.Area > 0)
+            {
+                List<CarboDataPoint> resultPointsA1A5 = CarboLifeProject.getPhaseTotals(true,true,true,false,false,false,false);
+                List<CarboDataPoint> resultPointsA1C = CarboLifeProject.getPhaseTotals(true, true, true, true, true, false, false);
+
+
+                double valueA1A5 = getDataTotals(resultPointsA1A5);
+                double valueA1C = getDataTotals(resultPointsA1C);
+
+                IEnumerable<UIElement> letiGraph = ScorsIndicator.generateImage(cnv_Leti, valueA1A5, valueA1C, CarboLifeProject.Area, cbb_BuildingType.Text);
+                foreach (UIElement uielement in letiGraph)
+                {
+                    cnv_Leti.Children.Add(uielement);
+                }
+            }
+        }
+
+        private double getDataTotals(List<CarboDataPoint> resultPointsA1A5)
+        {
+            double result = 0;
+
+            foreach(CarboDataPoint cdp in resultPointsA1A5)
+            {
+                result += cdp.Value;
+            }
+
+            return result;
+        }
+
         private void refreshSumary()
         {
             if (CarboLifeProject != null)
             {
                 cnv_Totals.Children.Clear();
+
                 summaryTextMemory = "";
 
 
@@ -145,7 +194,7 @@ namespace CarboLifeUI.UI
 
 
                 TextBlock summaryText = new TextBlock();
-                summaryText.Text = CarboLifeProject.getSummaryText(true, true, true, true);
+                summaryText.Text = CarboLifeProject.getCalcText();
                 summaryTextMemory += summaryText.Text;
                 summaryText.FontStyle = FontStyles.Normal;
                 summaryText.FontWeight = FontWeights.Normal;
@@ -158,6 +207,10 @@ namespace CarboLifeUI.UI
                 Canvas.SetLeft(summaryText, 5);
                 Canvas.SetTop(summaryText, 25);
                 cnv_Totals.Children.Add(summaryText);
+
+
+
+
             }
 
         }
@@ -171,24 +224,7 @@ namespace CarboLifeUI.UI
       
         private void SaveSettings()
         {
-            CarboLifeProject.Name = txt_ProjectName.Text;
-            CarboLifeProject.Number = txt_Number.Text;
-            CarboLifeProject.Category = txt_Category.Text;
-            CarboLifeProject.Description = txt_Desctiption.Text;
-
-            CarboLifeProject.SocialCost = CarboLifeAPI.Utils.ConvertMeToDouble(txt_SocialCost.Text);
-            CarboLifeProject.Area = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Area.Text);
-            CarboLifeProject.SocialCost = CarboLifeAPI.Utils.ConvertMeToDouble(txt_SocialCost.Text);
-            //A5
-            CarboLifeProject.Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
-            CarboLifeProject.A5Factor = CarboLifeAPI.Utils.ConvertMeToDouble(txt_ValueA5Fact.Text);
-
-            //C1
-            CarboLifeProject.demoArea = CarboLifeAPI.Utils.ConvertMeToDouble(txt_DemoArea.Text);
-            CarboLifeProject.C1Factor = CarboLifeAPI.Utils.ConvertMeToDouble(txt_DemoC1Fact.Text);
-
-            CarboLifeProject.CalculateProject();
-
+            CarboLifeProject.CalculateProject();           
         }
 
         private void Btn_SaveInfo_Click(object sender, RoutedEventArgs e)
@@ -220,16 +256,6 @@ namespace CarboLifeUI.UI
 
         }
 
-        private void btn_EditDescription_Click(object sender, RoutedEventArgs e)
-        {
-            DescriptionEditor editor = new DescriptionEditor(txt_Desctiption.Text);
-            editor.ShowDialog();
-            if (editor.isAccepted == true)
-            {
-                txt_Desctiption.Text = editor.description;
-            }
-        }
-
         private void btn_EditDescription_Copy_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -243,6 +269,124 @@ namespace CarboLifeUI.UI
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK);
+            }
+        }
+
+        private void cbb_BuildingType_DropDownClosed(object sender, EventArgs e)
+        {
+            if (cbb_BuildingType.Text != "")
+            {
+                RefreshLetiGraph();
+                CarboLifeProject.Category = cbb_BuildingType.Text;
+            }
+        }
+
+        private async void txt_Area_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = txt_Area.Text;
+
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length)
+            {
+                double convertedText = Utils.ConvertMeToDouble(tb.Text);
+                if (convertedText != 0)
+                {
+                    CarboLifeProject.Area = convertedText;
+                    txt_Area.Text = convertedText.ToString();
+                    RefreshLetiGraph();
+                }
+            }
+        }
+
+        private void RefreshPhasePie()
+        {
+            try
+            {
+                
+                if (CarboLifeProject != null)
+                {
+
+                    SeriesCollection pieLifeSeries = GraphBuilder.GetPieChartTotals(CarboLifeProject);
+
+                    if (pieLifeSeries != null)
+                    {
+                        pie_Chart2.Series = pieLifeSeries;
+                        pie_Chart2.SeriesColors = GraphBuilder.getColours();
+
+                    }
+                    //Totals
+                    refreshSumary();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void chx_A1A3_Changed(object sender, RoutedEventArgs e)
+        {
+            if (chx_A1A3 != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateA13 = chx_A1A3.IsChecked.Value;
+                RefreshPhasePie();
+            }
+        }
+
+        private void chx_A4_Changed(object sender, RoutedEventArgs e)
+        {
+            if (chx_A1A3 != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateA4 = chx_A4.IsChecked.Value;
+                RefreshPhasePie();
+            }
+        }
+
+        private void chx_A5_Changed(object sender, RoutedEventArgs e)
+        {
+            if (chx_A5 != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateA5 = chx_A5.IsChecked.Value;
+                RefreshPhasePie();
+            }
+        }
+
+        private void chx_B_Changed(object sender, RoutedEventArgs e)
+        {
+            if (chx_B1B7 != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateB = chx_B1B7.IsChecked.Value;
+                RefreshPhasePie();
+            }
+        }
+
+        private void chx_C_Changed(object sender, RoutedEventArgs e)
+        {
+            if (chx_C1C4 != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateC = chx_C1C4.IsChecked.Value;
+                RefreshPhasePie();
+            }
+        }
+
+        private void chx_D_Changed(object sender, RoutedEventArgs e)
+        {
+            if (chx_D != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateD = chx_D.IsChecked.Value;
+                RefreshPhasePie();
+            }
+        }
+
+        private void chx_Add_Changed(object sender, RoutedEventArgs e)
+        {
+            if (chx_Added != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateAdd = chx_Added.IsChecked.Value;
+                RefreshPhasePie();
             }
         }
     }

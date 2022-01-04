@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Carbo Life Calculator"
-             d:DesignHeight="820" d:DesignWidth="1200" MinWidth="1200" MinHeight="820" Width="1200" Height="820" Closing="Window_Closing">
+             d:DesignHeight="900" MinHeight="900" Height="900" d:DesignWidth="1200" MinWidth="1200"  Width="1200" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -72,6 +72,21 @@
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
                     <local:Overview x:Name="Panel_Overview" Grid.Row="1" Grid.Column="1" Visibility="Visible" ></local:Overview>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Project Settings">
+                <Grid Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+                    <local:ProjectSettings x:Name="Panel_ProjectSettings" Grid.Row="1" Grid.Column="1" Visibility="Visible" ></local:ProjectSettings>
                 </Grid>
             </TabItem>
             <TabItem Header="Calculation">

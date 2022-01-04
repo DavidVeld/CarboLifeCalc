@@ -1,0 +1,138 @@
+﻿<UserControl x:Class="CarboLifeUI.UI.ProjectSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarboLifeUI.UI"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="1200" IsVisibleChanged="UserControl_IsVisibleChanged">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MyStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource baseStyleTitle}">Basic Settings:</Label>
+
+        <GroupBox Grid.Column="1" Margin="5,5,5,5" Grid.Row="2" Header="Project Settings" Style="{StaticResource formTitleStyle}">
+            <Grid Name="grd_Edit" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="70" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="165"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Margin="0,2,10,0" Grid.Row="1"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Project Name:</Label>
+                <TextBox Name="txt_ProjectName" Grid.Column="2" Grid.Row="1" Margin="5,0,5,0" Height="30" Style="{StaticResource flatTextBox}" TextChanged="txt_ProjectName_TextChanged"></TextBox>
+
+                <Label Grid.Column="1" Margin="0,2,10,0" Grid.Row="2"    Height="28"  Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Project Number:</Label>
+                <TextBox Name="txt_Number" Grid.Column="2" Grid.Row="2" Margin="5,0,5,0" Height="30" Style="{StaticResource flatTextBox}" TextChanged="txt_Number_TextChanged" ></TextBox>
+
+                <Label Grid.Column="1" Margin="0,2,10,0" Grid.Row="3"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Project Category:</Label>
+                <ComboBox Name="cbb_BuildingType" Grid.Column="2" Grid.Row="3" Margin="5,3,5,0" Height="30" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_BuildingType_DropDownClosed"/>
+
+                <Label Grid.Column="1" Margin="0,2,5,0" Grid.Row="4"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Project Description:</Label>
+                <TextBox Name="txt_Desctiption" Grid.Column="2" Grid.Row="4" Margin="5,5,5,5" Style="{StaticResource flatTextBox}" VerticalContentAlignment="Top" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" TextChanged="txt_Desctiption_TextChanged"></TextBox>
+                <Button Name="btn_EditDescription"  Grid.Row="4" Grid.Column="3" Height="28" VerticalAlignment="Top" Width="40" Margin="5,3,0,2" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_EditDescription_Click" >Edit...</Button>
+
+
+                <Label Grid.Column="1" Margin="0,2,10,0" Grid.Row="5"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Total Area (GIA):</Label>
+                <TextBox Name="txt_Area" Grid.Column="2" Grid.Row="5" Margin="5,0,5,0" Height="30" Style="{StaticResource flatTextBox}" TextChanged="txt_Area_TextChanged"></TextBox>
+                <Label Grid.Column="3" Margin="3,0,0,0" Grid.Row="5"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
+                <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="5" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">This is the Gross Internal Area of the part of the building you are analysing</Label>
+
+
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Column="1" Margin="5,5,5,5" Grid.Row="3" Header="Advanced Settings:" Style="{StaticResource formTitleStyle}">
+            <Grid Name="grd_Advanced" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition  Height="35" />
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="165"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+
+
+                <Label Grid.Column="1" Grid.Row="1"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Total Demolished Area:</Label>
+                <TextBox Name="txt_DemoArea" Grid.Column="2" Grid.Row="1" Margin="5,0,0,1" Width="110" HorizontalAlignment="Left"  Height="27" Style="{StaticResource flatTextBox}" TextChanged="txt_DemoArea_TextChanged"></TextBox>
+
+                <Label Grid.Column="2" Margin="118,0,0,0" Grid.Row="1"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">
+                    m² x
+                </Label>
+
+                <TextBox Name="txt_DemoC1Fact" Grid.Column="2" Grid.Row="1" Margin="211,1,5,1" Height="27" Style="{StaticResource flatTextBox}" TextChanged="txt_DemoC1Fact_TextChanged" ></TextBox>
+                <Label Grid.Column="3" Margin="3,0,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">kgCO₂/m²</Label>
+                <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="1" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">The RICS guideline recomends adding 3.4 kgCO₂ per m² demolished area.</Label>
+
+                <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="2"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Total Project Value:</Label>
+                <TextBox Name="txt_Value" Grid.Column="2" Grid.Row="2" Margin="5,0,0,1" Width="110" HorizontalAlignment="Left" Height="27"  Style="{StaticResource flatTextBox}" TextChanged="txt_Value_TextChanged" ></TextBox>
+                <Label Grid.Column="2" Margin="118,0,0,0" Grid.Row="2"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">$/£/€
+                </Label>
+                <TextBox Name="txt_ValueA5Fact" Grid.Column="2" Grid.Row="2" Margin="211,0,5,0" Height="27" Style="{StaticResource flatTextBox}" TextChanged="txt_ValueA5Fact_TextChanged"></TextBox>
+                <Label Grid.Column="3" Margin="3,0,0,0" Grid.Row="2" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">kgCO₂/($/£/€)</Label>
+                <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="2" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">The RICS guideline recomends adding 1tCO₂ per 1400 £</Label>
+
+
+                <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="3"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Social Carbon Cost:</Label>
+                <TextBox Name="txt_SocialCost" Grid.Column="2" Grid.Row="3" Margin="5,0,0,1" Width="110" HorizontalAlignment="Left" Height="27"  Style="{StaticResource flatTextBox}" TextChanged="txt_SocialCost_TextChanged"></TextBox>
+                <Label Grid.Column="2" Margin="118,0,223,0" Grid.Row="3"   Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">$/£/€ per tCO₂</Label>
+                <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="3" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">Social Carbon Cost are currently between 50-200 pounds / dollar per tCO₂</Label>
+
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</UserControl>

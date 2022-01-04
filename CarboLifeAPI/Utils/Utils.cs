@@ -8,6 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Drawing;
 using System.Windows;
+using System.Linq;
 
 namespace CarboLifeAPI
 {
@@ -57,6 +58,19 @@ namespace CarboLifeAPI
                 }
                 return dt;
             }
+        }
+
+        public static double getScalingfactor(double canvasPixels, double Value)
+        {
+            //Based on y\ =\ 1-e^{-0.3x}
+            double result = 1;
+
+            if (Value <= 0)
+                Value = 50;
+
+            result = canvasPixels / Value;
+
+            return result;
         }
 
         public static int CalcLevenshteinDistance(string a, string b)
@@ -434,7 +448,7 @@ namespace CarboLifeAPI
             double r = Interpolate(color1.R, color2.R, fraction);
             double g = Interpolate(color1.G, color2.G, fraction);
             double b = Interpolate(color1.B, color2.B, fraction);
-            return Color.FromArgb((int)Math.Round(r), (int)Math.Round(g), (int)Math.Round(b));
+            return System.Drawing.Color.FromArgb((int)Math.Round(r), (int)Math.Round(g), (int)Math.Round(b));
         }
 
         private static double Interpolate(double d1, double d2, double fraction)
@@ -442,5 +456,70 @@ namespace CarboLifeAPI
             return d1 + (d2 - d1) * fraction;
         }
 
+        /// <summary>
+        /// Finds a Child of a given item in the visual tree. 
+        /// </summary>
+        /// <param name="parent">A direct parent of the queried item.</param>
+        /// <typeparam name="T">The type of the queried item.</typeparam>
+        /// <param name="childName">x:Name or Name of child. </param>
+        /// <returns>The first parent item that matches the submitted type parameter. 
+        /// If not matching item can be found, a null parent is being returned.</returns>
+        public static T FindChild<T>(DependencyObject parent, string childName)
+           where T : DependencyObject
+        {
+            // Confirm parent and childName are valid. 
+            if (parent == null) return null;
+
+            T foundChild = null;
+
+            int childrenCount = System.Windows.Media.VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = System.Windows.Media.VisualTreeHelper.GetChild(parent, i);
+                // If the child is not of the request child type child
+                T childType = child as T;
+                if (childType == null)
+                {
+                    // recursively drill down the tree
+                    foundChild = FindChild<T>(child, childName);
+
+                    // If the child is found, break so we do not overwrite the found child. 
+                    if (foundChild != null) break;
+                }
+                else if (!string.IsNullOrEmpty(childName))
+                {
+                    var frameworkElement = child as FrameworkElement;
+                    // If the child's name is set for search
+                    if (frameworkElement != null && frameworkElement.Name == childName)
+                    {
+                        // if the child's name is of the request name
+                        foundChild = (T)child;
+                        break;
+                    }
+                }
+                else
+                {
+                    // child element found.
+                    foundChild = (T)child;
+                    break;
+                }
+            }
+
+            return foundChild;
+        }
+
+        internal static string getString(List<CarboDataPoint> pieceListLifePoint, string itemName)
+        {
+            string result = "";
+
+            CarboDataPoint point = pieceListLifePoint.First(item => item.Name == itemName);
+
+            if (point != null)
+                result += Math.Round(point.Value, 1) + Environment.NewLine;
+            else
+                result += "Not Calculated " + Environment.NewLine;
+
+            return result;
+        }
     }
 }

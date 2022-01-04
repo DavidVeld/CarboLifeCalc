@@ -83,6 +83,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="img\LetiScore.cs" />
+    <Compile Include="img\ScorsIndicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -101,6 +103,7 @@
     <Compile Include="UI\CarboInfoBox.xaml.cs">
       <DependentUpon>CarboInfoBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\DataSource\ChartUtils.cs" />
     <Compile Include="UI\DataSource\SumValues.cs" />
     <Compile Include="UI\CarboAbout.xaml.cs">
       <DependentUpon>CarboAbout.xaml</DependentUpon>
@@ -126,6 +129,9 @@
     </Compile>
     <Compile Include="UI\CarboCompare.xaml.cs">
       <DependentUpon>CarboCompare.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ProjectSettings.xaml.cs">
+      <DependentUpon>ProjectSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\RevitActivator.xaml.cs">
       <DependentUpon>RevitActivator.xaml</DependentUpon>
@@ -239,6 +245,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\CarboCompare.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\ProjectSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -209,7 +209,8 @@ namespace CarboLifeUI.UI
             {
                 List<CarboDataPoint> PieceListLifePoint = new List<CarboDataPoint>();
 
-                PieceListLifePoint = carboLifeProject.getPhaseTotals();
+                PieceListLifePoint = carboLifeProject.getPhaseTotals(
+                    carboLifeProject.calculateA13, carboLifeProject.calculateA4, carboLifeProject.calculateA5, carboLifeProject.calculateB, carboLifeProject.calculateC, carboLifeProject.calculateD, carboLifeProject.calculateAdd);
 
                 //Remove the zero's
                 for (int i = PieceListLifePoint.Count - 1; i >= 0; i--)

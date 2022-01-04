@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -332,7 +333,35 @@ namespace CarboLifeUI.UI
             if (carboLifeProject != null)
             {
                 carboLifeProject.CalculateProject();
-                ReportBuilder.CreateReport(carboLifeProject);
+
+                Bitmap Chart1 = null;
+                Bitmap Chart2 = null;
+                Bitmap LetiChart = null;
+
+
+                LiveCharts.Wpf.PieChart foundchart1 = Panel_Overview.pie_Chart1;
+                LiveCharts.Wpf.PieChart foundchart2 = Panel_Overview.pie_Chart2;
+                Canvas foundletiChart = Panel_Overview.cnv_Leti;
+
+
+                if (foundchart1 != null)
+                {
+                    Chart1 = ChartUtils.ControlToImage(foundchart1, 300, 300);
+                    //Chart1.Save(@"C:\Users\David\Documents\img1.jpg");
+                }
+
+                if (foundchart2 != null)
+                {
+                    Chart2 = ChartUtils.ControlToImage(foundchart2, 300, 300);
+                }
+
+                if (foundletiChart != null)
+                {
+                    LetiChart = ChartUtils.ControlToImage(foundletiChart, 300, 300);
+                }
+
+
+                ReportBuilder.CreateReport(carboLifeProject, Chart1, Chart2, LetiChart);
             }
         }
 
