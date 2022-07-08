@@ -109,8 +109,8 @@
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="32"/>
-                    <RowDefinition Height="60"/>
                     <RowDefinition Height="32"/>
+                    <RowDefinition Height="60"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="32"/>
@@ -170,13 +170,20 @@
                 <TextBox Name="txt_D"  Grid.Row="7" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_D_TextChanged" Text="{Binding Text, Delay=1000}" ></TextBox>
                 <Button Name="btn_D"  Grid.Row="7" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_D_Click">Edit...</Button>
 
-                <Label  Grid.Row="8" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource InfoLabel}" MouseDown="Label_MouseDown">Additional:</Label>
-                <TextBox Name="txt_Mix_Setting"  Grid.Row="8" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="False" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_Setting_TextChanged"></TextBox>
-                <TextBox Name="txt_Mix"  Grid.Row="8" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_TextChanged" Text="{Binding Text, Delay=1000}" ></TextBox>
-                <Button Name="btn_Mix"  Grid.Row="8" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Mix_Click">Calc...</Button>
+                <Label  Grid.Row="8" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource InfoLabel}">Sequestration:</Label>
+                <TextBox Name="txt_Seq_Setting"  Grid.Row="8" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="False" Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_Seq"  Grid.Row="8" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_Seq_TextChanged"  Text="{Binding Text, Delay=1000}" ></TextBox>
+                <CheckBox x:Name="chx_Seq_Manual" Grid.Row="8" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_Seq_Manual_Click" ></CheckBox>
+                <Button Name="btn_Seq"  Grid.Row="8" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" IsEnabled="True" >Calc...</Button>
 
 
-                <GroupBox Grid.Row="9" Grid.Column="1" Background="White" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="5" Header="Total" Style="{StaticResource baseStyleBold}">
+                <Label  Grid.Row="9" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource InfoLabel}" MouseDown="Label_MouseDown">Additional:</Label>
+                <TextBox Name="txt_Mix_Setting"  Grid.Row="9" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="False" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_Setting_TextChanged"></TextBox>
+                <TextBox Name="txt_Mix"  Grid.Row="9" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_TextChanged" Text="{Binding Text, Delay=1000}" ></TextBox>
+                <Button Name="btn_Mix"  Grid.Row="9" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Mix_Click">Calc...</Button>
+
+
+                <GroupBox Grid.Row="10" Grid.Column="1" Background="White" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="5" Header="Total" Style="{StaticResource baseStyleBold}">
                     <Grid Background="White">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
@@ -206,7 +213,8 @@
         <Button Name="btn_New"  Grid.Row="3" Grid.Column="1" Height="25" Margin="10,0,0,0" VerticalAlignment="Center" Width="65" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_New_Click" >New</Button>
         <Button Name="btn_Delete"  Grid.Row="3" Grid.Column="1" Height="25" Margin="85,0,0,0" VerticalAlignment="Center" Width="65" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_Delete_Click" >Delete</Button>
         <Button Name="btn_Duplicate"  Grid.Row="3" Grid.Column="1" Height="25" Margin="160,0,0,0" VerticalAlignment="Center" Width="65" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Duplicate_Click" >Duplicate</Button>
-        <Button Name="btn_Sync"  Grid.Row="3" Grid.Column="1" Height="25" Margin="235,0,0,0" VerticalAlignment="Center" Width="65" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Sync_Click">Sync With</Button>
+        <Button Name="btn_ToTemplate"  Grid.Row="3" Grid.Column="1" Height="25" Margin="235,0,0,0" VerticalAlignment="Center" Width="85" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_TemplateSync_Click">To Template</Button>
+        <Button Name="btn_Sync"  Grid.Row="3" Grid.Column="1" Height="25" Margin="330,0,0,0" VerticalAlignment="Center" Width="65" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Sync_Click">Sync With</Button>
         <Button Name="btn_CopyProperties"  Grid.Row="3" Grid.Column="1" Height="25" Margin="225,0,0,0" VerticalAlignment="Center" Width="70" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Visibility="Hidden">Copy From</Button>
 
         <Button Name="btn_Accept" Grid.Row="3" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>

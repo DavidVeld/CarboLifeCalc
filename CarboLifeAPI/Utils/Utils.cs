@@ -515,9 +515,9 @@ namespace CarboLifeAPI
             CarboDataPoint point = pieceListLifePoint.First(item => item.Name == itemName);
 
             if (point != null)
-                result += Math.Round(point.Value, 1) + Environment.NewLine;
+                result += Math.Round(point.Value / 1000, 2, MidpointRounding.AwayFromZero).ToString("N");
             else
-                result += "Not Calculated " + Environment.NewLine;
+                result += "Not Calculated ";
 
             return result;
         }

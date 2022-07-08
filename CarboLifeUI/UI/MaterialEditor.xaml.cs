@@ -129,7 +129,7 @@ namespace CarboLifeUI.UI
                 chx_B1_B5_Manual.IsChecked = selectedMaterial.ECI_B1B5_Override;
                 chx_C1_C4_Manual.IsChecked = selectedMaterial.ECI_C1C4_Override;
                 chx_D_Manual.IsChecked = selectedMaterial.ECI_D_Override;
-
+                chx_Seq_Manual.IsChecked = selectedMaterial.ECI_Seq_Override;
 
                 //Materials
                 SetA1A3();
@@ -143,6 +143,8 @@ namespace CarboLifeUI.UI
                 SetC1C4();
                 //End of Life
                 SetD();
+                //
+                SetSeq();
                 //Mix
                 SetMix();
 
@@ -349,6 +351,33 @@ namespace CarboLifeUI.UI
             }
 
             txt_D.Text = selectedMaterial.ECI_D.ToString();
+        }
+
+        private void SetSeq()
+        {
+            if (selectedMaterial.ECI_Seq_Override == true)
+            {
+                //Manual
+                chx_Seq_Manual.IsChecked = true;
+
+                txt_Seq_Setting.Text = "Manual";
+                //txt_A5.Text = "";
+                txt_Seq.IsReadOnly = false;
+                txt_Seq.Foreground = Brushes.Black;
+
+            }
+            else
+            {
+                //Calculated
+                chx_Seq_Manual.IsChecked = false;
+
+                txt_Seq_Setting.Text = "Calculated";
+                txt_Seq.IsReadOnly = true;
+                txt_Seq.Foreground = Brushes.LightGray;
+
+            }
+
+            txt_Seq.Text = selectedMaterial.ECI_Seq.ToString();
         }
 
 
@@ -675,6 +704,16 @@ namespace CarboLifeUI.UI
             }
         }
 
+        private void chx_Seq_Manual_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.ECI_Seq_Override = chx_Seq_Manual.IsChecked.Value;
+
+                UpdateMaterialSettings();
+            }
+        }
+
         private async void txt_A1_A3_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
@@ -785,6 +824,22 @@ namespace CarboLifeUI.UI
             }
 
 
+        }
+
+        private async void txt_Seq_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length)
+            {
+                if (selectedMaterial.ECI_Seq_Override == true)
+                {
+                    selectedMaterial.ECI_Seq = Utils.ConvertMeToDouble(txt_Seq.Text);
+                    UpdateMaterialSettings();
+                }
+            }
         }
 
         private async void txt_Mix_TextChanged(object sender, TextChangedEventArgs e)
@@ -922,6 +977,11 @@ namespace CarboLifeUI.UI
 
             RefreshMaterialList();
 
+        }
+
+        private void btn_TemplateSync_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("This function is not yet implemented");
         }
 
         private void btn_Mix_Click(object sender, RoutedEventArgs e)

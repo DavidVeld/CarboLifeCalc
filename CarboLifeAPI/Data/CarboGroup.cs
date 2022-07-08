@@ -118,12 +118,21 @@ namespace CarboLifeAPI.Data
                 return (Mass * Material.ECI_D * Material.materialB1B5Properties.B4);
             }
         }
+        public double getTotalSeq
+        {
+            get
+            {
+                return (Mass * Material.ECI_Seq * Material.materialB1B5Properties.B4);
+            }
+        }
 
         public double getTotalMix
         {
             get
             {
-                return (Mass * Material.ECI_Mix * Material.materialB1B5Properties.B4);
+                double materialAdded = Mass * Material.ECI_Mix * Material.materialB1B5Properties.B4;
+                double addedManual = Mass * this.Additional * Material.materialB1B5Properties.B4;
+                return (materialAdded + addedManual);
             }
         }
 
@@ -302,13 +311,33 @@ namespace CarboLifeAPI.Data
                 PerCent = 0;
             }
         }
-        public void CalculateTotals()
+        public void CalculateTotals(bool cA13 = true, bool cA4 = true, bool cA5 = true, bool cB = true, bool cC = true, bool cD = true, bool cSeq = true, bool cAdd = true)
         {
             Material.CalculateTotals();
             //Clear Values
             MaterialName = Material.Name;
             //EEI = Material.EEI;
-            ECI = Material.ECI + Additional;
+            double totalECI = 0;
+            totalECI += Additional;
+
+            if (cA13 == true)
+                totalECI += Material.ECI_A1A3;
+            if (cA4 == true)
+                totalECI += Material.ECI_A4;
+            if (cA5 == true)
+                totalECI += Material.ECI_A5;
+            if (cB == true)
+                totalECI += Material.ECI_B1B5;
+            if (cC == true)
+                totalECI += Material.ECI_C1C4;
+            if (cD == true)
+                totalECI += Material.ECI_D;
+            if (cSeq == true)
+                totalECI += Material.ECI_Seq;
+            if (cAdd == true)
+                totalECI += Material.ECI_Mix;
+
+            ECI = totalECI;
             Density = Material.Density;
             
             if (AllElements != null)

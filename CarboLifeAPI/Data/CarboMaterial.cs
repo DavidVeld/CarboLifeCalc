@@ -76,6 +76,12 @@ namespace CarboLifeAPI.Data
         /// SUPPLEMENTARY INFORMATION BEYOND THE PROJECT LIFE CYCLE kgCO₂e/kg
         /// </summary>
         public double ECI_D { get; set; }
+
+        /// <summary>
+        /// Carbon Sequestration
+        /// </summary>        
+        public double ECI_Seq { get; set; }
+
         /// <summary>
         /// This is a value you can add to mix another materials totals into this.
         /// </summary>
@@ -102,6 +108,8 @@ namespace CarboLifeAPI.Data
         public CarboB1B5Properties materialB1B5Properties { get; set; }
         //EndofLift
         public CarboC1C4Properties materialC1C4Properties { get;set;}
+        //Sequestration
+        public CarboSeqProperties materialSeqProperties { get; set; }
         //Suplemental
         public CarboDProperties materialDProperties { get; set; }
 
@@ -111,7 +119,7 @@ namespace CarboLifeAPI.Data
         public bool ECI_B1B5_Override { get; set; }
         public bool ECI_C1C4_Override { get; set; }
         public bool ECI_D_Override { get; set; }
-
+        public bool ECI_Seq_Override { get; set; }
         public string ECI_Mix_Info { get; set; }
 
         public CarboMaterial()
@@ -128,8 +136,9 @@ namespace CarboLifeAPI.Data
             ECI_B1B5 = 1;
             ECI_C1C4 = 1;
             ECI_D = 1;
-
+            ECI_Seq = 0;
             ECI_Mix = 0;
+
             ECI_Mix_Info = "";
 
             isLocked = false;
@@ -141,6 +150,7 @@ namespace CarboLifeAPI.Data
             materialA5Properties = new CarboA5Properties();
             materialB1B5Properties = new CarboB1B5Properties();
             materialC1C4Properties = new CarboC1C4Properties();
+            materialSeqProperties = new CarboSeqProperties();
             materialDProperties = new CarboDProperties();
 
             ECI_A1A3_Override = false;
@@ -176,6 +186,7 @@ namespace CarboLifeAPI.Data
             materialA5Properties = new CarboA5Properties();
             materialB1B5Properties = new CarboB1B5Properties();
             materialC1C4Properties = new CarboC1C4Properties();
+            materialSeqProperties = new CarboSeqProperties();
             materialDProperties = new CarboDProperties();
 
             ECI_A1A3_Override = false;
@@ -225,11 +236,18 @@ namespace CarboLifeAPI.Data
                 ECI_D = materialDProperties.value;
             }
 
+            if (ECI_Seq_Override == false)
+            {
+                materialSeqProperties.calculate();
+                ECI_Seq = materialSeqProperties.value;
+            }
+
             //The main calc to do them all 
             if (materialB1B5Properties.B4 == 0)
                 materialB1B5Properties.B4 = 1;
 
-            ECI = materialB1B5Properties.B4 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_B1B5 + ECI_C1C4 + ECI_D + ECI_Mix);
+            //The full Calculation
+            ECI = materialB1B5Properties.B4 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_B1B5 + ECI_C1C4 + ECI_D + ECI_Seq + ECI_Mix);
         }
 
         internal void Copy(CarboMaterial cmNew)

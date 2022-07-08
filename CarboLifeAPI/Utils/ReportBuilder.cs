@@ -141,7 +141,7 @@ namespace CarboLifeAPI
         {
             string html = "<H1><B>" + "Material Properties" + "</B></H1><BR>" + System.Environment.NewLine;
 
-            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1250>";
+            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1850>";
 
             html += "<TR></TR>";
             //ResultTable in a table
@@ -153,7 +153,7 @@ namespace CarboLifeAPI
                 html += "<TR>" + System.Environment.NewLine;
                 html += "<TD width=" + 200 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 200 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 50 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 200 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
                 
                 html += "<TD width=" + 50 + "><B>" + "Density" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 50 + "><B>" + "ECI" + "</B></TD>" + System.Environment.NewLine;
@@ -246,7 +246,7 @@ namespace CarboLifeAPI
 
             string html = "<H1><B>" + "Embodied Carbon Calculation Groups:" + "</B></H1><BR>" + System.Environment.NewLine;
             
-            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1250>";
+            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1850>";
             
             html += "<TR></TR>";
             //ResultTable in a table
@@ -258,7 +258,7 @@ namespace CarboLifeAPI
                 html += "<TR>" + System.Environment.NewLine;
                 html += "<TD width=" + 150 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 200 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 200 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 250 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
 
                 //Advanced settings
                 html += "<TD width=" + 50 + "><B>" + "Correction Formula" + "</B></TD>" + System.Environment.NewLine;
@@ -393,21 +393,7 @@ namespace CarboLifeAPI
             html += "<TD width=" + 50 + "><B>" + "TOTAL" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-
-            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-
-            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-
-            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-            html += "<TD width=" + 50 + "><B>" + totalGroup.EC + "</B></TD>" + System.Environment.NewLine;
-            html += "<TD width=" + 50 + "><B>" + "100 %" + "</B></TD>" + System.Environment.NewLine;
-
+             
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
@@ -415,8 +401,6 @@ namespace CarboLifeAPI
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-            html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
-
 
             html += "</TR>" + System.Environment.NewLine;
             return html;
@@ -535,10 +519,8 @@ namespace CarboLifeAPI
 
             try
             {
-
                 //End HTML File
                 html += "</BODY></HTML>";
-
             }
             catch
             {

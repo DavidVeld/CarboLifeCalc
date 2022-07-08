@@ -50,7 +50,9 @@ namespace CarboLifeAPI.Data
         public bool calculateC { get; set; }
         public bool calculateD { get; set; }
         public bool calculateAdd { get; set; }
+        public bool calculateSeq { get; set; }
 
+        public string valueUnit { get; set; }
 
         public List<CarboMapElement> carboMaterialMap  { get; set; }
         public List<CarboLevel> carboLevelList { get; set; }
@@ -62,6 +64,10 @@ namespace CarboLifeAPI.Data
         {
             get { return elementList; }
         }
+
+        /// <summary>
+        /// All Groups
+        /// </summary>
         public ObservableCollection<CarboGroup> getGroupList
         {
             get {return groupList;}
@@ -131,6 +137,7 @@ namespace CarboLifeAPI.Data
             Number = "000000";
             Category = "A building";
             Description = "New Project";
+            valueUnit = "£";
             Area = 1;
             //C1 Global
             demoArea = 0;
@@ -617,6 +624,7 @@ namespace CarboLifeAPI.Data
             }
         }
 
+
         public List<CarboDataPoint> getMaterialTotals()
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
@@ -632,6 +640,7 @@ namespace CarboLifeAPI.Data
 
                     bool merged = false;
 
+                    //Add a new databoint, orr add value if exists
                     if (valueList.Count > 0)
                     {
                         foreach (CarboDataPoint pp in valueList)
@@ -656,6 +665,48 @@ namespace CarboLifeAPI.Data
             //Values should return now;
             return valueList;
         }
+
+        public List<CarboDataPoint> getCategoryTotals()
+        {
+            List<CarboDataPoint> valueList = new List<CarboDataPoint>();
+            try
+            {
+
+                foreach (CarboGroup CarboGroup in this.groupList)
+                {
+
+                    CarboDataPoint newelement = new CarboDataPoint();
+                    newelement.Name = CarboGroup.Category;
+                    newelement.Value = CarboGroup.EC;
+
+                    bool merged = false;
+
+                    //Add a new databoint, orr add value if exists
+                    if (valueList.Count > 0)
+                    {
+                        foreach (CarboDataPoint pp in valueList)
+                        {
+                            if (pp.Name == newelement.Name)
+                            {
+                                pp.Value += newelement.Value;
+                                merged = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (merged == false)
+                        valueList.Add(newelement);
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+            //Values should return now;
+            return valueList;
+        }
+
         /// <summary>
         /// Returns a list of the project totals (9 items)
         /// A1-A3, A4, A5 (Material), A5(Global), B1-B7, C1-C4, C1(Global), D, Additional)
@@ -668,7 +719,8 @@ namespace CarboLifeAPI.Data
             bool f_A5= true, 
             bool f_B1B5= true, 
             bool f_C1C4 = true, 
-            bool f_D = true, 
+            bool f_D = true,
+            bool f_Seq = true,
             bool f_Add = true)
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
@@ -682,6 +734,7 @@ namespace CarboLifeAPI.Data
                 CarboDataPoint cb_C1C4 = new CarboDataPoint("C1-C4", 0);
                 CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
                 CarboDataPoint cb_D = new CarboDataPoint("D", 0);
+                CarboDataPoint cb_Seq = new CarboDataPoint("Sequestration", 0);
                 CarboDataPoint Added = new CarboDataPoint("Additional", 0);
 
                 if(f_A1A4 == true)
@@ -707,6 +760,9 @@ namespace CarboLifeAPI.Data
                 if (f_D == true)
                     valueList.Add(cb_D);
 
+                if(f_Seq == true)
+                    valueList.Add(cb_Seq);
+
                 if (f_Add == true)
                     valueList.Add(Added);
 
@@ -718,6 +774,7 @@ namespace CarboLifeAPI.Data
                     double EC_B1B7 = CarboGroup.getTotalB1B7;
                     double EC_C1C4 = CarboGroup.getTotalC1C4;
                     double EC_D = CarboGroup.getTotalD;
+                    double EC_Seq = CarboGroup.getTotalSeq;
                     double EC_Add = CarboGroup.getTotalMix;
 
                     if (valueList.Count > 0)
@@ -753,6 +810,10 @@ namespace CarboLifeAPI.Data
                             else if (ppName == "Additional")
                             {
                                 pp.Value += EC_Add;
+                            }
+                            else if (ppName == "Sequestration")
+                            {
+                                pp.Value += EC_Seq;
                             }
                             else
                             {
@@ -875,8 +936,22 @@ namespace CarboLifeAPI.Data
         }
 
         //This will attempt to create a calc for summary: 
-        public string getCalcText()
+        /// <summary>
+        /// This value returns the project in bits of text you can use to build a report 
+        /// </summary>
+        /// <returns> 
+        /// 0. All Phase groups
+        /// 1. Values
+        /// 2. A bit of Text
+        /// </returns>
+        [Obsolete("This method should move out of the carbo project and into a utils")]
+        public List<string> getCalcText()
         {
+            List<string> result = new List<string>();
+
+            string phaseGroup = "";
+            string resultvalues = "";
+
             //Get the datavalues:
             List<CarboDataPoint> PieceListLifePoint = new List<CarboDataPoint>();
 
@@ -887,133 +962,145 @@ namespace CarboLifeAPI.Data
                 calculateB, 
                 calculateC, 
                 calculateD, 
+                calculateSeq,
                 calculateAdd);
 
-            string result = "";
-
-            /*
-             *  CarboDataPoint cb_A1A3 = new CarboDataPoint("A1-A3", 0);
-                CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
-                CarboDataPoint cb_A5 = new CarboDataPoint("A5(Material)",0);
-                CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
-                CarboDataPoint cb_B1B5 = new CarboDataPoint("B1-B7", 0);
-                CarboDataPoint cb_C1C4 = new CarboDataPoint("C1-C4", 0);
-                CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
-                CarboDataPoint cb_D = new CarboDataPoint("D", 0);
-                CarboDataPoint Added = new CarboDataPoint("Additional", 0);
-            */
 
             //Add A1-A5
-            result += "A1-A3 = ";
             if (calculateA13 == true)
             {
-                result += Utils.getString(PieceListLifePoint, "A1-A3");
+                phaseGroup += "A1-A3  " + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "A1-A3") + Environment.NewLine;
             }
             else
             {
-                result += Math.Round(0f, 1) + Environment.NewLine;
+                //result += Math.Round(0f, 1) + Environment.NewLine;
             }
 
             //A4
-            result += "A4 = ";
             if (calculateA4 == true)
             {
-                result += Utils.getString(PieceListLifePoint, "A4");
+                phaseGroup += "A4  " + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "A4") + Environment.NewLine;
             }
             else
             {
-                result += Math.Round(0f, 1) + Environment.NewLine;
+                //result += Math.Round(0f, 1) + Environment.NewLine;
             }
 
             //A5
-            result += "A5(Material) = ";
             if (calculateA5 == true)
             {
-                result += Utils.getString(PieceListLifePoint, "A5(Material)");
+                phaseGroup += "A5(Material)  " + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "A5(Material)") + Environment.NewLine;
             }
             else
             {
-                result += Math.Round(0f, 1) + Environment.NewLine;
+                //result += Math.Round(0f, 1) + Environment.NewLine;
             }
 
-            result += "A5(Global) = ";
             if (calculateA5 == true)
+
             {
-                result += Utils.getString(PieceListLifePoint, "A5(Global)");
+                phaseGroup += "A5(Global)  " + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "A5(Global)") + Environment.NewLine;
             }
             else
             {
-                result += Math.Round(0f, 1) + Environment.NewLine;
+                //result += Math.Round(0f, 1) + Environment.NewLine;
             }
 
             //B
-            result += "B1-B7 = ";
             if (calculateB == true)
             {
-                result += Utils.getString(PieceListLifePoint, "B1-B7");
+                phaseGroup += "B1-B7  " + Environment.NewLine; 
+                resultvalues += Utils.getString(PieceListLifePoint, "B1-B7") + Environment.NewLine;
             }
             else
             {
-                result += Math.Round(0f, 1) + Environment.NewLine;
+                //result += Math.Round(0f, 1) + Environment.NewLine;
             }
 
             //C
-            result += "C1-C4 = ";
             if (calculateC == true)
             {
-                result += Utils.getString(PieceListLifePoint, "C1-C4");
+                phaseGroup += "C1-C4  " + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "C1-C4") + Environment.NewLine;
             }
             else
             {
-                result += Math.Round(0f, 1) + Environment.NewLine;
+                //result += Math.Round(0f, 1) + Environment.NewLine;
             }
 
             //C
-            result += "C1(Global) = ";
             if (calculateC == true)
             {
-                result += Utils.getString(PieceListLifePoint, "C1(Global)");
+                phaseGroup += "C1(Global)  " + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "C1(Global)") + Environment.NewLine;
             }
             else
             {
-                result += Math.Round(0f, 1) + Environment.NewLine;
+                //result += Math.Round(0f, 1) + Environment.NewLine;
             }
 
             //D
-            result += "D = ";
             if (calculateD == true)
             {
-                result += Utils.getString(PieceListLifePoint, "D");
+                phaseGroup += "D  " + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "D") + Environment.NewLine;
             }
             else
             {
-                result += Math.Round(0f, 1) + Environment.NewLine;
+                //result += Math.Round(0f, 1) + Environment.NewLine;
+            }
+
+            //Sequestration
+            if (calculateSeq == true)
+            {
+                phaseGroup += "Sequestration  " + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "Sequestration") + Environment.NewLine;
+            }
+            else
+            {
+                //result += Math.Round(0f, 1) + Environment.NewLine;
             }
 
             //Add
-            result += "Additional = ";
             if (calculateAdd == true)
             {
-                result += Utils.getString(PieceListLifePoint, "Additional");
+                phaseGroup += "Additional  " + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "Additional") + Environment.NewLine;
             }
             else
             {
-                result += Math.Round(0f, 1) + Environment.NewLine;
+                //result += Math.Round(0f, 1) + Environment.NewLine;
             }
+
+            //Get the social carbon costs
+            double socialCarbonCost = Math.Round(this.SocialCost * this.ECTotal,0,MidpointRounding.AwayFromZero);
+            string generalText = "The Social Cabon cost of this project is: "  + this.valueUnit + " " + socialCarbonCost.ToString("N");
+
+            result.Add(phaseGroup);
+            result.Add(resultvalues);
+            result.Add(generalText);
+
 
             return result;
         }
 
+        /// <summary>
+        /// This is the main function that refreshes the entire projects calculation
+        /// </summary>
         public void CalculateProject()
         {
-            //EE = 0;
-            
+         
             EC = 0;
             ECTotal = 0;
+
             //This Will calculate all totals and set all the individual element values;
             foreach (CarboGroup cg in groupList)
             {
-                cg.CalculateTotals();
+                cg.CalculateTotals(calculateA13, calculateA4, calculateA5, calculateB, calculateC, calculateD, calculateSeq, calculateAdd);
                 //EE += cg.EE;
                 EC += cg.EC;
             }
@@ -1026,11 +1113,65 @@ namespace CarboLifeAPI.Data
             //Set element totals
             setElementotals();
 
-            //Set A5 based on value;
-            //1.400tCO₂e/£100k
-            A5Global = (A5Factor * (Value / 100000)) / 1000;
-            
-            C1Global = (demoArea * C1Factor) / 1000;
+            //Set Global Values if required
+
+            if (calculateA5 == true)
+                A5Global = (A5Factor * (Value / 100000)) / 1000;
+            else
+                A5Global = 0;
+               
+            if(calculateC == true)
+                C1Global = (demoArea * C1Factor) / 1000;
+            else
+                C1Global = 0;
+
+            ECTotal = EC + A5Global + C1Global;
+
+            justSaved = false;
+
+        }
+
+        /// <summary>
+        /// Forces the Project to calculate by phase, even if is is not set by the project. Leaving blank will result in a full report of all phases.
+        /// </summary>
+        /// <param name="cA13"></param>
+        /// <param name="cA4"></param>
+        /// <param name="cA5"></param>
+        /// <param name="cB"></param>
+        /// <param name="cC"></param>
+        /// <param name="cD"></param>
+        /// <param name="cSeq"></param>
+        /// <param name="cAdd"></param>
+        public void CalculateProjectByPhase(bool cA13 = true, bool cA4 = true, bool cA5 = true, bool cB = true, bool cC = true, bool cD = true, bool cSeq = true, bool cAdd = true)
+        {
+
+            EC = 0;
+            ECTotal = 0;
+            //This Will calculate all totals and set all the individual element values;
+            foreach (CarboGroup cg in groupList)
+            {
+                cg.CalculateTotals(cA13, cA4, cA5, cB, cC, cD, cSeq, cAdd);
+                //EE += cg.EE;
+                EC += cg.EC;
+            }
+
+            foreach (CarboGroup cg in groupList)
+            {
+                cg.SetPercentageOf(EC);
+            }
+
+            //Set element totals This is not done for a phase calculation
+            //setElementotals();
+
+            if (cA5 == true)
+                A5Global = (A5Factor * (Value / 100000)) / 1000;
+            else
+                A5Global = 0;
+
+            if (cC == true)
+                C1Global = (demoArea * C1Factor) / 1000;
+            else
+                C1Global = 0;
 
             ECTotal = EC + A5Global + C1Global;
 

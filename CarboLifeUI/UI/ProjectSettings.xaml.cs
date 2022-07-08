@@ -40,16 +40,12 @@ namespace CarboLifeUI.UI
 
             CarboLifeProject = carboLifeProject;
 
-
-
-
         }
 
         private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             try
             {
-
                 DependencyObject parent = VisualTreeHelper.GetParent(this);
                 Window parentWindow = Window.GetWindow(parent);
                 CarboLifeMainWindow mainViewer = parentWindow as CarboLifeMainWindow;
@@ -60,7 +56,6 @@ namespace CarboLifeUI.UI
                 if (CarboLifeProject != null)
                 {
                     //A project Is loaded, Proceed to next
-
                     RefreshInterFace();
                 }
 
@@ -78,8 +73,24 @@ namespace CarboLifeUI.UI
                     {
                         cbb_BuildingType.Items.Add(name);
                     }
+
+                    cbb_BuildingType.SelectedItem = CarboLifeProject.Category;
+
                 }
-                cbb_BuildingType.SelectedItem = CarboLifeProject.Category;
+
+                if (cbb_Currency.Items.Count == 0)
+                {
+                    cbb_Currency.Items.Add("£");
+                    cbb_Currency.Items.Add("$");
+                    cbb_Currency.Items.Add("€");
+                    cbb_Currency.Items.Add("¥");
+                    cbb_Currency.Items.Add("A$");
+                    cbb_Currency.Items.Add("C$");
+
+                    cbb_Currency.SelectedItem = CarboLifeProject.valueUnit;
+
+                }
+
 
             }
             catch (Exception ex)
@@ -98,6 +109,7 @@ namespace CarboLifeUI.UI
                     txt_ProjectName.Text = CarboLifeProject.Name;
                     txt_Number.Text = CarboLifeProject.Number;
                     cbb_BuildingType.Text = CarboLifeProject.Category;
+                    cbb_Currency.Text = CarboLifeProject.valueUnit;
                     txt_Desctiption.Text = CarboLifeProject.Description;
 
                     txt_Area.Text = CarboLifeProject.Area.ToString();
@@ -321,6 +333,11 @@ namespace CarboLifeUI.UI
                 CarboLifeProject.SocialCost = Utils.ConvertMeToDouble(tb.Text);
                 SaveSettings();
             }
+        }
+
+        private void cbb_Currency_DropDownClosed(object sender, EventArgs e)
+        {
+            CarboLifeProject.valueUnit = cbb_Currency.Text;
         }
     }
 }

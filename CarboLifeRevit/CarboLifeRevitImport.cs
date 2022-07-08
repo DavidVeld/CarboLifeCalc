@@ -145,7 +145,6 @@ namespace CarboLifeRevit
                 }
                 else //upadte an existing file:
                 {
-                    
                     CarboProject projectToUpdate = new CarboProject();
 
                     CarboProject buffer = new CarboProject();
@@ -166,7 +165,7 @@ namespace CarboLifeRevit
 
                 AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
-                carboCalcProgram.ShowDialog();
+                carboCalcProgram.Show();
                 //Create a visual
                 if(carboCalcProgram.createHeatmap == true)
                 {
@@ -441,15 +440,14 @@ namespace CarboLifeRevit
 
                 // get Rooms category
 
-                /*
-                                Category category = element.Category;
+                Category category = element.Category;
 
-                                CategorySet categories = revitApp.Create.NewCategorySet();
-                                categories.Insert(category);
-                */
+                CategorySet categories = revitApp.Create.NewCategorySet();
+                categories.Insert(category);
 
                 // insert the new parameter
-                InstanceBinding binding = revitApp.Create.NewInstanceBinding(categorySet);
+                InstanceBinding binding = revitApp.Create.NewInstanceBinding(categories);
+
                 app.ActiveUIDocument.Document.ParameterBindings.Insert(roomSharedParamDef, binding);
                 //return false;
             }

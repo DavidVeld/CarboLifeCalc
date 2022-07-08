@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
 using CarboLifeAPI;
+using System.Data;
 
 namespace CarboLifeUI.UI
 {
@@ -76,6 +77,13 @@ namespace CarboLifeUI.UI
                     }
                 }
 
+                if (cbb_GraphType.Items.Count == 0)
+                {
+                    cbb_GraphType.Items.Add("Material");
+                    cbb_GraphType.Items.Add("Category");
+
+                }
+                cbb_GraphType.SelectedItem = "Material";
                 cbb_BuildingType.SelectedItem = CarboLifeProject.Category;
                 txt_Area.Text = CarboLifeProject.Area.ToString();
 
@@ -93,12 +101,42 @@ namespace CarboLifeUI.UI
                 if (CarboLifeProject != null)
                 {
 
-                    SeriesCollection pieMaterialSeries = GraphBuilder.GetPieChartMaterials(CarboLifeProject);
+                    SeriesCollection pieSeries = null;
                     //SeriesCollection pieLifeSeries = GraphBuilder.GetPieChartTotals(CarboLifeProject);
 
-                    if (pieMaterialSeries != null)
+                    if (cbb_GraphType.SelectedValue == null)
                     {
-                        pie_Chart1.Series = pieMaterialSeries;
+                        DataTable currentProjectResult = CarboCalcTextUtils.getResultTable(CarboLifeProject);
+
+                        if (currentProjectResult != null)
+                            pieSeries = GraphBuilder.GetPieChart(currentProjectResult);
+                    }
+                    else if (cbb_GraphType.SelectedValue.ToString() == "Material")
+                    {
+                        DataTable currentProjectResult = CarboCalcTextUtils.getResultTable(CarboLifeProject);
+
+                        if (currentProjectResult != null)
+                            pieSeries = GraphBuilder.GetPieChart(currentProjectResult);
+                    }
+
+                    else if (cbb_GraphType.SelectedValue.ToString() == "Category")
+                    {
+                        DataTable currentProjectResult = CarboCalcTextUtils.getResultTable(CarboLifeProject);
+                        if (currentProjectResult != null)
+                            pieSeries = GraphBuilder.GetPieChart(currentProjectResult, "Category");
+
+                    }
+                    else
+                    {
+                        DataTable currentProjectResult = CarboCalcTextUtils.getResultTable(CarboLifeProject);
+
+                        if (currentProjectResult != null)
+                            pieSeries = GraphBuilder.GetPieChart(currentProjectResult);
+                    }
+
+                    if (pieSeries != null)
+                    {
+                        pie_Chart1.Series = pieSeries;
                         pie_Chart1.SeriesColors = GraphBuilder.getColours();
 
                     }
@@ -120,9 +158,8 @@ namespace CarboLifeUI.UI
                     chx_B1B7.IsChecked = CarboLifeProject.calculateB;
                     chx_C1C4.IsChecked = CarboLifeProject.calculateC;
                     chx_D.IsChecked = CarboLifeProject.calculateD;
+                    chx_Seq.IsChecked = CarboLifeProject.calculateSeq;
                     chx_Added.IsChecked = CarboLifeProject.calculateAdd;
-
-
 
                     RefreshLetiGraph();
                     RefreshPhasePie();
@@ -176,7 +213,6 @@ namespace CarboLifeUI.UI
 
                 summaryTextMemory = "";
 
-
                 TextBlock TotalText = new TextBlock();
                 TotalText.Text = "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e";
                 summaryTextMemory += TotalText.Text + Environment.NewLine;
@@ -192,24 +228,64 @@ namespace CarboLifeUI.UI
                 Canvas.SetTop(TotalText, 5);
                 cnv_Totals.Children.Add(TotalText);
 
+                List<string> textGroups = CarboLifeProject.getCalcText();
+                if (textGroups.Count == 3)
+                {
+                    string textItems = textGroups[0];
+                    string textResults = textGroups[1];
+                    string textGeneral = textGroups[2];
 
-                TextBlock summaryText = new TextBlock();
-                summaryText.Text = CarboLifeProject.getCalcText();
-                summaryTextMemory += summaryText.Text;
-                summaryText.FontStyle = FontStyles.Normal;
-                summaryText.FontWeight = FontWeights.Normal;
-
-                summaryText.Foreground = Brushes.Black;
-                summaryText.TextWrapping = TextWrapping.WrapWithOverflow;
-                summaryText.VerticalAlignment = VerticalAlignment.Top;
-                summaryText.FontSize = 13;
-
-                Canvas.SetLeft(summaryText, 5);
-                Canvas.SetTop(summaryText, 25);
-                cnv_Totals.Children.Add(summaryText);
+                    int numLines = textItems.Split('\n').Length;
 
 
+                    TextBlock summaryText = new TextBlock();
+                    summaryText.Text = textItems;
+                    //summaryTextMemory += summaryText.Text;
+                    summaryText.FontStyle = FontStyles.Normal;
+                    summaryText.FontWeight = FontWeights.Normal;
 
+                    summaryText.Foreground = Brushes.Black;
+                    summaryText.TextWrapping = TextWrapping.WrapWithOverflow;
+                    summaryText.VerticalAlignment = VerticalAlignment.Top;
+                    summaryText.FontSize = 13;
+
+                    Canvas.SetLeft(summaryText, 5);
+                    Canvas.SetTop(summaryText, 25);
+                    cnv_Totals.Children.Add(summaryText);
+
+                    TextBlock summaryValues = new TextBlock();
+                    summaryValues.Text = textResults;
+                    //summaryTextMemory += summaryText.Text;
+                    summaryValues.FontStyle = FontStyles.Normal;
+                    summaryValues.FontWeight = FontWeights.Normal;
+
+                    summaryValues.Foreground = Brushes.Black;
+                    //summaryValues.TextWrapping = TextWrapping.WrapWithOverflow;
+                    summaryValues.VerticalAlignment = VerticalAlignment.Top;
+                    summaryValues.FontSize = 13;
+                    summaryValues.HorizontalAlignment = HorizontalAlignment.Right;
+                    summaryValues.TextAlignment = TextAlignment.Right;
+                    Canvas.SetLeft(summaryValues, 110);
+                    Canvas.SetTop(summaryValues, 25);
+                    cnv_Totals.Children.Add(summaryValues);
+
+                    TextBlock textGeneralValues = new TextBlock();
+                    textGeneralValues.Text = textGeneral;
+                    //summaryTextMemory += summaryText.Text;
+                    textGeneralValues.FontStyle = FontStyles.Normal;
+                    textGeneralValues.FontWeight = FontWeights.Normal;
+
+                    textGeneralValues.Foreground = Brushes.Black;
+                    //summaryValues.TextWrapping = TextWrapping.WrapWithOverflow;
+                    textGeneralValues.VerticalAlignment = VerticalAlignment.Top;
+                    textGeneralValues.FontSize = 13;
+                    textGeneralValues.HorizontalAlignment = HorizontalAlignment.Right;
+                    textGeneralValues.TextAlignment = TextAlignment.Left;
+                    Canvas.SetLeft(textGeneralValues, 5);
+                    Canvas.SetTop(textGeneralValues, (numLines * 17) + 17);
+
+                    cnv_Totals.Children.Add(textGeneralValues);
+                }
 
             }
 
@@ -304,12 +380,13 @@ namespace CarboLifeUI.UI
         private void RefreshPhasePie()
         {
             try
-            {
-                
-                if (CarboLifeProject != null)
+            {                
+                if (CarboLifeProject != null && cbb_GraphType != null )
                 {
+                    SeriesCollection pieLifeSeries = null;
 
-                    SeriesCollection pieLifeSeries = GraphBuilder.GetPieChartTotals(CarboLifeProject);
+                    pieLifeSeries = GraphBuilder.GetPhasePieChartTotals(CarboLifeProject);
+
 
                     if (pieLifeSeries != null)
                     {
@@ -332,7 +409,7 @@ namespace CarboLifeUI.UI
             if (chx_A1A3 != null && CarboLifeProject != null)
             {
                 CarboLifeProject.calculateA13 = chx_A1A3.IsChecked.Value;
-                RefreshPhasePie();
+                RefreshInterFace();
             }
         }
 
@@ -341,7 +418,7 @@ namespace CarboLifeUI.UI
             if (chx_A1A3 != null && CarboLifeProject != null)
             {
                 CarboLifeProject.calculateA4 = chx_A4.IsChecked.Value;
-                RefreshPhasePie();
+                RefreshInterFace();
             }
         }
 
@@ -350,7 +427,7 @@ namespace CarboLifeUI.UI
             if (chx_A5 != null && CarboLifeProject != null)
             {
                 CarboLifeProject.calculateA5 = chx_A5.IsChecked.Value;
-                RefreshPhasePie();
+                RefreshInterFace();
             }
         }
 
@@ -359,7 +436,7 @@ namespace CarboLifeUI.UI
             if (chx_B1B7 != null && CarboLifeProject != null)
             {
                 CarboLifeProject.calculateB = chx_B1B7.IsChecked.Value;
-                RefreshPhasePie();
+                RefreshInterFace();
             }
         }
 
@@ -368,7 +445,7 @@ namespace CarboLifeUI.UI
             if (chx_C1C4 != null && CarboLifeProject != null)
             {
                 CarboLifeProject.calculateC = chx_C1C4.IsChecked.Value;
-                RefreshPhasePie();
+                RefreshInterFace();
             }
         }
 
@@ -377,7 +454,7 @@ namespace CarboLifeUI.UI
             if (chx_D != null && CarboLifeProject != null)
             {
                 CarboLifeProject.calculateD = chx_D.IsChecked.Value;
-                RefreshPhasePie();
+                RefreshInterFace();
             }
         }
 
@@ -386,8 +463,22 @@ namespace CarboLifeUI.UI
             if (chx_Added != null && CarboLifeProject != null)
             {
                 CarboLifeProject.calculateAdd = chx_Added.IsChecked.Value;
-                RefreshPhasePie();
+                RefreshInterFace();
             }
+        }
+
+        private void chx_Seq_Changed(object sender, RoutedEventArgs e)
+        {
+            if (chx_Seq != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateSeq = chx_Seq.IsChecked.Value;
+                RefreshInterFace();
+            }
+        }
+
+        private void cbb_GraphType_DropDownClosed(object sender, EventArgs e)
+        {
+            RefreshInterFace();
         }
     }
 }

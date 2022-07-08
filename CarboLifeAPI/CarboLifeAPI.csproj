@@ -72,6 +72,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\CarboC1C4Properties.cs" />
     <Compile Include="Data\CarboDProperties.cs" />
     <Compile Include="Data\CarboB1B5Properties.cs" />
     <Compile Include="Data\CarboElement.cs" />
@@ -82,7 +83,7 @@
     <Compile Include="Data\CarboProject.cs" />
     <Compile Include="Data\CarboA5Properties.cs" />
     <Compile Include="Data\CarboA4Properties.cs" />
-    <Compile Include="Data\CarboC1C4Properties.cs" />
+    <Compile Include="Data\CarboSeqProperties.cs" />
     <Compile Include="Data\CarboProperty.cs" />
     <Compile Include="Data\CarboGroupSettings.cs" />
     <Compile Include="Data\CarboMapElement.cs" />

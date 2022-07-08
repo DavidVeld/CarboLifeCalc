@@ -76,6 +76,10 @@
                 <Label Grid.Column="3" Margin="3,0,0,0" Grid.Row="5"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
                 <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="5" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">This is the Gross Internal Area of the part of the building you are analysing</Label>
 
+                <Label Grid.Column="1" Margin="0,2,10,0" Grid.Row="6"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Currency:</Label>
+                <ComboBox Name="cbb_Currency" Grid.Column="2" Grid.Row="6" Margin="5,3,250,0" Height="30" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_Currency_DropDownClosed"/>
+
+
 
             </Grid>
         </GroupBox>

@@ -11,7 +11,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CarboLifeRevit</RootNamespace>
     <AssemblyName>CarboLifeRevit</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -96,6 +96,9 @@
     <Compile Include="CarboLifeRevitImport.cs" />
     <Compile Include="CarboRevitImportSettings.cs" />
     <Compile Include="CarboRevitUtils.cs" />
+    <Compile Include="UI\HeatMapCreator.xaml.cs">
+      <DependentUpon>HeatMapCreator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\ImportSettingsWindow.xaml.cs">
       <DependentUpon>ImportSettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="UI\HeatMapCreator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\ImportSettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
