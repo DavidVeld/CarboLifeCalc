@@ -139,46 +139,6 @@ namespace CarboLifeUI.UI
 
         private void Btn_Material_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            if (dgv_Overview.SelectedItems.Count > 0)
-            {
-                try
-                {
-                    var selectedItems = dgv_Overview.SelectedItems;
-                    IList<CarboGroup> selectedGroups = new List<CarboGroup>();
-
-                    // ... Add all Names to a List.
-                    foreach (var item in selectedItems)
-                    {
-                        CarboGroup cg = item as CarboGroup;
-                        selectedGroups.Add(cg);
-                    }
-
-                    if (selectedGroups.Count > 0)
-                    {
-                        CarboGroup carboGroup = selectedGroups[0];
-
-                        MaterialEditor materialEditor = new MaterialEditor(carboGroup.Material.Name, CarboLifeProject.CarboDatabase);
-                        materialEditor.ShowDialog();
-
-                        if (materialEditor.acceptNew == true)
-                        {
-                            CarboLifeProject.CarboDatabase = materialEditor.returnedDatabase;
-
-                            foreach (CarboGroup cg in selectedGroups)
-                            {
-                                CarboLifeProject.UpdateMaterial(cg, materialEditor.selectedMaterial);
-                            }
-                            CarboLifeProject.UpdateAllMaterials();
-                        }
-                    }
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            */
 
             if (dgv_Overview.SelectedItems.Count > 0)
             {

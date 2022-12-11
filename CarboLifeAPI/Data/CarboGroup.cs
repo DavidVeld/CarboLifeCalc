@@ -250,6 +250,7 @@ namespace CarboLifeAPI.Data
             this.MaterialName = material.Name;
             this.Material = material;
             this.Density = material.Density;
+            this.Waste = material.WasteFactor;
 
             CalculateTotals();
         }

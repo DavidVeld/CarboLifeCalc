@@ -88,6 +88,11 @@ namespace CarboLifeAPI.Data
         public double ECI_Mix { get; set; }
 
         /// <summary>
+        /// When a group gets this material assigned, it get this percentage assigned for waste as a default.
+        /// </summary>
+        public double WasteFactor { get; set; }
+
+        /// <summary>
         /// Used to protect data
         /// </summary>
         public bool isLocked { get; set; }
@@ -141,6 +146,7 @@ namespace CarboLifeAPI.Data
 
             ECI_Mix_Info = "";
 
+            WasteFactor = 0;
             isLocked = false;
             //Properties = new List<CarboProperty>();
 
@@ -177,6 +183,7 @@ namespace CarboLifeAPI.Data
             ECI_B1B5 = 0;
             ECI_C1C4 = 0;
             ECI_D = 0;
+            WasteFactor = 0;
             isLocked = false;
             //Properties = new List<CarboProperty>();
 

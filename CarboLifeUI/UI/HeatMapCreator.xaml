@@ -1,4 +1,4 @@
-﻿<Window x:Class="CarboLifeRevit.HeatMapCreator"
+﻿<Window x:Class="CarboLifeUI.UI.HeatMapCreator"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -54,11 +54,11 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1">Project name:</Label>
-                <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1">Total Embodied Carbon:</Label>
+                <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Project name:</Label>
+                <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Total Embodied Carbon:</Label>
 
-                <Label Grid.Column="2" Margin="0,0,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1">VALUE</Label>
-                <Label Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1">VALUE</Label>
+                <Label Name="lbl_name" Grid.Column="2" Margin="0,0,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">VALUE</Label>
+                <Label Name="lbl_total" Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">VALUE</Label>
 
                 <Button x:Name="btn_Open" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="85" Height="30" Style="{StaticResource ButtonStyle}" Click="btn_Open_Click"  Content="Open Project"/>
 
@@ -90,10 +90,10 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1">Heatmap Type:</Label>
-                <RadioButton Name="rad_Bymaterial" Grid.Column="2" Margin="5,0,0,14" Grid.Row="2" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top" Click="rad_Bymaterial_Click" >By Material [kgCO₂/kg]</RadioButton>
-                <RadioButton Name="rad_Bymaterial2" Grid.Column="2" Margin="5,22,0,14" Grid.Row="2" FontSize="14" FontFamily="Calibri" Height="25" VerticalAlignment="Top" Click="rad_Bymaterial2_Click" >By Material [kgCO₂/m³]</RadioButton>
-                <RadioButton Name="rad_ByGroup" Grid.Column="2" Margin="5,44,0,0" Grid.RowSpan="2" Grid.Row="2" FontSize="14" FontFamily="Calibri" Height="25" VerticalAlignment="Top" Click="rad_ByGroup_Click" >By Group [kgCO₂]</RadioButton>
-                <RadioButton Name="rad_ByElement" Grid.Column="2" Margin="5,66,0,0" Grid.RowSpan="2" Grid.Row="2" FontSize="14" FontFamily="Calibri" Height="25" VerticalAlignment="Top" Click="rad_ByElement_Click">By Element [kgCO₂]</RadioButton>
+                <RadioButton Name="rad_Bymaterial" Grid.Column="2" Margin="5,0,0,14" Grid.Row="2" FontSize="14" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Click="rad_Bymaterial_Click" >By Material [kgCO₂/kg]</RadioButton>
+                <RadioButton Name="rad_Bymaterial2" Grid.Column="2" Margin="5,22,0,14" Grid.Row="2" FontSize="14" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Bymaterial2_Click" >By Material [kgCO₂/m³]</RadioButton>
+                <RadioButton Name="rad_ByGroup" Grid.Column="2" Margin="5,44,0,0" Grid.RowSpan="2" Grid.Row="2" FontSize="14" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_ByGroup_Click" >By Group [kgCO₂]</RadioButton>
+                <RadioButton Name="rad_ByElement" Grid.Column="2" Margin="5,66,0,0" Grid.RowSpan="2" Grid.Row="2" FontSize="14" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_ByElement_Click">By Element [kgCO₂]</RadioButton>
 
                 <TextBox Name="txt_standard" Grid.Row="3" Grid.Column="2" Margin="0,2,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="28" Style="{StaticResource flatTextBox}" Grid.RowSpan="2"></TextBox>
                 <Button Name="btn_Info" Grid.Row="3" Grid.Column="2" Margin="125,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="18" Height="18" Style="{StaticResource baseStyle}" Click="btn_Info_Click">?</Button>
@@ -107,7 +107,7 @@
                 <Button Name="btn_MaxOut" Grid.Row="5" Grid.Column="2" Margin="0,7,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Purple" IsEnabled="True"  Content="High"/>
                 <Label Grid.Column="1" Grid.Row="3" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1" Content="Standard deviation:"/>
 
-                <Canvas Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" Background="White"></Canvas>
+                <Canvas Name="cnv_Graph" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Margin="5" Background="White"></Canvas>
                 
                 
             </Grid>

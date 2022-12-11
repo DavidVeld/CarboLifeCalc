@@ -118,6 +118,9 @@
     <Compile Include="UI\B4EmissionPicker.xaml.cs">
       <DependentUpon>B4EmissionPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\HeatMapCreator.xaml.cs">
+      <DependentUpon>HeatMapCreator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\MaterialSequestrationCalc.xaml.cs">
       <DependentUpon>MaterialSequestrationCalc.xaml</DependentUpon>
     </Compile>
@@ -232,6 +235,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\B4EmissionPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\HeatMapCreator.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

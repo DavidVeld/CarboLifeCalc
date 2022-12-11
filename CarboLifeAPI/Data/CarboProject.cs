@@ -1548,6 +1548,7 @@ namespace CarboLifeAPI.Data
                     {
                         cg.MaterialName = NewMaterial.Name;
                         cg.Material = NewMaterial;
+                        cg.Waste = NewMaterial.WasteFactor;
                     }
 
                     //Update all idential materials
@@ -1555,6 +1556,7 @@ namespace CarboLifeAPI.Data
                     {
                         cg.MaterialName = NewMaterial.Name;
                         cg.Material = NewMaterial;
+                        cg.Waste = NewMaterial.WasteFactor;
                     }
                 }
             }

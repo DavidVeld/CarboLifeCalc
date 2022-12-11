@@ -123,6 +123,7 @@ namespace CarboLifeUI.UI
                 txt_Density.Text = selectedMaterial.Density.ToString();
                 txt_ECI.Text = selectedMaterial.ECI.ToString();
                 txt_EPDLink.Text = selectedMaterial.EPDurl;
+                txt_Waste.Text = selectedMaterial.WasteFactor.ToString();
 
                 chx_A4_Manual.IsChecked = selectedMaterial.ECI_A4_Override;
                 chx_A5_Manual.IsChecked = selectedMaterial.ECI_A5_Override;
@@ -162,7 +163,7 @@ namespace CarboLifeUI.UI
                     " ) = " + Math.Round(Utils.ConvertMeToDouble(txt_ECI.Text), 5);
                 Calc.Content = calc;
 
-                chk_Locked.IsChecked = selectedMaterial.isLocked;
+                //chk_Locked.IsChecked = selectedMaterial.isLocked;
 
                 if (selectedMaterial.isLocked == true)
                 {
@@ -1018,6 +1019,23 @@ namespace CarboLifeUI.UI
             }
         }
 
+        private async void txt_Waste_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
 
+            await Task.Delay(500);
+            if (startLength == tb.Text.Length)
+            {
+                double value = Utils.ConvertMeToDouble(tb.Text);
+                if (value < 0)
+                    value = 0;
+                else if (value > 100)
+                    value = 100;
+
+                selectedMaterial.WasteFactor = Math.Round(value,1,MidpointRounding.AwayFromZero);
+                    UpdateMaterialSettings();
+            }
+        }
     }
 }

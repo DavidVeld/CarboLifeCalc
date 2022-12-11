@@ -9,6 +9,9 @@ namespace CarboLifeAPI.Data
     [Serializable]
     public class CarboElement
     {
+        /// <summary>
+        /// revit id
+        /// </summary>
         public int Id { get; set; }
         public string Name { get; set; }
         //Imported Material Name

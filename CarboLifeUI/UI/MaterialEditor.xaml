@@ -52,12 +52,13 @@
         <Label  Grid.Row="1" Grid.Column="2" Height="30" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleTitle}">Properties</Label>
 
 
-        <GroupBox Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="1" Header="General" Style="{StaticResource baseStyleBold}" Height="235" VerticalAlignment="Top" >
+        <GroupBox Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="1" Header="General" Style="{StaticResource baseStyleBold}" Height="265" VerticalAlignment="Top" >
             <Grid Name="grd_Edit" >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="1"/>
                     <RowDefinition Height="36"/>
-                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="64"/>
+                    <RowDefinition Height="36"/>
                     <RowDefinition Height="36"/>
                     <RowDefinition Height="36"/>
                     <RowDefinition Height="36"/>
@@ -92,15 +93,16 @@
                 <TextBox Name="txt_EPDLink"  Grid.Column="2" Grid.Row="5" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}" ></TextBox>
                 <Button Name="btn_OpenLink"  Grid.Row="5" Grid.Column="3" Height="26" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_OpenLink_Click" >Open...</Button>
 
-                <CheckBox Name="chk_Locked" Grid.Column="2" Grid.Row="6" Height="25" VerticalAlignment="Center" Visibility="Hidden">Lock Material</CheckBox>
-
+                <Label Grid.Column="1" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Margin="0,5,0,0">Default Waste:</Label>
+                <TextBox Name="txt_Waste" Grid.Column="2" Grid.Row="6" Height="26" Margin="0,5,208,5"  Style="{StaticResource flatTextBox}" TextChanged="txt_Waste_TextChanged"></TextBox>
+                <Label Grid.Column="3" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Margin="5,5,0,0">%</Label>
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Row="2" Grid.Column="2" Margin="0,235,0,0" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="1" Header="Material" Style="{StaticResource baseStyleBold}" >
+        <GroupBox Grid.Row="2" Grid.Column="2" Margin="0,270,0,0" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="1" Header="Material" Style="{StaticResource baseStyleBold}" >
             <Grid >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="0"/>
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="32"/>

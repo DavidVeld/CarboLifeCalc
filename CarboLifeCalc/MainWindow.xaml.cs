@@ -124,5 +124,11 @@ namespace CarboLifeCalc
         {
             CarboLifeAPI.PathUtils.CleanOnlineDir();
         }
+
+        private void btn_Test_Click(object sender, RoutedEventArgs e)
+        {
+            CarboLifeUI.UI.HeatMapCreator creator = new HeatMapCreator();
+            creator.Show();
+        }
     }
 }
