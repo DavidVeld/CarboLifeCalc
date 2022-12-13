@@ -63,9 +63,39 @@ namespace Aardwolf.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ClassIcon1 {
+        internal static System.Drawing.Bitmap NewElement {
             get {
-                object obj = ResourceManager.GetObject("ClassIcon1", resourceCulture);
+                object obj = ResourceManager.GetObject("NewElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap QueryList {
+            get {
+                object obj = ResourceManager.GetObject("QueryList", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SaveElement {
+            get {
+                object obj = ResourceManager.GetObject("SaveElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SolveElement {
+            get {
+                object obj = ResourceManager.GetObject("SolveElement", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -17,14 +17,13 @@ namespace AardWolf
     {
         // Methods
         public AardWolfSolver()
-        : base("AardWolfSolver 1", "AardWolfSolver 2", "AardWolfSolver 3", "Extra", "AardWolfSolver 5")
+        : base("Carbo Life Project", "Carbo Life Project Solver", "Carbo Life Project Solver", "Aardwolf", "Aardwolf")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Elements", "Elements", "Carbo Life Elements", GH_ParamAccess.list);
-            pManager.AddTextParameter("Path", "Path", "Volume?", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Carbo Elements", "Carbo Elements", "Carbo Elements", GH_ParamAccess.list);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -40,14 +39,14 @@ namespace AardWolf
             pManager.Register_DoubleParam("Other", "Other", "Other Values");//7
             pManager.Register_DoubleParam("Seq", "Seq", "Sequestration");//8
 
-            pManager.Register_BooleanParam("Saved", "Saved", "Returns true if file was saved to path");//9
+            pManager.Register_GenericParam("Project", "P", "Returns the project file");//9
 
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             string errors = "";
-            string path = "";
+            //string path = "";
 
             var provided_as_goo = new List<GH_ObjectWrapper>();
             List<CarboElement> listOfElements = new List<CarboElement>();
@@ -55,7 +54,7 @@ namespace AardWolf
             CarboProject runtimeProject = new CarboProject();
 
             //Get the save as.. path :
-            DA.GetData<string>(1, ref path);
+            //DA.GetData<string>(1, ref path);
 
             //Get the data
             if (DA.GetDataList(0, provided_as_goo))
@@ -76,35 +75,7 @@ namespace AardWolf
                 runtimeProject = AardwolfProcess.ProcessData(listOfElements);
             }
 
-            bool saveOk = false;
-
-            //Save the project:
-            try
-            {
-                runtimeProject.SerializeXML(path);
-                saveOk = true;
-            }
-            catch (Exception ex)
-            {
-                saveOk = false;
-            }
-
-            // CarboGroup totalGroup = runtimeProject.getTotalsGroup();
             List<CarboDataPoint> list = runtimeProject.getPhaseTotals();
-
-            /*
-             * 0 CarboDataPoint cb_A1A3 = new CarboDataPoint("A1-A3", 0);
-               1 CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
-               2 CarboDataPoint cb_A5 = new CarboDataPoint("A5(Material)",0);
-               3 CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
-               4 CarboDataPoint cb_B1B5 = new CarboDataPoint("B1-B7", 0);
-               5 CarboDataPoint cb_C1C4 = new CarboDataPoint("C1-C4", 0);
-               6 CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
-               7 CarboDataPoint cb_D = new CarboDataPoint("D", 0);
-               8 CarboDataPoint cb_Seq = new CarboDataPoint("Sequestration", 0);
-               9 CarboDataPoint Added = new CarboDataPoint("Additional", 0);
-             */
-
 
             double totals = runtimeProject.getTotalEC();
 
@@ -135,7 +106,7 @@ namespace AardWolf
             DA.SetData(7, Other);
             DA.SetData(8, Seq);
 
-            DA.SetData(9, saveOk);
+            DA.SetData(9, runtimeProject);
 
 
         }
@@ -154,7 +125,7 @@ namespace AardWolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.ClassIcon1;
+                return Aardwolf.Properties.Resources.SolveElement;
             }
         }
     }

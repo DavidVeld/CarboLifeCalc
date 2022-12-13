@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using CarboLifeAPI.Data;
+using CarboLifeAPI;
 using Grasshopper.Kernel;
 using System.Windows;
-
+using CarboLifeAPI.Data;
 
 namespace AardWolf
 {
@@ -11,7 +11,7 @@ namespace AardWolf
     {
         // Methods
         public AardWolfElement()
-        : base("CarboLifeElement", "Aardwolf Element", "Build a Carbo Life Element", "Extra", "")
+        : base("Carbo Life Element", "Carbo Life Element", "Build a Carbo Life Element", "Aardwolf", "Aardwolf")
         {
         }
 
@@ -26,40 +26,48 @@ namespace AardWolf
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.Register_GenericParam("CarboElement", "CE", "A List of Carbo Life Calculator elements, pass these in a project or group");
-            pManager.Register_StringParam("Responses", "R", "Internal Messages");
+            pManager.Register_GenericParam("Carbo Element", "Carbo Element", "A List of Carbo Life Calculator elements, pass these in a project");
+            pManager.Register_StringParam("Message", "Message", "Internal Messages");
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-
+            string error = "";
             int id = -999;
             string name = "";
             string materialname = "";
             double volume = 0;
             string category = "";
 
-            CarboElement result = new CarboElement();
-
-            DA.GetData<int>(0, ref id);
-            DA.GetData<string>(1, ref name);
-            DA.GetData<string>(2, ref materialname);
-            DA.GetData<double>(3, ref volume);
-            DA.GetData<string>(4, ref category);
-
-
-            if (volume != 0 && materialname != "")
+            try
             {
-                result.Id = id;
-                result.Name = name;
-                result.MaterialName = materialname;
-                result.Volume = volume;
-                result.Category = category;
+                CarboElement result = new CarboElement();
 
+                DA.GetData<int>(0, ref id);
+                DA.GetData<string>(1, ref name);
+                DA.GetData<string>(2, ref materialname);
+                DA.GetData<double>(3, ref volume);
+                DA.GetData<string>(4, ref category);
 
-                DA.SetData(0, result);
-                DA.SetData(1, "Ok");
+                if (volume != 0 && materialname != "")
+                {
+                    result.Id = id;
+                    result.Name = name;
+                    result.MaterialName = materialname;
+                    result.Volume = volume;
+                    result.Category = category;
+
+                    DA.SetData(0, result);
+                    error = "Ok";
+                }
             }
+            catch(Exception ex)
+            {
+                error = ex.Message;
+            }        
+            
+            DA.SetData(1, error);
+
         }
         // Properties
         public override Guid ComponentGuid
@@ -76,7 +84,7 @@ namespace AardWolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.ClassIcon1;
+                return Aardwolf.Properties.Resources.NewElement;
             }
         }
     }
