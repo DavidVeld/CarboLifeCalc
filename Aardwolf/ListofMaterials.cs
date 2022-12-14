@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CarboLifeAPI;
 using CarboLifeAPI.Data;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace Aardwolf
 {
@@ -25,7 +26,7 @@ namespace Aardwolf
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.Register_StringParam("List", "L", "Returns the project material names",GH_ParamAccess.list);//9
+            pManager.Register_StringParam("List", "L", "Returns the project material names", GH_ParamAccess.list);//9
             //pManager.Register_StringParam("List2", "L2", "Returns the project material names");//9
 
         }
@@ -42,13 +43,52 @@ namespace Aardwolf
                 foreach (CarboMaterial CM in DB.CarboMaterialList)
                 {
                     listofCarboMaterials.Add(CM.Name);
-                   // DA.SetData(1, CM.Name);
+                    // DA.SetData(1, CM.Name);
                 }
 
-                if(listofCarboMaterials.Count > 0)
+                if (listofCarboMaterials.Count > 0)
                     DA.SetDataList(0, listofCarboMaterials);
+
+                //Add a new component to filter through;
+
+                if (this.Params.Output[0].SourceCount == 0)
+                {
+                    //trigger for debug
+                    bool ok = true;
+
+                    //build the valuelist;
+                    var vallist = new Grasshopper.Kernel.Special.GH_ValueList();
+                    vallist.CreateAttributes();
+                    vallist.Name = "Materials";
+                    vallist.NickName = "Material:";
+                    vallist.ListMode = Grasshopper.Kernel.Special.GH_ValueListMode.DropDown;
+
+                    vallist.ListItems.Clear();
+
+                    //Set Location
+                    //int inputcount = this.Params.Input[0].SourceCount;
+                    vallist.Attributes.Pivot = new PointF(
+                        (float)this.Attributes.Bounds.X,
+                        (float)this.Attributes.Bounds.Y);
+
+
+                    //Populate
+                    for (int i = 0; i < listofCarboMaterials.Count; i++)
+                    {
+                        vallist.ListItems.Add(new Grasshopper.Kernel.Special.GH_ValueListItem(listofCarboMaterials[i].ToString(), i.ToString()));
+                    }
+
+                    //place the component
+                    this.OnPingDocument().AddObject(vallist, false);
+
+                    //Attach to component
+
+                    //this.Params.Output[0].AddSource(vallist);
+                    //vallist.ExpireSolution(true);
+
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 DA.SetData(0, ex.Message);
             }
@@ -59,7 +99,7 @@ namespace Aardwolf
         {
             get
             {
-                return new Guid("{52928281-BA4C-4A64-8B00-50108C895D73}");
+                return new Guid("{5037CF93-9DCD-4AF9-BC50-33CE4F1DC8DD}");
             }
         }
 
