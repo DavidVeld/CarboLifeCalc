@@ -8,8 +8,8 @@ Carbo Life Calculator is an embodied carbon calculator for the built environment
 
 Carbo Life Calc is a tool that offers users a free and open-source solution to calculate the embodied carbon of a building design. It's designed to link into Autodesk Revit. Making this tool freely available for all will be key in creating awareness in the built environment.
 
-
-Status: Work in Good Progress
+Upates as per 13.12.22  
+Carbo Life Calculator can now be accesses in Rhino Grasshopper (5,6 & 7), the popular visual programming platform for designers, architects, and engineers. With this compatibility, users can now integrate embodied carbon calculations into their Grasshopper workflow, allowing them to use it more seamlessly and efficiently. This new feature makes Carbo Life Calculator even more versatile and useful for a wide range of design and analysis tasks. We are excited to offer this compatibility and we believe it will be a valuable addition for our users who rely on Grasshopper for their work.
 
 (build V1.0.0 01.07.21)  
 
@@ -43,8 +43,8 @@ Screenshots:
 2. Bug fixing (on-going, please supply feedback)
 3. Carbon sequestering calculator (Fun, but low priority)
 4. Project compare interface added graphs
-5. Link into grasshopper and/or Tekla
 6. Import from Excel
+
 
 Updates as per build V1.0.0 (01.07.21) 
 1. Graph improvements
