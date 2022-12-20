@@ -11,7 +11,7 @@ namespace AardWolf
     {
         // Methods
         public AardWolfElement()
-        : base("Carbo Life Element", "Carbo Life Element", "Build a Carbo Life Element", "Aardwolf", "Aardwolf")
+        : base("Carbo Life Element", "Carbo Life Element", "Build a Carbo Life Element", "Aardwolf", "Builder")
         {
         }
 
@@ -26,8 +26,8 @@ namespace AardWolf
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
-            pManager.Register_GenericParam("Carbo Element", "Carbo Element", "A List of Carbo Life Calculator elements, pass these in a project");
-            pManager.Register_StringParam("Message", "Message", "Internal Messages");
+            pManager.Register_GenericParam("Carbo Element", "CE", "A List of Carbo Life Calculator elements, pass these in a project");
+            pManager.Register_StringParam("Message", "M", "Internal Messages");
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)

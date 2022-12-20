@@ -29,7 +29,7 @@ namespace Aardwolf
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Project", "P", "Carbo Life Project", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Project", "CP", "Carbo Life Project", GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -54,7 +54,7 @@ namespace Aardwolf
                         CarboProject project = provided_as_goo.Value as CarboProject;
                         if (project != null)
                         {
-                            string title = "Carbo Life Calculator";
+                            string title = "Carbo Life Project Viewer";
 
                             // check if the window is already open
                             bool isOpen = false;
@@ -63,22 +63,17 @@ namespace Aardwolf
                                 if (win.Title == title)
                                 {
                                     isOpen = true;
-                                    win.Close();
+                                    win.Tag = project;
                                     break;
                                 }
                             }
-
-
-
                             if(isOpen == false)
                             {
-                                CarboLifeUI.UI.CarboLifeMainWindow window = new CarboLifeUI.UI.CarboLifeMainWindow(project);
-                                window.Show();
+                                OverViewViewer viewer = new OverViewViewer(project);
+                                viewer.Show();
                             }
-
                             errorMessage = "File saved";
                             ok = true;
-
                         }
                         else
                         {

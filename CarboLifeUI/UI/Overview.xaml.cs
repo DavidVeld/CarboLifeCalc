@@ -360,20 +360,26 @@ namespace CarboLifeUI.UI
         private async void txt_Area_TextChanged(object sender, TextChangedEventArgs e)
         {
             string text = txt_Area.Text;
-
-            TextBox tb = (TextBox)sender;
-            int startLength = tb.Text.Length;
-
-            await Task.Delay(500);
-            if (startLength == tb.Text.Length)
+            try
             {
-                double convertedText = Utils.ConvertMeToDouble(tb.Text);
-                if (convertedText != 0)
+                TextBox tb = (TextBox)sender;
+                int startLength = tb.Text.Length;
+
+                await Task.Delay(500);
+                if (startLength == tb.Text.Length)
                 {
-                    CarboLifeProject.Area = convertedText;
-                    txt_Area.Text = convertedText.ToString();
-                    RefreshLetiGraph();
+                    double convertedText = Utils.ConvertMeToDouble(tb.Text);
+                    if (convertedText != 0)
+                    {
+                        CarboLifeProject.Area = convertedText;
+                        txt_Area.Text = convertedText.ToString();
+                        RefreshLetiGraph();
+                    }
                 }
+            }
+            catch(Exception ex)
+            {
+                //Resume async error.
             }
         }
 

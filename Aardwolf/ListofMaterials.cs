@@ -49,12 +49,15 @@ namespace Aardwolf
                 if (listofCarboMaterials.Count > 0)
                     DA.SetDataList(0, listofCarboMaterials);
 
-                //Add a new component to filter through;
+                //Add a new component if there is no output linked.
 
-                if (this.Params.Output[0].SourceCount == 0)
+                if (this.Params.Output[0].Recipients.Count == 0)
                 {
                     //trigger for debug
                     bool ok = true;
+
+                    //var listIndex = new Grasshopper.Kernel.GH_ListUtil();
+
 
                     //build the valuelist;
                     var vallist = new Grasshopper.Kernel.Special.GH_ValueList();

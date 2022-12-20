@@ -25,5 +25,25 @@ namespace AardWolf
 
             return newProject;
         }
+
+        internal static CarboProject ProcessData(List<CarboGroup> listOfGroups)
+        {
+            CarboProject newProject = new CarboProject();
+
+            foreach (CarboGroup cg in listOfGroups)
+            {
+                newProject.AddGroup(cg);
+
+                foreach(CarboElement ce in cg.AllElements)
+                {
+                    newProject.AddElement(ce);
+                }
+            }
+
+            //Calculate the values
+            newProject.CalculateProject();
+
+            return newProject;
+        }
     }
 }

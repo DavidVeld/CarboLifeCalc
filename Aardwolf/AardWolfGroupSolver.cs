@@ -13,17 +13,17 @@ using Grasshopper.Kernel.Types;
 
 namespace AardWolf
 {
-    public class AardWolfSolver : GH_Component
+    public class AardWolfGroupSolver : GH_Component
     {
         // Methods
-        public AardWolfSolver()
+        public AardWolfGroupSolver()
         : base("Carbo Life Project", "Carbo Life Project Solver", "Carbo Life Project Solver", "Aardwolf", "Solvers")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Carbo Elements", "CE", "Carbo Elements", GH_ParamAccess.list);
+            pManager.AddGenericParameter("Carbo Groups", "CG", "Carbo Groups", GH_ParamAccess.list);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -31,7 +31,6 @@ namespace AardWolf
             pManager.Register_DoubleParam("Total", "Total", "Total COe2"); //0
             pManager.Register_GenericParam("Carbo Project", "CP", "Returns the Carbo Project file");//9
             pManager.Register_StringParam("Message", "M", "Returns results in a string list", GH_ParamAccess.list);//10
-
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -41,7 +40,7 @@ namespace AardWolf
             //string path = "";
 
             var provided_as_goo = new List<GH_ObjectWrapper>();
-            List<CarboElement> listOfElements = new List<CarboElement>();
+            List<CarboGroup> listOfGroups = new List<CarboGroup>();
 
             CarboProject runtimeProject = new CarboProject();
 
@@ -49,22 +48,31 @@ namespace AardWolf
             //DA.GetData<string>(1, ref path);
 
             //Get the data
+            Type carboGType = typeof(CarboGroup);
+            //Type carboGType2 = listOfGroups[0].GetType();
+
+
+
             if (DA.GetDataList(0, provided_as_goo))
             {
                 foreach (var goo in provided_as_goo)
                 {
-                    var obj = goo.Value;
-                    CarboElement ce = obj as CarboElement;
-                    if (ce != null)
+                    var obj = goo.ScriptVariable();
+
+                    //dynamic cahngeob = Convert.ChangeType(obj, carboGType);
+
+                    CarboLifeAPI.Data.CarboGroup cg = obj as CarboLifeAPI.Data.CarboGroup;
+ 
+                    if (cg != null)
                     {
-                        listOfElements.Add(ce);
+                        listOfGroups.Add(cg);
                     }
                 }
             }
 
-            if (listOfElements.Count != 0)
+            if (listOfGroups.Count != 0)
             {
-                runtimeProject = AardwolfProcess.ProcessData(listOfElements);
+                runtimeProject = AardwolfProcess.ProcessData(listOfGroups);
             }
 
             List<CarboDataPoint> list = runtimeProject.getPhaseTotals();
@@ -98,14 +106,13 @@ namespace AardWolf
             DA.SetData(1, runtimeProject);
             DA.SetDataList(2, resultList);
 
-
         }
         // Properties
         public override Guid ComponentGuid
         {
             get
             {
-                return new Guid("{2D1746FA-EE9D-4417-A978-E94A606639FC}");
+                return new Guid("{A7D6AA00-7A81-4763-8AEE-DEAFC1E56AC8}");
             }
         }
 

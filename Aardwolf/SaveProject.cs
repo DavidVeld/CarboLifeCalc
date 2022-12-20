@@ -27,7 +27,7 @@ namespace Aardwolf
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Project", "P", "Carbo Life Project", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Project", "CP", "Carbo Life Project", GH_ParamAccess.item);
             pManager.AddTextParameter("Path", "Path", "Save As.. Path?", GH_ParamAccess.item);
             pManager.AddBooleanParameter("Save", "Save", "A Switch", GH_ParamAccess.item);
             //pManager.AddBooleanParameter("Update", "Path", "Save As.. Path?", GH_ParamAccess.item);

@@ -44,6 +44,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -54,9 +55,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AardWolfElement.cs" />
+    <Compile Include="AardWolfGroup.cs" />
     <Compile Include="AardwolfProcess.cs" />
+    <Compile Include="AardWolfGroupSolver.cs" />
     <Compile Include="AardWolfSolver.cs" />
+    <Compile Include="AardWolfMaterialSelector.cs" />
     <Compile Include="ListofMaterials.cs" />
+    <Compile Include="OverViewViewer.xaml.cs">
+      <DependentUpon>OverViewViewer.xaml</DependentUpon>
+    </Compile>
     <None Include="OpenWindow.cs" />
     <Compile Include="SaveProject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,6 +112,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\QueryList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="OverViewViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
