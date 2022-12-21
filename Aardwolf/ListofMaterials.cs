@@ -14,7 +14,7 @@ namespace Aardwolf
     public class ListofMaterials : GH_Component
     {
         public ListofMaterials()
-: base("ListMaterials", "List all Materials", "Lists the available Carbo Life Materials", "Aardwolf", "Aardwolf")
+: base("List Materials", "List all Materials", "Lists the available Carbo Life Materials", "Aardwolf", "Data")
         {
 
         }
@@ -112,7 +112,7 @@ namespace Aardwolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.QueryList;
+                return Aardwolf.Properties.Resources.List;
             }
         }
 

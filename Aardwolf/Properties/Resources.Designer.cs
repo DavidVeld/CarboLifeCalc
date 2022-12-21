@@ -63,6 +63,46 @@ namespace Aardwolf.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CarboGroup {
+            get {
+                object obj = ResourceManager.GetObject("CarboGroup", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ElementSolver {
+            get {
+                object obj = ResourceManager.GetObject("ElementSolver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GroupSolver {
+            get {
+                object obj = ResourceManager.GetObject("GroupSolver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap List {
+            get {
+                object obj = ResourceManager.GetObject("List", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap NewElement {
             get {
                 object obj = ResourceManager.GetObject("NewElement", resourceCulture);
@@ -86,6 +126,26 @@ namespace Aardwolf.Properties {
         internal static System.Drawing.Bitmap SaveElement {
             get {
                 object obj = ResourceManager.GetObject("SaveElement", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SaveProject {
+            get {
+                object obj = ResourceManager.GetObject("SaveProject", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SaveProject2 {
+            get {
+                object obj = ResourceManager.GetObject("SaveProject2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

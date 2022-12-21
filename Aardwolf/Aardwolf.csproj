@@ -119,6 +119,24 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CarboGroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ElementSolver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GroupSolver.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SaveProject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SaveProject2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\List.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>Copy "$(TargetPath)" "$(TargetDir)$(ProjectName).gha"

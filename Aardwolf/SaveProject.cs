@@ -15,7 +15,7 @@ namespace Aardwolf
     {
         // Methods
         public SaveProject()
-        : base("Save a Carbo Life Project", "Save Project", "Saves the Carbo Life Project to a specified path", "Aardwolf", "Aardwolf")
+        : base("Save a Carbo Life Project", "Save Project", "Saves the Carbo Life Project to a specified path", "Aardwolf", "Solvers")
         {
         }
         public override Guid ComponentGuid
@@ -93,7 +93,7 @@ namespace Aardwolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.SaveElement;
+                return Aardwolf.Properties.Resources.SaveProject;
             }
         }
 

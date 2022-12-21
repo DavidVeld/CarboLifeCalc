@@ -16,7 +16,7 @@ namespace Aardwolf
     public class AardWolfGroup : GH_Component
     {
         public AardWolfGroup()
-: base("AardWolfGroup", "Create a CarboGroup", "Combines Multiple Materials into a CarboGroup", "Aardwolf", "Builder")
+: base("CarboGroup", "Create a CarboGroup", "Combines Multiple Materials into a CarboGroup", "Aardwolf", "Builder")
         {
 
         }
@@ -91,13 +91,24 @@ namespace Aardwolf
                     }
                 }
 
-                //Now Add the List to the group
-
+                //Now Add the elements to the group
                 foreach (CarboElement cel in listOfElements)
                 {
                     carboGroup.AllElements.Add(cel);
                 }
-                message += listOfElements.Count + " Elements were added to this group" + Environment.NewLine;
+
+                //Give a nice description and name to the group
+                if(listOfElements.Count > 0)
+                {
+                    carboGroup.Category = listOfElements[0].Category;
+                    carboGroup.Description = "Group of: " + listOfElements[0].Name;
+                    
+                    //set default waste.
+                    carboGroup.Waste = carboGroup.Material.WasteFactor;
+
+                }
+
+                message += listOfElements.Count + "Elements were added to this group" + Environment.NewLine;
 
                 //All is good calculate the group and return;
 
@@ -128,7 +139,7 @@ namespace Aardwolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.QueryList;
+                return Aardwolf.Properties.Resources.CarboGroup;
             }
         }
 

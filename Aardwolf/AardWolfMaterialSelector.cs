@@ -15,9 +15,8 @@ namespace Aardwolf
     public class AardWolfMaterialSelector : GH_Component
     {
         public AardWolfMaterialSelector()
-: base("SelectMaterials", "Select a CarboMaterial", "Selects the closest available Carbo Life Material", "Aardwolf", "Aardwolf")
+: base("Select Materials", "Select a CarboMaterial", "Selects the closest available Carbo Life Material", "Aardwolf", "Data")
         {
-
         }
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)

@@ -17,7 +17,7 @@ namespace AardWolf
     {
         // Methods
         public AardWolfSolver()
-        : base("Carbo Life Project", "Carbo Life Project Solver", "Carbo Life Project Solver", "Aardwolf", "Solvers")
+        : base("Project Element Solver", "Carbo Life Project Solver by Elements", "Generates a Carbo Life Project using Elements", "Aardwolf", "Solvers")
         {
         }
 
@@ -115,7 +115,7 @@ namespace AardWolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.SolveElement;
+                return Aardwolf.Properties.Resources.ElementSolver;
             }
         }
     }
