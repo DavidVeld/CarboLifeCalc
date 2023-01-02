@@ -99,6 +99,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RequestHandler.cs" />
     <Compile Include="ShowCarboCalc.cs" />
     <Compile Include="CarboLifeCalcUpdate.cs" />
     <Compile Include="CarboLifeCalcPlus.cs" />

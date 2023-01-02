@@ -36,7 +36,7 @@ namespace Aardwolf
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
             pManager.Register_StringParam("Message", "Message", "Error Messages to mind");//9
-            pManager.Register_BooleanParam("Saved", "Sucess", "Returns true if file was saved");//9
+            //pManager.Register_BooleanParam("Saved", "Sucess", "Returns true if file was saved");//9
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -63,12 +63,12 @@ namespace Aardwolf
                         if (project != null && saveme == true)
                         {
                             project.SerializeXML(path);
-                            errorMessage = "File saved";
+                            errorMessage = "Project saved to " + path;
                             ok = true;
                         }
                         else
                         {
-                            errorMessage = "Could not convert project from Goo";
+                            errorMessage = "Project not Saved";
                         }
                     }
                 }
@@ -83,7 +83,7 @@ namespace Aardwolf
             }
 
             DA.SetData(0, errorMessage); //Totals
-            DA.SetData(1, ok); //Totals
+            //DA.SetData(1, ok); //Totals
 
 
         }

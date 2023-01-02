@@ -20,6 +20,7 @@ namespace CarboLifeRevit
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             UIApplication app = commandData.Application;
+            HeatMapCreator newWindow;
 
             try
             {
@@ -44,8 +45,19 @@ namespace CarboLifeRevit
 
                     projectToOpen = projectToUpdate;
 
-                    HeatMapCreator newWindow = new HeatMapCreator(projectToOpen);
+
+                    // We give the objects to the new dialog;
+                    // The dialog becomes the owner responsible fore disposing them, eventually.
+                    newWindow = new HeatMapCreator(exEvent, handler, uiapp);
+
+                    newWindow.ExEvent = exEvent;
+                    handler.Item = newWindow;
+
                     newWindow.Show();
+
+
+                    
+
                 }
             }
             catch (Exception ex)

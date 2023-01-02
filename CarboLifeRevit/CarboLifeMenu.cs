@@ -80,6 +80,22 @@ namespace CarboLifeRevit
             pB_CarboCalcPlus.SetContextualHelp(contextualHelp);
             pB_CarboCalcPlus.ToolTip = "Advanced export settings";
 
+            try
+            {
+                //The hanldler for the colour viewerr:
+                ColourViewerhandler handler = new ColourViewerhandler();
+                // External use this on in the dialog:
+                ExternalEvent exEvent = ExternalEvent.Create(handler);
+
+            }
+            catch (Exception eX)
+            {
+                TaskDialog td = new TaskDialog("Error in handler setup");
+                td.ExpandedContent = eX.GetType().Name + ": " + eX.Message + Environment.NewLine + eX.StackTrace;
+                td.Show();
+
+                return Result.Failed;
+            }
 
             return Result.Succeeded;
         }
