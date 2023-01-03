@@ -99,11 +99,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RequestHandler.cs" />
-    <Compile Include="ShowCarboCalc.cs" />
+    <Compile Include="Modeless\CarboViewerCommand.cs" />
+    <Compile Include="Modeless\ColourViewerHandler.cs" />
     <Compile Include="CarboLifeCalcUpdate.cs" />
     <Compile Include="CarboLifeCalcPlus.cs" />
-    <Compile Include="CarboLifeMenu.cs" />
+    <Compile Include="CarboLifeApp.cs" />
     <Compile Include="CarboLifeCalc.cs" />
     <Compile Include="CarboLifeRevitImport.cs" />
     <Compile Include="CarboRevitImportSettings.cs" />
