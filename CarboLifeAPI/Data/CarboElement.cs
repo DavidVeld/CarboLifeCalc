@@ -29,9 +29,13 @@ namespace CarboLifeAPI.Data
         public bool isExisting { get; set; }
         public bool isSubstructure { get; set; }
 
+        [Obsolete]
         public byte r { get; set; }
+        [Obsolete]
         public byte g { get; set; }
+        [Obsolete]
         public byte b { get; set; }
+
         public double ECI { get; set; }
         public double EC { get; set; }
         public double ECI_Total { get; set; }

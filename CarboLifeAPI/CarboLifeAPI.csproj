@@ -80,6 +80,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UtilClasses\CarboGraphResult.cs" />
+    <Compile Include="UtilClasses\CarboValues.cs" />
     <Compile Include="Data\CarboC1C4Properties.cs" />
     <Compile Include="Data\CarboDProperties.cs" />
     <Compile Include="Data\CarboB1B5Properties.cs" />

@@ -29,7 +29,7 @@ namespace CarboLifeUI.UI
     public partial class HeatMapCreator : Window
     {
         private CarboProject carboProject;
-
+        CarboGraphResult graphData;
         public HeatMapCreator(CarboProject project)
         {
             carboProject = project;
@@ -49,51 +49,13 @@ namespace CarboLifeUI.UI
             //this is just to confirm the window loaded
             if (carboProject != null)
             {
-                lbl_Range.Content = carboProject.Name;
+                lbl_name.Content = carboProject.Name;
             }
-
-            UpdateData();
-
         }
 
         private void btn_Update_Click(object sender, RoutedEventArgs e)
         {
-            UpdateData();
-        }
-
-        private void Btn_Accept_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void rad_Bymaterial_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void rad_Bymaterial2_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void rad_ByGroup_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void rad_ByElement_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btn_Info_Click(object sender, RoutedEventArgs e)
-        {
-
+            UpdateGraph();
         }
 
         private void btn_Open_Click(object sender, RoutedEventArgs e)
@@ -122,38 +84,120 @@ namespace CarboLifeUI.UI
                     carboProject = projectToUpdate;
                 }
 
-                UpdateData();
+                UpdateDataSource();
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
         }
 
-        private void UpdateData()
+        private void LoadProject()
         {
+            lbl_name.Content = carboProject.Name;
+            lbl_total.Content = carboProject.getTotalEC().ToString("N") + " tCO2";
+            UpdateDataSource();
+            
+        }
+
+        /// <summary>
+        /// This method loads new data from the carboproject
+        /// </summary>
+        public void UpdateDataSource()
+        {
+            graphData = new CarboGraphResult();
+            CarboGraphResult thisResult = new CarboGraphResult();
+            //Define the type of graph to make:
             if (carboProject != null)
             {
-                lbl_name.Content = carboProject.Name;
-                lbl_total.Content = carboProject.getTotalEC().ToString("N") + " tCO2";
-
-                CarboGraphResult graphData = new CarboGraphResult();
-
-                //Define the type of graph to make:
-                if (rad_Bymaterial.IsChecked == true)
+                if (rad_ByDensitykg.IsChecked == true)
                 {
                     //This will plot each element based on their material the X axis is the embodied carbon (kgCo2/kg) the Y axis it the weight or mass.
 
-                    graphData = CarboLifeAPI.HeatMapBuilderClasses.GetByMaterialMassChart(carboProject, cnv_Graph.ActualWidth, cnv_Graph.ActualHeight);
-                    cnv_Graph.Children.Clear();
+                    thisResult = CarboLifeAPI.HeatMapBuilderClasses.GetMaterialMassData(carboProject);
 
+                }
+                else if (rad_ByDensitym.IsChecked == true)
+                {
+
+                }
+                else if(rad_ByGroup.IsChecked == true)
+                {
+
+                }
+                else if(rad_ByElement.IsChecked == true)
+                {
+
+                }
+                else if(rad_MaterialTotals.IsChecked == true)
+                {
+
+                }
+                else
+                {
+
+                }
+            }
+
+            //if data was collected make it the source and update the graph
+            //clear if no data
+            if (thisResult.elementData.Count > 0)
+            {
+                graphData = thisResult;
+                UpdateGraph();
+            }
+            else
+                cnv_Graph.Children.Clear(); 
+
+        }
+
+        //this method updates the graph based on current settings.
+        public void UpdateGraph()
+        {
+            cnv_Graph.Visibility = Visibility.Hidden;
+            cnv_Graph.Children.Clear();
+            cnv_Graph.Visibility = Visibility.Visible;
+
+            if (carboProject != null && graphData!= null )
+            {
+                //Values we'd need for all options:
+                double deviationFact = Utils.ConvertMeToDouble(txt_standard.Text);
+                double xMaxCutoff = Utils.ConvertMeToDouble(txt_CutoffMax.Text);
+                double xMinCutoff = Utils.ConvertMeToDouble(txt_CutoffMin.Text);
+
+                if (graphData.elementData.Count > 0)
+                {
+                    graphData = CarboLifeAPI.HeatMapBuilderClasses.Calculate(cnv_Graph.ActualWidth, cnv_Graph.ActualHeight, deviationFact, xMinCutoff, xMaxCutoff);
+                    
+                    cnv_Graph.Children.Clear();
                     foreach (UIElement uielement in graphData.UIData)
                     {
                         cnv_Graph.Children.Add(uielement);
                     }
                 }
             }
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateGraph();
+        }
+
+        private void Btn_Ok_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_Info_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("This is the value of the standard deviation which is used to set the outer bounds");
+        }
+
+        //Radiocontrollbuttons
+        private void rad_Control_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateDataSource();
         }
     }
 }
