@@ -5,13 +5,13 @@ using Grasshopper.Kernel;
 using System.Windows;
 using CarboLifeAPI.Data;
 
-namespace AardWolf
+namespace CarboCroc
 {
-    public class AardWolfElement : GH_Component
+    public class CarboCrocElement : GH_Component
     {
         // Methods
-        public AardWolfElement()
-        : base("Carbo Life Element", "Carbo Life Element", "Build a Carbo Life Element", "Aardwolf", "Builder")
+        public CarboCrocElement()
+        : base("Carbo Life Element", "Carbo Life Element", "Build a Carbo Life Element", "CarboCroc", "Builder")
         {
         }
 
@@ -74,7 +74,7 @@ namespace AardWolf
         {
             get
             {
-                return new Guid("{B23086F8-D611-49E4-8803-1C0DE0EC6E10}");
+                return new Guid("{9C57513A-5160-4D09-835C-816E7E52077C}");
             }
         }
 
@@ -84,7 +84,7 @@ namespace AardWolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.NewElement;
+                return CarboCroc.Properties.Resources.NewElement;
             }
         }
     }

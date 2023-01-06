@@ -36,8 +36,10 @@ namespace CarboLifeAPI
         /// </summary>
         public double yValue { get; set; }
 
-        [Obsolete]
-        public double EC_Total { get; set; }
+        /// <summary>
+        /// This is usefull to group data when needed
+        /// </summary>
+        public string Material { get; set; }
 
     }
 

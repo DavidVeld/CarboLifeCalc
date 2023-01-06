@@ -8,41 +8,49 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace Aardwolf
+namespace CarboCroc
 {
-    public class OpenWindow : GH_Component
+    public class SaveProject : GH_Component
     {
         // Methods
-        public OpenWindow()
-        : base("Opens a Carbo Life Project", "Open Project", "Opends the Carbo Life Project", "Aardwolf", "Aardwolf")
+        public SaveProject()
+        : base("Save a Carbo Life Project", "Save Project", "Saves the Carbo Life Project to a specified path", "CarboCroc", "Solvers")
         {
         }
         public override Guid ComponentGuid
         {
             get
             {
-                return new Guid("{5567D21C-AF71-40D2-9A76-45206B97C97B}");
+                return new Guid("{8A9D1559-8099-47B6-BB26-7BB01B59D9C7}");
             }
         }
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Project", "CP", "Carbo Life Project", GH_ParamAccess.item);
+            pManager.AddTextParameter("Path", "Path", "Save As.. Path?", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("Save", "Save", "A Switch", GH_ParamAccess.item);
+            //pManager.AddBooleanParameter("Update", "Path", "Save As.. Path?", GH_ParamAccess.item);
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.Register_BooleanParam("Saved", "Sucess", "Returns true if file was saved");//9
+            pManager.Register_StringParam("Message", "Message", "Error Messages to mind");//9
+            //pManager.Register_BooleanParam("Saved", "Sucess", "Returns true if file was saved");//9
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             GH_ObjectWrapper provided_as_goo = null;
+            List<CarboElement> listOfElements = new List<CarboElement>();
+            string path = "";
+            bool saveme = false;
 
             bool ok = false;
             string errorMessage = "";
+
+            DA.GetData<string>(1, ref path);
+            DA.GetData<bool>(2, ref saveme);
 
             try
             {
@@ -52,32 +60,15 @@ namespace Aardwolf
                     if (provided_as_goo.Value is CarboProject)
                     {
                         CarboProject project = provided_as_goo.Value as CarboProject;
-                        if (project != null)
+                        if (project != null && saveme == true)
                         {
-                            string title = "Carbo Life Project Viewer";
-
-                            // check if the window is already open
-                            bool isOpen = false;
-                            foreach (Window win in System.Windows.Application.Current.Windows)
-                            {
-                                if (win.Title == title)
-                                {
-                                    isOpen = true;
-                                    win.Tag = project;
-                                    break;
-                                }
-                            }
-                            if(isOpen == false)
-                            {
-                                OverViewViewer viewer = new OverViewViewer(project);
-                                viewer.Show();
-                            }
-                            errorMessage = "File saved";
+                            project.SerializeXML(path);
+                            errorMessage = "Project saved to " + path;
                             ok = true;
                         }
                         else
                         {
-                            errorMessage = "Could not convert project from Goo";
+                            errorMessage = "Project not Saved";
                         }
                     }
                 }
@@ -91,7 +82,8 @@ namespace Aardwolf
                 errorMessage = ex.Message;
             }
 
-            DA.SetData(1, ok); //Totals
+            DA.SetData(0, errorMessage); //Totals
+            //DA.SetData(1, ok); //Totals
 
 
         }
@@ -101,7 +93,7 @@ namespace Aardwolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.SaveElement;
+                return CarboCroc.Properties.Resources.SaveProject;
             }
         }
 

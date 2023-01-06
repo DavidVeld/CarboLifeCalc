@@ -49,7 +49,7 @@ namespace CarboLifeAPI
         private static double Y_min;
 
         //The Mins and Maxes of the user's filters:
-        private static double deviationFactor;
+        //private static double deviationFactor;
         private static double avgX;
         private static double minBoundX;
         private static double maxBoundX;
@@ -61,8 +61,8 @@ namespace CarboLifeAPI
         private static double Yorigin;
         private static double border;
         private static double fontsize;
-        private static double realLength;
-        private static double realHeight;
+        private static double graphLength;
+        private static double graphHeight;
 
         //The scale of the current graph;
         private static double scalex;
@@ -100,6 +100,110 @@ namespace CarboLifeAPI
             return thisResult;
         }
 
+        public static CarboGraphResult GetMaterialVolumeData(CarboProject carboProject)
+        {
+            //This is the most usefull set of Data To work with for now:
+            List<CarboElement> bufferList = carboProject.getTemporaryElementListWithTotals();
+
+            CarboGraphResult thisResult = new CarboGraphResult();
+
+            thisResult.xName = "ECI";
+            thisResult.yName = "Mass";
+
+            //This part collects the required data we need to build the graph later on.
+            foreach (CarboElement carboElement in bufferList)
+            {
+                CarboValues value = new CarboValues();
+                value.xValue = (carboElement.EC_Total / carboElement.Volume_Total);
+                value.yValue = carboElement.Volume_Total;
+                value.Id = carboElement.Id;
+                thisResult.elementData.Add(value);
+            }
+
+            //set the values of which to calculate;
+            result = thisResult;
+            return thisResult;
+        }
+
+        public static CarboGraphResult GetPerGroupData(CarboProject carboProject)
+        {
+            //This is the most usefull set of Data To work with for now:
+            CarboGraphResult thisResult = new CarboGraphResult();
+
+            thisResult.xName = "EC";
+            thisResult.yName = "ElementsInGroup";
+
+            foreach (CarboGroup cgr in carboProject.getGroupList)
+            {
+                //This part collects the required data we need to build the graph later on.
+                foreach (CarboElement carboElement in cgr.AllElements)
+                {
+                    CarboValues value = new CarboValues();
+                    value.xValue = (cgr.EC);
+                    value.yValue = cgr.AllElements.Count;
+                    value.Id = carboElement.Id;
+
+                    thisResult.elementData.Add(value);
+                }
+            }
+
+            //set the values of which to calculate;
+            result = thisResult;
+            return thisResult;
+        }
+
+        public static CarboGraphResult GetPerElementData(CarboProject carboProject)
+        {
+            //This is the most usefull set of Data To work with for now:
+            List<CarboElement> bufferList = carboProject.getTemporaryElementListWithTotals();
+
+            CarboGraphResult thisResult = new CarboGraphResult();
+
+            thisResult.xName = "EC";
+            thisResult.yName = "Mass";
+
+            //This part collects the required data we need to build the graph later on.
+            foreach (CarboElement carboElement in bufferList)
+            {
+                CarboValues value = new CarboValues();
+                value.xValue = (carboElement.EC_Total / 1000);
+                value.yValue = carboElement.Mass;
+                value.Id = carboElement.Id;
+                thisResult.elementData.Add(value);
+            }
+
+            //set the values of which to calculate;
+            result = thisResult;
+            return thisResult;
+        }
+
+        public static CarboGraphResult GetMaterialTotalData(CarboProject carboProject)
+        {
+            //This is the most usefull set of Data To work with for now:
+            CarboGraphResult thisResult = new CarboGraphResult();
+
+            thisResult.xName = "EC";
+            thisResult.yName = "ElementsInGroup";
+            
+            foreach (CarboGroup cgr in carboProject.getGroupList)
+            {
+                //This part collects the required data we need to build the graph later on.
+                foreach (CarboElement carboElement in cgr.AllElements)
+                {
+                    CarboValues value = new CarboValues();
+                    value.xValue = (cgr.EC);
+                    value.yValue = cgr.AllElements.Count;
+                    value.Id = carboElement.Id;
+
+                    thisResult.elementData.Add(value);
+                }
+            }
+
+            //set the values of which to calculate;
+            result = thisResult;
+            return thisResult;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -109,57 +213,79 @@ namespace CarboLifeAPI
         /// <param name="xminCutoff"></param>
         /// <param name="xmaxCutoff"></param>
         /// <returns></returns>
-        public static CarboGraphResult Calculate(double actualWidth, double actualHeight, double deviationFact = 1, double xminCutoff = 0, double xmaxCutoff = 0)
+        public static CarboGraphResult Calculate(double actualWidth, double actualHeight, double xminCutoff = 0, double xmaxCutoff = 0)
         {
+            //Set the values that define the bounds and scale of the plot.
             canvasWidth = actualWidth;
             canvasHeight = actualHeight;
-            deviationFactor = deviationFact;
+            //deviationFactor = deviationFact;
             minXCutoff = xminCutoff;
             maxXCutoff = xmaxCutoff;
+            result.UIData.Clear();
 
-            //get the right colour range.
-            SetColours();
-
-            //remove items out of bounds
-            SetValidDataPoints();
-
-            //Using the valid datapoints, not create the axis, and set the bounds. 
-            if (workingValues.Count > 0)
+            try
             {
 
-                //Get the axis
-                IList<UIElement> axisUIData = DrawAxis();
-                result.Add(axisUIData);
+                //get the right colour range.
+                SetColours();
 
-                //Get the boundaries
-                IList<UIElement> boundariesUIData = CalculateBounds();
-                result.Add(boundariesUIData);
+                //remove items out of bounds (provided min and max)
+                SetValidDataPoints();
 
-                //colour the values;
-                result = ColourByValues();
+                //Using the valid datapoints, not create the axis, and set the bounds. 
+                if (workingValues != null && workingValues.Count > 0)
+                {
 
+                    //Get the axis
+                    IList<UIElement> axisUIData = DrawAxis();
+                    result.Add(axisUIData);
+
+                    //Get the boundaries
+                    IList<UIElement> boundariesUIData = CalculateBounds();
+                    result.Add(boundariesUIData);
+
+                    //colour the values;
+                    result = ColourByValues();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error");
+                return null;
             }
 
             return result;
         }
 
+
         private static void SetValidDataPoints()
         {
-            workingValues = new List<CarboValues>();
-
-            if (result != null)
-            {
-                if (result.elementData != null && result.elementData.Count > 0)
+                try
                 {
-                    foreach (CarboValues cv in result.elementData)
+
+                workingValues = new List<CarboValues>();
+                workingValues.Clear();
+                    if (result != null)
                     {
-                        if (cv.xValue > minXCutoff && cv.xValue < maxXCutoff)
+                        if (result.elementData != null && result.elementData.Count > 0)
                         {
-                            workingValues.Add(cv);
+                            foreach (CarboValues cv in result.elementData)
+                            {
+                                if (cv.xValue > minXCutoff && cv.xValue < maxXCutoff)
+                                {
+                                    workingValues.Add(cv);
+                                }
+                            }
                         }
                     }
+
                 }
-            }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                }
+            
         }
 
         private static IList<UIElement> CalculateBounds()
@@ -170,33 +296,44 @@ namespace CarboLifeAPI
 
 
             //get the standard deviation
-            double standDevValue = CalculateStandardDeviation(dataResult);
+            //double standDevValue = CalculateStandardDeviation(dataResult);
 
-            avgX = dataResult.Average(item => item.xValue);
-            minBoundX = avgX - (standDevValue * deviationFactor);
-            maxBoundX = avgX + ( standDevValue * deviationFactor);
+            //avgX = dataResult.Average(item => item.xValue);
+            //minBoundX = avgX - (standDevValue * deviationFactor);
+            //maxBoundX = avgX + ( standDevValue * deviationFactor);
 
-            double closestMin = getClosest(minBoundX, dataResult, true);
-            double closestMax = getClosest(minBoundX, dataResult, false);
+            double closestMin = getClosest(minXCutoff, dataResult, true);
+            double closestMax = getClosest(maxXCutoff, dataResult, false);
 
             minBoundX = closestMin;
             maxBoundX = closestMax;
 
-            //draw three lines on these locations
-            //Yaxis
-            Line minline = GetLine(minBoundX, 0, minBoundX, (Y_max * .1));
-            minline.Stroke = Brushes.Blue;
+            //draw min and max cutoff:
+            Line minCutoffLine = GetLine(minXCutoff, 0, minXCutoff, (Y_max * 1));
+            minCutoffLine.Stroke = Brushes.Blue;
+            minCutoffLine.StrokeThickness = 2;
 
-            Line maxline = GetLine(maxBoundX, 0, maxBoundX, (Y_max * .1));
-            maxline.Stroke = Brushes.Red;
+            Line maxCutoffLine = GetLine(maxXCutoff, 0, maxXCutoff, (Y_max * 1));
+            maxCutoffLine.Stroke = Brushes.Red;
+            maxCutoffLine.StrokeThickness = 2;
+            
+            //The closest Values
+            Line minValueLine = GetLine(closestMin, 0, closestMin, (Y_max * .5));
+            minValueLine.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, Session_minRangeColour.R, Session_minRangeColour.G, Session_minRangeColour.B));
+            minValueLine.StrokeThickness = 2;
 
-            Line avgline = GetLine(avgX, 0, avgX, (Y_max * .1));
-            avgline.Stroke = Brushes.Black;
+            Line maxValueLine = GetLine(closestMax, 0, closestMax, (Y_max * .5));
+            maxValueLine.Stroke = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, Session_maxRangeColour.R, Session_maxRangeColour.G, Session_maxRangeColour.B));
+            maxValueLine.StrokeThickness = 2;
 
-            thisResult.Add(minline);
-            thisResult.Add(maxline);
-            thisResult.Add(avgline);
 
+            thisResult.Add(minCutoffLine);
+            thisResult.Add(maxCutoffLine);
+            thisResult.Add(maxValueLine);
+            thisResult.Add(minValueLine);
+
+            //The closest actual value:
+            /*
             double avgset = 0;
 
             if (workingValues.Count > 0)
@@ -206,25 +343,30 @@ namespace CarboLifeAPI
             avgSetline.Stroke = Brushes.Orange;
 
             thisResult.Add(avgSetline);
-
+            */
             return thisResult;
         }
 
-        private static double getClosest(double valuetofind, IList<CarboValues> dataResult, bool roundUp)
+        private static double getClosest(double valuetofind, IList<CarboValues> dataResult, bool findMin)
         {
+            //First we need to make sure the list is sorted;
+            List<CarboValues> SortedList = dataResult.OrderBy(o => o.xValue).ToList();
+
             double result = 0;
             double buffer;
 
-            if (roundUp)
+            if (findMin)
                 goto lowhigh;
             else
                 goto highlow;
 
             lowhigh:
-            //We#re going up the list untill we find a value higher than the value then we stop
-            for (int i = 0; i < dataResult.Count; i++)
+            return SortedList[0].xValue;
+            //We're going up the list untill we find a value higher than the value then we stop
+            //This is to find the lowest value in the list closest to the valuetofind
+            for (int i = 0; i < SortedList.Count; i++)
             {
-                buffer = dataResult[i].xValue;
+                buffer = SortedList[i].xValue;
                 if (buffer < valuetofind)
                     result = buffer;
                 else
@@ -233,10 +375,12 @@ namespace CarboLifeAPI
             return result;
 
         highlow:
+            return SortedList[SortedList.Count -1].xValue;
+
             //We#re going up the list untill we find a value higher than the value then we stop
-            for (int i = dataResult.Count; i > 0; i--)
+            for (int i = SortedList.Count; i > 0; i--)
             {
-                buffer = dataResult[i -1].xValue;
+                buffer = SortedList[i -1].xValue;
                 if (buffer > valuetofind)
                     result = buffer;
                 else
@@ -248,21 +392,21 @@ namespace CarboLifeAPI
         }
 
         /// <summary>
-        /// draws a line on given coordinates bases on current scales.
+        /// draws a line on given coordinates bases on current scales, based for absolute values.
         /// </summary>
-        /// <param name="maxBoundX1"></param>
-        /// <param name="v"></param>
-        /// <param name="maxBoundX2"></param>
-        /// <param name="y_max"></param>
+        /// <param name="p1x">Point 1 x</param>
+        /// <param name="p1y">Point 1 y</param>
+        /// <param name="p2x">Point 2 x</param>
+        /// <param name="p2y">Point 3 y</param>
         /// <returns></returns>
-        private static Line GetLine(double p1x, int p1y, double p2x, double p2y)
+        private static Line GetLine(double p1x, double p1y, double p2x, double p2y)
         {
             //Yaxis
             Line line = new Line();
             Thickness ythickness = new Thickness(0, 0, 0, 0);
             line.Margin = ythickness;
             line.Visibility = System.Windows.Visibility.Visible;
-            line.StrokeThickness = 1;
+            line.StrokeThickness = 1.5;
             line.Stroke = System.Windows.Media.Brushes.Black;
 
             //StartPoint
@@ -284,12 +428,12 @@ namespace CarboLifeAPI
         {
             //load deafult settings from a file in the future 
 
-            Session_minOutColour = System.Drawing.Color.FromArgb(255, 93, 140, 140);
-            Session_maxOutColour = System.Drawing.Color.FromArgb(255, 163, 87, 82);
+            Session_minOutColour = System.Drawing.Color.FromArgb(255, 0, 0, 255);
+            Session_maxOutColour = System.Drawing.Color.FromArgb(255, 250, 0, 0);
 
-            Session_minRangeColour = System.Drawing.Color.FromArgb(255, 93, 140, 140);
-            Session_midRangeColour = System.Drawing.Color.FromArgb(255, 222, 146, 80);
-            Session_maxRangeColour = System.Drawing.Color.FromArgb(255, 163, 87, 82);
+            Session_minRangeColour = System.Drawing.Color.FromArgb(255, 141, 241, 41);
+            Session_midRangeColour = System.Drawing.Color.FromArgb(255, 242, 116, 40);
+            Session_maxRangeColour = System.Drawing.Color.FromArgb(255, 240, 40, 9);
         }
 
         private static IList<UIElement> DrawAxis()
@@ -309,76 +453,69 @@ namespace CarboLifeAPI
             Yorigin = 35;
             border = 35;
             fontsize = 10;
-            realLength = canvasWidth - Xorigin - border;
-            realHeight = canvasHeight - Yorigin - border;
+            graphLength = canvasWidth - Xorigin - border;
+            graphHeight = canvasHeight - Yorigin - border;
+
+            //Some Data checks:
+            if (X_min > 0)
+                X_min = 0;
+            X_max = Convert.ToInt32(X_max);
+
+            //Call this for all items that need rotating 90degrees
+
+            //Rotate the text that need rotating
+            TransformGroup myTransformGroup = new TransformGroup();
+            RotateTransform RT = new RotateTransform();
+            RT.Angle = 90;
+            myTransformGroup.Children.Add(RT);
+
 
             /// Calculate the scale between the points 
             double scaleLength = X_max - X_min;
             double scaleHeight = Y_max - Y_min;
 
-            scalex = realLength / scaleLength;
-            scaley = realHeight / scaleHeight;
+            scalex = graphLength / scaleLength;
+            scaley = graphHeight / scaleHeight;
 
+            //Main Axis Lines:
             //Xaxis
-            Line xline = new Line();
-            Thickness xthickness = new Thickness(0, 0, 0, 0);
-            xline.Margin = xthickness;
-            xline.Visibility = System.Windows.Visibility.Visible;
-            xline.StrokeThickness = 1;
-            xline.Stroke = System.Windows.Media.Brushes.Black;
+            Line xline = GetLine(X_min, 0, X_max, 0);
+            //Yaxis
+            Line yline = GetLine(X_min, 0, 0, Y_max);
 
-            //StartPoint
-            xline.X1 = 0; 
-            xline.Y1 = 0;
-
-            //EndPoint
-            xline.X2 = realLength;
-            xline.Y2 = 0;
-
-            Canvas.SetLeft(xline, Xorigin);
-            Canvas.SetBottom(xline, Yorigin);
-
-            ///The DataValue
+            ///Set a grid for the values
             /// Xaxis
+
+            double div_X = X_max - X_min;
+            double step = div_X / 10;
+            for(double i = X_min; i <= Math.Round(X_max,3); i = Math.Round(i + step,3))
+            {
+                Line x_stepline = GetLine(i, 0, i, (Y_max * .1));
+                x_stepline.StrokeThickness = 1;
+                x_stepline.Stroke = System.Windows.Media.Brushes.Gray; 
+
+                //value
+                TextBlock xval = new TextBlock();
+                xval.Text = Math.Round(i, 2).ToString("N");
+                xval.Foreground = Brushes.Black;
+                xval.FontSize = fontsize;
+                xval.LayoutTransform = myTransformGroup;
+
+                Canvas.SetLeft(xval, i * scalex + Xorigin -5);
+                Canvas.SetBottom(xval, 10);
+
+                thisResult.Add(x_stepline);
+                thisResult.Add(xval);
+
+            }
+
+            
             TextBlock xtb = new TextBlock();
             xtb.Text = Convert.ToString("X (" + result.xName + ")");
             xtb.Foreground = Brushes.Black;
             xtb.FontSize = fontsize;
             Canvas.SetLeft(xtb, Xorigin +20);
             Canvas.SetBottom(xtb, 10);
-
-            TextBlock xmin = new TextBlock();
-            xmin.Text = Math.Round(X_min, 2).ToString("N");
-            xmin.Foreground = Brushes.Black;
-            xmin.FontSize = fontsize;
-            Canvas.SetLeft(xmin, Xorigin);
-            Canvas.SetBottom(xmin, 10);
-
-            TextBlock xmax = new TextBlock();
-            xmax.Text = Math.Round(X_max,2).ToString("N");
-            xmax.Foreground = Brushes.Black;
-            xmax.FontSize = fontsize;
-            Canvas.SetLeft(xmax, Xorigin + realLength);
-            Canvas.SetBottom(xmax, 10);
-
-            //Yaxis
-            Line yline = new Line();
-            Thickness ythickness = new Thickness(0, 0, 0, 0);
-            yline.Margin = ythickness;
-            yline.Visibility = System.Windows.Visibility.Visible;
-            yline.StrokeThickness = 1;
-            yline.Stroke = System.Windows.Media.Brushes.Black;
-
-            //StartPoint
-            yline.X1 = 0; 
-            yline.Y1 = 0;
-
-            //EndPoint
-            yline.X2 = 0;
-            yline.Y2 = realHeight;
-
-            Canvas.SetLeft(yline, Xorigin);
-            Canvas.SetBottom(yline, Yorigin);
 
             ///The DataValue
             TextBlock ytb = new TextBlock();
@@ -388,9 +525,10 @@ namespace CarboLifeAPI
             ytb.TextAlignment = TextAlignment.Right;
             Canvas.SetLeft(ytb, Xorigin - 20);
             Canvas.SetBottom(ytb, Yorigin + 25);
+            ytb.LayoutTransform = myTransformGroup;
 
             TextBlock ymin = new TextBlock();
-            ymin.Text = Convert.ToString (Math.Round(Y_min, 2).ToString("N"));
+            ymin.Text = Convert.ToString(Math.Round(Y_min, 2).ToString("N"));
             ymin.Foreground = Brushes.Black;
             ymin.TextAlignment = TextAlignment.Right;
 
@@ -410,29 +548,46 @@ namespace CarboLifeAPI
 
             ymax.TextAlignment = TextAlignment.Right;
             Canvas.SetLeft(ymax, Xorigin - 28);
-            Canvas.SetBottom(ymax, Yorigin + realHeight);
+            Canvas.SetBottom(ymax, Yorigin + graphHeight);
 
-            //Rotate the text that need rotating
-            TransformGroup myTransformGroup = new TransformGroup();
-            RotateTransform RT = new RotateTransform();
-            RT.Angle = 90;
-            myTransformGroup.Children.Add(RT);
+            /*
+            TextBlock xmin = new TextBlock();
+            xmin.Text = Math.Round(X_min, 2).ToString("N");
+            xmin.Foreground = Brushes.Black;
+            xmin.FontSize = fontsize;
+            Canvas.SetLeft(xmin, Xorigin);
+            Canvas.SetBottom(xmin, 10);
+
+            TextBlock xmax = new TextBlock();
+            xmax.Text = Math.Round(X_max,2).ToString("N");
+            xmax.Foreground = Brushes.Black;
+            xmax.FontSize = fontsize;
+            Canvas.SetLeft(xmax, Xorigin + graphLength);
+            Canvas.SetBottom(xmax, 10);
+
+
+
+
+            
 
             xmin.LayoutTransform = myTransformGroup;
             xmax.LayoutTransform = myTransformGroup;
-            ytb.LayoutTransform = myTransformGroup;
 
             //Add them all to the canvas
-            thisResult.Add(xtb);
             thisResult.Add(xmin);
             thisResult.Add(xmax);
-            thisResult.Add(xline);
 
-            thisResult.Add(ytb);
+
+            */
+
             thisResult.Add(ymin);
             thisResult.Add(ymax);
-            thisResult.Add(yline);
 
+            thisResult.Add(xtb);
+            thisResult.Add(ytb);
+
+            thisResult.Add(xline);
+            thisResult.Add(yline);
             return thisResult;
         }
 
@@ -441,7 +596,7 @@ namespace CarboLifeAPI
             IList<UIElement> thisResult = new List<UIElement>();
 
             //Draw a little rectangle
-            foreach (CarboValues cv in result.elementData)
+            foreach (CarboValues cv in workingValues)
             {
                 //GetTheColour:
                 System.Drawing.Color colorBrush = GetColour(cv);
@@ -449,14 +604,14 @@ namespace CarboLifeAPI
                 Rectangle rect = new Rectangle();
 
                 SolidColorBrush mySolidColorBrush = new SolidColorBrush();
-                mySolidColorBrush.Color = System.Windows.Media.Color.FromArgb(colorBrush.R, colorBrush.G, colorBrush.B, 255);
+                mySolidColorBrush.Color = System.Windows.Media.Color.FromArgb(255, colorBrush.R, colorBrush.G, colorBrush.B);
 
                 rect.Fill = mySolidColorBrush;
                 rect.Stroke = mySolidColorBrush;
 
-                rect.StrokeThickness = 2;
-                rect.Width = 3;
-                rect.Height = 3;
+                rect.StrokeThickness = 3;
+                rect.Width = 6;
+                rect.Height = 6;
 
                 double x = cv.xValue * scalex;
                 double y = cv.yValue * scaley;
@@ -464,33 +619,15 @@ namespace CarboLifeAPI
                 Canvas.SetLeft(rect, Xorigin + x - 1);
                 Canvas.SetBottom(rect, Yorigin + y - 1 );
 
+                //add the value in the datapoint;
+                cv.r = colorBrush.R;
+                cv.g = colorBrush.G;
+                cv.b = colorBrush.B;
+
                 thisResult.Add(rect);
             }
+            // Add the out-of bounds elements as required.
 
-            //Marker for Origin
-            /*
-            Rectangle rectt = new Rectangle();
-            rectt.Stroke = System.Windows.Media.Brushes.Red;
-            rectt.StrokeThickness = 1;
-            rectt.Width = 3;
-            rectt.Height = 3;
-            Canvas.SetLeft(rectt, Xorigin + 0);
-            Canvas.SetBottom(rectt, Yorigin + 0);
-            thisResult.Add(rectt);
-
-
-            //Marker for Extreme
-            Rectangle rectE = new Rectangle();
-            rectE.Stroke = System.Windows.Media.Brushes.Red;
-            rectE.StrokeThickness = 1;
-            rectE.Width = 3;
-            rectE.Height = 3;
-
-            Canvas.SetLeft(rectE, Xorigin + ((X_max - X_min) * scalex) - 1);
-            Canvas.SetBottom(rectE, Yorigin + ((Y_max - Y_min) * scaley) - 1);
-            thisResult.Add(rectE);
-            */
-            //Add items to the UIclass
             result.Add(thisResult);
 
             return result;
@@ -498,7 +635,7 @@ namespace CarboLifeAPI
 
         private static System.Drawing.Color GetColour(CarboValues cv)
         {
-            System.Drawing.Color colourResult = Utils.GetBlendedColor(X_max, X_min, cv.xValue, Session_minRangeColour, Session_midRangeColour, Session_maxRangeColour);
+            System.Drawing.Color colourResult = Utils.GetBlendedColor(maxBoundX, minBoundX, cv.xValue, Session_minRangeColour, Session_midRangeColour, Session_maxRangeColour);
             return colourResult;
         }
 
@@ -537,6 +674,8 @@ namespace CarboLifeAPI
 
             return result;
         }
+
+
     }
 
 

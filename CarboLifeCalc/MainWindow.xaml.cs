@@ -130,5 +130,11 @@ namespace CarboLifeCalc
             CarboLifeUI.UI.HeatMapCreator creator = new HeatMapCreator();
             creator.Show();
         }
+
+        private void btn_Test_Click2(object sender, RoutedEventArgs e)
+        {
+            //CarboRe.UI.HeatMapCreator creator = new HeatMapCreator();
+            //creator.Show();
+        }
     }
 }

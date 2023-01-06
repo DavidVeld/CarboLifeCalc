@@ -10,12 +10,12 @@ using System.Drawing;
 using System.ComponentModel;
 using GH_IO.Serialization;
 
-namespace Aardwolf
+namespace CarboCroc
 {
-    public class AardWolfMaterialSelector : GH_Component
+    public class CarboCrocMaterialSelector : GH_Component
     {
-        public AardWolfMaterialSelector()
-: base("Select Materials", "Select a CarboMaterial", "Selects the closest available Carbo Life Material", "Aardwolf", "Data")
+        public CarboCrocMaterialSelector()
+: base("Select Materials", "Select a CarboMaterial", "Selects the closest available Carbo Life Material", "CarboCroc", "Data")
         {
         }
 
@@ -62,7 +62,7 @@ namespace Aardwolf
         {
             get
             {
-                return new Guid("{BCEA1A2A-4E41-427F-B797-4EF9B22A728A}");
+                return new Guid("{FE52ABBA-C7C1-4486-94D6-47584C7AA906}");
             }
         }
 
@@ -72,7 +72,7 @@ namespace Aardwolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.QueryList;
+                return CarboCroc.Properties.Resources.QueryList;
             }
         }
 

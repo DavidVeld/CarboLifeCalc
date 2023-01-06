@@ -19,6 +19,7 @@ using LiveCharts.Defaults;
 using Microsoft.Win32;
 using System.IO;
 using CarboLifeAPI;
+using System.Runtime.ConstrainedExecution;
 
 namespace CarboLifeUI.UI
 {
@@ -34,14 +35,12 @@ namespace CarboLifeUI.UI
         {
             carboProject = project;
             InitializeComponent();
-
         }
 
         public HeatMapCreator()
         {
             carboProject = null;
             InitializeComponent();
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -52,12 +51,6 @@ namespace CarboLifeUI.UI
                 lbl_name.Content = carboProject.Name;
             }
         }
-
-        private void btn_Update_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateGraph();
-        }
-
         private void btn_Open_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -82,6 +75,10 @@ namespace CarboLifeUI.UI
                     projectToUpdate.CalculateProject();
 
                     carboProject = projectToUpdate;
+                    
+                    //Show the data
+                    lbl_name.Content = carboProject.Name;
+                    lbl_total.Content = carboProject.getTotalEC().ToString("N") + " tCO2";
                 }
 
                 UpdateDataSource();
@@ -89,16 +86,12 @@ namespace CarboLifeUI.UI
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
         }
-
-        private void LoadProject()
+        private void btn_Update_Click(object sender, RoutedEventArgs e)
         {
-            lbl_name.Content = carboProject.Name;
-            lbl_total.Content = carboProject.getTotalEC().ToString("N") + " tCO2";
-            UpdateDataSource();
-            
+            UpdateGraph();
         }
 
         /// <summary>
@@ -120,19 +113,19 @@ namespace CarboLifeUI.UI
                 }
                 else if (rad_ByDensitym.IsChecked == true)
                 {
-
+                    thisResult = CarboLifeAPI.HeatMapBuilderClasses.GetMaterialVolumeData(carboProject);
                 }
                 else if(rad_ByGroup.IsChecked == true)
                 {
-
+                    thisResult = CarboLifeAPI.HeatMapBuilderClasses.GetPerGroupData(carboProject);
                 }
                 else if(rad_ByElement.IsChecked == true)
                 {
-
+                    thisResult = CarboLifeAPI.HeatMapBuilderClasses.GetPerElementData(carboProject);
                 }
                 else if(rad_MaterialTotals.IsChecked == true)
                 {
-
+                    thisResult = CarboLifeAPI.HeatMapBuilderClasses.GetMaterialTotalData(carboProject);
                 }
                 else
                 {
@@ -144,6 +137,25 @@ namespace CarboLifeUI.UI
             //clear if no data
             if (thisResult.elementData.Count > 0)
             {
+                double maxValue = thisResult.elementData.Max(item => item.xValue);
+                double minValue = thisResult.elementData.Min(item => item.xValue);
+
+                //Some Data checks:
+                if (minValue > 0)
+                    minValue = 0;
+                maxValue = Convert.ToInt32(maxValue);
+
+                txt_CutoffMax.Text = maxValue.ToString();
+                txt_CutoffMin.Text = minValue.ToString();
+                
+                sld_Max.Minimum = minValue;
+                sld_Max.Maximum = maxValue;
+                sld_Max.Value = maxValue;
+
+                sld_Min.Minimum = minValue;
+                sld_Min.Maximum = maxValue;
+                sld_Min.Value = minValue;
+
                 graphData = thisResult;
                 UpdateGraph();
             }
@@ -155,25 +167,26 @@ namespace CarboLifeUI.UI
         //this method updates the graph based on current settings.
         public void UpdateGraph()
         {
-            cnv_Graph.Visibility = Visibility.Hidden;
-            cnv_Graph.Children.Clear();
-            cnv_Graph.Visibility = Visibility.Visible;
-
-            if (carboProject != null && graphData!= null )
+            if (cnv_Graph != null)
             {
-                //Values we'd need for all options:
-                double deviationFact = Utils.ConvertMeToDouble(txt_standard.Text);
-                double xMaxCutoff = Utils.ConvertMeToDouble(txt_CutoffMax.Text);
-                double xMinCutoff = Utils.ConvertMeToDouble(txt_CutoffMin.Text);
-
-                if (graphData.elementData.Count > 0)
+                cnv_Graph.Visibility = Visibility.Hidden;
+                cnv_Graph.Children.Clear();
+                cnv_Graph.Visibility = Visibility.Visible;
+                if (carboProject != null && graphData != null)
                 {
-                    graphData = CarboLifeAPI.HeatMapBuilderClasses.Calculate(cnv_Graph.ActualWidth, cnv_Graph.ActualHeight, deviationFact, xMinCutoff, xMaxCutoff);
-                    
-                    cnv_Graph.Children.Clear();
-                    foreach (UIElement uielement in graphData.UIData)
+                    //Values we'd need for all options:
+                    double xMaxCutoff = Utils.ConvertMeToDouble(txt_CutoffMax.Text);
+                    double xMinCutoff = Utils.ConvertMeToDouble(txt_CutoffMin.Text);
+
+                    if (graphData.elementData.Count > 0)
                     {
-                        cnv_Graph.Children.Add(uielement);
+                        graphData = CarboLifeAPI.HeatMapBuilderClasses.Calculate(cnv_Graph.ActualWidth, cnv_Graph.ActualHeight, xMinCutoff, xMaxCutoff);
+
+                        cnv_Graph.Children.Clear();
+                        foreach (UIElement uielement in graphData.UIData)
+                        {
+                            cnv_Graph.Children.Add(uielement);
+                        }
                     }
                 }
             }
@@ -189,15 +202,34 @@ namespace CarboLifeUI.UI
 
         }
 
-        private void btn_Info_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("This is the value of the standard deviation which is used to set the outer bounds");
-        }
-
         //Radiocontrollbuttons
         private void rad_Control_Click(object sender, RoutedEventArgs e)
         {
             UpdateDataSource();
+        }
+
+        private void btn_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            //graphData = new CarboGraphResult();
+            cnv_Graph.Children.Clear();
+        }
+
+        private void sld_Max_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            txt_CutoffMax.Text = Math.Round(sld_Max.Value,3).ToString();
+            UpdateGraph();
+        }
+
+        private void sld_Min_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            txt_CutoffMin.Text = Math.Round(sld_Min.Value, 3).ToString();
+            UpdateGraph();
+
+        }
+
+        private void dummy(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

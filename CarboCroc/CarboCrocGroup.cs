@@ -11,12 +11,12 @@ using System.ComponentModel;
 using GH_IO.Serialization;
 using Grasshopper.Kernel.Types;
 
-namespace Aardwolf
+namespace CarboCroc
 {
-    public class AardWolfGroup : GH_Component
+    public class CarboCrocGroup : GH_Component
     {
-        public AardWolfGroup()
-: base("CarboGroup", "Create a CarboGroup", "Combines Multiple Materials into a CarboGroup", "Aardwolf", "Builder")
+        public CarboCrocGroup()
+: base("CarboGroup", "Create a CarboGroup", "Combines Multiple Materials into a CarboGroup", "CarboCroc", "Builder")
         {
 
         }
@@ -129,7 +129,7 @@ namespace Aardwolf
         {
             get
             {
-                return new Guid("{4AE989F1-8495-4D08-9C06-85916BD06D36}");
+                return new Guid("{39989138-2344-4C0C-B6A9-022B7CB1BC95}");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Aardwolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.CarboGroup;
+                return CarboCroc.Properties.Resources.CarboGroup;
             }
         }
 

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{14322A64-E2D4-425A-9BC3-82FDD89C8D15}</ProjectGuid>
+    <ProjectGuid>{E72AD7FC-8E68-4BE9-966B-B174A4E0B7DF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Aardwolf</RootNamespace>
-    <AssemblyName>Aardwolf</AssemblyName>
+    <RootNamespace>CarboCroc</RootNamespace>
+    <AssemblyName>CarboCroc</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -21,6 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -54,17 +56,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AardWolfElement.cs" />
-    <Compile Include="AardWolfGroup.cs" />
-    <Compile Include="AardwolfProcess.cs" />
-    <Compile Include="AardWolfGroupSolver.cs" />
-    <Compile Include="AardWolfSolver.cs" />
-    <Compile Include="AardWolfMaterialSelector.cs" />
+    <Compile Include="CarboCrocElement.cs" />
+    <Compile Include="CarboCrocGroup.cs" />
+    <Compile Include="CarboCrocProcess.cs" />
+    <Compile Include="CarboCrocGroupSolver.cs" />
+    <Compile Include="CarboCrocSolver.cs" />
+    <Compile Include="CarboCrocMaterialSelector.cs" />
     <Compile Include="ListofMaterials.cs" />
-    <Compile Include="OverViewViewer.xaml.cs">
-      <DependentUpon>OverViewViewer.xaml</DependentUpon>
-    </Compile>
-    <None Include="OpenWindow.cs" />
     <Compile Include="SaveProject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -96,46 +94,54 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\NewElement.png">
+    <Content Include="Resources\NewElement.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\SaveElement.png">
+    <Content Include="Resources\SaveElement.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\SolveElement.png">
+    <Content Include="Resources\SolveElement.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\QueryList.png" />
+    <Content Include="Resources\QueryList.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="OverViewViewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Content Include="Resources\CarboGroup.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\CarboGroup.png" />
+    <Content Include="Resources\ElementSolver.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ElementSolver.png" />
+    <Content Include="Resources\GroupSolver.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\GroupSolver.png" />
+    <Content Include="Resources\SaveProject.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SaveProject.png" />
+    <Content Include="Resources\SaveProject2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\SaveProject2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\List.png" />
+    <Content Include="Resources\List.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

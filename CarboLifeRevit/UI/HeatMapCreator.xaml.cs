@@ -29,9 +29,11 @@ namespace CarboLifeRevit
     /// </summary>
     public partial class HeatMapCreator : Window
     {
+        //Used for colour 
         private CarboProject carboProject;
-        private CarboGraphResult resultList;
+        CarboGraphResult graphData;
 
+        //Used for Revit handlers
         private ColourViewerHandler m_Handler;
         private ExternalEvent m_ExEvent;
 
@@ -63,32 +65,14 @@ namespace CarboLifeRevit
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //this is just to confirm the window loaded
-            lbl_Range.Content = carboProject.Name;
-            UpdateData();
+            if (carboProject != null)
+            {
+                lbl_name.Content = carboProject.Name;
+            }
         }
-        private void rad_Bymaterial_Click(object sender, RoutedEventArgs e)
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            UpdateData();
-        }
-
-        private void rad_Bymaterial2_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateData();
-        }
-
-        private void rad_ByGroup_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateData();
-        }
-
-        private void rad_ByElement_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateData();
-        }
-
-        private void btn_Info_Click(object sender, RoutedEventArgs e)
-        {
-            UpdateData();
+            UpdateGraph();
         }
 
         private void btn_Open_Click(object sender, RoutedEventArgs e)
@@ -115,64 +99,123 @@ namespace CarboLifeRevit
                     projectToUpdate.CalculateProject();
 
                     carboProject = projectToUpdate;
+
+                    //Show the data
+                    lbl_name.Content = carboProject.Name;
+                    lbl_total.Content = carboProject.getTotalEC().ToString("N") + " tCO2";
                 }
 
-                UpdateData();
+                UpdateDataSource();
 
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
         }
 
-        private void UpdateData()
-        {
-            Random rnd = new Random();
 
+        /// <summary>
+        /// This method loads new data from the carboproject
+        /// </summary>
+        public void UpdateDataSource()
+        {
+            graphData = new CarboGraphResult();
+            CarboGraphResult thisResult = new CarboGraphResult();
+            //Define the type of graph to make:
             if (carboProject != null)
             {
-                lbl_name.Content = carboProject.Name;
-                lbl_total.Content = carboProject.getTotalEC().ToString("N") + " tCO2";
-
-                CarboGraphResult graphData = new CarboGraphResult();
-
-                //Define the type of graph to make:
-                if (rad_Bymaterial.IsChecked == true)
+                if (rad_ByDensitykg.IsChecked == true)
                 {
                     //This will plot each element based on their material the X axis is the embodied carbon (kgCo2/kg) the Y axis it the weight or mass.
-                    graphData = CarboLifeAPI.HeatMapBuilderClasses.GetByMaterialMassChart(carboProject, cnv_Graph.ActualWidth, cnv_Graph.ActualHeight);
-                }
 
-                //print the results;
+                    thisResult = CarboLifeAPI.HeatMapBuilderClasses.GetMaterialMassData(carboProject);
+
+                }
+                else if (rad_ByDensitym.IsChecked == true)
+                {
+                    thisResult = CarboLifeAPI.HeatMapBuilderClasses.GetMaterialVolumeData(carboProject);
+                }
+                else if (rad_ByGroup.IsChecked == true)
+                {
+                    thisResult = CarboLifeAPI.HeatMapBuilderClasses.GetPerGroupData(carboProject);
+                }
+                else if (rad_ByElement.IsChecked == true)
+                {
+                    thisResult = CarboLifeAPI.HeatMapBuilderClasses.GetPerElementData(carboProject);
+                }
+                else if (rad_MaterialTotals.IsChecked == true)
+                {
+                    thisResult = CarboLifeAPI.HeatMapBuilderClasses.GetMaterialTotalData(carboProject);
+                }
+                else
+                {
+
+                }
+            }
+
+            //if data was collected make it the source and update the graph
+            //clear if no data
+            if (thisResult.elementData.Count > 0)
+            {
+                double maxValue = thisResult.elementData.Max(item => item.xValue);
+                double minValue = thisResult.elementData.Min(item => item.xValue);
+
+                //Some Data checks:
+                if (minValue > 0)
+                    minValue = 0;
+                maxValue = Convert.ToInt32(maxValue);
+
+                txt_CutoffMax.Text = maxValue.ToString();
+                txt_CutoffMin.Text = minValue.ToString();
+
+                sld_Max.Minimum = minValue;
+                sld_Max.Maximum = maxValue;
+                sld_Max.Value = maxValue;
+
+                sld_Min.Minimum = minValue;
+                sld_Min.Maximum = maxValue;
+                sld_Min.Value = minValue;
+
+                graphData = thisResult;
+                UpdateGraph();
+            }
+            else
                 cnv_Graph.Children.Clear();
 
-                foreach (UIElement uielement in graphData.UIData)
-                {
-                    cnv_Graph.Children.Add(uielement);
-                }
-                resultList = graphData;
+        }
 
-                //This is a random bit of code to test colours
-                if(resultList.elementData.Count > 0)
+        //this method updates the graph based on current settings.
+        public void UpdateGraph()
+        {
+            if (cnv_Graph != null)
+            {
+                cnv_Graph.Visibility = Visibility.Hidden;
+                cnv_Graph.Children.Clear();
+                cnv_Graph.Visibility = Visibility.Visible;
+                if (carboProject != null && graphData != null)
                 {
-                    foreach(CarboValues cv in resultList.elementData)
+                    //Values we'd need for all options:
+                    double xMaxCutoff = Utils.ConvertMeToDouble(txt_CutoffMax.Text);
+                    double xMinCutoff = Utils.ConvertMeToDouble(txt_CutoffMin.Text);
+
+                    if (graphData.elementData.Count > 0)
                     {
-                        cv.r = Convert.ToByte(rnd.Next(1, 250));
-                        cv.g = Convert.ToByte(rnd.Next(1, 250));
-                        cv.b = Convert.ToByte(rnd.Next(1, 250));
+                        graphData = CarboLifeAPI.HeatMapBuilderClasses.Calculate(cnv_Graph.ActualWidth, cnv_Graph.ActualHeight, xMinCutoff, xMaxCutoff);
+
+                        cnv_Graph.Children.Clear();
+                        foreach (UIElement uielement in graphData.UIData)
+                        {
+                            cnv_Graph.Children.Add(uielement);
+                        }
                     }
                 }
-
             }
         }
 
-        private void btn_Show_Click(object sender, RoutedEventArgs e)
+        private void Btn_Ok_Click(object sender, RoutedEventArgs e)
         {
-
-            m_Handler.ColourTheModel(resultList,true);
-            m_ExEvent.Raise();
-            //DozeOff();
+            CarboLifeApp.thisApp.CloseHeatmap();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -180,6 +223,41 @@ namespace CarboLifeRevit
             CarboLifeApp.thisApp.CloseHeatmap();
         }
 
+        private void rad_Control_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateDataSource();
+        }
+        private void sld_Max_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            txt_CutoffMax.Text = Math.Round(sld_Max.Value, 3).ToString();
+            UpdateGraph();
+        }
+
+        private void sld_Min_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            txt_CutoffMin.Text = Math.Round(sld_Min.Value, 3).ToString();
+            UpdateGraph();
+
+        }
+        private void btn_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            //graphData = new CarboGraphResult();
+            cnv_Graph.Children.Clear();
+        }
+
+        // This is the part that interacts with Revit Do not copy over
+
+        private void Btn_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            m_Handler.ColourTheModel(graphData, false);
+            m_ExEvent.Raise();
+        }
+
+        private void btn_Show_Click(object sender, RoutedEventArgs e)
+        {
+            m_Handler.ColourTheModel(graphData, true);
+            m_ExEvent.Raise();
+        }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             //Before the form is closed, everything must be disposed properly
@@ -195,18 +273,6 @@ namespace CarboLifeRevit
 
         private void btn_Update_Click(object sender, RoutedEventArgs e)
         {
-            UpdateData();
-        }
-
-        private void Btn_Clear_Click(object sender, RoutedEventArgs e)
-        {
-            m_Handler.ColourTheModel(resultList, false);
-            m_ExEvent.Raise();
-        }
-
-        private void Btn_Close_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
 
         }
     }
