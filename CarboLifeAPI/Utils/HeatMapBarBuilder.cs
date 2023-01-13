@@ -33,11 +33,13 @@ namespace CarboLifeAPI
     /// </summary>
     public static class HeatMapBarBuilder
     {
+        /*
         public static System.Drawing.Color Session_minOutColour { get; set; }
         public static System.Drawing.Color Session_maxOutColour { get; set; }
         public static System.Drawing.Color Session_minRangeColour { get; set; }
         public static System.Drawing.Color Session_midRangeColour { get; set; }
         public static System.Drawing.Color Session_maxRangeColour { get; set; }
+        */
 
         //The Values we need to construct the graph
 
@@ -46,6 +48,9 @@ namespace CarboLifeAPI
 
         private static double canvasWidth;
         private static double canvasHeight;
+
+        private static CarboColourPreset colourSettings;
+
 
         //CanvasScale
         //The mins and maxes of the dataset
@@ -76,13 +81,13 @@ namespace CarboLifeAPI
         /// <param name="xminCutoff"></param>
         /// <param name="xmaxCutoff"></param>
         /// <returns></returns>
-        public static (CarboGraphResult, IList<UIElement>) GetBarGraph(CarboGraphResult _projectData, double _canvasWidth, double _canvasHeight, string settings = "default")
+        public static (CarboGraphResult, IList<UIElement>) GetBarGraph(CarboGraphResult _projectData, double _canvasWidth, double _canvasHeight, CarboColourPreset _colourTemplate)
         {
             //Set the values that define the bounds and scale of the plot.
             projectData = _projectData;
             canvasWidth = _canvasWidth;
             canvasHeight = _canvasHeight;
-            //deviationFactor = deviationFact;
+            colourSettings = _colourTemplate;
 
             IList<UIElement> graph = new List<UIElement>();
 
@@ -92,7 +97,7 @@ namespace CarboLifeAPI
                     return (projectData, graph);
 
                 //get the right colour range.
-                SetColours();
+                //SetColours();
 
                 //Set the Scale of the graph
                 SetScales();
@@ -121,13 +126,14 @@ namespace CarboLifeAPI
         private static void SetColours()
         {
             //load deafult settings from a file in the future 
-
+            /*
             Session_minOutColour = System.Drawing.Color.FromArgb(255, 0, 0, 255);
             Session_maxOutColour = System.Drawing.Color.FromArgb(255, 250, 0, 0);
 
             Session_minRangeColour = System.Drawing.Color.FromArgb(255, 141, 241, 41);
             Session_midRangeColour = System.Drawing.Color.FromArgb(255, 242, 116, 40);
             Session_maxRangeColour = System.Drawing.Color.FromArgb(255, 240, 40, 9);
+            */
         }
         private static void SetScales()
         {
@@ -295,31 +301,28 @@ namespace CarboLifeAPI
                             cv.b = colorBrush.B;
                         }
                     }
-
-                    foreach (CarboValues cv in projectData.outOfBoundsMaxData)
-                    {
-                        if (cv.Value == value)
-                        {
-                            //Apply the colour to each element in the workingValueList:
-                            //add the value in the datapoint;
-                            cv.r = 240;
-                            cv.g = 240;
-                            cv.b = 240;
-                        }
-                    }
-
-                    foreach (CarboValues cv in projectData.outOfBoundsMinData)
-                    {
-                        if (cv.Value == value)
-                        {
-                            //Apply the colour to each element in the workingValueList:
-                            //add the value in the datapoint;
-                            cv.r = 240;
-                            cv.g = 240;
-                            cv.b = 240;
-                        }
-                    }
                 }
+
+                foreach (CarboValues cv in projectData.outOfBoundsMaxData)
+                {
+                    //Apply the colour to each element in the workingValueList:
+                    //add the value in the datapoint;
+                    cv.r = colourSettings.outmax.r;
+                    cv.g = colourSettings.outmax.g;
+                    cv.b = colourSettings.outmax.b;
+
+                }
+
+                foreach (CarboValues cv in projectData.outOfBoundsMinData)
+                {
+                    //Apply the colour to each element in the workingValueList:
+                    //add the value in the datapoint;
+                    cv.r = colourSettings.outmin.r;
+                    cv.g = colourSettings.outmin.g;
+                    cv.b = colourSettings.outmin.b;
+                }
+
+
             }
             // Add the out-of bounds elements as required.
 
@@ -381,7 +384,11 @@ namespace CarboLifeAPI
         }
         private static System.Drawing.Color GetColour(int position, int ListCount)
         {
-            System.Drawing.Color colourResult = Utils.GetBlendedColor(ListCount, 0, position, Session_minRangeColour, Session_midRangeColour, Session_maxRangeColour);
+            System.Drawing.Color minColour = System.Drawing.Color.FromArgb(colourSettings.min.a, colourSettings.min.r, colourSettings.min.g, colourSettings.min.b);
+            System.Drawing.Color midColour = System.Drawing.Color.FromArgb(colourSettings.mid.a, colourSettings.mid.r, colourSettings.mid.g, colourSettings.mid.b);
+            System.Drawing.Color maxolour = System.Drawing.Color.FromArgb(colourSettings.max.a, colourSettings.max.r, colourSettings.max.g, colourSettings.max.b);
+
+            System.Drawing.Color colourResult = Utils.GetBlendedColor(ListCount, 0, position, minColour, midColour, maxolour);
             return colourResult;
         }
 

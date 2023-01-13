@@ -32,7 +32,7 @@ namespace CarboLifeRevit
         //Used for colour 
         private CarboProject carboProject;
         private CarboGraphResult graphData;
-        private CarboColourPreset currentColours;
+        private CarboColourPreset currentColourSettings;
         private CarboSettings carboSettings;
 
         //Used for Revit handlers
@@ -42,10 +42,18 @@ namespace CarboLifeRevit
 
         public HeatMapCreator(ExternalEvent exEvent, ColourViewerHandler handler, CarboProject project, List<int> _visibleElements)
         {
+            carboSettings = new CarboSettings();
+            carboSettings.Load();
+
             InitializeComponent();
+
+            refreshColourtemplatesList();
+            selectColour();
 
             this.m_ExEvent = exEvent;
             this.m_Handler = handler;
+
+ 
 
             //set the list of elements active in the view when form was launched.
             if (_visibleElements != null && _visibleElements.Count > 0)
@@ -60,6 +68,8 @@ namespace CarboLifeRevit
             }
             else
                 carboProject = new CarboProject();
+
+
         }
 
         //for Non-Modeless Usage;
@@ -69,6 +79,9 @@ namespace CarboLifeRevit
                 carboProject = project;
             else
                 carboProject = new CarboProject();
+
+            carboSettings = new CarboSettings();
+            carboSettings.Load();
 
             InitializeComponent();
         }
@@ -94,11 +107,14 @@ namespace CarboLifeRevit
             m_ExEvent = null;
 
             //clear the handler
+            m_Handler._revitEvent.Dispose();
+            m_Handler._revitEvent = null;
             m_Handler = null;
 
             //You have to call the base class
             base.OnClosing(e);
         }
+
 
         //************************************************************************************************
         //ANYTHING BELOW THIS LINE SHOULD BE IDENTICAL TO THE NON-MODELESS FORM
@@ -114,28 +130,20 @@ namespace CarboLifeRevit
                 lbl_name.Content = carboProject.Name;
             }
 
+            //load current Settings;
             carboSettings = new CarboSettings();
             carboSettings = carboSettings.Load();
 
-            if (carboSettings != null)
-            {
-                if (carboSettings.colourPresets.Count == 0)
-                {
-                    carboSettings.colourPresets.Add(new CarboColourPreset());
-                }
-
-                foreach (CarboColourPreset ccp in carboSettings.colourPresets)
-                {
-                    cbb_colours.Items.Add(ccp.name);
-                }
-                cbb_colours.SelectedIndex = 0;
-            }
+            refreshColourtemplatesList();
+            selectColour();
 
             cbb_outofBounds.Items.Add("Colour White");
             cbb_outofBounds.Items.Add("By Revit");
             cbb_outofBounds.Items.Add("Hide");
 
         }
+
+
         private void btn_Open_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -158,7 +166,6 @@ namespace CarboLifeRevit
 
                     projectToUpdate.Audit();
                     projectToUpdate.CalculateProject();
-
 
                     carboProject = projectToUpdate;
 
@@ -184,7 +191,7 @@ namespace CarboLifeRevit
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                System.Windows.Forms.MessageBox.Show(ex.Message);
             }
         }
         private void btn_Update_Click(object sender, RoutedEventArgs e)
@@ -265,16 +272,14 @@ namespace CarboLifeRevit
 
                 sld_Max.Minimum = minValue;
                 sld_Max.Maximum = maxValue;
+                sld_Max.Value = maxValue;
 
                 sld_Min.Minimum = minValue;
                 sld_Min.Maximum = maxValue;
+                sld_Min.Value = minValue;
 
                 UpdateGraphData();
                 RefreshGraph();
-
-                sld_Max.Value = maxValue;
-                sld_Min.Value = minValue;
-
             }
             else
                 cnv_Graph.Children.Clear();
@@ -310,7 +315,7 @@ namespace CarboLifeRevit
                     if (graphData.entireProjectData.Count > 0)
                     {
                         //to be set in a ui
-                        var result = CarboLifeAPI.HeatMapBarBuilder.GetBarGraph(graphData, cnv_Graph.ActualWidth, cnv_Graph.ActualHeight);
+                        var result = CarboLifeAPI.HeatMapBarBuilder.GetBarGraph(graphData, cnv_Graph.ActualWidth, cnv_Graph.ActualHeight, currentColourSettings);
 
                         graphData = result.Item1 as CarboGraphResult;
                         List<UIElement> graph = result.Item2 as List<UIElement>;
@@ -393,13 +398,6 @@ namespace CarboLifeRevit
 
         }
 
-        private void btn_Low_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Media.Brush startColour = btn_MinOut.Background;
-            System.Drawing.Color pickedColour = GetColor(startColour);
-            btn_MinOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
-            RefreshGraph();
-        }
 
         private System.Drawing.Color GetColor(System.Windows.Media.Brush startColour)
         {
@@ -408,7 +406,7 @@ namespace CarboLifeRevit
 
             System.Drawing.Color oldC = ConvertToColor(startColour);
 
-            ColorDialog MyDialog = new ColorDialog();
+            System.Windows.Forms.ColorDialog MyDialog = new System.Windows.Forms.ColorDialog();
             // Keeps the user from selecting a custom color.
             MyDialog.AllowFullOpen = true;
             MyDialog.FullOpen = true;
@@ -441,7 +439,156 @@ namespace CarboLifeRevit
 
         private void btn_SaveColours_Click(object sender, RoutedEventArgs e)
         {
+            bool found = false;
+            bool refreshLookup = false;
             //Saves the preset
+            //set the preset in the settings, then save the settings;
+            if (carboSettings.colourPresets != null && carboSettings.colourPresets.Count > 0)
+            {
+                for (int i = 0; i < carboSettings.colourPresets.Count; i++)
+                {
+                    CarboColourPreset cps = carboSettings.colourPresets[i];
+
+                    if (cps.name == cbb_colours.Text)
+                    {
+                        cps = currentColourSettings;
+                        found = true;
+                    }
+                }
+            }
+
+            if (found == false)
+            {
+                //the name of the template could not be found, save as a new value.
+                carboSettings.colourPresets.Add(currentColourSettings);
+                refreshLookup = true;
+            }
+
+            carboSettings.Save();
+
+            if (refreshLookup == true)
+                refreshColourtemplatesList();
+
+        }
+
+        private void refreshColourtemplatesList()
+        {
+            if (carboSettings != null)
+            {
+                if (carboSettings.colourPresets.Count == 0)
+                {
+                    carboSettings.colourPresets.Add(new CarboColourPreset());
+                }
+
+                foreach (CarboColourPreset ccp in carboSettings.colourPresets)
+                {
+                    cbb_colours.Items.Add(ccp.name);
+                }
+                cbb_colours.SelectedIndex = 0;
+            }
+        }
+
+        private void selectColour()
+        {
+            string selectedColourname = cbb_colours.Text;
+
+            foreach (CarboColourPreset ccp in carboSettings.colourPresets)
+            {
+                if (selectedColourname == ccp.name)
+                {
+                    currentColourSettings = ccp;
+
+                    btn_MaxOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.outmax.a, currentColourSettings.outmax.r, currentColourSettings.outmax.g, currentColourSettings.outmax.b));
+                    btn_MinOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.outmin.a, currentColourSettings.outmin.r, currentColourSettings.outmin.g, currentColourSettings.outmin.b));
+
+                    btn_Low.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.min.a, currentColourSettings.min.r, currentColourSettings.min.g, currentColourSettings.min.b));
+                    btn_Mid.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.mid.a, currentColourSettings.mid.r, currentColourSettings.mid.g, currentColourSettings.mid.b));
+                    btn_High.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.max.a, currentColourSettings.max.r, currentColourSettings.max.g, currentColourSettings.max.b));
+
+
+                    break;
+                }
+            }
+
+        }
+
+        private void btn_Low_Click(object sender, RoutedEventArgs e)
+        {
+            //get a new colour
+            System.Windows.Media.Brush startColour = btn_Low.Background;
+            System.Drawing.Color pickedColour = GetColor(startColour);
+
+            //apply in the colour settings
+            currentColourSettings.min = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+
+            //Refresh the graph
+            btn_Low.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+            UpdateGraphData();
+            RefreshGraph();
+        }
+
+        private void btn_Mid_Click(object sender, RoutedEventArgs e)
+        {
+            //get a new colour
+            System.Windows.Media.Brush startColour = btn_Mid.Background;
+            System.Drawing.Color pickedColour = GetColor(startColour);
+
+            //apply in the colour settings
+            currentColourSettings.mid = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+
+            //Refresh the graph
+            btn_Mid.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+
+            UpdateGraphData();
+            RefreshGraph();
+        }
+
+        private void btn_High_Click(object sender, RoutedEventArgs e)
+        {
+            //get a new colour
+            System.Windows.Media.Brush startColour = btn_High.Background;
+            System.Drawing.Color pickedColour = GetColor(startColour);
+
+            //apply in the colour settings
+            currentColourSettings.max = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+
+            //Refresh the graph
+            btn_High.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+
+            UpdateGraphData();
+            RefreshGraph();
+        }
+
+        private void btn_MinOut_Click(object sender, RoutedEventArgs e)
+        {
+            //get a new colour
+            System.Windows.Media.Brush startColour = btn_MinOut.Background;
+            System.Drawing.Color pickedColour = GetColor(startColour);
+
+            //apply in the colour settings
+            currentColourSettings.outmin = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+
+            //Refresh the graph
+            btn_MinOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+
+            UpdateGraphData();
+            RefreshGraph();
+        }
+
+        private void btn_MaxOut_Click(object sender, RoutedEventArgs e)
+        {
+            //get a new colour
+            System.Windows.Media.Brush startColour = btn_MaxOut.Background;
+            System.Drawing.Color pickedColour = GetColor(startColour);
+
+            //apply in the colour settings
+            currentColourSettings.outmax = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+
+            //Refresh the graph
+            btn_MaxOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+
+            UpdateGraphData();
+            RefreshGraph();
         }
 
 

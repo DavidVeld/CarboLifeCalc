@@ -138,6 +138,16 @@ namespace CarboLifeRevit
             }
             else
             {
+                // A new handler to handle request posting by the dialog
+                ColourViewerHandler handler = new ColourViewerHandler(uiapp);
+
+                // External Event for the dialog to use (to post requests)
+                ExternalEvent exEvent = ExternalEvent.Create(handler);
+
+                // We give the objects to the new dialog;
+                // The dialog becomes the owner responsible fore disposing them, eventually.
+                m_HeatMapCreator = new HeatMapCreator(exEvent, handler, project, VisibleElements);
+                m_HeatMapCreator.Show();
             }
 
         }

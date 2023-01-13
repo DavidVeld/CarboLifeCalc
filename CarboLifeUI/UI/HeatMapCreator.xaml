@@ -137,10 +137,11 @@
                 <Canvas Name="cnv_Graph" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="5" Background="White" Visibility="Visible"></Canvas>
 
                 <Button Name="btn_Low" Grid.Row="4" Grid.Column="1" Margin="35,00,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Lime"  IsEnabled="True" Click="btn_Low_Click">Low</Button>
-                <Button Name="btn_Mid" Grid.Row="4" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Orange" IsEnabled="True" >Mid</Button>
-                <Button Name="btn_High" Grid.Row="4" Grid.Column="1" Margin="0,0,35,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Red" IsEnabled="True" >High</Button>
-                <Button Name="btn_MinOut" Grid.Row="4" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="30" Style="{StaticResource baseStyle}" Background="CornflowerBlue"  IsEnabled="True" Content="Out"  />
-                <Button Name="btn_MaxOut" Grid.Row="4" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="25" Height="30" Style="{StaticResource baseStyle}" Background="Purple" IsEnabled="True"  Content="Out"/>
+                <Button Name="btn_Mid" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Orange" IsEnabled="True" Click="btn_Mid_Click" >Mid</Button>
+                <Button Name="btn_High" Grid.Row="4" Grid.Column="1" Margin="0,0,35,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Red" IsEnabled="True" Click="btn_High_Click" >High</Button>
+                
+                <Button Name="btn_MinOut" Grid.Row="4" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="30" Style="{StaticResource baseStyle}" Background="CornflowerBlue"  IsEnabled="True" Content="Out" Click="btn_MinOut_Click" />
+                <Button Name="btn_MaxOut" Grid.Row="4" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="25" Height="30" Style="{StaticResource baseStyle}" Background="Purple" IsEnabled="True"  Content="Out" Click="btn_MaxOut_Click"/>
 
 
 

@@ -16,12 +16,18 @@ namespace CarboLifeRevit
 
         private CarboGraphResult resultList;
         private static bool colourMeSwitch;
+
+        public ExternalEvent _revitEvent;
+
+
         public CarboGraphResult resultModel { get { return resultList; } set { resultList = value; } }
         public ColourViewerHandler(UIApplication uiapp)
         {
             UIApplication app = uiapp;
             uidoc = app.ActiveUIDocument;
             doc = uidoc.Document;
+
+            _revitEvent = ExternalEvent.Create(this);
         }
 
         public void Execute(UIApplication uiapp)
@@ -39,27 +45,69 @@ namespace CarboLifeRevit
 
                         FilteredElementCollector elements = new FilteredElementCollector(doc);
                         FillPatternElement solidFillPattern = elements.OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>().First(a => a.GetFillPattern().IsSolidFill);
+                        
+                        //applies for all overrides
+                        OverrideGraphicSettings ogs = new OverrideGraphicSettings();
 
-                        //Here we colour the model
+                        //Rest all coulours
                         foreach (CarboValues cv in resultList.entireProjectData)
                         {
                             Element el = doc.GetElement(new ElementId(cv.Id));
-                            if(el != null)
+
+                            if (el != null)
                             {
-                                OverrideGraphicSettings ogs = new OverrideGraphicSettings();
-
-                                //if switch is false reset overrides.
-                                if (colourMeSwitch == true)
-                                {
-                                    ogs.SetSurfaceForegroundPatternId(solidFillPattern.Id);
-                                    ogs.SetSurfaceForegroundPatternColor(new Color(cv.r, cv.g, cv.b));
-
-                                    ogs.SetCutForegroundPatternId(solidFillPattern.Id);
-                                    ogs.SetCutForegroundPatternColor(new Color(cv.r, cv.g, cv.b));
-                                }
                                 doc.ActiveView.SetElementOverrides(el.Id, ogs);
                             }
                         }
+
+
+                        if (colourMeSwitch == true)
+                        {
+                            foreach (CarboValues cv in resultList.validData)
+                            {
+                                Element el = doc.GetElement(new ElementId(cv.Id));
+                                if (el != null)
+                                {
+                                    //if switch is false reset overrides.
+                                    ogs = getOverrideObject(cv, solidFillPattern.Id);
+
+                                }
+
+                                doc.ActiveView.SetElementOverrides(el.Id, ogs);
+                            }
+
+                            foreach (CarboValues cv in resultList.outOfBoundsMaxData)
+                            {
+                                Element el = doc.GetElement(new ElementId(cv.Id));
+                                if (el != null)
+                                {
+                                    //if switch is false reset overrides.
+                                    ogs = getOverrideObject(cv, solidFillPattern.Id);
+
+                                }
+
+                                doc.ActiveView.SetElementOverrides(el.Id, ogs);
+                            }
+
+                            foreach (CarboValues cv in resultList.outOfBoundsMinData)
+                            {
+                                Element el = doc.GetElement(new ElementId(cv.Id));
+                                if (el != null)
+                                {
+                                    //if switch is false reset overrides.
+                                    ogs = getOverrideObject(cv, solidFillPattern.Id);
+
+                                }
+
+                                doc.ActiveView.SetElementOverrides(el.Id, ogs);
+                            }
+
+                        }
+                        
+
+                        //coulour out of bounds max
+
+
                         doc.Regenerate();
 
                         t.Commit();
@@ -70,6 +118,19 @@ namespace CarboLifeRevit
             {
                 TaskDialog.Show("Error", ex.Message);
             }
+        }
+
+        private OverrideGraphicSettings getOverrideObject(CarboValues cv, ElementId id)
+        {
+            OverrideGraphicSettings ogs = new OverrideGraphicSettings();
+
+            ogs.SetSurfaceForegroundPatternId(id);
+            ogs.SetSurfaceForegroundPatternColor(new Color(cv.r, cv.g, cv.b));
+
+            ogs.SetCutForegroundPatternId(id);
+            ogs.SetCutForegroundPatternColor(new Color(cv.r, cv.g, cv.b));
+
+            return ogs;
         }
 
         public string GetName()
