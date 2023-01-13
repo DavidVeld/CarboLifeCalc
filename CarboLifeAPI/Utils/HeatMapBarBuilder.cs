@@ -88,7 +88,8 @@ namespace CarboLifeAPI
 
             try
             {
-
+                if(_canvasWidth <= 0 || _canvasHeight <= 0)
+                    return (projectData, graph);
 
                 //get the right colour range.
                 SetColours();
@@ -283,7 +284,9 @@ namespace CarboLifeAPI
                     //Colour all the CarboValues so they can be moved to Revit.
                     foreach (CarboValues cv in projectData.validData)
                     {
-                        if (cv.Value == value)
+                        double roundedValue = Math.Round(cv.Value, 3);
+
+                        if (roundedValue == value)
                         {
                             //Apply the colour to each element in the workingValueList:
                             //add the value in the datapoint;

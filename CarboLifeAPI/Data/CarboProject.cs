@@ -1506,12 +1506,25 @@ namespace CarboLifeAPI.Data
         {
             List<int> validElements = new List<int>();
             try
-            {
-                IEnumerable<CarboElement> listOfElement = getElementsFromGroups();
 
-                foreach (CarboElement element in listOfElement)
+            {
+                if (groupList.Count > 0)
                 {
-                    validElements.Add(element.Id);
+                    IEnumerable<CarboElement> listOfElement = getElementsFromGroups();
+
+                    foreach (CarboElement element in listOfElement)
+                    {
+                        validElements.Add(element.Id);
+                    }
+                }
+                else if(elementList.Count > 0)
+                {
+                    IEnumerable<CarboElement> listOfElement = getAllElements;
+
+                    foreach (CarboElement element in listOfElement)
+                    {
+                        validElements.Add(element.Id);
+                    }
                 }
             }
             catch(Exception ex)

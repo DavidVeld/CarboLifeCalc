@@ -48,7 +48,7 @@ namespace CarboLifeRevit
             this.m_Handler = handler;
 
             //set the list of elements active in the view when form was launched.
-            if (_visibleElements != null && visibleElements.Count > 0)
+            if (_visibleElements != null && _visibleElements.Count > 0)
             {
                 visibleElements = _visibleElements;
             }
@@ -265,14 +265,16 @@ namespace CarboLifeRevit
 
                 sld_Max.Minimum = minValue;
                 sld_Max.Maximum = maxValue;
-                sld_Max.Value = maxValue;
 
                 sld_Min.Minimum = minValue;
                 sld_Min.Maximum = maxValue;
-                sld_Min.Value = minValue;
 
                 UpdateGraphData();
                 RefreshGraph();
+
+                sld_Max.Value = maxValue;
+                sld_Min.Value = minValue;
+
             }
             else
                 cnv_Graph.Children.Clear();
