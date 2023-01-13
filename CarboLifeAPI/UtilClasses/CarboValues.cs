@@ -27,19 +27,31 @@ namespace CarboLifeAPI
         /// (Revit) Id
         /// </summary>
         public int Id { get; set; }
+
         /// <summary>
         /// The xValue
         /// </summary>
-        public double xValue { get; set; }
+        //public double xValue { get; set; }
+
         /// <summary>
         /// The yValue
         /// </summary>
-        public double yValue { get; set; }
+        //public double yValue { get; set; }
+
 
         /// <summary>
         /// This is usefull to group data when needed
         /// </summary>
-        public string Material { get; set; }
+        public string ValueName { get; set; }
+        /// <summary>
+        /// The Element's Category
+        /// </summary>
+        public string ValueCategory { get; set; }
+        /// <summary>
+        /// The Element's Value
+        /// </summary>
+        public double Value { get; set; }
+
 
     }
 

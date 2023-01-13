@@ -41,7 +41,7 @@ namespace CarboLifeRevit
                         FillPatternElement solidFillPattern = elements.OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>().First(a => a.GetFillPattern().IsSolidFill);
 
                         //Here we colour the model
-                        foreach (CarboValues cv in resultList.elementData)
+                        foreach (CarboValues cv in resultList.entireProjectData)
                         {
                             Element el = doc.GetElement(new ElementId(cv.Id));
                             if(el != null)

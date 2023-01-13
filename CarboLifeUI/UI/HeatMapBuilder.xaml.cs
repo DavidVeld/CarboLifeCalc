@@ -184,6 +184,7 @@ namespace CarboLifeUI.UI
             else
                 return oldC;
         }
+
         private System.Windows.Media.Color GetColor(System.Drawing.Color drawingColour)
         {
             System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(drawingColour.A, drawingColour.R, drawingColour.G, drawingColour.B);

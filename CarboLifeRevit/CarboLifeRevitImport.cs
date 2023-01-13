@@ -25,112 +25,12 @@ namespace CarboLifeRevit
             string MyAssemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string MyAssemblyDir = Path.GetDirectoryName(MyAssemblyPath);
             bool updateFile = false;
+            double area = 0;
 
             if (File.Exists(updatePath))
                 updateFile = true;
             //Create a new project
-            CarboProject myProject = new CarboProject();
-
-            myProject.Name = doc.ProjectInformation.Name.Trim();
-            myProject.Number = doc.ProjectInformation.Number;
-
-            ICollection<ElementId> selectionList = uidoc.Selection.GetElementIds();
-
-            double area = 0;
-
-            #region buildQuantitiestable
-
-            if (selectionList.Count == 0)
-            {
-                //No elements are selected, all elements will be parsed
-                View activeView = doc.ActiveView;
-
-                FilteredElementCollector coll = new FilteredElementCollector(app.ActiveUIDocument.Document, activeView.Id);
-
-                coll.WherePasses(new LogicalOrFilter(new ElementIsElementTypeFilter(false),
-                    new ElementIsElementTypeFilter(true)));
-
-                //Now cast them as elements into a container
-                IList<Element> collection = coll.ToElements();
-                string name = "";
-
-                List<string> IdsNotFound = new List<string>();
-
-                    foreach (Element el in collection)
-                    {
-                    name = el.Id.ToString();
-
-                    try
-                    {
-                        if (CarboRevitUtils.isElementReal(el) == true)
-                        {
-                            ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
-
-                            foreach (ElementId materialIds in MaterialIds)
-                            {
-                                CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, settings);
-
-                                if (carboElement != null)
-                                    myProject.AddElement(carboElement);
-                            }
-                        //See if is floor(then count area)
-                            area += getFloorarea(el);
-                        }
-
-
-                    }
-                    catch
-                    {
-                        IdsNotFound.Add(name);
-
-                        //TaskDialog.Show("Error", ex.Message);
-                    }
-
-                }
-                    if(IdsNotFound.Count > 0)
-                    {
-                        string message = "One or more elements weren't processed, most likely because they didn't contain any volume the element ids of these elements are: ";
-
-                        foreach (string id in IdsNotFound)
-                        {
-                            message += "\n" + id;
-                        }
-
-                        MessageBox.Show(message, "Warning", MessageBoxButton.OK);
-                    }
-
-            }
-            else
-            {
-                try
-                {
-                    foreach (ElementId elid in selectionList)
-                    {
-                        Element el = doc.GetElement(elid);
-                        ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
-
-                        if (CarboRevitUtils.isElementReal(el) == true)
-                        {
-                            foreach (ElementId materialIds in MaterialIds)
-                            {
-                                CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, settings);
-
-                                if (carboElement != null)
-                                    myProject.AddElement(carboElement);
-                            }
-                            //See if is floor(then count area)
-                            area += getFloorarea(el);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    TaskDialog.Show("Error", ex.Message);
-                }
-
-            }
-
-            #endregion
+            CarboProject myProject = CollectVisibleorSelectedElements(app, settings);
 
             //All element have been mapped, here the code will be split between an update or a new one.
             if (myProject.getAllElements.Count > 0)
@@ -165,7 +65,7 @@ namespace CarboLifeRevit
 
                 AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
-                carboCalcProgram.Show();
+                carboCalcProgram.ShowDialog();
                 //Create a visual
                 if(carboCalcProgram.createHeatmap == true)
                 {
@@ -197,6 +97,115 @@ namespace CarboLifeRevit
                 }
                 return ayResult;
             }
+        }
+
+        public static CarboProject CollectVisibleorSelectedElements(UIApplication app, CarboRevitImportSettings settings)
+        {
+            UIDocument uidoc = app.ActiveUIDocument;
+            Document doc = uidoc.Document;
+
+            string MyAssemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string MyAssemblyDir = Path.GetDirectoryName(MyAssemblyPath);
+
+
+            //Create a new project
+            CarboProject myProject = new CarboProject();
+
+            myProject.Name = doc.ProjectInformation.Name.Trim();
+            myProject.Number = doc.ProjectInformation.Number;
+
+            ICollection<ElementId> selectionList = uidoc.Selection.GetElementIds();
+
+
+            if (selectionList.Count == 0) //Collect all elements in View.
+            {
+                //No elements are selected, all elements will be parsed
+                View activeView = doc.ActiveView;
+
+                FilteredElementCollector coll = new FilteredElementCollector(app.ActiveUIDocument.Document, activeView.Id);
+
+                coll.WherePasses(new LogicalOrFilter(new ElementIsElementTypeFilter(false),
+                    new ElementIsElementTypeFilter(true)));
+
+                //Now cast them as elements into a container
+                IList<Element> collection = coll.ToElements();
+                string name = "";
+
+                List<string> IdsNotFound = new List<string>();
+
+                foreach (Element el in collection)
+                {
+                    name = el.Id.ToString();
+
+                    try
+                    {
+                        if (CarboRevitUtils.isElementReal(el) == true)
+                        {
+                            ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
+
+                            foreach (ElementId materialIds in MaterialIds)
+                            {
+                                CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, settings);
+
+                                if (carboElement != null)
+                                    myProject.AddElement(carboElement);
+                            }
+                            //See if is floor(then count area)
+                        }
+
+
+                    }
+                    catch
+                    {
+                        IdsNotFound.Add(name);
+
+                        //TaskDialog.Show("Error", ex.Message);
+                    }
+
+                }
+                if (IdsNotFound.Count > 0)
+                {
+                    string message = "One or more elements weren't processed, most likely because they didn't contain any volume the element ids of these elements are: ";
+
+                    foreach (string id in IdsNotFound)
+                    {
+                        message += "\n" + id;
+                    }
+
+                    MessageBox.Show(message, "Warning", MessageBoxButton.OK);
+                }
+
+            }
+            else //If a selection was made:
+            {
+                try
+                {
+                    foreach (ElementId elid in selectionList)
+                    {
+                        Element el = doc.GetElement(elid);
+                        ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
+
+                        if (CarboRevitUtils.isElementReal(el) == true)
+                        {
+                            foreach (ElementId materialIds in MaterialIds)
+                            {
+                                CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, settings);
+
+                                if (carboElement != null)
+                                    myProject.AddElement(carboElement);
+                            }
+                            //See if is floor(then count area)
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    TaskDialog.Show("Error", ex.Message);
+                }
+
+            }
+
+            return myProject;
         }
 
         private static void ParseDataToModel(UIApplication app, CarboProject carboLifeProject)
@@ -482,8 +491,5 @@ namespace CarboLifeRevit
 
             return result;
         }
-
-
-
     }
 }

@@ -20,6 +20,12 @@ namespace CarboLifeRevit
         {
             try
             {
+                UIApplication app = commandData.Application;
+
+                CarboRevitImportSettings importSettings = new CarboRevitImportSettings();
+                importSettings = importSettings.DeSerializeXML();
+
+
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
 
@@ -41,8 +47,12 @@ namespace CarboLifeRevit
 
                     projectToOpen = projectToUpdate;
 
+                    CarboProject ElementsVisibleOrSelected = CarboLifeRevitImport.CollectVisibleorSelectedElements(app, importSettings);
+
+                    List<int> VisibleElements = ElementsVisibleOrSelected.GetElementIdList();
+
                     //Show the form
-                    CarboLifeApp.thisApp.ShowHeatmap(commandData.Application, projectToUpdate);
+                    CarboLifeApp.thisApp.ShowHeatmap(commandData.Application, projectToOpen, VisibleElements);
                 }
 
                 //Return result

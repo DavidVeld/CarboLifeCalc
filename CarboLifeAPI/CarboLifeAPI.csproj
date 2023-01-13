@@ -80,6 +80,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\CarboColourPreset.cs" />
     <Compile Include="UtilClasses\CarboGraphResult.cs" />
     <Compile Include="UtilClasses\CarboValues.cs" />
     <Compile Include="Data\CarboC1C4Properties.cs" />
@@ -104,9 +105,11 @@
     <Compile Include="UtilClasses\VehicleAndFuel.cs" />
     <Compile Include="Utils\CarboDataPoint.cs" />
     <Compile Include="Utils\CarboCalcTextUtils.cs" />
-    <Compile Include="Utils\HeatMapBuilderClasses.cs" />
+    <Compile Include="Utils\HeatMapCollector.cs" />
+    <Compile Include="Utils\HeatMapBarBuilder.cs" />
+    <None Include="Utils\HeatMapBuilderClasses.cs" />
     <Compile Include="Utils\ReadWriteCsv.cs" />
-    <Compile Include="Utils\HeatMapBuilderUtils.cs" />
+    <None Include="Utils\HeatMapBuilderUtils.cs" />
     <Compile Include="Utils\DataExportUtils.cs" />
     <Compile Include="Utils\ReportBuilder.cs" />
     <Compile Include="Utils\StringToFormula.cs" />

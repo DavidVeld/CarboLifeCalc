@@ -120,7 +120,7 @@ namespace CarboLifeRevit
             return Result.Succeeded;
         }
 
-        public void ShowHeatmap(UIApplication uiapp, CarboProject project)
+        public void ShowHeatmap(UIApplication uiapp, CarboProject project, List<int> VisibleElements)
         {
             // If we do not have a dialog yet, create and show it
             if (m_HeatMapCreator == null)
@@ -133,7 +133,7 @@ namespace CarboLifeRevit
 
                 // We give the objects to the new dialog;
                 // The dialog becomes the owner responsible fore disposing them, eventually.
-                m_HeatMapCreator = new HeatMapCreator(exEvent, handler, project);
+                m_HeatMapCreator = new HeatMapCreator(exEvent, handler, project, VisibleElements);
                 m_HeatMapCreator.Show();
             }
             else

@@ -1,4 +1,5 @@
 ﻿using CarboLifeAPI;
+using CarboLifeAPI.Data.Superseded;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +25,9 @@ namespace CarboLifeAPI.Data
         public bool groupuniqueTypeNames { get; set; }
 
         public string uniqueTypeNames { get; set; }
+
+        public List<CarboColourPreset> colourPresets {get; set;}
+
         public CarboSettings()
         {
             templatePath = "Local";
@@ -37,6 +41,13 @@ namespace CarboLifeAPI.Data
             groupDemolition = false;
             groupuniqueTypeNames = false;
             uniqueTypeNames = "";
+            colourPresets = new List<CarboColourPreset>();
+
+            if(colourPresets.Count>0)
+            {
+                CarboColourPreset preset = new CarboColourPreset();
+                colourPresets.Add(preset);
+            }
         }
 
         public CarboSettings Load()

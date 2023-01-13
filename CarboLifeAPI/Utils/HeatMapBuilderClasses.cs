@@ -24,7 +24,9 @@ using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace CarboLifeAPI
 {
-
+    /// <summary>
+    /// [Obsolete] To be deleted
+    /// </summary>
     public static class HeatMapBuilderClasses
     {
         public static System.Drawing.Color Session_minOutColour { get; set; }
@@ -213,7 +215,7 @@ namespace CarboLifeAPI
         /// <param name="xminCutoff"></param>
         /// <param name="xmaxCutoff"></param>
         /// <returns></returns>
-        public static CarboGraphResult Calculate(double actualWidth, double actualHeight, double xminCutoff = 0, double xmaxCutoff = 0)
+        public static CarboGraphResult GetScatterPlot(double actualWidth, double actualHeight, double xminCutoff = 0, double xmaxCutoff = 0)
         {
             //Set the values that define the bounds and scale of the plot.
             canvasWidth = actualWidth;
@@ -257,7 +259,6 @@ namespace CarboLifeAPI
 
             return result;
         }
-
 
         private static void SetValidDataPoints()
         {

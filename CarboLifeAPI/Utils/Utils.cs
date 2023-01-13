@@ -508,6 +508,7 @@ namespace CarboLifeAPI
             return foundChild;
         }
 
+
         internal static string getString(List<CarboDataPoint> pieceListLifePoint, string itemName)
         {
             string result = "";
@@ -521,5 +522,22 @@ namespace CarboLifeAPI
 
             return result;
         }
+
+        /// <summary>
+        /// Checks if a list is null or empty
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static bool IsEmpty<T>(List<T> list)
+        {
+            if (list == null)
+            {
+                return true;
+            }
+
+            return !list.Any();
+        }
+
     }
 }

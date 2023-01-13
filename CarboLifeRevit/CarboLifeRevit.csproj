@@ -89,6 +89,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -108,8 +109,8 @@
     <Compile Include="CarboLifeRevitImport.cs" />
     <Compile Include="CarboRevitImportSettings.cs" />
     <Compile Include="CarboRevitUtils.cs" />
-    <Compile Include="UI\HeatMapCreator.xaml.cs">
-      <DependentUpon>HeatMapCreator.xaml</DependentUpon>
+    <Compile Include="UI\HeatMapCreatorRevit.xaml.cs">
+      <DependentUpon>HeatMapCreatorRevit.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\ImportSettingsWindow.xaml.cs">
       <DependentUpon>ImportSettingsWindow.xaml</DependentUpon>
@@ -127,7 +128,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UI\HeatMapCreator.xaml">
+    <Page Include="UI\HeatMapCreatorRevit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
