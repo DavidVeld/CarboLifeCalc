@@ -98,6 +98,8 @@ namespace CarboLifeAPI.Data
 
             return newGroup;
         }
+
+        [Obsolete("the colours are set using a separate class")]
         internal void clearHeatmapAndValues()
         {
             foreach (CarboGroup grp in getGroupList)
@@ -558,6 +560,7 @@ namespace CarboLifeAPI.Data
                                             gr.Material = cm;
                                             gr.RefreshValuesFromElements();
                                             gr.CalculateTotals();
+                                            
                                         }
                                     }
                                 }
@@ -1195,6 +1198,8 @@ namespace CarboLifeAPI.Data
                         for (int i = 0; i<=cg.AllElements.Count - 1; i++)
                         {
                             CarboElement ce = cg.AllElements[i];
+                            ce.CarboMaterialName = cg.MaterialName;
+
                             ce = addBufferToElements(elementbuffer, ce, out okSet);
                         }
                     }
@@ -1495,6 +1500,40 @@ namespace CarboLifeAPI.Data
                     break;
                 }
             }
+        }
+
+        public List<int> GetElementIdList()
+        {
+            List<int> validElements = new List<int>();
+            try
+
+            {
+                if (groupList.Count > 0)
+                {
+                    IEnumerable<CarboElement> listOfElement = getElementsFromGroups();
+
+                    foreach (CarboElement element in listOfElement)
+                    {
+                        validElements.Add(element.Id);
+                    }
+                }
+                else if(elementList.Count > 0)
+                {
+                    IEnumerable<CarboElement> listOfElement = getAllElements;
+
+                    foreach (CarboElement element in listOfElement)
+                    {
+                        validElements.Add(element.Id);
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                
+            }
+            //Notes.Select(x => x.Author).Distinct();
+
+            return validElements.Distinct().ToList();
         }
         public void DuplicateGroup(CarboGroup carboGroup)
         {

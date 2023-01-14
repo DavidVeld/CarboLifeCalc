@@ -1,28 +1,31 @@
-﻿using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using CarboLifeAPI.Data;
-using CarboLifeUI.UI;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.Attributes;
+using CarboLifeRevit;
+using CarboLifeAPI.Data;
+using Microsoft.Win32;
+using System.IO;
 
 namespace CarboLifeRevit
 {
-    [Autodesk.Revit.Attributes.Transaction(Autodesk.Revit.Attributes.TransactionMode.Manual)]
-
-    class ShowCarboCalc : IExternalCommand
+    [TransactionAttribute(TransactionMode.Manual)]
+    class CarboViewerCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            UIApplication app = commandData.Application;
-
             try
             {
+                UIApplication app = commandData.Application;
+
+                CarboRevitImportSettings importSettings = new CarboRevitImportSettings();
+                importSettings = importSettings.DeSerializeXML();
+
+
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
 
@@ -44,22 +47,22 @@ namespace CarboLifeRevit
 
                     projectToOpen = projectToUpdate;
 
-                    HeatMapCreator newWindow = new HeatMapCreator(projectToOpen);
-                    newWindow.Show();
+                    CarboProject ElementsVisibleOrSelected = CarboLifeRevitImport.CollectVisibleorSelectedElements(app, importSettings);
+
+                    List<int> VisibleElements = ElementsVisibleOrSelected.GetElementIdList();
+
+                    //Show the form
+                    CarboLifeApp.thisApp.ShowHeatmap(commandData.Application, projectToOpen, VisibleElements);
                 }
+
+                //Return result
+                return Result.Succeeded;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                message = ex.Message;
+                return Result.Failed;
             }
-        
-
-
-
-
-
-
-            return Result.Succeeded;
         }
     }
 }

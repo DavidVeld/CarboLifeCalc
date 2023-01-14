@@ -14,6 +14,9 @@ using System.Windows.Controls;
 
 namespace CarboLifeAPI
 {
+    /// <summary>
+    /// [Obsolete] To be deleted
+    /// </summary>
     public static class HeatMapBuilderUtils
     {
         public static System.Drawing.Color Session_minOutColour { get; set; }

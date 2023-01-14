@@ -14,13 +14,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
 using Microsoft.Win32;
 using System.IO;
 using CarboLifeAPI;
 
+using Autodesk.Revit.UI;
+using System.Windows.Forms;
 
-namespace CarboLifeUI.UI
+namespace CarboLifeRevit
 {
 
     /// <summary>
@@ -28,22 +29,56 @@ namespace CarboLifeUI.UI
     /// </summary>
     public partial class HeatMapCreator : Window
     {
+        //Used for colour 
         private CarboProject carboProject;
         private CarboGraphResult graphData;
-        private List<int> visibleElements;
         private CarboColourPreset currentColourSettings;
         private CarboSettings carboSettings;
+
+        //Used for Revit handlers
+        private ColourViewerHandler m_Handler;
+        private ExternalEvent m_ExEvent;
+        private List<int> visibleElements;
+
+        public HeatMapCreator(ExternalEvent exEvent, ColourViewerHandler handler, CarboProject project, List<int> _visibleElements)
+        {
+            carboSettings = new CarboSettings();
+            carboSettings.Load();
+
+            InitializeComponent();
+
+            refreshColourtemplatesList();
+            selectColour();
+
+            this.m_ExEvent = exEvent;
+            this.m_Handler = handler;
+
+ 
+
+            //set the list of elements active in the view when form was launched.
+            if (_visibleElements != null && _visibleElements.Count > 0)
+            {
+                visibleElements = _visibleElements;
+            }
+            //Load the project and refresh screen
+            if (project != null)
+            {
+                carboProject = project;
+                UpdateDataSource();
+            }
+            else
+                carboProject = new CarboProject();
+
+
+        }
+
+        //for Non-Modeless Usage;
         public HeatMapCreator(CarboProject project)
         {
-            carboProject = project;
-            carboSettings = new CarboSettings();
-            carboSettings.Load();
-            InitializeComponent();
-        }
-
-        public HeatMapCreator()
-        {
-            carboProject = null;
+            if (project != null)
+                carboProject = project;
+            else
+                carboProject = new CarboProject();
 
             carboSettings = new CarboSettings();
             carboSettings.Load();
@@ -51,16 +86,40 @@ namespace CarboLifeUI.UI
             InitializeComponent();
         }
 
-        private void btn_Show_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        //************************************************************************************************
+        // This is the part that interacts with Revit Do not copy over
+        //************************************************************************************************
 
         private void Btn_Clear_Click(object sender, RoutedEventArgs e)
         {
-
+            m_Handler.ColourTheModel(graphData, false);
+            m_ExEvent.Raise();
         }
-        /// ** The below can be copied over
+        private void btn_Show_Click(object sender, RoutedEventArgs e)
+        {
+            m_Handler.ColourTheModel(graphData, true);
+            m_ExEvent.Raise();
+        }
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            //Before the form is closed, everything must be disposed properly
+            m_ExEvent.Dispose();
+            m_ExEvent = null;
+
+            //clear the handler
+            m_Handler._revitEvent.Dispose();
+            m_Handler._revitEvent = null;
+            m_Handler = null;
+
+            //You have to call the base class
+            base.OnClosing(e);
+        }
+
+
+        //************************************************************************************************
+        //ANYTHING BELOW THIS LINE SHOULD BE IDENTICAL TO THE NON-MODELESS FORM
+        //FOR NOW BOTH CAN EXIST
+        //************************************************************************************************
 
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -70,7 +129,7 @@ namespace CarboLifeUI.UI
             {
                 lbl_name.Content = carboProject.Name;
             }
-            
+
             //load current Settings;
             carboSettings = new CarboSettings();
             carboSettings = carboSettings.Load();
@@ -111,7 +170,7 @@ namespace CarboLifeUI.UI
                     carboProject = projectToUpdate;
 
                     //When Opened the entire dataset is considered;
-                    if(Utils.IsEmpty(visibleElements))
+                    if (Utils.IsEmpty(visibleElements))
                     {
                         visibleElements = carboProject.GetElementIdList();
                     }
@@ -172,15 +231,15 @@ namespace CarboLifeUI.UI
                 {
                     thisResult = CarboLifeAPI.HeatMapCollector.GetMaterialVolumeData(carboProject);
                 }
-                else if(rad_ByGroup.IsChecked == true)
+                else if (rad_ByGroup.IsChecked == true)
                 {
                     thisResult = CarboLifeAPI.HeatMapCollector.GetPerGroupData(carboProject);
                 }
-                else if(rad_ByElement.IsChecked == true)
+                else if (rad_ByElement.IsChecked == true)
                 {
                     thisResult = CarboLifeAPI.HeatMapCollector.GetPerElementData(carboProject);
                 }
-                else if(rad_MaterialTotals.IsChecked == true)
+                else if (rad_MaterialTotals.IsChecked == true)
                 {
                     thisResult = CarboLifeAPI.HeatMapCollector.GetMaterialTotalData(carboProject);
                 }
@@ -197,7 +256,7 @@ namespace CarboLifeUI.UI
 
             //if data was collected make it the source and update the graph
             //clear if no data
-            if (thisResult.entireProjectData.Count > 0 )
+            if (thisResult.entireProjectData.Count > 0)
             {
                 double maxValue = graphData.getMaxValue();
                 double minValue = graphData.getMinValue();
@@ -210,7 +269,7 @@ namespace CarboLifeUI.UI
 
                 txt_CutoffMax.Text = maxValue.ToString();
                 txt_CutoffMin.Text = minValue.ToString();
-                
+
                 sld_Max.Minimum = minValue;
                 sld_Max.Maximum = maxValue;
                 sld_Max.Value = maxValue;
@@ -218,12 +277,12 @@ namespace CarboLifeUI.UI
                 sld_Min.Minimum = minValue;
                 sld_Min.Maximum = maxValue;
                 sld_Min.Value = minValue;
-                
+
                 UpdateGraphData();
                 RefreshGraph();
             }
             else
-                cnv_Graph.Children.Clear(); 
+                cnv_Graph.Children.Clear();
 
         }
         private void UpdateGraphData()
@@ -272,9 +331,9 @@ namespace CarboLifeUI.UI
                     }
                 }
             }
-            if(!Utils.IsEmpty(visibleElements))
-                lbl_debug.Content = string.Format("Elements in projects {0}, selected: {1} " + Environment.NewLine + ", valid/filtered: {2} elements in selection/view: {3}", 
-                    graphData.entireProjectData.Count, 
+            if (!Utils.IsEmpty(visibleElements))
+                lbl_debug.Content = string.Format("Elements in projects {0}, selected: {1} " + Environment.NewLine + ", valid/filtered: {2} elements in selection/view: {3}",
+                    graphData.entireProjectData.Count,
                     graphData.selectedData.Count,
                     graphData.validData.Count,
                     visibleElements.Count);
@@ -304,7 +363,7 @@ namespace CarboLifeUI.UI
 
         private void sld_Max_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            txt_CutoffMax.Text = Math.Round(sld_Max.Value,3).ToString();
+            txt_CutoffMax.Text = Math.Round(sld_Max.Value, 3).ToString();
             UpdateGraphData();
             RefreshGraph();
         }
@@ -324,9 +383,9 @@ namespace CarboLifeUI.UI
 
             Random random = new Random();
 
-            for(int i = listOfIds.Count -1; i >= 0; i--)
+            for (int i = listOfIds.Count - 1; i >= 0; i--)
             {
-                int val = random.Next(1,6);
+                int val = random.Next(1, 6);
                 if (!(val == 3))
                     listOfIds.RemoveAt(i);
             }
@@ -398,7 +457,7 @@ namespace CarboLifeUI.UI
                 }
             }
 
-            if(found == false)
+            if (found == false)
             {
                 //the name of the template could not be found, save as a new value.
                 carboSettings.colourPresets.Add(currentColourSettings);
@@ -435,9 +494,12 @@ namespace CarboLifeUI.UI
 
             foreach (CarboColourPreset ccp in carboSettings.colourPresets)
             {
-                if(selectedColourname == ccp.name)
+                if (selectedColourname == ccp.name)
                 {
                     currentColourSettings = ccp;
+
+                    btn_MaxOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.outmax.a, currentColourSettings.outmax.r, currentColourSettings.outmax.g, currentColourSettings.outmax.b));
+                    btn_MinOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.outmin.a, currentColourSettings.outmin.r, currentColourSettings.outmin.g, currentColourSettings.outmin.b));
 
                     btn_Low.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.min.a, currentColourSettings.min.r, currentColourSettings.min.g, currentColourSettings.min.b));
                     btn_Mid.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.mid.a, currentColourSettings.mid.r, currentColourSettings.mid.g, currentColourSettings.mid.b));
@@ -453,7 +515,7 @@ namespace CarboLifeUI.UI
         private void btn_Low_Click(object sender, RoutedEventArgs e)
         {
             //get a new colour
-            System.Windows.Media.Brush startColour = btn_MinOut.Background;
+            System.Windows.Media.Brush startColour = btn_Low.Background;
             System.Drawing.Color pickedColour = GetColor(startColour);
 
             //apply in the colour settings
@@ -461,7 +523,7 @@ namespace CarboLifeUI.UI
 
             //Refresh the graph
             btn_Low.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
-
+            UpdateGraphData();
             RefreshGraph();
         }
 
@@ -477,6 +539,7 @@ namespace CarboLifeUI.UI
             //Refresh the graph
             btn_Mid.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
 
+            UpdateGraphData();
             RefreshGraph();
         }
 
@@ -492,6 +555,7 @@ namespace CarboLifeUI.UI
             //Refresh the graph
             btn_High.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
 
+            UpdateGraphData();
             RefreshGraph();
         }
 
@@ -507,6 +571,7 @@ namespace CarboLifeUI.UI
             //Refresh the graph
             btn_MinOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
 
+            UpdateGraphData();
             RefreshGraph();
         }
 
@@ -520,9 +585,14 @@ namespace CarboLifeUI.UI
             currentColourSettings.outmax = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
 
             //Refresh the graph
-            btn_MinOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+            btn_MaxOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
 
+            UpdateGraphData();
             RefreshGraph();
         }
+
+
+
+
     }
 }

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AardWolf
+namespace CarboCroc
 {
-    internal static class AardwolfProcess
+    internal static class CarboCrocProcess
     {
         internal static CarboProject ProcessData(List<CarboElement> listOfElements)
         {

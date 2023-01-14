@@ -11,13 +11,13 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 
-namespace AardWolf
+namespace CarboCroc
 {
-    public class AardWolfSolver : GH_Component
+    public class CarboCrocSolver : GH_Component
     {
         // Methods
-        public AardWolfSolver()
-        : base("Project Element Solver", "Carbo Life Project Solver by Elements", "Generates a Carbo Life Project using Elements", "Aardwolf", "Solvers")
+        public CarboCrocSolver()
+        : base("Project Element Solver", "Carbo Life Project Solver by Elements", "Generates a Carbo Life Project using Elements", "CarboCroc", "Solvers")
         {
         }
 
@@ -64,7 +64,7 @@ namespace AardWolf
 
             if (listOfElements.Count != 0)
             {
-                runtimeProject = AardwolfProcess.ProcessData(listOfElements);
+                runtimeProject = CarboCrocProcess.ProcessData(listOfElements);
             }
 
             List<CarboDataPoint> list = runtimeProject.getPhaseTotals();
@@ -105,7 +105,7 @@ namespace AardWolf
         {
             get
             {
-                return new Guid("{2D1746FA-EE9D-4417-A978-E94A606639FC}");
+                return new Guid("{305B0190-EB88-44A6-88D1-FC799F4BF995}");
             }
         }
 
@@ -115,7 +115,7 @@ namespace AardWolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.ElementSolver;
+                return CarboCroc.Properties.Resources.ElementSolver;
             }
         }
     }

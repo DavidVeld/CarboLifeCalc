@@ -438,6 +438,7 @@ namespace CarboLifeUI.UI
 
         private void mnu_Heatmap_Click(object sender, RoutedEventArgs e)
         {
+            /*
             IsRevit = true;
             if (IsRevit == true)
             {
@@ -512,6 +513,7 @@ namespace CarboLifeUI.UI
             {
                 MessageBox.Show("This option is available once you launch the program from Autodesk Revit");
             }
+            */
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)

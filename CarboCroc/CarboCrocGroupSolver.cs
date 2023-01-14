@@ -11,13 +11,13 @@ using Grasshopper.Kernel;
 using Grasshopper.Kernel.Data;
 using Grasshopper.Kernel.Types;
 
-namespace AardWolf
+namespace CarboCroc
 {
-    public class AardWolfGroupSolver : GH_Component
+    public class CarboCrocGroupSolver : GH_Component
     {
         // Methods
-        public AardWolfGroupSolver()
-        : base("Project Group Solver", "Carbo Life Group Project Solver", "Generates a Carbo Life Project using Carbo Groups", "Aardwolf", "Solvers")
+        public CarboCrocGroupSolver()
+        : base("Project Group Solver", "Carbo Life Group Project Solver", "Generates a Carbo Life Project using Carbo Groups", "CarboCroc", "Solvers")
         {
         }
 
@@ -72,7 +72,7 @@ namespace AardWolf
 
             if (listOfGroups.Count != 0)
             {
-                runtimeProject = AardwolfProcess.ProcessData(listOfGroups);
+                runtimeProject = CarboCrocProcess.ProcessData(listOfGroups);
             }
 
             List<CarboDataPoint> list = runtimeProject.getPhaseTotals();
@@ -112,7 +112,7 @@ namespace AardWolf
         {
             get
             {
-                return new Guid("{A7D6AA00-7A81-4763-8AEE-DEAFC1E56AC8}");
+                return new Guid("{735E875F-C89F-4D2B-B031-DF04520E1D1B}");
             }
         }
 
@@ -122,7 +122,7 @@ namespace AardWolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.GroupSolver;
+                return CarboCroc.Properties.Resources.GroupSolver;
             }
         }
     }

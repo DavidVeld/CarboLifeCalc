@@ -157,9 +157,9 @@
     <Compile Include="UI\DescriptionEditor.xaml.cs">
       <DependentUpon>DescriptionEditor.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\HeatMapBuilder.xaml.cs">
+    <None Include="UI\HeatMapBuilder.xaml.cs">
       <DependentUpon>HeatMapBuilder.xaml</DependentUpon>
-    </Compile>
+    </None>
     <Compile Include="UI\MaterialMyEPD.xaml.cs">
       <DependentUpon>MaterialMyEPD.xaml</DependentUpon>
     </Compile>
@@ -290,10 +290,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\HeatMapBuilder.xaml">
+    <None Include="UI\HeatMapBuilder.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
+    </None>
     <Page Include="UI\MaterialMyEPD.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

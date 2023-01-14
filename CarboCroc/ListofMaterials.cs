@@ -9,12 +9,12 @@ using CarboLifeAPI.Data;
 using System.Drawing;
 using System.ComponentModel;
 
-namespace Aardwolf
+namespace CarboCroc
 {
     public class ListofMaterials : GH_Component
     {
         public ListofMaterials()
-: base("List Materials", "List all Materials", "Lists the available Carbo Life Materials", "Aardwolf", "Data")
+: base("List Materials", "List all Materials", "Lists the available Carbo Life Materials", "CarboCroc", "Data")
         {
 
         }
@@ -102,7 +102,7 @@ namespace Aardwolf
         {
             get
             {
-                return new Guid("{5037CF93-9DCD-4AF9-BC50-33CE4F1DC8DD}");
+                return new Guid("{992D35B8-12B0-4E8A-A9B8-62CA03DDAC59}");
             }
         }
 
@@ -112,7 +112,7 @@ namespace Aardwolf
             {
                 // You can add image files to your project resources and access them like this:
                 //return Resources.IconForThisComponent;
-                return Aardwolf.Properties.Resources.List;
+                return CarboCroc.Properties.Resources.List;
             }
         }
 
