@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using CarboLifeAPI;
 using CarboLifeAPI.Data;
+using System.CodeDom;
 
 namespace CarboLifeRevit
 {
@@ -16,9 +17,15 @@ namespace CarboLifeRevit
 
         private CarboGraphResult resultList;
         private static bool colourMeSwitch;
+        private static bool colourOutOfBoundsSwitch;
+        private static bool clearValueSwitch;
+
+        private CarboProject targetProject;
+        private string parameterName;
 
         public ExternalEvent _revitEvent;
 
+        public int commandSwitch = 0; //0 = colour 1 = import 
 
         public CarboGraphResult resultModel { get { return resultList; } set { resultList = value; } }
         public ColourViewerHandler(UIApplication uiapp)
@@ -26,6 +33,7 @@ namespace CarboLifeRevit
             UIApplication app = uiapp;
             uidoc = app.ActiveUIDocument;
             doc = uidoc.Document;
+            parameterName = "";
 
             _revitEvent = ExternalEvent.Create(this);
         }
@@ -37,45 +45,72 @@ namespace CarboLifeRevit
             {
                 if (doc != null)
                 {
-                    var view = doc.ActiveView;
-
-                    using (Transaction t = new Transaction(doc, "Colour The Model"))
+                    if (commandSwitch == 0)
                     {
-                        t.Start();
+                        ColourTheModelTransaction(doc);
+                    }
+                    else if(commandSwitch == 1)
+                    {
+                        ImportvaluesToElements(uiapp);
+                    }
+                    else
+                    {
+                        TaskDialog.Show("Error", "Revit did not receive a valid command");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TaskDialog.Show("Error", ex.Message);
+            }
+        }
 
-                        FilteredElementCollector elements = new FilteredElementCollector(doc);
-                        FillPatternElement solidFillPattern = elements.OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>().First(a => a.GetFillPattern().IsSolidFill);
-                        
-                        //applies for all overrides
-                        OverrideGraphicSettings ogs = new OverrideGraphicSettings();
+        private void ColourTheModelTransaction(Document doc)
+        {
+            if (doc != null)
+            {
+                var view = doc.ActiveView;
 
-                        //Rest all coulours
-                        foreach (CarboValues cv in resultList.entireProjectData)
+
+                using (Transaction t = new Transaction(doc, "Colour The Model"))
+                {
+                    t.Start();
+
+                    FilteredElementCollector elements = new FilteredElementCollector(doc);
+                    FillPatternElement solidFillPattern = elements.OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>().First(a => a.GetFillPattern().IsSolidFill);
+
+                    //applies for all overrides
+                    OverrideGraphicSettings ogs = new OverrideGraphicSettings();
+
+                    //Reset all coulours
+                    foreach (CarboValues cv in resultList.entireProjectData)
+                    {
+                        Element el = doc.GetElement(new ElementId(cv.Id));
+
+                        if (el != null)
+                        {
+                            doc.ActiveView.SetElementOverrides(el.Id, ogs);
+                        }
+                    }
+
+                    //Colour them if required.
+                    if (colourMeSwitch == true)
+                    {
+                        foreach (CarboValues cv in resultList.validData)
                         {
                             Element el = doc.GetElement(new ElementId(cv.Id));
-
                             if (el != null)
                             {
-                                doc.ActiveView.SetElementOverrides(el.Id, ogs);
+                                //if switch is false reset overrides.
+                                ogs = getOverrideObject(cv, solidFillPattern.Id);
+
                             }
+
+                            doc.ActiveView.SetElementOverrides(el.Id, ogs);
                         }
 
-
-                        if (colourMeSwitch == true)
+                        if (colourOutOfBoundsSwitch == true)
                         {
-                            foreach (CarboValues cv in resultList.validData)
-                            {
-                                Element el = doc.GetElement(new ElementId(cv.Id));
-                                if (el != null)
-                                {
-                                    //if switch is false reset overrides.
-                                    ogs = getOverrideObject(cv, solidFillPattern.Id);
-
-                                }
-
-                                doc.ActiveView.SetElementOverrides(el.Id, ogs);
-                            }
-
                             foreach (CarboValues cv in resultList.outOfBoundsMaxData)
                             {
                                 Element el = doc.GetElement(new ElementId(cv.Id));
@@ -101,24 +136,41 @@ namespace CarboLifeRevit
 
                                 doc.ActiveView.SetElementOverrides(el.Id, ogs);
                             }
-
                         }
-                        
 
-                        //coulour out of bounds max
-
-
-                        doc.Regenerate();
-
-                        t.Commit();
                     }
+
+
+                    //coulour out of bounds max
+
+
+                    doc.Regenerate();
+
+                    t.Commit();
                 }
             }
-            catch (Exception ex)
+        }
+
+        private void ImportvaluesToElements(UIApplication uiapp)
+        {
+            if (doc != null)
             {
-                TaskDialog.Show("Error", ex.Message);
+
+                using (Transaction t = new Transaction(doc, "Import values to Model"))
+                {
+                    t.Start();
+
+                    CarboLifeImportData.ParseDataToModel(uiapp, targetProject, parameterName, clearValueSwitch);
+
+                    doc.Regenerate();
+
+                    t.Commit();
+                }
             }
         }
+
+
+
 
         private OverrideGraphicSettings getOverrideObject(CarboValues cv, ElementId id)
         {
@@ -135,10 +187,10 @@ namespace CarboLifeRevit
 
         public string GetName()
         {
-            return "Colour the Model";
+            return "CarboLifeCalc : Modify the Model";
         }
 
-        public void ColourTheModel(CarboGraphResult colourResults, bool colourMe)
+        public void ColourTheModel(CarboGraphResult colourResults, bool colourMe, bool colourOutOfBounds)
         {
             if (doc != null && colourResults != null)
             {
@@ -146,15 +198,40 @@ namespace CarboLifeRevit
                 {
                     resultList = colourResults;
                     colourMeSwitch = colourMe;
+                    colourOutOfBoundsSwitch = colourOutOfBounds;
+                    commandSwitch = 0;
                 }
                 catch(Exception ex)
                 {
                     TaskDialog.Show("Error", ex.Message);
                     colourMeSwitch = false;
-
+                    commandSwitch = 999;
                 }
             }
         }
+
+        public void Importvalues(CarboProject project, string paramname, bool clearValue)
+        {
+            if (doc != null && project != null)
+            {
+                try
+                {
+                    targetProject = project;
+                    commandSwitch = 1;
+                    parameterName = paramname;
+                    clearValueSwitch = clearValue;
+                }
+                catch (Exception ex)
+                {
+                    TaskDialog.Show("Error", ex.Message);
+                    colourMeSwitch = false;
+                    commandSwitch = 999;
+                    parameterName = "";
+                    clearValueSwitch = false;
+                }
+            }
+        }
+
     }
 }
     

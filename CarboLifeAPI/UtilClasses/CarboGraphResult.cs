@@ -74,43 +74,49 @@ namespace CarboLifeAPI
         /// <param name="applicablelements">This is a list of elements in the project that needs to be considered, if no elements are selected, the entire project is looked at</param>
         public void FilterNonVisible(List<int> applicablelements)
         {
-
-            if (entireProjectData == null || entireProjectData.Count <= 0)
-                throw new Exception("The project has no data, we cannot filter");
-
-            //If the list send is not present or empty then the entire range needs to be considered
-            if (applicablelements == null || applicablelements.Count == 0)
+            try
             {
-                List<int> listOfAllElementIds = entireProjectData.Select(i => i.Id).Distinct().ToList();
-                if(listOfAllElementIds.Count > 0)
+                if (entireProjectData == null || entireProjectData.Count <= 0)
+                    throw new Exception("The project has no data, we cannot filter");
+
+                //If the list send is not present or empty then the entire range needs to be considered
+                if (applicablelements == null || applicablelements.Count == 0)
                 {
-                    applicablelements = listOfAllElementIds;
+                    List<int> listOfAllElementIds = entireProjectData.Select(i => i.Id).Distinct().ToList();
+                    if (listOfAllElementIds.Count > 0)
+                    {
+                        applicablelements = listOfAllElementIds;
+                    }
+                }
+
+                if (Utils.IsEmpty(applicablelements))
+                    throw new Exception("Could not collect visible or selected elements from the given dataset");
+
+                //We will now collect the elements with said id:
+                validData.Clear();
+                validData = new List<CarboValues>();
+                notSelectedData = new List<CarboValues>();
+
+                foreach (CarboValues cv in entireProjectData)
+                {
+                    bool elementIsVisible = false;
+                    //Check if element is visible:
+                    elementIsVisible = applicablelements.Contains(cv.Id);
+
+                    if (elementIsVisible == true)
+                    {
+                        selectedData.Add(cv);
+                    }
+                    else
+                    {
+                        notSelectedData.Add(cv);
+                    }
+
                 }
             }
-
-            if (Utils.IsEmpty(applicablelements))
-                throw new Exception("Could not collect visible or selected elements from the given dataset");
-
-            //We will now collect the elements with said id:
-            validData.Clear();
-            validData = new List<CarboValues>();
-            notSelectedData = new List<CarboValues>();
-
-            foreach (CarboValues cv in entireProjectData)
+            catch (Exception ex)
             {
-                bool elementIsVisible = false;
-                //Check if element is visible:
-                elementIsVisible = applicablelements.Contains(cv.Id);
-
-                if (elementIsVisible == true)
-                {
-                    selectedData.Add(cv);
-                }
-                else
-                {
-                    notSelectedData.Add(cv);
-                }
-
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -153,7 +159,7 @@ namespace CarboLifeAPI
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
         }
 
@@ -163,24 +169,32 @@ namespace CarboLifeAPI
             //If the project was just loaded the valid data has no data, the selected dataset will then be used;
             List<CarboValues> SortedList = new List<CarboValues>();
 
-            if (validData.Count > 0 && selectedData.Count > 0)
+            try
             {
-                //
-                SortedList = validData.OrderBy(o => o.Value).ToList();
-            }
-            else if (validData.Count < 0 && selectedData.Count > 0)
-            {
-                SortedList = selectedData.OrderBy(o => o.Value).ToList();
-            }
-            else
-            {
-                SortedList = entireProjectData.OrderBy(o => o.Value).ToList();
-            }
+                if (validData.Count > 0 && selectedData.Count > 0)
+                {
+                    //
+                    SortedList = validData.OrderBy(o => o.Value).ToList();
+                }
+                else if (validData.Count < 0 && selectedData.Count > 0)
+                {
+                    SortedList = selectedData.OrderBy(o => o.Value).ToList();
+                }
+                else
+                {
+                    SortedList = entireProjectData.OrderBy(o => o.Value).ToList();
+                }
 
-            if(SortedList.Count > 0)
-                return SortedList[SortedList.Count - 1].Value;
-            else
+                if (SortedList.Count > 0)
+                    return SortedList[SortedList.Count - 1].Value;
+                else
+                    return 9999;
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
                 return 9999;
+            }
         }
 
         public double getMinValue()
@@ -188,34 +202,50 @@ namespace CarboLifeAPI
             //First we need to make sure the list is sorted;
             //If the project was just loaded the valid data has no data, the selected dataset will then be used;
             List<CarboValues> SortedList = new List<CarboValues>();
+            try
+            {
+                if (validData.Count > 0)
+                {
+                    SortedList = validData.OrderBy(o => o.Value).ToList();
+                }
+                else if (validData.Count > 0 && selectedData.Count > 0)
+                {
+                    SortedList = selectedData.OrderBy(o => o.Value).ToList();
+                }
+                else
+                {
+                    SortedList = entireProjectData.OrderBy(o => o.Value).ToList();
+                }
 
-            if (validData.Count > 0)
-            {
-                SortedList = validData.OrderBy(o => o.Value).ToList();
+                if (SortedList.Count > 0)
+                    return SortedList[0].Value;
+                else
+                    return -99999;
             }
-            else if (validData.Count > 0 && selectedData.Count > 0)
+            catch (Exception ex)
             {
-                SortedList = selectedData.OrderBy(o => o.Value).ToList();
-            }
-            else
-            {
-                SortedList = entireProjectData.OrderBy(o => o.Value).ToList();
+                MessageBox.Show(ex.Message);
+                return -99999;
             }
 
-            if (SortedList.Count > 0)
-                return SortedList[0].Value;
-            else
-                return -9999;
         }
 
         public List<double> GetUniqueValues()
         {
             List<double> thisResult = new List<double>();
 
-            if (validData != null)
-                thisResult = validData.Select(x => Math.Round(x.Value,3)).Distinct().ToList();
+            try
+            {
+                if (validData != null)
+                    thisResult = validData.Select(x => Math.Round(x.Value, 3)).Distinct().ToList();
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+            }
 
             return thisResult;
+
         }
 
     }

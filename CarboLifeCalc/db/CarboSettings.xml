@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<CarboSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <templatePath></templatePath>
+<CarboSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <templatePath>C:\000 - Workfiles\001 - Coding\CarboLifeCalcGit\CarboLifeCalc\bin\Debug\db\UserMaterials.cxml</templatePath>
   <useLocal>true</useLocal>
-  <firstLaunch>true</firstLaunch>
+  <firstLaunch>false</firstLaunch>
   <groupCategory>true</groupCategory>
   <groupSubCategory>false</groupSubCategory>
   <groupType>false</groupType>
@@ -11,4 +11,138 @@
   <groupDemolition>false</groupDemolition>
   <groupuniqueTypeNames>false</groupuniqueTypeNames>
   <uniqueTypeNames />
+  <colourPresets>
+    <CarboColourPreset>
+      <name>Preset 1</name>
+      <outmin>
+        <a>255</a>
+        <r>0</r>
+        <g>128</g>
+        <b>255</b>
+      </outmin>
+      <min>
+        <a>255</a>
+        <r>141</r>
+        <g>241</g>
+        <b>41</b>
+      </min>
+      <mid>
+        <a>255</a>
+        <r>242</r>
+        <g>116</g>
+        <b>40</b>
+      </mid>
+      <max>
+        <a>255</a>
+        <r>255</r>
+        <g>0</g>
+        <b>0</b>
+      </max>
+      <outmax>
+        <a>255</a>
+        <r>255</r>
+        <g>0</g>
+        <b>128</b>
+      </outmax>
+    </CarboColourPreset>
+    <CarboColourPreset>
+      <name>Preset 2</name>
+      <outmin>
+        <a>255</a>
+        <r>250</r>
+        <g>250</g>
+        <b>250</b>
+      </outmin>
+      <min>
+        <a>255</a>
+        <r>141</r>
+        <g>241</g>
+        <b>41</b>
+      </min>
+      <mid>
+        <a>255</a>
+        <r>0</r>
+        <g>128</g>
+        <b>255</b>
+      </mid>
+      <max>
+        <a>255</a>
+        <r>240</r>
+        <g>40</g>
+        <b>9</b>
+      </max>
+      <outmax>
+        <a>255</a>
+        <r>250</r>
+        <g>250</g>
+        <b>250</b>
+      </outmax>
+    </CarboColourPreset>
+    <CarboColourPreset>
+      <name>Preset 3</name>
+      <outmin>
+        <a>255</a>
+        <r>128</r>
+        <g>255</g>
+        <b>128</b>
+      </outmin>
+      <min>
+        <a>255</a>
+        <r>0</r>
+        <g>255</g>
+        <b>0</b>
+      </min>
+      <mid>
+        <a>255</a>
+        <r>0</r>
+        <g>128</g>
+        <b>255</b>
+      </mid>
+      <max>
+        <a>255</a>
+        <r>255</r>
+        <g>0</g>
+        <b>0</b>
+      </max>
+      <outmax>
+        <a>255</a>
+        <r>255</r>
+        <g>128</g>
+        <b>128</b>
+      </outmax>
+    </CarboColourPreset>
+    <CarboColourPreset>
+      <name>Preset 4</name>
+      <outmin>
+        <a>255</a>
+        <r>255</r>
+        <g>255</g>
+        <b>255</b>
+      </outmin>
+      <min>
+        <a>255</a>
+        <r>240</r>
+        <g>240</g>
+        <b>240</b>
+      </min>
+      <mid>
+        <a>255</a>
+        <r>128</r>
+        <g>128</g>
+        <b>128</b>
+      </mid>
+      <max>
+        <a>255</a>
+        <r>15</r>
+        <g>15</g>
+        <b>15</b>
+      </max>
+      <outmax>
+        <a>255</a>
+        <r>0</r>
+        <g>0</g>
+        <b>0</b>
+      </outmax>
+    </CarboColourPreset>
+  </colourPresets>
 </CarboSettings>

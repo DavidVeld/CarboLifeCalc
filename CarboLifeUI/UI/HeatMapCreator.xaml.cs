@@ -33,10 +33,12 @@ namespace CarboLifeUI.UI
         private List<int> visibleElements;
         private CarboColourPreset currentColourSettings;
         private CarboSettings carboSettings;
+        public bool colour;
         public HeatMapCreator(CarboProject project)
         {
             carboProject = project;
             carboSettings = new CarboSettings();
+            colour = true;
             carboSettings.Load();
             InitializeComponent();
         }
@@ -69,8 +71,10 @@ namespace CarboLifeUI.UI
             if (carboProject != null)
             {
                 lbl_name.Content = carboProject.Name;
+                lbl_total.Content = carboProject.getTotalEC().ToString("N") + " tCO2";
+
             }
-            
+
             //load current Settings;
             carboSettings = new CarboSettings();
             carboSettings = carboSettings.Load();
@@ -78,10 +82,9 @@ namespace CarboLifeUI.UI
             refreshColourtemplatesList();
             selectColour();
 
-            cbb_outofBounds.Items.Add("Colour White");
-            cbb_outofBounds.Items.Add("By Revit");
-            cbb_outofBounds.Items.Add("Hide");
-
+            cbb_outofBounds.Items.Add("Colour");
+            cbb_outofBounds.Items.Add("No Override");
+            cbb_outofBounds.SelectedIndex = 0;
         }
 
 
@@ -147,11 +150,18 @@ namespace CarboLifeUI.UI
 
         private void FilterPerMaxMin()
         {
-            //Values we'd need for all options:
-            double xMaxCutoff = Utils.ConvertMeToDouble(txt_CutoffMax.Text);
-            double xMinCutoff = Utils.ConvertMeToDouble(txt_CutoffMin.Text);
+            try
+            {
+                //Values we'd need for all options:
+                double xMaxCutoff = Utils.ConvertMeToDouble(txt_CutoffMax.Text);
+                double xMinCutoff = Utils.ConvertMeToDouble(txt_CutoffMin.Text);
 
-            graphData.FilterMinMax(xMinCutoff, xMaxCutoff);
+                graphData.FilterMinMax(xMinCutoff, xMaxCutoff);
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
 
         /// <summary>
@@ -161,123 +171,142 @@ namespace CarboLifeUI.UI
         {
             CarboGraphResult thisResult = new CarboGraphResult();
             //Define the type of graph to make:
-            if (carboProject != null)
+            try
             {
-                if (rad_ByDensitykg.IsChecked == true)
+                if (carboProject != null)
                 {
-                    //This will plot each element based on their material the X axis is the embodied carbon (kgCo2/kg) the Y axis it the weight or mass.
-                    thisResult = CarboLifeAPI.HeatMapCollector.GetMaterialMassData(carboProject);
+                    if (rad_ByDensitykg.IsChecked == true)
+                    {
+                        //This will plot each element based on their material the X axis is the embodied carbon (kgCo2/kg) the Y axis it the weight or mass.
+                        thisResult = CarboLifeAPI.HeatMapCollector.GetMaterialMassData(carboProject);
+                    }
+                    else if (rad_ByDensitym.IsChecked == true)
+                    {
+                        thisResult = CarboLifeAPI.HeatMapCollector.GetMaterialVolumeData(carboProject);
+                    }
+                    else if (rad_ByGroup.IsChecked == true)
+                    {
+                        thisResult = CarboLifeAPI.HeatMapCollector.GetPerGroupData(carboProject);
+                    }
+                    else if (rad_ByElement.IsChecked == true)
+                    {
+                        thisResult = CarboLifeAPI.HeatMapCollector.GetPerElementData(carboProject);
+                    }
+                    else if (rad_MaterialTotals.IsChecked == true)
+                    {
+                        thisResult = CarboLifeAPI.HeatMapCollector.GetMaterialTotalData(carboProject);
+                    }
+                    else
+                    {
+
+                    }
                 }
-                else if (rad_ByDensitym.IsChecked == true)
+
+                graphData = thisResult;
+
+                //Filter the project per visible elements, this only happends in the update source part;
+                FilterPerList();
+
+                //if data was collected make it the source and update the graph
+                //clear if no data
+                if (thisResult.entireProjectData.Count > 0)
                 {
-                    thisResult = CarboLifeAPI.HeatMapCollector.GetMaterialVolumeData(carboProject);
-                }
-                else if(rad_ByGroup.IsChecked == true)
-                {
-                    thisResult = CarboLifeAPI.HeatMapCollector.GetPerGroupData(carboProject);
-                }
-                else if(rad_ByElement.IsChecked == true)
-                {
-                    thisResult = CarboLifeAPI.HeatMapCollector.GetPerElementData(carboProject);
-                }
-                else if(rad_MaterialTotals.IsChecked == true)
-                {
-                    thisResult = CarboLifeAPI.HeatMapCollector.GetMaterialTotalData(carboProject);
+                    double maxValue = graphData.getMaxValue();
+                    double minValue = graphData.getMinValue();
+
+                    //Some Data checks:
+                    if (minValue > 0)
+                        minValue = 0;
+
+                    maxValue = Convert.ToInt32(maxValue);
+
+                    txt_CutoffMax.Text = maxValue.ToString();
+                    txt_CutoffMin.Text = minValue.ToString();
+
+                    sld_Max.Minimum = minValue;
+                    sld_Max.Maximum = maxValue;
+                    sld_Max.Value = maxValue;
+
+                    sld_Min.Minimum = minValue;
+                    sld_Min.Maximum = maxValue;
+                    sld_Min.Value = minValue;
+
+                    UpdateGraphData();
+                    RefreshGraph();
                 }
                 else
-                {
-
-                }
+                    cnv_Graph.Children.Clear();
             }
-
-            graphData = thisResult;
-
-            //Filter the project per visible elements, this only happends in the update source part;
-            FilterPerList();
-
-            //if data was collected make it the source and update the graph
-            //clear if no data
-            if (thisResult.entireProjectData.Count > 0 )
+            catch (Exception ex)
             {
-                double maxValue = graphData.getMaxValue();
-                double minValue = graphData.getMinValue();
-
-                //Some Data checks:
-                if (minValue > 0)
-                    minValue = 0;
-
-                maxValue = Convert.ToInt32(maxValue);
-
-                txt_CutoffMax.Text = maxValue.ToString();
-                txt_CutoffMin.Text = minValue.ToString();
-                
-                sld_Max.Minimum = minValue;
-                sld_Max.Maximum = maxValue;
-                sld_Max.Value = maxValue;
-
-                sld_Min.Minimum = minValue;
-                sld_Min.Maximum = maxValue;
-                sld_Min.Value = minValue;
-                
-                UpdateGraphData();
-                RefreshGraph();
+                System.Windows.Forms.MessageBox.Show(ex.Message);
             }
-            else
-                cnv_Graph.Children.Clear(); 
 
-        }
+}
         private void UpdateGraphData()
         {
-
-            if (cnv_Graph != null)
+            try
             {
-                cnv_Graph.Visibility = Visibility.Hidden;
-                cnv_Graph.Children.Clear();
-                cnv_Graph.Visibility = Visibility.Visible;
-
-                if (carboProject != null && graphData != null)
+                if (cnv_Graph != null)
                 {
-                    FilterPerMaxMin();
+                    cnv_Graph.Visibility = Visibility.Hidden;
+                    cnv_Graph.Children.Clear();
+                    cnv_Graph.Visibility = Visibility.Visible;
+
+                    if (carboProject != null && graphData != null)
+                    {
+                        FilterPerMaxMin();
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
 
         //this method updates the graph based on current settings.
         private void RefreshGraph()
         {
-            if (cnv_Graph != null)
+            try
             {
-                cnv_Graph.Visibility = Visibility.Hidden;
-                cnv_Graph.Children.Clear();
-                cnv_Graph.Visibility = Visibility.Visible;
-                if (carboProject != null && graphData != null)
+                if (cnv_Graph != null)
                 {
-                    if (graphData.entireProjectData.Count > 0)
+                    cnv_Graph.Visibility = Visibility.Hidden;
+                    cnv_Graph.Children.Clear();
+                    cnv_Graph.Visibility = Visibility.Visible;
+                    if (carboProject != null && graphData != null)
                     {
-                        //to be set in a ui
-                        var result = CarboLifeAPI.HeatMapBarBuilder.GetBarGraph(graphData, cnv_Graph.ActualWidth, cnv_Graph.ActualHeight, currentColourSettings);
-
-                        graphData = result.Item1 as CarboGraphResult;
-                        List<UIElement> graph = result.Item2 as List<UIElement>;
-
-                        cnv_Graph.Children.Clear();
-                        if (graph != null && graph.Count > 0)
+                        if (graphData.entireProjectData.Count > 0)
                         {
-                            foreach (UIElement uielement in graph)
+                            //to be set in a ui
+                            var result = CarboLifeAPI.HeatMapBarBuilder.GetBarGraph(graphData, cnv_Graph.ActualWidth, cnv_Graph.ActualHeight, currentColourSettings);
+
+                            graphData = result.Item1 as CarboGraphResult;
+                            List<UIElement> graph = result.Item2 as List<UIElement>;
+
+                            cnv_Graph.Children.Clear();
+                            if (graph != null && graph.Count > 0)
                             {
-                                cnv_Graph.Children.Add(uielement);
+                                foreach (UIElement uielement in graph)
+                                {
+                                    cnv_Graph.Children.Add(uielement);
+                                }
                             }
                         }
                     }
                 }
+                if (!Utils.IsEmpty(visibleElements))
+                    lbl_debug.Content = string.Format("Elements in projects {0}, selected: {1} " + Environment.NewLine + ", valid/filtered: {2} elements in selection/view: {3}",
+                        graphData.entireProjectData.Count,
+                        graphData.selectedData.Count,
+                        graphData.validData.Count,
+                        visibleElements.Count);
             }
-            if(!Utils.IsEmpty(visibleElements))
-                lbl_debug.Content = string.Format("Elements in projects {0}, selected: {1} " + Environment.NewLine + ", valid/filtered: {2} elements in selection/view: {3}", 
-                    graphData.entireProjectData.Count, 
-                    graphData.selectedData.Count,
-                    graphData.validData.Count,
-                    visibleElements.Count);
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -287,7 +316,7 @@ namespace CarboLifeUI.UI
 
         private void Btn_Ok_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         //Radiocontrollbuttons
@@ -304,17 +333,30 @@ namespace CarboLifeUI.UI
 
         private void sld_Max_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            txt_CutoffMax.Text = Math.Round(sld_Max.Value,3).ToString();
-            UpdateGraphData();
-            RefreshGraph();
+            try
+            {
+                txt_CutoffMax.Text = Math.Round(sld_Max.Value, 3).ToString();
+                UpdateGraphData();
+                RefreshGraph();
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
 
         private void sld_Min_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            txt_CutoffMin.Text = Math.Round(sld_Min.Value, 3).ToString();
-            UpdateGraphData();
-            RefreshGraph();
-
+            try
+            {
+                txt_CutoffMin.Text = Math.Round(sld_Min.Value, 3).ToString();
+                UpdateGraphData();
+                RefreshGraph();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
 
         private void btn_TestFunction(object sender, RoutedEventArgs e)
@@ -336,193 +378,299 @@ namespace CarboLifeUI.UI
             UpdateDataSource();
             UpdateGraphData();
             RefreshGraph();
-
         }
-
 
         private System.Drawing.Color GetColor(System.Windows.Media.Brush startColour)
         {
             //System.Windows.Media.Color color = ((SolidColorBrush)startColour).Color;
             //System.Drawing.Color oldC = System.Drawing.Color.FromArgb(color.R, color.G, color.B);
+            try
+            {
+                System.Drawing.Color oldC = ConvertToColor(startColour);
 
-            System.Drawing.Color oldC = ConvertToColor(startColour);
+                System.Windows.Forms.ColorDialog MyDialog = new System.Windows.Forms.ColorDialog();
+                // Keeps the user from selecting a custom color.
+                MyDialog.AllowFullOpen = true;
+                MyDialog.FullOpen = true;
+                // Allows the user to get help. (The default is false.)
+                MyDialog.ShowHelp = true;
+                // Sets the initial color select to the current text color.
+                MyDialog.Color = oldC;
 
-            System.Windows.Forms.ColorDialog MyDialog = new System.Windows.Forms.ColorDialog();
-            // Keeps the user from selecting a custom color.
-            MyDialog.AllowFullOpen = true;
-            MyDialog.FullOpen = true;
-            // Allows the user to get help. (The default is false.)
-            MyDialog.ShowHelp = true;
-            // Sets the initial color select to the current text color.
-            MyDialog.Color = oldC;
-
-            // Update the text box color if the user clicks OK 
-            if (MyDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                return MyDialog.Color;
-            else
-                return oldC;
+                // Update the text box color if the user clicks OK 
+                if (MyDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    return MyDialog.Color;
+                else
+                    return oldC;
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.Forms.MessageBox.Show(ex.Message);
+                return System.Drawing.Color.FromArgb(255,0,0,0);
+            }
         }
 
         private System.Windows.Media.Color GetColor(System.Drawing.Color drawingColour)
         {
-            System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(drawingColour.A, drawingColour.R, drawingColour.G, drawingColour.B);
-            return color;
+            try
+            {
+                System.Windows.Media.Color color = System.Windows.Media.Color.FromArgb(drawingColour.A, drawingColour.R, drawingColour.G, drawingColour.B);
+                return color;
+            }
+            catch (Exception ex)
+            {
+                return System.Windows.Media.Color.FromArgb(255, 0, 0, 0);
+            }
         }
 
         private System.Drawing.Color ConvertToColor(System.Windows.Media.Brush brush)
         {
-            System.Windows.Media.Color color = ((SolidColorBrush)brush).Color;
-            System.Drawing.Color oldC = System.Drawing.Color.FromArgb(color.R, color.G, color.B);
+            try
+            {
+                System.Windows.Media.Color color = ((SolidColorBrush)brush).Color;
+                System.Drawing.Color oldC = System.Drawing.Color.FromArgb(color.R, color.G, color.B);
 
-            return oldC;
-
+                return oldC;
+            }
+            catch (Exception ex)
+            {
+                return System.Drawing.Color.FromArgb(255, 0, 0, 0);
+            }
         }
 
         private void btn_SaveColours_Click(object sender, RoutedEventArgs e)
         {
             bool found = false;
             bool refreshLookup = false;
-            //Saves the preset
-            //set the preset in the settings, then save the settings;
-            if (carboSettings.colourPresets != null && carboSettings.colourPresets.Count > 0)
+            try
             {
-                for (int i = 0; i < carboSettings.colourPresets.Count; i++)
+                //Saves the preset
+                //set the preset in the settings, then save the settings;
+                if (carboSettings.colourPresets != null && carboSettings.colourPresets.Count > 0)
                 {
-                    CarboColourPreset cps = carboSettings.colourPresets[i];
-
-                    if (cps.name == cbb_colours.Text)
+                    for (int i = 0; i < carboSettings.colourPresets.Count; i++)
                     {
-                        cps = currentColourSettings;
-                        found = true;
+                        CarboColourPreset cps = carboSettings.colourPresets[i];
+
+                        if (cps.name == cbb_colours.Text)
+                        {
+                            cps = currentColourSettings;
+                            found = true;
+                        }
                     }
                 }
-            }
 
-            if(found == false)
+                if (found == false)
+                {
+                    //the name of the template could not be found, save as a new value.
+                    carboSettings.colourPresets.Add(currentColourSettings);
+                    refreshLookup = true;
+                }
+
+                carboSettings.Save();
+
+                if (refreshLookup == true)
+                    refreshColourtemplatesList();
+            }
+            catch (Exception ex)
             {
-                //the name of the template could not be found, save as a new value.
-                carboSettings.colourPresets.Add(currentColourSettings);
-                refreshLookup = true;
+                System.Windows.Forms.MessageBox.Show(ex.Message);
             }
-
-            carboSettings.Save();
-
-            if (refreshLookup == true)
-                refreshColourtemplatesList();
-
         }
 
         private void refreshColourtemplatesList()
         {
-            if (carboSettings != null)
+            try
             {
-                if (carboSettings.colourPresets.Count == 0)
+                if (carboSettings != null)
                 {
-                    carboSettings.colourPresets.Add(new CarboColourPreset());
-                }
+                    if (carboSettings.colourPresets.Count == 0)
+                    {
+                        carboSettings.colourPresets.Add(new CarboColourPreset());
+                    }
 
-                foreach (CarboColourPreset ccp in carboSettings.colourPresets)
-                {
-                    cbb_colours.Items.Add(ccp.name);
+                    foreach (CarboColourPreset ccp in carboSettings.colourPresets)
+                    {
+                        cbb_colours.Items.Add(ccp.name);
+                    }
+                    cbb_colours.SelectedIndex = 0;
                 }
-                cbb_colours.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
             }
         }
 
         private void selectColour()
         {
-            string selectedColourname = cbb_colours.Text;
-
-            foreach (CarboColourPreset ccp in carboSettings.colourPresets)
+            try
             {
-                if(selectedColourname == ccp.name)
+                string selectedColourname = cbb_colours.Text;
+
+                foreach (CarboColourPreset ccp in carboSettings.colourPresets)
                 {
-                    currentColourSettings = ccp;
+                    if (selectedColourname == ccp.name)
+                    {
+                        currentColourSettings = ccp;
 
-                    btn_Low.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.min.a, currentColourSettings.min.r, currentColourSettings.min.g, currentColourSettings.min.b));
-                    btn_Mid.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.mid.a, currentColourSettings.mid.r, currentColourSettings.mid.g, currentColourSettings.mid.b));
-                    btn_High.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.max.a, currentColourSettings.max.r, currentColourSettings.max.g, currentColourSettings.max.b));
+                        btn_Low.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.min.a, currentColourSettings.min.r, currentColourSettings.min.g, currentColourSettings.min.b));
+                        btn_Mid.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.mid.a, currentColourSettings.mid.r, currentColourSettings.mid.g, currentColourSettings.mid.b));
+                        btn_High.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.max.a, currentColourSettings.max.r, currentColourSettings.max.g, currentColourSettings.max.b));
+
+                        btn_MaxOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.outmax.a, currentColourSettings.outmax.r, currentColourSettings.outmax.g, currentColourSettings.outmax.b));
+                        btn_MinOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(currentColourSettings.outmin.a, currentColourSettings.outmin.r, currentColourSettings.outmin.g, currentColourSettings.outmin.b));
 
 
-                    break;
+                        break;
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
 
         private void btn_Low_Click(object sender, RoutedEventArgs e)
         {
-            //get a new colour
-            System.Windows.Media.Brush startColour = btn_MinOut.Background;
-            System.Drawing.Color pickedColour = GetColor(startColour);
+            try
+            {
+                //get a new colour
+                System.Windows.Media.Brush startColour = btn_Low.Background;
+                System.Drawing.Color pickedColour = GetColor(startColour);
 
-            //apply in the colour settings
-            currentColourSettings.min = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+                //apply in the colour settings
+                currentColourSettings.min = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
 
-            //Refresh the graph
-            btn_Low.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
-
-            RefreshGraph();
+                //Refresh the graph
+                btn_Low.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+                UpdateGraphData();
+                RefreshGraph();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
 
         private void btn_Mid_Click(object sender, RoutedEventArgs e)
         {
-            //get a new colour
-            System.Windows.Media.Brush startColour = btn_Mid.Background;
-            System.Drawing.Color pickedColour = GetColor(startColour);
+            try
+            {
+                //get a new colour
+                System.Windows.Media.Brush startColour = btn_Mid.Background;
+                System.Drawing.Color pickedColour = GetColor(startColour);
 
-            //apply in the colour settings
-            currentColourSettings.mid = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+                //apply in the colour settings
+                currentColourSettings.mid = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
 
-            //Refresh the graph
-            btn_Mid.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+                //Refresh the graph
+                btn_Mid.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
 
-            RefreshGraph();
+                UpdateGraphData();
+                RefreshGraph();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
 
         private void btn_High_Click(object sender, RoutedEventArgs e)
         {
-            //get a new colour
-            System.Windows.Media.Brush startColour = btn_High.Background;
-            System.Drawing.Color pickedColour = GetColor(startColour);
+            try
+            {
+                //get a new colour
+                System.Windows.Media.Brush startColour = btn_High.Background;
+                System.Drawing.Color pickedColour = GetColor(startColour);
 
-            //apply in the colour settings
-            currentColourSettings.max = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+                //apply in the colour settings
+                currentColourSettings.max = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
 
-            //Refresh the graph
-            btn_High.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+                //Refresh the graph
+                btn_High.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
 
-            RefreshGraph();
+                UpdateGraphData();
+                RefreshGraph();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
 
         private void btn_MinOut_Click(object sender, RoutedEventArgs e)
         {
-            //get a new colour
-            System.Windows.Media.Brush startColour = btn_MinOut.Background;
-            System.Drawing.Color pickedColour = GetColor(startColour);
+            try
+            {
+                //get a new colour
+                System.Windows.Media.Brush startColour = btn_MinOut.Background;
+                System.Drawing.Color pickedColour = GetColor(startColour);
 
-            //apply in the colour settings
-            currentColourSettings.outmin = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+                //apply in the colour settings
+                currentColourSettings.outmin = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
 
-            //Refresh the graph
-            btn_MinOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+                //Refresh the graph
+                btn_MinOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
 
-            RefreshGraph();
+                UpdateGraphData();
+                RefreshGraph();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
 
         private void btn_MaxOut_Click(object sender, RoutedEventArgs e)
         {
-            //get a new colour
-            System.Windows.Media.Brush startColour = btn_MaxOut.Background;
-            System.Drawing.Color pickedColour = GetColor(startColour);
+            try
+            {
+                //get a new colour
+                System.Windows.Media.Brush startColour = btn_MaxOut.Background;
+                System.Drawing.Color pickedColour = GetColor(startColour);
 
-            //apply in the colour settings
-            currentColourSettings.outmax = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+                //apply in the colour settings
+                currentColourSettings.outmax = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
 
-            //Refresh the graph
-            btn_MinOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+                //Refresh the graph
+                btn_MaxOut.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
 
-            RefreshGraph();
+                UpdateGraphData();
+                RefreshGraph();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void cbb_colours_DropDownClosed(object sender, EventArgs e)
+        {
+            try
+            {
+                if (carboSettings.colourPresets != null && carboSettings.colourPresets.Count > 0)
+                {
+                    for (int i = 0; i < carboSettings.colourPresets.Count; i++)
+                    {
+                        CarboColourPreset cps = carboSettings.colourPresets[i];
+
+                        if (cps.name == cbb_colours.Text)
+                        {
+                            currentColourSettings = cps;
+
+                        }
+                    }
+                }
+                selectColour();
+                RefreshGraph();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
         }
     }
 }

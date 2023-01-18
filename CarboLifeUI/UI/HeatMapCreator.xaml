@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="475" d:DesignWidth="800" MinWidth="800" MinHeight="800" Width="500" Height="475"  Loaded="Window_Loaded" Background="WhiteSmoke" SizeChanged="Window_SizeChanged">
+             d:DesignHeight="900" d:DesignWidth="800" MinWidth="800" MinHeight="900" Width="500" Height="900"  Loaded="Window_Loaded" Background="WhiteSmoke" SizeChanged="Window_SizeChanged">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -64,97 +64,131 @@
             </Grid>
         </GroupBox>
 
+        <TabControl Grid.Column="2" Margin="0,0,0,0" Grid.Row="3">
+            <TabItem Header="Colour Import">
+                <GroupBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="3" Header="Settings" Style="{StaticResource bigStyle}" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="200"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="0"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="5"/>
+                        </Grid.ColumnDefinitions>
 
-        <GroupBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="3" Header="Value" Style="{StaticResource bigStyle}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="0"/>
-                    <RowDefinition Height="200"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="5"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="15"/>
-                    <ColumnDefinition Width="5"/>
-                </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1"  Grid.Row="2" Grid.ColumnSpan="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                                <RowDefinition Height="28"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="160"/>
+                                <ColumnDefinition Width="90"/>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="5"/>
+                            </Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="1"  Grid.Row="2" Grid.ColumnSpan="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="28"/>
-                        <RowDefinition Height="28"/>
-                        <RowDefinition Height="28"/>
-                        <RowDefinition Height="28"/>
-                        <RowDefinition Height="28"/>
-                        <RowDefinition Height="28"/>
-                        <RowDefinition Height="28"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="160"/>
-                        <ColumnDefinition Width="90"/>
-                        <ColumnDefinition Width="120"/>
-                        <ColumnDefinition Width="5"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Grid.Column="1" Margin="0,-5,0,0" Grid.Row="0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="1">Heatmap Type:</Label>
-                    <Label Grid.Column="2" Margin="0,-5,0,0" Grid.Row="0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="1">Filters:</Label>
-
-
-                    <RadioButton Name="rad_ByDensitykg" Grid.Column="1" Margin="5,0,0,14" Grid.Row="1" FontSize="12" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Material [kgCO₂/kg]</RadioButton>
-                    <RadioButton Name="rad_ByDensitym" Grid.Column="1" Margin="5,0,0,14" Grid.Row="2" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Material [kgCO₂/m³]</RadioButton>
-                    <RadioButton Name="rad_ByGroup" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="3" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Group [kgCO₂]</RadioButton>
-                    <RadioButton Name="rad_ByElement" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="4" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click">By Element [kgCO₂]</RadioButton>
-                    <RadioButton Name="rad_MaterialTotals" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="5" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click">By Material Totals</RadioButton>
-
-                    <Label Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Cutoff Max:"/>
-                    <TextBox x:Name="txt_CutoffMax" Grid.Row="2" Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="80" Height="25" Style="{StaticResource flatTextBox}">9999</TextBox>
-                    <Slider x:Name="sld_Max" Grid.Row="2" Grid.Column="4" Margin="5,5,5,5" Value="1" Maximum="1" ValueChanged="sld_Max_ValueChanged"></Slider>
-
-                    <Label Grid.Row="1" Grid.Column="2" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Cutoff Min:"/>
-                    <TextBox x:Name="txt_CutoffMin" Grid.Row="1" Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="80" Height="25" Style="{StaticResource flatTextBox}" >0</TextBox>
-                    <Slider x:Name="sld_Min" Grid.Row="1" Grid.Column="4" Margin="5,5,5,5" Maximum="1" ValueChanged="sld_Min_ValueChanged"></Slider>
-
-                    <Label Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Out of scope elements:"/>
-                    <ComboBox x:Name="cbb_outofBounds" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,0,0"></ComboBox>
-
-                    <Label Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Colour Presets:"/>
-                    <ComboBox x:Name="cbb_colours" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,35,0"></ComboBox>
-
-                    <Button x:Name="btn_Update" Grid.Row="6" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="85" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Update_Click"  Content="Refresh"/>
-                    <Button x:Name="btn_Test" Grid.Row="6" Grid.Column="1" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="85" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_TestFunction"  Content="Test Func"/>
-                    <Button x:Name="btn_SaveColours" Grid.Row="4" Grid.Column="4" Margin="88,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="30" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_SaveColours_Click"  Content="S"/>
-
-                </Grid>
+                            <Label Grid.Column="1" Margin="0,-5,0,0" Grid.Row="0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="1">Heatmap Type:</Label>
+                            <Label Grid.Column="2" Margin="0,-5,0,0" Grid.Row="0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="1">Filters:</Label>
 
 
-                <Label Grid.Column="1" Margin="0,7,0,0" Grid.Row="5" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="1" >Colours:</Label>
+                            <RadioButton Name="rad_ByDensitykg" Grid.Column="1" Margin="5,0,0,14" Grid.Row="1" FontSize="12" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Material [kgCO₂/kg]</RadioButton>
+                            <RadioButton Name="rad_ByDensitym" Grid.Column="1" Margin="5,0,0,14" Grid.Row="2" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Material [kgCO₂/m³]</RadioButton>
+                            <RadioButton Name="rad_ByGroup" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="3" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Group [kgCO₂]</RadioButton>
+                            <RadioButton Name="rad_ByElement" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="4" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click">By Element [kgCO₂]</RadioButton>
+                            <RadioButton Name="rad_MaterialTotals" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="5" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click">By Material Totals</RadioButton>
 
-                <Canvas Name="cnv_Graph" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="5" Background="White" Visibility="Visible"></Canvas>
+                            <Label Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Cutoff Max:"/>
+                            <TextBox x:Name="txt_CutoffMax" Grid.Row="2" Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="80" Height="25" Style="{StaticResource flatTextBox}" IsEnabled="False">9999</TextBox>
+                            <Slider x:Name="sld_Max" Grid.Row="2" Grid.Column="4" Margin="5,5,5,5" Value="1" Maximum="1" ValueChanged="sld_Max_ValueChanged"></Slider>
 
-                <Button Name="btn_Low" Grid.Row="4" Grid.Column="1" Margin="35,00,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Lime"  IsEnabled="True" Click="btn_Low_Click">Low</Button>
-                <Button Name="btn_Mid" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Orange" IsEnabled="True" Click="btn_Mid_Click" >Mid</Button>
-                <Button Name="btn_High" Grid.Row="4" Grid.Column="1" Margin="0,0,35,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Red" IsEnabled="True" Click="btn_High_Click" >High</Button>
-                
-                <Button Name="btn_MinOut" Grid.Row="4" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="30" Style="{StaticResource baseStyle}" Background="CornflowerBlue"  IsEnabled="True" Content="Out" Click="btn_MinOut_Click" />
-                <Button Name="btn_MaxOut" Grid.Row="4" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="25" Height="30" Style="{StaticResource baseStyle}" Background="Purple" IsEnabled="True"  Content="Out" Click="btn_MaxOut_Click"/>
+                            <Label Grid.Row="1" Grid.Column="2" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Cutoff Min:"/>
+                            <TextBox x:Name="txt_CutoffMin" Grid.Row="1" Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="80" Height="25" Style="{StaticResource flatTextBox}" IsEnabled="False" >0</TextBox>
+                            <Slider x:Name="sld_Min" Grid.Row="1" Grid.Column="4" Margin="5,5,5,5" Maximum="1" ValueChanged="sld_Min_ValueChanged"></Slider>
+
+                            <Label Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Out of scope elements:"/>
+                            <ComboBox x:Name="cbb_outofBounds" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,0,0"  Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
+
+                            <Label Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Colour Presets:"/>
+                            <ComboBox x:Name="cbb_colours" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,35,0" DropDownClosed="cbb_colours_DropDownClosed"  Style="{StaticResource ComboBoxFlatStyle}"  ></ComboBox>
+
+                            <Button x:Name="btn_Update" Grid.Row="6" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="85" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Update_Click"  Content="Refresh"/>
+                            <Button x:Name="btn_SaveColours" Grid.Row="4" Grid.Column="4" Margin="88,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="30" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_SaveColours_Click"  Content="S"/>
+
+                        </Grid>
+
+
+                        <Canvas Name="cnv_Graph" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="5" Background="White" Visibility="Visible"></Canvas>
+
+                        <Button Name="btn_Low" Grid.Row="4" Grid.Column="1" Margin="35,00,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Lime"  IsEnabled="True" Click="btn_Low_Click">Low</Button>
+                        <Button Name="btn_Mid" Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Orange" IsEnabled="True" Click="btn_Mid_Click" >Mid</Button>
+                        <Button Name="btn_High" Grid.Row="4" Grid.Column="1" Margin="0,0,35,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="30" Style="{StaticResource baseStyle}" Background="Red" IsEnabled="True" Click="btn_High_Click" >High</Button>
+
+                        <Button Name="btn_MinOut" Grid.Row="4" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="25" Height="30" Style="{StaticResource baseStyle}" Background="CornflowerBlue"  IsEnabled="True" Content="Out" Click="btn_MinOut_Click" />
+                        <Button Name="btn_MaxOut" Grid.Row="4" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="25" Height="30" Style="{StaticResource baseStyle}" Background="Purple" IsEnabled="True"  Content="Out" Click="btn_MaxOut_Click"/>
+
+                        <!--These two dont work but are required for Revit interaction-->
+                        <Button x:Name="btn_Apply"  Grid.Row="5" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="30" Style="{StaticResource ButtonStyle}" Click="btn_Show_Click"  Content="Apply Colours" Visibility="Visible"/>
+                        <Button x:Name="btn_Clear"  Grid.Row="5" Grid.Column="1" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Clear_Click" Visibility="Visible">Clear Colours</Button>
 
 
 
-            </Grid>
-        </GroupBox>
+                    </Grid>
+                </GroupBox>
 
-        <Button Name="btn_Ok" Grid.Row="4" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Ok_Click">Ok</Button>
-        <CheckBox Name="chx_ImportValuesToRevit" Grid.Column="2" Margin="373,10,-402,0" Grid.Row="4" Grid.ColumnSpan="2" FontSize="14" FontFamily="Calibri" IsChecked="True" Height="25" VerticalAlignment="Top">Import Embodied Carbon values to Revit Elements</CheckBox>
+            </TabItem>
+            <TabItem Header="Value Import">
+                <GroupBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="3" Header="Settings" Style="{StaticResource bigStyle}" >
 
-        <!--These two dont work but are required for Revit interaction-->
-        <Button x:Name="btn_Apply" Grid.Row="4" Grid.Column="2" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="30" Style="{StaticResource ButtonStyle}" Click="btn_Show_Click"  Content="Apply Colours" Visibility="Visible"/>
-        <Button x:Name="btn_Clear" Grid.Row="4" Grid.Column="2" Margin="110,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Clear_Click" Visibility="Visible">Clear</Button>
+                    <Grid Grid.Column="1"  Grid.Row="2" Grid.ColumnSpan="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="28"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
 
+                        <CheckBox x:Name="chc_ImportCarbon" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="1" FontSize="14" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Visibility="Hidden">Import total EC values to Parameter:</CheckBox>
+
+                        <Label Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Import total EC values to Parameter:"/>
+                        <ComboBox x:Name="cbb_Parameter" Grid.Row="1" Grid.Column="3" Margin="0,0,0,0"  Style="{StaticResource ComboBoxFlatStyle}">9999</ComboBox>
+
+                        <Button x:Name="btn_Importvalues"  Grid.Row="1" Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="30" Style="{StaticResource ButtonStyle}"  Content="Import values" Visibility="Visible"/>
+                        <Button x:Name="btn_ClearValues"  Grid.Row="6" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="30" Style="{StaticResource ButtonStyle}" Visibility="Visible">Clear Values</Button>
+
+                    </Grid>
+                </GroupBox>
+            </TabItem>
+        </TabControl>
+
+
+        <Button Name="btn_Ok" Grid.Row="4" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Ok_Click">Close</Button>
 
 
     </Grid>

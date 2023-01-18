@@ -40,26 +40,33 @@ namespace CarboLifeAPI
         public static CarboGraphResult GetMaterialMassData(CarboProject carboProject)
         {
             //This is the most usefull set of Data To work with for now:
-            List<CarboElement> bufferList = carboProject.getTemporaryElementListWithTotals();
+            IEnumerable<CarboElement> bufferList = carboProject.getElementsFromGroups();
 
             CarboGraphResult thisResult = new CarboGraphResult();
 
-            thisResult.ValueName = "ECI";
-            thisResult.Unit = "kgCO₂/kg";
-
-            //This part collects the required data we need to build the graph later on.
-            foreach (CarboElement carboElement in bufferList)
+            try
             {
-                CarboValues value = new CarboValues();
+                thisResult.ValueName = "ECI";
+                thisResult.Unit = "kgCO₂/kg";
 
-                value.Id = carboElement.Id;
-                value.Value = carboElement.ECI_Total;
-                value.ValueName = carboElement.CarboMaterialName;
-                value.ValueCategory = carboElement.Category;
+                //This part collects the required data we need to build the graph later on.
+                foreach (CarboElement carboElement in bufferList)
+                {
+                    CarboValues value = new CarboValues();
 
-                thisResult.entireProjectData.Add(value);
+                    value.Id = carboElement.Id;
+                    value.Value = carboElement.ECI_Total;
+                    value.ValueName = carboElement.CarboMaterialName;
+                    value.ValueCategory = carboElement.Category;
+
+                    thisResult.entireProjectData.Add(value);
+                }
             }
-
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+                return thisResult;
+            }
             //set the values of which to calculate;
             return thisResult;
         }
@@ -67,7 +74,7 @@ namespace CarboLifeAPI
         public static CarboGraphResult GetMaterialVolumeData(CarboProject carboProject)
         {
             //This is the most usefull set of Data To work with for now:
-            List<CarboElement> bufferList = carboProject.getTemporaryElementListWithTotals();
+            IEnumerable<CarboElement> bufferList = carboProject.getElementsFromGroups();
             CarboGraphResult thisResult = new CarboGraphResult();
 
             try
@@ -102,33 +109,39 @@ namespace CarboLifeAPI
         {
             //This is the most usefull set of Data To work with for now:
             CarboGraphResult thisResult = new CarboGraphResult();
-
-            thisResult.ValueName = "EC";
-            thisResult.Unit = "tCO₂e";
-
-            foreach (CarboGroup cgr in carboProject.getGroupList)
+            try
             {
-                //This part collects the required data we need to build the graph later on.
-                foreach (CarboElement carboElement in cgr.AllElements)
+                thisResult.ValueName = "EC";
+                thisResult.Unit = "tCO₂e";
+
+                foreach (CarboGroup cgr in carboProject.getGroupList)
                 {
-                    CarboValues value = new CarboValues();
-                    value.Id = carboElement.Id;
-                    value.Value = cgr.EC;
-                    value.ValueName = cgr.MaterialName;
-                    value.ValueCategory = cgr.Category;
-                    thisResult.entireProjectData.Add(value);
+                    //This part collects the required data we need to build the graph later on.
+                    foreach (CarboElement carboElement in cgr.AllElements)
+                    {
+                        CarboValues value = new CarboValues();
+                        value.Id = carboElement.Id;
+                        value.Value = cgr.EC;
+                        value.ValueName = cgr.MaterialName;
+                        value.ValueCategory = cgr.Category;
+                        thisResult.entireProjectData.Add(value);
+                    }
                 }
+
+                //set the values of which to calculate;
+                return thisResult;
             }
-
-            //set the values of which to calculate;
-            return thisResult;
-
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+                return thisResult;
+            }
         }
 
         public static CarboGraphResult GetPerElementData(CarboProject carboProject)
         {
             //This is the most usefull set of Data To work with for now:
-            List<CarboElement> bufferList = carboProject.getTemporaryElementListWithTotals();
+            IEnumerable<CarboElement> bufferList = carboProject.getElementsFromGroups();
 
             CarboGraphResult thisResult = new CarboGraphResult();
 
@@ -152,44 +165,51 @@ namespace CarboLifeAPI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
                 return thisResult;
             }
+
         }
 
         public static CarboGraphResult GetMaterialTotalData(CarboProject carboProject)
         {
             //make sure all carbo materials are written in the elements;
-            carboProject.CalculateProject();
-
             //This is the most usefull set of Data To work with for now:
             CarboGraphResult thisResult = new CarboGraphResult();
-            List<CarboDataPoint> materialData = carboProject.getMaterialTotals();
-            IEnumerable<CarboElement> bufferList = carboProject.getElementsFromGroups();
-
-            thisResult.ValueName = "EC";
-            thisResult.Unit = "ElementsInGroup";
-
-            List<CarboDataPoint> materialist = carboProject.getMaterialTotals();
-
-            //add the elements per material;
-
-            foreach (CarboDataPoint cdp in materialData)
+            try
             {
-                foreach (CarboElement carboElement in bufferList)
-                {
-                    if (carboElement.CarboMaterialName == cdp.Name)
-                    {
-                        CarboValues value = new CarboValues();
-                        value.Id = carboElement.Id;
-                        value.Value = cdp.Value;
-                        value.ValueName = carboElement.CarboMaterialName;
-                        value.ValueCategory = carboElement.Category;
+                carboProject.CalculateProject();
+                List<CarboDataPoint> materialData = carboProject.getMaterialTotals();
+                IEnumerable<CarboElement> bufferList = carboProject.getElementsFromGroups();
 
-                        thisResult.entireProjectData.Add(value);
+                thisResult.ValueName = "EC";
+                thisResult.Unit = "tCO₂e";
+
+                List<CarboDataPoint> materialist = carboProject.getMaterialTotals();
+
+                //add the elements per material;
+
+                foreach (CarboDataPoint cdp in materialData)
+                {
+                    foreach (CarboElement carboElement in bufferList)
+                    {
+                        if (carboElement.CarboMaterialName == cdp.Name)
+                        {
+                            CarboValues value = new CarboValues();
+                            value.Id = carboElement.Id;
+                            value.Value = cdp.Value;
+                            value.ValueName = carboElement.CarboMaterialName;
+                            value.ValueCategory = carboElement.Category;
+
+                            thisResult.entireProjectData.Add(value);
+                        }
                     }
+
                 }
-                
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
             }
 
             return thisResult;

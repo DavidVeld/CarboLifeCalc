@@ -36,8 +36,6 @@ namespace CarboLifeUI.UI
         /// <summary>
         /// If a heat map will be created after exit;
         /// </summary>
-        public bool createHeatmap {get; set;}
-        public bool importData { get; set; }
 
         //For async excel exporter:
         public string ExcelExportPath { get; private set; }
@@ -74,17 +72,6 @@ namespace CarboLifeUI.UI
         }
         private void Menu_Loaded(object sender, RoutedEventArgs e)
         {
-            //Delete log
-            /*
-            string fileName = "db\\log.txt";
-            string logPath = Utils.getAssemblyPath() + "\\" + fileName;
-
-            if (File.Exists(logPath))
-                File.Delete(logPath);
-
-            Utils.WriteToLog("New Log Started: " + carboLifeProject.Name);
-            */
-            //Create a usermaterial file;
 
         }
 
@@ -528,10 +515,6 @@ namespace CarboLifeUI.UI
 
         private void chx_AcceptHeatmap_Click(object sender, RoutedEventArgs e)
         {
-            if (chx_AcceptHeatmap.IsChecked == true)
-                createHeatmap = true;
-            else
-                createHeatmap = false;
 
         }
 

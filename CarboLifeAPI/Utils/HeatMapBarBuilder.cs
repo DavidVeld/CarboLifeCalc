@@ -33,13 +33,6 @@ namespace CarboLifeAPI
     /// </summary>
     public static class HeatMapBarBuilder
     {
-        /*
-        public static System.Drawing.Color Session_minOutColour { get; set; }
-        public static System.Drawing.Color Session_maxOutColour { get; set; }
-        public static System.Drawing.Color Session_minRangeColour { get; set; }
-        public static System.Drawing.Color Session_midRangeColour { get; set; }
-        public static System.Drawing.Color Session_maxRangeColour { get; set; }
-        */
 
         //The Values we need to construct the graph
 
@@ -50,7 +43,6 @@ namespace CarboLifeAPI
         private static double canvasHeight;
 
         private static CarboColourPreset colourSettings;
-
 
         //CanvasScale
         //The mins and maxes of the dataset
@@ -70,7 +62,6 @@ namespace CarboLifeAPI
         private static double scalex;
         private static double scaley;
         private static double barwidth;
-
 
         /// <summary>
         /// This Function will return a bar-chart based on the provided projectdata, min and max and settings, it will also give the colour code for each element.
@@ -197,7 +188,7 @@ namespace CarboLifeAPI
             {
                 Line y_stepline = GetLine(0, i, BarCount, i);
                 y_stepline.StrokeThickness = 1;
-                y_stepline.Stroke = System.Windows.Media.Brushes.Gray; 
+                y_stepline.Stroke = System.Windows.Media.Brushes.LightGray; 
 
                 //value
                 TextBlock yval = new TextBlock();
@@ -252,9 +243,49 @@ namespace CarboLifeAPI
             //Draw a bar for each unique double starting from low:
             if (uniqueValues.Count > 0)
             {
+                int p = 0;
+
                 for (int i = 0; i < uniqueValues.Count; i++)
                 {
                     double value = uniqueValues[i];
+
+                    //get the list of results that match the bar
+                    List<CarboValues> listOfResults = new List<CarboValues>();
+                    string valueString = "";
+                    foreach(CarboValues cv in projectData.validData)
+                    {
+                        if (Math.Round(cv.Value, 3) == Math.Round(value, 3))
+                        {
+                            listOfResults.Add(cv);
+                        }
+                    }
+                   // Use only unique values
+                    List<string> listOfResultsUnique = listOfResults.Select(item => item.ValueName).Distinct().ToList();
+                    foreach (string str in listOfResultsUnique)
+                    {
+                        valueString += str + Environment.NewLine;
+                    }
+                    valueString = valueString.ToString().TrimEnd('\r', '\n');
+
+
+                    //only draw the notes on each bas if <20
+                    bool drawtags = false;
+                    if (p > 10)
+                        p = 0;
+                    if (uniqueValues.Count < 20)
+                    {
+                        drawtags = true;
+                    }
+                    else if(i == 0 || i == uniqueValues.Count - 1 || p == 10)
+                    {
+                        drawtags = true;
+
+                    }
+                    else
+                    {
+                        drawtags = false;
+                    }
+
                     //Draw the shape:
                     //GetTheColour:
                     System.Drawing.Color colorBrush = GetColour(i, uniqueValues.Count);
@@ -273,20 +304,39 @@ namespace CarboLifeAPI
 
                     Canvas.SetLeft(rect, Xorigin + (i * barwidth));
                     Canvas.SetBottom(rect, Yorigin);
-
-                    //Set a text Value
-                    TextBlock label = new TextBlock();
-                    label.Text = Convert.ToString(Math.Round(value,3));
-                    label.Foreground = Brushes.Black;
-                    label.FontSize = fontsize;
-                    label.TextAlignment = TextAlignment.Right;
-                    Canvas.SetLeft(label, Xorigin + (i * barwidth) + .25 * barwidth);
-                    Canvas.SetBottom(label, value * scaley + 40);
-                    label.LayoutTransform = myTransformGroup;
-
                     thisResult.Add(rect);
-                    thisResult.Add(label);
 
+                    //if there are too many bars, don't show the legend;
+                    if (drawtags == true)
+                    {
+                        //Set a text Value
+                        TextBlock label = new TextBlock();
+                        label.Text = Convert.ToString(Math.Round(value, 3)) + Environment.NewLine + valueString;
+                        label.Foreground = Brushes.Black;
+                        label.FontSize = fontsize;
+                        if (i == uniqueValues.Count - 1)
+                        {
+                            //last label
+                            label.TextAlignment = TextAlignment.Left;
+                            Canvas.SetBottom(label, value * scaley - 75);
+                        }
+                        else
+                        {
+                            label.TextAlignment = TextAlignment.Right;
+                            Canvas.SetBottom(label, value * scaley + 40);
+                        }
+                        label.VerticalAlignment = VerticalAlignment.Center;
+                        label.HorizontalAlignment = HorizontalAlignment.Center;
+
+                        Canvas.SetLeft(label, Xorigin + (i * barwidth) + .20 * barwidth);
+                       // Canvas.SetBottom(label, value * scaley + 40);
+
+                        //Canvas.SetBottom(label, -100);
+
+                        label.LayoutTransform = myTransformGroup;
+
+                        thisResult.Add(label);
+                    }
                     //Colour all the CarboValues so they can be moved to Revit.
                     foreach (CarboValues cv in projectData.validData)
                     {
@@ -301,6 +351,8 @@ namespace CarboLifeAPI
                             cv.b = colorBrush.B;
                         }
                     }
+
+                    p++;
                 }
 
                 foreach (CarboValues cv in projectData.outOfBoundsMaxData)
