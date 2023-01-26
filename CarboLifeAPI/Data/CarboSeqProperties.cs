@@ -10,11 +10,12 @@ namespace CarboLifeAPI.Data
     public class CarboSeqProperties
     {
         public string propertyName { get; set; }
+        public int sequestrationPeriod { get; set; }
+        public double value { get; set; }
 
         //Total
         [NonSerialized]
         public string calcResult;
-        public double value { get; set; }
 
         public CarboSeqProperties()
         {
@@ -22,11 +23,12 @@ namespace CarboLifeAPI.Data
 
             value = 0;
             calcResult = "";
-
+            sequestrationPeriod = 40;
         }
 
         public void calculate()
         {
+
         }
     }
 }

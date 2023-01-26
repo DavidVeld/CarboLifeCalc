@@ -18,6 +18,8 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using CarboLifeAPI;
 using Microsoft.Win32;
+using LiveCharts.Helpers;
+using LiveCharts.Definitions.Charts;
 
 namespace CarboLifeUI.UI
 {
@@ -72,6 +74,8 @@ namespace CarboLifeUI.UI
                     {
                         cbb_GraphType.Items.Add("Materials");
                         cbb_GraphType.Items.Add("Totals");
+                        cbb_GraphType.Items.Add("Life Line");
+
                         cbb_GraphType.Text = "Totals";
                     }
                 }
@@ -123,6 +127,18 @@ namespace CarboLifeUI.UI
                         projectlist.Add(cp.Name);
                     }
                     //Labels = null;
+                    //set the axis:
+                    AxesCollection XaxisCollection = new AxesCollection();
+                    Axis XAxis = new Axis { Title = "Projects", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black, Labels = null };
+                    XaxisCollection.Add(XAxis);
+
+                    AxesCollection YaxisCollection = new AxesCollection();
+                    Axis YAxis = new Axis { Title = "Total Embodied Carbon (tCO2)", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
+                    YaxisCollection.Add(YAxis);
+
+                    barchart.AxisX = XaxisCollection;
+                    barchart.AxisY = YaxisCollection;
+
                     Labels = projectlist.ToArray();
 
                     barchart.SeriesColors = GraphBuilder.getColours();
@@ -138,22 +154,7 @@ namespace CarboLifeUI.UI
             }
         }
 
-        //When assembly cant be find bind to current
-        System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            System.Reflection.Assembly ayResult = null;
-            string sShortAssemblyName = args.Name.Split(',')[0];
-            System.Reflection.Assembly[] ayAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (System.Reflection.Assembly ayAssembly in ayAssemblies)
-            {
-                if (sShortAssemblyName == ayAssembly.FullName.Split(',')[0])
-                {
-                    ayResult = ayAssembly;
-                    break;
-                }
-            }
-            return ayResult;
-        }
+
 
         private void cbb_GraphType_DropDownClosed(object sender, EventArgs e)
         {
@@ -235,5 +236,65 @@ namespace CarboLifeUI.UI
         {
             DataExportUtils.ExportComaringGraphs(CarboLifeProject, projectListToCompareTo);
         }
+
+        private void btn_Refresh2_Click(object sender, RoutedEventArgs e)
+        {
+            if (CarboLifeProject != null)
+            {
+                //IList<CarboDataPoint> data = TimeLine.GetBarGraph(CarboLifeProject, true, true, true);
+
+                SeriesCollection currentProjectSeriesCollection = new SeriesCollection();
+
+                currentProjectSeriesCollection = GraphBuilder.BuildLifeLine(CarboLifeProject, projectListToCompareTo);
+
+                //always count from 0;
+                double min = GraphBuilder.min;
+
+                if (min > 0)
+                {
+                    min = - 10;
+                }
+                else
+                {
+                    min = min - 10;
+                }
+
+                //set the axis:
+                AxesCollection XaxisCollection = new AxesCollection();
+                Axis XAxis = new Axis { Title = "Years From Construction Completion", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
+                XaxisCollection.Add(XAxis);
+
+                AxesCollection YaxisCollection = new AxesCollection();
+                Axis YAxis = new Axis { Title = "Total embodied Carbon (tCO2)", MinValue = min, Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
+                YaxisCollection.Add(YAxis);
+
+
+                barchart.AxisX = XaxisCollection;
+                barchart.AxisY = YaxisCollection;
+
+                barchart.Series = currentProjectSeriesCollection;
+
+
+                DataContext = this;
+            }
+        }
+
+        //When assembly cant be find bind to current
+        System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            System.Reflection.Assembly ayResult = null;
+            string sShortAssemblyName = args.Name.Split(',')[0];
+            System.Reflection.Assembly[] ayAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (System.Reflection.Assembly ayAssembly in ayAssemblies)
+            {
+                if (sShortAssemblyName == ayAssembly.FullName.Split(',')[0])
+                {
+                    ayResult = ayAssembly;
+                    break;
+                }
+            }
+            return ayResult;
+        }
+
     }
 }

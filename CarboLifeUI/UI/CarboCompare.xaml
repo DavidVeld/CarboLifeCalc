@@ -15,6 +15,18 @@
                 <ResourceDictionary Source="MyDataGrid.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <Style TargetType="lvc:Separator">
+                <Setter Property="Stroke" Value="#1A303030"></Setter>
+                <Style.Triggers>
+                    <Trigger Property="AxisOrientation" Value="X">
+                        <Setter Property="IsEnabled" Value="False"></Setter>
+                    </Trigger>
+                    <Trigger Property="AxisOrientation" Value="X">
+                        <Setter Property="IsEnabled" Value="True"></Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -79,11 +91,17 @@
         <lvc:CartesianChart Name="barchart" Grid.Column="2" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Compare Projects" 
-                          Labels="{Binding Labels}" 
-                          Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" />
+                          Labels="{Binding Labels}" >
+
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Stroke="Red" Width="20"/>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisX>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Carbon Totals" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                <lvc:Axis Title="Carbon Totals" LabelFormatter="{Binding Formatter}">
+
+                </lvc:Axis>
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 
@@ -92,6 +110,7 @@
         <ComboBox Name="cbb_GraphType" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="84,4,527,5"  Height="26"  Style="{StaticResource  ComboBoxFlatStyleLight}" IsReadOnly="True" DropDownClosed="cbb_GraphType_DropDownClosed" IsEnabled="False"></ComboBox>
 
         <Button Name="btn_Refresh"  Grid.Column="1" Grid.Row="3"  Margin="0,6,96,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Refresh" Click="btn_Refresh_Click" ></Button>
+        <Button Name="btn_Refresh2"  Grid.Column="1" Grid.Row="3"  Margin="100,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="102" Height="26" Style="{StaticResource ButtonStyle}" Content="Show Life line " Click="btn_Refresh2_Click" ></Button>
 
 
     </Grid>

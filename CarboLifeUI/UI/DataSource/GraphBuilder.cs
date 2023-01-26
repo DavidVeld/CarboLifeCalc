@@ -15,6 +15,8 @@ namespace CarboLifeUI.UI
 {
     public static class GraphBuilder
     {
+        public static double min;
+        public static double max;
 
         /// <summary>
         /// Builds an overview A1-Mix graph for the user to add to a graph
@@ -122,6 +124,57 @@ namespace CarboLifeUI.UI
             }
             return result;
 
+        }
+
+        //
+        internal static SeriesCollection BuildLifeLine(CarboProject project, List<CarboProject> projectListToCompareTo)
+        {
+            min = double.PositiveInfinity;
+            max = double.NegativeInfinity;
+
+            List<CarboProject> projectList = new List<CarboProject>();
+
+            if(project != null)
+                projectList.Add(project);
+
+            if (projectListToCompareTo != null && projectListToCompareTo.Count > 0)
+            {
+                projectList.AddRange(projectListToCompareTo);
+            }
+
+            SeriesCollection result = new SeriesCollection();
+
+            if (projectList.Count > 0)
+            {
+                foreach (CarboProject prct in projectList)
+                {
+                    IList<CarboDataPoint> data = CarboTimeLine.GetTimeLineDataPoints(prct, true, true, true);
+
+                    LineSeries lineSeries = new LineSeries();
+                    ChartValues<double> Values = new ChartValues<double>();
+
+                    foreach (CarboDataPoint point in data)
+                    {
+                        Values.Add(Math.Round((point.Value / 1000), 1));
+                    }
+
+                    lineSeries.Values = Values;
+                    lineSeries.Title = prct.Name;
+                    lineSeries.DataLabels = false;
+                    lineSeries.Foreground = Brushes.Black;
+                    
+                    //check min max
+                    if(Values.Max() > max)
+                        max = Values.Max();
+                    if(Values.Min() < min) 
+                        min = Values.Min();
+
+                    result.Add(lineSeries);
+                }
+            }
+
+            return result;
+            
         }
 
         internal static ColorsCollection getColours()

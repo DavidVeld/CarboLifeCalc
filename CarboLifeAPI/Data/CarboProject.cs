@@ -54,6 +54,10 @@ namespace CarboLifeAPI.Data
 
         public string valueUnit { get; set; }
 
+        public int designLife { get; set; }
+
+        public double energyPerYear { get; set; }
+
         public List<CarboMapElement> carboMaterialMap  { get; set; }
         public List<CarboLevel> carboLevelList { get; set; }
 
@@ -165,7 +169,8 @@ namespace CarboLifeAPI.Data
             calculateD = false;
             calculateAdd = false;
 
-
+            designLife = 50;
+            energyPerYear = 0;
         }
 
 
@@ -712,7 +717,7 @@ namespace CarboLifeAPI.Data
 
         /// <summary>
         /// Returns a list of the project totals (9 items)
-        /// A1-A3, A4, A5 (Material), A5(Global), B1-B7, C1-C4, C1(Global), D, Additional)
+        /// A1-A3, A4, A5 (Material), A5(Global), B1-B7, C1-C4, C1(Global), D, Sequestration, Additional)
         /// These are net values(based on the corrected converted Total Volume
         /// </summary>
         /// <returns>Returns a list of the project totals (9 items) in kgCO₂</returns>

@@ -106,6 +106,7 @@
     <Compile Include="UtilClasses\VehicleAndFuel.cs" />
     <Compile Include="Utils\CarboDataPoint.cs" />
     <Compile Include="Utils\CarboCalcTextUtils.cs" />
+    <Compile Include="Utils\CarboTimeLine.cs" />
     <Compile Include="Utils\HeatMapCollector.cs" />
     <Compile Include="Utils\HeatMapBarBuilder.cs" />
     <None Include="Superseded\HeatMapBuilderClasses.cs" />

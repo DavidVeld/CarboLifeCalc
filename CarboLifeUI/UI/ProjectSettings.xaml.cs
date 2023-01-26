@@ -124,6 +124,10 @@ namespace CarboLifeUI.UI
                     txt_DemoArea.Text = CarboLifeProject.demoArea.ToString();
                     txt_DemoC1Fact.Text = CarboLifeProject.C1Factor.ToString();
 
+                    //energy
+                    txt_DesignLife.Text = CarboLifeProject.designLife.ToString();
+                    txt_EnergyPerYear.Text = CarboLifeProject.energyPerYear.ToString();
+
                     }
             }
             catch (Exception ex)
@@ -335,9 +339,38 @@ namespace CarboLifeUI.UI
             }
         }
 
+
+
+
         private void cbb_Currency_DropDownClosed(object sender, EventArgs e)
         {
             CarboLifeProject.valueUnit = cbb_Currency.Text;
+        }
+
+        private async void txt_DesignLife_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(250);
+            if (startLength == tb.Text.Length)
+            {
+                CarboLifeProject.designLife = Convert.ToInt32(Utils.ConvertMeToDouble(tb.Text));
+                SaveSettings();
+            }
+        }
+
+        private async void txt_EnergyPerYear_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(250);
+            if (startLength == tb.Text.Length)
+            {
+                CarboLifeProject.energyPerYear = Utils.ConvertMeToDouble(tb.Text);
+                SaveSettings();
+            }
         }
     }
 }
