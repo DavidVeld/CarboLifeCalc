@@ -7,17 +7,22 @@ using System.Threading.Tasks;
 namespace CarboLifeAPI.Data
 {
     [Serializable]
-    public class CarboSeqProperties
+    public class CarboEnergyProperties
     {
         public string propertyName { get; set; }
         public double value { get; set; }
-        public int sequestrationPeriod { get; set; }
+        public double electricityPerYear { get; set; }
+        public double waterPerYear { get; set; }
+        public double gasPerYear { get; set; }
         public string comment { get; set; }
-        public CarboSeqProperties()
+
+        public CarboEnergyProperties()
         {
-            propertyName = "Sequestration";
+            propertyName = "CarboEnergyProperties";
             value = 0;
-            sequestrationPeriod = 40;
+            electricityPerYear = 0;
+            waterPerYear = 0;
+            gasPerYear = 0;
             comment = "";
         }
 

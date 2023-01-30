@@ -31,11 +31,11 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
         <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource baseStyleTitle}">Material Editor</Label>
-        <Label Grid.Column="1" Margin="10,0,10,0" Grid.Row="2" Height="27" VerticalAlignment="Top"  Style="{StaticResource bigStyle}">Material Category:</Label>
+        <Label Grid.Column="1" Margin="10,0,10,0" Grid.Row="2" Height="27" VerticalAlignment="Top"  Style="{StaticResource formTextStyle}">Material Category:</Label>
 
         <ComboBox Name="cbb_Categories" Grid.Column="1" Grid.Row="2" Margin="10,25,10,0" Height="30" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyleLight}" DropDownClosed="Cbb_Categories_DropDownClosed" ></ComboBox>
 
-        <Label Grid.Column="1" Margin="10,58,10,0" Grid.Row="2" Height="27" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource bigStyle}">Search:</Label>
+        <Label Grid.Column="1" Margin="10,58,10,0" Grid.Row="2" Height="27" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Search:</Label>
         <TextBox Name="txt_Search" Grid.Column="1" Grid.Row="2" Margin="10,85,10,0" Height="30" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" TextChanged="Txt_Search_TextChanged"></TextBox>
 
 
@@ -74,28 +74,28 @@
 
 
 
-                <Label Grid.Column="1" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,0" Style="{StaticResource bigStyle}">Name:</Label>
+                <Label Grid.Column="1" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,0" Style="{StaticResource formTextStyle}">Name:</Label>
                 <TextBox Name="txt_Name" Grid.Column="2" Grid.Row="1" Height="26" VerticalAlignment="Top" Margin="0,5,5,5" Style="{StaticResource flatTextBox}"></TextBox>
 
-                <Label Grid.Column="1" Grid.Row="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,0" Style="{StaticResource bigStyle}">Description:</Label>
+                <Label Grid.Column="1" Grid.Row="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,0" Style="{StaticResource formTextStyle}">Description:</Label>
                 <TextBox Name="txt_Description" Grid.Column="2" Grid.Row="2" Margin="0,5,5,5"  Style="{StaticResource flatTextBox}" SpellCheck.IsEnabled="True" ></TextBox>
                 <Button Name="btn_EditDescription"  Grid.Row="2" Grid.Column="3" Height="25" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_EditDescription_Click" >Edit...</Button>
 
-                <Label Grid.Column="1" Grid.Row="3" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Margin="0,5,0,0">Category:</Label>
+                <Label Grid.Column="1" Grid.Row="3" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="0,5,0,0">Category:</Label>
                 <ComboBox Name="cbb_Category"  Grid.Column="2" Grid.Row="3" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
                 <Button Name="btn_AddCategory"  Grid.Row="3" Grid.Column="3" Height="26" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_AddCategory_Click" >Add...</Button>
 
-                <Label Grid.Column="1" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Margin="0,5,0,0">Density:</Label>
+                <Label Grid.Column="1" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="0,5,0,0">Density:</Label>
                 <TextBox Name="txt_Density" Grid.Column="2" Grid.Row="4" Height="26" Margin="0,5,5,5"  Style="{StaticResource flatTextBox}"></TextBox>
                 <Label Grid.Column="3" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Margin="5,5,0,0">kg/m³</Label>
 
-                <Label Grid.Column="1" Grid.Row="5" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Margin="0,5,0,0">EDP Link:</Label>
+                <Label Grid.Column="1" Grid.Row="5" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="0,5,0,0">EDP Link:</Label>
                 <TextBox Name="txt_EPDLink"  Grid.Column="2" Grid.Row="5" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}" ></TextBox>
                 <Button Name="btn_OpenLink"  Grid.Row="5" Grid.Column="3" Height="26" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_OpenLink_Click" >Open...</Button>
 
-                <Label Grid.Column="1" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Margin="0,5,0,0">Default Waste:</Label>
+                <Label Grid.Column="1" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="0,5,0,0">Default Waste:</Label>
                 <TextBox Name="txt_Waste" Grid.Column="2" Grid.Row="6" Height="26" Margin="0,5,208,5"  Style="{StaticResource flatTextBox}" TextChanged="txt_Waste_TextChanged"></TextBox>
-                <Label Grid.Column="3" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Margin="5,5,0,0">%</Label>
+                <Label Grid.Column="3" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="5,5,0,0">%</Label>
             </Grid>
         </GroupBox>
 
@@ -128,58 +128,58 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label  Grid.ColumnSpan="2"  Grid.Row="1" Grid.Column="2" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Description</Label>
-                <Label  Grid.ColumnSpan="2"  Grid.Row="1" Grid.Column="4" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Override</Label>
-                <Label  Grid.ColumnSpan="2"  Grid.Row="1" Grid.Column="3" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Value |kgCO₂/kg|</Label>
+                <Label  Grid.ColumnSpan="2"  Grid.Row="1" Grid.Column="2" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Description</Label>
+                <Label  Grid.ColumnSpan="2"  Grid.Row="1" Grid.Column="4" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Override</Label>
+                <Label  Grid.ColumnSpan="2"  Grid.Row="1" Grid.Column="3" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Value |kgCO₂e/kg|</Label>
 
 
-                <Label  Grid.Row="2" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Production [A1-A3]:</Label>
+                <Label  Grid.Row="2" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Production [A1-A3]:</Label>
                 <TextBox Name="txt_A1_A3_Setting"  Grid.Row="2" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="True"  Style="{StaticResource flatTextBox}" Visibility="Visible"></TextBox>
                 <CheckBox x:Name="chx_A1_A3_Manual" Grid.Row="2" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_A1_A3_Manual_Click"/>
                 <TextBox Name="txt_A1_A3"  Grid.Row="2" Grid.Column="3" Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_A1_A3_TextChanged"/>
                 <Button Name="btn_A1_A3"  Grid.Row="2" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A1_A3_Click">Edit...</Button>
 
-                <Label  Grid.Row="3" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Transport [A4]:</Label>
+                <Label  Grid.Row="3" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Transport [A4]:</Label>
                 <TextBox Name="txt_A4_Setting"  Grid.Row="3" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="True"  Style="{StaticResource flatTextBox}"></TextBox>
                 <CheckBox x:Name="chx_A4_Manual" Grid.Row="3" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_A4_Manual_Click"></CheckBox>
                 <TextBox Name="txt_A4"  Grid.Row="3" Grid.Column="3" Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_A4_TextChanged"></TextBox>
                 <Button Name="btn_A4"  Grid.Row="3" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A4_Click">Edit...</Button>
 
-                <Label  Grid.Row="4" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Construction [A5]:</Label>
+                <Label  Grid.Row="4" Grid.Column="1" Height="25" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Construction [A5]:</Label>
                 <TextBox Name="txt_A5_Setting"  Grid.Row="4" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="True"  Style="{StaticResource flatTextBox}"></TextBox>
                 <CheckBox x:Name="chx_A5_Manual" Grid.Row="4" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_A5_Manual_Click"></CheckBox>
                 <TextBox Name="txt_A5"  Grid.Row="4" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_A5_TextChanged"></TextBox>
                 <Button Name="btn_A5"  Grid.Row="4" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A5_Click">Edit...</Button>
 
-                <Label  Grid.Row="5" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Life [B1-B7]:</Label>
+                <Label  Grid.Row="5" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Life [B1-B7]:</Label>
                 <TextBox Name="txt_B1_B5_Setting"  Grid.Row="5" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="True" Style="{StaticResource flatTextBox}"></TextBox>
                 <CheckBox x:Name="chx_B1_B5_Manual" Grid.Row="5" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_B1_B5_Manual_Click"></CheckBox>
                 <TextBox Name="txt_B1_B5"  Grid.Row="5" Grid.Column="3"  Height="26" Margin="3,3,70,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_B1_B5_TextChanged"></TextBox>
-                <Label  Grid.Row="5" Grid.Column="3" Margin="48,3,0,3" Height="26" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">[B4]:</Label>
+                <Label  Grid.Row="5" Grid.Column="3" Margin="48,3,0,3" Height="26" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">[B4]:</Label>
                 <TextBox Name="txt_B4"  Grid.Row="5" Grid.Column="3"  Height="26" Margin="82,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_B4_TextChanged"></TextBox>
 
                 <Button Name="btn_B1_B5"  Grid.Row="5" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_B1_B5_Click">Edit...</Button>
 
-                <Label  Grid.Row="6" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">End of Life [C1-C4]:</Label>
+                <Label  Grid.Row="6" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">End of Life [C1-C4]:</Label>
                 <TextBox Name="txt_C1_C4_Setting"  Grid.Row="6" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="True" Style="{StaticResource flatTextBox}"></TextBox>
                 <CheckBox x:Name="chx_C1_C4_Manual" Grid.Row="6" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_C1_C4_Manual_Click"></CheckBox>
                 <TextBox Name="txt_C1_C4"  Grid.Row="6" Grid.Column="3" Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_C1_C4_TextChanged"></TextBox>
                 <Button Name="btn_C1_C4"  Grid.Row="6" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_C1_C4_Click">Edit...</Button>
 
-                <Label  Grid.Row="7" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Out of Scope [D]:</Label>
+                <Label  Grid.Row="7" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Out of Scope [D]:</Label>
                 <TextBox Name="txt_D_Setting"  Grid.Row="7" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="True" Style="{StaticResource flatTextBox}"></TextBox>
                 <CheckBox x:Name="chx_D_Manual" Grid.Row="7" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_D_Manual_Click"></CheckBox>
                 <TextBox Name="txt_D"  Grid.Row="7" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_D_TextChanged" Text="{Binding Text, Delay=1000}" ></TextBox>
                 <Button Name="btn_D"  Grid.Row="7" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_D_Click">Edit...</Button>
 
-                <Label  Grid.Row="8" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource InfoLabel}">Sequestration:</Label>
+                <Label  Grid.Row="8" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Sequestration:</Label>
                 <TextBox Name="txt_Seq_Setting"  Grid.Row="8" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="False" Style="{StaticResource flatTextBox}"></TextBox>
                 <TextBox Name="txt_Seq"  Grid.Row="8" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_Seq_TextChanged"  Text="{Binding Text, Delay=1000}" ></TextBox>
                 <CheckBox x:Name="chx_Seq_Manual" Grid.Row="8" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_Seq_Manual_Click" ></CheckBox>
-                <Button Name="btn_Seq"  Grid.Row="8" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" IsEnabled="True" >Calc...</Button>
+                <Button Name="btn_Seq"  Grid.Row="8" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="btn_Seq_Click" >Edit...</Button>
 
 
-                <Label  Grid.Row="9" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource InfoLabel}" MouseDown="Label_MouseDown">Additional:</Label>
+                <Label  Grid.Row="9" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" MouseDown="Label_MouseDown">Additional:</Label>
                 <TextBox Name="txt_Mix_Setting"  Grid.Row="9" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="False" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_Setting_TextChanged"></TextBox>
                 <TextBox Name="txt_Mix"  Grid.Row="9" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_TextChanged" Text="{Binding Text, Delay=1000}" ></TextBox>
                 <Button Name="btn_Mix"  Grid.Row="9" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Mix_Click">Calc...</Button>
@@ -198,13 +198,13 @@
                             <ColumnDefinition Width="35"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Total kgCO₂ per kg:</Label>
+                        <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Total kgCO₂e per kg:</Label>
                         <CheckBox x:Name="chx_Total_Manual" Grid.Row="8" Grid.Column="3" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" IsEnabled="False" Visibility="Hidden" ></CheckBox>
                         <TextBox Name="txt_ECI" Grid.Column="2" Grid.Row="8"  Height="27" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>
                     </Grid>
                 </GroupBox>
 
-                <Label Name="Calc" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="5"  Margin="0,5,0,0" Style="{StaticResource bigStyle}" Grid.RowSpan="3" Visibility="Hidden">[CALC]</Label>
+                <Label Name="Calc" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="5"  Margin="0,5,0,0" Style="{StaticResource formTextStyle}" Grid.RowSpan="3" Visibility="Hidden">[CALC]</Label>
 
                 <Button Name="btn_Apply"  Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="Btn_Apply_Click">Apply</Button>
                 <Button Name="btn_FromEPD"  Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="btn_FromEPD_Click">From EPD...</Button>

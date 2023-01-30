@@ -75,7 +75,7 @@
                 <ComboBox Name="cbb_ReinforcementMaterial" Grid.Column="1" Grid.Row="1" Margin="72,2,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="Cbb_Categories_DropDownClosed"></ComboBox>
 
                 <Label Grid.Column="1" Margin="0,35,10,0" Grid.Row="1" Height="28" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Reinforcement Density:</Label>
-                <TextBox Name="txt_Density" Grid.Column="1" Grid.Row="1" Margin="152,35,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxStyle}" TextChanged="Txt_Search_TextChanged">50</TextBox>
+                <TextBox Name="txt_Density" Grid.Column="1" Grid.Row="1" Margin="152,35,0,0" Height="25" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" TextChanged="Txt_Search_TextChanged">50</TextBox>
                 <Label Grid.Column="1" Margin="257,34,30,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kg/m³</Label>
 
 
@@ -95,24 +95,24 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,0,260,0" Grid.Row="1" Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Volume:</Label>
-                <Label Grid.Column="1" Margin="0,32,260,0" Grid.Row="1" Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Weight:</Label>
-                <Label Grid.Column="1" Margin="0,64,260,0" Grid.Row="1" Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Embodied Carbon added:</Label>
+                <Label Grid.Column="1" Margin="0,0,260,0" Grid.Row="1" Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Volume:</Label>
+                <Label Grid.Column="1" Margin="0,32,260,0" Grid.Row="1" Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Weight:</Label>
+                <Label Grid.Column="1" Margin="0,64,260,0" Grid.Row="1" Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource  formTextStyle}">Embodied Carbon added:</Label>
 
                 <TextBox Name="txt_VolumeRebar" Grid.Column="1" Grid.Row="1" Margin="162,0,10,0" Height="28" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"></TextBox>
                 <TextBox Name="txt_WeightRebar" Grid.Column="1" Grid.Row="1" Margin="162,32,10,0" Height="28" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"></TextBox>
                 <TextBox Name="txt_MixResult" Grid.Column="1" Grid.Row="1" Margin="162,64,0,0" Height="28" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"/>
 
-                
-                <Label Grid.Column="1" Margin="270,0,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">m³</Label>
-                <Label Grid.Column="1" Margin="270,32,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kg</Label>
-                <Label Grid.Column="1" Margin="270,64,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
+
+                <Label Grid.Column="1" Margin="270,0,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m³</Label>
+                <Label Grid.Column="1" Margin="270,32,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">kg</Label>
+                <Label Grid.Column="1" Margin="270,64,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">kgCO₂/kg</Label>
 
 
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="5" Header="Options" Style="{StaticResource baseStyleBold}">
+        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="5" Header="Options" Style="{StaticResource formTitleStyle}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
@@ -125,8 +125,8 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <RadioButton Name="rd_NewGroup" Grid.Column="1" Grid.Row="1" Margin="5,25,0,0" Height="28" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" >Create new group for reinforcement</RadioButton>
-                <RadioButton Name="rd_Insert" Grid.Column="1" Grid.Row="1" Margin="5,0,0,0" Height="28" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="True">Insert reinforcement into selected</RadioButton>
+                <RadioButton Name="rd_NewGroup" Grid.Column="1" Grid.Row="1" Margin="5,25,0,0" Height="28" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource  formTextStyle}">Create new group for reinforcement</RadioButton>
+                <RadioButton Name="rd_Insert" Grid.Column="1" Grid.Row="1" Margin="5,0,0,0" Height="28" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="True" Style="{StaticResource  formTextStyle}">Insert reinforcement into selected</RadioButton>
 
             </Grid>
         </GroupBox>

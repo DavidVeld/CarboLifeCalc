@@ -59,9 +59,9 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,1,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Emissions:</Label>
+                <Label Grid.Column="1" Margin="0,1,500,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Emissions:</Label>
                 <TextBox Name="txt_B1Value" Grid.Column="1" Grid.Row="1" Margin="150,1,0,0" Height="25" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_B1Value_TextChanged"></TextBox>
-                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
+                <Label Grid.Column="1" Margin="230,1,10,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">kgCO₂/kg</Label>
 
             </Grid>
         </GroupBox>

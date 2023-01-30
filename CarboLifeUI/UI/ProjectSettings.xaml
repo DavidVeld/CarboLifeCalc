@@ -144,6 +144,7 @@
                 <TextBox Name="txt_EnergyPerYear" Grid.Column="2" Grid.Row="5" Margin="5,0,0,1" Width="110" HorizontalAlignment="Left" Height="27"  Style="{StaticResource flatTextBox}" TextChanged="txt_EnergyPerYear_TextChanged"></TextBox>
                 <Label Grid.Column="2" Margin="118,0,223,0" Grid.Row="5"   Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">kWh</Label>
                 <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="5" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">Energy consumption of the entire building per year</Label>
+                <Button Name="btn_CalcEnergy"  Grid.Row="5" Grid.Column="3" Height="28" VerticalAlignment="Top" Width="40" Margin="5,3,0,2" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_CalcEnergy_Click" >Calc...</Button>
 
             </Grid>
         </GroupBox>

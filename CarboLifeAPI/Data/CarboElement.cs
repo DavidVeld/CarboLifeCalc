@@ -29,13 +29,6 @@ namespace CarboLifeAPI.Data
         public bool isExisting { get; set; }
         public bool isSubstructure { get; set; }
 
-        [Obsolete]
-        public byte r { get; set; }
-        [Obsolete]
-        public byte g { get; set; }
-        [Obsolete]
-        public byte b { get; set; }
-
         public double ECI { get; set; }
         public double EC { get; set; }
         public double ECI_Total { get; set; }
@@ -59,10 +52,6 @@ namespace CarboLifeAPI.Data
             Level = 0;
             isDemolished = false;
             isExisting = false;
-            //Material = new CarboMaterial(); removed 23.03.21
-            r = 0;
-            g = 0;
-            b = 0;
             ECI = 0;
             EC = 0;
             ECI_Total = 0;
@@ -113,9 +102,6 @@ namespace CarboLifeAPI.Data
             clone.isExisting = this.isExisting;
             clone.isSubstructure = this.isSubstructure;
 
-            clone.r = this.r;
-            clone.g = this.g;
-            clone.b = this.b;
             clone.ECI = this.ECI;
             clone.EC = this.EC;
             clone.ECI_Total = this.ECI_Total;

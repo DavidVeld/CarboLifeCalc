@@ -107,11 +107,11 @@
                             <Label Grid.Column="2" Margin="0,-5,0,0" Grid.Row="0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="1">Filters:</Label>
 
 
-                            <RadioButton Name="rad_ByDensitykg" Grid.Column="1" Margin="5,0,0,14" Grid.Row="1" FontSize="12" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Material [kgCO₂/kg]</RadioButton>
-                            <RadioButton Name="rad_ByDensitym" Grid.Column="1" Margin="5,0,0,14" Grid.Row="2" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Material [kgCO₂/m³]</RadioButton>
-                            <RadioButton Name="rad_ByGroup" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="3" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Group [kgCO₂]</RadioButton>
-                            <RadioButton Name="rad_ByElement" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="4" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click">By Element [kgCO₂]</RadioButton>
-                            <RadioButton Name="rad_MaterialTotals" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="5" FontSize="12" FontFamily="Artifakt Element" Height="25" VerticalAlignment="Top" Click="rad_Control_Click">By Material Totals</RadioButton>
+                            <RadioButton Name="rad_ByDensitykg" Grid.Column="1" Margin="5,0,0,14" Grid.Row="1" FontSize="12" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Material [kgCO₂/kg]</RadioButton>
+                            <RadioButton Name="rad_ByDensitym" Grid.Column="1" Margin="5,0,0,14" Grid.Row="2" FontSize="12" FontFamily="Segoe UI" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Material [kgCO₂/m³]</RadioButton>
+                            <RadioButton Name="rad_ByGroup" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="3" FontSize="12" FontFamily="Segoe UI" Height="25" VerticalAlignment="Top" Click="rad_Control_Click" >By Group [kgCO₂]</RadioButton>
+                            <RadioButton Name="rad_ByElement" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="4" FontSize="12" FontFamily="Segoe UI" Height="25" VerticalAlignment="Top" Click="rad_Control_Click">By Element [kgCO₂]</RadioButton>
+                            <RadioButton Name="rad_MaterialTotals" Grid.Column="1" Margin="5,0,0,0"  Grid.Row="5" FontSize="12" FontFamily="Segoe UI" Height="25" VerticalAlignment="Top" Click="rad_Control_Click">By Material Totals</RadioButton>
 
                             <Label Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Cutoff Max:"/>
                             <TextBox x:Name="txt_CutoffMax" Grid.Row="2" Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="80" Height="25" Style="{StaticResource flatTextBox}" IsEnabled="False">9999</TextBox>
@@ -174,7 +174,7 @@
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
 
-                        <CheckBox x:Name="chc_ImportCarbon" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="1" FontSize="14" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Visibility="Hidden">Import total EC values to Parameter:</CheckBox>
+                        <CheckBox x:Name="chc_ImportCarbon" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="1" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Visibility="Hidden">Import total EC values to Parameter:</CheckBox>
 
                         <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" >Import total EC values to Parameter:</TextBlock>
                         <TextBlock  Grid.Row="2" Grid.Column="1" Margin="0,5,0,0"   Grid.ColumnSpan="5"  TextWrapping="WrapWithOverflow">

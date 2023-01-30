@@ -340,8 +340,6 @@ namespace CarboLifeUI.UI
         }
 
 
-
-
         private void cbb_Currency_DropDownClosed(object sender, EventArgs e)
         {
             CarboLifeProject.valueUnit = cbb_Currency.Text;
@@ -371,6 +369,11 @@ namespace CarboLifeUI.UI
                 CarboLifeProject.energyPerYear = Utils.ConvertMeToDouble(tb.Text);
                 SaveSettings();
             }
+        }
+
+        private void btn_CalcEnergy_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("An average house uses between 80-50 kWh/m² " + Environment.NewLine + "An average office uses between 100-200 kWh/m²") ;
         }
     }
 }

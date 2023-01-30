@@ -18,21 +18,21 @@
         
     <Style TargetType="{x:Type Control}" x:Key="formTitleStyle">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontFamily" Value="Artifakt Element" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
     <Style TargetType="{x:Type Control}" x:Key="formTextStyle">
-        <Setter Property="FontSize" Value="13" />
-        <Setter Property="FontFamily" Value="Artifakt Element" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
     <Style TargetType="{x:Type Control}" x:Key="formHelpText">
         <Setter Property="FontSize" Value="12" />
-        <Setter Property="FontFamily" Value="Artifakt Element" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="DarkGray" />
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -50,7 +50,7 @@
     
     <Style TargetType="{x:Type Control}" x:Key="bigStyle">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="FontFamily" Value="Artifakt Element" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -83,7 +83,7 @@
     </Style>
     <Style TargetType="{x:Type Control}" x:Key="baseStyleTitle">
         <Setter Property="FontSize" Value="16" />
-        <Setter Property="FontFamily" Value="Artifakt Element" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Background" Value="Transparent" />
@@ -91,7 +91,7 @@
 
     <Style TargetType="{x:Type Control}" x:Key="baseStyleBold">
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="FontFamily" Value="Artifakt Element" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Background" Value="Transparent"/>
@@ -231,7 +231,7 @@
         <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
         <Setter Property="TextElement.Foreground" Value="#444444"/>
         <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="FontFamily" Value="Artifakt Element"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="13"></Setter>
         <Setter Property="FontWeight" Value="DemiBold"></Setter>
         <Setter Property="Foreground" Value="#000"></Setter>
@@ -308,7 +308,7 @@
         <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
         <Setter Property="TextElement.Foreground" Value="#444444"/>
         <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="FontFamily" Value="Artifakt Element"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="14"></Setter>
         <Setter Property="FontWeight" Value="DemiBold"></Setter>
         <Setter Property="Foreground" Value="#000"></Setter>
@@ -798,7 +798,7 @@
     <Style x:Key="ButtonStyle" TargetType="Button">
         <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
         <Setter Property="FontSize" Value="11.5" />
-        <Setter Property="FontFamily" Value="Artifakt Element" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="FontWeight" Value="DemiBold"></Setter>
         <Setter Property="Padding" Value="5,0,5,2" />
         <Setter Property="MinHeight" Value="20" />
@@ -877,9 +877,9 @@
     <Color x:Key="detailMark">#FFA1A9B3</Color>
     <SolidColorBrush x:Key="detailMarkBrush" Color="{StaticResource ResourceKey=detailMark}" />
     <Style x:Key="flatTextBox" TargetType="{x:Type TextBox}">
-        <Setter Property="FontFamily" Value="Artifakt Element" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="#000" />
-        <Setter Property="FontSize" Value="12.5"/>
+        <Setter Property="FontSize" Value="12.0"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="Template">

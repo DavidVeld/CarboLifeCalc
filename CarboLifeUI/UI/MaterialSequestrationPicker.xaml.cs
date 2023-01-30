@@ -20,36 +20,39 @@ namespace CarboLifeUI.UI
     /// <summary>
     /// Interaction logic for MaterialConstructionPicker.xaml
     /// </summary>
-    public partial class MaterialSequestrationCalc : Window
+    public partial class MaterialSequestrationPicker : Window
     {
         internal bool isAccepted;
-        public CarboDProperties materialDProperties;
+        public CarboSeqProperties materialSeqProperties;
 
-        public MaterialSequestrationCalc()
+        public MaterialSequestrationPicker()
         {
-            materialDProperties = new CarboDProperties();
+            materialSeqProperties = new CarboSeqProperties();
 
             InitializeComponent();
         }
 
-        public MaterialSequestrationCalc(CarboDProperties materialDProperties)
+        public MaterialSequestrationPicker(CarboSeqProperties materialseqProperties)
         {
-            this.materialDProperties = materialDProperties;
+            this.materialSeqProperties = materialseqProperties;
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            txt_Value.Text = materialDProperties.value.ToString();
-            txt_Description.Text = materialDProperties.calcResult;
+            txt_Value.Text = materialSeqProperties.value.ToString();
+            txt_Year.Text = materialSeqProperties.sequestrationPeriod.ToString();
+            txt_Description.Text = materialSeqProperties.comment;
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = true;
-            materialDProperties.value = Utils.ConvertMeToDouble(txt_Value.Text);
-            materialDProperties.calcResult = txt_Description.Text;
-            materialDProperties.name = "Enhanced value";
+            materialSeqProperties.value = Utils.ConvertMeToDouble(txt_Value.Text);
+            materialSeqProperties.sequestrationPeriod = (int)Utils.ConvertMeToDouble(txt_Value.Text);
+            materialSeqProperties.comment = txt_Description.Text;
+            materialSeqProperties.propertyName = "Sequestration";
+
             this.Close();
         }
 

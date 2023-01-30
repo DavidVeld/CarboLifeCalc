@@ -127,7 +127,7 @@ namespace CarboLifeUI.UI
         }
 
         //
-        internal static SeriesCollection BuildLifeLine(CarboProject project, List<CarboProject> projectListToCompareTo)
+        internal static SeriesCollection BuildLifeLine(CarboProject project, List<CarboProject> projectListToCompareTo, bool sequestration, bool energy, bool demolition)
         {
             min = double.PositiveInfinity;
             max = double.NegativeInfinity;
@@ -148,7 +148,7 @@ namespace CarboLifeUI.UI
             {
                 foreach (CarboProject prct in projectList)
                 {
-                    IList<CarboDataPoint> data = CarboTimeLine.GetTimeLineDataPoints(prct, true, true, true);
+                    IList<CarboDataPoint> data = CarboTimeLine.GetTimeLineDataPoints(prct, sequestration, energy, demolition);
 
                     LineSeries lineSeries = new LineSeries();
                     ChartValues<double> Values = new ChartValues<double>();
@@ -162,9 +162,11 @@ namespace CarboLifeUI.UI
                     lineSeries.Title = prct.Name;
                     lineSeries.DataLabels = false;
                     lineSeries.Foreground = Brushes.Black;
-                    
+                    lineSeries.PointGeometrySize = 5;
+                    lineSeries.Width = 1;
+
                     //check min max
-                    if(Values.Max() > max)
+                    if (Values.Max() > max)
                         max = Values.Max();
                     if(Values.Min() < min) 
                         min = Values.Min();

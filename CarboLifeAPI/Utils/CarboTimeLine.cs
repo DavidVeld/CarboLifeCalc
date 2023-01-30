@@ -100,6 +100,10 @@ namespace CarboLifeAPI
                 demolitionFactor = 1;
             }
 
+
+
+
+
             //Calulate each item
             project.getPhaseTotals();
             ObservableCollection<CarboGroup> groupList = project.getGroupList;
@@ -119,8 +123,11 @@ namespace CarboLifeAPI
                 totalECAcumulated += ((group.getTotalA5 + project.A5Global) * a1a5Factor);
 
 
+                //ignore if not selected:
+                if (calcEnergy == false)
+                    energyFactor = 0;
                 //Get EnergyPerElements
-                totalECAcumulated += (group.getTotalB1B7 * energyFactor);
+                totalECAcumulated += (group.getTotalB1B7 * energyFactor); //THIS IS COMPLETELY WRONG
 
                 //get the sequestration
 
@@ -128,6 +135,11 @@ namespace CarboLifeAPI
                 seqFactor = (double)i / (double)seqPeriod;
                 if (seqFactor > 1)
                     seqFactor = 1;
+
+                //ignore if not selected:
+                if (calcSequestration == false)
+                    seqFactor = 0;
+
 
                 totalECAcumulated += (group.getTotalSeq * seqFactor);
 

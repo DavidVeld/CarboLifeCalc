@@ -543,6 +543,22 @@ namespace CarboLifeUI.UI
             UpdateMaterialSettings();
         }
 
+
+        private void btn_Seq_Click(object sender, RoutedEventArgs e)
+        {
+            MaterialSequestrationPicker materialSequestrationPicker = new MaterialSequestrationPicker(selectedMaterial.materialSeqProperties);
+            materialSequestrationPicker.ShowDialog();
+            if (materialSequestrationPicker.isAccepted == true)
+            {
+                chx_Seq_Manual.IsChecked = false;
+                selectedMaterial.ECI_Seq_Override = false;
+
+                selectedMaterial.materialSeqProperties = materialSequestrationPicker.materialSeqProperties;
+                selectedMaterial.ECI_Seq = selectedMaterial.materialSeqProperties.value;
+            }
+            UpdateMaterialSettings();
+        }
+
         private void Btn_Refresh_Click(object sender, RoutedEventArgs e)
         {
             UpdateMaterialSettings();
@@ -1037,5 +1053,6 @@ namespace CarboLifeUI.UI
                     UpdateMaterialSettings();
             }
         }
+
     }
 }

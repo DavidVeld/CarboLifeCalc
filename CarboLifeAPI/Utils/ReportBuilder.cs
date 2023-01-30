@@ -467,12 +467,12 @@ namespace CarboLifeAPI
 
             html += "<STYLE type=\"text/css\">" + System.Environment.NewLine;
 
-            html += "table {font-family:Artifakt Element, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "table {font-family:Segoe UI, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "margin-left:20px;" +
                         "border:#000 1px solid; }" +
                         System.Environment.NewLine;
 
-            html += "td {font-family:Artifakt Element, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "td {font-family:Segoe UI, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
                         "font-size:16px;" +
                         "background:#fff;" +
@@ -480,7 +480,7 @@ namespace CarboLifeAPI
                         "border:#000 0px solid; }" +
                         System.Environment.NewLine;
 
-            html += "h1 {font-family:Artifakt Element, Ubuntu, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "h1 {font-family:Segoe UI, Ubuntu, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
                         "font-size:36px;" +
                         "text-shadow: 1px 1px 0px #fff;" +
@@ -488,7 +488,7 @@ namespace CarboLifeAPI
                         "border:#000 0px solid; }" +
                         System.Environment.NewLine;
 
-            html += "h2 {font-family:Artifakt Element, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "h2 {font-family:Segoe UI, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
                         "font-size:16px;" +
                         "text-shadow: 1px 1px 0px #fff;" +
@@ -496,7 +496,7 @@ namespace CarboLifeAPI
                         "border:#000 0px solid; }" +
                         System.Environment.NewLine;
 
-            html += "h3 {font-family:Artifakt Element, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+            html += "h3 {font-family:Segoe UI, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
                         "color:#000;" +
                         "font-size:16px;" +
                         "text-shadow: 1px 1px 0px #fff;" +

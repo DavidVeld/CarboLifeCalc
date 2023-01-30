@@ -107,11 +107,12 @@
 
 
         <Label Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="5,2,778,5"  Height="28" Style="{StaticResource baseStyleLabel}">Compare:</Label>
-        <ComboBox Name="cbb_GraphType" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="84,4,527,5"  Height="26"  Style="{StaticResource  ComboBoxFlatStyleLight}" IsReadOnly="True" DropDownClosed="cbb_GraphType_DropDownClosed" IsEnabled="False"></ComboBox>
+        <ComboBox Name="cbb_GraphType" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="84,4,517,5"  Height="26"  Style="{StaticResource  ComboBoxFlatStyleLight}" IsReadOnly="True" DropDownClosed="cbb_GraphType_DropDownClosed" IsEnabled="True"></ComboBox>
+        <Button Name="btn_Refresh"  Grid.Column="2" Grid.Row="3"  Margin="350,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Refresh" Click="directRefresh" ></Button>
 
-        <Button Name="btn_Refresh"  Grid.Column="1" Grid.Row="3"  Margin="0,6,96,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Refresh" Click="btn_Refresh_Click" ></Button>
-        <Button Name="btn_Refresh2"  Grid.Column="1" Grid.Row="3"  Margin="100,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="102" Height="26" Style="{StaticResource ButtonStyle}" Content="Show Life line " Click="btn_Refresh2_Click" ></Button>
-
+        <Label Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="1" Margin="5,-5,0,5" VerticalAlignment="Top"  Height="28" Style="{StaticResource baseStyleLabel}">Include:</Label>
+        <CheckBox Name="chx_Sequestration" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="1" Margin="20,25,5,2" VerticalAlignment="Top" Height="26" IsChecked="True" Checked="directRefresh" Unchecked="directRefresh">Sequestration</CheckBox>
+        <CheckBox Name="chx_Energy" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="1" Margin="20,42,5,2" VerticalAlignment="Top"  Height="26" IsChecked="True" Checked="directRefresh" Unchecked="directRefresh">Energy Usage</CheckBox>
 
     </Grid>
 </UserControl>

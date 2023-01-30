@@ -17,6 +17,8 @@ namespace CarboLifeAPI.Data
     public class CarboProject
     {
         public CarboDatabase CarboDatabase { get; set; }
+
+        public CarboEnergyProperties energyProperties { get; set; }
         public string Name { get; set; }
         public string Number { get; set; }
         public string Category { get; set; }
@@ -103,26 +105,6 @@ namespace CarboLifeAPI.Data
             return newGroup;
         }
 
-        [Obsolete("the colours are set using a separate class")]
-        internal void clearHeatmapAndValues()
-        {
-            foreach (CarboGroup grp in getGroupList)
-            {
-                try
-                {
-                    List<CarboElement> elements = grp.AllElements;
-                    foreach (CarboElement cel in elements)
-                    {
-                        cel.r = 0;
-                        cel.g = 0;
-                        cel.b = 0;
-                    }
-                }
-                catch
-                {
-                }
-            }
-        }
         public void SetGroups(ObservableCollection<CarboGroup> groupList)
         {
             this.groupList = groupList;
@@ -138,6 +120,7 @@ namespace CarboLifeAPI.Data
             groupList = new ObservableCollection<CarboGroup>();
             elementList = new ObservableCollection<CarboElement>();
             carboLevelList = new List<CarboLevel>();
+            energyProperties = new CarboEnergyProperties();
 
             Name = "New Project";
             Number = "000000";

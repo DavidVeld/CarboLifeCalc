@@ -129,8 +129,11 @@
     <Compile Include="UI\HeatMapCreator.xaml.cs">
       <DependentUpon>HeatMapCreator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\MaterialSequestrationCalc.xaml.cs">
-      <DependentUpon>MaterialSequestrationCalc.xaml</DependentUpon>
+    <Compile Include="UI\ProjectEnergyUsage.xaml.cs">
+      <DependentUpon>ProjectEnergyUsage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MaterialSequestrationPicker.xaml.cs">
+      <DependentUpon>MaterialSequestrationPicker.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\MaterialSelector.xaml.cs">
       <DependentUpon>MaterialSelector.xaml</DependentUpon>
@@ -250,7 +253,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\MaterialSequestrationCalc.xaml">
+    <Page Include="UI\ProjectEnergyUsage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\MaterialSequestrationPicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

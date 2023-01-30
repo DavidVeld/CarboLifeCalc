@@ -45,10 +45,11 @@ namespace CarboLifeUI.UI
         public CarboCompare(CarboProject carboLifeProject)
         {
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
-            InitializeComponent();
 
             CarboLifeProject = carboLifeProject;
             projectListToCompareTo = new List<CarboProject>();
+
+            InitializeComponent();
 
         }
 
@@ -70,13 +71,13 @@ namespace CarboLifeUI.UI
 
                     RefreshInterFace();
 
-                    if(cbb_GraphType.Items.Count <= 0)
+                    if (cbb_GraphType.Items.Count <= 0)
                     {
-                        cbb_GraphType.Items.Add("Materials");
-                        cbb_GraphType.Items.Add("Totals");
+                        //cbb_GraphType.Items.Add("Materials");
+                        cbb_GraphType.Items.Add("Phases");
                         cbb_GraphType.Items.Add("Life Line");
 
-                        cbb_GraphType.Text = "Totals";
+                        cbb_GraphType.Text = "Phases";
                     }
                 }
 
@@ -94,9 +95,30 @@ namespace CarboLifeUI.UI
         {
             try
             {
+                if (chx_Energy != null && chx_Sequestration != null)
+                {
+                    chx_Energy.Visibility = Visibility.Hidden;
+                    chx_Sequestration.Visibility = Visibility.Hidden;
+                }
+
+                string GraphType = cbb_GraphType.Text;
+                if (GraphType == "Materials")
+                {
+                    ShowMaterialsGraph();
+                }
+                else if (GraphType == "Phases")
+                {
+                    ShowPhasesGraph();
+                }
+                else if (GraphType == "Life Line")
+                {
+                    ShowLifeLineGraph();
+                }
+
+                /*
                 if (CarboLifeProject != null)
                 {
-                    chx_Project0.Content = CarboLifeProject.Name + " (Current) " + Environment.NewLine + Math.Round(CarboLifeProject.ECTotal,2) + " kgCO₂";
+                    chx_Project0.Content = CarboLifeProject.Name + " (Current) " + Environment.NewLine + Math.Round(CarboLifeProject.ECTotal, 2) + " kgCO₂";
 
 
                     if (liv_Projects != null)
@@ -122,7 +144,131 @@ namespace CarboLifeUI.UI
                     if (chx_Project0.IsChecked == true)
                         projectlist.Add("Current");
 
-                    foreach(CarboProject cp in projectListToCompareTo)
+                    foreach (CarboProject cp in projectListToCompareTo)
+                    {
+                        projectlist.Add(cp.Name);
+                    }
+                    //Labels = null;
+                    //set the axis:
+                    AxesCollection XaxisCollection = new AxesCollection();
+                    Axis XAxis = new Axis { Title = "Projects", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black, Labels = null };
+                    XaxisCollection.Add(XAxis);
+
+                    AxesCollection YaxisCollection = new AxesCollection();
+                    Axis YAxis = new Axis { Title = "Total Embodied Carbon (tCO2)", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
+                    YaxisCollection.Add(YAxis);
+
+                    barchart.AxisX = XaxisCollection;
+                    barchart.AxisY = YaxisCollection;
+
+                    Labels = projectlist.ToArray();
+
+                    barchart.SeriesColors = GraphBuilder.getColours();
+                    barchart.Series = currentProjectSeriesCollection;
+
+                    DataContext = this;
+
+                }
+
+                */
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void ShowLifeLineGraph()
+        {
+            try
+            {
+                if (CarboLifeProject != null)
+                {
+                    chx_Energy.Visibility = Visibility.Visible;
+                    chx_Sequestration.Visibility = Visibility.Visible;
+
+                    SeriesCollection currentProjectSeriesCollection = new SeriesCollection();
+
+                    bool calcSequesteration = chx_Sequestration.IsChecked.Value;
+                    bool calcEnergy = chx_Energy.IsChecked.Value;
+                    bool calcDemolition = true;
+
+                    currentProjectSeriesCollection = GraphBuilder.BuildLifeLine(CarboLifeProject, projectListToCompareTo, calcSequesteration, calcEnergy, calcDemolition);
+
+                    //always count from 0;
+                    double min = GraphBuilder.min;
+
+                    if (min > 0)
+                    {
+                        min = -10;
+                    }
+                    else
+                    {
+                        min = min - 10;
+                    }
+
+                    //set the axis:
+                    AxesCollection XaxisCollection = new AxesCollection();
+                    Axis XAxis = new Axis { Title = "Years From Construction Completion", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
+                    XaxisCollection.Add(XAxis);
+
+                    AxesCollection YaxisCollection = new AxesCollection();
+                    Axis YAxis = new Axis { Title = "Total embodied Carbon (tCO2)", MinValue = min, Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
+                    YaxisCollection.Add(YAxis);
+
+
+                    barchart.AxisX = XaxisCollection;
+                    barchart.AxisY = YaxisCollection;
+
+                    barchart.Series = currentProjectSeriesCollection;
+
+
+                    DataContext = this;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
+    private void ShowPhasesGraph()
+        {
+            try
+            {
+
+                if (CarboLifeProject != null)
+                {
+                    chx_Project0.Content = CarboLifeProject.Name + " (Current) " + Environment.NewLine + Math.Round(CarboLifeProject.ECTotal, 2) + " kgCO₂";
+
+
+                    if (liv_Projects != null)
+                    {
+                        liv_Projects.ItemsSource = null;
+                        liv_Projects.ItemsSource = projectListToCompareTo;
+                    }
+                    SeriesCollection currentProjectSeriesCollection = new SeriesCollection();
+                    if (chx_Project0.IsChecked == true)
+                    {
+                        currentProjectSeriesCollection = GraphBuilder.BuildComparingTotalsBarGraph(CarboLifeProject, projectListToCompareTo);
+                    }
+                    else
+                    {
+                        currentProjectSeriesCollection = GraphBuilder.BuildComparingTotalsBarGraph(null, projectListToCompareTo);
+                    }
+
+                    Func<double, string> Formatter = value => value + " kgCO₂";
+
+                    //Build the labels
+                    List<string> projectlist = new List<string>();
+
+                    if (chx_Project0.IsChecked == true)
+                        projectlist.Add("Current");
+
+                    foreach (CarboProject cp in projectListToCompareTo)
                     {
                         projectlist.Add(cp.Name);
                     }
@@ -154,12 +300,11 @@ namespace CarboLifeUI.UI
             }
         }
 
-
-
-        private void cbb_GraphType_DropDownClosed(object sender, EventArgs e)
+        private void ShowMaterialsGraph()
         {
-            RefreshInterFace();
+            //To be coded
         }
+
 
         private void setProject(CarboProject clp)
         {
@@ -219,11 +364,6 @@ namespace CarboLifeUI.UI
                 setProject(clp);
         }
 
-        private void btn_Refresh_Click(object sender, RoutedEventArgs e)
-        {
-            RefreshInterFace();
-        }
-
         private void chx_Project0_Click(object sender, RoutedEventArgs e)
         {
             if (CarboLifeProject != null)
@@ -237,47 +377,6 @@ namespace CarboLifeUI.UI
             DataExportUtils.ExportComaringGraphs(CarboLifeProject, projectListToCompareTo);
         }
 
-        private void btn_Refresh2_Click(object sender, RoutedEventArgs e)
-        {
-            if (CarboLifeProject != null)
-            {
-                //IList<CarboDataPoint> data = TimeLine.GetBarGraph(CarboLifeProject, true, true, true);
-
-                SeriesCollection currentProjectSeriesCollection = new SeriesCollection();
-
-                currentProjectSeriesCollection = GraphBuilder.BuildLifeLine(CarboLifeProject, projectListToCompareTo);
-
-                //always count from 0;
-                double min = GraphBuilder.min;
-
-                if (min > 0)
-                {
-                    min = - 10;
-                }
-                else
-                {
-                    min = min - 10;
-                }
-
-                //set the axis:
-                AxesCollection XaxisCollection = new AxesCollection();
-                Axis XAxis = new Axis { Title = "Years From Construction Completion", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
-                XaxisCollection.Add(XAxis);
-
-                AxesCollection YaxisCollection = new AxesCollection();
-                Axis YAxis = new Axis { Title = "Total embodied Carbon (tCO2)", MinValue = min, Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
-                YaxisCollection.Add(YAxis);
-
-
-                barchart.AxisX = XaxisCollection;
-                barchart.AxisY = YaxisCollection;
-
-                barchart.Series = currentProjectSeriesCollection;
-
-
-                DataContext = this;
-            }
-        }
 
         //When assembly cant be find bind to current
         System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
@@ -296,5 +395,20 @@ namespace CarboLifeUI.UI
             return ayResult;
         }
 
+        private void directRefresh(object sender, RoutedEventArgs e)
+        {
+            if (CarboLifeProject != null)
+            {
+                RefreshInterFace();
+            }
+        }
+
+        private void cbb_GraphType_DropDownClosed(object sender, EventArgs e)
+        {
+            if (CarboLifeProject != null)
+            {
+                RefreshInterFace();
+            }
+        }
     }
 }

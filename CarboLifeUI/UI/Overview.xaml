@@ -55,7 +55,7 @@
             <ComboBox Name="cbb_GraphType" Grid.Row="1" Grid.Column="1"  Margin="0,0,0,0" Height="25" Width="170" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_GraphType_DropDownClosed"/>
 
 
-            <lvc:PieChart Name="pie_Chart1"  Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Artifakt Element" FontWeight="Light" LegendLocation="Right">
+            <lvc:PieChart Name="pie_Chart1"  Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Segoe UI" FontWeight="Light" LegendLocation="Right">
                 <lvc:PieChart.Resources>
                     <Style TargetType="lvc:PieSeries">
                         <Setter Property="DataLabels" Value="True"></Setter>
@@ -87,7 +87,7 @@
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
-            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Artifakt Element" LegendLocation="Right" FontWeight="Light"  InnerRadius="42" Visibility="Visible">
+            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Segoe UI" LegendLocation="Right" FontWeight="Light"  InnerRadius="42" Visibility="Visible">
                 <lvc:PieChart.Resources>
                     <Style TargetType="lvc:PieSeries">
                         <Setter Property="DataLabels" Value="True"></Setter>
@@ -105,14 +105,14 @@
             <Label Grid.Column="2" Grid.Row="1" Margin="-5,5,0,0" Style="{StaticResource formTitleStyle}">Include:</Label>
 
             <!--Settings-->
-            <CheckBox Name="chx_A1A3" Grid.Column="2" Grid.Row="2" Margin="0,5,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A1A3_Changed" Unchecked="chx_A1A3_Changed">A1-A3</CheckBox>
-            <CheckBox Name="chx_A4" Grid.Column="2" Grid.Row="2" Margin="0,25,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A4_Changed" Unchecked="chx_A4_Changed">A4</CheckBox>
-            <CheckBox Name="chx_A5" Grid.Column="2" Grid.Row="2" Margin="0,45,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A5_Changed" Unchecked="chx_A5_Changed">A5</CheckBox>
-            <CheckBox Name="chx_B1B7" Grid.Column="2" Grid.Row="2" Margin="0,65,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_B_Changed" Unchecked="chx_B_Changed">B1-B7</CheckBox>
-            <CheckBox Name="chx_C1C4" Grid.Column="2" Grid.Row="2" Margin="0,85,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_C_Changed" Unchecked="chx_C_Changed">C1-C4</CheckBox>
-            <CheckBox Name="chx_D" Grid.Column="2" Grid.Row="2" Margin="0,105,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_D_Changed" Unchecked="chx_D_Changed">D</CheckBox>
-            <CheckBox Name="chx_Seq" Grid.Column="2" Grid.Row="2" Margin="0,125,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_Seq_Changed" Unchecked="chx_Seq_Changed">Sequestration</CheckBox>
-            <CheckBox Name="chx_Added" Grid.Column="2" Grid.Row="2" Margin="0,145,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Artifakt Element" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_Add_Changed" Unchecked="chx_Add_Changed">Additional</CheckBox>
+            <CheckBox Name="chx_A1A3" Grid.Column="2" Grid.Row="2" Margin="0,5,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A1A3_Changed" Unchecked="chx_A1A3_Changed">A1-A3</CheckBox>
+            <CheckBox Name="chx_A4" Grid.Column="2" Grid.Row="2" Margin="0,25,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A4_Changed" Unchecked="chx_A4_Changed">A4</CheckBox>
+            <CheckBox Name="chx_A5" Grid.Column="2" Grid.Row="2" Margin="0,45,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A5_Changed" Unchecked="chx_A5_Changed">A5</CheckBox>
+            <CheckBox Name="chx_B1B7" Grid.Column="2" Grid.Row="2" Margin="0,65,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_B_Changed" Unchecked="chx_B_Changed">B1-B7</CheckBox>
+            <CheckBox Name="chx_C1C4" Grid.Column="2" Grid.Row="2" Margin="0,85,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_C_Changed" Unchecked="chx_C_Changed">C1-C4</CheckBox>
+            <CheckBox Name="chx_D" Grid.Column="2" Grid.Row="2" Margin="0,105,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_D_Changed" Unchecked="chx_D_Changed">D</CheckBox>
+            <CheckBox Name="chx_Seq" Grid.Column="2" Grid.Row="2" Margin="0,125,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_Seq_Changed" Unchecked="chx_Seq_Changed">Sequestration</CheckBox>
+            <CheckBox Name="chx_Added" Grid.Column="2" Grid.Row="2" Margin="0,145,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_Add_Changed" Unchecked="chx_Add_Changed">Additional</CheckBox>
             <Border  Visibility="Hidden" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" Grid.Column="1"  Margin="0,0,0,0" Grid.Row="1" Grid.RowSpan="2" />
         </Grid>
 

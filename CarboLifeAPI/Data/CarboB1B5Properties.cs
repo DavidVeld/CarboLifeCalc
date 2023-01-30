@@ -47,6 +47,8 @@ namespace CarboLifeAPI.Data
         /// </summary>
         public double B7 { get; set; }
 
+
+
         //Results
         public double totalValue { get; set; }
 
