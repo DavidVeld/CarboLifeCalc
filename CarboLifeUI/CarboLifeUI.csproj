@@ -80,6 +80,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -371,6 +372,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\DVLogo256.jpg" />
+    <Resource Include="img\rbn_refrsh64.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\rbn_newgroup.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\rbn_material.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\rbn_materialedit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\rbn_del.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\rbn_material32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Resources\ico_CarboLife.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

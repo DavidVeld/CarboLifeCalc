@@ -232,5 +232,27 @@ namespace CarboLifeRevit
 
             return result;
         }
+
+        /// <summary>
+        /// Some classes do not return a valid embodied carbon value, these need to be reviewed separately
+        /// </summary>
+        /// <param name="el"></param>
+        /// <returns></returns>
+        internal static bool ValidCategory(Element el)
+        {
+            bool result = true;
+
+            List<string> nonValidClasses = new List<string>();
+            //List of categories to exclude
+            nonValidClasses.Add("Runs");
+            nonValidClasses.Add("Ramps");
+
+            string catName = el.Category.Name;
+
+            if (nonValidClasses.Contains(catName))
+                result = false;
+
+            return result;
+        }
     }
 }

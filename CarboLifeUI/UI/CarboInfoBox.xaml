@@ -34,7 +34,7 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Information</Label>
+        <Label x:Name="lbl_Title" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Information</Label>
 
         <GroupBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" Header="" Style="{StaticResource bigStyle}">
             <Grid>

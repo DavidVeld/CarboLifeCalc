@@ -105,6 +105,7 @@ namespace CarboLifeUI.UI
             {
                 if (CarboLifeProject != null)
                 {
+                    CarboLifeProject.CalculateProject();
 
                     txt_ProjectName.Text = CarboLifeProject.Name;
                     txt_Number.Text = CarboLifeProject.Number;
@@ -113,6 +114,7 @@ namespace CarboLifeUI.UI
                     txt_Desctiption.Text = CarboLifeProject.Description;
 
                     txt_Area.Text = CarboLifeProject.Area.ToString();
+                    txt_DesignLife.Text = CarboLifeProject.designLife.ToString();
                     
                     //A5
                     txt_Value.Text = CarboLifeProject.Value.ToString();
@@ -125,10 +127,15 @@ namespace CarboLifeUI.UI
                     txt_DemoC1Fact.Text = CarboLifeProject.C1Factor.ToString();
 
                     //energy
-                    txt_DesignLife.Text = CarboLifeProject.designLife.ToString();
-                    txt_EnergyPerYear.Text = CarboLifeProject.energyPerYear.ToString();
+                    txt_EnergyPerYear.Text = CarboLifeProject.energyProperties.value.ToString();
 
-                    }
+                    //Totals
+                    txt_A0Total.Text = CarboLifeProject.A0Global.ToString();
+                    txt_A5Total.Text = CarboLifeProject.A5Global.ToString();
+                    txt_EnergyTotal.Text = CarboLifeProject.energyProperties.value.ToString();
+                    txt_C1Total.Text = CarboLifeProject.C1Global.ToString();
+
+                }
             }
             catch (Exception ex)
             {
@@ -143,37 +150,6 @@ namespace CarboLifeUI.UI
 
         }
       
-        private void SaveSettings()
-        {
-            /*
-            CarboLifeProject.Name = txt_ProjectName.Text;
-            CarboLifeProject.Number = txt_Number.Text;
-            CarboLifeProject.Category = cbb_BuildingType.Text;
-            CarboLifeProject.Description = txt_Desctiption.Text;
-
-            CarboLifeProject.SocialCost = CarboLifeAPI.Utils.ConvertMeToDouble(txt_SocialCost.Text);
-            CarboLifeProject.Area = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Area.Text);
-            CarboLifeProject.SocialCost = CarboLifeAPI.Utils.ConvertMeToDouble(txt_SocialCost.Text);
-            //A5
-            CarboLifeProject.Value = CarboLifeAPI.Utils.ConvertMeToDouble(txt_Value.Text);
-            CarboLifeProject.A5Factor = CarboLifeAPI.Utils.ConvertMeToDouble(txt_ValueA5Fact.Text);
-
-            //C1
-            CarboLifeProject.demoArea = CarboLifeAPI.Utils.ConvertMeToDouble(txt_DemoArea.Text);
-            CarboLifeProject.C1Factor = CarboLifeAPI.Utils.ConvertMeToDouble(txt_DemoC1Fact.Text);
-            */
-
-            CarboLifeProject.CalculateProject();
-
-        }
-
-        /*
-        private void Btn_SaveInfo_Click(object sender, RoutedEventArgs e)
-        {
-          //  SaveSettings();
-         //   RefreshInterFace();
-        }
-        */
 
         //When assembly cant be find bind to current
         System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
@@ -270,8 +246,9 @@ namespace CarboLifeUI.UI
             if (startLength == tb.Text.Length)
             {
                 CarboLifeProject.Area = Utils.ConvertMeToDouble(tb.Text);
-                SaveSettings();
             }
+
+            RefreshInterFace();
         }
 
         private async void txt_DemoArea_TextChanged(object sender, TextChangedEventArgs e)
@@ -283,7 +260,6 @@ namespace CarboLifeUI.UI
             if (startLength == tb.Text.Length)
             {
                 CarboLifeProject.demoArea = Utils.ConvertMeToDouble(tb.Text);
-                SaveSettings();
             }
         }
 
@@ -296,7 +272,6 @@ namespace CarboLifeUI.UI
             if (startLength == tb.Text.Length)
             {
                 CarboLifeProject.C1Factor = Utils.ConvertMeToDouble(tb.Text);
-                SaveSettings();
             }
         }
 
@@ -309,8 +284,10 @@ namespace CarboLifeUI.UI
             if (startLength == tb.Text.Length)
             {
                 CarboLifeProject.Value = Utils.ConvertMeToDouble(tb.Text);
-                SaveSettings();
             }
+
+            RefreshInterFace();
+
         }
 
         private async void txt_ValueA5Fact_TextChanged(object sender, TextChangedEventArgs e)
@@ -322,8 +299,10 @@ namespace CarboLifeUI.UI
             if (startLength == tb.Text.Length)
             {
                 CarboLifeProject.A5Factor = Utils.ConvertMeToDouble(tb.Text);
-                SaveSettings();
             }
+
+            RefreshInterFace();
+
         }
 
         private async void txt_SocialCost_TextChanged(object sender, TextChangedEventArgs e)
@@ -335,7 +314,6 @@ namespace CarboLifeUI.UI
             if (startLength == tb.Text.Length)
             {
                 CarboLifeProject.SocialCost = Utils.ConvertMeToDouble(tb.Text);
-                SaveSettings();
             }
         }
 
@@ -350,30 +328,39 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(250);
-            if (startLength == tb.Text.Length)
-            {
-                CarboLifeProject.designLife = Convert.ToInt32(Utils.ConvertMeToDouble(tb.Text));
-                SaveSettings();
-            }
-        }
-
-        private async void txt_EnergyPerYear_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox tb = (TextBox)sender;
-            int startLength = tb.Text.Length;
+            int designLifeNew = 50;
 
             await Task.Delay(250);
             if (startLength == tb.Text.Length)
             {
-                CarboLifeProject.energyPerYear = Utils.ConvertMeToDouble(tb.Text);
-                SaveSettings();
+                designLifeNew = Convert.ToInt32(Utils.ConvertMeToDouble(tb.Text));
+
+                CarboLifeProject.SetDesignLife(designLifeNew);
             }
+
+
+            RefreshInterFace();
+
         }
 
         private void btn_CalcEnergy_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("An average house uses between 80-50 kWh/m² " + Environment.NewLine + "An average office uses between 100-200 kWh/m²") ;
+            ProjectEnergyUsage energyusageWindow = new ProjectEnergyUsage(CarboLifeProject.energyProperties, CarboLifeProject.designLife);
+            energyusageWindow.ShowDialog();
+
+            if (energyusageWindow.isAccepted)
+            {
+
+                CarboLifeProject.energyProperties = energyusageWindow.projectEnergyProperties;
+                CarboLifeProject.energyProperties.calculate(CarboLifeProject.designLife);
+            }
+            RefreshInterFace();
+
+        }
+
+        private void txt_EnergyPerYear_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

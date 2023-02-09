@@ -38,7 +38,6 @@
         <Button Name="btn_Materials" Grid.Column="1" Grid.Row="2" Width="175" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,90,10,10" Click="btn_Materials_Click" Style="{StaticResource ButtonStyle}" Visibility="Visible">Edit Material Template...</Button>
         <Button Name="btn_Addin" Visibility="Visible" Grid.Column="1" Grid.Row="2" Width="175" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,130,10,10" Click="Addin_Click"  Style="{StaticResource ButtonStyle}">Activate Revit Addin...</Button>
         <Button Name="btn_Test" Visibility="Visible" Grid.Column="1" Grid.Row="2" Width="175" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,170,10,10" Click="btn_Test_Click"  Style="{StaticResource ButtonStyle}">Heatmap</Button>
-        <Button Name="btn_Test2" Visibility="Visible" Grid.Column="1" Grid.Row="2" Width="175" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,250,10,10" Click="btn_Test_Click2"  Style="{StaticResource ButtonStyle}">ChartTest</Button>
 
         <Image Grid.Column="2" Grid.Row="2" Width="128" Margin="0,30,0,0" Height="128" HorizontalAlignment="Center" VerticalAlignment="Top" Source="pack://siteoforigin:,,,/Resources/Logo128.jpg" ></Image>
         <Image Grid.Column="3" Grid.Row="3" Width="128" Margin="249,42,5,0" Height="53" HorizontalAlignment="Center" VerticalAlignment="Top" Source="pack://siteoforigin:,,,/Resources/DVLogo256.jpg" />

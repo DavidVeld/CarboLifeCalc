@@ -668,16 +668,17 @@
     <Style x:Key="{x:Type GridViewColumnHeader}" TargetType="GridViewColumnHeader">
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Foreground" Value="#b23636" />
         <Setter Property="Padding" Value="8,2,8,2"/>
-        <Setter Property="Background" Value="#b23636"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="DemiBold"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="GridViewColumnHeader">
                     <Grid>
-                        <Border Name="HeaderBorder" Padding="{TemplateBinding Padding}" BorderThickness="0,0,0,0" BorderBrush="#3e3e45" Background="#b23636">
+                        <Border Name="HeaderBorder" Padding="{TemplateBinding Padding}" BorderThickness="0,0,0,0" BorderBrush="#3e3e45" Background="Transparent">
                             <ContentPresenter Name="HeaderContent" Margin="0,0,0,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
                         <Thumb x:Name="PART_HeaderGripper" HorizontalAlignment="Right" Margin="0,0,-9,0" Style="{StaticResource GridViewColumnHeaderGripper}"/>

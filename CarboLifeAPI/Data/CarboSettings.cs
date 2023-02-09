@@ -24,6 +24,8 @@ namespace CarboLifeAPI.Data
         public bool groupDemolition { get; set; }
         public bool groupuniqueTypeNames { get; set; }
 
+        public string subStructureParameterName { get; set; }
+
         public string uniqueTypeNames { get; set; }
 
         public List<CarboColourPreset> colourPresets {get; set;}
@@ -42,8 +44,10 @@ namespace CarboLifeAPI.Data
             groupuniqueTypeNames = false;
             uniqueTypeNames = "";
             colourPresets = new List<CarboColourPreset>();
+            subStructureParameterName = "";
 
-            if(colourPresets.Count>0)
+
+            if (colourPresets.Count>0)
             {
                 CarboColourPreset preset = new CarboColourPreset();
                 colourPresets.Add(preset);

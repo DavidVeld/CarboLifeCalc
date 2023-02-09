@@ -110,7 +110,7 @@ namespace CarboLifeAPI.Data
         //Construction
         public CarboA5Properties materialA5Properties { get; set; }
         //Life
-        public CarboB1B5Properties materialB1B5Properties { get; set; }
+        //public CarboB1B7Properties materialB1B5Properties { get; set; }
         //EndofLift
         public CarboC1C4Properties materialC1C4Properties { get;set;}
         //Sequestration
@@ -121,7 +121,6 @@ namespace CarboLifeAPI.Data
         public bool ECI_A1A3_Override { get; set; }
         public bool ECI_A4_Override { get; set; }
         public bool ECI_A5_Override { get; set; }
-        public bool ECI_B1B5_Override { get; set; }
         public bool ECI_C1C4_Override { get; set; }
         public bool ECI_D_Override { get; set; }
         public bool ECI_Seq_Override { get; set; }
@@ -134,13 +133,13 @@ namespace CarboLifeAPI.Data
             Category = "";
             Description = "";
             Density = 500;
-            ECI = 1;
-            ECI_A1A3 = 1;
-            ECI_A4 = 1;
-            ECI_A5 = 1;
-            ECI_B1B5 = 1;
-            ECI_C1C4 = 1;
-            ECI_D = 1;
+            ECI = 0;
+            ECI_A1A3 = 0;
+            ECI_A4 = 0;
+            ECI_A5 = 0;
+            ECI_B1B5 = 0;
+            ECI_C1C4 = 0;
+            ECI_D = 0;
             ECI_Seq = 0;
             ECI_Mix = 0;
 
@@ -154,7 +153,6 @@ namespace CarboLifeAPI.Data
             materiaA4Properties = new CarboA4Properties();
             materiaA4Properties.calculate();
             materialA5Properties = new CarboA5Properties();
-            materialB1B5Properties = new CarboB1B5Properties();
             materialC1C4Properties = new CarboC1C4Properties();
             materialSeqProperties = new CarboSeqProperties();
             materialDProperties = new CarboDProperties();
@@ -162,8 +160,8 @@ namespace CarboLifeAPI.Data
             ECI_A1A3_Override = false;
             ECI_A4_Override = false;
             ECI_A5_Override = false;
-            ECI_B1B5_Override = false;
             ECI_C1C4_Override = false;
+            ECI_Seq_Override = false;
             ECI_D_Override = false;
 
         }
@@ -172,7 +170,7 @@ namespace CarboLifeAPI.Data
         {
             Id = -1;
             Name = materialName;
-            Category = "Not specified";
+            Category = "New Carbo material";
             Description = "Carbon material and properties not set.";
             Density = 1;
             //EEI = 1;
@@ -191,7 +189,6 @@ namespace CarboLifeAPI.Data
             materialA1A3Properties = new A1A3Element();
             materiaA4Properties = new CarboA4Properties();
             materialA5Properties = new CarboA5Properties();
-            materialB1B5Properties = new CarboB1B5Properties();
             materialC1C4Properties = new CarboC1C4Properties();
             materialSeqProperties = new CarboSeqProperties();
             materialDProperties = new CarboDProperties();
@@ -199,7 +196,7 @@ namespace CarboLifeAPI.Data
             ECI_A1A3_Override = false;
             ECI_A4_Override = false;
             ECI_A5_Override = false;
-            ECI_B1B5_Override = false;
+            ECI_Seq_Override = false;
             ECI_C1C4_Override = false;
             ECI_D_Override = false;
         }
@@ -225,11 +222,6 @@ namespace CarboLifeAPI.Data
                 ECI_A5 = materialA5Properties.value;
             }
 
-            if (ECI_B1B5_Override == false)
-            {
-                materialB1B5Properties.calculate();
-                ECI_B1B5 = materialB1B5Properties.totalValue;
-            }
 
             if (ECI_C1C4_Override == false)
             {
@@ -249,12 +241,8 @@ namespace CarboLifeAPI.Data
                 ECI_Seq = materialSeqProperties.value;
             }
 
-            //The main calc to do them all 
-            if (materialB1B5Properties.B4 == 0)
-                materialB1B5Properties.B4 = 1;
-
             //The full Calculation
-            ECI = materialB1B5Properties.B4 * (ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_B1B5 + ECI_C1C4 + ECI_D + ECI_Seq + ECI_Mix);
+            ECI = ECI_A1A3 + ECI_A4 + ECI_A5 + ECI_B1B5 + ECI_C1C4 + ECI_D + ECI_Seq + ECI_Mix;
         }
 
         internal void Copy(CarboMaterial cmNew)

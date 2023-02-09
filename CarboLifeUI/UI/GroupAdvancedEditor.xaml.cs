@@ -28,6 +28,7 @@ namespace CarboLifeUI.UI
         public CarboGroup group;
         public CarboDatabase database;
 
+
         public List<LookupItem> wasteItemList;
         public List<LookupItem> componentLifeItemList;
 
@@ -35,6 +36,7 @@ namespace CarboLifeUI.UI
         {
             this.group = carboGroup;
             this.database = dataBase; 
+
             InitializeComponent();
         }
 
@@ -51,27 +53,13 @@ namespace CarboLifeUI.UI
                 cbb_WasteItem.Items.Add(loi.name);
             }
 
-            foreach (LookupItem loi in componentLifeItemList)
-            {
-                cbb_Type.Items.Add(loi.name);
-            }
-
-            cbb_Type.Text = group.B4Description;
             cbb_WasteItem.Text = group.WasteDescription;
 
         }
 
         private void UpdateValue()
         {
-            //Calculate B4
-            if(group.ComponentLifePeriod != 0)
-                group.B4Factor = Math.Ceiling(group.AssetLifePeriod / group.ComponentLifePeriod);
-            else
-            {
-                group.AssetLifePeriod = 50;
-                group.ComponentLifePeriod = 50;
-                group.B4Factor = Math.Ceiling(group.AssetLifePeriod / group.ComponentLifePeriod);
-            }
+
             ///Formula
             txt_Formula.Text = group.Correction;
             txt_FormulaDescription.Text = group.CorrectionDescription;
@@ -82,12 +70,7 @@ namespace CarboLifeUI.UI
             txt_AdditionalValue.Text = group.Additional.ToString();
             txt_AdditionalDescription.Text = group.AdditionalDescription.ToString();
             ///B4
-            txt_B4Factor.Text = group.B4Factor.ToString();
-            txt_AssetReferencePeriod.Text = group.AssetLifePeriod.ToString();
-            txt_ComponentLifespan.Text = group.ComponentLifePeriod.ToString();
 
-
-            cbb_Type.Text = group.B4Description;
 
             cbb_WasteItem.Text = group.WasteDescription;
         }
@@ -241,6 +224,7 @@ namespace CarboLifeUI.UI
         /// <param name="e"></param>
         private async void txt_B4Factor_TextChanged(object sender, TextChangedEventArgs e)
         {
+            /*
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
@@ -251,10 +235,12 @@ namespace CarboLifeUI.UI
                 UpdateValue();
 
             }
+            */
         }
 
         private async void txt_AssetReferencePeriod_TextChanged(object sender, TextChangedEventArgs e)
         {
+            /*
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
@@ -264,10 +250,12 @@ namespace CarboLifeUI.UI
                 group.AssetLifePeriod = Utils.ConvertMeToDouble(tb.Text);
                 UpdateValue();
             }
+            */
         }
 
         private async void txt_ComponentLifespan_TextChanged(object sender, TextChangedEventArgs e)
         {
+            /*
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
@@ -277,6 +265,7 @@ namespace CarboLifeUI.UI
                 group.ComponentLifePeriod = Utils.ConvertMeToDouble(tb.Text);
                 UpdateValue();
             }
+            */
         }
 
         /// <summary>
@@ -331,6 +320,7 @@ namespace CarboLifeUI.UI
 
         private void cbb_Type_DropDownClosed(object sender, EventArgs e)
         {
+            /*
             string nameToFind = cbb_Type.Text;
             if (nameToFind != "")
             {
@@ -351,6 +341,7 @@ namespace CarboLifeUI.UI
                 }
             }
             UpdateValue();
+            */
         }
     }
 

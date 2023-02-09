@@ -198,17 +198,17 @@ namespace CarboLifeAPI
                     xlWorkSheet.Cells[row, col + 6] = grp.ECI;
                     xlWorkSheet.Cells[row, col + 7] = grp.EC;
                     xlWorkSheet.Cells[row, col + 8] = grp.PerCent;
-                    xlWorkSheet.Cells[row, col + 9] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_A1A3 * grp.Mass)) / 1000;
-                    xlWorkSheet.Cells[row, col + 10] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_A4 * grp.Mass)) / 1000;
-                    xlWorkSheet.Cells[row, col + 11] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_A5 * grp.Mass)) / 1000;
-                    xlWorkSheet.Cells[row, col + 12] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_B1B5)) / 1000;
-                    xlWorkSheet.Cells[row, col + 13] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_C1C4 * grp.Mass)) / 1000;
-                    xlWorkSheet.Cells[row, col + 14] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_D * grp.Mass)) / 1000;
-                    xlWorkSheet.Cells[row, col + 15] = (grp.Material.materialB1B5Properties.B4 * (grp.Material.ECI_Mix * grp.Mass)) / 1000;
+                    xlWorkSheet.Cells[row, col + 9] = (grp.inUseProperties.B4 * (grp.Material.ECI_A1A3 * grp.Mass)) / 1000;
+                    xlWorkSheet.Cells[row, col + 10] = (grp.inUseProperties.B4 * (grp.Material.ECI_A4 * grp.Mass)) / 1000;
+                    xlWorkSheet.Cells[row, col + 11] = (grp.inUseProperties.B4 * (grp.Material.ECI_A5 * grp.Mass)) / 1000;
+                    xlWorkSheet.Cells[row, col + 12] = (grp.inUseProperties.B4 * (grp.Material.ECI_B1B5)) / 1000;
+                    xlWorkSheet.Cells[row, col + 13] = (grp.inUseProperties.B4 * (grp.Material.ECI_C1C4 * grp.Mass)) / 1000;
+                    xlWorkSheet.Cells[row, col + 14] = (grp.inUseProperties.B4 * (grp.Material.ECI_D * grp.Mass)) / 1000;
+                    xlWorkSheet.Cells[row, col + 15] = (grp.inUseProperties.B4 * (grp.Material.ECI_Mix * grp.Mass)) / 1000;
 
                     xlWorkSheet.Cells[row, col + 16] = grp.Correction;
                     xlWorkSheet.Cells[row, col + 17] = grp.Waste;
-                    xlWorkSheet.Cells[row, col + 18] = grp.B4Factor;
+                    xlWorkSheet.Cells[row, col + 18] = grp.inUseProperties.B4;
                     xlWorkSheet.Cells[row, col + 19] = grp.Additional;
                     xlWorkSheet.Cells[row, col + 20] = grp.Volume;
 
@@ -418,7 +418,7 @@ namespace CarboLifeAPI
                         xlWorkSheet3.Cells[row, col + 11] = material.ECI_C1C4;
                         xlWorkSheet3.Cells[row, col + 12] = material.ECI_D;
                         xlWorkSheet3.Cells[row, col + 13] = material.ECI_Mix;
-                        xlWorkSheet3.Cells[row, col + 14] = material.materialB1B5Properties.B4;
+                        xlWorkSheet3.Cells[row, col + 14] = 0;
 
                     }
 

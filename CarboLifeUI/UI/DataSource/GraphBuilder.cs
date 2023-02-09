@@ -230,15 +230,7 @@ namespace CarboLifeUI.UI
             {
                 List<CarboDataPoint> PieceListLifePoint = new List<CarboDataPoint>();
 
-                PieceListLifePoint = carboLifeProject.getPhaseTotals(
-                    carboLifeProject.calculateA13, 
-                    carboLifeProject.calculateA4, 
-                    carboLifeProject.calculateA5, 
-                    carboLifeProject.calculateB, 
-                    carboLifeProject.calculateC, 
-                    carboLifeProject.calculateD, 
-                    carboLifeProject.calculateSeq, 
-                    carboLifeProject.calculateAdd);
+                PieceListLifePoint = carboLifeProject.getPhaseTotals();
 
                 double totalEC = carboLifeProject.ECTotal;
 
@@ -251,6 +243,9 @@ namespace CarboLifeUI.UI
                         PieceListLifePoint.RemoveAt(i);
 
                 }
+
+                if (PieceListLifePoint.Count == 0)
+                    PieceListLifePoint.Add(new CarboDataPoint { Name = "Error", Value = 1 });
 
                 //New Code: Trim all values below 5%, 
                 List<int> counter = new List<int>();
@@ -374,7 +369,7 @@ namespace CarboLifeUI.UI
                     {
                         //The item is too small for the graph:
                         otherPoint.Value += cp.Value;
-                        otherPoint.Name += cp.Name + " (" + (Math.Round(cp.Value / 1000, 2)) + " tCO₂ )" + Environment.NewLine;
+                        otherPoint.Name += cp.Name + " (" + (Math.Round(cp.Value, 1)) + " tCO₂ )" + Environment.NewLine;
 
                         counter.Add(i);
                     }

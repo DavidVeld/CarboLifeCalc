@@ -226,7 +226,7 @@ namespace CarboLifeAPI
                         html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Material.ECI_D, 2) + "</td>" + System.Environment.NewLine;
                         html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Material.ECI_Mix, 2) + "</td>" + System.Environment.NewLine;
 
-                        html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Material.materialB1B5Properties.B4, 2) + "</td>" + System.Environment.NewLine;
+                        html += "<TD align='left' valign='middle'>" + Math.Round(cbg.inUseProperties.B4, 2) + "</td>" + System.Environment.NewLine;
 
 
                         html += "</TR>" + System.Environment.NewLine;
@@ -347,7 +347,7 @@ namespace CarboLifeAPI
                     html += "<TD align='left' valign='middle'>" + cbg.Correction + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + cbg.Waste + "%" + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Additional, 2) + "</td>" + System.Environment.NewLine;
-                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.B4Factor, 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.inUseProperties.B4, 2) + "</td>" + System.Environment.NewLine;
 
                     html += "<TD align='left' valign='middle'>" + Math.Round(cbg.TotalVolume, 2) + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + cbg.Density + "</td>" + System.Environment.NewLine;
@@ -361,13 +361,13 @@ namespace CarboLifeAPI
                     html += "<TD align='left' valign='middle'>" + Math.Round(cbg.PerCent,2) + "</td>" + System.Environment.NewLine;
 
                     //Per Group
-                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.materialB1B5Properties.B4 * cbg.Material.ECI_A1A3 * cbg.Mass,3), 2) + "</td>" + System.Environment.NewLine;
-                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.materialB1B5Properties.B4 * cbg.Material.ECI_A4 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
-                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.materialB1B5Properties.B4 * cbg.Material.ECI_A5 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
-                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.materialB1B5Properties.B4 * cbg.Material.ECI_B1B5 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
-                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.materialB1B5Properties.B4 * cbg.Material.ECI_C1C4 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
-                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.materialB1B5Properties.B4 * cbg.Material.ECI_D * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
-                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.materialB1B5Properties.B4 * cbg.Material.ECI_Mix * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.inUseProperties.B4 * cbg.Material.ECI_A1A3 * cbg.Mass,3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.inUseProperties.B4 * cbg.Material.ECI_A4 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.inUseProperties.B4 * cbg.Material.ECI_A5 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.inUseProperties.B4 * cbg.Material.ECI_B1B5 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.inUseProperties.B4 * cbg.Material.ECI_C1C4 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.inUseProperties.B4 * cbg.Material.ECI_D * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.inUseProperties.B4 * cbg.Material.ECI_Mix * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
 
                     html += "</TR>" + System.Environment.NewLine;
 

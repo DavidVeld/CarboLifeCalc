@@ -25,28 +25,43 @@ namespace CarboLifeUI.UI
     public partial class MaterialLifePicker : Window
     {
         internal bool isAccepted;
-        public CarboB1B5Properties materialB1B5Properties;
+        public CarboB1B7Properties inUseProperties;
         public List<LookupItem> componentLifeItemList;
+        private int desinglife;
 
-        public MaterialLifePicker(CarboB1B5Properties materialB1B5Properties)
+        private bool formloaded;
+        public MaterialLifePicker(CarboB1B7Properties _inUseProperties, int _desinglife)
         {
-            this.materialB1B5Properties = materialB1B5Properties;
+            this.inUseProperties = _inUseProperties;
+            desinglife = _desinglife;
+
             componentLifeItemList = LoadLookupItems("Use");
+            formloaded = false;
 
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
-            foreach (LookupItem loi in componentLifeItemList)
+            if (componentLifeItemList.Count > 0)
             {
-                cbb_Type.Items.Add(loi.name);
+                foreach (LookupItem loi in componentLifeItemList)
+                {
+                    cbb_Type.Items.Add(loi.name);
+                }
             }
+            else
+            {
+                cbb_Type.Items.Clear();
+            }
+
+            txt_AssetReferencePeriod.Text = desinglife.ToString();
 
 
             RefreshInterface();
+            
             UpdateValue();
+            formloaded = true;
         }
 
         private List<LookupItem> LoadLookupItems(string file)
@@ -108,20 +123,22 @@ namespace CarboLifeUI.UI
 
 
         private void RefreshInterface()
-        {
+        {            
+            chx_EndOfLife.IsChecked = inUseProperties.designLifeToEnd;
+
             //B1
-            txt_B1Value.Text = materialB1B5Properties.B1.ToString();
-            txt_B2Value.Text = materialB1B5Properties.B2.ToString();
-            txt_B3Value.Text = materialB1B5Properties.B3.ToString();
-            txt_B4Factor.Text = materialB1B5Properties.B4.ToString();
-            txt_B5Value.Text = materialB1B5Properties.B5.ToString();
-            txt_B6Value.Text = materialB1B5Properties.B6.ToString();
-            txt_B7Value.Text = materialB1B5Properties.B7.ToString();
+            txt_B1Value.Text = inUseProperties.B1.ToString();
+            txt_B2Value.Text = inUseProperties.B2.ToString();
+            txt_B3Value.Text = inUseProperties.B3.ToString();
+            txt_B4Factor.Text = inUseProperties.B4.ToString();
+            txt_B5Value.Text = inUseProperties.B5.ToString();
+            txt_B6Value.Text = inUseProperties.B6.ToString();
+            txt_B7Value.Text = inUseProperties.B7.ToString();
 
-            txt_AssetReferencePeriod.Text = materialB1B5Properties.buildingdesignlife.ToString();
-            txt_ComponentLifespan.Text = materialB1B5Properties.elementdesignlife.ToString();
+            txt_ComponentLifespan.Text = inUseProperties.elementdesignlife.ToString();
 
-            cbb_Type.Text = materialB1B5Properties.assetType;
+            cbb_Type.Text = inUseProperties.assetType;
+
         }
 
         private async void Txt_Life_TextChanged(object sender, TextChangedEventArgs e)
@@ -149,20 +166,43 @@ namespace CarboLifeUI.UI
 
         private void UpdateValue()
         {
-            materialB1B5Properties.calculate();
+            if (formloaded == true)
+            {
+                inUseProperties.calculate(desinglife);
 
-            lbl_Calc.Content = "Total = " + materialB1B5Properties.B4 + " x ( "
-                + materialB1B5Properties.B1 + " + "
-                + materialB1B5Properties.B2 + " + "
-                + materialB1B5Properties.B3 + " + "
-                + materialB1B5Properties.B5 + " + "
-                + materialB1B5Properties.B6 + " + "
-                + materialB1B5Properties.B7 + ") = "
-                + Math.Round(materialB1B5Properties.totalValue * materialB1B5Properties.B4,3 ) + " kgCO₂/kg ";
+                if (lbl_Calc != null)
+                {
 
-            txt_B4Factor.Text = materialB1B5Properties.B4.ToString();
-            txt_AssetReferencePeriod.Text = materialB1B5Properties.buildingdesignlife.ToString();
-            txt_ComponentLifespan.Text = materialB1B5Properties.elementdesignlife.ToString();
+                    if (inUseProperties.designLifeToEnd == true) //true equals design life
+                    {
+                        //Disable Settings
+                        cbb_Type.IsEnabled = false;
+                        cbb_Type.Text = "";
+                       
+                        txt_ComponentLifespan.IsReadOnly = true;
+                        txt_ComponentLifespan.IsEnabled = false;
+                    }
+                    else //false user gives value
+                    {
+
+                        cbb_Type.IsEnabled = true;
+                        txt_ComponentLifespan.IsReadOnly = false;
+                        txt_ComponentLifespan.IsEnabled = true;
+                    }
+
+                        txt_B4Factor.Text = inUseProperties.B4.ToString();
+                        txt_ComponentLifespan.Text = inUseProperties.elementdesignlife.ToString();
+
+                    lbl_Calc.Content = "Total = "
+    + inUseProperties.B1 + " + "
+    + inUseProperties.B2 + " + "
+    + inUseProperties.B3 + " + "
+    + inUseProperties.B5 + " + "
+    + inUseProperties.B6 + " + "
+    + inUseProperties.B7 + " = " +
+    Math.Round(inUseProperties.totalECI ,3) + " kgCO₂/kg ( x " + inUseProperties.B4 + " )" ;
+                }
+            }
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
@@ -185,7 +225,7 @@ namespace CarboLifeUI.UI
             await Task.Delay(250);
             if (startLength == tb.Text.Length)
             {
-                materialB1B5Properties.B1 = Utils.ConvertMeToDouble(tb.Text);
+                inUseProperties.B1 = Utils.ConvertMeToDouble(tb.Text);
                 UpdateValue();
             }
         }
@@ -198,7 +238,7 @@ namespace CarboLifeUI.UI
             await Task.Delay(250);
             if (startLength == tb.Text.Length)
             {
-                materialB1B5Properties.B2 = Utils.ConvertMeToDouble(tb.Text);
+                inUseProperties.B2 = Utils.ConvertMeToDouble(tb.Text);
                 UpdateValue();
             }
         }
@@ -211,49 +251,12 @@ namespace CarboLifeUI.UI
             await Task.Delay(250);
             if (startLength == tb.Text.Length)
             {
-                materialB1B5Properties.B3 = Utils.ConvertMeToDouble(tb.Text);
+                inUseProperties.B3 = Utils.ConvertMeToDouble(tb.Text);
                 UpdateValue();
             }
         }
 
-        private async void txt_ComponentLifespan_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox tb = (TextBox)sender;
-            int startLength = tb.Text.Length;
 
-            await Task.Delay(250);
-            if (startLength == tb.Text.Length)
-            {
-                materialB1B5Properties.elementdesignlife = Utils.ConvertMeToDouble(tb.Text);
-                UpdateValue();
-            }
-        }
-
-        private async void txt_AssetReferencePeriod_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox tb = (TextBox)sender;
-            int startLength = tb.Text.Length;
-
-            await Task.Delay(250);
-            if (startLength == tb.Text.Length)
-            {
-                materialB1B5Properties.buildingdesignlife = Utils.ConvertMeToDouble(tb.Text);
-                UpdateValue();
-            }
-        }
-
-        private async void txt_B4Factor_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox tb = (TextBox)sender;
-            int startLength = tb.Text.Length;
-
-            await Task.Delay(250);
-            if (startLength == tb.Text.Length)
-            {
-                materialB1B5Properties.B4 = Utils.ConvertMeToDouble(tb.Text);
-                UpdateValue();
-            }
-        }
 
         private async void txt_B5Value_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -263,7 +266,7 @@ namespace CarboLifeUI.UI
             await Task.Delay(250);
             if (startLength == tb.Text.Length)
             {
-                materialB1B5Properties.B5 = Utils.ConvertMeToDouble(tb.Text);
+                inUseProperties.B5 = Utils.ConvertMeToDouble(tb.Text);
                 UpdateValue();
             }
         }
@@ -276,7 +279,7 @@ namespace CarboLifeUI.UI
             await Task.Delay(250);
             if (startLength == tb.Text.Length)
             {
-                materialB1B5Properties.B6 = Utils.ConvertMeToDouble(tb.Text);
+                inUseProperties.B6 = Utils.ConvertMeToDouble(tb.Text);
                 UpdateValue();
             }
         }
@@ -289,34 +292,60 @@ namespace CarboLifeUI.UI
             await Task.Delay(250);
             if (startLength == tb.Text.Length)
             {
-                materialB1B5Properties.B7 = Utils.ConvertMeToDouble(tb.Text);
+                inUseProperties.B7 = Utils.ConvertMeToDouble(tb.Text);
                 UpdateValue();
             }
         }
 
+
         private void cbb_Type_DropDownClosed(object sender, EventArgs e)
         {
-            string nameToFind = cbb_Type.Text;
-            if (nameToFind != "")
+            if (formloaded == true)
             {
-                try
-                {
-                    LookupItem selectedValue = componentLifeItemList.First(item => item.name == nameToFind);
+                string nameToFind = cbb_Type.Text;
 
-                    if (selectedValue != null)
+                if (nameToFind != "")
+                {
+                    try
                     {
-                        materialB1B5Properties.elementdesignlife = selectedValue.value;
-                        materialB1B5Properties.assetType = selectedValue.name;
+                        LookupItem selectedValue = componentLifeItemList.First(item => item.name == nameToFind);
+
+                        if (selectedValue != null)
+                        {
+                            inUseProperties.elementdesignlife = selectedValue.value;
+                            inUseProperties.assetType = selectedValue.name;
+                        }
+                    }
+                    catch
+                    {
+                        inUseProperties.elementdesignlife = 50;
+                        inUseProperties.assetType = "General";
                     }
                 }
-                catch
-                {
-                    materialB1B5Properties.elementdesignlife = 50;
-                    materialB1B5Properties.buildingdesignlife = 50;
-                    materialB1B5Properties.assetType = "General";
-                }
+                UpdateValue();
             }
-            UpdateValue();
+        }
+
+        private async void txt_ComponentLifespan_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            int startLength = tb.Text.Length;
+
+            await Task.Delay(250);
+            if (startLength == tb.Text.Length)
+            {
+                inUseProperties.elementdesignlife = Utils.ConvertMeToDouble(tb.Text);
+                UpdateValue();
+            }
+        }
+
+        private void chx_EndOfLife_Changed(object sender, RoutedEventArgs e)
+        {
+            if (formloaded == true)
+            {
+                inUseProperties.designLifeToEnd = chx_EndOfLife.IsChecked.Value;
+                UpdateValue();
+            }
         }
     }
 }

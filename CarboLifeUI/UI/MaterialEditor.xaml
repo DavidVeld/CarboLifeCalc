@@ -151,14 +151,11 @@
                 <TextBox Name="txt_A5"  Grid.Row="4" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_A5_TextChanged"></TextBox>
                 <Button Name="btn_A5"  Grid.Row="4" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A5_Click">Edit...</Button>
 
-                <Label  Grid.Row="5" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Life [B1-B7]:</Label>
+                <Label  Grid.Row="5" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">In Use [B1-B7]:</Label>
                 <TextBox Name="txt_B1_B5_Setting"  Grid.Row="5" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="True" Style="{StaticResource flatTextBox}"></TextBox>
-                <CheckBox x:Name="chx_B1_B5_Manual" Grid.Row="5" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_B1_B5_Manual_Click"></CheckBox>
-                <TextBox Name="txt_B1_B5"  Grid.Row="5" Grid.Column="3"  Height="26" Margin="3,3,70,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_B1_B5_TextChanged"></TextBox>
-                <Label  Grid.Row="5" Grid.Column="3" Margin="48,3,0,3" Height="26" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">[B4]:</Label>
-                <TextBox Name="txt_B4"  Grid.Row="5" Grid.Column="3"  Height="26" Margin="82,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_B4_TextChanged"></TextBox>
+                <TextBox Name="txt_B1_B5"  Grid.Row="5" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_B1_B5_TextChanged"></TextBox>
 
-                <Button Name="btn_B1_B5"  Grid.Row="5" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_B1_B5_Click">Edit...</Button>
+                <Button Name="btn_B1_B5"  Grid.Row="5" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_B1_B5_Click" Visibility="Visible">?</Button>
 
                 <Label  Grid.Row="6" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">End of Life [C1-C4]:</Label>
                 <TextBox Name="txt_C1_C4_Setting"  Grid.Row="6" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="True" Style="{StaticResource flatTextBox}"></TextBox>
@@ -182,7 +179,7 @@
                 <Label  Grid.Row="9" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" MouseDown="Label_MouseDown">Additional:</Label>
                 <TextBox Name="txt_Mix_Setting"  Grid.Row="9" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="False" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_Setting_TextChanged"></TextBox>
                 <TextBox Name="txt_Mix"  Grid.Row="9" Grid.Column="3"  Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_Mix_TextChanged" Text="{Binding Text, Delay=1000}" ></TextBox>
-                <Button Name="btn_Mix"  Grid.Row="9" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Mix_Click">Calc...</Button>
+                <Button Name="btn_Mix"  Grid.Row="9" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Mix_Click">Edit...</Button>
 
 
                 <GroupBox Grid.Row="10" Grid.Column="1" Background="White" Margin="0,0,0,0" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="5" Header="Total" Style="{StaticResource baseStyleBold}">

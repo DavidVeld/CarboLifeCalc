@@ -178,12 +178,15 @@ namespace CarboLifeRevit
 
                         if (CarboRevitUtils.isElementReal(el) == true)
                         {
-                            foreach (ElementId materialIds in MaterialIds)
+                            if (CarboRevitUtils.ValidCategory(el) == true)
                             {
-                                CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, settings);
+                                foreach (ElementId materialIds in MaterialIds)
+                                {
+                                    CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, settings);
 
-                                if (carboElement != null)
-                                    myProject.AddElement(carboElement);
+                                    if (carboElement != null)
+                                        myProject.AddElement(carboElement);
+                                }
                             }
                             //See if is floor(then count area)
                         }

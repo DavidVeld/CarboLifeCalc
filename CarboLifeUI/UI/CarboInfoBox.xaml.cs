@@ -24,6 +24,7 @@ namespace CarboLifeUI.UI
     {
         internal bool isAccepted;
         public string description;
+        public string title;
 
         public CarboInfoBox()
         {
@@ -41,8 +42,18 @@ namespace CarboLifeUI.UI
 
         }
 
+        public CarboInfoBox(string _title, string _description, int width = 400, int height = 300)
+        {
+            this.title = _title;
+            this.description = _description;
+            this.Width = width;
+            this.Height = height;
+            InitializeComponent();
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            lbl_Title.Content = title;
             txt_Description.Text = description;
         }
 

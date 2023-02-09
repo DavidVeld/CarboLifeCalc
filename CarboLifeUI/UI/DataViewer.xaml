@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="1050" IsVisibleChanged="UserControl_IsVisibleChanged" Background="WhiteSmoke">
+             d:DesignHeight="600" d:DesignWidth="1050" IsVisibleChanged="UserControl_IsVisibleChanged" Background="WhiteSmoke">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="MyStyles.xaml"/>
                 <ResourceDictionary Source="MyDataGrid.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
         </ResourceDictionary>
 
     </UserControl.Resources>
@@ -22,10 +23,11 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="32"/>
             <RowDefinition Height="32"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="271*"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="1*" Name="grd_Elements"/>
+            <RowDefinition Height="114*" Name="grd_Elements"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -34,104 +36,88 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Menu Grid.Row="1" Grid.Column="1" Background="Transparent" Height="32" Margin="0,0,0,2" HorizontalAlignment="Left">
-            <Menu.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <DockPanel HorizontalAlignment="Stretch"/>
-                </ItemsPanelTemplate>
-            </Menu.ItemsPanel>
 
-            <MenuItem Header="Groups" Background="Transparent" Style="{StaticResource baseStyleLabel}" Height="26" Margin="0,2,0,0" VerticalAlignment="Top">
-                <MenuItem Name="mnu_NewGroup" Header="New Group" Click="Mnu_NewGroup_Click"/>
-                <MenuItem Name="mnu_DeleteGroup" Header="Delete Group" Click="Mnu_DeleteGroup_Click" />
-                <MenuItem Name="mnu_MergeGroup" Header="Merge Groups" Click="Mnu_MergeGroup_Click"/>
-                <MenuItem Name="mnu_DuplicateGroup" Header="Duplicate Group" Click="Mnu_DuplicateGroup_Click"/>
-                <Separator></Separator>
-                <MenuItem Name="mnu_MapElements" Header="Map Materials..." Click="mnu_MapElements_Click"/>
-                <MenuItem Name="mnu_reGroupData" Header="Rebuild Groups from Elements..." Click="Mnu_reGroupData_Click"/>
-                <Separator></Separator>
+        <Ribbon x:Name="rbn" Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" Margin="0,-20,0,0"           
+                  Background="WhiteSmoke"
+                  BorderBrush="Gray"
+                  MouseOverBackground="Wheat"
+                  MouseOverBorderBrush="Black"
+                  PressedBackground="WhiteSmoke"
+                  PressedBorderBrush="Black"
+                  CheckedBackground="WhiteSmoke"
+                  CheckedBorderBrush="Black"
+                  FocusedBackground="WhiteSmoke"
+                  FocusedBorderBrush="Black" 
+                Loaded="rbn_Loaded" ContextMenuOpening="fe_ContextMenuOpening" BorderThickness="1"
+                FontFamily="Segoe UI" FontSize="12">
+            <Ribbon.QuickAccessToolBar>
+                <RibbonQuickAccessToolBar ContextMenuOpening="RibbonQuickAccessToolBar_ContextMenuOpening" Visibility="Collapsed">
+                    <DockPanel>
+                        <RibbonButton Label="Btn2"  />
+                    </DockPanel>
+                </RibbonQuickAccessToolBar>
+            </Ribbon.QuickAccessToolBar>
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu Visibility="Collapsed"/>
+            </Ribbon.ApplicationMenu>
 
+            <!-- Ribbon Tab #1: Home -->
+            <RibbonTab Header="General" >
 
-            </MenuItem>
-            <MenuItem Header="Tools" Background="Transparent"  VerticalAlignment="Top" Style="{StaticResource baseStyleLabel}"  Height="26" Margin="0,2,0,0">
-                <Separator></Separator>
-                <MenuItem Name="mnu_editadvanced" Header="Edit Advanced parameters" Click="btn_EditAdvanced_Click"/>
-                <MenuItem Name="mnu_Additional" Header="Reinforce/Mix selected..." Click="Mnu_Reinforce_Click"/>
-                <MenuItem Name="mnu_Metaldeck" Header="Apply a Profile correction..." Click="Mnu_Metaldeck_Click" />
-                <Separator></Separator>
-                <MenuItem Name="mnu_PurgeElements" Header="Purge Elements from Group" Click="Mnu_PurgeElements_Click"/>
-            </MenuItem>
+                <!-- Group-->
+                <RibbonGroup x:Name="Group" Header="Group">
+                    <RibbonButton Label="New" Width="64" Height="64" Click="Mnu_NewGroup_Click" LargeImageSource="/img/rbn_newgroup.png"/>
 
-        </Menu>
+                    <RibbonMenuButton Label="Delete Group" PreviewMouseDown="Mnu_DeleteGroup_Click" SmallImageSource="/img/rbn_del.png"/>
+                    <RibbonMenuButton Label="Merge Group" PreviewMouseDown="Mnu_MergeGroup_Click"/>
+                    <RibbonMenuButton Label="Purge Elements" MouseDown="Mnu_PurgeElements_Click"/>
 
-        <Menu Grid.Row="2" Grid.Column="1" Background="Transparent" Height="32" Margin="0,0,0,2" HorizontalAlignment="Stretch">
-            <Menu.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <DockPanel HorizontalAlignment="Stretch"/>
-                </ItemsPanelTemplate>
-            </Menu.ItemsPanel>
-
-            <Button x:Name="btn_EditMaterial_V2" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="125" Height="24" Padding="5,0,5,0"
-                    BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" Background="#ddd"
-                    FontWeight="DemiBold" BorderThickness="1" Click="Btn_Material_Click" ToolTip="Edit the material of the selected group">Change Material</Button>
-
-            <Button x:Name="btn_OpenMaterialEditor" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="125" Height="24" Padding="5,0,5,0"
-                    BorderBrush="#444" BorderThickness="1" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" Background="#ddd"
-                    FontWeight="DemiBold" Click="btn_OpenMaterialEditor_Click"  ToolTip="Open the material editor">Material Editor
-            </Button>
-            <Button x:Name="btn_EditAdvanced" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="160" Height="24" Padding="5,0,5,0"
-                    BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" Background="#ddd"
-                    FontWeight="DemiBold" BorderThickness="1" Click="btn_EditAdvanced_Click"  ToolTip="Edit the material of the selected group" Visibility="Visible">Edit Advanced Params</Button>
-            
+                    <RibbonMenuButton Label="Split Group..." Visibility="Visible"/>
+                    <RibbonMenuButton Label="Re-group..." PreviewMouseDown="Mnu_reGroupData_Click"/>
+                    <RibbonMenuButton Label="Multi-Map..." PreviewMouseDown="mnu_MapElements_Click"/>
+                </RibbonGroup>
+                <!-- Employee And Payroll group-->
+                <RibbonGroup x:Name="Materials" Header="Materials">
+                    <RibbonButton Label="Select" Click="Btn_Material_Click" LargeImageSource="/img/rbn_material32.png"/>
+                    <RibbonButton Label="Editor" Click="btn_OpenMaterialEditor_Click" LargeImageSource="/img/rbn_materialedit.png" />
+                </RibbonGroup>
 
 
-            <Separator Background="Gray" Width="20" Height="20" BorderThickness="2" BorderBrush="#000000">
-                <Separator.LayoutTransform>
-                    <RotateTransform Angle="90" />
-                </Separator.LayoutTransform>
-            </Separator>
 
-            <ToggleButton x:Name="btn_ShowHideCorrections" Content="Show / Hide Advanced" Width="180" Height="24" BorderBrush="#444" FontWeight="DemiBold"
-                          HorizontalAlignment="Right" Click="Btn_ShowHideCorrections_Click" FontFamily="Segoe UI" Background="WhiteSmoke"  FontSize="14" ToolTip="Add extra features to manipulate the dataset"/>
+                <RibbonGroup x:Name="Tools" Header="Tools">
+                    <RibbonButton Width="64" Height="64" Label="Reinforcement" Click="Mnu_Reinforce_Click"/>
+                    <RibbonButton Width="64" Height="64" Label="Profile" Click="Mnu_Metaldeck_Click"/>
+                    <RibbonButton Width="64" Height="64" Label="Refresh" Click="Btn_Calculate_Click" LargeImageSource="/img/rbn_refrsh64.png" >
+                    </RibbonButton>
+                </RibbonGroup>
 
-            <Button x:Name="btn_Calculate" FlowDirection="LeftToRight"  HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"  Width="110" Height="24" Padding="5,0,5,0"
-                    BorderBrush="#444" HorizontalContentAlignment="Center" FontFamily="Segoe UI" VerticalContentAlignment="Center" FontSize="14" 
-                    FontWeight="DemiBold" BorderThickness="1" Click="Btn_Calculate_Click">
-                <StackPanel HorizontalAlignment="Stretch" Background="WhiteSmoke">
-                    <Image x:Name="img_refreshbutton" HorizontalAlignment="Left" Height="18" Width="18" Margin="10,1,0,0" />
-                    <TextBlock HorizontalAlignment="Left" Width="105" Height="22" VerticalAlignment="Top" Margin="34,-19,-24,0" Text="Refresh" ToolTip="Refresh the calculation" />
-                </StackPanel>
-            </Button>
+                <RibbonGroup x:Name="Advanced" Header="Advanced">
+                    <RibbonButton Label="Advanced" Width="64" Height="64" Click="btn_EditAdvanced_Click"/>
+                    <RibbonButton Label="B1-B7"  Width="64" Height="64" Click="btn_EditInUseValues_Click"/>
+                </RibbonGroup>
+                <RibbonGroup x:Name="Table" Header="Table">
+                    <RibbonCheckBox Name="chx_AdvancedShow" Label="Show/Hide Advanced" ToolTip="Show/Hide advanced settings" Checked="Btn_ShowHideCorrections_Click" Unchecked="Btn_ShowHideCorrections_Click"></RibbonCheckBox>
 
-            <Separator Background="Gray" Width="20" Height="2" BorderThickness="1" BorderBrush="#000000">
-                <Separator.LayoutTransform>
-                    <RotateTransform Angle="90" />
-                </Separator.LayoutTransform>
-            </Separator>
+                    <RibbonComboBox Label="Sort by: " 
+                  SelectionBoxWidth="62"
+                  VerticalAlignment="Center" 
+                  IsEditable="True" DropDownClosed="ComboBox_DropDownClosed"
+                                    Name="cbb_SortValue">
+                        <RibbonGallery SelectedValue="Green"
+                          SelectedValuePath="Content"
+                          MaxColumnCount="1">
+                            <RibbonGalleryCategory>
+                                <RibbonGalleryItem Content="Material" Foreground="Black" />
+                                <RibbonGalleryItem Content="Category" Foreground="Black" />
+                            </RibbonGalleryCategory>
+                        </RibbonGallery>
+                    </RibbonComboBox>
 
-            <StackPanel HorizontalAlignment="Right">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="28"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="85"/>
-                        <ColumnDefinition Width="130"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource baseStyleLabel}" HorizontalAlignment="Right" VerticalAlignment="Top"  Height="29" Margin="0,0,0,0">Sort by:</Label>
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
 
-                    <ComboBox  Grid.Row="0" Grid.Column="1" Name="cbb_Sort" FontSize="14" FontWeight="DemiBold" Width="125" Height="24" SelectedIndex="0" Margin="0,-2,0,0" DropDownClosed="ComboBox_DropDownClosed" Style="{StaticResource ComboBoxFlatStyle}" HorizontalAlignment="Right" >
-                        <ComboBoxItem>Material</ComboBoxItem>
-                        <ComboBoxItem>Category</ComboBoxItem>
-                    </ComboBox>
-
-                </Grid>
-            </StackPanel>
-
-        </Menu>
-
-
-        <DataGrid x:Name="dgv_Overview" Grid.Row="3" Grid.Column="1" 
+        <DataGrid x:Name="dgv_Overview" Grid.Row="4" Grid.Column="1" 
                               Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="False" SelectionChanged="Dgv_Overview_SelectionChanged" 
                   CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" HorizontalScrollBarVisibility="Visible">
             <DataGrid.Resources>
@@ -189,7 +175,8 @@
                 <!--Additional Correction -->
                 <DataGridTextColumn x:Name="column_Addition" MinWidth="100" Header="Additional &#x0a;[kgCO₂e/kg] " Binding="{Binding Path=Additional, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
                 <!--Additional Correction -->
-                <DataGridTextColumn x:Name="column_B4" MinWidth="100" Header="Group [B4] &#x0a;[x build] " Binding="{Binding Path=B4Factor, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>
+                <DataGridTextColumn x:Name="column_B4" MinWidth="100" Header="Group [B4] &#x0a;[x build] " Binding="{Binding Path=inUseProperties.B4, Mode=TwoWay}" IsReadOnly="True" Visibility="Hidden"/>
+                <DataGridTextColumn x:Name="column_B1B7ECI" MinWidth="100" Header="Group [B1-B7] &#x0a;[kgCO₂e/kg] " Binding="{Binding Path=inUseProperties.totalECI, Mode=TwoWay}" IsReadOnly="True" Visibility="Hidden"/>
 
                 <!--Total Volume-->
                 <!--<DataGridTextColumn x:Name="column_Volume"  MinWidth="100" Header="Total Volume &#x0a;[m³]" Binding="{Binding Path=TotalVolume, Mode=OneWay}" IsReadOnly="True" Visibility="Hidden"/>
@@ -257,10 +244,10 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Label Name="lbl_Total" Grid.Row="4" Grid.Column="1" Background="Transparent">TOTAL: xxx tCO₂ (Recalculate to refresh)</Label>
+        <Label Name="lbl_Total" Grid.Row="5" Grid.Column="1" Background="Transparent">TOTAL: xxx tCO₂e (Recalculate to refresh)</Label>
 
 
-        <Menu Grid.Row="5" Grid.Column="1" Background="Transparent" >
+        <Menu Grid.Row="6" Grid.Column="1" Background="Transparent" >
             <Button x:Name="btn_Collaps" Width="35" Content="▼" HorizontalAlignment="Right" VerticalAlignment="Top"  Margin="0,0,0,0" Style="{StaticResource ButtonStyle}" Click="Btn_Collaps_Click"/>
             <MenuItem Name="mnu_EditElements" Header="Elements" Background="Transparent" Style="{StaticResource baseStyleLabel}" >
                 <MenuItem Name="mnu_MoveToNewGroup" Header="_To New Group" Click="Mnu_MoveToNewGroup_Click"/>
@@ -269,7 +256,7 @@
             </MenuItem>
         </Menu>
 
-        <DataGrid x:Name="dgv_Elements" Grid.Row="6" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible"></DataGrid>
+        <DataGrid x:Name="dgv_Elements" Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible"></DataGrid>
 
     </Grid>
 </UserControl>

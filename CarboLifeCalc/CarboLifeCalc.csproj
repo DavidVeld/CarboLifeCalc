@@ -223,6 +223,22 @@
     <Content Include="img\ico_UpdateCarboLife32.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="img\rbn_refrsh64.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\rbn_newgroup.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\rbn_materialedit.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\rbn_material.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\rbn_del.png" />
+    <Resource Include="img\rbn_material32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Resources\DVLogo256.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

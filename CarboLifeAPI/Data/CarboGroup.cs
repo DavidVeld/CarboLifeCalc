@@ -22,10 +22,14 @@ namespace CarboLifeAPI.Data
         public double Density { get; set; }
         public double Mass { get; set; }
 
-        //Calculated Values
-        //public double EEI { get; set; }
+/// <summary>
+/// Total kgCO2/kg per kg.
+/// </summary>
         public double ECI { get; set; }
-        //public double EE { get; set; }
+
+        /// <summary>
+        /// Total CO2 in Ton
+        /// </summary>
         public double EC { get; set; }
         public double PerCent { get; set; }
 
@@ -45,14 +49,12 @@ namespace CarboLifeAPI.Data
         /// </summary>
         public double Additional { get; set; }
         public string AdditionalDescription { get; set; }
-        /// <summary>
-        /// The replacement value factor
-        /// </summary>
-        public double B4Factor { get; set; }
-        public string B4Description { get; set; }
 
-        public double ComponentLifePeriod { get; set; }
-        public double AssetLifePeriod { get; set; }
+        /// <summary>
+        /// In Use Values
+        /// </summary>
+        ///       
+        public CarboB1B7Properties inUseProperties { get; set; }
 
         /// <summary>
         /// The group material
@@ -75,7 +77,7 @@ namespace CarboLifeAPI.Data
         {
             get
             {
-                return (Mass * Material.ECI_A1A3 * Material.materialB1B5Properties.B4);
+                return (Mass * Material.ECI_A1A3 * inUseProperties.B4);
             }
         }
 
@@ -83,7 +85,7 @@ namespace CarboLifeAPI.Data
         {
             get
             {
-                return (Mass * Material.ECI_A4 * Material.materialB1B5Properties.B4);
+                return (Mass * Material.ECI_A4 * inUseProperties.B4);
             }
         }
 
@@ -91,7 +93,7 @@ namespace CarboLifeAPI.Data
         {
             get
             {
-                return (Mass * Material.ECI_A5 * Material.materialB1B5Properties.B4);
+                return (Mass * Material.ECI_A5 * inUseProperties.B4);
             }
         }
 
@@ -99,7 +101,7 @@ namespace CarboLifeAPI.Data
         {
             get
             {
-                return (Mass * Material.ECI_B1B5 * Material.materialB1B5Properties.B4);
+                return (Mass * Material.ECI_B1B5 * inUseProperties.B4);
             }
         }
 
@@ -107,7 +109,7 @@ namespace CarboLifeAPI.Data
         {
             get
             {
-                return (Mass * Material.ECI_C1C4 * Material.materialB1B5Properties.B4);
+                return (Mass * Material.ECI_C1C4 * inUseProperties.B4);
             }
         }
 
@@ -115,14 +117,14 @@ namespace CarboLifeAPI.Data
         {
             get
             {
-                return (Mass * Material.ECI_D * Material.materialB1B5Properties.B4);
+                return (Mass * Material.ECI_D * inUseProperties.B4);
             }
         }
         public double getTotalSeq
         {
             get
             {
-                return (Mass * Material.ECI_Seq * Material.materialB1B5Properties.B4);
+                return (Mass * Material.ECI_Seq * inUseProperties.B4);
             }
         }
 
@@ -130,8 +132,8 @@ namespace CarboLifeAPI.Data
         {
             get
             {
-                double materialAdded = Mass * Material.ECI_Mix * Material.materialB1B5Properties.B4;
-                double addedManual = Mass * this.Additional * Material.materialB1B5Properties.B4;
+                double materialAdded = Mass * Material.ECI_Mix * inUseProperties.B4;
+                double addedManual = Mass * this.Additional * inUseProperties.B4;
                 return (materialAdded + addedManual);
             }
         }
@@ -161,11 +163,8 @@ namespace CarboLifeAPI.Data
             //Additional
             Additional = 0;
             AdditionalDescription = "";
-            //B4
-            B4Factor = 1;
-            ComponentLifePeriod = 50;
-            AssetLifePeriod = 50;
-            B4Description = "";
+            //Life
+            inUseProperties = new CarboB1B7Properties();
 
             PerCent = 0;
             Material = new CarboMaterial();
@@ -234,11 +233,10 @@ namespace CarboLifeAPI.Data
             //Additional
             Additional = 0;
             AdditionalDescription = "";
-            //B4
-            B4Factor = 1;
-            ComponentLifePeriod = 50;
-            AssetLifePeriod = 50;
-            B4Description = "";
+            
+            //Life / In use
+            inUseProperties = new CarboB1B7Properties();
+
 
             PerCent = 0;
 
@@ -281,11 +279,9 @@ namespace CarboLifeAPI.Data
             //Additional
             Additional = 0;
             AdditionalDescription = "";
-            //B4
-            B4Factor = 1;
-            ComponentLifePeriod = 50;
-            AssetLifePeriod = 50;
-            B4Description = "";
+            
+            //Life / in use
+            inUseProperties = new CarboB1B7Properties();
 
             PerCent = 0;
 
@@ -314,6 +310,7 @@ namespace CarboLifeAPI.Data
         }
         public void CalculateTotals(bool cA13 = true, bool cA4 = true, bool cA5 = true, bool cB = true, bool cC = true, bool cD = true, bool cSeq = true, bool cAdd = true)
         {
+            //Recalculate The materials
             Material.CalculateTotals();
             //Clear Values
             MaterialName = Material.Name;
@@ -321,6 +318,7 @@ namespace CarboLifeAPI.Data
             double totalECI = 0;
             totalECI += Additional;
 
+            //Calculate the total ECI for each group, using only the parameters that are set
             if (cA13 == true)
                 totalECI += Material.ECI_A1A3;
             if (cA4 == true)
@@ -339,8 +337,11 @@ namespace CarboLifeAPI.Data
                 totalECI += Material.ECI_Mix;
 
             ECI = totalECI;
+
+            //Get the density from the material.
             Density = Material.Density;
             
+            //Recalculate All the Elements.
             if (AllElements != null)
             {
                 if (AllElements.Count > 0)
@@ -348,14 +349,21 @@ namespace CarboLifeAPI.Data
                     Volume = 0;
                     foreach (CarboElement ce in AllElements)
                     {
-                        ce.Calculate(Material);
-                        Volume += ce.Volume;
+                        if (ce.includeInCalc == true)
+                        {
+                            ce.Calculate(Material);
+                            Volume += ce.Volume;
+                        }
                     }
                 }
             }
 
-            double wasteFact = 1 + (Waste / 100);
+            //Round the volume;
             Volume = Math.Round(Volume, 3);
+
+            //Convert to Total Volume waste, convertion and B4 factors:
+
+            double wasteFact = 1 + (Waste / 100);
 
             //Calculate the real volume based on a correction if required. 
             if (Utils.isValidExpression(Correction) == true)
@@ -363,18 +371,26 @@ namespace CarboLifeAPI.Data
                 string volumeStr = Volume.ToString();
                 StringToFormula stf = new StringToFormula();
                 double result = stf.Eval(volumeStr + Correction);
-                TotalVolume = Math.Round((B4Factor *(result * wasteFact)), 3);
+
+                TotalVolume = Math.Round((inUseProperties.B4 * (result * wasteFact)), 3);
             }
             else
             {
-                TotalVolume = Math.Round(B4Factor * (Volume * wasteFact),3);
+                TotalVolume = Math.Round(inUseProperties.B4 * (Volume * wasteFact), 3);
             }
             
 
             //Calculate corrected mass
             Mass = TotalVolume * Density;
             //EC = Total corrected Mass * EE;I
-            EC = (Mass * ECI) / 1000;
+
+            //Get all the B1-B7 per group
+            double inuseECI = inUseProperties.totalECI;
+            double ECB1B7 = Mass * inuseECI;
+            inUseProperties.totalValue = ECB1B7;
+
+
+            EC = (Mass * (ECI + inuseECI)) / 1000;
 
         }
         internal void TrucateElements()
@@ -418,10 +434,7 @@ namespace CarboLifeAPI.Data
             result.Additional = this.Additional;
             result.AdditionalDescription = this.AdditionalDescription;
             //B4
-            result.B4Factor = this.B4Factor;
-            result.ComponentLifePeriod = this.ComponentLifePeriod;
-            result.AssetLifePeriod = this.AssetLifePeriod;
-            result.B4Description = this.B4Description;
+            result.inUseProperties = this.inUseProperties.Copy();
 
             result.isDemolished = this.isDemolished;
             result.isSubstructure = this.isSubstructure;

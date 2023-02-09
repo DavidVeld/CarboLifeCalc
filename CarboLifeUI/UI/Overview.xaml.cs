@@ -178,8 +178,10 @@ namespace CarboLifeUI.UI
 
             if (CarboLifeProject.Area > 0)
             {
-                List<CarboDataPoint> resultPointsA1A5 = CarboLifeProject.getPhaseTotals(true,true,true,false,false,false,false);
-                List<CarboDataPoint> resultPointsA1C = CarboLifeProject.getPhaseTotals(true, true, true, true, true, false, false);
+                //UpfrontOnly
+                List<CarboDataPoint> resultPointsA1A5 = CarboLifeProject.getPhaseTotals(true);
+                //No Sequestration or D
+                List<CarboDataPoint> resultPointsA1C = CarboLifeProject.getPhaseTotals(true);
 
 
                 double valueA1A5 = getDataTotals(resultPointsA1A5);
@@ -482,9 +484,28 @@ namespace CarboLifeUI.UI
             }
         }
 
+
+        private void chx_A0_Changed(object sender, RoutedEventArgs e)
+        {
+            if (chx_A0 != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateA0 = chx_A0.IsChecked.Value;
+                RefreshInterFace();
+            }
+        }
+        private void chx_B67D2_Changed(object sender, RoutedEventArgs e)
+        {
+            if (chx_Operational != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateA0 = chx_Operational.IsChecked.Value;
+                RefreshInterFace();
+            }
+        }
+
         private void cbb_GraphType_DropDownClosed(object sender, EventArgs e)
         {
             RefreshInterFace();
         }
+
     }
 }

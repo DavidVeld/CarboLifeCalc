@@ -4,8 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="500" MinWidth="500" MinHeight="400" Width="500" Height="400"  Loaded="Window_Loaded" Background="WhiteSmoke">
+             d:DesignHeight="600" d:DesignWidth="600" MinWidth="500" MinHeight="650" Width="600" Height="600"  Loaded="Window_Loaded" Background="WhiteSmoke">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,7 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="55"/>
+            <RowDefinition Height="45"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
@@ -35,45 +37,106 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Global Energy Usage</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">B6 B7 &amp; D2 Global Energy Usage and Generation</Label>
 
         <TextBox Grid.Column="2" Grid.Row="2" Margin="0" Style="{StaticResource formTextStyle}" AcceptsReturn="True" IsReadOnly="True" TextWrapping="Wrap">
-            For high-level energy assesment provide the information below to add this information to the project</TextBox>
+            For high-level energy assesment provide the information below</TextBox>
 
         <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="3" Header="Value" Style="{StaticResource baseStyleBold}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="25"/>
                     <RowDefinition Height="35"/>
                     <RowDefinition Height="35"/>
+
                     <RowDefinition Height="35"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="35"/>
+
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="83"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="90"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="85"/>
+                    <ColumnDefinition Width="35"/>
+
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Electricity:</Label>
-                <TextBox Name="txt_Electricty" Grid.Column="2" Grid.Row="1"  Height="27" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,0"/>
-                <Label Grid.Column="3" Margin="0,0,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">kWh/year</Label>
+                <!--B6-->
+                <Label Grid.Column="1" Grid.Row="1" Height="30" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTitleStyle}" Grid.RowSpan="2">B6 - Operational Energy</Label>
 
-                <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Gas:</Label>
-                <TextBox Name="txt_Gas" Grid.Column="2" Grid.Row="2"  Height="27" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,0"/>
-                <Label Grid.Column="3" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m³/Year</Label>
+                <Label Grid.Column="1" Margin="5,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Energy:</Label>
+                <TextBox Name="txt_Electricty" Grid.Column="2" Grid.Row="2"  Height="27" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,0" TextChanged="txt_Electricty_TextChanged" />
+                <Label Grid.Column="3" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.ColumnSpan="2">kWh/year</Label>
 
-                <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="3" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Electricity:</Label>
-                <TextBox Name="txt_Water" Grid.Column="2" Grid.Row="3"  Height="27" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,0"/>
-                <Label Grid.Column="3" Margin="0,0,0,0" Grid.Row="3" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">l/year</Label>
+                <Label Grid.Column="4" Grid.Row="2" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">@</Label>
+                <TextBox Name="txt_ElectrictyCost" Grid.Column="5" Grid.Row="2"  Height="27" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,0" TextChanged="txt_ElectrictyCost_TextChanged"/>
+                <Label Grid.Column="6" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.ColumnSpan="2">CO₂e/kWh</Label>
+                
+                <Button Name="btn_EnergyAdvice" Grid.Row="2" Grid.Column="7" Margin="0,0,0,0" Style="{StaticResource ButtonStyle}" Click="btn_EnergyAdvice_Click">?</Button>
 
-                <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="4" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Comments:</Label>
-                <TextBox Name="txt_Description" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="2" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,4"/>
+                <!--B7-->
 
+                <Label Grid.Column="1" Grid.Row="3" Height="28" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTitleStyle}" Grid.RowSpan="2">B7 - Operational Water</Label>
+
+                <Label Grid.Column="1" Grid.Row="4" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Water:</Label>
+                <TextBox Name="txt_Water" Grid.Column="2" Grid.Row="4"  Height="27" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,0" TextChanged="txt_Water_TextChanged"/>
+                <Label Grid.Column="3" Margin="0,0,0,0" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.ColumnSpan="2">l/Year</Label>
+
+                <Label Grid.Column="4" Grid.Row="4" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">@</Label>
+                <TextBox Name="txt_WaterCost" Grid.Column="5" Grid.Row="4"  Height="27" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,0" TextChanged="txt_WaterCost_TextChanged"/>
+                <Label Grid.Column="6" Margin="0,0,0,0" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.ColumnSpan="2">CO₂e/kWh</Label>
+
+                <Button Name="btn_WaterAdvice" Grid.Row="4" Grid.Column="7" Margin="0,0,0,0" Style="{StaticResource ButtonStyle}" Click="btn_WaterAdvice_Click">?</Button>
+
+                <!--D2-->
+                <Label Grid.Column="1" Grid.Row="5" Height="28" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTitleStyle}" Grid.RowSpan="2">D2 - Reclaimed Energy</Label>
+
+                <Label Grid.Column="1" Grid.Row="6" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Electricity generated:</Label>
+                <TextBox Name="txt_EnergyGeneration" Grid.Column="2" Grid.Row="6"  Height="27" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,0" TextChanged="txt_EnergyGeneration_TextChanged"/>
+                <Label Grid.Column="3" Margin="0,0,0,0" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.ColumnSpan="2">kWh/year</Label>
+
+                <Button Name="btn_GeneratedAdvice" Grid.Row="6" Grid.Column="7" Margin="0,0,0,0" Style="{StaticResource ButtonStyle}" Click="btn_GeneratedAdvice_Click">?</Button>
+
+                <!--Factor-->
+                <Label Grid.Column="1" Grid.Row="7" Height="28" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTitleStyle}" Grid.RowSpan="2">Decarbonisation Factor</Label>
+
+                <Label Grid.Column="1" Grid.Row="8" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Value (%):</Label>
+                <TextBox Name="txt_decarbofact" Grid.Column="2" Grid.Row="8"  Height="27" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,0" TextChanged="txt_decarbofact_TextChanged"/>
+                <Label Grid.Column="3" Margin="0,0,0,0" Grid.Row="8" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">% reduction / year</Label>
+
+                <Button Name="btn_DecarbonisationAdvice" Grid.Row="8" Grid.Column="7" Margin="0,0,0,0" Style="{StaticResource ButtonStyle}" Click="btn_DecarbonisationAdvice_Click">?</Button>
+
+                <!--Comment-->
+
+                <Label Grid.Column="1" Grid.Row="9" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Comments:</Label>
+                <TextBox Name="txt_Description" Grid.Column="2" Grid.Row="9" Grid.ColumnSpan="5" Style="{StaticResource flatTextBox}" IsReadOnly="False" Margin="0,0,5,4" TextChanged="txt_Description_TextChanged"/>
+
+                <Label Grid.Column="1" Grid.Row="10" Height="28" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTitleStyle}" Grid.RowSpan="2">Predicted Energy Cost:</Label>
+
+
+                <lvc:CartesianChart Name="chrt_Preview" Grid.Column="1" Margin="0,3,0,5" Grid.Row="11" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right" Grid.RowSpan="2">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Years" 
+                          Labels="{Binding Labels}" 
+                          Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" />
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="CO₂e/year"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
 
             </Grid>
         </GroupBox>

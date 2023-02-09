@@ -30,10 +30,14 @@ namespace CarboLifeAPI.Data
         public double Value { get; set; }
         public double Area { get; set; }
         public string filePath { get; set; }
-        
+
         //Global Calculations:
+        public double A0Global { get; set; }
+        public double A0Factor { get; set; }
         public double A5Global { get; set; }
         public double A5Factor { get; set; }
+        public double b675Global { get; set; }
+        public double B67Factor { get; set; }
         public double demoArea { get; set; }
         public double C1Factor { get; set; }
         public double C1Global { get; set; }
@@ -45,20 +49,19 @@ namespace CarboLifeAPI.Data
         /// 
 
         //Calc Switches
+        public bool calculateA0 { get; set; }
         public bool calculateA13 { get; set; }
         public bool calculateA4 { get; set; }
         public bool calculateA5 { get; set; }
         public bool calculateB { get; set; }
+        public bool calculateB67 { get; set; }
         public bool calculateC { get; set; }
         public bool calculateD { get; set; }
         public bool calculateAdd { get; set; }
         public bool calculateSeq { get; set; }
 
         public string valueUnit { get; set; }
-
         public int designLife { get; set; }
-
-        public double energyPerYear { get; set; }
 
         public List<CarboMapElement> carboMaterialMap  { get; set; }
         public List<CarboLevel> carboLevelList { get; set; }
@@ -144,16 +147,19 @@ namespace CarboLifeAPI.Data
             //New projects don't need to be saved
             justSaved = true;
 
+            calculateA0 = true;
             calculateA13 = true;
             calculateA4 = true;
             calculateA5 = true;
             calculateB = false;
+            calculateB67 = false;
+
             calculateC = true;
             calculateD = false;
             calculateAdd = false;
 
             designLife = 50;
-            energyPerYear = 0;
+
         }
 
 
@@ -704,58 +710,65 @@ namespace CarboLifeAPI.Data
         /// These are net values(based on the corrected converted Total Volume
         /// </summary>
         /// <returns>Returns a list of the project totals (9 items) in kgCO₂</returns>
-        public List<CarboDataPoint> getPhaseTotals(
-            bool f_A1A4 = true, 
-            bool f_A4 = true, 
-            bool f_A5= true, 
-            bool f_B1B5= true, 
-            bool f_C1C4 = true, 
-            bool f_D = true,
-            bool f_Seq = true,
-            bool f_Add = true)
+        public List<CarboDataPoint> getPhaseTotals(bool calculateAll = false)
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
             try
             {
+                CarboDataPoint cb_A0 = new CarboDataPoint("A0", 0);
                 CarboDataPoint cb_A1A3 = new CarboDataPoint("A1-A3", 0);
                 CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
                 CarboDataPoint cb_A5 = new CarboDataPoint("A5(Material)",0);
-                CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
+
                 CarboDataPoint cb_B1B5 = new CarboDataPoint("B1-B7", 0);
                 CarboDataPoint cb_C1C4 = new CarboDataPoint("C1-C4", 0);
-                CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
+
                 CarboDataPoint cb_D = new CarboDataPoint("D", 0);
                 CarboDataPoint cb_Seq = new CarboDataPoint("Sequestration", 0);
                 CarboDataPoint Added = new CarboDataPoint("Additional", 0);
 
-                if(f_A1A4 == true)
+                //These are global calculated values through settngs
+                CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
+                CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
+                CarboDataPoint cb_B67D2 = new CarboDataPoint("Energy B6, B7 + D2 (Global)", this.energyProperties.value * 1000);
+
+                //A
+                if (calculateA0 == true || calculateAll == true)
+                    valueList.Add(cb_A0);
+
+                if (calculateA13 == true || calculateAll == true)
                     valueList.Add(cb_A1A3);
 
-                if(f_A4 == true)
-                valueList.Add(cb_A4);
+                if(calculateA4 == true || calculateAll == true)
+                    valueList.Add(cb_A4);
 
-                if (f_A5 == true)
+                if (calculateA5 == true || calculateAll == true)
                 {
                     valueList.Add(cb_A5);
                     valueList.Add(cb_A5Global);
                 }
-                if(f_B1B5 == true)
+
+                if(calculateB == true || calculateAll == true)
                     valueList.Add(cb_B1B5);
 
-                if (f_C1C4 == true)
+                if(calculateB67 == true || calculateAll == true)
+                    valueList.Add(cb_B67D2);
+
+                if (calculateC == true || calculateAll == true)
                 {
                     valueList.Add(cb_C1C4);
                     valueList.Add(cb_C1Global);
                 }
 
-                if (f_D == true)
+                if (calculateD == true || calculateAll == true)
                     valueList.Add(cb_D);
 
-                if(f_Seq == true)
+                if(calculateSeq == true || calculateAll == true)
                     valueList.Add(cb_Seq);
 
-                if (f_Add == true)
+                if (calculateAdd == true || calculateAll == true)
                     valueList.Add(Added);
+
 
                 foreach (CarboGroup CarboGroup in this.groupList)
                 {
@@ -947,14 +960,7 @@ namespace CarboLifeAPI.Data
             List<CarboDataPoint> PieceListLifePoint = new List<CarboDataPoint>();
 
             //Get all data:
-            PieceListLifePoint = getPhaseTotals(calculateA13, 
-                calculateA4, 
-                calculateA5, 
-                calculateB, 
-                calculateC, 
-                calculateD, 
-                calculateSeq,
-                calculateAdd);
+            PieceListLifePoint = getPhaseTotals();
 
 
             //Add A1-A5
@@ -1650,6 +1656,29 @@ namespace CarboLifeAPI.Data
                 System.Windows.MessageBox.Show(ex.Message);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// This Method will re-calculate the design life consequences of a project
+        /// It will need to go through all groups to ensure the replacement factor is adjusted
+        /// It will need to go throuhg the energy spent totals to adjust thevalues.
+        /// </summary>
+        /// <param name="designLifeNew"></param>
+        public void SetDesignLife(int designLifeNew)
+        {
+            this.designLife = designLifeNew;
+
+            //First The Energy
+            energyProperties.calculate(designLifeNew);
+
+            //The Groups.
+            foreach(CarboGroup group in groupList)
+            {
+                //Calculate Factor;
+                group.inUseProperties.calculate(designLifeNew);
+            }
+
+            this.CalculateProject();
         }
     }
 }

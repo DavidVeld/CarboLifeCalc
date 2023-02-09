@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Sync Materials to Dialog Window"
-             d:DesignHeight="700" d:DesignWidth="800" Height="650" Width="800" MinHeight="650" MinWidth="800" Loaded="Window_Loaded" ShowInTaskbar="True" Background="LightGray">
+             d:DesignHeight="700" d:DesignWidth="800" Height="650" Width="800" MinHeight="650" MinWidth="800" Loaded="Window_Loaded" ShowInTaskbar="True" Background="WhiteSmoke">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -46,7 +46,7 @@
         <Label Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="1" Style="{StaticResource baseStyleLabel}">...t</Label>
         <ComboBox Name="cbb_DataBases" Grid.Column="4" Grid.Row="3" Grid.ColumnSpan="1" Margin="5,0,160,2"  Height="28"  Style="{StaticResource  ComboBoxFlatStyleLight}" IsReadOnly="True" DropDownClosed="cbb_DataBases_DropDownClosed"></ComboBox>
         <Button Name="btn_OpenFrom" Grid.Row="3" Grid.Column="4" Margin="0,1,83,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Open..."  Click="btn_OpenFrom_Click"></Button>
-        <Button Name="btn_OpenOnline" Grid.Row="3" Grid.Column="4" Margin="0,1,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Get Online.." Click="btn_OpenOnline_Click"></Button>
+        <Button Name="btn_OpenOnline" Grid.Row="3" Grid.Column="4" Margin="0,1,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Get Online.." Click="btn_OpenOnline_Click" Visibility="Hidden"></Button>
 
         <ListView Name="liv_CurrentMaterials" Grid.Column="2" Grid.Row="4" Margin="5,0,5,10" Background="White">
             <ListView.View>

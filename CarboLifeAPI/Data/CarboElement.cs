@@ -28,7 +28,7 @@ namespace CarboLifeAPI.Data
         public bool isDemolished { get; set; }
         public bool isExisting { get; set; }
         public bool isSubstructure { get; set; }
-
+        public bool includeInCalc { get; set; }
         public double ECI { get; set; }
         public double EC { get; set; }
         public double ECI_Total { get; set; }
@@ -58,6 +58,7 @@ namespace CarboLifeAPI.Data
             EC_Total = 0;
             Volume_Total = 0;
             isUpdated = false;
+            includeInCalc = true;
         }
 
         
@@ -107,6 +108,8 @@ namespace CarboLifeAPI.Data
             clone.ECI_Total = this.ECI_Total;
             clone.EC_Total = this.EC_Total;
             clone.Volume_Total = this.Volume_Total;
+
+            clone.includeInCalc = this.includeInCalc;
 
             return clone;
         }

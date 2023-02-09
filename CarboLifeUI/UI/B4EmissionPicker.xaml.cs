@@ -22,9 +22,10 @@ namespace CarboLifeUI.UI
     public partial class B4EmissionPicker : Window
     {
         internal bool isAccepted;
-        public CarboB1B5Properties materialB1B5Properties;
+        public CarboB1B7Properties materialB1B5Properties;
+        public int desinglife;
 
-        public B4EmissionPicker(CarboB1B5Properties materialB1B5Properties)
+        public B4EmissionPicker(CarboB1B7Properties materialB1B5Properties)
         {
             this.materialB1B5Properties = materialB1B5Properties;
             InitializeComponent();
@@ -32,7 +33,6 @@ namespace CarboLifeUI.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            txt_AssetReferencePeriod.Text = materialB1B5Properties.buildingdesignlife.ToString();
             txt_ComponentLifespan.Text = materialB1B5Properties.elementdesignlife.ToString();
             UpdateValue();
         }
@@ -63,9 +63,8 @@ namespace CarboLifeUI.UI
         private void UpdateValue()
         {
             materialB1B5Properties.elementdesignlife = CarboLifeAPI.Utils.ConvertMeToDouble(txt_ComponentLifespan.Text);
-            materialB1B5Properties.buildingdesignlife = CarboLifeAPI.Utils.ConvertMeToDouble(txt_AssetReferencePeriod.Text);
 
-            materialB1B5Properties.calculate();
+            materialB1B5Properties.calculate(desinglife);
 
             txt_Value.Text = Math.Round(materialB1B5Properties.totalValue, 3).ToString();
         }
@@ -81,6 +80,11 @@ namespace CarboLifeUI.UI
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void chx_EndOfLife_Changed(object sender, RoutedEventArgs e)
+        {
+            materialB1B5Properties.designLifeToEnd = chx_EndOfLife.IsChecked.Value;
         }
     }
 }

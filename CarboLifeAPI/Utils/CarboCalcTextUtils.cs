@@ -75,7 +75,7 @@ namespace CarboLifeAPI
 
                 dr["Waste"] = cg.Waste;
                 dr["Added"] = cg.Additional;
-                dr["B4"] = cg.B4Factor;
+                dr["B4"] = cg.inUseProperties.B4;
                 dr["Density"] = cg.Density;
                 dr["Mass"] = cg.Mass;
                 dr["ECI"] = cg.ECI;

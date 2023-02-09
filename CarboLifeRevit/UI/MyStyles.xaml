@@ -30,7 +30,7 @@
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
-    <Style TargetType="{x:Type Control}" x:Key="formHelpText">
+    <Style TargetType="{x:Type Control}" x:Key="formGreyText">
         <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="DarkGray" />
