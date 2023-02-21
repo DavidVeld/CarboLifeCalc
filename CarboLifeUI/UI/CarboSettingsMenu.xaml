@@ -49,7 +49,7 @@
                     <ColumnDefinition Width="1"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Grid.RowSpan="1">User Template path:</Label>
+                <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="1" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Grid.RowSpan="1">User Template path:</Label>
                 <TextBox Name="txt_Path" Grid.Column="1" Grid.Row="1"  Margin="141,1,32,0" TextWrapping="Wrap"   VerticalAlignment="Top"  Height="27" Background="Transparent"  Style="{StaticResource flatTextBox}" Text="[Path]" IsEnabled="False"/>
                 <Button Name="btn_Browse" Grid.Row="1" Grid.Column="1" Margin="0,1,0,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="17" Height="27" Style="{StaticResource ButtonStyle}" Click="btn_Browse_Click">...</Button>
                 <Label Name="lbl_CheckTemplatePath" Visibility="Hidden" Grid.Column="1" Margin="0,25,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Grid.RowSpan="1">[]</Label>

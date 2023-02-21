@@ -4,41 +4,43 @@
 
 
     <!-- DATAGRID VIEWER -->
-
+    <!--#ffd8cf-->
+    
     <Style x:Key="DataGridColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}"  >
-        <Setter Property="Background" Value="#ffcdab"></Setter>
+        <Setter Property="Background" Value="#ffd8cf"></Setter>
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="MinWidth" Value="0" />
         <Setter Property="MinHeight" Value="28" />
         <Setter Property="FontFamily" Value="Segoe UI" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="SeparatorBrush" Value="Black"></Setter>
     </Style>
 
     <Style x:Key="DataGridDataStyle" TargetType="{x:Type DataGridCell}"  >
-        <Setter Property="Background" Value="White"></Setter>
+        <Setter Property="Background" Value="#fff"></Setter>
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="MinWidth" Value="0" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter  Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
     </Style>
-
+    
+       
     <Style x:Key="DataViewerStyle" TargetType="{x:Type DataGrid}">
-        <Setter Property="Background" Value="#FFECD4"></Setter>
+        <Setter Property="Background" Value="#fff"></Setter>
         <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DataGridColumnHeaderStyle}"></Setter>
         <Setter Property="CellStyle" Value="{DynamicResource DataGridDataStyle}"></Setter>
+
         <Setter Property="RowHeaderWidth" Value="0"></Setter>
-        <Setter Property="BorderThickness" Value="2"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="BorderBrush" Value="#222"></Setter>
-
     </Style>
- 
 
-    
+
+
     <!-- style for all datagrids-->
     <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource DataViewerStyle}"></Style>
 

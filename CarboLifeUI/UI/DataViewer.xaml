@@ -66,34 +66,34 @@
 
                 <!-- Group-->
                 <RibbonGroup x:Name="Group" Header="Group">
-                    <RibbonButton Label="New" Width="64" Height="64" Click="Mnu_NewGroup_Click" LargeImageSource="/img/rbn_newgroup.png"/>
+                    <RibbonButton Label="New" Width="64" Height="64" Click="Mnu_NewGroup_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_groupnew32.png"/>
 
-                    <RibbonMenuButton Label="Delete Group" PreviewMouseDown="Mnu_DeleteGroup_Click" SmallImageSource="/img/rbn_del.png"/>
-                    <RibbonMenuButton Label="Merge Group" PreviewMouseDown="Mnu_MergeGroup_Click"/>
-                    <RibbonMenuButton Label="Purge Elements" MouseDown="Mnu_PurgeElements_Click"/>
+                    <RibbonMenuButton Label="Delete Group" PreviewMouseDown="Mnu_DeleteGroup_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_del.png" />
+                    <RibbonMenuButton Label="Merge Group" PreviewMouseDown="Mnu_MergeGroup_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupmerge32.png"/>
+                    <RibbonMenuButton Label="Purge Elements" MouseDown="Mnu_PurgeElements_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_grouppurge32.png"/>
 
-                    <RibbonMenuButton Label="Split Group..." Visibility="Visible"/>
-                    <RibbonMenuButton Label="Re-group..." PreviewMouseDown="Mnu_reGroupData_Click"/>
-                    <RibbonMenuButton Label="Multi-Map..." PreviewMouseDown="mnu_MapElements_Click"/>
+                    <RibbonMenuButton Label="Split Group..." Visibility="Visible" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupsplit32.png"/>
+                    <RibbonMenuButton Label="Re-group..." PreviewMouseDown="Mnu_reGroupData_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupregroup32.png"/>
+                    <RibbonMenuButton Label="Multi-Map..." PreviewMouseDown="mnu_MapElements_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_del.png"/>
                 </RibbonGroup>
                 <!-- Employee And Payroll group-->
                 <RibbonGroup x:Name="Materials" Header="Materials">
-                    <RibbonButton Label="Select" Click="Btn_Material_Click" LargeImageSource="/img/rbn_material32.png"/>
-                    <RibbonButton Label="Editor" Click="btn_OpenMaterialEditor_Click" LargeImageSource="/img/rbn_materialedit.png" />
+                    <RibbonButton Label="Select" Click="Btn_Material_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_materialselect32.png" />
+                    <RibbonButton Label="Editor" Click="btn_OpenMaterialEditor_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_materialedit32.png" />
                 </RibbonGroup>
 
 
 
                 <RibbonGroup x:Name="Tools" Header="Tools">
-                    <RibbonButton Width="64" Height="64" Label="Reinforcement" Click="Mnu_Reinforce_Click"/>
-                    <RibbonButton Width="64" Height="64" Label="Profile" Click="Mnu_Metaldeck_Click"/>
-                    <RibbonButton Width="64" Height="64" Label="Refresh" Click="Btn_Calculate_Click" LargeImageSource="/img/rbn_refrsh64.png" >
+                    <RibbonButton Width="64" Height="64" Label="Reinforcement" Click="Mnu_Reinforce_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_rebar32.png"/>
+                    <RibbonButton Width="64" Height="64" Label="Profile" Click="Mnu_Metaldeck_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_metaldeck32.png"/>
+                    <RibbonButton Width="64" Height="64" Label="Refresh" Click="Btn_Calculate_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_refresh32.png" >
                     </RibbonButton>
                 </RibbonGroup>
 
                 <RibbonGroup x:Name="Advanced" Header="Advanced">
-                    <RibbonButton Label="Advanced" Width="64" Height="64" Click="btn_EditAdvanced_Click"/>
-                    <RibbonButton Label="B1-B7"  Width="64" Height="64" Click="btn_EditInUseValues_Click"/>
+                    <RibbonButton Label="Advanced" Width="64" Height="64" Click="btn_EditAdvanced_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_advanced32.png"/>
+                    <RibbonButton Label="B1-B7"  Width="64" Height="64" Click="btn_EditInUseValues_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_Energy32.png"/>
                 </RibbonGroup>
                 <RibbonGroup x:Name="Table" Header="Table">
                     <RibbonCheckBox Name="chx_AdvancedShow" Label="Show/Hide Advanced" ToolTip="Show/Hide advanced settings" Checked="Btn_ShowHideCorrections_Click" Unchecked="Btn_ShowHideCorrections_Click"></RibbonCheckBox>
@@ -119,7 +119,7 @@
 
         <DataGrid x:Name="dgv_Overview" Grid.Row="4" Grid.Column="1" 
                               Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="False" SelectionChanged="Dgv_Overview_SelectionChanged" 
-                  CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" HorizontalScrollBarVisibility="Visible">
+                  CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" HorizontalScrollBarVisibility="Visible"  >
             <DataGrid.Resources>
                 <local:SumValues x:Key="SumValues"/>
             </DataGrid.Resources>
@@ -132,7 +132,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type GroupItem}">
-                                        <Expander IsExpanded="True" BorderThickness="1,1,1,1" Foreground="Black" Background="#ffd6bb" BorderBrush="#ffd6bb">
+                                        <Expander IsExpanded="True" BorderThickness="1,1,1,1" Foreground="Black" Background="#ffe3dd" BorderBrush="#ffd8cf">
                                             <Expander.Header>
                                                 <DockPanel Width="800"  >
                                                     <TextBlock FontSize="14" FontFamily="Segoe UI" FontWeight="Bold" Text="{Binding Path=Name}" Margin="5,0,0,0"/>

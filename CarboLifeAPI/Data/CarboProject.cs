@@ -16,6 +16,7 @@ namespace CarboLifeAPI.Data
     [Serializable]
     public class CarboProject
     {
+        public CarboRevitImportSettings RevitImportSettings { get; set; }
         public CarboDatabase CarboDatabase { get; set; }
 
         public CarboEnergyProperties energyProperties { get; set; }
@@ -117,6 +118,7 @@ namespace CarboLifeAPI.Data
             //UserPaths
             PathUtils.CheckFileLocationsNew();
 
+            RevitImportSettings = new CarboRevitImportSettings();
             CarboDatabase = new CarboDatabase();
             CarboDatabase = CarboDatabase.DeSerializeXML("");
 
@@ -162,8 +164,6 @@ namespace CarboLifeAPI.Data
 
         }
 
-
-
         public void CreateGroups()
         {
             //get default group settings;
@@ -208,8 +208,6 @@ namespace CarboLifeAPI.Data
                 }
             }
         }
-
-
 
         /// <summary>
         /// Updates the project with the elements inside another carbogroup

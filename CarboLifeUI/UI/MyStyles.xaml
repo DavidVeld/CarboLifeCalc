@@ -7,7 +7,7 @@
     <!--COLOURS-->
     <!--       -->
     <SolidColorBrush x:Key="DVColour" Color="#ff6600" />
-    
+
     <Style TargetType="{x:Type Control}" x:Key="formBoldTitleStyle">
         <Setter Property="FontSize" Value="16" />
         <Setter Property="FontFamily" Value="Segoe UI" />
@@ -15,7 +15,7 @@
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
-        
+
     <Style TargetType="{x:Type Control}" x:Key="formTitleStyle">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="Segoe UI" />
@@ -24,12 +24,20 @@
         <Setter Property="Background" Value="Transparent"/>
     </Style>
     <Style TargetType="{x:Type Control}" x:Key="formTextStyle">
-        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="FontSize" Value="13" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
+    <Style TargetType="{x:Type Control}" x:Key="formGreyText">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="Segoe UI" />
+        <Setter Property="Foreground" Value="DarkGray" />
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    
     <Style TargetType="{x:Type Control}" x:Key="formHelpText">
         <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="Segoe UI" />
@@ -582,7 +590,7 @@
     <!-- LISTBOX VIEWER -->
     <Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
         <Setter Property="Width" Value="18"/>
-        <Setter Property="Background" Value="#fff"/>
+        <Setter Property="Background" Value="#ffd8cf"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
@@ -668,9 +676,9 @@
     <Style x:Key="{x:Type GridViewColumnHeader}" TargetType="GridViewColumnHeader">
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="#b23636" />
+        <Setter Property="Foreground" Value="#000" />
         <Setter Property="Padding" Value="8,2,8,2"/>
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="#ffd8cf"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="DemiBold"></Setter>
@@ -678,7 +686,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="GridViewColumnHeader">
                     <Grid>
-                        <Border Name="HeaderBorder" Padding="{TemplateBinding Padding}" BorderThickness="0,0,0,0" BorderBrush="#3e3e45" Background="Transparent">
+                        <Border Name="HeaderBorder" Padding="{TemplateBinding Padding}" BorderThickness="0,0,0,0" BorderBrush="#3e3e45" Background="#ffd8cf">
                             <ContentPresenter Name="HeaderContent" Margin="0,0,0,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
                         <Thumb x:Name="PART_HeaderGripper" HorizontalAlignment="Right" Margin="0,0,-9,0" Style="{StaticResource GridViewColumnHeaderGripper}"/>

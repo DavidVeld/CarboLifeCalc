@@ -50,13 +50,16 @@ namespace CarboLifeAPI.Data
             SubCategory = "";
             Volume = 0;
             Level = 0;
-            isDemolished = false;
-            isExisting = false;
+            Density = 0;
+
             ECI = 0;
             EC = 0;
             ECI_Total = 0;
             EC_Total = 0;
             Volume_Total = 0;
+
+            isDemolished = false;
+            isExisting = false;
             isUpdated = false;
             includeInCalc = true;
         }

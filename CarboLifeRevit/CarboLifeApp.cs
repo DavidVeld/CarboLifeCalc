@@ -76,7 +76,7 @@ namespace CarboLifeRevit
             pB_ShowCarboCalc.SetContextualHelp(contextualHelp);
             pB_ShowCarboCalc.ToolTip = "Vizualise your project in Revit";
 
-
+            /*
             PushButton pB_CarboCalcPlus = CarboCalcPanel.AddItem(new PushButtonData("CarboLifeCalcSettings", "Settings", MyAssemblyPath, "CarboLifeRevit.CarboLifeCalcPlus")) as PushButton;
             //LImage
             Uri img_CarboImport = new Uri(MyAssemblyDir + @"\img\ico_CarboLifeSettings32.png");
@@ -89,6 +89,7 @@ namespace CarboLifeRevit
             pB_CarboCalcPlus.Image = smllimg_CarboImport;
             pB_CarboCalcPlus.SetContextualHelp(contextualHelp);
             pB_CarboCalcPlus.ToolTip = "Advanced export settings";
+            */
 
             try
             {

@@ -12,6 +12,14 @@ namespace CarboLifeRevit
 {
     public static class CarboRevitUtils
     {
+        /// <summary>
+        /// This is the main function to form a carbo element based on a Revit Input.
+        /// </summary>
+        /// <param name="doc"></param>
+        /// <param name="el"></param>
+        /// <param name="materialIds"></param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
         public static CarboElement getNewCarboElement(Document doc, Element el, ElementId materialIds, CarboRevitImportSettings settings)
         {
 
@@ -66,18 +74,16 @@ namespace CarboLifeRevit
 
 
                 //Category
-                setCategory = getValueFromList(el,type, settings.MainCategory, doc);
+                setCategory = getValueFromList(el,type, settings.CategoryName, doc);
 
-                //SubCategory
-                setSubCategory = getValueFromList(el, type, settings.SubCategory, doc);
+                //SubCategory (Not used at the moment)
+                setSubCategory = setCategory;
                 
                 //Volume
-                               
                 double volumeCubicFt = el.GetMaterialVolume(materialIds);
                 setVolume = Utils.convertToCubicMtrs(volumeCubicFt);
 
-                newCarboElement.isDemolished = false;
-                
+
                 Level lvl = doc.GetElement(el.LevelId) as Level;
                 if (lvl != null)
                 {
@@ -88,15 +94,12 @@ namespace CarboLifeRevit
                     setLevel = 0;
                 }
 
-                if (setLevel <= settings.CutoffLevelValue)
-                    setIsSubstructure = true;
-                else
-                    setIsSubstructure = false;
 
                 //Get Phasing;
                 Phase elCreatedPhase = doc.GetElement(el.CreatedPhaseId) as Phase;
                 Phase elDemoPhase = doc.GetElement(el.DemolishedPhaseId) as Phase;
-                
+
+                newCarboElement.isDemolished = false;
 
                 if (elDemoPhase != null)
                 {
@@ -132,6 +135,20 @@ namespace CarboLifeRevit
                         return null;
                 }
 
+
+                //Is Substructure
+                setIsSubstructure = false;
+
+                Parameter substructParam = el.LookupParameter(settings.IsSubStructureParamName);
+                if(substructParam != null)
+                {
+                    if (substructParam.StorageType == StorageType.Integer)
+                    {
+                        if (substructParam.AsInteger() == 1)
+                            setIsSubstructure = true;
+                    }
+                }
+
                 //If it passed it is either proposed, or demolished and retained.
 
                 newCarboElement.Id = setId;
@@ -162,50 +179,71 @@ namespace CarboLifeRevit
             }
 
         }
+        /*            
+        categorylist.Add("(Revit) Category");
+        categorylist.Add("Type Name");
+        categorylist.Add("Type Comment");
+        categorylist.Add("Comment");
+        */
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="el"></param>
+        /// <param name="type"></param>
+        /// <param name="searchString"></param>
+        /// <param name="doc"></param>
+        /// <returns></returns>
         private static string getValueFromList(Element el, ElementType type, string searchString, Document doc)
         {
             string result = "";
 
-            if (searchString == "Type Comment")
+            if (searchString == "(Revit) Category")
             {
-                Parameter commentpar = type.LookupParameter("Type Comments");
-                if (commentpar != null)
-                    result = commentpar.AsString();
+                result = el.Category.Name;
             }
-            else if (searchString == "Family Name")
+            else if (searchString == "Type Name")
             {
                 result = type.FamilyName;
             }
-            else if (searchString == "")
+            else if (searchString == "Type Comment")
             {
-                result = "";
-            }
-            else if (searchString == "CarboLifeCategory")
-            {
-                Parameter carbonpar = type.LookupParameter("CarboLifeCategory");
+                Parameter carbonpar = type.LookupParameter("Comment");
                 if (carbonpar != null)
-                    result = carbonpar.AsString();
-            }
-            else if ( searchString == "Level")
-            {
-                Element lvlEl = doc.GetElement(el.LevelId);
-                if (lvlEl != null)
                 {
-                    Level lvl = doc.GetElement(el.LevelId) as Level;
-                    result = lvl.Name;
+                    if (carbonpar.StorageType == StorageType.String)
+                        result = carbonpar.AsString();
+                    else
+                        result = "Unknown Category";
                 }
-                else
+            }
+            else if (searchString == "Comment")
+            {
+                Parameter carbonpar = el.LookupParameter("Comment");
+                if (carbonpar != null)
                 {
-                    result = "";
+                    if (carbonpar.StorageType == StorageType.String)
+                        result = carbonpar.AsString();
+                    else
+                        result = "Unknown Category";
                 }
             }
             else
             {
-                result = el.Category.Name;
+                Parameter carbonpar = el.LookupParameter(searchString);
+
+                if (carbonpar != null)
+                {
+                    if (carbonpar.StorageType == StorageType.String)
+                        result = carbonpar.AsString();
+                    else
+                        result = "Unknown Category";
+                }
+                else
+                {
+                    result = el.Category.Name;
+                }
             }
-
             return result;
-
         }
         /// <summary>
         /// Validates the elements and it's class;

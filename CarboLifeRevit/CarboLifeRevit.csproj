@@ -104,18 +104,23 @@
     <Compile Include="Modeless\CarboViewerCommand.cs" />
     <Compile Include="Modeless\ColourViewerHandler.cs" />
     <Compile Include="CarboLifeCalcUpdate.cs" />
-    <Compile Include="CarboLifeCalcPlus.cs" />
+    <None Include="CarboLifeCalcPlus.cs" />
     <Compile Include="CarboLifeApp.cs" />
     <Compile Include="CarboLifeCalc.cs" />
     <Compile Include="CarboLifeRevitImport.cs" />
-    <Compile Include="CarboRevitImportSettings.cs" />
+    <None Include="CarboRevitImportSettings.cs" />
     <Compile Include="CarboRevitUtils.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="UI\HeatMapCreatorRevit.xaml.cs">
       <DependentUpon>HeatMapCreatorRevit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ImportSettingsWindow.xaml.cs">
-      <DependentUpon>ImportSettingsWindow.xaml</DependentUpon>
-    </Compile>
+    <None Include="UI\ImportSettingsWindowOLD.xaml.cs">
+      <DependentUpon>ImportSettingsWindowOLD.xaml</DependentUpon>
+    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -133,10 +138,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\ImportSettingsWindow.xaml">
+    <None Include="UI\ImportSettingsWindowOLD.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
+    </None>
     <Page Include="UI\MyStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -144,6 +149,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ico_CarboLife.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

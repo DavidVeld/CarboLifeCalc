@@ -83,6 +83,7 @@
     <Compile Include="Data\CarboColour.cs" />
     <Compile Include="Data\CarboColourPreset.cs" />
     <Compile Include="Data\CarboEnergyProperties.cs" />
+    <Compile Include="Data\CarboRevitImportSettings.cs" />
     <Compile Include="UtilClasses\CarboGraphResult.cs" />
     <Compile Include="UtilClasses\CarboValues.cs" />
     <Compile Include="Data\CarboC1C4Properties.cs" />

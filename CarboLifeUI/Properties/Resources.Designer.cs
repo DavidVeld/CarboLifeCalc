@@ -83,9 +83,159 @@ namespace CarboLifeUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap rbn_refrsh64 {
+        internal static System.Drawing.Bitmap rbn_advanced32 {
             get {
-                object obj = ResourceManager.GetObject("rbn_refrsh64", resourceCulture);
+                object obj = ResourceManager.GetObject("rbn_advanced32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_del {
+            get {
+                object obj = ResourceManager.GetObject("rbn_del", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_del1 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_del1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_Energy32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_Energy32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_groupmerge32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_groupmerge32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_groupnew32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_groupnew32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_groupnew321 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_groupnew321", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_grouppurge32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_grouppurge32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_groupregroup32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_groupregroup32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_groupsplit32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_groupsplit32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_material32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_material32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_materialedit32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_materialedit32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_materialselect32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_materialselect32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_metaldeck32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_metaldeck32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_rebar32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_rebar32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rbn_refresh32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_refresh32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
