@@ -20,7 +20,7 @@ namespace CarboLifeRevit
         /// <param name="materialIds"></param>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public static CarboElement getNewCarboElement(Document doc, Element el, ElementId materialIds, CarboRevitImportSettings settings)
+        public static CarboElement getNewCarboElement(Document doc, Element el, ElementId materialIds, CarboGroupSettings settings)
         {
 
             CarboElement newCarboElement = new CarboElement();
@@ -73,17 +73,17 @@ namespace CarboLifeRevit
                 }
 
 
-                //Category
+                //Get the right Category name
                 setCategory = getValueFromList(el,type, settings.CategoryName, doc);
 
                 //SubCategory (Not used at the moment)
-                setSubCategory = setCategory;
+                setSubCategory = "";
                 
                 //Volume
                 double volumeCubicFt = el.GetMaterialVolume(materialIds);
                 setVolume = Utils.convertToCubicMtrs(volumeCubicFt);
 
-
+                //Get the level (in meter)
                 Level lvl = doc.GetElement(el.LevelId) as Level;
                 if (lvl != null)
                 {
@@ -93,7 +93,6 @@ namespace CarboLifeRevit
                 {
                     setLevel = 0;
                 }
-
 
                 //Get Phasing;
                 Phase elCreatedPhase = doc.GetElement(el.CreatedPhaseId) as Phase;
@@ -110,7 +109,7 @@ namespace CarboLifeRevit
                     setIsDemolished = false;
                 }
 
-                if (elCreatedPhase.Name == "Existing")
+                if (elCreatedPhase.Name == settings.ExistingPhaseName)
                 {
                     setIsExisting = true;
                 }
@@ -121,25 +120,25 @@ namespace CarboLifeRevit
 
                 //Makepass;
 
-                //Is existing and retained
-                if (setIsExisting == true && setIsDemolished == false)
-                {
-                    if (settings.IncludeExisting == false)
-                        return null;
-                }
-
                 //Is demolished
                 if (setIsDemolished == true)
                 {
                     if(settings.IncludeDemo == false)
-                        return null;
+                        return null; //don't make a element
+                }
+
+                //Is existing and retained
+                if (setIsExisting == true)
+                {
+                    if (settings.IncludeExisting == false)
+                        return null; //don't make a element
                 }
 
 
                 //Is Substructure
                 setIsSubstructure = false;
 
-                Parameter substructParam = el.LookupParameter(settings.IsSubStructureParamName);
+                Parameter substructParam = el.LookupParameter(settings.SubStructureParamName);
                 if(substructParam != null)
                 {
                     if (substructParam.StorageType == StorageType.Integer)
@@ -149,8 +148,7 @@ namespace CarboLifeRevit
                     }
                 }
 
-                //If it passed it is either proposed, or demolished and retained.
-
+                //If it passed it matches all criteria:
                 newCarboElement.Id = setId;
                 newCarboElement.Name = setName;
                 newCarboElement.MaterialName = setImportedMaterialName;
@@ -162,7 +160,8 @@ namespace CarboLifeRevit
                 newCarboElement.isDemolished = setIsDemolished;
                 newCarboElement.isExisting = setIsExisting;
                 newCarboElement.isSubstructure = setIsSubstructure;
-                             
+                newCarboElement.includeInCalc = true;
+
                 if (newCarboElement.Volume != 0)
                 {
                     return newCarboElement;
@@ -174,7 +173,6 @@ namespace CarboLifeRevit
             }
             catch
             {
-                //TaskDialog.Show("Error", ex.Message);
                 return null;
             }
 

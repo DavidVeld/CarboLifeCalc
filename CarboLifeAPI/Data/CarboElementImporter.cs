@@ -27,6 +27,90 @@ namespace CarboLifeAPI.Data
             return result;
         }
 
+        /// <summary>
+        /// This is the main function to generate a grouplist based on 
+        /// </summary>
+        /// <param name="carboElementList"></param>
+        /// <param name="importSettiungs"></param>
+        /// <returns></returns>
+        public static ObservableCollection<CarboGroup> GroupElementsAdvanced(ObservableCollection<CarboElement> carboElementList, CarboGroupSettings importSettiungs, CarboDatabase materialData)
+        {
+            ObservableCollection<CarboGroup> result = new ObservableCollection<CarboGroup>();
+
+            //First we build groups based on the import settings
+            foreach (CarboElement ce in carboElementList)
+            {
+                result = AddToCarboGroupV2(result, ce, importSettiungs.IncludeSubStructure, importSettiungs.IncludeExisting, importSettiungs.IncludeDemo);
+            }
+            //Now we map the importedMaterialParameter to one in our own database;
+            result = mapGroupMaterials(result, materialData);
+            //Recalculate the entire thing
+            result = RefreshValues(result);
+            return result;
+        }
+
+        private static ObservableCollection<CarboGroup> AddToCarboGroupV2(ObservableCollection<CarboGroup> carboGroupList, CarboElement carboElement, bool includeSubStructure, bool includeExisting, bool includeDemo)
+        {
+            int idbase = 1000;
+
+            //Go through each group, if there is a match, add the element, if not create a new group. 
+            foreach (CarboGroup cg in carboGroupList)
+            {
+                bool matchesCategory = false;
+                bool matchMaterial = false;
+
+                bool matchesSubStructure = false;
+                bool matchesDemolition = false;
+                bool matchesExisting = false;
+
+                //Find which conditions match category, Material should always match
+
+                //Category
+                if (cg.Category == carboElement.Category)
+                    matchesCategory = true;
+                //Material
+                if (cg.MaterialName == carboElement.MaterialName)
+                    matchMaterial = true;
+
+                //Substructure
+                if (cg.isSubstructure == carboElement.isSubstructure)
+                    matchesSubStructure = true;
+                //Demoltion
+                if (cg.isDemolished == carboElement.isDemolished)
+                    matchesDemolition = true;
+                //Existing
+                if (cg.isExisting == carboElement.isExisting)
+                    matchesExisting = true;
+           
+
+                //If all passes add to group if not skip and create new group;
+                if (
+                 matchesCategory == true &&
+                 matchMaterial == true &&
+                 matchesSubStructure == true &&
+                 matchesDemolition == true &&
+                 matchesExisting == true)
+                {
+                    cg.AllElements.Add(carboElement);
+
+                    return carboGroupList;
+                }
+            }
+
+            //NoCategoryWasFound: make new group
+            int id = carboGroupList.Count + idbase;
+
+            CarboGroup newGroup = new CarboGroup(carboElement);
+            newGroup.Id = idbase + id;
+
+            carboGroupList.Add(newGroup);
+
+            return carboGroupList;
+        }
+
+
+
+        [Obsolete]
         public static ObservableCollection<CarboGroup> GroupElementsAdvanced(ObservableCollection<CarboElement> carboElementList,
                                                                              bool groupCategory,
                                                                              bool groupSubCategory,
@@ -51,6 +135,7 @@ namespace CarboLifeAPI.Data
             return result;
         }
 
+        [Obsolete]
         private static ObservableCollection<CarboGroup> AddToCarboGroup(
             ObservableCollection<CarboGroup> carboGroupList, 
             CarboElement carboElement, 

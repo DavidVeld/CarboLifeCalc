@@ -16,25 +16,24 @@ namespace CarboLifeAPI.Data
         public string templatePath { get; set; }
         public bool useLocal { get; set; }
         public bool firstLaunch { get; set; }
-        public bool groupCategory { get; set; }
-        public bool groupSubCategory { get; set; }
-        public bool groupType { get; set; }
-        public bool groupMaterial { get; set; }
-        public bool groupSubStructure { get; set; }
-        public bool groupDemolition { get; set; }
-        public bool groupuniqueTypeNames { get; set; }
-
-        public string subStructureParameterName { get; set; }
-
-        public string uniqueTypeNames { get; set; }
+        //public bool groupCategory { get; set; }
+        //public bool groupSubCategory { get; set; }
+        //public bool groupType { get; set; }
+        //public bool groupMaterial { get; set; }
+        //public bool groupSubStructure { get; set; }
+        //public bool groupDemolition { get; set; }
+        //public bool groupuniqueTypeNames { get; set; }
 
         public List<CarboColourPreset> colourPresets {get; set;}
 
+        public CarboGroupSettings defaultCarboGroupSettings;
         public CarboSettings()
         {
             templatePath = "Local";
             useLocal = true;
             firstLaunch = true;
+
+            /*
             groupCategory = true;
             groupSubCategory = false;
             groupType = false;
@@ -43,9 +42,12 @@ namespace CarboLifeAPI.Data
             groupDemolition = false;
             groupuniqueTypeNames = false;
             uniqueTypeNames = "";
-            colourPresets = new List<CarboColourPreset>();
             subStructureParameterName = "";
+            */
 
+            colourPresets = new List<CarboColourPreset>();
+
+            defaultCarboGroupSettings = new CarboGroupSettings();
 
             if (colourPresets.Count>0)
             {

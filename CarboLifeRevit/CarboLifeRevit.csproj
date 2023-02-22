@@ -108,7 +108,6 @@
     <Compile Include="CarboLifeApp.cs" />
     <Compile Include="CarboLifeCalc.cs" />
     <Compile Include="CarboLifeRevitImport.cs" />
-    <None Include="CarboRevitImportSettings.cs" />
     <Compile Include="CarboRevitUtils.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

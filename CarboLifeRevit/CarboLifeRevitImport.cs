@@ -17,7 +17,7 @@ namespace CarboLifeRevit
 {
     public class CarboLifeRevitImport
     {
-        public static void ImportElements(UIApplication app, CarboRevitImportSettings settings, string updatePath)
+        public static void ImportElements(UIApplication app, CarboGroupSettings settings, string updatePath)
         {
             UIDocument uidoc = app.ActiveUIDocument;
             Document doc = uidoc.Document;
@@ -90,7 +90,7 @@ namespace CarboLifeRevit
             }
         }
 
-        public static CarboProject CollectVisibleorSelectedElements(UIApplication app, CarboRevitImportSettings settings)
+        public static CarboProject CollectVisibleorSelectedElements(UIApplication app, CarboGroupSettings settings)
         {
             UIDocument uidoc = app.ActiveUIDocument;
             Document doc = uidoc.Document;

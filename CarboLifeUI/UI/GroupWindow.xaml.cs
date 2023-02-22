@@ -44,36 +44,12 @@ namespace CarboLifeUI.UI
         {
             dialogOk = false;
 
-            chk_GroupMain.IsChecked = carboGroupSettings.groupCategory;
-            chk_GroupSec.IsChecked = carboGroupSettings.groupSubCategory;
-            chk_GroupType.IsChecked = carboGroupSettings.groupType ;
-            chk_material.IsChecked = carboGroupSettings.groupMaterial;
-            chk_GroupSuperSubStructure.IsChecked = carboGroupSettings.groupSubStructure;
-            chk_GroupDemolishedItems.IsChecked = carboGroupSettings.groupDemolition;
-            chk_GroupUniqueTypes.IsChecked = carboGroupSettings.groupuniqueTypeNames;
-            txt_SpecialTypes.Text = carboGroupSettings.uniqueTypeNames;
 
         }
 
         private void Btn_Group_Click(object sender, RoutedEventArgs e)
         {
             string typeNames = "";
-            if (chk_GroupUniqueTypes.IsChecked.Value == true)
-                typeNames = txt_SpecialTypes.Text;
-            //Reset the groups
-            carboGroupList = new ObservableCollection<CarboGroup>();
-            //Build Groups Based on new
-            carboGroupList = CarboElementImporter.GroupElementsAdvanced(
-                carboElementList, 
-                chk_GroupMain.IsChecked.Value, 
-                chk_GroupSec.IsChecked.Value, 
-                chk_GroupType.IsChecked.Value, 
-                chk_material.IsChecked.Value,
-                chk_GroupSuperSubStructure.IsChecked.Value,
-                chk_GroupDemolishedItems.IsChecked.Value, 
-                materialData,
-                typeNames
-                );
 
             //CarboElementImporter.G
 
@@ -97,15 +73,6 @@ namespace CarboLifeUI.UI
             }
             else
                 dialogOk = false;
-
-            carboGroupSettings.groupCategory = chk_GroupMain.IsChecked.Value;
-            carboGroupSettings.groupSubCategory = chk_GroupSec.IsChecked.Value;
-            carboGroupSettings.groupType = chk_GroupType.IsChecked.Value;
-            carboGroupSettings.groupMaterial = chk_material.IsChecked.Value;
-            carboGroupSettings.groupSubStructure = chk_GroupSuperSubStructure.IsChecked.Value;
-            carboGroupSettings.groupDemolition = chk_GroupDemolishedItems.IsChecked.Value;
-            carboGroupSettings.groupuniqueTypeNames = chk_GroupUniqueTypes.IsChecked.Value;
-            carboGroupSettings.uniqueTypeNames = txt_SpecialTypes.Text;
 
             //Save the settings
             carboGroupSettings.Save();

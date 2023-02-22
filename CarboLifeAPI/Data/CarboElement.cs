@@ -18,23 +18,23 @@ namespace CarboLifeAPI.Data
         public string MaterialName { get; set; }
         //Matched To Material Name
         public string CarboMaterialName { get; set; }
-
         public string Category { get; set; }
         public string SubCategory { get; set; }
         public double Volume { get; set; }
         public double Mass { get; set; }
         public double Density { get; set; }
         public double Level { get; set; }
-        public bool isDemolished { get; set; }
-        public bool isExisting { get; set; }
-        public bool isSubstructure { get; set; }
-        public bool includeInCalc { get; set; }
         public double ECI { get; set; }
         public double EC { get; set; }
         public double ECI_Total { get; set; }
         public double EC_Total { get; set; }
         public double Volume_Total { get; set; }
-       
+        public bool isDemolished { get; set; }
+        public bool isExisting { get; set; }
+        public bool isSubstructure { get; set; }
+        public bool includeInCalc { get; set; }       
+
+
 
         //public CarboMaterial Material {get;set; }
 
@@ -61,6 +61,7 @@ namespace CarboLifeAPI.Data
             isDemolished = false;
             isExisting = false;
             isUpdated = false;
+            isSubstructure = false;
             includeInCalc = true;
         }
 

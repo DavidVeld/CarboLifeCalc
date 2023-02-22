@@ -22,7 +22,7 @@ namespace CarboLifeRevit
             {
                 UIApplication app = commandData.Application;
 
-                CarboRevitImportSettings importSettings = new CarboRevitImportSettings();
+                CarboGroupSettings importSettings = new CarboGroupSettings();
                 importSettings = importSettings.DeSerializeXML();
 
 

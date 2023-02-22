@@ -130,8 +130,8 @@
     <Compile Include="UI\HeatMapCreator.xaml.cs">
       <DependentUpon>HeatMapCreator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ImportSettingsWindow.xaml.cs">
-      <DependentUpon>ImportSettingsWindow.xaml</DependentUpon>
+    <Compile Include="UI\CarboGroupingSettingsDialog.xaml.cs">
+      <DependentUpon>CarboGroupingSettingsDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\ProjectEnergyUsage.xaml.cs">
       <DependentUpon>ProjectEnergyUsage.xaml</DependentUpon>
@@ -257,7 +257,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UI\ImportSettingsWindow.xaml">
+    <Page Include="UI\CarboGroupingSettingsDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

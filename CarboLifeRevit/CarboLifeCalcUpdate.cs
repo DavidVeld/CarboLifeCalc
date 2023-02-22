@@ -30,7 +30,7 @@ namespace CarboLifeRevit
 
                 if (openFileDialog.FileName != "")
                 {
-                    CarboRevitImportSettings importSettings = new CarboRevitImportSettings();
+                    CarboGroupSettings importSettings = new CarboGroupSettings();
                     importSettings = importSettings.DeSerializeXML();
 
                     //Import the Files

@@ -36,6 +36,7 @@
         <Setter Property="Foreground" Value="DarkGray" />
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="IsEnabled" Value="False"/>
     </Style>
     
     <Style TargetType="{x:Type Control}" x:Key="formHelpText">

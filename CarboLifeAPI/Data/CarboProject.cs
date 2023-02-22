@@ -9,16 +9,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
-using CarboLifeUI;
 
 namespace CarboLifeAPI.Data
 {
     [Serializable]
     public class CarboProject
     {
-        public CarboRevitImportSettings RevitImportSettings { get; set; }
+        public CarboGroupSettings RevitImportSettings { get; set; }
         public CarboDatabase CarboDatabase { get; set; }
-
         public CarboEnergyProperties energyProperties { get; set; }
         public string Name { get; set; }
         public string Number { get; set; }
@@ -118,7 +116,7 @@ namespace CarboLifeAPI.Data
             //UserPaths
             PathUtils.CheckFileLocationsNew();
 
-            RevitImportSettings = new CarboRevitImportSettings();
+            RevitImportSettings = new CarboGroupSettings();
             CarboDatabase = new CarboDatabase();
             CarboDatabase = CarboDatabase.DeSerializeXML("");
 
@@ -167,10 +165,10 @@ namespace CarboLifeAPI.Data
         public void CreateGroups()
         {
             //get default group settings;
-            CarboSettings groupSettings = new CarboSettings().Load();
+            //CarboSettings groupSettings = new CarboSettings().Load();
             //groupSettings = groupSettings.DeSerializeXML();
 
-            this.groupList = CarboElementImporter.GroupElementsAdvanced(this.elementList, groupSettings.groupCategory, groupSettings.groupSubCategory, groupSettings.groupType, groupSettings.groupMaterial, groupSettings.groupSubStructure, groupSettings.groupDemolition, CarboDatabase, groupSettings.uniqueTypeNames);
+            this.groupList = CarboElementImporter.GroupElementsAdvanced(this.elementList, RevitImportSettings, CarboDatabase);
             CalculateProject();
         }
         /// <summary>

@@ -19,17 +19,15 @@ namespace CarboLifeRevit
         {
             UIApplication app = commandData.Application;
 
+            CarboSettings settings = new CarboSettings();
+            settings = settings.Load();
+            CarboGroupSettings importSettings = settings.defaultCarboGroupSettings;
 
-
-            ImportSettingsWindow settingsWindow = new ImportSettingsWindow();
+            CarboGroupingSettingsDialog settingsWindow = new CarboGroupingSettingsDialog(importSettings);
             settingsWindow.ShowDialog();
 
             if (settingsWindow.dialogOk == System.Windows.MessageBoxResult.Yes)
             {
-                CarboRevitImportSettings importSettings = settingsWindow.importSettings;
-                importSettings = importSettings.DeSerializeXML();
-
-
                 CarboLifeRevitImport.ImportElements(app, importSettings, "");
             }
             else

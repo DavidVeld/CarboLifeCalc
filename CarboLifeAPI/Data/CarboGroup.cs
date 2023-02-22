@@ -62,7 +62,7 @@ namespace CarboLifeAPI.Data
         public CarboMaterial Material {get;set;}
 
         public List<CarboElement> AllElements { get; set; }
-
+        public bool isExisting { get; set; }
         public bool isDemolished { get; set; }
         public bool isSubstructure { get; set; }
         public double getVolumeECI
@@ -172,6 +172,7 @@ namespace CarboLifeAPI.Data
 
             isDemolished = false;
             isSubstructure = false;
+            isExisting = false;
         }
         internal void RefreshValuesFromElements()
         {
@@ -259,11 +260,11 @@ namespace CarboLifeAPI.Data
             Category = carboElement.Category;
             SubCategory = carboElement.SubCategory;
 
-            Description = "";
-
             Volume = carboElement.Volume;
-            Density = 0;
+            Density = carboElement.Density;
             Mass = 0;
+
+            Description = GetDescription(carboElement);
 
             //EEI = 0;
             ECI = 0;
@@ -293,8 +294,30 @@ namespace CarboLifeAPI.Data
             AllElements = new List<CarboElement>();
 
             AllElements.Add(carboElement);
+
+            isExisting = carboElement.isExisting;
             isDemolished = carboElement.isDemolished;
             isSubstructure = carboElement.isSubstructure;
+        }
+
+        private string GetDescription(CarboElement carboElement)
+        {
+            string result = "";
+            string prefix = "";
+            string suffix = "";
+
+            if (carboElement.isExisting == true && carboElement.isDemolished == true)
+                prefix = "Existing & Demolished ";
+
+            if (carboElement.isExisting == true && carboElement.isDemolished == false)
+                prefix = "Existing ";
+
+            if (carboElement.isSubstructure == true)
+                suffix = " (Substructure)";
+
+            result = prefix + carboElement.Category + suffix;
+
+            return result;
         }
         internal void SetPercentageOf(double eCTotal)
         {
