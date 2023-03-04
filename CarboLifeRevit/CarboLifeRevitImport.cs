@@ -17,7 +17,7 @@ namespace CarboLifeRevit
 {
     public class CarboLifeRevitImport
     {
-        public static void ImportElements(UIApplication app, CarboGroupSettings settings, string updatePath)
+        public static void ImportElements(UIApplication app, CarboGroupSettings settings, string updatePath, string selectedTemplateFile)
         {
             UIDocument uidoc = app.ActiveUIDocument;
             Document doc = uidoc.Document;
@@ -30,7 +30,7 @@ namespace CarboLifeRevit
             if (File.Exists(updatePath))
                 updateFile = true;
             //Create a new project
-            CarboProject myProject = CollectVisibleorSelectedElements(app, settings);
+            CarboProject myProject = CollectVisibleorSelectedElements(app, settings, selectedTemplateFile);
 
             //All element have been mapped, here the code will be split between an update or a new one.
             if (myProject.getAllElements.Count > 0)
@@ -90,7 +90,14 @@ namespace CarboLifeRevit
             }
         }
 
-        public static CarboProject CollectVisibleorSelectedElements(UIApplication app, CarboGroupSettings settings)
+        /// <summary>
+        /// This function creates a CarboElement Out of each Revit Element
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="settings"></param>
+        /// <param name="selectedTemplateFile"></param>
+        /// <returns></returns>
+        public static CarboProject CollectVisibleorSelectedElements(UIApplication app, CarboGroupSettings settings, string selectedTemplateFile)
         {
             UIDocument uidoc = app.ActiveUIDocument;
             Document doc = uidoc.Document;
@@ -98,9 +105,10 @@ namespace CarboLifeRevit
             string MyAssemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string MyAssemblyDir = Path.GetDirectoryName(MyAssemblyPath);
 
+            double area = 0;
 
-            //Create a new project
-            CarboProject myProject = new CarboProject();
+            //Create a new project based on the selected template
+            CarboProject myProject = new CarboProject(selectedTemplateFile);
 
             myProject.Name = doc.ProjectInformation.Name.Trim();
             myProject.Number = doc.ProjectInformation.Number;
@@ -141,10 +149,10 @@ namespace CarboLifeRevit
                                 if (carboElement != null)
                                     myProject.AddElement(carboElement);
                             }
+
                             //See if is floor(then count area)
+                            area += getFloorarea(el);
                         }
-
-
                     }
                     catch
                     {
@@ -189,6 +197,7 @@ namespace CarboLifeRevit
                                 }
                             }
                             //See if is floor(then count area)
+
                         }
                     }
                 }
@@ -198,6 +207,9 @@ namespace CarboLifeRevit
                 }
 
             }
+
+            if (myProject.Area != 1)
+                myProject.Area = area;
 
             return myProject;
         }
@@ -213,12 +225,11 @@ namespace CarboLifeRevit
                 Floor floorElement = el as Floor;
                 if (floorElement != null)
                 {
-
                     Parameter floorPar = floorElement.LookupParameter("Area");
                     if (floorPar != null)
                     {
                         double floorArea = floorPar.AsDouble();
-                        result += floorArea;
+                        result = floorArea;
                     }
                 }
             }

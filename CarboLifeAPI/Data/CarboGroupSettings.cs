@@ -13,6 +13,8 @@ namespace CarboLifeAPI.Data
     public class CarboGroupSettings
     {
         public string CategoryName { get; set; }
+        public string CategoryParamName { get; set; }
+
         public string SubStructureParamName { get; set; }
         public string ExistingPhaseName { get; set; }
         public bool IncludeSubStructure { get; set; }

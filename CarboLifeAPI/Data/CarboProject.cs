@@ -111,6 +111,10 @@ namespace CarboLifeAPI.Data
         {
             this.groupList = groupList;
         }
+
+        /// <summary>
+        /// Generates a new CarboProject
+        /// </summary>
         public CarboProject()
         {
             //UserPaths
@@ -127,7 +131,63 @@ namespace CarboLifeAPI.Data
 
             Name = "New Project";
             Number = "000000";
-            Category = "A building";
+            Category = "Structure";
+            Description = "New Project";
+            valueUnit = "£";
+            Area = 1;
+            //C1 Global
+            demoArea = 0;
+            C1Global = 0;
+            C1Factor = 3.40; // kg CO₂ per m2
+            //A5 Global
+            A5Global = 0;
+            A5Factor = 1400; //kg CO₂ per vaue
+            //Social
+            SocialCost = 100;
+            //Other
+
+            //Totals
+            Value = 0;
+            //New projects don't need to be saved
+            justSaved = true;
+
+            calculateA0 = true;
+            calculateA13 = true;
+            calculateA4 = true;
+            calculateA5 = true;
+            calculateB = false;
+            calculateB67 = false;
+
+            calculateC = true;
+            calculateD = false;
+            calculateAdd = false;
+
+            designLife = 50;
+
+        }
+
+
+        /// <summary>
+        /// Generates a new CarboProject
+        /// </summary>
+        /// <param name="selectedTemplateFile">Optional path to a selected template "" uses the set default template</param>
+        public CarboProject(string selectedTemplateFile = "")
+        {
+            //UserPaths
+            PathUtils.CheckFileLocationsNew();
+
+            RevitImportSettings = new CarboGroupSettings();
+            CarboDatabase = new CarboDatabase();
+            CarboDatabase = CarboDatabase.DeSerializeXML(selectedTemplateFile);
+
+            groupList = new ObservableCollection<CarboGroup>();
+            elementList = new ObservableCollection<CarboElement>();
+            carboLevelList = new List<CarboLevel>();
+            energyProperties = new CarboEnergyProperties();
+
+            Name = "New Project";
+            Number = "000000";
+            Category = "Structure";
             Description = "New Project";
             valueUnit = "£";
             Area = 1;

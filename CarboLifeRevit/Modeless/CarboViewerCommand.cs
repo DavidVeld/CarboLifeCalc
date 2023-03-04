@@ -47,7 +47,7 @@ namespace CarboLifeRevit
 
                     projectToOpen = projectToUpdate;
 
-                    CarboProject ElementsVisibleOrSelected = CarboLifeRevitImport.CollectVisibleorSelectedElements(app, importSettings);
+                    CarboProject ElementsVisibleOrSelected = CarboLifeRevitImport.CollectVisibleorSelectedElements(app, importSettings, "");
 
                     List<int> VisibleElements = ElementsVisibleOrSelected.GetElementIdList();
 

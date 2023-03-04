@@ -74,7 +74,7 @@ namespace CarboLifeRevit
 
 
                 //Get the right Category name
-                setCategory = getValueFromList(el,type, settings.CategoryName, doc);
+                setCategory = getCategoryValue(el,type, settings.CategoryName, doc, settings.CategoryParamName);
 
                 //SubCategory (Not used at the moment)
                 setSubCategory = "";
@@ -177,77 +177,81 @@ namespace CarboLifeRevit
             }
 
         }
+
+
         /*            
-        categorylist.Add("(Revit) Category");
-        categorylist.Add("Type Name");
-        categorylist.Add("Type Comment");
-        categorylist.Add("Comment");
+            categorylist.Add("(Revit) Category");
+            categorylist.Add("Type Parameter");
+            categorylist.Add("Instance Parameter");
         */
         /// <summary>
-        /// 
+        /// Returns the category value based on inputs
         /// </summary>
-        /// <param name="el"></param>
-        /// <param name="type"></param>
-        /// <param name="searchString"></param>
-        /// <param name="doc"></param>
-        /// <returns></returns>
-        private static string getValueFromList(Element el, ElementType type, string searchString, Document doc)
+        /// <param name="el">the element</param>
+        /// <param name="type">the element type</param>
+        /// <param name="searchString">the parameter type</param>
+        /// <param name="doc">document</param>
+        /// <param name="paramName">the name of the category parameter</param>
+
+        /// <returns> category value based on inputs</returns>
+        private static string getCategoryValue(Element el, ElementType type, string searchString, Document doc, string paramName = "")
         {
             string result = "";
-
-            if (searchString == "(Revit) Category")
+            try
             {
-                result = el.Category.Name;
-            }
-            else if (searchString == "Type Name")
-            {
-                result = type.FamilyName;
-            }
-            else if (searchString == "Type Comment")
-            {
-                Parameter carbonpar = type.LookupParameter("Comment");
-                if (carbonpar != null)
+                if (searchString == "(Revit) Category")
                 {
-                    if (carbonpar.StorageType == StorageType.String)
-                        result = carbonpar.AsString();
-                    else
-                        result = "Unknown Category";
+                    result = el.Category.Name;
                 }
-            }
-            else if (searchString == "Comment")
-            {
-                Parameter carbonpar = el.LookupParameter("Comment");
-                if (carbonpar != null)
+                else if (searchString == "Type Parameter")
                 {
-                    if (carbonpar.StorageType == StorageType.String)
-                        result = carbonpar.AsString();
+                    Parameter carbonpar = type.LookupParameter(paramName);
+                    if (carbonpar != null)
+                    {
+                        if (carbonpar.StorageType == StorageType.String)
+                            result = carbonpar.AsString();
+                        else
+                            result = "Wrong Category Type";
+                    }
                     else
-                        result = "Unknown Category";
+                    {
+                        result = "No Category Found";
+                    }
                 }
-            }
-            else
-            {
-                Parameter carbonpar = el.LookupParameter(searchString);
-
-                if (carbonpar != null)
+                else if (searchString == "Instance Parameter")
                 {
-                    if (carbonpar.StorageType == StorageType.String)
-                        result = carbonpar.AsString();
+                    Parameter carbonpar = el.LookupParameter(paramName);
+
+                    if (carbonpar != null)
+                    {
+                        if (carbonpar.StorageType == StorageType.String)
+                            result = carbonpar.AsString();
+                        else
+                            result = "Wrong Category Type";
+                    }
                     else
-                        result = "Unknown Category";
+                    {
+                        result = "No Category Found";
+                    }
                 }
                 else
                 {
                     result = el.Category.Name;
                 }
             }
+            catch(Exception ex)
+            {
+                result = "Export Error";
+
+            }
             return result;
         }
+       
         /// <summary>
         /// Validates the elements and it's class;
         /// </summary>
         /// <param name="el"></param>
-        /// <returns></returns>
+        /// <returns>True if the element can be extracted</returns>
         public static bool isElementReal(Element el)
         {
             bool result = false;

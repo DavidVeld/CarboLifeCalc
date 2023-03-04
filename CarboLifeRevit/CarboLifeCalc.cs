@@ -28,7 +28,7 @@ namespace CarboLifeRevit
 
             if (settingsWindow.dialogOk == System.Windows.MessageBoxResult.Yes)
             {
-                CarboLifeRevitImport.ImportElements(app, importSettings, "");
+                CarboLifeRevitImport.ImportElements(app, importSettings, "", settingsWindow.selectedTemplateFile);
             }
             else
             {

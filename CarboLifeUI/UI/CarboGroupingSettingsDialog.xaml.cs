@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static System.Net.WebRequestMethods;
+using File = System.IO.File;
 using Path = System.IO.Path;
 
 namespace CarboLifeUI.UI
@@ -29,6 +30,10 @@ namespace CarboLifeUI.UI
         public MessageBoxResult dialogOk;
         //public List<CarboLevel> carboLevelList;
         public CarboGroupSettings importSettings;
+
+        private IDictionary<string, string> templateCollection;
+
+        public string selectedTemplateFile;
         public CarboGroupingSettingsDialog(CarboGroupSettings settings)
         {
             importSettings = settings;
@@ -43,11 +48,11 @@ namespace CarboLifeUI.UI
         {
             dialogOk = MessageBoxResult.Cancel;
 
+            //Category Settings
             List<string> categorylist = new List<string>();
             categorylist.Add("(Revit) Category");
-            //categorylist.Add("Type Name");
-            //categorylist.Add("Type Comment");
-            //categorylist.Add("Comment");
+            categorylist.Add("Type Parameter");
+            categorylist.Add("Instance Parameter");
 
 
             foreach (string str in categorylist)
@@ -57,38 +62,30 @@ namespace CarboLifeUI.UI
 
             cbb_MainGroup.Text = "(Revit) Category";
 
+            txt_CategoryparamName.Text = importSettings.CategoryParamName;
+
             //TemplateList
 
             //get DefaultTemplate:
+            templateCollection = PathUtils.getTemplateFiles();
+            if (templateCollection != null)
+            {
+                foreach (var template in templateCollection)
+                {
+                    cbb_Template.Items.Add(template.Key);
+                }
+            }
+
             string defaultTemplate = PathUtils.getTemplateFolder();
 
             string defaultfimeName = System.IO.Path.GetFileName(defaultTemplate);
-            cbb_Template.Items.Add(defaultTemplate);
+            cbb_Template.Items.Add(defaultfimeName);
+            
 
-
-            string myLocalPath = PathUtils.getAssemblyPath() + "\\db\\";
-            string[] files = System.IO.Directory.GetFiles(myLocalPath, "*.cxml");
-
-            if (files.Length > 0) {
-                foreach (string file in files)
-                {
-                    string fimeName = System.IO.Path.GetFileName(file);
-
-                    if (System.IO.File.Exists(file))
-                    {
-                        //add if not default of the buffer
-                        if (!fimeName.Contains("buffer") || defaultfimeName != fimeName)
-                        {
-                            cbb_Template.Items.Add(fimeName);
-                        }
-                    }
-                }
-            }
             cbb_Template.Text = defaultfimeName;
             cbb_MainGroup.Text = "(Revit) Category";
             txt_SubstructureParamName.Text = importSettings.SubStructureParamName;
             chk_ImportSubstructure.IsChecked = importSettings.IncludeSubStructure;
-            //txt_SpecialTypes.Text = settings.TypeNameSeparators;
             chk_ImportExisting.IsChecked = importSettings.IncludeExisting;
             txt_ExistingPhaseName.Text = importSettings.ExistingPhaseName;
 
@@ -104,6 +101,18 @@ namespace CarboLifeUI.UI
 
         private void Btn_ImportClose_Click(object sender, RoutedEventArgs e)
         {
+            string result;
+            if (templateCollection.TryGetValue(cbb_Template.Text, out result))
+
+            if (File.Exists(result))
+            {
+                selectedTemplateFile = result;
+            }
+            else
+            {
+                MessageBox.Show("The Selected Template could not be found");
+            }
+
             dialogOk = MessageBoxResult.Yes;
             SaveSettings();
             this.Close();
@@ -120,6 +129,7 @@ namespace CarboLifeUI.UI
         {
             
             importSettings.CategoryName = cbb_MainGroup.Text;
+            importSettings.CategoryParamName = txt_CategoryparamName.Text;
 
             importSettings.SubStructureParamName = txt_SubstructureParamName.Text;
             importSettings.IncludeSubStructure = chk_ImportSubstructure.IsChecked.Value;

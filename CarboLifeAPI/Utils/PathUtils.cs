@@ -49,7 +49,6 @@ namespace CarboLifeAPI
             string TemplateFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\UserMaterials.cxml";
             string SettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\CarboSettings.xml";
             string RevitSettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\RevitImportSettings.xml";
-            //string GroupSettingsFile = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\GroupSettings.xml";
 
             bool firstLaunch = false;
 
@@ -321,6 +320,57 @@ namespace CarboLifeAPI
                 return "";
             }
             //return "";
+        }
+
+        /// <summary>
+        /// Finds the location of the Carbo Life Calculator Template File
+        /// </summary>
+        /// <returns>Template Path</returns>
+        public static IDictionary<string, string> getTemplateFiles()
+        {
+            IDictionary<string, string> result = new Dictionary<string, string>();
+            try
+            {
+                //get DefaultTemplate:
+                string defaultTemplatePath = PathUtils.getTemplateFolder();
+                string defaultfimeName = System.IO.Path.GetFileName(defaultTemplatePath);
+
+                result.Add(defaultfimeName, defaultTemplatePath);
+
+                //get the other files in the local database
+                string myLocalPath = PathUtils.getAssemblyPath() + "\\db\\";
+                string[] files = System.IO.Directory.GetFiles(myLocalPath, "*.cxml");
+
+                if (files.Length > 0)
+                {
+                    foreach (string file in files)
+                    {
+                        string fileName = System.IO.Path.GetFileName(file);
+
+                        if (System.IO.File.Exists(file))
+                        {
+                            //add if not default of the buffer
+                            bool exclude = false;
+                            if (fileName.Contains("Buffer"))
+                                exclude = true;
+                            if (defaultfimeName == fileName)
+                                exclude = true;
+
+                            if (exclude == false)
+                            {
+                                result.Add(fileName, file);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+
+            }
+
+            return result;
         }
 
         /// <summary>
