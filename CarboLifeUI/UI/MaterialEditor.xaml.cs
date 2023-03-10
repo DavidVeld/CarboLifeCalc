@@ -596,6 +596,7 @@ namespace CarboLifeUI.UI
 
         private void btn_Duplicate_Click(object sender, RoutedEventArgs e)
         {
+
             if (selectedMaterial != null)
             {
                 ValueDialogBox vdb = new ValueDialogBox("New Material Name");
@@ -933,7 +934,46 @@ namespace CarboLifeUI.UI
 
         private void btn_TemplateSync_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("This function is not yet implemented");
+            
+            TemplateSelector templateSelectionDialog = new TemplateSelector();
+            templateSelectionDialog.ShowDialog();
+
+            if(templateSelectionDialog.isAccepted == true)
+            {
+                string templatePath = templateSelectionDialog.selectedTemplateFile;
+                List<CarboMaterial> list = liv_materialList.SelectedItems.Cast<CarboMaterial>().ToList();
+
+                if (File.Exists(templatePath) && list.Count > 0)
+                {
+                    try
+                    {
+                        //Create a buffer database for sync
+                        CarboDatabase buffer = new CarboDatabase();
+
+                        foreach (CarboMaterial material in list)
+                        {
+                            buffer.AddMaterial(material);
+                        }
+
+                        //get the template & Sync
+                        CarboDatabase db = new CarboDatabase();
+                        db = db.DeSerializeXML(templatePath);
+
+                        //sync
+                        db.SyncMaterials(buffer);
+
+                        //save template
+                        db.SerializeXML(templatePath);
+
+                        MessageBox.Show(selectedMaterial.Name + " added to database.");
+                    }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+
         }
 
         private void btn_Mix_Click(object sender, RoutedEventArgs e)

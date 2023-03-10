@@ -22,8 +22,8 @@ namespace CarboLifeRevit
             {
                 UIApplication app = commandData.Application;
 
-                CarboGroupSettings importSettings = new CarboGroupSettings();
-                importSettings = importSettings.DeSerializeXML();
+                ///CarboGroupSettings importSettings = new CarboGroupSettings();
+                //importSettings = importSettings.DeSerializeXML();
 
 
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -47,7 +47,7 @@ namespace CarboLifeRevit
 
                     projectToOpen = projectToUpdate;
 
-                    CarboProject ElementsVisibleOrSelected = CarboLifeRevitImport.CollectVisibleorSelectedElements(app, importSettings, "");
+                    CarboProject ElementsVisibleOrSelected = CarboLifeRevitImport.CollectVisibleorSelectedElements(app, projectToOpen.RevitImportSettings, "");
 
                     List<int> VisibleElements = ElementsVisibleOrSelected.GetElementIdList();
 

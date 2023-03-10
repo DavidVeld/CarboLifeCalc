@@ -25,10 +25,20 @@ namespace CarboLifeRevit
             string MyAssemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string MyAssemblyDir = Path.GetDirectoryName(MyAssemblyPath);
             bool updateFile = false;
-            double area = 0;
+
+            CarboProject projectToUpdate = new CarboProject();
+
 
             if (File.Exists(updatePath))
+            {
+                //if a file needs to be updated get the settings first.
                 updateFile = true;
+
+
+                CarboProject buffer = new CarboProject();
+                projectToUpdate = buffer.DeSerializeXML(updatePath);
+                settings = projectToUpdate.RevitImportSettings;
+            }
             //Create a new project
             CarboProject myProject = CollectVisibleorSelectedElements(app, settings, selectedTemplateFile);
 
@@ -42,13 +52,11 @@ namespace CarboLifeRevit
                     //Create groups from all the individual elements
                     myProject.CreateGroups();
                     projectToOpen = myProject;
+
                 }
                 else //upadte an existing file:
                 {
-                    CarboProject projectToUpdate = new CarboProject();
 
-                    CarboProject buffer = new CarboProject();
-                    projectToUpdate = buffer.DeSerializeXML(updatePath);
 
                     projectToUpdate.Audit();
                     projectToUpdate.UpdateProject(myProject);
@@ -57,8 +65,6 @@ namespace CarboLifeRevit
                     projectToOpen = projectToUpdate;
                 }
 
-                double areaMSqr = Math.Round((area * (0.3048 * 0.3048)),2);
-                projectToOpen.Area = areaMSqr;
 
                 CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(projectToOpen);
                 carboCalcProgram.IsRevit = true;
@@ -208,8 +214,8 @@ namespace CarboLifeRevit
 
             }
 
-            if (myProject.Area != 1)
-                myProject.Area = area;
+            // If Project contained area, make sure it is updated.
+            myProject.Area = Math.Round((area * (0.3048 * 0.3048)), 2); //to sqr m2
 
             return myProject;
         }

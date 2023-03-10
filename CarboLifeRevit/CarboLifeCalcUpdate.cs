@@ -28,26 +28,16 @@ namespace CarboLifeRevit
 
                 var path = openFileDialog.ShowDialog();
 
-                if (openFileDialog.FileName != "")
+                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
                 {
-                    CarboGroupSettings importSettings = new CarboGroupSettings();
-                    importSettings = importSettings.DeSerializeXML();
-
                     //Import the Files
-                    CarboLifeRevitImport.ImportElements(app, importSettings, openFileDialog.FileName, "");
-
+                    CarboLifeRevitImport.ImportElements(app, null, openFileDialog.FileName, "");
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-        
-
-
-
-
-
 
             return Result.Succeeded;
         }

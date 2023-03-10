@@ -239,16 +239,27 @@ namespace CarboLifeUI.UI
 
         private async void txt_Area_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox tb = (TextBox)sender;
-            int startLength = tb.Text.Length;
-
-            await Task.Delay(250);
-            if (startLength == tb.Text.Length)
+            string text = txt_Area.Text;
+            try
             {
-                CarboLifeProject.Area = Utils.ConvertMeToDouble(tb.Text);
-            }
+                TextBox tb = (TextBox)sender;
+                int startLength = tb.Text.Length;
 
-            RefreshInterFace();
+                await Task.Delay(500);
+                if (startLength == tb.Text.Length)
+                {
+                    double convertedText = Utils.ConvertMeToDouble(tb.Text);
+                    if (convertedText != 0)
+                    {
+                        CarboLifeProject.Area = convertedText;
+                        txt_Area.Text = convertedText.ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //Resume async error.
+            }
         }
 
         private async void txt_DemoArea_TextChanged(object sender, TextChangedEventArgs e)

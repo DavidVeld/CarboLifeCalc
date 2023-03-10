@@ -91,8 +91,12 @@ namespace CarboLifeAPI
             {
                 report = writeHeader(carboProject);
 
+                //Project Information and base info
                 report += writeReportTable(carboProject);
 
+                //Quantities
+
+                //Calculation values
                 report += writeMaterialTable(carboProject);
 
                 report += ImgTag1;

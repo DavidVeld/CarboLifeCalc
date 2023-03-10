@@ -92,6 +92,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\TemplateSelector.xaml.cs">
+      <DependentUpon>TemplateSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\LetiScore.cs" />
     <Compile Include="UI\ScorsIndicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -172,9 +175,6 @@
     <Compile Include="UI\DescriptionEditor.xaml.cs">
       <DependentUpon>DescriptionEditor.xaml</DependentUpon>
     </Compile>
-    <None Include="UI\HeatMapBuilder.xaml.cs">
-      <DependentUpon>HeatMapBuilder.xaml</DependentUpon>
-    </None>
     <Compile Include="UI\MaterialMyEPD.xaml.cs">
       <DependentUpon>MaterialMyEPD.xaml</DependentUpon>
     </Compile>
@@ -238,6 +238,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\CarboAbout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\TemplateSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -313,10 +317,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <None Include="UI\HeatMapBuilder.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </None>
     <Page Include="UI\MaterialMyEPD.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

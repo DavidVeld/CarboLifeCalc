@@ -24,6 +24,8 @@ namespace CarboLifeAPI.Data
         public CarboGroupSettings()
         {
             CategoryName = "(Revit) Category";
+            CategoryParamName = "";
+
             SubStructureParamName = "IsSubstructure";
 
             ExistingPhaseName = "Existing";

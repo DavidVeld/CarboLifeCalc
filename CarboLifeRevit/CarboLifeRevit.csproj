@@ -117,9 +117,6 @@
     <Compile Include="UI\HeatMapCreatorRevit.xaml.cs">
       <DependentUpon>HeatMapCreatorRevit.xaml</DependentUpon>
     </Compile>
-    <None Include="UI\ImportSettingsWindowOLD.xaml.cs">
-      <DependentUpon>ImportSettingsWindowOLD.xaml</DependentUpon>
-    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -137,10 +134,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <None Include="UI\ImportSettingsWindowOLD.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </None>
     <Page Include="UI\MyStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

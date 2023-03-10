@@ -74,15 +74,9 @@ namespace CarboLifeUI.UI
                 {
                     cbb_Template.Items.Add(template.Key);
                 }
+                cbb_Template.SelectedIndex = 0;
             }
-
-            string defaultTemplate = PathUtils.getTemplateFolder();
-
-            string defaultfimeName = System.IO.Path.GetFileName(defaultTemplate);
-            cbb_Template.Items.Add(defaultfimeName);
-            
-
-            cbb_Template.Text = defaultfimeName;
+            //cbb_Template.Text = defaultfimeName;
             cbb_MainGroup.Text = "(Revit) Category";
             txt_SubstructureParamName.Text = importSettings.SubStructureParamName;
             chk_ImportSubstructure.IsChecked = importSettings.IncludeSubStructure;

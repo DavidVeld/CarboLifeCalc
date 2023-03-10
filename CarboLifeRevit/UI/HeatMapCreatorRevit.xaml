@@ -160,7 +160,7 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="60"/>
-                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="90"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="28"/>
@@ -177,15 +177,16 @@
                         <CheckBox x:Name="chc_ImportCarbon" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="1" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Visibility="Hidden">Import total EC values to Parameter:</CheckBox>
 
                         <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" >Import total EC values to Parameter:</TextBlock>
-                        <TextBlock  Grid.Row="2" Grid.Column="1" Margin="0,5,0,0"   Grid.ColumnSpan="5"  TextWrapping="WrapWithOverflow">
+                        <ComboBox x:Name="cbb_Parameter" Grid.Row="1" Grid.Column="3" Margin="0,0,0,0"  Style="{StaticResource ComboBoxFlatStyle}" IsEditable="True"></ComboBox>
+                        <Button x:Name="btn_Importvalues"  Grid.Row="1" Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Importvalues_Click" Content="Import values" Visibility="Visible"/>
+
+                       
+                        <TextBlock  Grid.Row="3" Grid.Column="1" Margin="0,5,0,0"   Grid.ColumnSpan="5"  TextWrapping="WrapWithOverflow">
                             The total embodied carbon will be written to the selected or given parameter name. 
                             The Parameter to write to will need to be a Number and Instance Parameter. 
                             To remove all embodied carbon information from the parameter use the "Clear" Values Button.
                         </TextBlock>
 
-                        <ComboBox x:Name="cbb_Parameter" Grid.Row="1" Grid.Column="3" Margin="0,0,0,0"  Style="{StaticResource ComboBoxFlatStyle}" IsEditable="True"></ComboBox>
-
-                        <Button x:Name="btn_Importvalues"  Grid.Row="1" Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Importvalues_Click" Content="Import values" Visibility="Visible"/>
                         <Button x:Name="btn_ClearValues"  Grid.Row="6" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="28" Style="{StaticResource ButtonStyle}" Visibility="Visible" Click="btn_ClearValues_Click">Clear Values</Button>
 
                     </Grid>

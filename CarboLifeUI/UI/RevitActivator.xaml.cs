@@ -17,12 +17,16 @@ namespace CarboLifeUI.UI
         bool ok2020;
         bool ok2021;
         bool ok2022;
+        bool ok2023;
+        bool ok2024;
 
 
         bool has2019;
         bool has2020;
         bool has2021;
         bool has2022;
+        bool has2023;
+        bool has2024;
 
 
         public RevitActivator()
@@ -43,11 +47,16 @@ namespace CarboLifeUI.UI
             ok2020 = false;
             ok2021 = false;
             ok2022 = false;
+            ok2023 = false;
+            ok2024 = false;
+
 
             has2019 = false;
             has2020 = false;
             has2021 = false;
             has2022 = false;
+            has2023 = false;
+            has2024 = false;
 
 
             if (Directory.Exists(path))
@@ -76,6 +85,12 @@ namespace CarboLifeUI.UI
                         if (str.Contains("2022"))
                             has2022 = true;
 
+                        if (str.Contains("2023"))
+                            has2023 = true;
+
+                        if (str.Contains("2024"))
+                            has2024 = true;
+
                         if (has2019 == true && exists == true)
                         {
                             ok2019 = true;
@@ -94,6 +109,16 @@ namespace CarboLifeUI.UI
                         if (has2022 == true && exists == true)
                         {
                             ok2022 = true;
+                        }
+
+                        if (has2023 == true && exists == true)
+                        {
+                            ok2023 = true;
+                        }
+
+                        if (has2024 == true && exists == true)
+                        {
+                            ok2024 = true;
                         }
                     }
                 }
@@ -232,6 +257,71 @@ namespace CarboLifeUI.UI
                 lbl_2022.Content = "2022 Not Found";
 
             }
+
+            ///2023
+            if (has2023 == true)
+            {
+                //Folder is present
+                if (ok2023 == true)
+                {
+                    //addin is installed
+                    chx_2023.IsChecked = true;
+                    //chx_2022.IsEnabled = false;
+                    lbl_2023.Foreground = Brushes.Green;
+                    lbl_2023.Content = "2023 Activated";
+
+                }
+                else
+                {
+                    //addin is not installed
+                    chx_2023.IsChecked = false;
+                    chx_2023.IsEnabled = true;
+                    lbl_2023.Foreground = Brushes.Black;
+                    lbl_2023.Content = "2023 Not Installed";
+
+                }
+            }
+            else
+            {
+                //revit version not found
+                chx_2023.IsEnabled = false;
+                lbl_2023.Foreground = Brushes.Gray;
+                lbl_2023.Content = "2023 Not Found";
+
+            }
+
+            ///2024
+            if (has2024 == true)
+            {
+                //Folder is present
+                if (ok2024 == true)
+                {
+                    //addin is installed
+                    chx_2024.IsChecked = true;
+                    //chx_2022.IsEnabled = false;
+                    lbl_2024.Foreground = Brushes.Green;
+                    lbl_2024.Content = "2024 Activated";
+
+                }
+                else
+                {
+                    //addin is not installed
+                    chx_2024.IsChecked = false;
+                    chx_2024.IsEnabled = true;
+                    lbl_2024.Foreground = Brushes.Black;
+                    lbl_2024.Content = "2024 Not Installed";
+
+                }
+            }
+            else
+            {
+                //revit version not found
+                chx_2024.IsEnabled = false;
+                lbl_2024.Foreground = Brushes.Gray;
+                lbl_2024.Content = "2024 Not Found";
+
+            }
+
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -264,7 +354,6 @@ namespace CarboLifeUI.UI
                         {
                             if(File.Exists(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2019 + "\\CarboLifeCalc.addin"))
                                 File.Delete(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2019 + "\\CarboLifeCalc.addin");
-
                         }
 
                         if (chx_2020.IsChecked == true)
@@ -284,12 +373,28 @@ namespace CarboLifeUI.UI
                                 File.Delete(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2021 + "\\CarboLifeCalc.addin");
                         }
 
-                        if (chx_2021.IsChecked == true)
+                        if (chx_2022.IsChecked == true)
                             CopyFile(filePath, "2022");
                         else
                         {
                             if (File.Exists(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2022 + "\\CarboLifeCalc.addin"))
                                 File.Delete(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2022 + "\\CarboLifeCalc.addin");
+                        }
+
+                        if (chx_2023.IsChecked == true)
+                            CopyFile(filePath, "2022");
+                        else
+                        {
+                            if (File.Exists(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2023 + "\\CarboLifeCalc.addin"))
+                                File.Delete(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2023 + "\\CarboLifeCalc.addin");
+                        }
+
+                        if (chx_2024.IsChecked == true)
+                            CopyFile(filePath, "2022");
+                        else
+                        {
+                            if (File.Exists(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2024 + "\\CarboLifeCalc.addin"))
+                                File.Delete(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2024 + "\\CarboLifeCalc.addin");
                         }
 
                         //deletebuffer
