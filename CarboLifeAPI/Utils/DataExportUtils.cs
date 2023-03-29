@@ -593,8 +593,45 @@ namespace CarboLifeAPI
 
         }
 
+        public static void ExportToCSV(CarboProject carboLifeProject, string excelExportPath, bool exportResult, bool exportElements, bool exportMaterials)
+        {
+            string exportpath = Path.GetDirectoryName(excelExportPath);
 
+            //Check if user has excel
+            if (!Directory.Exists(exportpath) == true)
+            {
+                return;
+            }
 
+            string exportpathResult = exportpath + "\\Results.csv";
+            string exportpathElements = exportpath + "\\Elements.csv";
+            string exportpathMaterials = exportpath + "\\Materials.csv";
+
+            if (File.Exists(exportpathResult) == true ||
+                File.Exists(exportpathElements) == true ||
+                File.Exists(exportpathMaterials) == true)
+            {
+                var result =  System.Windows.MessageBox.Show("Do you want to override the existing files?", "Question", MessageBoxButton.YesNo);
+                if (result != MessageBoxResult.Yes) //Anything but YES should cancel the command
+                    return;
+            }
+
+            if (exportResult == false)
+                exportpathResult = "";
+                    
+            if (exportElements == false)
+                exportpathElements = "";
+
+            if (exportMaterials == false)
+                exportpathMaterials = "";
+
+            CreateCVSFile(carboLifeProject, exportpathResult, exportpathElements, exportpathMaterials);
+        }
+
+        private static void CreateCVSFile(CarboProject carboLifeProject, string exportpathResult, string exportpathElements, string exportpathMaterials)
+        {
+
+        }
     }
 
 

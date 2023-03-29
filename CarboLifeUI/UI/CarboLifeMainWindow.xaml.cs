@@ -422,87 +422,6 @@ namespace CarboLifeUI.UI
             PathUtils.CleanOnlineDir();
 
         }
-
-        private void mnu_Heatmap_Click(object sender, RoutedEventArgs e)
-        {
-            /*
-            IsRevit = true;
-            if (IsRevit == true)
-            {
-                HeatMapBuilder heatmapBuilder = new HeatMapBuilder(importData, createHeatmap);
-                //heatmapBuilder.importData = importData;
-                //heatmapBuilder.createHeatmap = createHeatmap;
-
-                heatmapBuilder.ShowDialog();
-
-
-                if (heatmapBuilder.isAccepted == true)
-                {
-                    //MessageBox.Show("The heatmap data will be stored within the calculation, once you close the application, Revit will colour in your view.", "Warning", MessageBoxButton.OK);
-                    if (heatmapBuilder.rad_Bymaterial.IsChecked == true)
-                    {
-                        carboLifeProject = HeatMapBuilderUtils.CreateIntensityHeatMap(carboLifeProject, heatmapBuilder.minOutColour, heatmapBuilder.maxOutColour, heatmapBuilder.minRangeColour, heatmapBuilder.midRangeColour, heatmapBuilder.maxRangeColour, heatmapBuilder.standardDev);
-                    }
-                    else if (heatmapBuilder.rad_Bymaterial2.IsChecked == true)
-                    {
-                        carboLifeProject = HeatMapBuilderUtils.CreateIntensityHeatMapVolume(carboLifeProject, heatmapBuilder.minOutColour, heatmapBuilder.maxOutColour, heatmapBuilder.minRangeColour, heatmapBuilder.midRangeColour, heatmapBuilder.maxRangeColour, heatmapBuilder.standardDev);
-                    }
-                    else if(heatmapBuilder.rad_ByGroup.IsChecked == true)
-                    {
-                        carboLifeProject = HeatMapBuilderUtils.CreateByGroupHeatMap(carboLifeProject, heatmapBuilder.minOutColour, heatmapBuilder.maxOutColour, heatmapBuilder.minRangeColour, heatmapBuilder.midRangeColour, heatmapBuilder.maxRangeColour, heatmapBuilder.standardDev);
-                    }
-                    else if (heatmapBuilder.rad_ByElement.IsChecked == true)
-                    {
-                        carboLifeProject = HeatMapBuilderUtils.CreateByElementHeatMap(carboLifeProject, heatmapBuilder.minOutColour, heatmapBuilder.maxOutColour, heatmapBuilder.minRangeColour, heatmapBuilder.midRangeColour, heatmapBuilder.maxRangeColour, heatmapBuilder.standardDev);
-
-                    }
-
-                    if (heatmapBuilder.createHeatmap == true || heatmapBuilder.importData == true)
-                    {
-                        chx_AcceptHeatmap.Visibility = Visibility.Visible;
-                        chx_AcceptHeatmap.IsChecked = true;
-                        lbl_AcceptHeatmap.Visibility = Visibility.Visible;
-                        createHeatmap = true;
-                    }
-                    else
-                    {
-                        chx_AcceptHeatmap.Visibility = Visibility.Hidden;
-                        chx_AcceptHeatmap.IsChecked = false;
-                        lbl_AcceptHeatmap.Visibility = Visibility.Hidden;
-                        createHeatmap = false;
-                    }
-
-
-
-                    if(heatmapBuilder.importData == true)
-                    {
-                        importData = true;
-                    }
-                    else
-                    {
-                        importData = false;
-                    }
-
-                    MessageBox.Show("Success! The heatmap and/or data import will be applied once you close Carbo life Calculator", "Success");
-
-                }
-                else
-                {
-                    //chx_AcceptHeatmap.Visibility = Visibility.Visible;
-                    //chx_AcceptHeatmap.IsChecked = true;
-                    //lbl_AcceptHeatmap.Visibility = Visibility.Visible;
-                    //createHeatmap = true;
-                }
-
-
-            }
-            else
-            {
-                MessageBox.Show("This option is available once you launch the program from Autodesk Revit");
-            }
-            */
-        }
-
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -511,11 +430,6 @@ namespace CarboLifeUI.UI
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void chx_AcceptHeatmap_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void mnu_Activate_Click(object sender, RoutedEventArgs e)
@@ -531,10 +445,9 @@ namespace CarboLifeUI.UI
 
             if (exportMenu.isAccepted == true)
             {
-
-             ExcelExportResult = exportMenu.results;
-             ExcelExportElements = exportMenu.elements;
-             ExcelExportMaterials = exportMenu.materials;
+                ExcelExportResult = exportMenu.results;
+                ExcelExportElements = exportMenu.elements;
+                ExcelExportMaterials = exportMenu.materials;
 
                 //Async Attempt 2:
 
@@ -560,6 +473,7 @@ namespace CarboLifeUI.UI
                         MessageBox.Show("The file is open by another process, or cannot be openend, please specify another location");
                     }
                 }
+
             }
         }
         void ExportThread_DoWork(object sender, DoWorkEventArgs e)
@@ -614,7 +528,9 @@ namespace CarboLifeUI.UI
         }
         private void ExportFile_DoWork(object sender, DoWorkEventArgs e)
         {
-            DataExportUtils.ExportToExcel(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials);
+            //DataExportUtils.ExportToExcel(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials);
+            DataExportUtils.ExportToCSV(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials);
+
         }
 
         private void mnu_Settings_Click(object sender, RoutedEventArgs e)
