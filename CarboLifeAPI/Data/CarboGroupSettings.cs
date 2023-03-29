@@ -17,6 +17,8 @@ namespace CarboLifeAPI.Data
 
         public string SubStructureParamName { get; set; }
         public string ExistingPhaseName { get; set; }
+        public string VolumeConversionFactor { get; set; }
+
         public bool IncludeSubStructure { get; set; }
         public bool IncludeDemo { get; set; }
         public bool IncludeExisting { get; set; }
@@ -33,6 +35,8 @@ namespace CarboLifeAPI.Data
             IncludeSubStructure = false;
             IncludeDemo = false;
             IncludeExisting = false;
+
+            VolumeConversionFactor = "";
         }
 
         public CarboGroupSettings DeSerializeXML()
