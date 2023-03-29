@@ -90,6 +90,9 @@ namespace CarboLifeAPI
             try
             {
                 report = writeHeader(carboProject);
+                
+                //Material Quanaities
+                report += writeQuantitiesTable(carboProject);
 
                 //Project Information and base info
                 report += writeReportTable(carboProject);
@@ -128,6 +131,7 @@ namespace CarboLifeAPI
             //VOID
 
         }
+
 
         private static string getImageTag(string imageAsString, int width, int height, string toolText)
         {
@@ -245,12 +249,104 @@ namespace CarboLifeAPI
             return html;
         }
 
+        private static string writeQuantitiesTable(CarboProject carboProject)
+        {
+            string html = "<H1><B>" + "Material Quantities:" + "</B></H1><BR>" + System.Environment.NewLine;
+
+            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1600>";
+            html += "<TR></TR>";
+            //ResultTable in a table
+            try
+            {
+
+                //Write 10 Headers:
+                html += "<TR>" + System.Environment.NewLine;
+
+                html += "<TD width=" + 150 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 175 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 175 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 40 + "><B>" + "Volume" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD width=" + 40 + "><B>" + "Correction Formula" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 40 + "><B>" + "Waste" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 40 + "><B>" + "[B4]" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 40 + "><B>" + "Total Volume" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD width=" + 40 + "><B>" + "Density" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 40 + "><B>" + "Mass" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "</TR>" + System.Environment.NewLine;
+
+                //Write 10 units
+                html += "<TR>" + System.Environment.NewLine;
+
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "m³" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "%" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "x" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "m³" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD align='left'><B>" + "kg/m³" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "kg" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "</TR>" + System.Environment.NewLine;
+
+                ObservableCollection<CarboGroup> cglist = carboProject.getGroupList;
+                cglist = new ObservableCollection<CarboGroup>(cglist.OrderBy(i => i.MaterialName));
+
+                string material = "";
+
+                foreach (CarboGroup cbg in cglist)
+                {
+                    //If this is the first instance of a group, then write the title of the material
+                    if (cbg.MaterialName != material)
+                    {
+                        material = cbg.MaterialName;
+                        html += getTitleRow(material);
+                    }
+
+                    html += "<TR>" + System.Environment.NewLine;
+
+                    html += "<TD align='left' valign='middle'>" + cbg.Category + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + cbg.Material.Name + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + cbg.Description + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Volume, 2) + "</td>" + System.Environment.NewLine;
+
+                    //Advanced settings
+                    html += "<TD align='left' valign='middle'>" + cbg.Correction + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + cbg.Waste + "%" + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.inUseProperties.B4, 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.TotalVolume, 2) + "</td>" + System.Environment.NewLine;
+
+                    html += "<TD align='left' valign='middle'>" + cbg.Density + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Mass, 2) + "</td>" + System.Environment.NewLine;
+
+                    html += "</TR>" + System.Environment.NewLine;
+                }
+
+
+                html += "</TABLE>";
+
+
+            }
+            catch
+            {
+            }
+
+            return html;
+
+        }
+
         private static string writeReportTable(CarboProject carboProject)
         {
 
             string html = "<H1><B>" + "Embodied Carbon Calculation Groups:" + "</B></H1><BR>" + System.Environment.NewLine;
             
-            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1850>";
+            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1600>";
             
             html += "<TR></TR>";
             //ResultTable in a table
@@ -261,7 +357,7 @@ namespace CarboLifeAPI
 
                 html += "<TR>" + System.Environment.NewLine;
                 html += "<TD width=" + 150 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 200 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 175 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 250 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
 
                 //Advanced settings
@@ -472,6 +568,7 @@ namespace CarboLifeAPI
             html += "<STYLE type=\"text/css\">" + System.Environment.NewLine;
 
             html += "table {font-family:Segoe UI, Quattrocento Sans, Oswald, Sergoe UI, Calabri, Arial, Helvetica, sans-serif;" +
+                        "font-size:14px;" +
                         "margin-left:20px;" +
                         "border:#000 1px solid; }" +
                         System.Environment.NewLine;

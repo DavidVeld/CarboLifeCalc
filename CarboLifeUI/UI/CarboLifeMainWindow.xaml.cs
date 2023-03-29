@@ -213,8 +213,7 @@ namespace CarboLifeUI.UI
             }
         }
         
-
-        private void Mnu_saveProject_Click(object sender, RoutedEventArgs e)
+       private void Mnu_saveProject_Click(object sender, RoutedEventArgs e)
         {
             string path = carboLifeProject.filePath;
             if(File.Exists(path))
