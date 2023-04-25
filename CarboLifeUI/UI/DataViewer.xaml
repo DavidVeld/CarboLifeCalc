@@ -72,9 +72,11 @@
                     <RibbonMenuButton Label="Merge Group" PreviewMouseDown="Mnu_MergeGroup_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupmerge32.png"/>
                     <RibbonMenuButton Label="Purge Elements" MouseDown="Mnu_PurgeElements_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_grouppurge32.png"/>
 
-                    <RibbonMenuButton Label="Split Group..." Visibility="Visible" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupsplit32.png"/>
-                    <RibbonMenuButton Label="Re-group..." PreviewMouseDown="Mnu_reGroupData_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupregroup32.png"/>
+                    <RibbonMenuButton Label="Split Group..." PreviewMouseDown="RibbonMenuButton_PreviewMouseDown" Visibility="Visible" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupsplit32.png"/>
                     <RibbonMenuButton Label="Multi-Map..." PreviewMouseDown="mnu_MapElements_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_del.png"/>
+                   <!--- Needs a re-think -->
+                    <RibbonMenuButton Label="Re-group..." PreviewMouseDown="Mnu_reGroupData_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupregroup32.png" Visibility="Hidden"/>
+
                 </RibbonGroup>
                 <!-- Employee And Payroll group-->
                 <RibbonGroup x:Name="Materials" Header="Materials">

@@ -33,14 +33,14 @@ namespace CarboLifeAPI.Data
         /// <param name="carboElementList"></param>
         /// <param name="importSettiungs"></param>
         /// <returns></returns>
-        public static ObservableCollection<CarboGroup> GroupElementsAdvanced(ObservableCollection<CarboElement> carboElementList, CarboGroupSettings importSettiungs, CarboDatabase materialData)
+        public static ObservableCollection<CarboGroup> GroupElementsAdvanced(ObservableCollection<CarboElement> carboElementList, CarboGroupSettings importSettings, CarboDatabase materialData)
         {
             ObservableCollection<CarboGroup> result = new ObservableCollection<CarboGroup>();
 
             //First we build groups based on the import settings
             foreach (CarboElement ce in carboElementList)
             {
-                result = AddToCarboGroupV2(result, ce, importSettiungs.IncludeSubStructure, importSettiungs.IncludeExisting, importSettiungs.IncludeDemo);
+                result = AddToCarboGroupV2(result, ce, importSettings);
             }
             //Now we map the importedMaterialParameter to one in our own database;
             result = mapGroupMaterials(result, materialData);
@@ -49,9 +49,10 @@ namespace CarboLifeAPI.Data
             return result;
         }
 
-        private static ObservableCollection<CarboGroup> AddToCarboGroupV2(ObservableCollection<CarboGroup> carboGroupList, CarboElement carboElement, bool includeSubStructure, bool includeExisting, bool includeDemo)
+        private static ObservableCollection<CarboGroup> AddToCarboGroupV2(ObservableCollection<CarboGroup> carboGroupList, CarboElement carboElement, CarboGroupSettings importSettings)
         {
             int idbase = 1000;
+            bool elementFound = false;
 
             //Go through each group, if there is a match, add the element, if not create a new group. 
             foreach (CarboGroup cg in carboGroupList)
@@ -84,6 +85,13 @@ namespace CarboLifeAPI.Data
            
 
                 //If all passes add to group if not skip and create new group;
+                //IF existing and demo needs to be combined, only create one group.
+                
+                //if you want existing and demo combined then Demo is always yes
+                //This is a bit of a patch and might need improvements later
+                if(importSettings.CombineExistingAndDemo)
+                    matchesDemolition = true;
+
                 if (
                  matchesCategory == true &&
                  matchMaterial == true &&
@@ -92,10 +100,12 @@ namespace CarboLifeAPI.Data
                  matchesExisting == true)
                 {
                     cg.AllElements.Add(carboElement);
-
-                    return carboGroupList;
+                    elementFound = true;
+                    break;
                 }
             }
+            if(elementFound == true)
+                return carboGroupList;
 
             //NoCategoryWasFound: make new group
             int id = carboGroupList.Count + idbase;

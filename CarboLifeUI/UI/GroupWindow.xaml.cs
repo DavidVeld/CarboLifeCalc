@@ -26,24 +26,24 @@ namespace CarboLifeUI.UI
 
         public ObservableCollection<CarboElement> carboElementList;
         public ObservableCollection<CarboGroup> carboGroupList;
-        public CarboDatabase materialData;
-        public CarboSettings carboGroupSettings;
+        public ObservableCollection<CarboGroup> carboGroupNewList;
 
-        public GroupWindow(ObservableCollection<CarboElement> elementList, CarboDatabase userMaterialData, CarboSettings groupSettings)
+        public CarboDatabase materialData;
+
+        public GroupWindow(CarboGroup groupSettings)
         {
             dialogOk = false;
-            carboElementList = elementList;
             carboGroupList = new ObservableCollection<CarboGroup>();
-            carboGroupSettings = groupSettings;
 
-            materialData = userMaterialData;
             InitializeComponent();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             dialogOk = false;
-
+            cbb_MainGroup.Items.Add("Category");
+            cbb_MainGroup.Items.Add("Type Name");
+            cbb_MainGroup.Items.Add(" Name");
 
         }
 
@@ -74,12 +74,12 @@ namespace CarboLifeUI.UI
             else
                 dialogOk = false;
 
-            //Save the settings
-            carboGroupSettings.Save();
-
             this.Close();
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
+        }
     }
 }

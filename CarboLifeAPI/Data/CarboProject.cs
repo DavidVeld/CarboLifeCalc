@@ -163,7 +163,6 @@ namespace CarboLifeAPI.Data
             calculateAdd = false;
 
             designLife = 50;
-
         }
 
 
@@ -219,7 +218,6 @@ namespace CarboLifeAPI.Data
             calculateAdd = false;
 
             designLife = 50;
-
         }
 
         public void CreateGroups()

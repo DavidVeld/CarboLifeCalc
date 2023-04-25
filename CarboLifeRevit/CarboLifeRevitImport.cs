@@ -34,7 +34,6 @@ namespace CarboLifeRevit
                 //if a file needs to be updated get the settings first.
                 updateFile = true;
 
-
                 CarboProject buffer = new CarboProject();
                 projectToUpdate = buffer.DeSerializeXML(updatePath);
                 settings = projectToUpdate.RevitImportSettings;
@@ -52,32 +51,28 @@ namespace CarboLifeRevit
                     //Create groups from all the individual elements
                     myProject.CreateGroups();
                     projectToOpen = myProject;
-
                 }
                 else //upadte an existing file:
                 {
-
-
                     projectToUpdate.Audit();
                     projectToUpdate.UpdateProject(myProject);
                     projectToUpdate.CalculateProject();
-
                     projectToOpen = projectToUpdate;
                 }
 
-
+                //Open the interface
                 CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(projectToOpen);
                 carboCalcProgram.IsRevit = true;
 
                 AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
                 carboCalcProgram.ShowDialog();
-
             }
             else
             {
                 MessageBox.Show("No elements could be found to be calculated, please make sure you have a 3D view active and the building volume is clearly visible ", "Warning", MessageBoxButton.OK);
             }
+
             //When assembly cant be find bind to current
             System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
             {
@@ -120,6 +115,7 @@ namespace CarboLifeRevit
             myProject.Number = doc.ProjectInformation.Number;
 
             ICollection<ElementId> selectionList = uidoc.Selection.GetElementIds();
+            IList<Element> elementCollection = new List<Element>();
 
 
             if (selectionList.Count == 0) //Collect all elements in View.
@@ -133,54 +129,16 @@ namespace CarboLifeRevit
                     new ElementIsElementTypeFilter(true)));
 
                 //Now cast them as elements into a container
-                IList<Element> collection = coll.ToElements();
-                string name = "";
+                IList<Element> bufferCollection = coll.ToElements();
 
-                List<string> IdsNotFound = new List<string>();
-
-                foreach (Element el in collection)
+                foreach (Element el in bufferCollection)
                 {
-                    name = el.Id.ToString();
-
-                    try
+                    if (el != null && CarboRevitUtils.isElementReal(el) == true)
                     {
-                        if (CarboRevitUtils.isElementReal(el) == true)
-                        {
-                            ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
-
-                            foreach (ElementId materialIds in MaterialIds)
-                            {
-                                CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, settings);
-
-                                if (carboElement != null)
-                                    myProject.AddElement(carboElement);
-                            }
-
-                            //See if is floor(then count area)
-                            area += getFloorarea(el);
-                        }
+                        elementCollection.Add(el);
                     }
-                    catch
-                    {
-                        IdsNotFound.Add(name);
-
-                        //TaskDialog.Show("Error", ex.Message);
-                    }
-
                 }
-                if (IdsNotFound.Count > 0)
-                {
-                    string message = "One or more elements weren't processed, most likely because they didn't contain any volume the element ids of these elements are: ";
-
-                    foreach (string id in IdsNotFound)
-                    {
-                        message += "\n" + id;
-                    }
-
-                    MessageBox.Show(message, "Warning", MessageBoxButton.OK);
-                }
-
-            }
+             }
             else //If a selection was made:
             {
                 try
@@ -188,22 +146,10 @@ namespace CarboLifeRevit
                     foreach (ElementId elid in selectionList)
                     {
                         Element el = doc.GetElement(elid);
-                        ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
 
-                        if (CarboRevitUtils.isElementReal(el) == true)
+                        if (el!= null && CarboRevitUtils.isElementReal(el) == true)
                         {
-                            if (CarboRevitUtils.ValidCategory(el) == true)
-                            {
-                                foreach (ElementId materialIds in MaterialIds)
-                                {
-                                    CarboElement carboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialIds, settings);
-
-                                    if (carboElement != null)
-                                        myProject.AddElement(carboElement);
-                                }
-                            }
-                            //See if is floor(then count area)
-
+                            elementCollection.Add(el);
                         }
                     }
                 }
@@ -211,15 +157,85 @@ namespace CarboLifeRevit
                 {
                     TaskDialog.Show("Error", ex.Message);
                 }
+            }
+
+            //USe the above collection to create a new project or update an existing
+            foreach (Element el in elementCollection)
+            {
+                try
+                {
+                    //This is an updated version where the getGeometry Method is used. 
+                    //This is slower but needed for railings and ramps
+                    BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.IntegerValue;
+                    List<CarboElement> carboElementList = new List<CarboElement>();
+
+                    //if (el.Category.Name == "Railings"
+                    //|| el.Category.Name == "Ramps") //English
+
+                    if (enumCategory == BuiltInCategory.OST_Railings ||
+                        enumCategory == BuiltInCategory.OST_Ramps)
+
+                    {
+                        carboElementList = CarboRevitUtils.getGeometryElement(doc, el, settings);
+                    }
+                    else
+                    {
+                        //this is the fast method of extraction
+                        ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
+                        foreach (ElementId materialId in MaterialIds)
+                        {
+                            CarboElement newCarboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialId, settings);
+                            
+                            if(carboElementList != null)
+                                carboElementList.Add(newCarboElement);
+                        }
+                    }
+
+                    if (carboElementList != null || carboElementList.Count > 0)
+                    {
+                        foreach (CarboElement carboElement in carboElementList)
+                        {
+                            myProject.AddElement(carboElement);
+                        }
+                    }
+
+                    //See if is floor(then count area)
+                    area += getFloorarea(el);
+                }
+                catch (Exception ex)
+                {
+                }
 
             }
 
-            // If Project contained area, make sure it is updated.
-            myProject.Area = Math.Round((area * (0.3048 * 0.3048)), 2); //to sqr m2
+            /*
+            if (IdsNotFound.Count > 0)
+            {
+                string message = "One or more elements weren't processed, most likely because they didn't contain any volume the element ids of these elements are: ";
 
+                foreach (string id in IdsNotFound)
+                {
+                    message += "\n" + id;
+                }
+
+                MessageBox.Show(message, "Warning", MessageBoxButton.OK);
+            }
+            */
+
+            // If Project contained area, make sure it is updated.
+            if(myProject.Area == 0)
+                myProject.Area = Math.Round((area * (0.3048 * 0.3048)), 2); //to sqr m2
+
+            //Apply settings to new projectfile
+            myProject.RevitImportSettings = settings;
             return myProject;
         }
 
+        /// <summary>
+        /// Retreives the area of a floor slab
+        /// </summary>
+        /// <param name="el">element</param>
+        /// <returns>Area in sqr ft</returns>
         private static double getFloorarea(Element el)
         {
             double result = 0;

@@ -21,11 +21,11 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="55"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="175"/>
+            <RowDefinition Height="65"/>
+            <RowDefinition/>
+            <RowDefinition Height="0"/>
+            <RowDefinition Height="0*"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
@@ -38,23 +38,47 @@
 
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Group Elements</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}" Content="Split Groups"/>
 
-        <Label Grid.Column="1" Margin="5,0,5,0" Grid.Row="4" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Category:</Label>
-        <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="4" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent">Select or write the parameter that defines the object's category:</TextBox>
-        <ComboBox Name="cbb_MainGroup" IsReadOnly="False" Grid.Column="2" Grid.Row="4" Margin="30,60,5,0" Height="25" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
+        <Label Grid.Column="1" Margin="5,0,5,0" Grid.Row="3" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Category:</Label>
+        <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="3" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" TextChanged="TextBox_TextChanged">Select The parameter you want to split this group by.</TextBox>
+        <ComboBox Name="cbb_MainGroup" IsReadOnly="False" Grid.Column="2" Grid.Row="3" Margin="59,60,5,0" Height="25" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}"></ComboBox>
 
-        <CheckBox Name="chk_ImportSubstructure" IsEnabled="True" Grid.Column="2" Grid.Row="5" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Grid.RowSpan="2">Split Substructure</CheckBox>
+        <CheckBox Name="chk_ImportSubstructure" IsEnabled="True" Grid.Column="2" Grid.Row="4" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Grid.RowSpan="2" Visibility="Hidden">Split Substructure</CheckBox>
+        <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="4" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" Visibility="Hidden">An element set as substructure will be placed in a separate group.</TextBox>
 
-        <CheckBox Name="chk_ImportExisting" IsEnabled="True" Grid.Column="2" Grid.Row="6" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include Existing Elements</CheckBox>
+        <CheckBox Name="chk_ImportExisting" IsEnabled="True" Grid.Column="2" Grid.Row="5" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Visibility="Hidden">Include Existing Elements</CheckBox>
+        <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="5" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" Visibility="Hidden">Existing elements will be grouped</TextBox>
 
-        <CheckBox Name="chk_ImportDemolished" IsEnabled="True" Grid.Column="2" Grid.Row="7" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include Demolished Elements</CheckBox>
+        <CheckBox Name="chk_ImportDemolished" IsEnabled="True" Grid.Column="2" Grid.Row="7" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Visibility="Hidden">Include Demolished Elements</CheckBox>
+        <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="7" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" Visibility="Hidden">Demolished elements will be grouped</TextBox>
 
 
-        <Button Name="btn_Group" Grid.Row="6" Grid.Column="2" Grid.RowSpan="2" Margin="0,0,5,5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Group_Click">Group</Button>
+        <Button x:Name="btn_Group" Grid.Row="3" Grid.Column="2" Margin="0,0,5,5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Group_Click" Content="Split"/>
 
-        <Label Grid.Column="3" Margin="0,0,10,0" Grid.Row="2" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource baseStyle}">Preview:</Label>
-        <DataGrid AutoGenerateColumns="False" Name="dgv_Preview" Grid.Column="4" Grid.Row="2" Grid.RowSpan="6" Margin="0,22,5,5" IsReadOnly="True"  EnableRowVirtualization="false"  CanUserAddRows="False" CanUserReorderColumns="False" ColumnWidth="*" HorizontalScrollBarVisibility="Hidden">
+        <Label Grid.Column="4" Margin="0,0,10,0" Grid.Row="1" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource formTitleStyle}">Selected Group Elements:</Label>
+        <DataGrid AutoGenerateColumns="False" Name="dgv_Preview" Grid.Column="4" Grid.Row="2" Grid.RowSpan="2" Margin="0,22,5,10" IsReadOnly="True"  EnableRowVirtualization="false"  CanUserAddRows="False" CanUserReorderColumns="False" ColumnWidth="*" HorizontalScrollBarVisibility="Hidden">
+            <DataGrid.Columns>
+                <DataGridTextColumn MinWidth="25" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
+
+                <DataGridTextColumn Width="1*" MinWidth="200" Header="Category" Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="200" Header="Material" Binding="{Binding Path=MaterialName}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Description" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="90" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
+
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="90" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="100" Header="ECI(kgCO₂/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="EC (tCO₂)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Label Grid.Column="4" Margin="0,0,10,0" Grid.Row="4" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource formTitleStyle}">Filtered Group Elements:</Label>
+
+        <DataGrid AutoGenerateColumns="False" Name="dgv_Preview2" Grid.Column="4" Grid.Row="5" Grid.RowSpan="4" Margin="0,22,5,10" IsReadOnly="True"  EnableRowVirtualization="false"  CanUserAddRows="False" CanUserReorderColumns="False" ColumnWidth="*" HorizontalScrollBarVisibility="Hidden">
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="25" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
 
@@ -76,6 +100,8 @@
 
         <Button Name="btn_Accept" Grid.Row="8" Grid.Column="4" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Import_Click">Accept</Button>
         <Button Name="btn_Cancel" Grid.Row="8" Grid.Column="4" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
+        <Label Grid.Column="1" Margin="5,90,5,0" Grid.Row="3" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}" Content="Value:"/>
+        <TextBox Name="txt_SplitValue" Grid.Column="2" Margin="59,90,5,0" Grid.Row="3" Height="28" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}"></TextBox>
 
     </Grid>
 </Window>

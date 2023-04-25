@@ -1,12 +1,15 @@
 ﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using CarboLifeAPI;
 using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace CarboLifeRevit
 {
@@ -15,170 +18,110 @@ namespace CarboLifeRevit
         /// <summary>
         /// This is the main function to form a carbo element based on a Revit Input.
         /// </summary>
+        /// <param name="doc">Document</param>
+        /// <param name="el">Element</param>
+        /// <param name="materialIds"></param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
+        internal static CarboElement getNewCarboElement(Document doc, Element el, ElementId materialId ,CarboGroupSettings settings)
+        {
+
+            CarboElement result = new CarboElement();
+            CarboElement newCarboElement = new CarboElement();
+
+            if (materialId == null)
+                return null;
+
+                try
+                {
+                    newCarboElement = getNewElementProps(el, doc, settings);
+
+                    string setImportedMaterialName;
+                    double setVolume;
+
+                    //MaterialName
+                    setImportedMaterialName = doc.GetElement(materialId).Name.ToString();
+
+                    //Volume
+                    double volumeCubicFt = el.GetMaterialVolume(materialId);
+                    setVolume = Utils.convertToCubicMtrs(volumeCubicFt);
+
+                    //If it passed it matches all criteria:
+                    newCarboElement.MaterialName = setImportedMaterialName;
+                    newCarboElement.Volume = Math.Round(setVolume, 4);
+                }
+                catch
+                {
+                    newCarboElement = null;
+                }
+
+                if (newCarboElement != null && newCarboElement.Volume > 0)
+                {
+                    result = newCarboElement;
+                }
+            
+                return result;
+        }
+
+        /// <summary>
+        /// This is the main function to form a carbo element based on a Revit Input.
+        /// </summary>
         /// <param name="doc"></param>
         /// <param name="el"></param>
         /// <param name="materialIds"></param>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public static CarboElement getNewCarboElement(Document doc, Element el, ElementId materialIds, CarboGroupSettings settings)
+        [Obsolete("This is a very slow method for some reason as it contructs a list for each item, so don't even think about using this")]
+        internal static List<CarboElement> getNewCarboElement(Document doc, Element el, CarboGroupSettings settings)
         {
+            
+            List<CarboElement> result = new List<CarboElement>();
 
-            CarboElement newCarboElement = new CarboElement();
-            try
-            {
-                int setId;
-                string setName;
-                string setImportedMaterialName;
-                string setCategory;
-                string setSubCategory;
-                double setVolume;
-                double setLevel;
-                bool setIsDemolished;
-                bool setIsSubstructure;
-                bool setIsExisting;
-                //int layernr;
-
-                // Material material = doc.GetElement(materialIds) as Material;
-                //Id:
-                setId = el.Id.IntegerValue;
-                
-                //Name (Type)
-                ElementId elId = el.GetTypeId();
-                ElementType type = doc.GetElement(elId) as ElementType;
-                setName = type.Name;
-
-                //MaterialName
-                setImportedMaterialName = doc.GetElement(materialIds).Name.ToString();
-
-                //CarboMaterial carboMaterial = new CarboMaterial(setMaterialName);
-               
-                //GetDensity
-                Parameter paramMaterial = el.get_Parameter(BuiltInParameter.STRUCTURAL_MATERIAL_PARAM);
-                if (paramMaterial != null)
-                {
-                    Material material = doc.GetElement(paramMaterial.AsElementId()) as Material;
-                    if (material != null)
-                    {
-                        PropertySetElement property = doc.GetElement(material.StructuralAssetId) as PropertySetElement;
-                        if (property != null)
-                        {
-                            Parameter paramDensity = property.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_STRUCTURAL_DENSITY);
-                            if (paramDensity != null)
-                            {
-                                double density = paramDensity.AsDouble();
-                                newCarboElement.Density = density;
-                            }
-                        }
-                    }
-                }
-
-
-                //Get the right Category name
-                setCategory = getCategoryValue(el,type, settings.CategoryName, doc, settings.CategoryParamName);
-
-                //SubCategory (Not used at the moment)
-                setSubCategory = "";
-                
-                //Volume
-                double volumeCubicFt = el.GetMaterialVolume(materialIds);
-                setVolume = Utils.convertToCubicMtrs(volumeCubicFt);
-
-                //Get the level (in meter)
-                Level lvl = doc.GetElement(el.LevelId) as Level;
-                if (lvl != null)
-                {
-                    setLevel = Convert.ToDouble((lvl.Elevation) * 304.8);
-                }
-                else
-                {
-                    setLevel = 0;
-                }
-
-                //Get Phasing;
-                Phase elCreatedPhase = doc.GetElement(el.CreatedPhaseId) as Phase;
-                Phase elDemoPhase = doc.GetElement(el.DemolishedPhaseId) as Phase;
-
-                newCarboElement.isDemolished = false;
-
-                if (elDemoPhase != null)
-                {
-                    setIsDemolished = true;
-                }
-                else
-                {
-                    setIsDemolished = false;
-                }
-
-                if (elCreatedPhase.Name == settings.ExistingPhaseName)
-                {
-                    setIsExisting = true;
-                }
-                else
-                {
-                    setIsExisting = false;
-                }
-
-                //Makepass;
-
-                //Is demolished
-                if (setIsDemolished == true)
-                {
-                    if(settings.IncludeDemo == false)
-                        return null; //don't make a element
-                }
-
-                //Is existing and retained
-                if (setIsExisting == true)
-                {
-                    if (settings.IncludeExisting == false)
-                        return null; //don't make a element
-                }
-
-
-                //Is Substructure
-                setIsSubstructure = false;
-
-                Parameter substructParam = el.LookupParameter(settings.SubStructureParamName);
-                if(substructParam != null)
-                {
-                    if (substructParam.StorageType == StorageType.Integer)
-                    {
-                        if (substructParam.AsInteger() == 1)
-                            setIsSubstructure = true;
-                    }
-                }
-
-                //If it passed it matches all criteria:
-                newCarboElement.Id = setId;
-                newCarboElement.Name = setName;
-                newCarboElement.MaterialName = setImportedMaterialName;
-                newCarboElement.Category = setCategory;
-                newCarboElement.SubCategory = setSubCategory;
-                newCarboElement.Volume = Math.Round(setVolume, 4);
-                //newCarboElement.Material = carboMaterial; //Material removed
-                newCarboElement.Level = Math.Round(setLevel,3);
-                newCarboElement.isDemolished = setIsDemolished;
-                newCarboElement.isExisting = setIsExisting;
-                newCarboElement.isSubstructure = setIsSubstructure;
-                newCarboElement.includeInCalc = true;
-
-                if (newCarboElement.Volume != 0)
-                {
-                    return newCarboElement;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch
-            {
+            ICollection<ElementId> MaterialIds = el.GetMaterialIds(false);
+            if (MaterialIds == null || MaterialIds.Count <= 0)
                 return null;
+
+            foreach (ElementId materialIds in MaterialIds)
+            {
+                CarboElement newCarboElement = new CarboElement();
+
+                try
+                {
+                    newCarboElement = getNewElementProps(el, doc, settings);
+
+                    string setImportedMaterialName;
+                    double setVolume;
+
+                    //MaterialName
+                    setImportedMaterialName = doc.GetElement(materialIds).Name.ToString();
+
+                    //Volume
+                    double volumeCubicFt = el.GetMaterialVolume(materialIds);
+                    setVolume = Utils.convertToCubicMtrs(volumeCubicFt);
+
+                    //If it passed it matches all criteria:
+                    newCarboElement.MaterialName = setImportedMaterialName;
+                    newCarboElement.Volume = Math.Round(setVolume, 4);
+                }
+                catch
+                {
+                    newCarboElement = null;
+                }
+
+                if (newCarboElement != null && newCarboElement.Volume > 0)
+                {
+                    result.Add(newCarboElement);
+                }
             }
+
+            if (result != null && result.Count > 0)
+            {
+                return result;
+            }
+            else
+                return null;
 
         }
-
-
         /*            
             categorylist.Add("(Revit) Category");
             categorylist.Add("Type Parameter");
@@ -263,8 +206,9 @@ namespace CarboLifeRevit
                     if (el.get_Geometry(new Options()) != null)
                     {
                         //Check if not of any forbidden categories such as runs:
-                        string Typename = el.Category.Name;
-                        if(Typename != "Run")
+                        bool isValidCategory = ValidCategory(el);
+
+                        if(isValidCategory == true)
                             result = true;
                     }
                 }
@@ -278,21 +222,270 @@ namespace CarboLifeRevit
         /// </summary>
         /// <param name="el"></param>
         /// <returns></returns>
-        internal static bool ValidCategory(Element el)
+        private static bool ValidCategory(Element el)
         {
             bool result = true;
 
-            List<string> nonValidClasses = new List<string>();
-            //List of categories to exclude
-            nonValidClasses.Add("Runs");
-            nonValidClasses.Add("Ramps");
-
-            string catName = el.Category.Name;
-
-            if (nonValidClasses.Contains(catName))
+            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.IntegerValue;
+            
+            if(enumCategory == BuiltInCategory.OST_StairsRuns)
+            {
                 result = false;
+            }
 
             return result;
+        }
+
+        /// <summary>
+        /// A method to extract ALL geometry from an element when it is valid but data is not ready availble such as Railings & Ramp Families
+        /// </summary>
+        /// <param name="doc">Document</param>
+        /// <param name="el">Element TO scoop</param>
+        /// <param name="settings">CarboGroupSettings</param>
+        /// <returns> List<CarboElement> with geometry data</returns>
+        internal static List<CarboElement> getGeometryElement(Document doc, Element el, CarboGroupSettings settings)
+        {
+            List<CarboElement> result = new List<CarboElement>();
+
+            try
+            {
+
+                Options opt = new Options();
+                opt.DetailLevel = ViewDetailLevel.Fine;
+
+                List<Solid> lisofGeos = new List<Solid>();
+                
+                //First Try High Level:
+                lisofGeos = el.get_Geometry(opt).OfType<Solid>().Where(s => s.Volume > 0).ToList();
+
+
+                double volumeCheck = 0;
+                if (lisofGeos.Count > 0)
+                    volumeCheck = lisofGeos[0].Volume;
+
+                //if no volume or no solids where found, try a deeper snoop.
+               if (volumeCheck == 0)
+                    lisofGeos = el.get_Geometry(opt).OfType<GeometryInstance>().SelectMany(g => g.GetInstanceGeometry().OfType<Solid>().Where(s => s.Volume > 0)).ToList();
+                
+
+                if (lisofGeos == null || lisofGeos.Count <= 0)
+                    return null; //this is not a valid item
+
+
+                foreach (Solid solidShape in lisofGeos)
+                {
+                    string materialName = "";
+                    double volume = 0;
+
+                    if (solidShape.Volume > 0)
+                    {
+                        volume = solidShape.Volume;
+
+                        FaceArray array = solidShape.Faces;
+                        PlanarFace face = array.get_Item(0) as PlanarFace;
+                        Material faceMat = null;
+
+                        ///Check the material of this element;
+                        if (face != null)
+                        {
+                            ElementId eid = face.MaterialElementId;
+                            
+                            faceMat = doc.GetElement(eid) as Material;
+                            if (faceMat != null)
+                            {
+                                materialName = faceMat.Name;
+                            }
+                        }
+
+                        if (materialName != "" && volume > 0 && faceMat != null)
+                            result = CarboRevitUtils.addToCarboElement(result, materialName, volume, el, doc, settings);
+
+                    }
+                }
+                foreach (CarboElement cel in result)
+                {
+                    cel.Volume = Utils.convertToCubicMtrs(cel.Volume);
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+             return null;
+
+        }
+
+        private static List<CarboElement> addToCarboElement(List<CarboElement> result, string materialName, double volume, Element el, Document doc, CarboGroupSettings settings)
+        {
+            if(result.Count > 0)
+            {
+                foreach(CarboElement carboElement in result)
+                {
+                    if (carboElement.MaterialName == materialName)
+                    {
+                        carboElement.Volume += volume;
+                        return result;
+                    }
+                }
+            }
+
+            //first item or not found; new element added to list;
+            CarboElement newElement = getNewElementProps(el, doc, settings);
+
+            if (newElement != null)
+            {
+                newElement.MaterialName = materialName;
+                newElement.Volume = volume;
+
+                result.Add(newElement);
+            }
+
+            return result;
+
+        }
+
+        /// <summary>
+        /// Extracts all data from a revit element apart from volume and material.
+        /// </summary>
+        /// <param name="el">Element</param>
+        /// <param name="doc">Document</param>
+        /// <param name="settings">CarboGroupSettings</param>
+        /// <returns>CarboElement with no volume or material</returns>
+        private static CarboElement getNewElementProps(Element el, Document doc, CarboGroupSettings settings)
+        {
+            CarboElement newCarboElement = new CarboElement();
+            try
+            {
+                int setId;
+                string setName;
+                string setCategory;
+                string setSubCategory;
+                double setLevel;
+                bool setIsDemolished;
+                bool setIsSubstructure;
+                bool setIsExisting;
+                //int layernr;
+
+                //Id:
+                setId = el.Id.IntegerValue;
+
+                //Name (Type)
+                ElementId elId = el.GetTypeId();
+                ElementType type = doc.GetElement(elId) as ElementType;
+                setName = type.Name;
+
+                //GetDensity
+                Parameter paramMaterial = el.get_Parameter(BuiltInParameter.STRUCTURAL_MATERIAL_PARAM);
+                if (paramMaterial != null)
+                {
+                    Material material = doc.GetElement(paramMaterial.AsElementId()) as Material;
+                    if (material != null)
+                    {
+                        PropertySetElement property = doc.GetElement(material.StructuralAssetId) as PropertySetElement;
+                        if (property != null)
+                        {
+                            Parameter paramDensity = property.get_Parameter(BuiltInParameter.PHY_MATERIAL_PARAM_STRUCTURAL_DENSITY);
+                            if (paramDensity != null)
+                            {
+                                double density = paramDensity.AsDouble();
+                                newCarboElement.Density = density;
+                            }
+                        }
+                    }
+                }
+
+
+                //Get the right Category name
+                setCategory = getCategoryValue(el, type, settings.CategoryName, doc, settings.CategoryParamName);
+
+                //SubCategory (Not used at the moment)
+                setSubCategory = "";
+
+                //Get the level (in meter)
+                Level lvl = doc.GetElement(el.LevelId) as Level;
+                if (lvl != null)
+                {
+                    setLevel = Convert.ToDouble((lvl.Elevation) * 304.8);
+                }
+                else
+                {
+                    setLevel = 0;
+                }
+
+                //Get Phasing;
+                Phase elCreatedPhase = doc.GetElement(el.CreatedPhaseId) as Phase;
+                Phase elDemoPhase = doc.GetElement(el.DemolishedPhaseId) as Phase;
+
+                newCarboElement.isDemolished = false;
+
+                if (elDemoPhase != null)
+                {
+                    setIsDemolished = true;
+                }
+                else
+                {
+                    setIsDemolished = false;
+                }
+
+                if (elCreatedPhase.Name == settings.ExistingPhaseName)
+                {
+                    setIsExisting = true;
+                }
+                else
+                {
+                    setIsExisting = false;
+                }
+
+                //Makepass;
+
+                //Is demolished
+                if (setIsDemolished == true)
+                {
+                    if (settings.IncludeDemo == false)
+                        return null; //don't make a element
+                }
+
+                //Is existing and retained
+                if (setIsExisting == true)
+                {
+                    if (settings.IncludeExisting == false)
+                        return null; //don't make a element
+                }
+
+
+                //Is Substructure
+                setIsSubstructure = false;
+
+                Parameter substructParam = el.LookupParameter(settings.SubStructureParamName);
+                if (substructParam != null)
+                {
+                    if (substructParam.StorageType == StorageType.Integer)
+                    {
+                        if (substructParam.AsInteger() == 1)
+                            setIsSubstructure = true;
+                    }
+                }
+
+                //If it passed it matches all criteria:
+                newCarboElement.Id = setId;
+                newCarboElement.Name = setName;
+                newCarboElement.Category = setCategory;
+                newCarboElement.SubCategory = setSubCategory;
+                newCarboElement.Level = Math.Round(setLevel, 3);
+
+                newCarboElement.isDemolished = setIsDemolished;
+                newCarboElement.isExisting = setIsExisting;
+                newCarboElement.isSubstructure = setIsSubstructure;
+                newCarboElement.includeInCalc = true;
+
+                return newCarboElement;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

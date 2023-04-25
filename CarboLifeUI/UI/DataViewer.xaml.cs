@@ -209,32 +209,6 @@ namespace CarboLifeUI.UI
 
         }
 
-        private void Mnu_reGroupData_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("Regrouping the set can remove any groups that you have created thus far, do you want to proceed?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Stop);
-            if (result == MessageBoxResult.Yes)
-            {
-                CarboSettings settings = new CarboSettings().Load();
-
-                //CarboGroupSettings groupSettings = new CarboGroupSettings();
-                //groupSettings = groupSettings.DeSerializeXML();
-
-                GroupWindow importGroupWindow = new GroupWindow(CarboLifeProject.getAllElements, CarboLifeProject.CarboDatabase, settings);
-                importGroupWindow.ShowDialog();
-                if (importGroupWindow.dialogOk == true)
-                {
-                    //Save non-element items;
-
-                    ObservableCollection<CarboGroup> userGroups = new ObservableCollection<CarboGroup>();
-                    userGroups = CarboLifeProject.GetGroupsWithoutElements();
-
-                    CarboLifeProject.SetGroups(importGroupWindow.carboGroupList);
-                    CarboLifeProject.AddGroups(userGroups);
-                    refreshData();
-                }
-            }
-        }
-
         private void Mnu_NewGroup_Click(object sender, RoutedEventArgs e)
         {
             CarboLifeProject.CreateNewGroup();
@@ -592,10 +566,6 @@ namespace CarboLifeUI.UI
 
         private void Mnu_MergeGroup_Click(object sender, MouseButtonEventArgs e)
         {
-
-        }
-        private void Mnu_MergeGroup_Click(object sender, RoutedEventArgs e)
-        {
             try
             {
                 List<CarboGroup> selectedCarboGroupList = new List<CarboGroup>();
@@ -794,6 +764,28 @@ namespace CarboLifeUI.UI
             refreshData();
         }
 
+        private void RibbonMenuButton_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var selectedItems = dgv_Overview.SelectedItems;
+            IList<CarboGroup> selectedGroups = new List<CarboGroup>();
+
+            // ... Add all Names to a List.
+            foreach (var item in selectedItems)
+            {
+                CarboGroup cg = item as CarboGroup;
+                if (cg != null)
+                    selectedGroups.Add(cg);
+            }
+
+            if (selectedGroups.Count > 1)
+                MessageBox.Show("Please slect only a single group");
+            else
+            {
+                GroupWindow splitter = new GroupWindow(selectedGroups[0]);
+                splitter.ShowDialog();
+            }
+
+        }
         private void btn_EditInUseValues_Click(object sender, RoutedEventArgs e)
         {
             var selectedItems = dgv_Overview.SelectedItems;
@@ -861,5 +853,7 @@ namespace CarboLifeUI.UI
             e.Handled = true;
 
         }
+
+
     }
 }

@@ -208,5 +208,98 @@ namespace CarboLifeRevit
             }
         }
 
+        internal static bool CreateParameterFromFile(UIApplication app, string parametername)
+        {
+            // Create Shared Parameter Routine: -->
+            // 1: Check whether the shared parameter("parametername") has been defined.
+            // 2: Share parameter file locates under sample directory of this .dll module.
+            // 3: Add a group named "SDKSampleRoomScheduleGroup".
+            // 4: Add a shared parameter named "External Room ID" to "Rooms" category, which is visible.
+            //    The "External Room ID" parameter will be used to map to spreadsheet based room ID(which is unique)
+
+            bool result = true;
+
+            try
+            {
+                // create shared parameter file
+                String modulePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                String paramFile = modulePath + "\\CarbonSharedParams.txt";
+
+                if (!File.Exists(paramFile))
+                {
+                    MessageBox.Show("Could not find shared parameter file : " + paramFile, "Error");
+                    return false;
+                }
+
+                // cache application handle
+                Autodesk.Revit.ApplicationServices.Application revitApp = app.Application;
+
+                // prepare shared parameter file
+                app.Application.SharedParametersFilename = paramFile;
+
+                // open shared parameter file
+                DefinitionFile parafile = revitApp.OpenSharedParameterFile();
+
+                if (parafile == null)
+                {
+                    MessageBox.Show("Error opening shared parameter file", "Error");
+                    return false;
+                }
+
+                //This is a small alteration
+                Definition carboSharedParamDef = null;
+
+
+                // collect the group
+                DefinitionGroup retreivedDefGroup = parafile.Groups.get_Item("CarbonSharedParamsGroup");
+                if (retreivedDefGroup == null)
+                {
+                    MessageBox.Show("Could not find CarbonSharedParamsGroup", "Error");
+                    return false;
+                }
+
+                //Retreive the parameterdef
+                Definition carboDefinition = retreivedDefGroup.Definitions.get_Item(parametername);
+                if (carboDefinition == null)
+                {
+                    MessageBox.Show("Could not find parameter " + parametername + " in the shared parameter file", "Error");
+                    return false;
+                }
+
+                //Assign the shared parameter to all the relevant categories
+                //Get All Revit Categories
+                Categories categories = app.ActiveUIDocument.Document.Settings.Categories;
+
+                List<string> myCategories = new List<string>();
+                myCategories.Clear();
+
+                CategorySet categorySet = revitApp.Create.NewCategorySet();
+
+                foreach (Category c in categories)
+                {
+                    if (c.AllowsBoundParameters)
+                    {
+                        if (c.CategoryType == CategoryType.Model)
+                        {
+                            categorySet.Insert(c);
+                            myCategories.Add(c.Name);
+                        }
+                    }
+                }
+
+                // Bind the new parameter
+                InstanceBinding binding = revitApp.Create.NewInstanceBinding(categorySet);
+                app.ActiveUIDocument.Document.ParameterBindings.Insert(carboDefinition, binding);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to create shared parameter: " + ex.Message);
+            }
+
+            return true;
+
+        }
+
     }
 }

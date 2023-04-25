@@ -22,6 +22,7 @@ namespace CarboLifeAPI.Data
         public bool IncludeSubStructure { get; set; }
         public bool IncludeDemo { get; set; }
         public bool IncludeExisting { get; set; }
+        public bool CombineExistingAndDemo { get; set; }
 
         public CarboGroupSettings()
         {
@@ -29,13 +30,12 @@ namespace CarboLifeAPI.Data
             CategoryParamName = "";
 
             SubStructureParamName = "IsSubstructure";
-
             ExistingPhaseName = "Existing";
 
             IncludeSubStructure = false;
             IncludeDemo = false;
             IncludeExisting = false;
-
+            CombineExistingAndDemo = false;
             VolumeConversionFactor = "";
         }
 

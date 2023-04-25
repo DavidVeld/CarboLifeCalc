@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -34,6 +35,9 @@ namespace CarboLifeUI.UI
         private IDictionary<string, string> templateCollection;
 
         public string selectedTemplateFile;
+
+        public string projectPath;
+
         public CarboGroupingSettingsDialog(CarboGroupSettings settings)
         {
             importSettings = settings;
@@ -63,6 +67,7 @@ namespace CarboLifeUI.UI
             cbb_MainGroup.Text = "(Revit) Category";
 
             txt_CategoryparamName.Text = importSettings.CategoryParamName;
+            txt_CategoryparamName.IsEnabled = false;
 
             //TemplateList
 
@@ -78,12 +83,18 @@ namespace CarboLifeUI.UI
             }
             //cbb_Template.Text = defaultfimeName;
             cbb_MainGroup.Text = "(Revit) Category";
+            
             txt_SubstructureParamName.Text = importSettings.SubStructureParamName;
             chk_ImportSubstructure.IsChecked = importSettings.IncludeSubStructure;
+            
             chk_ImportExisting.IsChecked = importSettings.IncludeExisting;
             txt_ExistingPhaseName.Text = importSettings.ExistingPhaseName;
 
             chk_ImportDemolished.IsChecked = importSettings.IncludeDemo;
+            chk_CombineExistingAndDemo.IsChecked = importSettings.CombineExistingAndDemo;
+
+            CheckCaregoryParam();
+
         }
 
 
@@ -104,7 +115,7 @@ namespace CarboLifeUI.UI
             }
             else
             {
-                MessageBox.Show("The Selected Template could not be found");
+               System.Windows.MessageBox.Show("The Selected Template could not be found");
             }
 
             dialogOk = MessageBoxResult.Yes;
@@ -122,22 +133,54 @@ namespace CarboLifeUI.UI
         private void SaveSettings()
         {
             
-            importSettings.CategoryName = cbb_MainGroup.Text;
-            importSettings.CategoryParamName = txt_CategoryparamName.Text;
-
-            importSettings.SubStructureParamName = txt_SubstructureParamName.Text;
-            importSettings.IncludeSubStructure = chk_ImportSubstructure.IsChecked.Value;
-
-            importSettings.IncludeDemo = chk_ImportDemolished.IsChecked.Value;
-            importSettings.IncludeExisting = chk_ImportExisting.IsChecked.Value;
-
             //Save the latest settings in the default;
             CarboSettings settings = new CarboSettings();
-            settings.Load();
-            settings.defaultCarboGroupSettings = importSettings;
+            settings = settings.Load();
+
+            //Write default values as standard
+            settings.defaultCarboGroupSettings.CategoryName = cbb_MainGroup.Text;
+            settings.defaultCarboGroupSettings.CategoryParamName = txt_CategoryparamName.Text;
+
+            settings.defaultCarboGroupSettings.SubStructureParamName = txt_SubstructureParamName.Text;
+            settings.defaultCarboGroupSettings.IncludeSubStructure = chk_ImportSubstructure.IsChecked.Value;
+
+            settings.defaultCarboGroupSettings.IncludeDemo = chk_ImportDemolished.IsChecked.Value;
+            settings.defaultCarboGroupSettings.IncludeExisting = chk_ImportExisting.IsChecked.Value;
+            settings.defaultCarboGroupSettings.CombineExistingAndDemo = chk_CombineExistingAndDemo.IsChecked.Value;
+
             settings.Save();
 
             //importSettings.SerializeXML();
+        }
+
+        private void cbb_MainGroup_DropDownClosed(object sender, EventArgs e)
+        {
+            CheckCaregoryParam();
+        }
+
+        private void CheckCaregoryParam()
+        {
+            if (cbb_MainGroup.Text == "(Revit) Category")
+            {
+                txt_CategoryparamName.Text = "";
+                txt_CategoryparamName.IsEnabled = false;
+            }
+            else
+                txt_CategoryparamName.IsEnabled = true;
+        }
+
+        private void btn_ProjectPath_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
+
+            var path = openFileDialog.ShowDialog();
+
+            if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
+            {
+                this.projectPath = openFileDialog.FileName;
+                txt_ProjectPath.Text = openFileDialog.FileName;
+            }
         }
     }
 }
