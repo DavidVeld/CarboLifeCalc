@@ -92,6 +92,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UI\DataSource\GroupQueryUtils.cs" />
     <Compile Include="UI\TemplateSelector.xaml.cs">
       <DependentUpon>TemplateSelector.xaml</DependentUpon>
     </Compile>

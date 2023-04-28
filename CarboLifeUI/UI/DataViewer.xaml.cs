@@ -783,6 +783,24 @@ namespace CarboLifeUI.UI
             {
                 GroupWindow splitter = new GroupWindow(selectedGroups[0]);
                 splitter.ShowDialog();
+
+                if(splitter.dialogOk == true)
+                {
+                    CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
+                    
+                    //Update List of Current
+                    carboGroup.AllElements.Clear();
+
+                    foreach (CarboElement el in splitter.GrpPassed.AllElements)
+                    {
+                        carboGroup.AllElements.Add(el);
+                    }
+                    
+                    //Add new list
+                    CarboLifeProject.AddGroup(splitter.GrpFiltered);
+                }
+
+
             }
 
         }
@@ -842,7 +860,6 @@ namespace CarboLifeUI.UI
         {
 
         }
-
         private void RibbonQuickAccessToolBar_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
             e.Handled = true;

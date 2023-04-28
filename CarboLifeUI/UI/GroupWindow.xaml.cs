@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,18 +24,24 @@ namespace CarboLifeUI.UI
     /// </summary>
     public partial class GroupWindow : Window
     {
+        private CarboGroup carboGroup;
+        private List<CarboElement> elementList;
+
+        private ObservableCollection<CarboElement> passedElementList;
+        private ObservableCollection<CarboElement> filteredElementList;
+
         public bool dialogOk;
 
-        public ObservableCollection<CarboElement> carboElementList;
-        public ObservableCollection<CarboGroup> carboGroupList;
-        public ObservableCollection<CarboGroup> carboGroupNewList;
-
-        public CarboDatabase materialData;
-
-        public GroupWindow(CarboGroup groupSettings)
+        public CarboGroup GrpPassed;
+        public CarboGroup GrpFiltered;
+        public GroupWindow(CarboGroup groupToSplit)
         {
             dialogOk = false;
-            carboGroupList = new ObservableCollection<CarboGroup>();
+            carboGroup = groupToSplit;
+            elementList = carboGroup.AllElements;
+            passedElementList = new ObservableCollection<CarboElement>();
+            filteredElementList = new ObservableCollection<CarboElement>();
+
 
             InitializeComponent();
         }
@@ -41,24 +49,22 @@ namespace CarboLifeUI.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             dialogOk = false;
-            cbb_MainGroup.Items.Add("Category");
-            cbb_MainGroup.Items.Add("Type Name");
-            cbb_MainGroup.Items.Add(" Name");
 
-        }
-
-        private void Btn_Group_Click(object sender, RoutedEventArgs e)
-        {
-            string typeNames = "";
-
-            //CarboElementImporter.G
-
-            if(carboGroupList != null)
+            foreach (var prop in elementList[0].GetType().GetProperties())
             {
-                dgv_Preview.ItemsSource = null;
-                dgv_Preview.ItemsSource = carboGroupList;
+                cbb_MainGroup.Items.Add(prop.Name);
+            }
+            cbb_MainGroup.Text = "Name";
+            //load elements
+            //passedElementList = getDataTablefromList(elementList);
+
+            if (passedElementList != null)
+            {
+                dgv_Preview.ItemsSource = elementList;
             }
         }
+
+        
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
             dialogOk = false;
@@ -67,19 +73,53 @@ namespace CarboLifeUI.UI
 
         private void Btn_Import_Click(object sender, RoutedEventArgs e)
         {
-            if (carboGroupList.Count > 0)
+            dialogOk = true;
+
+            GrpPassed = carboGroup.Clone() as CarboGroup;
+            GrpFiltered = carboGroup.Clone() as CarboGroup;
+
+            GrpPassed.AllElements.Clear();
+            GrpFiltered.AllElements.Clear();
+
+            foreach (CarboElement ce in passedElementList)
             {
-                dialogOk = true;
+                GrpPassed.AllElements.Add(ce);
             }
-            else
-                dialogOk = false;
+
+            foreach (CarboElement ce in filteredElementList)
+            {
+                GrpFiltered.AllElements.Add(ce);
+            }
+
+            GrpPassed.CalculateTotals();
+            GrpFiltered.CalculateTotals();
 
             this.Close();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void btn_Split_Click(object sender, RoutedEventArgs e)
         {
+            string queryGroup = cbb_MainGroup.Text;
+            string query = txt_SplitValue.Text;
 
+            if (queryGroup != "" && query != "")
+            {
+                GroupQueryUtils searchContainer = new GroupQueryUtils(elementList, queryGroup, query);
+                searchContainer.TrySearch();
+
+                if(searchContainer.Result == true)
+                {
+                    passedElementList = searchContainer.PassedElementList;
+                    filteredElementList = searchContainer.FilteredElementList;
+
+                    dgv_Preview.ItemsSource = passedElementList;
+                    dgv_Preview2.ItemsSource = filteredElementList;
+                }
+
+            }
         }
+
+
+
     }
 }

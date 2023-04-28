@@ -22,7 +22,7 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="175"/>
-            <RowDefinition Height="65"/>
+            <RowDefinition Height="40"/>
             <RowDefinition/>
             <RowDefinition Height="0"/>
             <RowDefinition Height="0*"/>
@@ -41,7 +41,7 @@
         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}" Content="Split Groups"/>
 
         <Label Grid.Column="1" Margin="5,0,5,0" Grid.Row="3" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Category:</Label>
-        <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="3" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" TextChanged="TextBox_TextChanged">Select The parameter you want to split this group by.</TextBox>
+        <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="3" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" >Select The parameter you want to split this group by.</TextBox>
         <ComboBox Name="cbb_MainGroup" IsReadOnly="False" Grid.Column="2" Grid.Row="3" Margin="59,60,5,0" Height="25" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}"></ComboBox>
 
         <CheckBox Name="chk_ImportSubstructure" IsEnabled="True" Grid.Column="2" Grid.Row="4" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Grid.RowSpan="2" Visibility="Hidden">Split Substructure</CheckBox>
@@ -54,45 +54,70 @@
         <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="7" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" Visibility="Hidden">Demolished elements will be grouped</TextBox>
 
 
-        <Button x:Name="btn_Group" Grid.Row="3" Grid.Column="2" Margin="0,0,5,5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Group_Click" Content="Split"/>
+        <Button x:Name="btn_Split" Grid.Row="3" Grid.Column="2" Margin="0,0,5,5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_Split_Click" Content="Split"/>
 
         <Label Grid.Column="4" Margin="0,0,10,0" Grid.Row="1" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource formTitleStyle}">Selected Group Elements:</Label>
         <DataGrid AutoGenerateColumns="False" Name="dgv_Preview" Grid.Column="4" Grid.Row="2" Grid.RowSpan="2" Margin="0,22,5,10" IsReadOnly="True"  EnableRowVirtualization="false"  CanUserAddRows="False" CanUserReorderColumns="False" ColumnWidth="*" HorizontalScrollBarVisibility="Hidden">
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="25" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
 
-                <DataGridTextColumn Width="1*" MinWidth="200" Header="Category" Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="200" Header="Material" Binding="{Binding Path=MaterialName}" IsReadOnly="True"/>
-                <DataGridTextColumn Width="1*" MinWidth="100" Header="Description" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Category" Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Name" Binding="{Binding Path=Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="MaterialName" Binding="{Binding Path=MaterialName, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="CarboMaterialName" Binding="{Binding Path=CarboMaterialName, Mode=TwoWay}" IsReadOnly="True"/>
 
-                <DataGridTextColumn MinWidth="90" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
+                <DataGridTextColumn MinWidth="50" Header="Level" Binding="{Binding Path=Level}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="90" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="True" Visibility="Visible"/>
+                <DataGridTextColumn MinWidth="90" Header="Volume_Total (m³)" Binding="{Binding Path=Volume_Total, Mode=TwoWay}" IsReadOnly="True" Visibility="Visible"/>
 
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="1*" MinWidth="90" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
 
-                <DataGridTextColumn MinWidth="100" Header="ECI(kgCO₂/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="100" Header="EC (tCO₂)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="ECI(kgCO₂e/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="ECI_Total(kgCO₂e/kg)" Binding="{Binding Path=ECI_Total}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="100" Header="EC (tCO₂e)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="EC_Total (tCO₂e)" Binding="{Binding Path=EC_Total}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="100" Header="isDemolished" Binding="{Binding Path=isDemolished}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="isExisting" Binding="{Binding Path=isExisting}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="isSubstructure" Binding="{Binding Path=isSubstructure}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="includeInCalc" Binding="{Binding Path=includeInCalc}" IsReadOnly="True"/>
+
 
             </DataGrid.Columns>
         </DataGrid>
 
         <Label Grid.Column="4" Margin="0,0,10,0" Grid.Row="4" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource formTitleStyle}">Filtered Group Elements:</Label>
 
-        <DataGrid AutoGenerateColumns="False" Name="dgv_Preview2" Grid.Column="4" Grid.Row="5" Grid.RowSpan="4" Margin="0,22,5,10" IsReadOnly="True"  EnableRowVirtualization="false"  CanUserAddRows="False" CanUserReorderColumns="False" ColumnWidth="*" HorizontalScrollBarVisibility="Hidden">
+        <DataGrid AutoGenerateColumns="False" Name="dgv_Preview2" Grid.Column="4" Grid.Row="5" Grid.RowSpan="4" Margin="0,0,5,10" IsReadOnly="True"  EnableRowVirtualization="false"  CanUserAddRows="False" CanUserReorderColumns="False" ColumnWidth="*" HorizontalScrollBarVisibility="Hidden">
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="25" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
 
-                <DataGridTextColumn Width="1*" MinWidth="200" Header="Category" Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="200" Header="Material" Binding="{Binding Path=MaterialName}" IsReadOnly="True"/>
-                <DataGridTextColumn Width="1*" MinWidth="100" Header="Description" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Category" Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Name" Binding="{Binding Path=Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="MaterialName" Binding="{Binding Path=MaterialName, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="CarboMaterialName" Binding="{Binding Path=CarboMaterialName, Mode=TwoWay}" IsReadOnly="True"/>
 
-                <DataGridTextColumn MinWidth="90" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
+                <DataGridTextColumn MinWidth="50" Header="Level" Binding="{Binding Path=Level}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="90" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="True" Visibility="Visible"/>
+                <DataGridTextColumn MinWidth="90" Header="Volume_Total (m³)" Binding="{Binding Path=Volume_Total, Mode=TwoWay}" IsReadOnly="True" Visibility="Visible"/>
 
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="1*" MinWidth="90" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
 
-                <DataGridTextColumn MinWidth="100" Header="ECI(kgCO₂/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="100" Header="EC (tCO₂)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="ECI(kgCO₂e/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="ECI_Total(kgCO₂e/kg)" Binding="{Binding Path=ECI_Total}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="100" Header="EC (tCO₂e)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="EC_Total (tCO₂e)" Binding="{Binding Path=EC_Total}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="100" Header="isDemolished" Binding="{Binding Path=isDemolished}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="isExisting" Binding="{Binding Path=isExisting}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="isSubstructure" Binding="{Binding Path=isSubstructure}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="includeInCalc" Binding="{Binding Path=includeInCalc}" IsReadOnly="True"/>
 
             </DataGrid.Columns>
         </DataGrid>
@@ -100,7 +125,7 @@
 
         <Button Name="btn_Accept" Grid.Row="8" Grid.Column="4" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Import_Click">Accept</Button>
         <Button Name="btn_Cancel" Grid.Row="8" Grid.Column="4" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
-        <Label Grid.Column="1" Margin="5,90,5,0" Grid.Row="3" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}" Content="Value:"/>
+        <Label Grid.Column="1" Margin="5,90,5,0" Grid.Row="3" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}" Content="Contains:"/>
         <TextBox Name="txt_SplitValue" Grid.Column="2" Margin="59,90,5,0" Grid.Row="3" Height="28" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}"></TextBox>
 
     </Grid>

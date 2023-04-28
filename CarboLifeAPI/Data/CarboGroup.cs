@@ -9,7 +9,7 @@ namespace CarboLifeAPI.Data
 {
     [Serializable]
 
-    public class CarboGroup
+    public class CarboGroup : ICloneable
     {
         public int Id { get; set; }
         public string MaterialName { get; set; }
@@ -443,7 +443,7 @@ namespace CarboLifeAPI.Data
             result.Density = this.Density;
             result.Description = this.Description;
             result.EC = this.EC;
-            result.ECI = result.ECI;
+            result.ECI = this.ECI;
             result.Id = this.Id;
             result.Mass = this.Mass;
 
@@ -465,6 +465,51 @@ namespace CarboLifeAPI.Data
             result.PerCent = this.PerCent;
 
             return result;
+
+        }
+
+        /// <summary>
+        /// Clones Without Elements
+        /// </summary>
+        /// <returns>Clone Without Elements</returns>
+        public object Clone()
+        {
+            return new CarboGroup
+            {
+                Category = this.Category,
+                SubCategory = this.SubCategory,
+
+                Material = this.Material,
+                MaterialName = this.MaterialName,
+
+                Volume = this.Volume,
+                TotalVolume = this.TotalVolume,
+                Correction = this.Correction,
+                Density = this.Density,
+                Description = this.Description,
+                EC = this.EC,
+                ECI = this.ECI,
+                Id = this.Id,
+                Mass = this.Mass,
+
+                AllElements = new List<CarboElement>(),
+
+                //Correction Formula
+                CorrectionDescription = this.CorrectionDescription,
+                //Waste
+                Waste = this.Waste,
+                WasteDescription = this.WasteDescription,
+                //Additional
+                Additional = this.Additional,
+                AdditionalDescription = this.AdditionalDescription,
+                //B4
+                inUseProperties = this.inUseProperties,
+
+                isDemolished = this.isDemolished,
+                isSubstructure = this.isSubstructure,
+
+                PerCent = this.PerCent
+        };
 
         }
         internal void copyValues(CarboGroup carboGroup)

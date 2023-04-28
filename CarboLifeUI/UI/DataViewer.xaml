@@ -74,8 +74,7 @@
 
                     <RibbonMenuButton Label="Split Group..." PreviewMouseDown="RibbonMenuButton_PreviewMouseDown" Visibility="Visible" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupsplit32.png"/>
                     <RibbonMenuButton Label="Multi-Map..." PreviewMouseDown="mnu_MapElements_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_del.png"/>
-                   <!--- Needs a re-think -->
-                    <RibbonMenuButton Label="Re-group..." PreviewMouseDown="Mnu_reGroupData_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupregroup32.png" Visibility="Hidden"/>
+                    <!--- Needs a re-think -->
 
                 </RibbonGroup>
                 <!-- Employee And Payroll group-->
@@ -121,7 +120,7 @@
 
         <DataGrid x:Name="dgv_Overview" Grid.Row="4" Grid.Column="1" 
                               Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="False" SelectionChanged="Dgv_Overview_SelectionChanged" 
-                  CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="True" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" HorizontalScrollBarVisibility="Visible"  >
+                  CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" HorizontalScrollBarVisibility="Visible"  >
             <DataGrid.Resources>
                 <local:SumValues x:Key="SumValues"/>
             </DataGrid.Resources>
@@ -258,7 +257,37 @@
             </MenuItem>
         </Menu>
 
-        <DataGrid x:Name="dgv_Elements" Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible"></DataGrid>
+        <DataGrid x:Name="dgv_Elements" Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible">
+            <DataGrid.Columns>
+                <DataGridTextColumn MinWidth="25" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
 
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Category" Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Name" Binding="{Binding Path=Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="MaterialName" Binding="{Binding Path=MaterialName, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="CarboMaterialName" Binding="{Binding Path=CarboMaterialName, Mode=TwoWay}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="50" Header="Level" Binding="{Binding Path=Level}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="90" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="True" Visibility="Visible"/>
+                <DataGridTextColumn MinWidth="90" Header="Volume_Total (m³)" Binding="{Binding Path=Volume_Total, Mode=TwoWay}" IsReadOnly="True" Visibility="Visible"/>
+
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Density (kg/m³)" Binding="{Binding Path=Density}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="1*" MinWidth="90" Header="Mass(kg)" Binding="{Binding Path=Mass}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="100" Header="ECI(kgCO₂e/kg)" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="ECI_Total(kgCO₂e/kg)" Binding="{Binding Path=ECI_Total}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="100" Header="EC (tCO₂e)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="EC_Total (tCO₂e)" Binding="{Binding Path=EC_Total}" IsReadOnly="True"/>
+
+                <DataGridTextColumn MinWidth="100" Header="isDemolished" Binding="{Binding Path=isDemolished}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="isExisting" Binding="{Binding Path=isExisting}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="isSubstructure" Binding="{Binding Path=isSubstructure}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="includeInCalc" Binding="{Binding Path=includeInCalc}" IsReadOnly="True"/>
+
+
+            </DataGrid.Columns>
+
+        </DataGrid>
     </Grid>
 </UserControl>
