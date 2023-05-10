@@ -62,7 +62,7 @@
         <TextBox Name="txt_ExistingPhaseName" Grid.Column="2" Grid.Row="6" Margin="30,45,5,0" Height="28" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}"/>
 
         <CheckBox Name="chk_ImportDemolished" IsEnabled="True" Grid.Column="2" Grid.Row="7" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include Demolished Elements</CheckBox>
-        <CheckBox Name="chk_CombineExistingAndDemo" IsEnabled="True" Grid.Column="2" Grid.Row="8" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Combine Existing and Demolished Elements</CheckBox>
+        <CheckBox Name="chk_CombineExistingAndDemo" IsEnabled="True" Grid.Column="2" Grid.Row="8" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Visibility="Hidden">Combine Existing and Demolished Elements</CheckBox>
 
         <Button Name="btn_ImportClose" Grid.Row="8" Grid.Column="2" Margin="175,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="95" Height="24" Style="{StaticResource ButtonStyle}" Click="Btn_ImportClose_Click">Ok &amp; Import</Button>
         <Button Name="btn_Cancel" Grid.Row="8" Grid.Column="2" Margin="275,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="95" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>

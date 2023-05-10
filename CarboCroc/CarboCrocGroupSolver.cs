@@ -75,32 +75,12 @@ namespace CarboCroc
                 runtimeProject = CarboCrocProcess.ProcessData(listOfGroups);
             }
 
-            List<CarboDataPoint> list = runtimeProject.getPhaseTotals();
+            List<CarboDataPoint> list = runtimeProject.getPhaseTotals(true);
 
             double totals = runtimeProject.getTotalEC();
 
-            double a13Total = list[0].Value;
-            double a4Total = list[1].Value;
-            double a5Total = list[2].Value;
-            double a5Global = list[3].Value;
-
-            double B16Total = list[4].Value;
-            double CTotal = list[5].Value;
-            double CGlobal = list[6].Value;
-
-            double DTotal = list[7].Value;
-            double Seq = list[8].Value;
-            double Other = list[9].Value;
-
-            //Build a stringlist
-            resultList.Add("A1-A3," + a13Total.ToString());
-            resultList.Add("A4," + a4Total.ToString());
-            resultList.Add("A5," + (a5Total + a5Global).ToString());
-            resultList.Add("B," + B16Total.ToString());
-            resultList.Add("C," + (CTotal + CGlobal).ToString());
-            resultList.Add("D," + DTotal.ToString());
-            resultList.Add("Other," + Other.ToString());
-            resultList.Add("Seq," + Seq.ToString());
+            foreach (CarboDataPoint cdp in list)
+                resultList.Add(cdp.Name + ";" + cdp.Value.ToString());
 
             DA.SetData(0, totals); //Totals
             DA.SetData(1, runtimeProject);

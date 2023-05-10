@@ -67,10 +67,13 @@ namespace CarboCroc
                 runtimeProject = CarboCrocProcess.ProcessData(listOfElements);
             }
 
-            List<CarboDataPoint> list = runtimeProject.getPhaseTotals();
+            List<CarboDataPoint> list = runtimeProject.getPhaseTotals(true);
 
             double totals = runtimeProject.getTotalEC();
 
+            foreach(CarboDataPoint cdp in list)
+                resultList.Add(cdp.Name + ";" + cdp.Value.ToString());
+            /*
             double a13Total = list[0].Value;
             double a4Total = list[1].Value;
             double a5Total = list[2].Value;
@@ -93,6 +96,7 @@ namespace CarboCroc
             resultList.Add("D," + DTotal.ToString());
             resultList.Add("Other," + Other.ToString());
             resultList.Add("Seq," + Seq.ToString());
+            */
 
             DA.SetData(0, totals); //Totals
             DA.SetData(1, runtimeProject);
