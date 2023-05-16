@@ -150,7 +150,7 @@ namespace CarboLifeUI.UI
 
             settings.Save();
 
-            //importSettings.SerializeXML();
+            importSettings = settings.defaultCarboGroupSettings;
         }
 
         private void cbb_MainGroup_DropDownClosed(object sender, EventArgs e)

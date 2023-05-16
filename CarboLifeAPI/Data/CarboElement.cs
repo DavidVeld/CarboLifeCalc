@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CarboLifeAPI.Data
 {
     [Serializable]
-    public class CarboElement
+    public class CarboElement : ICloneable
     {
         /// <summary>
         /// revit id
@@ -118,5 +118,36 @@ namespace CarboLifeAPI.Data
             return clone;
         }
 
+        public object Clone()
+        {
+            CarboElement clone = new CarboElement();
+
+            clone.Id = this.Id;
+            clone.Name = this.Name;
+            //Imported Material Name
+            clone.MaterialName = this.MaterialName;
+            //Matched To Material Name
+            clone.CarboMaterialName = this.CarboMaterialName;
+
+            clone.Category = this.Category;
+            clone.SubCategory = this.SubCategory;
+            clone.Volume = this.Volume;
+            clone.Mass = this.Mass;
+            clone.Density = this.Density;
+            clone.Level = this.Level;
+            clone.isDemolished = this.isDemolished;
+            clone.isExisting = this.isExisting;
+            clone.isSubstructure = this.isSubstructure;
+
+            clone.ECI = this.ECI;
+            clone.EC = this.EC;
+            clone.ECI_Total = this.ECI_Total;
+            clone.EC_Total = this.EC_Total;
+            clone.Volume_Total = this.Volume_Total;
+
+            clone.includeInCalc = this.includeInCalc;
+
+            return clone;
+        }
     }
 }

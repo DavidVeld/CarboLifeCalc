@@ -17,7 +17,7 @@ namespace CarboLifeRevit
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            UIApplication app = commandData.Application;
+            UIApplication app = commandData.Application;    
 
             CarboSettings settings = new CarboSettings();
             settings = settings.Load();
@@ -30,6 +30,8 @@ namespace CarboLifeRevit
             {
                 string approvedPath = "";
                 string path = settingsWindow.projectPath;
+                importSettings = settingsWindow.importSettings;
+
                 if (File.Exists(path))
                     approvedPath = path;
 

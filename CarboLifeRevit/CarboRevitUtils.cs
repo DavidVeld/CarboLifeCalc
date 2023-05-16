@@ -368,6 +368,44 @@ namespace CarboLifeRevit
                 bool setIsExisting;
                 //int layernr;
 
+                //Get Phasing;
+                Phase elCreatedPhase = doc.GetElement(el.CreatedPhaseId) as Phase;
+                Phase elDemoPhase = doc.GetElement(el.DemolishedPhaseId) as Phase;
+
+                newCarboElement.isDemolished = false;
+
+                if (elDemoPhase != null)
+                {
+                    setIsDemolished = true;
+                }
+                else
+                {
+                    setIsDemolished = false;
+                }
+
+                if (elCreatedPhase.Name == settings.ExistingPhaseName)
+                {
+                    setIsExisting = true;
+                }
+                else
+                {
+                    setIsExisting = false;
+                }
+
+                //Is demolished
+                if (setIsDemolished == true)
+                {
+                    if (settings.IncludeDemo == false)
+                        return null; //don't make a element
+                }
+
+                //Is existing and retained
+                if (setIsExisting == true)
+                {
+                    if (settings.IncludeExisting == false)
+                        return null; //don't make a element
+                }
+
                 //Id:
                 setId = el.Id.IntegerValue;
 
@@ -414,45 +452,10 @@ namespace CarboLifeRevit
                     setLevel = 0;
                 }
 
-                //Get Phasing;
-                Phase elCreatedPhase = doc.GetElement(el.CreatedPhaseId) as Phase;
-                Phase elDemoPhase = doc.GetElement(el.DemolishedPhaseId) as Phase;
 
-                newCarboElement.isDemolished = false;
-
-                if (elDemoPhase != null)
-                {
-                    setIsDemolished = true;
-                }
-                else
-                {
-                    setIsDemolished = false;
-                }
-
-                if (elCreatedPhase.Name == settings.ExistingPhaseName)
-                {
-                    setIsExisting = true;
-                }
-                else
-                {
-                    setIsExisting = false;
-                }
 
                 //Makepass;
 
-                //Is demolished
-                if (setIsDemolished == true)
-                {
-                    if (settings.IncludeDemo == false)
-                        return null; //don't make a element
-                }
-
-                //Is existing and retained
-                if (setIsExisting == true)
-                {
-                    if (settings.IncludeExisting == false)
-                        return null; //don't make a element
-                }
 
 
                 //Is Substructure

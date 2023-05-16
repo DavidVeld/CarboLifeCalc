@@ -89,8 +89,8 @@ namespace CarboLifeAPI.Data
                 
                 //if you want existing and demo combined then Demo is always yes
                 //This is a bit of a patch and might need improvements later
-                if(importSettings.CombineExistingAndDemo)
-                    matchesDemolition = true;
+                //if(importSettings.CombineExistingAndDemo)
+                //    matchesDemolition = true;
 
                 if (
                  matchesCategory == true &&
@@ -99,7 +99,7 @@ namespace CarboLifeAPI.Data
                  matchesDemolition == true &&
                  matchesExisting == true)
                 {
-                    cg.AllElements.Add(carboElement);
+                    cg.AllElements.Add((CarboElement)carboElement.Clone());
                     elementFound = true;
                     break;
                 }
