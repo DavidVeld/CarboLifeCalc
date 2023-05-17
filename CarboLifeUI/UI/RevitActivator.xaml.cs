@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace CarboLifeUI.UI
@@ -13,14 +14,6 @@ namespace CarboLifeUI.UI
     {
         internal bool isAccepted;
 
-        bool ok2019;
-        bool ok2020;
-        bool ok2021;
-        bool ok2022;
-        bool ok2023;
-        bool ok2024;
-
-
         bool has2019;
         bool has2020;
         bool has2021;
@@ -28,6 +21,7 @@ namespace CarboLifeUI.UI
         bool has2023;
         bool has2024;
 
+        bool checked2019;
 
         public RevitActivator()
         {
@@ -43,15 +37,6 @@ namespace CarboLifeUI.UI
         {
             string path = @"C:\ProgramData\Autodesk\Revit\Addins";
 
-            ok2019 = false;
-            ok2020 = false;
-            ok2021 = false;
-            ok2022 = false;
-            ok2023 = false;
-            ok2024 = false;
-
-
-            has2019 = false;
             has2020 = false;
             has2021 = false;
             has2022 = false;
@@ -65,263 +50,241 @@ namespace CarboLifeUI.UI
 
                 if (dirlist.Length > 0)
                 {
-                    foreach(string str in dirlist)
+                    //2019
+                    has2019 = false;
+                    foreach (string str in dirlist)
                     {
-                        bool exists = false;
-
                         string filepath = str + "\\" + "CarboLifeCalc.addin";
-                        if (File.Exists(filepath))
-                            exists = true;
 
                         if (str.Contains("2019"))
+                        {
+                            //Check if user has addin in the folder
+                            if (File.Exists(filepath))
+                            {
+                                //addin is installed
+                                chx_2019.IsChecked = true;
+                                chx_2019.IsEnabled = true;
+                                lbl_2019.Foreground = Brushes.Green;
+                                lbl_2019.Content = "2019 Addin Installed";
+                            }
+                            else
+                            {
+                                //User has revit version but not addin installed
+                                chx_2019.IsChecked = false;
+                                chx_2019.IsEnabled = true;
+                                lbl_2019.Foreground = Brushes.Black;
+                                lbl_2019.Content = "2019 Addin Not Installed";
+                            }
                             has2019 = true;
-
-                        if (str.Contains("2020"))
-                            has2020 = true;
-
-                        if (str.Contains("2021"))
-                            has2021 = true;
-
-                        if (str.Contains("2022"))
-                            has2022 = true;
-
-                        if (str.Contains("2023"))
-                            has2023 = true;
-
-                        if (str.Contains("2024"))
-                            has2024 = true;
-
-                        if (has2019 == true && exists == true)
-                        {
-                            ok2019 = true;
-                        }
-
-                        if (has2020 == true && exists == true)
-                        {
-                            ok2020 = true;
-                        }
-
-                        if (has2021 == true && exists == true)
-                        {
-                            ok2021 = true;
-                        }
-
-                        if (has2022 == true && exists == true)
-                        {
-                            ok2022 = true;
-                        }
-
-                        if (has2023 == true && exists == true)
-                        {
-                            ok2023 = true;
-                        }
-
-                        if (has2024 == true && exists == true)
-                        {
-                            ok2024 = true;
+                            break;
                         }
                     }
-                }
 
-            }
-            else
-            {
-                MessageBox.Show("The installation folder for the addins cannot be found in: " + path + Environment.NewLine + "Please make sure you have Revit and the required versions installed", "Computer says no", MessageBoxButton.OK);
-            }
-            
-            ///2019
-            if (has2019 == true)
-            {
-                //Folder is present
-                if (ok2019 == true)
-                {
-                    //addin is installed
-                    chx_2019.IsChecked = true;
-                    //chx_2019.IsEnabled = false;
-                    lbl_2019.Foreground = Brushes.Green;
-                    lbl_2019.Content = "2019 Activated";
+                    if (has2019 == false)
+                    {
+                        //revit version not found
+                        chx_2019.IsEnabled = false;
+                        lbl_2019.Foreground = Brushes.Gray;
+                        lbl_2019.Content = "Revit 2019 Not Found";
+                    }
+                    //End 2019
+                    //2020
+                    has2020 = false;
+                    foreach (string str in dirlist)
+                    {
+                        string filepath = str + "\\" + "CarboLifeCalc.addin";
 
+                        if (str.Contains("2020"))
+                        {
+                            //Check if user has addin in the folder
+                            if (File.Exists(filepath))
+                            {
+                                //addin is installed
+                                chx_2020.IsChecked = true;
+                                chx_2020.IsEnabled = true;
+                                lbl_2020.Foreground = Brushes.Green;
+                                lbl_2020.Content = "2020 Addin Installed";
+                            }
+                            else
+                            {
+                                //User has revit version but not addin installed
+                                chx_2020.IsChecked = false;
+                                chx_2020.IsEnabled = true;
+                                lbl_2020.Foreground = Brushes.Black;
+                                lbl_2020.Content = "2020 Addin Not Installed";
+                            }
+                            has2020 = true;
+                            break;
+                        }
+                    }
 
+                    if (has2020 == false)
+                    {
+                        //revit version not found
+                        chx_2020.IsEnabled = false;
+                        lbl_2020.Foreground = Brushes.Gray;
+                        lbl_2020.Content = "Revit 2020 Not Found";
+                    }
+                    //End 2020
+                    //2021
+                    has2021 = false;
+                    foreach (string str in dirlist)
+                    {
+                        string filepath = str + "\\" + "CarboLifeCalc.addin";
+
+                        if (str.Contains("2021"))
+                        {
+                            //Check if user has addin in the folder
+                            if (File.Exists(filepath))
+                            {
+                                //addin is installed
+                                chx_2021.IsChecked = true;
+                                chx_2021.IsEnabled = true;
+                                lbl_2021.Foreground = Brushes.Green;
+                                lbl_2021.Content = "2021 Addin Installed";
+                            }
+                            else
+                            {
+                                //User has revit version but not addin installed
+                                chx_2021.IsChecked = false;
+                                chx_2021.IsEnabled = true;
+                                lbl_2021.Foreground = Brushes.Black;
+                                lbl_2021.Content = "2021 Addin Not Installed";
+                            }
+                            has2021 = true;
+                            break;
+                        }
+                    }
+
+                    if (has2021 == false)
+                    {
+                        //revit version not found
+                        chx_2021.IsEnabled = false;
+                        lbl_2021.Foreground = Brushes.Gray;
+                        lbl_2021.Content = "Revit 2021 Not Found";
+                    }
+                    //End 2021
+                    //2022
+                    has2022 = false;
+                    foreach (string str in dirlist)
+                    {
+                        string filepath = str + "\\" + "CarboLifeCalc.addin";
+
+                        if (str.Contains("2022"))
+                        {
+                            //Check if user has addin in the folder
+                            if (File.Exists(filepath))
+                            {
+                                //addin is installed
+                                chx_2022.IsChecked = true;
+                                chx_2022.IsEnabled = true;
+                                lbl_2022.Foreground = Brushes.Green;
+                                lbl_2022.Content = "2022 Addin Installed";
+                            }
+                            else
+                            {
+                                //User has revit version but not addin installed
+                                chx_2022.IsChecked = false;
+                                chx_2022.IsEnabled = true;
+                                lbl_2022.Foreground = Brushes.Black;
+                                lbl_2022.Content = "2022 Addin Not Installed";
+                            }
+                            has2022 = true;
+                            break;
+                        }
+                    }
+
+                    if (has2022 == false)
+                    {
+                        //revit version not found
+                        chx_2022.IsEnabled = false;
+                        lbl_2022.Foreground = Brushes.Gray;
+                        lbl_2022.Content = "Revit 2022 Not Found";
+                    }
+                    //End 2022
+                    //2023
+                    has2023 = false;
+                    foreach (string str in dirlist)
+                    {
+                        string filepath = str + "\\" + "CarboLifeCalc.addin";
+
+                        if (str.Contains("2023"))
+                        {
+                            //Check if user has addin in the folder
+                            if (File.Exists(filepath))
+                            {
+                                //addin is installed
+                                chx_2023.IsChecked = true;
+                                chx_2023.IsEnabled = true;
+                                lbl_2023.Foreground = Brushes.Green;
+                                lbl_2023.Content = "2023 Addin Installed";
+                            }
+                            else
+                            {
+                                //User has revit version but not addin installed
+                                chx_2023.IsChecked = false;
+                                chx_2023.IsEnabled = true;
+                                lbl_2023.Foreground = Brushes.Black;
+                                lbl_2023.Content = "2023 Addin Not Installed";
+                            }
+                            has2023 = true;
+                            break;
+                        }
+                    }
+
+                    if (has2023 == false)
+                    {
+                        //revit version not found
+                        chx_2023.IsEnabled = false;
+                        lbl_2023.Foreground = Brushes.Gray;
+                        lbl_2023.Content = "Revit 2023 Not Found";
+                    }
+                    //End 2023
+                    //2024
+                    has2024 = false;
+                    foreach (string str in dirlist)
+                    {
+                        string filepath = str + "\\" + "CarboLifeCalc.addin";
+
+                        if (str.Contains("2024"))
+                        {
+                            //Check if user has addin in the folder
+                            if (File.Exists(filepath))
+                            {
+                                //addin is installed
+                                chx_2024.IsChecked = true;
+                                chx_2024.IsEnabled = true;
+                                lbl_2024.Foreground = Brushes.Green;
+                                lbl_2024.Content = "2024 Addin Installed";
+                            }
+                            else
+                            {
+                                //User has revit version but not addin installed
+                                chx_2024.IsChecked = false;
+                                chx_2024.IsEnabled = true;
+                                lbl_2024.Foreground = Brushes.Black;
+                                lbl_2024.Content = "2024 Addin Not Installed";
+                            }
+                            has2024 = true;
+                            break;
+                        }
+                    }
+
+                    if (has2024 == false)
+                    {
+                        //revit version not found
+                        chx_2024.IsEnabled = false;
+                        lbl_2024.Foreground = Brushes.Gray;
+                        lbl_2024.Content = "Revit 2024 Not Found";
+                    }
+                    //End 2024
                 }
                 else
                 {
-                    //addin is not installed
-                    chx_2019.IsChecked = false;
-                    chx_2019.IsEnabled = true;
-                    lbl_2019.Foreground = Brushes.Black;
-                    lbl_2019.Content = "2019 Not Installed";
-
+                    MessageBox.Show("The installation folder for the addins cannot be found in: " + path + Environment.NewLine + "Please make sure you have Revit and the required versions installed", "Computer says no", MessageBoxButton.OK);
                 }
             }
-            else
-            {
-                //revit version not found
-                chx_2019.IsEnabled = false;
-                lbl_2019.Foreground = Brushes.Gray;
-                lbl_2019.Content = "2019 Not Found";
-
-
-            }
-
-            ///2020
-            if (has2020 == true)
-            {
-                //Folder is present
-                if (ok2020 == true)
-                {
-                    //addin is installed
-                    chx_2020.IsChecked = true;
-                    //chx_2020.IsEnabled = false;
-                    lbl_2020.Foreground = Brushes.Green;
-                    lbl_2020.Content = "2020 Activated";
-                }
-                else
-                {
-                    //addin is not installed
-                    chx_2020.IsChecked = false;
-                    chx_2020.IsEnabled = true;
-                    lbl_2020.Foreground = Brushes.Black;
-                    lbl_2020.Content = "2020 Not installed";
-
-                }
-            }
-            else
-            {
-                //revit version not found
-                chx_2020.IsEnabled = false;
-                lbl_2020.Foreground = Brushes.Gray;
-                lbl_2019.Content = "2020 Not found";
-
-            }
-
-            ///2021
-            if (has2021 == true)
-            {
-                //Folder is present
-                if (ok2021 == true)
-                {
-                    //addin is installed
-                    chx_2021.IsChecked = true;
-                    //chx_2021.IsEnabled = false;
-                    lbl_2021.Foreground = Brushes.Green;
-                    lbl_2021.Content = "2021 Activated";
-
-                }
-                else
-                {
-                    //addin is not installed
-                    chx_2021.IsChecked = false;
-                    chx_2021.IsEnabled = true;
-                    lbl_2021.Foreground = Brushes.Black;
-                    lbl_2021.Content = "2021 Not Installed";
-
-                }
-            }
-            else
-            {
-                //revit version not found
-                chx_2021.IsEnabled = false;
-                lbl_2021.Foreground = Brushes.Gray;
-                lbl_2021.Content = "2021 Not Found";
-
-            }
-
-            ///2022
-            if (has2022 == true)
-            {
-                //Folder is present
-                if (ok2022 == true)
-                {
-                    //addin is installed
-                    chx_2022.IsChecked = true;
-                    //chx_2022.IsEnabled = false;
-                    lbl_2022.Foreground = Brushes.Green;
-                    lbl_2022.Content = "2022 Activated";
-
-                }
-                else
-                {
-                    //addin is not installed
-                    chx_2022.IsChecked = false;
-                    chx_2022.IsEnabled = true;
-                    lbl_2022.Foreground = Brushes.Black;
-                    lbl_2022.Content = "2022 Not Installed";
-
-                }
-            }
-            else
-            {
-                //revit version not found
-                chx_2022.IsEnabled = false;
-                lbl_2022.Foreground = Brushes.Gray;
-                lbl_2022.Content = "2022 Not Found";
-
-            }
-
-            ///2023
-            if (has2023 == true)
-            {
-                //Folder is present
-                if (ok2023 == true)
-                {
-                    //addin is installed
-                    chx_2023.IsChecked = true;
-                    //chx_2022.IsEnabled = false;
-                    lbl_2023.Foreground = Brushes.Green;
-                    lbl_2023.Content = "2023 Activated";
-
-                }
-                else
-                {
-                    //addin is not installed
-                    chx_2023.IsChecked = false;
-                    chx_2023.IsEnabled = true;
-                    lbl_2023.Foreground = Brushes.Black;
-                    lbl_2023.Content = "2023 Not Installed";
-
-                }
-            }
-            else
-            {
-                //revit version not found
-                chx_2023.IsEnabled = false;
-                lbl_2023.Foreground = Brushes.Gray;
-                lbl_2023.Content = "2023 Not Found";
-
-            }
-
-            ///2024
-            if (has2024 == true)
-            {
-                //Folder is present
-                if (ok2024 == true)
-                {
-                    //addin is installed
-                    chx_2024.IsChecked = true;
-                    //chx_2022.IsEnabled = false;
-                    lbl_2024.Foreground = Brushes.Green;
-                    lbl_2024.Content = "2024 Activated";
-
-                }
-                else
-                {
-                    //addin is not installed
-                    chx_2024.IsChecked = false;
-                    chx_2024.IsEnabled = true;
-                    lbl_2024.Foreground = Brushes.Black;
-                    lbl_2024.Content = "2024 Not Installed";
-
-                }
-            }
-            else
-            {
-                //revit version not found
-                chx_2024.IsEnabled = false;
-                lbl_2024.Foreground = Brushes.Gray;
-                lbl_2024.Content = "2024 Not Found";
-
-            }
-
+           
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -382,7 +345,7 @@ namespace CarboLifeUI.UI
                         }
 
                         if (chx_2023.IsChecked == true)
-                            CopyFile(filePath, "2022");
+                            CopyFile(filePath, "2023");
                         else
                         {
                             if (File.Exists(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2023 + "\\CarboLifeCalc.addin"))
@@ -390,7 +353,7 @@ namespace CarboLifeUI.UI
                         }
 
                         if (chx_2024.IsChecked == true)
-                            CopyFile(filePath, "2022");
+                            CopyFile(filePath, "2024");
                         else
                         {
                             if (File.Exists(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2024 + "\\CarboLifeCalc.addin"))
