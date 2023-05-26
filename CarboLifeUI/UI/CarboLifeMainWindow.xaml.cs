@@ -510,7 +510,7 @@ namespace CarboLifeUI.UI
 
             if (File.Exists(ExcelExportPath))
             {
-                System.Windows.MessageBox.Show("Excel export succesful, click OK to open!", "Success!", MessageBoxButton.OK);
+                System.Windows.MessageBox.Show("CVS export succesful, click OK to open!", "Success!", MessageBoxButton.OK);
                 System.Diagnostics.Process.Start(ExcelExportPath);
             }
 

@@ -49,7 +49,7 @@ namespace CarboLifeUI.UI
         {
             isAccepted = true;
             materialSeqProperties.value = Utils.ConvertMeToDouble(txt_Value.Text);
-            materialSeqProperties.sequestrationPeriod = (int)Utils.ConvertMeToDouble(txt_Value.Text);
+            materialSeqProperties.sequestrationPeriod = (int)Utils.ConvertMeToDouble(txt_Year.Text);
             materialSeqProperties.comment = txt_Description.Text;
             materialSeqProperties.propertyName = "Sequestration";
 

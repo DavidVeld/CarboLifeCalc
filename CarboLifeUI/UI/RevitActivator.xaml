@@ -22,7 +22,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
@@ -36,7 +36,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource  baseStyleTitle}">Revit Activator</Label>
-        <Label Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource  baseStyleLabel}">Select a version of Revit to activate the plugin.</Label>
+        <TextBox Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource baseStyle}" TextWrapping="Wrap">Select a version of Revit to activate the plugin. Or untick(and apply) to remove the addin.</TextBox>
 
         <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="3" Header="Versions" Style="{StaticResource baseStyleBold}">
             <Grid>
