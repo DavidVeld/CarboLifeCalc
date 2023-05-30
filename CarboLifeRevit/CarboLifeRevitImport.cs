@@ -186,7 +186,7 @@ namespace CarboLifeRevit
                         {
                             CarboElement newCarboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialId, settings);
                             
-                            if(carboElementList != null)
+                            if(carboElementList != null && newCarboElement != null)
                                 carboElementList.Add(newCarboElement);
                         }
                     }

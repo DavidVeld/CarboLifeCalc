@@ -52,7 +52,7 @@ namespace CarboLifeRevit
                 }
                 catch
                 {
-                    newCarboElement = null;
+                    return null;
                 }
 
                 if (newCarboElement != null && newCarboElement.Volume > 0)
