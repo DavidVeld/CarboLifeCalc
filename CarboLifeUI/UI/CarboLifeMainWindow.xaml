@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Carbo Life Calculator"
-             d:DesignHeight="900" MinHeight="900" Height="900" d:DesignWidth="1200" MinWidth="1200"  Width="1200" Closing="Window_Closing">
+             d:DesignHeight="900" MinHeight="900" Height="900" d:DesignWidth="1600" MinWidth="1400"  Width="1600" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -40,7 +40,7 @@
                 <MenuItem Name="mnu_saveDataBase" Header="Save Project as..." Click="Mnu_saveDataBase_Click"/>
                 <Separator></Separator>
                 <MenuItem Name="mnu_BuildReport" Header="Save as Report" Click="mnu_BuildReport_Click"/>
-                <MenuItem Name="mnu_ExportToExcel" Header="Export to cvs" Click="mnu_ExportToExcel_Click"></MenuItem>
+                <MenuItem Name="mnu_ExportToExcel" Header="Export to CSV" Click="mnu_ExportToExcel_Click"></MenuItem>
                 
                 <Separator></Separator>
                 <MenuItem Name="mnu_CloseMe" Header="Close" Click="mnu_CloseMe_Click"/>

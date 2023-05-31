@@ -39,6 +39,8 @@ namespace CarboLifeUI.UI
 
         //For async excel exporter:
         public string ExcelExportPath { get; private set; }
+        public string ExcelExportPrefix { get; private set; }
+
         public bool ExportExcel_Completed { get; private set; }
         public bool ExcelExportResult { get; private set; }
         public bool ExcelExportElements { get; private set; }
@@ -524,6 +526,9 @@ namespace CarboLifeUI.UI
         private void ExportFile_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
             ExportExcel_Completed = true;
+            MessageBox.Show("Export completed");
+            System.Diagnostics.Process.Start(ExcelExportPath);
+
         }
         private void ExportFile_DoWork(object sender, DoWorkEventArgs e)
         {

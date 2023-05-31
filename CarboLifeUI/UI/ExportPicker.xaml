@@ -35,9 +35,9 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Export to Excel</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}" Content="Export to *.CSV"/>
 
-        <GroupBox Grid.Column="2" Margin="0,0,10,0" Grid.Row="2" Header="Tables to export" Style="{StaticResource baseStyleBold}">
+        <GroupBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" Header="Tables to export" Style="{StaticResource baseStyleBold}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>
@@ -54,10 +54,12 @@
                 <Label Grid.Column="1" Margin="16,4,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2">Results</Label>
 
                 <CheckBox Name="check_Elements" Grid.Column="1" Grid.Row="1" Margin="0,35,5,4" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" IsChecked="True"></CheckBox>
-                <Label Grid.Column="1" Margin="16,34,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2">Elements (Takes a long time)</Label>
+                <Label Grid.Column="1" Margin="16,34,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2">Elements</Label>
 
                 <CheckBox Name="check_Materials" Grid.Column="1" Grid.Row="1" Margin="0,65,5,4" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Visible" IsChecked="True"></CheckBox>
                 <Label Grid.Column="1" Margin="16,64,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2" Visibility="Visible">Materials</Label>
+
+                <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Margin="0" Style="{StaticResource formTextStyle}" VerticalAlignment="Bottom" Content="(Each Table exports to a separate file)"/>
 
             </Grid>
         </GroupBox>

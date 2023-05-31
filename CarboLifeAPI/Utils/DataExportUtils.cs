@@ -25,8 +25,8 @@ namespace CarboLifeAPI
         {
             //Create a File and save it as a HTML File
             SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Title = "Specify report file location";
-            saveDialog.Filter = "cvs Files|*.cvs";
+            saveDialog.Title = "Specify report file prefix";
+            saveDialog.Filter = "csv file prefix|*.csv";
             saveDialog.FilterIndex = 2;
             saveDialog.RestoreDirectory = true;
 
@@ -593,14 +593,10 @@ namespace CarboLifeAPI
 
         }
 
-
-
-
-
-
         public static void ExportToCSV(CarboProject carboLifeProject, string cvsExportPath, bool exportResult, bool exportElements, bool exportMaterials)
         {
             string exportpath = Path.GetDirectoryName(cvsExportPath);
+            string prefix = Path.GetFileNameWithoutExtension(cvsExportPath);
 
             //Check if user has excel
             if (!Directory.Exists(exportpath) == true)
@@ -608,9 +604,12 @@ namespace CarboLifeAPI
                 return;
             }
 
-            string exportpathResult = exportpath + "\\Results.csv";
-            string exportpathElements = exportpath + "\\Elements.csv";
-            string exportpathMaterials = exportpath + "\\Materials.csv";
+            if (prefix != "")
+                prefix = prefix + "_";
+
+            string exportpathResult = exportpath + "\\" + prefix + "Results.csv";
+            string exportpathElements = exportpath + "\\" + prefix + "Elements.csv";
+            string exportpathMaterials = exportpath + "\\" + prefix + "Materials.csv";
 
             if (File.Exists(exportpathResult) == true ||
                 File.Exists(exportpathElements) == true ||
@@ -625,11 +624,11 @@ namespace CarboLifeAPI
             if (exportResult == true)
                 CreateResultsCVSFile(carboLifeProject, exportpathResult);
 
-            if (exportElements == false)
-                CreateElementsCVSFile(carboLifeProject, exportpathResult);
+            if (exportElements == true)
+                CreateElementsCVSFile(carboLifeProject, exportpathElements);
 
-            if (exportMaterials == false)
-                CreateMaterialsCVSFile(carboLifeProject, exportpathResult);
+            if (exportMaterials == true)
+                CreateMaterialsCVSFile(carboLifeProject, exportpathMaterials);
 
         }
 
@@ -640,31 +639,36 @@ namespace CarboLifeAPI
 
             string fileString = "";
 
+            /*
+             * 
+             */
+
+
             //Create Headers;
             fileString = 
-                "Category" + "," + //0
-                "Material" + "," + //1
-                "Description" + "," + //2
-                "Base Volume" + "," + //3
-                "[Formula]" + "," + //4
-                "[Waste] (%)" + "," + //5
-                "[B4] (x)" + "," + //6
-                "[Additional] (tCO₂e/kg)" + "," + //7
-                "Total Volume" + "," + //8
-                "Density (kg/m³)" + "," + //9
-                "Mass (kg)" + "," + //10
+                "Category" + ";" + //0
+                "Material" + ";" + //1
+                "Description" + ";" + //2
+                "Base Volume" + ";" + //3
+                "[Formula]" + ";" + //4
+                "[Waste] (%)" + ";" + //5
+                "[B4] (x)" + ";" + //6
+                "[Additional] (tCO₂e/kg)" + ";" + //7
+                "Total Volume" + ";" + //8
+                "Density (kg/m³)" + ";" + //9
+                "Mass (kg)" + ";" + //10
 
-                "ECI (kgCO₂e/kg)" + "," + //11
-                "EC (tCO₂e)" + "," + //12
-                "Total (%)" + "," + //13
+                "ECI (kgCO₂e/kg)" + ";" + //11
+                "EC (tCO₂e)" + ";" + //12
+                "Total (%)" + ";" + //13
 
-                "A1-A3 (tCO₂e)" + "," + //14
-                "A4 (tCO₂e)" + "," + //15
-                "A5 (tCO₂e)" + "," + //16
-                "B1-B5 (tCO₂e)" + "," + //17
-                "C1-C4 (tCO₂e)" + "," + //18
-                "D (tCO₂e)" + "," + //19
-                "Sequestration (tCO₂e)" + "," + //20
+                "A1-A3 (tCO₂e)" + ";" + //14
+                "A4 (tCO₂e)" + ";" + //15
+                "A5 (tCO₂e)" + ";" + //16
+                "B1-B5 (tCO₂e)" + ";" + //17
+                "C1-C4 (tCO₂e)" + ";" + //18
+                "D (tCO₂e)" + ";" + //19
+                "Sequestration (tCO₂e)" + ";" + //20
                 "Additional (tCO₂e)" + //21
                 Environment.NewLine; 
             //Advanced
@@ -674,30 +678,30 @@ namespace CarboLifeAPI
                 {
                     string resultString = "";
 
-                    resultString += grp.Category + ","; //1
-                    resultString += grp.MaterialName + ","; //2
-                    resultString += grp.Description + ","; //3
-                    resultString += grp.Volume + ","; //3
-                    resultString += grp.Correction + ","; //4
-                    resultString += grp.Waste + ","; //5
-                    resultString += grp.inUseProperties.B4 + ","; //6
-                    resultString += grp.Additional + ","; //7
-                    resultString += grp.TotalVolume + ","; //8
-                    resultString += grp.Density + ","; //9
-                    resultString += grp.Mass + ","; //10
+                    resultString += grp.Category + ";"; //1
+                    resultString += grp.MaterialName + ";"; //2
+                    resultString += grp.Description + ";"; //3
+                    resultString += grp.Volume + ";"; //3
+                    resultString += grp.Correction + ";"; //4
+                    resultString += grp.Waste + ";"; //5
+                    resultString += grp.inUseProperties.B4 + ";"; //6
+                    resultString += grp.Additional + ";"; //7
+                    resultString += grp.TotalVolume + ";"; //8
+                    resultString += grp.Density + ";"; //9
+                    resultString += grp.Mass + ";"; //10
 
-                    resultString += grp.ECI + ","; //11
-                    resultString += grp.EC + ","; //12
-                    resultString += grp.PerCent + ","; //13
+                    resultString += grp.ECI + ";"; //11
+                    resultString += grp.EC + ";"; //12
+                    resultString += grp.PerCent + ";"; //13
 
-                    resultString += ((grp.Material.ECI_A1A3 * grp.Mass)) / 1000 + ","; //14
-                    resultString += ((grp.Material.ECI_A4 * grp.Mass)) / 1000 + ","; //15
-                    resultString += ((grp.Material.ECI_A5 * grp.Mass)) / 1000 + ","; //16
-                    resultString += ((grp.Material.ECI_B1B5)) / 1000 + ","; //17
-                    resultString += ((grp.Material.ECI_C1C4 * grp.Mass)) / 1000 + ","; //18
-                    resultString += ((grp.Material.ECI_D * grp.Mass)) / 1000 + ","; //19
-                    resultString += ((grp.Material.ECI_Seq * grp.Mass)) / 1000 + ","; //20
-                    resultString += ((grp.Material.ECI_Mix * grp.Mass)) / 1000 + ","; //21
+                    resultString += ((grp.Material.ECI_A1A3 * grp.Mass)) / 1000 + ";"; //14
+                    resultString += ((grp.Material.ECI_A4 * grp.Mass)) / 1000 + ";"; //15
+                    resultString += ((grp.Material.ECI_A5 * grp.Mass)) / 1000 + ";"; //16
+                    resultString += ((grp.Material.ECI_B1B5)) / 1000 + ";"; //17
+                    resultString += ((grp.Material.ECI_C1C4 * grp.Mass)) / 1000 + ";"; //18
+                    resultString += ((grp.Material.ECI_D * grp.Mass)) / 1000 + ";"; //19
+                    resultString += ((grp.Material.ECI_Seq * grp.Mass)) / 1000 + ";"; //20
+                    resultString += ((grp.Material.ECI_Mix * grp.Mass)) / 1000 + ";"; //21
 
                     resultString += Environment.NewLine;
 
@@ -709,6 +713,151 @@ namespace CarboLifeAPI
                 }
             }
 
+            WriteCVSFile(fileString, exportPath);
+
+        }
+
+        private static void CreateElementsCVSFile(CarboProject carboLifeProject, string exportPath)
+        {
+            if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
+                return;
+
+            string fileString = "";
+
+
+            //Create Headers;
+            fileString =
+                "Id" + ";" + //-1
+                "Category" + ";" + //0
+                "Name" + ";" + //1
+                "Material Name" + ";" + //2
+                "Carbo Material Name" + ";" + //3
+                "Level" + ";" + //4
+
+                "Volume (m³)" + ";" + //5
+                "Volume Total (m³)" + ";" + //6
+
+                "Density (kg/m³)" + ";" + //7
+                "Mass (kg)" + ";" + //8
+
+                "ECI (kgCO₂e/kg)" + ";" + //9
+                "ECI Total (kgCO₂e/kg)" + ";" + //10
+                "EC (kgCO₂e)" + ";" + //11
+                "ECI Total (kgCO₂e)" + ";" + //12
+
+                "isExisting" + ";" + //13
+                "isDemolished" + ";" + //14
+                "isSubstructure" + ";" + //15
+                "includeInCalc" + ";" + //16
+
+                Environment.NewLine;
+
+            foreach (CarboElement el in carboLifeProject.getElementsFromGroups())
+            {
+                string resultString = "";
+
+                resultString += el.Id + ";"; //-1
+                resultString += el.Category + ";"; //0
+                resultString += el.Name + ";"; //1
+                resultString += el.MaterialName + ";"; //2
+                resultString += el.CarboMaterialName + ";"; //3
+                resultString += el.Level + ";"; //4
+
+                resultString += el.Volume + ";"; //5
+                resultString += el.Volume_Total + ";"; //6
+                resultString += el.Density + ";"; //7
+                resultString += el.Mass + ";"; //8
+
+                resultString += el.ECI + ";"; //9
+                resultString += el.ECI_Total + ";"; //10
+                resultString += el.EC + ";"; //11
+                resultString += el.EC_Total + ";"; //12
+
+                resultString += el.isExisting + ";"; //13
+                resultString += el.isDemolished + ";"; //14
+                resultString += el.isSubstructure + ";"; //15
+                resultString += el.includeInCalc + ";"; //16
+
+                resultString += Environment.NewLine; //enter
+
+                fileString += resultString;
+            }
+
+            WriteCVSFile(fileString, exportPath);
+
+        }
+
+        private static void CreateMaterialsCVSFile(CarboProject carboLifeProject, string exportPath)
+        {
+            if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
+                return;
+
+            string fileString = "";
+
+            //Create Headers;
+            fileString =
+                "Id" + ";" + //0
+                "Name" + ";" + //1
+                "Category" + ";" + //2
+                "Description" + ";" + //3
+                "Density" + ";" + //4
+                "ECI (kgCO₂e/kg)" + ";" + //5
+                "ECI Volume (kgCO₂e/m³)" + ";" + //6
+
+                "A1-A3 (kgCO₂e/kg)" + ";" + //7
+                "A4 (kgCO₂e/kg)" + ";" + //8
+                "A5 (kgCO₂e/kg)" + ";" + //9
+                "B1-B7 (kgCO₂e/kg)" + ";" + //10
+                "C1-C4 (kgCO₂e/kg)" + ";" + //11
+                "D (tCO₂e)" + ";" + //12
+                "Sequestration (kgCO₂e/kg)" + ";" + //13
+                "Additional (kgCO₂e/kg)" + ";" + //14
+
+                "Default Waste (%)" + ";" + //15
+
+                Environment.NewLine;
+
+            ObservableCollection<CarboGroup> cglist = carboLifeProject.getGroupList;
+            cglist = new ObservableCollection<CarboGroup>(cglist.OrderBy(i => i.MaterialName));
+
+            string material = "";
+
+            foreach (CarboGroup cbg in cglist)
+            {
+                if (cbg.MaterialName != material)
+                {
+                    string resultString = "";
+
+                    resultString += cbg.Material.Id + ";"; //1
+                    resultString += cbg.Material.Name + ";"; //2
+                    resultString += cbg.Material.Category + ";"; //3
+                    resultString += cbg.Material.Description + ";"; //3
+                    resultString += cbg.Material.Density + ";"; //4
+                    resultString += cbg.Material.ECI + ";"; //5
+                    resultString += cbg.Material.getVolumeECI + ";"; //6
+
+                    resultString += cbg.Material.ECI_A1A3 + ";"; //7
+                    resultString += cbg.Material.ECI_A4 + ";"; //8
+                    resultString += cbg.Material.ECI_A5 + ";"; //9
+                    resultString += cbg.Material.ECI_B1B5 + ";"; //10
+                    resultString += cbg.Material.ECI_C1C4 + ";"; //11
+                    resultString += cbg.Material.ECI_D + ";"; //12
+                    resultString += cbg.Material.ECI_Seq + ";"; //13
+                    resultString += cbg.Material.ECI_Mix + ";"; //14
+
+                    resultString += cbg.Material.WasteFactor + ";"; //14
+
+                    resultString += Environment.NewLine; //enter
+
+                    fileString += resultString;
+                }
+            }
+
+            WriteCVSFile(fileString, exportPath);
+        }
+
+        private static void WriteCVSFile(string fileString, string exportPath)
+        {
             try
             {
                 using (StreamWriter writer = new StreamWriter(exportPath))
@@ -723,16 +872,6 @@ namespace CarboLifeAPI
             }
         }
 
-
-        private static void CreateElementsCVSFile(CarboProject carboLifeProject, string exportPath)
-        {
-
-        }
-
-        private static void CreateMaterialsCVSFile(CarboProject carboLifeProject, string exportPath)
-        {
-
-        }
     }
 
 

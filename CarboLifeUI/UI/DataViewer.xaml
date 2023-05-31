@@ -257,7 +257,7 @@
             </MenuItem>
         </Menu>
 
-        <DataGrid x:Name="dgv_Elements" Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="True" Visibility="Visible">
+        <DataGrid x:Name="dgv_Elements" Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="False" Visibility="Visible">
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="25" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
 
@@ -283,7 +283,7 @@
                 <DataGridTextColumn MinWidth="100" Header="isDemolished" Binding="{Binding Path=isDemolished}" IsReadOnly="True"/>
                 <DataGridTextColumn MinWidth="100" Header="isExisting" Binding="{Binding Path=isExisting}" IsReadOnly="True"/>
                 <DataGridTextColumn MinWidth="100" Header="isSubstructure" Binding="{Binding Path=isSubstructure}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="100" Header="includeInCalc" Binding="{Binding Path=includeInCalc}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="100" Header="includeInCalc" Binding="{Binding Path=includeInCalc}" IsReadOnly="False"/>
 
 
             </DataGrid.Columns>

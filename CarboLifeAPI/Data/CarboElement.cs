@@ -85,8 +85,8 @@ namespace CarboLifeAPI.Data
             }
 
         }
-        
-        internal CarboElement CopyMe()
+
+        public CarboElement CopyMe()
         {
             CarboElement clone = new CarboElement();
 
@@ -103,9 +103,6 @@ namespace CarboLifeAPI.Data
             clone.Mass = this.Mass;
             clone.Density = this.Density;
             clone.Level = this.Level;
-            clone.isDemolished = this.isDemolished;
-            clone.isExisting = this.isExisting;
-            clone.isSubstructure = this.isSubstructure;
 
             clone.ECI = this.ECI;
             clone.EC = this.EC;
@@ -113,6 +110,9 @@ namespace CarboLifeAPI.Data
             clone.EC_Total = this.EC_Total;
             clone.Volume_Total = this.Volume_Total;
 
+            clone.isDemolished = this.isDemolished;
+            clone.isExisting = this.isExisting;
+            clone.isSubstructure = this.isSubstructure;
             clone.includeInCalc = this.includeInCalc;
 
             return clone;

@@ -503,10 +503,18 @@ namespace CarboLifeUI.UI
             try
             {
                 List<CarboElement> selectedCarboElementList = new List<CarboElement>();
+                List<CarboElement> carboElementsToCopy = new List<CarboElement>();
+
                 selectedCarboElementList = dgv_Elements.SelectedItems.Cast<CarboElement>().ToList();
 
                 if (selectedCarboElementList.Count > 0)
                 {
+
+                    foreach (CarboElement carboElement in selectedCarboElementList)
+                    {
+                        carboElementsToCopy.Add(carboElement.CopyMe());
+                    }
+
                     CarboGroup selectedCarboGroup = (CarboGroup)dgv_Overview.SelectedItem;
 
                     //Reset all findme flags.
@@ -518,39 +526,33 @@ namespace CarboLifeUI.UI
                         ce.isUpdated = true;
                     }
 
-                    int carbogroupId = selectedCarboGroup.Id;
                     List<CarboElement> allCarboElementList = selectedCarboGroup.AllElements;
                     CarboGroup newGroup = selectedCarboGroup.Copy();
 
                     //move all elements to the new group
-                    newGroup.AllElements = selectedCarboElementList;
-                    newGroup.Description = "A new Group";
-
-                    int delcounter = 0;
+                    newGroup.AllElements = carboElementsToCopy;
+                    newGroup.Description = "Copy of: " + newGroup.Description;
 
                     //remove the old ones from the list
                     foreach (CarboElement ce in selectedCarboElementList)
                     {
-                        for (int i = 0; i >= 0; i--)
+                        for (int j = selectedCarboGroup.AllElements.Count - 1; j >= 0; j--)
                         {
-                            CarboElement oldce = allCarboElementList[i];
-                            if (oldce.isUpdated == true)
+                            CarboElement ceg = selectedCarboGroup.AllElements[j];
+                            if(ceg != null)
                             {
-                                allCarboElementList.RemoveAt(i);
-                                delcounter++;
+                                if (ce.Id == ceg.Id)
+                                {
+                                    selectedCarboGroup.AllElements.RemoveAt(j);
+                                }
                             }
                         }
+                    }
 
-                    }
-                    //Now there should be two lists, one with the selcted items and one without.
-                    foreach (CarboGroup cg in CarboLifeProject.getGroupList)
-                    {
-                        if (cg.Id == carbogroupId)
-                            cg.AllElements = allCarboElementList;
-                    }
+                    //Add the new group
                     CarboLifeProject.AddGroup(newGroup);
 
-                    MessageBox.Show(delcounter + " Elements moved to new group", "Message", MessageBoxButton.OK);
+                    MessageBox.Show(selectedCarboElementList.Count + " Elements moved to new group", "Message", MessageBoxButton.OK);
 
                     CarboLifeProject.CalculateProject();
                     refreshData();
