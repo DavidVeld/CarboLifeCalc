@@ -93,7 +93,7 @@ namespace CarboLifeUI.UI
 
                 //loop though
                 // i is nr type of information extracted
-                for (int i = 0; i < 9; i++)
+                for (int i = 0; i < pointList[0].Count; i++)
                 {
                     StackedColumnSeries newSeries = new StackedColumnSeries();
 

@@ -39,8 +39,8 @@
                 <MenuItem Name="mnu_saveProject" Header="Save Project" Click="Mnu_saveProject_Click"/>
                 <MenuItem Name="mnu_saveDataBase" Header="Save Project as..." Click="Mnu_saveDataBase_Click"/>
                 <Separator></Separator>
-                <MenuItem Name="mnu_BuildReport" Header="Save as Report" Click="mnu_BuildReport_Click"/>
-                <MenuItem Name="mnu_ExportToExcel" Header="Export to CSV" Click="mnu_ExportToExcel_Click"></MenuItem>
+                <MenuItem Name="mnu_BuildReport" Header="Export Report" Click="mnu_BuildReport_Click"/>
+                <MenuItem Name="mnu_ExportToExcel" Header="Export Data to CSV..." Click="mnu_ExportToExcel_Click"></MenuItem>
                 
                 <Separator></Separator>
                 <MenuItem Name="mnu_CloseMe" Header="Close" Click="mnu_CloseMe_Click"/>

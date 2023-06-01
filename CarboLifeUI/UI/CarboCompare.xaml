@@ -92,7 +92,6 @@
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="Compare Projects" 
                           Labels="{Binding Labels}" >
-
                     <lvc:Axis.Separator>
                         <lvc:Separator Stroke="Red" Width="20"/>
                     </lvc:Axis.Separator>
@@ -107,8 +106,8 @@
 
 
         <Label Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="5,2,778,5"  Height="28" Style="{StaticResource baseStyleLabel}">Compare:</Label>
-        <ComboBox Name="cbb_GraphType" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="84,4,517,5"  Height="26"  Style="{StaticResource  ComboBoxFlatStyleLight}" IsReadOnly="True" DropDownClosed="cbb_GraphType_DropDownClosed" IsEnabled="True"></ComboBox>
-        <Button Name="btn_Refresh"  Grid.Column="2" Grid.Row="3"  Margin="350,6,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Refresh" Click="directRefresh" ></Button>
+        <ComboBox Name="cbb_GraphType" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" Margin="85,4,0,5"  Height="26" Width="250" HorizontalAlignment="Left" Style="{StaticResource  ComboBoxFlatStyleLight}" IsReadOnly="True" DropDownClosed="cbb_GraphType_DropDownClosed" IsEnabled="True"></ComboBox>
+        <Button Name="btn_Refresh"  Grid.Column="2" Grid.Row="3"  Margin="350,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Height="26" Style="{StaticResource ButtonStyle}" Content="Refresh" Click="directRefresh" ></Button>
 
         <Label Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="1" Margin="5,-5,0,5" VerticalAlignment="Top"  Height="28" Style="{StaticResource baseStyleLabel}">Include:</Label>
         <CheckBox Name="chx_Sequestration" Grid.Column="2" Grid.Row="4" Grid.ColumnSpan="1" Margin="20,25,5,2" VerticalAlignment="Top" Height="26" IsChecked="True" Checked="directRefresh" Unchecked="directRefresh">Sequestration</CheckBox>
