@@ -1017,6 +1017,17 @@ namespace CarboLifeAPI.Data
             PieceListLifePoint = getPhaseTotals();
 
 
+            //Add A0
+            if (calculateA0 == true)
+            {
+                phaseGroup += "A0  " + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "A0") + Environment.NewLine;
+            }
+            else
+            {
+                //result += Math.Round(0f, 1) + Environment.NewLine;
+            }
+
             //Add A1-A5
             if (calculateA13 == true)
             {

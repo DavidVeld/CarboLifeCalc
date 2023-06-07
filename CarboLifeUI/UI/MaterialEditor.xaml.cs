@@ -394,6 +394,8 @@ namespace CarboLifeUI.UI
             if (view != null)
             {
                 view.SortDescriptions.Add(new System.ComponentModel.SortDescription("Category", System.ComponentModel.ListSortDirection.Ascending));
+                view.SortDescriptions.Add(new System.ComponentModel.SortDescription("Name", System.ComponentModel.ListSortDirection.Ascending));
+
                 /*
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
                 view.GroupDescriptions.Add(groupDescription);
@@ -585,9 +587,33 @@ namespace CarboLifeUI.UI
 
         private void Btn_Delete_Click(object sender, RoutedEventArgs e)
         {
-            if(selectedMaterial != null)
+            if (selectedMaterial != null)
             {
-                returnedDatabase.deleteMaterial(selectedMaterial.Id);
+                List<int> idList = new List<int>();
+
+                if (liv_materialList != null)
+                {
+                    foreach (var current in liv_materialList.SelectedItems)
+                    {
+                        try
+                        {
+                            CarboMaterial material = current as CarboMaterial;
+                            if (material != null)
+                                idList.Add(material.Id);
+                        }
+                        catch
+                        {//continue
+                        }
+                    }
+                }
+
+                if (idList.Count > 0)
+                {
+                    foreach (int i in idList)
+                    {
+                        returnedDatabase.deleteMaterial(i);
+                    }
+                }
                 RefreshMaterialList();
 
                 liv_materialList.SelectedIndex = 0;
@@ -599,7 +625,9 @@ namespace CarboLifeUI.UI
 
             if (selectedMaterial != null)
             {
-                ValueDialogBox vdb = new ValueDialogBox("New Material Name");
+                ValueDialogBox vdb = new ValueDialogBox(selectedMaterial.Name + " Copy");
+                //vdb.txt_Value.Text = ;
+                vdb.WindowStartupLocation  = WindowStartupLocation.CenterOwner;
                 vdb.txt_Value.Focus();
                 vdb.ShowDialog();
 
@@ -692,15 +720,13 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(500);
-            if (startLength == tb.Text.Length)
-            {
+            await Task.Delay(1000);
                 if (selectedMaterial.ECI_A1A3_Override == true)
                 {
                     selectedMaterial.ECI_A1A3 = Utils.ConvertMeToDouble(txt_A1_A3.Text);
                     UpdateMaterialSettings();
                 }
-            }
+
         }
 
         private async void txt_A4_TextChanged(object sender, TextChangedEventArgs e)
@@ -708,14 +734,11 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(500);
-            if (startLength == tb.Text.Length)
+            await Task.Delay(1000);
+            if (selectedMaterial.ECI_A4_Override == true)
             {
-                if (selectedMaterial.ECI_A4_Override == true)
-                {
-                    selectedMaterial.ECI_A4 = Utils.ConvertMeToDouble(txt_A4.Text);
-                    UpdateMaterialSettings();
-                }
+                selectedMaterial.ECI_A4 = Utils.ConvertMeToDouble(txt_A4.Text);
+                UpdateMaterialSettings();
             }
         }
 
@@ -724,15 +747,14 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(500);
-            if (startLength == tb.Text.Length)
-            {
+            await Task.Delay(1000);
+
                 if (selectedMaterial.ECI_A5_Override == true)
                 {
                     selectedMaterial.ECI_A5 = Utils.ConvertMeToDouble(txt_A5.Text);
                     UpdateMaterialSettings();
                 }
-            }
+            
         }
 
         private async void txt_B1_B5_TextChanged(object sender, TextChangedEventArgs e)
@@ -740,27 +762,22 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(500);
-            if (startLength == tb.Text.Length)
-            {
+            await Task.Delay(1000);
                     selectedMaterial.ECI_B1B5 = Utils.ConvertMeToDouble(txt_B1_B5.Text);
                     UpdateMaterialSettings();
-            }
         }
         private async void txt_C1_C4_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(500);
-            if (startLength == tb.Text.Length)
-            {
+            await Task.Delay(1000);
                 if (selectedMaterial.ECI_C1C4_Override == true)
                 {
                     selectedMaterial.ECI_C1C4 = Utils.ConvertMeToDouble(txt_C1_C4.Text);
                     UpdateMaterialSettings();
                 }
-            }
+            
         }
 
         private async void txt_D_TextChanged(object sender, TextChangedEventArgs e)
@@ -769,32 +786,26 @@ namespace CarboLifeUI.UI
             int startLength = tb.Text.Length;
 
             await Task.Delay(500);
-            if (startLength == tb.Text.Length)
-            { 
                  if (selectedMaterial.ECI_D_Override == true)
                     {
                         selectedMaterial.ECI_D = Utils.ConvertMeToDouble(txt_D.Text);
                         UpdateMaterialSettings();
                     }           
-            }
-
-
-        }
+           }
 
         private async void txt_Seq_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(500);
-            if (startLength == tb.Text.Length)
-            {
+            await Task.Delay(1000);
+
                 if (selectedMaterial.ECI_Seq_Override == true)
                 {
                     selectedMaterial.ECI_Seq = Utils.ConvertMeToDouble(txt_Seq.Text);
                     UpdateMaterialSettings();
                 }
-            }
+
         }
 
         private async void txt_Mix_TextChanged(object sender, TextChangedEventArgs e)
@@ -802,12 +813,9 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(500);
-            if (startLength == tb.Text.Length)
-            {
+            await Task.Delay(1000);
                 selectedMaterial.ECI_Mix = Utils.ConvertMeToDouble(txt_Mix.Text);
                 UpdateMaterialSettings();
-            }
         }
 
         private void btn_EditDescription_Click(object sender, RoutedEventArgs e)
@@ -1000,14 +1008,12 @@ namespace CarboLifeUI.UI
         private async void txt_Mix_Setting_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
-            int startLength = tb.Text.Length;
 
-            await Task.Delay(500);
-            if (startLength == tb.Text.Length)
-            {
+            await Task.Delay(1000);
+
                 selectedMaterial.ECI_Mix_Info = tb.Text;
                 UpdateMaterialSettings();
-            }
+            
         }
 
         private async void txt_Waste_TextChanged(object sender, TextChangedEventArgs e)
@@ -1033,6 +1039,17 @@ namespace CarboLifeUI.UI
         {
             CarboInfoBox info = new CarboInfoBox("In Use values","This is a generic kgCO2/kg value for material dependent properties, the value should be controlled by Group, not material, default value = 0");
             info.ShowDialog();
+        }
+
+        private async void txt_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            /*
+            TextBox tb = (TextBox)sender;
+            await Task.Delay(2000);
+            selectedMaterial.Name = tb.Text;
+            RefreshMaterialList();
+            UpdateMaterialSettings();
+            */
         }
     }
 }

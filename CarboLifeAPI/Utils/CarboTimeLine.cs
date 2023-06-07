@@ -127,7 +127,7 @@ namespace CarboLifeAPI
                 if (calcEnergy == false)
                     energyFactor = 0;
                 //Get EnergyPerElements
-                totalECAcumulated += (group.getTotalB1B7 * energyFactor); //THIS IS COMPLETELY WRONG
+                totalECAcumulated += (group.getTotalB1B7 * energyFactor); //THIS IS ONLY GROUP SPECIFIC, GLOBAL IS DOE LATER
 
                 //get the sequestration
 
@@ -148,6 +148,15 @@ namespace CarboLifeAPI
                 totalECAcumulated += ((group.getTotalC1C4 + project.C1Global) * demolitionFactor);
 
             }
+
+            //Get the Energy for year "i"
+            if (calcEnergy == true)
+            {
+                double energyValue = project.energyProperties.getTotalValue(i);
+
+                totalECAcumulated += energyValue;
+            }
+
             result.Name = i.ToString();
             result.Value = totalECAcumulated;
 

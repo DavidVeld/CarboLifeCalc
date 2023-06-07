@@ -267,11 +267,10 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(250);
-            if (startLength == tb.Text.Length)
-            {
-                CarboLifeProject.demoArea = Utils.ConvertMeToDouble(tb.Text);
-            }
+            await Task.Delay(1000);
+            CarboLifeProject.demoArea = Utils.ConvertMeToDouble(tb.Text);
+            RefreshInterFace();
+
         }
 
         private async void txt_DemoC1Fact_TextChanged(object sender, TextChangedEventArgs e)
@@ -279,11 +278,10 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(250);
-            if (startLength == tb.Text.Length)
-            {
-                CarboLifeProject.C1Factor = Utils.ConvertMeToDouble(tb.Text);
-            }
+            await Task.Delay(1000);
+            CarboLifeProject.C1Factor = Utils.ConvertMeToDouble(tb.Text);
+            RefreshInterFace();
+
         }
 
         private async void txt_Value_TextChanged(object sender, TextChangedEventArgs e)
@@ -291,12 +289,8 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(250);
-            if (startLength == tb.Text.Length)
-            {
-                CarboLifeProject.Value = Utils.ConvertMeToDouble(tb.Text);
-            }
-
+            await Task.Delay(1000);
+            CarboLifeProject.Value = Utils.ConvertMeToDouble(tb.Text);
             RefreshInterFace();
 
         }
@@ -306,12 +300,8 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(250);
-            if (startLength == tb.Text.Length)
-            {
-                CarboLifeProject.A5Factor = Utils.ConvertMeToDouble(tb.Text);
-            }
-
+            await Task.Delay(1000);
+            CarboLifeProject.A5Factor = Utils.ConvertMeToDouble(tb.Text);
             RefreshInterFace();
 
         }
@@ -321,11 +311,10 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(250);
-            if (startLength == tb.Text.Length)
-            {
-                CarboLifeProject.SocialCost = Utils.ConvertMeToDouble(tb.Text);
-            }
+            await Task.Delay(1000);
+            CarboLifeProject.SocialCost = Utils.ConvertMeToDouble(tb.Text);
+            RefreshInterFace();
+
         }
 
 
@@ -341,15 +330,9 @@ namespace CarboLifeUI.UI
 
             int designLifeNew = 50;
 
-            await Task.Delay(250);
-            if (startLength == tb.Text.Length)
-            {
-                designLifeNew = Convert.ToInt32(Utils.ConvertMeToDouble(tb.Text));
-
-                CarboLifeProject.SetDesignLife(designLifeNew);
-            }
-
-
+            await Task.Delay(1000);
+            designLifeNew = Convert.ToInt32(Utils.ConvertMeToDouble(tb.Text));
+            CarboLifeProject.SetDesignLife(designLifeNew);
             RefreshInterFace();
 
         }

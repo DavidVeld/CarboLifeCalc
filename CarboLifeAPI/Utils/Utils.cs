@@ -508,7 +508,12 @@ namespace CarboLifeAPI
             return foundChild;
         }
 
-
+        /// <summary>
+        /// gets the value of a phase from the project totals
+        /// </summary>
+        /// <param name="pieceListLifePoint"></param>
+        /// <param name="itemName">"A0"</param>
+        /// <returns>the value as a string, or "not Calculated"</returns>
         internal static string getString(List<CarboDataPoint> pieceListLifePoint, string itemName)
         {
             string result = "";

@@ -19,6 +19,7 @@ using CarboLifeAPI.Data;
 using CarboLifeUI;
 using CarboLifeUI.UI;
 using Microsoft.Win32;
+using Path = System.IO.Path;
 
 namespace CarboLifeCalc
 {
@@ -49,6 +50,47 @@ namespace CarboLifeCalc
 
         private void btn_Materials_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                CarboSettings settings = new CarboSettings();
+                settings = settings.Load();
+                string Startpath = settings.templatePath;
+                string pathForViewing = Path.GetDirectoryName(Startpath);
+
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Carbo Life Material File (*.cxml)|*.cxml|All files (*.*)|*.*";
+                openFileDialog.InitialDirectory = pathForViewing;
+
+                var path = openFileDialog.ShowDialog();
+
+                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
+                {
+                    CarboProject newProject = new CarboProject();
+                    CarboDatabase bufferDatabase = newProject.CarboDatabase;
+
+                    CarboDatabase cd = bufferDatabase.DeSerializeXML(openFileDialog.FileName);
+
+                    MaterialEditor mateditor = new MaterialEditor(cd.CarboMaterialList[0].Name, cd);
+                    mateditor.ShowDialog();
+
+                    if (mateditor.acceptNew == true)
+                    {
+                        CarboDatabase database = mateditor.returnedDatabase;
+                        database.SerializeXML(openFileDialog.FileName);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Closed without saving");
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            /* OLD
             CarboProject newProject = new CarboProject();
             CarboDatabase cd = newProject.CarboDatabase;
             cd.DeSerializeXML("");
@@ -69,12 +111,15 @@ namespace CarboLifeCalc
             {
                 MessageBox.Show("Template Database not found");
             }
+            */
         }
 
         private void btn_Open_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+
+
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
 

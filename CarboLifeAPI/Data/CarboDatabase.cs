@@ -313,9 +313,13 @@ namespace CarboLifeAPI.Data
             string name = "";
             bool ok = false;
 
-            try
+            //never delete the last entry
+            if (CarboMaterialList.Count == 1)
+                return;
+
+                try
             {
-                for (int i = CarboMaterialList.Count -1; i > 0; i--)
+                for (int i = CarboMaterialList.Count -1; i >= 0; i--)
                 {
                     if (CarboMaterialList[i].Id == id)
                     {
