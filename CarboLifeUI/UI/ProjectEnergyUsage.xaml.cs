@@ -98,24 +98,24 @@ namespace CarboLifeUI.UI
 
         private void btn_EnergyAdvice_Click(object sender, RoutedEventArgs e)
         {
-            ShowInfoBox("B6 - Operational Energy", "For operational energy a LETI advised limits are: \n Residential: 35kWh/m² \n Offices: 55kWh/m² \n Schools: 65kWh/m² \n\n For the emmissions per kWh look at the local values a UK average is arounf 0.193 kgCo2/kWh");
+            ShowInfoBox("B6 - Operational Energy", "For operational energy a LETI advised limits are: \n Residential: 35kWh/m²/year \n Offices: 55kWh/m²/year \n Schools: 65kWh/m²/year \n\n For the emissions per kWh look at the local values a UK average is approx. 0.193 kgCo2/kWh");
         }
 
 
         private void btn_WaterAdvice_Click(object sender, RoutedEventArgs e)
         {
-            ShowInfoBox("B7 - Water Usage", "Water usage depends on the type of building and it's usage. For Residential: Assuming 65m³ of water per person per year which is between 1.5-2.5 m³ water /m²/year. For the emmissions per m³ of water look at the local values. The UK average is arounf 0.0015 kgCo2/m³");
+            ShowInfoBox("B7 - Water Usage", "Water usage depends on the type of building and it's usage. For Residential: Assuming 65m³ of water per person per year which is between 1.5-2.5 m³ water /m²/year. For the emissions per m³ of water look at the local values. The UK average is approx. 0.0015 kgCo2/m³");
 
         }
 
         private void btn_GeneratedAdvice_Click(object sender, RoutedEventArgs e)
         {
-            ShowInfoBox("D2 - Energy Generation", "This value specifies the amount of energy a building will produce per year. As an example a solar panel produces approx 0.150 Watt/m² per hour, or around 750-1000 kWh / year. \n Use : Area x 750 = kWh/year \n The excact values are depending position, type and age of solar panels.");
+            ShowInfoBox("D2 - Energy Generation", "This value specifies the amount of energy a building will produce per year. As an example a solar panel produces approx. 0.150 Watt/m² per hour, or around 750-1000 kWh / year. \n Use: Area x 750 = kWh/year \n The exact values are depending position, type and age of solar panels.");
         }
 
         private void btn_DecarbonisationAdvice_Click(object sender, RoutedEventArgs e)
         {
-            ShowInfoBox("Decarbonisation", "Geneally assumed is that the energy grid will 'decarbonise', a conservative value would be around 1-3%, more optimistic would be 10-15%, refer to local national data to establish this factor");
+            ShowInfoBox("Decarbonisation", "Generally assumed is that the energy grid will 'decarbonise', a conservative value would be around 1-3%, more optimistic would be 5-10%, refer to local national data to establish this factor");
         }
 
         private void ShowInfoBox(string title, string content)

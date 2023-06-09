@@ -91,7 +91,7 @@
 
         <Label Grid.Column="4" Margin="0,0,10,0" Grid.Row="4" Height="25" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource formTitleStyle}">Filtered Group Elements:</Label>
 
-        <DataGrid AutoGenerateColumns="False" Name="dgv_Preview2" Grid.Column="4" Grid.Row="5" Grid.RowSpan="4" Margin="0,0,5,10" IsReadOnly="True"  EnableRowVirtualization="false"  CanUserAddRows="False" CanUserReorderColumns="False" ColumnWidth="*" HorizontalScrollBarVisibility="Hidden">
+        <DataGrid AutoGenerateColumns="False" Name="dgv_Preview2" Grid.Column="4" Grid.Row="5" Grid.RowSpan="3" Margin="0,0,5,10" IsReadOnly="True"  EnableRowVirtualization="false"  CanUserAddRows="False" CanUserReorderColumns="False" ColumnWidth="*" HorizontalScrollBarVisibility="Hidden">
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="25" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
 

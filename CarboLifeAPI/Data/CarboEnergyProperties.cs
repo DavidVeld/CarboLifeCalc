@@ -62,8 +62,8 @@ namespace CarboLifeAPI.Data
             B7 = 0;
             D2 = 0;
 
-            ElectricityUsedPerYear = 20000;
-            WaterUsedPerYear = 5000;
+            ElectricityUsedPerYear = 100;
+            WaterUsedPerYear = 550;
             ElectricitygeneratedPerYear = 0;
             CO2CostPerkWh = 0.200;
             CO2CostPerm3 = 0.0015;

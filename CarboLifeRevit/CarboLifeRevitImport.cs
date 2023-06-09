@@ -186,7 +186,10 @@ namespace CarboLifeRevit
                         {
                             CarboElement newCarboElement = CarboRevitUtils.getNewCarboElement(doc, el, materialId, settings);
                             
-                            if(carboElementList != null && newCarboElement != null)
+                            if(carboElementList != null 
+                                && newCarboElement != null 
+                                && newCarboElement.Id != -999 
+                                && newCarboElement.Volume > 0)
                                 carboElementList.Add(newCarboElement);
                         }
                     }
@@ -223,7 +226,7 @@ namespace CarboLifeRevit
             */
 
             // If Project contained area, make sure it is updated.
-            if(myProject.Area == 0)
+            if(myProject.Area == 1)
                 myProject.Area = Math.Round((area * (0.3048 * 0.3048)), 2); //to sqr m2
 
             //Apply settings to new projectfile

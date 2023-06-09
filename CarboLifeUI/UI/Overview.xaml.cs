@@ -18,6 +18,7 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using CarboLifeAPI;
 using System.Data;
+using System.IO;
 
 namespace CarboLifeUI.UI
 {
@@ -267,7 +268,7 @@ namespace CarboLifeUI.UI
                     summaryValues.FontSize = 13;
                     summaryValues.HorizontalAlignment = HorizontalAlignment.Right;
                     summaryValues.TextAlignment = TextAlignment.Right;
-                    Canvas.SetLeft(summaryValues, 110);
+                    Canvas.SetLeft(summaryValues, 125);
                     Canvas.SetTop(summaryValues, 25);
                     cnv_Totals.Children.Add(summaryValues);
 
@@ -338,10 +339,43 @@ namespace CarboLifeUI.UI
         {
             try
             {
-                if (CarboLifeProject != null && summaryTextMemory != "")
+                string result = "";
+
+                result += "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e" + Environment.NewLine;
+
+                List<string> textGroups = CarboLifeProject.getCalcText();
+                //Merge first string with second;
+                if(textGroups.Count == 3)
                 {
-                    Clipboard.SetText(summaryTextMemory);
+                    string[] list1 = textGroups[0].Split(new string[] { System.Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] list2 = textGroups[1].Split(new string[] { System.Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+                    int a = list1.Length;
+                    int b = list2.Length;
+
+                    if(a == b)
+                    {
+                        for(int i=0;i<a-1;i++)
+                        {
+                            result += list1[i] + "   " + list2[i] + Environment.NewLine;
+                        }
+                    }
+
+                    result += textGroups[2] + Environment.NewLine;
+
+                }
+
+
+
+                if (CarboLifeProject != null && result != "")
+                {
+                    Clipboard.SetText(result);
                     MessageBox.Show("Text copied to clipboard", "Friendly Message", MessageBoxButton.OK);
+                }
+                else
+                {
+                    MessageBox.Show("Nothing to copy", "Friendly Message", MessageBoxButton.OK);
+
                 }
             }
             catch(Exception ex)
@@ -497,7 +531,7 @@ namespace CarboLifeUI.UI
         {
             if (chx_Operational != null && CarboLifeProject != null)
             {
-                CarboLifeProject.calculateA0 = chx_Operational.IsChecked.Value;
+                CarboLifeProject.calculateB67 = chx_Operational.IsChecked.Value;
                 RefreshInterFace();
             }
         }

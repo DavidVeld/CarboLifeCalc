@@ -179,6 +179,14 @@ namespace CarboLifeAPI.Data
             {
                 XmlSerializer ser = new XmlSerializer(typeof(CarboDatabase));
 
+                //delete all resultdata
+                foreach (CarboMaterial cm in CarboMaterialList)
+                {
+                    cm.materiaA4Properties.calcResult = "";
+                    cm.materialC1C4Properties.c2Properties.calcResult = "";
+                    cm.materialC1C4Properties.calcResult = "";
+                }
+
                 using (FileStream fs = new FileStream(myPath, FileMode.Create))
                 {
                     ser.Serialize(fs, this);

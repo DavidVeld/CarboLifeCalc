@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using System.Xml.Serialization;
 
 namespace CarboLifeAPI.Data
@@ -784,7 +785,7 @@ namespace CarboLifeAPI.Data
                 //These are global calculated values through settngs
                 CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
                 CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
-                CarboDataPoint cb_B67D2 = new CarboDataPoint("Energy B6, B7 + D2 (Global)", this.energyProperties.value * 1000);
+                CarboDataPoint cb_B67D2 = new CarboDataPoint("Energy B6-B7 + D2 (Global)", this.energyProperties.value * 1000);
 
                 //A
                 if (calculateA0 == true || calculateAll == true)
@@ -919,13 +920,14 @@ namespace CarboLifeAPI.Data
         /// <summary>
         /// Returns the toal EC including the global values
         /// </summary>
-        /// <returns></returns>
+        /// <returns>EC based on selection in tCO2e</returns>
         public double getTotalEC() 
         {
             double totalMaterials = getTotalsGroup().EC;
             double totalA5 = A5Global;
             double totalC1 = C1Global;
-            double totalTotal = totalMaterials + totalA5 + totalC1;
+            double totalB6B7 = energyProperties.value;
+            double totalTotal = totalMaterials + totalA5 + totalC1 + totalB6B7;
             
             return totalTotal;
         }
@@ -1082,6 +1084,15 @@ namespace CarboLifeAPI.Data
             {
                 //result += Math.Round(0f, 1) + Environment.NewLine;
             }
+            if (calculateB67 == true)
+            {
+                phaseGroup += "B6-B7 + D2(Energy)  " + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "Energy B6-B7 + D2 (Global)") + Environment.NewLine;
+            }
+            else
+            {
+                //result += Math.Round(0f, 1) + Environment.NewLine;
+            }
 
             //C
             if (calculateC == true)
@@ -1187,7 +1198,16 @@ namespace CarboLifeAPI.Data
             else
                 C1Global = 0;
 
-            ECTotal = EC + A5Global + C1Global;
+            if (calculateB67 == true)
+            {
+                energyProperties.calculate(this.designLife);
+            }
+            else
+            {
+                energyProperties.value = 0;
+            }
+
+            ECTotal = EC + A5Global + C1Global + energyProperties.value;
 
             justSaved = false;
 
@@ -1707,6 +1727,14 @@ namespace CarboLifeAPI.Data
                 }
                 
                 XmlSerializer ser = new XmlSerializer(typeof(CarboProject));
+
+                //delete all resultdata
+                foreach (CarboMaterial cm in CarboDatabase.CarboMaterialList)
+                {
+                    cm.materiaA4Properties.calcResult = "";
+                    cm.materialC1C4Properties.c2Properties.calcResult = "";
+                    cm.materialC1C4Properties.calcResult = "";
+                }
 
                 using (FileStream fs = new FileStream(myPath, FileMode.Create))
                 {

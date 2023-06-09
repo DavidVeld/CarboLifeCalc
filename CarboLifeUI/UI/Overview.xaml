@@ -153,7 +153,7 @@
                     
                     
                 <CheckBox Name="chx_D" Grid.Column="0" Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_D_Changed" Unchecked="chx_D_Changed">D</CheckBox>
-                <CheckBox Name="chx_Operational" Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_B67D2_Changed" Unchecked="chx_Add_Changed">B6-B7 &amp; D2</CheckBox>
+                        <CheckBox Name="chx_Operational" Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_B67D2_Changed" Unchecked="chx_B67D2_Changed">B6-B7 &amp; D2</CheckBox>
                    
                     
                     </Grid>
