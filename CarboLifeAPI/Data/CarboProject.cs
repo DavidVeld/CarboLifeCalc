@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -785,7 +786,7 @@ namespace CarboLifeAPI.Data
                 //These are global calculated values through settngs
                 CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
                 CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
-                CarboDataPoint cb_B67D2 = new CarboDataPoint("Energy B6-B7 + D2 (Global)", this.energyProperties.value * 1000);
+                CarboDataPoint cb_B67D2 = new CarboDataPoint("Energy B6-B7 + D2 (Global)", this.energyProperties.value);
 
                 //A
                 if (calculateA0 == true || calculateAll == true)
@@ -926,7 +927,7 @@ namespace CarboLifeAPI.Data
             double totalMaterials = getTotalsGroup().EC;
             double totalA5 = A5Global;
             double totalC1 = C1Global;
-            double totalB6B7 = energyProperties.value;
+            double totalB6B7 = energyProperties.value / 1000;
             double totalTotal = totalMaterials + totalA5 + totalC1 + totalB6B7;
             
             return totalTotal;
@@ -1151,12 +1152,13 @@ namespace CarboLifeAPI.Data
 
             //Get the social carbon costs
             double socialCarbonCost = Math.Round(this.SocialCost * this.ECTotal,0,MidpointRounding.AwayFromZero);
-            string generalText = "The Social Cabon cost of this project is: "  + this.valueUnit + " " + socialCarbonCost.ToString("N");
+            string generalText = "The Social Cabon cost of this project is: "  + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
+            generalText += "This equals to: " + Math.Round(this.ECTotal / 1.40, 2) + " average car emission per year (1.40 tCO₂/car). (UK)" + Environment.NewLine;
+            generalText += "This requires " + Math.Round((this.ECTotal * 40), 0) + " Trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
 
             result.Add(phaseGroup);
             result.Add(resultvalues);
             result.Add(generalText);
-
 
             return result;
         }
@@ -1207,7 +1209,7 @@ namespace CarboLifeAPI.Data
                 energyProperties.value = 0;
             }
 
-            ECTotal = EC + A5Global + C1Global + energyProperties.value;
+            ECTotal = EC + A5Global + C1Global + (energyProperties.value / 1000);
 
             justSaved = false;
 

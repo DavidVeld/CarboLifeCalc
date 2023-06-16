@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace CarboLifeRevit
@@ -490,5 +491,19 @@ namespace CarboLifeRevit
                 return null;
             }
         }
+
+        public static bool IsWindowOpen<T>(string name = "") where T : Window
+        {
+            if (Application.Current != null)
+            {
+                return string.IsNullOrEmpty(name)
+                   ? Application.Current.Windows.OfType<T>().Any()
+                   : Application.Current.Windows.OfType<T>().Any(w => w.Name.Equals(name));
+            }
+            else
+                return false;
+        }
+        
+
     }
 }

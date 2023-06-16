@@ -10,7 +10,10 @@ namespace CarboLifeAPI.Data
     public class CarboEnergyProperties
     {
         public string propertyName { get; set; }
-        
+
+        /// <summary>
+        /// Total CO2 during design life in Co2e for tCO2e / 1000
+        /// </summary>
         public double value { get; set; }
 
         /// <summary>

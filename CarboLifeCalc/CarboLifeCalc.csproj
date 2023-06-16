@@ -212,6 +212,12 @@
     <Content Include="img\ico_CarboLife16.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="img\ico_CarboLife2D16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="img\ico_CarboLife2D32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="img\ico_CarboLife32.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

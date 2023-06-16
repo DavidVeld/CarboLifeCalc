@@ -69,8 +69,6 @@ namespace CarboLifeUI.UI
                 {
                     //A project Is loaded, Proceed to next
 
-                    RefreshInterFace();
-
                     if (cbb_GraphType.Items.Count <= 0)
                     {
                         //cbb_GraphType.Items.Add("Materials");
@@ -79,6 +77,11 @@ namespace CarboLifeUI.UI
 
                         cbb_GraphType.Text = "Phases";
                     }
+
+
+                    RefreshInterFace();
+
+
                 }
 
 

@@ -90,28 +90,6 @@ namespace CarboLifeCalc
                 MessageBox.Show(ex.Message);
             }
 
-            /* OLD
-            CarboProject newProject = new CarboProject();
-            CarboDatabase cd = newProject.CarboDatabase;
-            cd.DeSerializeXML("");
-            if (newProject != null && cd != null && cd.CarboMaterialList.Count > 0)
-            {
-                MaterialEditor mateditor = new MaterialEditor(cd.CarboMaterialList[0].Name, cd);
-                mateditor.ShowDialog();
-
-                if (mateditor.acceptNew == true)
-                {
-                    CarboDatabase database = mateditor.returnedDatabase;
-                    database.SerializeXML("");
-                }
-
-
-            }
-            else
-            {
-                MessageBox.Show("Template Database not found");
-            }
-            */
         }
 
         private void btn_Open_Click(object sender, RoutedEventArgs e)

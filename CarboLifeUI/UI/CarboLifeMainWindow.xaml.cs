@@ -543,5 +543,47 @@ namespace CarboLifeUI.UI
             settingsWindow.ShowDialog();
         }
 
+        private void mnu_EditTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CarboSettings settings = new CarboSettings();
+                settings = settings.Load();
+                string Startpath = settings.templatePath;
+                string pathForViewing = System.IO.Path.GetDirectoryName(Startpath);
+
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Carbo Life Material File (*.cxml)|*.cxml|All files (*.*)|*.*";
+                openFileDialog.InitialDirectory = pathForViewing;
+
+                var path = openFileDialog.ShowDialog();
+
+                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
+                {
+                    CarboProject newProject = new CarboProject();
+                    CarboDatabase bufferDatabase = newProject.CarboDatabase;
+
+                    CarboDatabase cd = bufferDatabase.DeSerializeXML(openFileDialog.FileName);
+
+                    MaterialEditor mateditor = new MaterialEditor(cd.CarboMaterialList[0].Name, cd);
+                    mateditor.ShowDialog();
+
+                    if (mateditor.acceptNew == true)
+                    {
+                        CarboDatabase database = mateditor.returnedDatabase;
+                        database.SerializeXML(openFileDialog.FileName);
+                    }
+                    else
+                    {
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

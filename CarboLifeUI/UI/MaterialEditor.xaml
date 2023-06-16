@@ -82,15 +82,15 @@
                 <Button Name="btn_EditDescription"  Grid.Row="2" Grid.Column="3" Height="25" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_EditDescription_Click" >Edit...</Button>
 
                 <Label Grid.Column="1" Grid.Row="3" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="0,5,0,0">Category:</Label>
-                <ComboBox Name="cbb_Category"  Grid.Column="2" Grid.Row="3" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
+                <ComboBox Name="cbb_Category"  Grid.Column="2" Grid.Row="3" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_Category_DropDownClosed" ></ComboBox>
                 <Button Name="btn_AddCategory"  Grid.Row="3" Grid.Column="3" Height="26" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_AddCategory_Click" >Add...</Button>
 
                 <Label Grid.Column="1" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="0,5,0,0">Density:</Label>
-                <TextBox Name="txt_Density" Grid.Column="2" Grid.Row="4" Height="26" Margin="0,5,5,5"  Style="{StaticResource flatTextBox}"></TextBox>
+                <TextBox Name="txt_Density" Grid.Column="2" Grid.Row="4" Height="26" Margin="0,5,5,5"  Style="{StaticResource flatTextBox}" TextChanged="txt_Density_TextChanged"></TextBox>
                 <Label Grid.Column="3" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Margin="5,5,0,0">kg/m³</Label>
 
                 <Label Grid.Column="1" Grid.Row="5" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="0,5,0,0">EDP Link:</Label>
-                <TextBox Name="txt_EPDLink"  Grid.Column="2" Grid.Row="5" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}" ></TextBox>
+                <TextBox Name="txt_EPDLink"  Grid.Column="2" Grid.Row="5" Height="26" Margin="0,5,5,5" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}" TextChanged="txt_EPDLink_TextChanged" ></TextBox>
                 <Button Name="btn_OpenLink"  Grid.Row="5" Grid.Column="3" Height="26" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_OpenLink_Click" >Open...</Button>
 
                 <Label Grid.Column="1" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="0,5,0,0">Default Waste:</Label>
@@ -136,7 +136,7 @@
                 <Label  Grid.Row="2" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Production [A1-A3]:</Label>
                 <TextBox Name="txt_A1_A3_Setting"  Grid.Row="2" Grid.Column="2" Height="26"  Margin="0,3,0,3" VerticalAlignment="Center" IsReadOnly="True"  Style="{StaticResource flatTextBox}" Visibility="Visible"></TextBox>
                 <CheckBox x:Name="chx_A1_A3_Manual" Grid.Row="2" Grid.Column="4" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" Click="chx_A1_A3_Manual_Click"/>
-                <TextBox Name="txt_A1_A3"  Grid.Row="2" Grid.Column="3" Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_A1_A3_TextChanged"/>
+                <TextBox Name="txt_A1_A3"  Grid.Row="2" Grid.Column="3" Height="26" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_A1_A3_TextChanged"/> <!--Binding Path=inUseProperties.B4-->
                 <Button Name="btn_A1_A3"  Grid.Row="2" Grid.Column="5" Height="25" VerticalAlignment="Center" Width="40" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_A1_A3_Click">Edit...</Button>
 
                 <Label  Grid.Row="3" Grid.Column="1" Height="27" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Transport [A4]:</Label>
@@ -203,8 +203,8 @@
 
                 <Label Name="Calc" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="5"  Margin="0,5,0,0" Style="{StaticResource formTextStyle}" Grid.RowSpan="3" Visibility="Hidden">[CALC]</Label>
 
-                <Button Name="btn_Apply"  Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="Btn_Apply_Click">Apply</Button>
-                <Button Name="btn_FromEPD"  Grid.Row="13" Grid.Column="2" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="btn_FromEPD_Click">From EPD...</Button>
+                <Button Name="btn_Apply"  Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="3" Margin="0,0,0,0" VerticalAlignment="Center" Width="95" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="Btn_Apply_Click">Apply Changes</Button>
+                <Button Name="btn_FromEPD"  Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,105,0" VerticalAlignment="Center" Width="95" Height="25" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_FromEPD_Click">From EPD...</Button>
 
             </Grid>
         </GroupBox>

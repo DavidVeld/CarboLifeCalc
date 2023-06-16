@@ -37,10 +37,10 @@ namespace CarboLifeRevit
             /// New Project
             PushButton pB_CarboCalc = CarboCalcPanel.AddItem(new PushButtonData("CarboLifeCalc", "Launch", MyAssemblyPath, "CarboLifeRevit.CarboLifeCalc")) as PushButton;
             //LImage
-            Uri img_CarboCalc = new Uri(MyAssemblyDir + @"\img\ico_CarboLife32.png");
+            Uri img_CarboCalc = new Uri(MyAssemblyDir + @"\img\ico_CarboLife2D32.png");
             BitmapImage limg_CarboCalc = new BitmapImage(img_CarboCalc);
             //SImahe
-            Uri imgsmll_CarboCalc = new Uri(MyAssemblyDir + @"\img\ico_CarboLife16.png");
+            Uri imgsmll_CarboCalc = new Uri(MyAssemblyDir + @"\img\ico_CarboLife2D16.png");
             BitmapImage smllimg_CarboCalc = new BitmapImage(imgsmll_CarboCalc);
 
             pB_CarboCalc.LargeImage = limg_CarboCalc;
@@ -67,10 +67,10 @@ namespace CarboLifeRevit
             /// Visual Menu
             PushButton pB_ShowCarboCalc = CarboCalcPanel.AddItem(new PushButtonData("Show CarboLife Calc", "Show Project", MyAssemblyPath, "CarboLifeRevit.CarboViewerCommand")) as PushButton;
             //LImage
-            Uri pB_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_UpdateCarboLife32.png");
+            Uri pB_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_CarboLife32.png");
             BitmapImage limg_pB_ShowCarboCalc2 = new BitmapImage(pB_ShowCarboCalc2);
             //SImahe
-            Uri imgsmll_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_UpdateCarboLife16.png");
+            Uri imgsmll_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_CarboLife16.png");
             BitmapImage smllimg_ShowCarboCalc2 = new BitmapImage(imgsmll_ShowCarboCalc2);
 
             pB_ShowCarboCalc.LargeImage = limg_pB_ShowCarboCalc2;
@@ -125,6 +125,13 @@ namespace CarboLifeRevit
 
         public void ShowHeatmap(UIApplication uiapp, CarboProject project, List<int> VisibleElements)
         {
+
+            if (CarboRevitUtils.IsWindowOpen<Window>("HeatMapCreatorWin"))
+            {
+                // HeatMapCreator is open
+                MessageBox.Show("Whoop Whoop");
+            }
+
             // If we do not have a dialog yet, create and show it
             if (m_HeatMapCreator == null)
             {

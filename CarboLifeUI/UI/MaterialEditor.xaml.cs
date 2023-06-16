@@ -113,6 +113,9 @@ namespace CarboLifeUI.UI
         /// </summary>
         private void UpdateMaterialSettings()
         {
+            //StoreGeneralProperties();
+            //StoreEmissionProperties();
+
             if (selectedMaterial != null)
             {
                 selectedMaterial.CalculateTotals();
@@ -362,6 +365,7 @@ namespace CarboLifeUI.UI
 
         private void Cbb_Categories_DropDownClosed(object sender, EventArgs e)
         {
+            //StoreGeneralProperties();
             RefreshMaterialList();
         }
 
@@ -440,7 +444,7 @@ namespace CarboLifeUI.UI
                         selectedMaterial.Density = selectedMaterial.materialA1A3Properties.Density;
                 }
             }
-
+            StoreGeneralProperties();
             UpdateMaterialSettings();
 
         }
@@ -459,6 +463,7 @@ namespace CarboLifeUI.UI
 
                 //selectedMaterial.SetProperty("ECI_A4_Settings", materialTransportPicker.Settings);
             }
+            StoreGeneralProperties();
             UpdateMaterialSettings();
         }
 
@@ -475,6 +480,7 @@ namespace CarboLifeUI.UI
                 selectedMaterial.ECI_A5 = selectedMaterial.materialA5Properties.value;
                 
             }
+            StoreGeneralProperties();
             UpdateMaterialSettings();
         }
 
@@ -491,6 +497,7 @@ namespace CarboLifeUI.UI
                 selectedMaterial.materialC1C4Properties = materialEndofLifePicker.eolProperties;
                 selectedMaterial.ECI_C1C4 = selectedMaterial.materialC1C4Properties.value;
             }
+            StoreGeneralProperties();
             UpdateMaterialSettings();
         }
 
@@ -506,22 +513,27 @@ namespace CarboLifeUI.UI
                 selectedMaterial.materialDProperties = materialAdditionalPicker.materialDProperties;
                 selectedMaterial.ECI_D = selectedMaterial.materialDProperties.value;
             }
+            StoreGeneralProperties();
             UpdateMaterialSettings();
         }
 
 
         private void btn_Seq_Click(object sender, RoutedEventArgs e)
         {
-            MaterialSequestrationPicker materialSequestrationPicker = new MaterialSequestrationPicker(selectedMaterial.materialSeqProperties);
-            materialSequestrationPicker.ShowDialog();
-            if (materialSequestrationPicker.isAccepted == true)
+            if (selectedMaterial != null)
             {
-                chx_Seq_Manual.IsChecked = false;
-                selectedMaterial.ECI_Seq_Override = false;
+                MaterialSequestrationPicker materialSequestrationPicker = new MaterialSequestrationPicker(selectedMaterial.materialSeqProperties);
+                materialSequestrationPicker.ShowDialog();
+                if (materialSequestrationPicker.isAccepted == true)
+                {
+                    chx_Seq_Manual.IsChecked = false;
+                    selectedMaterial.ECI_Seq_Override = false;
 
-                selectedMaterial.materialSeqProperties = materialSequestrationPicker.materialSeqProperties;
-                selectedMaterial.ECI_Seq = selectedMaterial.materialSeqProperties.value;
+                    selectedMaterial.materialSeqProperties = materialSequestrationPicker.materialSeqProperties;
+                    selectedMaterial.ECI_Seq = selectedMaterial.materialSeqProperties.value;
+                }
             }
+            StoreGeneralProperties();
             UpdateMaterialSettings();
         }
 
@@ -532,6 +544,17 @@ namespace CarboLifeUI.UI
 
         private void Btn_Apply_Click(object sender, RoutedEventArgs e)
         {
+            //Strore the general Properties
+            StoreGeneralProperties();
+            StoreEmissionProperties();
+            UpdateMaterialSettings();
+            RefreshMaterialList();
+            selectMaterial(txt_Name.Text);
+
+        }
+
+        private void StoreGeneralProperties()
+        {
             if (selectedMaterial != null)
             {
                 selectedMaterial.Name = txt_Name.Text;
@@ -539,7 +562,12 @@ namespace CarboLifeUI.UI
                 selectedMaterial.Category = cbb_Category.Text;
                 selectedMaterial.Density = Utils.ConvertMeToDouble(txt_Density.Text);
                 selectedMaterial.EPDurl = txt_EPDLink.Text;
-                /*
+            }
+        }
+        private void StoreEmissionProperties()
+        {
+            if (selectedMaterial != null)
+            {
                 selectedMaterial.ECI = Utils.ConvertMeToDouble(txt_ECI.Text);
                 selectedMaterial.ECI_A1A3 = Utils.ConvertMeToDouble(txt_A1_A3.Text);
                 selectedMaterial.ECI_A4 = Utils.ConvertMeToDouble(txt_A4.Text);
@@ -547,18 +575,8 @@ namespace CarboLifeUI.UI
                 selectedMaterial.ECI_B1B5 = Utils.ConvertMeToDouble(txt_B1_B5.Text);
                 selectedMaterial.ECI_C1C4 = Utils.ConvertMeToDouble(txt_C1_C4.Text);
                 selectedMaterial.ECI_D = Utils.ConvertMeToDouble(txt_D.Text);
-                */
-
             }
-
-            UpdateMaterialSettings();
-            RefreshMaterialList();
-            selectMaterial(txt_Name.Text);
-
-            //selectedMaterial.EEI = Utils.ConvertMeToDouble(txt_EEI.Text);
-
         }
-
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
             acceptNew = false;
@@ -660,6 +678,7 @@ namespace CarboLifeUI.UI
             {
                 selectedMaterial.ECI_A1A3_Override = chx_A1_A3_Manual.IsChecked.Value;
 
+                StoreGeneralProperties();
                 UpdateMaterialSettings();
             }
         }
@@ -670,6 +689,7 @@ namespace CarboLifeUI.UI
             {
                 selectedMaterial.ECI_A4_Override = chx_A4_Manual.IsChecked.Value;
 
+                StoreGeneralProperties();
                 UpdateMaterialSettings();
             }
         }
@@ -680,6 +700,7 @@ namespace CarboLifeUI.UI
             {
                 selectedMaterial.ECI_A5_Override = chx_A5_Manual.IsChecked.Value;
 
+                StoreGeneralProperties();
                 UpdateMaterialSettings();
             }
         }
@@ -691,6 +712,7 @@ namespace CarboLifeUI.UI
             {
                 selectedMaterial.ECI_C1C4_Override = chx_C1_C4_Manual.IsChecked.Value;
 
+                StoreGeneralProperties();
                 UpdateMaterialSettings();
             }
         }
@@ -701,6 +723,7 @@ namespace CarboLifeUI.UI
             {
                 selectedMaterial.ECI_D_Override = chx_D_Manual.IsChecked.Value;
 
+                StoreGeneralProperties();
                 UpdateMaterialSettings();
             }
         }
@@ -711,6 +734,7 @@ namespace CarboLifeUI.UI
             {
                 selectedMaterial.ECI_Seq_Override = chx_Seq_Manual.IsChecked.Value;
 
+                StoreGeneralProperties();
                 UpdateMaterialSettings();
             }
         }
@@ -718,15 +742,17 @@ namespace CarboLifeUI.UI
         private async void txt_A1_A3_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
-            int startLength = tb.Text.Length;
+            int caretIndex = txt_A1_A3.CaretIndex;
 
             await Task.Delay(1000);
-                if (selectedMaterial.ECI_A1A3_Override == true)
-                {
-                    selectedMaterial.ECI_A1A3 = Utils.ConvertMeToDouble(txt_A1_A3.Text);
-                    UpdateMaterialSettings();
-                }
+            if (selectedMaterial.ECI_A1A3_Override == true)
+            {
+                selectedMaterial.ECI_A1A3 = Utils.ConvertMeToDouble(txt_A1_A3.Text);
 
+                StoreGeneralProperties();
+                UpdateMaterialSettings();
+                txt_A1_A3.CaretIndex = txt_A1_A3.Text.Length;
+            }
         }
 
         private async void txt_A4_TextChanged(object sender, TextChangedEventArgs e)
@@ -738,6 +764,8 @@ namespace CarboLifeUI.UI
             if (selectedMaterial.ECI_A4_Override == true)
             {
                 selectedMaterial.ECI_A4 = Utils.ConvertMeToDouble(txt_A4.Text);
+
+                StoreGeneralProperties();
                 UpdateMaterialSettings();
             }
         }
@@ -749,12 +777,14 @@ namespace CarboLifeUI.UI
 
             await Task.Delay(1000);
 
-                if (selectedMaterial.ECI_A5_Override == true)
-                {
-                    selectedMaterial.ECI_A5 = Utils.ConvertMeToDouble(txt_A5.Text);
-                    UpdateMaterialSettings();
-                }
-            
+            if (selectedMaterial.ECI_A5_Override == true)
+            {
+                selectedMaterial.ECI_A5 = Utils.ConvertMeToDouble(txt_A5.Text);
+
+                StoreGeneralProperties();
+                UpdateMaterialSettings();
+            }
+
         }
 
         private async void txt_B1_B5_TextChanged(object sender, TextChangedEventArgs e)
@@ -764,20 +794,18 @@ namespace CarboLifeUI.UI
 
             await Task.Delay(1000);
                     selectedMaterial.ECI_B1B5 = Utils.ConvertMeToDouble(txt_B1_B5.Text);
-                    UpdateMaterialSettings();
+            StoreGeneralProperties();
+            UpdateMaterialSettings();
         }
         private async void txt_C1_C4_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TextBox tb = (TextBox)sender;
-            int startLength = tb.Text.Length;
-
             await Task.Delay(1000);
-                if (selectedMaterial.ECI_C1C4_Override == true)
-                {
-                    selectedMaterial.ECI_C1C4 = Utils.ConvertMeToDouble(txt_C1_C4.Text);
-                    UpdateMaterialSettings();
-                }
-            
+            if (selectedMaterial.ECI_C1C4_Override == true)
+            {
+                selectedMaterial.ECI_C1C4 = Utils.ConvertMeToDouble(txt_C1_C4.Text);
+                StoreGeneralProperties();
+                UpdateMaterialSettings();
+            }
         }
 
         private async void txt_D_TextChanged(object sender, TextChangedEventArgs e)
@@ -785,12 +813,13 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(500);
+            await Task.Delay(1000);
                  if (selectedMaterial.ECI_D_Override == true)
                     {
                         selectedMaterial.ECI_D = Utils.ConvertMeToDouble(txt_D.Text);
-                        UpdateMaterialSettings();
-                    }           
+                StoreGeneralProperties();
+                UpdateMaterialSettings();
+            }           
            }
 
         private async void txt_Seq_TextChanged(object sender, TextChangedEventArgs e)
@@ -803,8 +832,9 @@ namespace CarboLifeUI.UI
                 if (selectedMaterial.ECI_Seq_Override == true)
                 {
                     selectedMaterial.ECI_Seq = Utils.ConvertMeToDouble(txt_Seq.Text);
-                    UpdateMaterialSettings();
-                }
+                StoreGeneralProperties();
+                UpdateMaterialSettings();
+            }
 
         }
 
@@ -815,7 +845,8 @@ namespace CarboLifeUI.UI
 
             await Task.Delay(1000);
                 selectedMaterial.ECI_Mix = Utils.ConvertMeToDouble(txt_Mix.Text);
-                UpdateMaterialSettings();
+            StoreGeneralProperties();
+            UpdateMaterialSettings();
         }
 
         private void btn_EditDescription_Click(object sender, RoutedEventArgs e)
@@ -826,7 +857,9 @@ namespace CarboLifeUI.UI
             {
                 if (selectedMaterial != null)
                 {
-                    selectedMaterial.Description = editor.description;
+                    txt_Description.Text = editor.description;
+
+                    StoreGeneralProperties();
                     UpdateMaterialSettings();
                 }
             }
@@ -837,7 +870,7 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(250);
+            await Task.Delay(1000);
             if (startLength == tb.Text.Length)
             {
                 RefreshMaterialList();
@@ -920,6 +953,7 @@ namespace CarboLifeUI.UI
                     }
                 }
             }
+            StoreGeneralProperties();
             UpdateMaterialSettings();
 
         }
@@ -942,7 +976,13 @@ namespace CarboLifeUI.UI
 
         private void btn_TemplateSync_Click(object sender, RoutedEventArgs e)
         {
-            
+
+            if (selectedMaterial != null)
+            {
+                StoreGeneralProperties();
+                StoreEmissionProperties();
+            }
+
             TemplateSelector templateSelectionDialog = new TemplateSelector();
             templateSelectionDialog.ShowDialog();
 
@@ -953,6 +993,8 @@ namespace CarboLifeUI.UI
 
                 if (File.Exists(templatePath) && list.Count > 0)
                 {
+
+
                     try
                     {
                         //Create a buffer database for sync
@@ -995,7 +1037,8 @@ namespace CarboLifeUI.UI
                     selectedMaterial.ECI_Mix = materialmixer.valueToBeMixed;
                     selectedMaterial.ECI_Mix_Info = materialmixer.selectedMaterialDescription;
                 }
-                UpdateMaterialSettings();
+                StoreGeneralProperties();
+                StoreEmissionProperties();
             }
         }
 
@@ -1010,10 +1053,10 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
 
             await Task.Delay(1000);
+            selectedMaterial.ECI_Mix_Info = tb.Text;
 
-                selectedMaterial.ECI_Mix_Info = tb.Text;
-                UpdateMaterialSettings();
-            
+            StoreGeneralProperties();
+            StoreEmissionProperties();
         }
 
         private async void txt_Waste_TextChanged(object sender, TextChangedEventArgs e)
@@ -1021,7 +1064,7 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             int startLength = tb.Text.Length;
 
-            await Task.Delay(500);
+            await Task.Delay(1000);
             if (startLength == tb.Text.Length)
             {
                 double value = Utils.ConvertMeToDouble(tb.Text);
@@ -1031,7 +1074,10 @@ namespace CarboLifeUI.UI
                     value = 100;
 
                 selectedMaterial.WasteFactor = Math.Round(value,1,MidpointRounding.AwayFromZero);
-                    UpdateMaterialSettings();
+                
+                StoreGeneralProperties();
+                StoreEmissionProperties();
+                UpdateMaterialSettings();
             }
         }
 
@@ -1043,13 +1089,40 @@ namespace CarboLifeUI.UI
 
         private async void txt_Name_TextChanged(object sender, TextChangedEventArgs e)
         {
-            /*
-            TextBox tb = (TextBox)sender;
-            await Task.Delay(2000);
-            selectedMaterial.Name = tb.Text;
-            RefreshMaterialList();
-            UpdateMaterialSettings();
-            */
+            await Task.Delay(1000);
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.Name = txt_Name.Text;
+                StoreGeneralProperties();
+                //RefreshMaterialList();
+            }
+        }
+
+        private void cbb_Category_DropDownClosed(object sender, EventArgs e)
+        {
+            StoreGeneralProperties();
+            //RefreshMaterialList();
+        }
+
+        private async void txt_Density_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await Task.Delay(1000);
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.Density = Utils.ConvertMeToDouble(txt_Density.Text);
+                StoreGeneralProperties();
+            }
+        }
+
+        private async void txt_EPDLink_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await Task.Delay(1000);
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.EPDurl = txt_EPDLink.Text;
+                StoreGeneralProperties();
+                //RefreshMaterialList();
+            }
         }
     }
 }

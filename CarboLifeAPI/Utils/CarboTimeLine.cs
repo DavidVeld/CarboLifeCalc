@@ -101,9 +101,6 @@ namespace CarboLifeAPI
             }
 
 
-
-
-
             //Calulate each item
             project.getPhaseTotals();
             ObservableCollection<CarboGroup> groupList = project.getGroupList;
@@ -154,7 +151,7 @@ namespace CarboLifeAPI
             {
                 double energyValue = project.energyProperties.getTotalValue(i);
 
-                totalECAcumulated += energyValue;
+                totalECAcumulated += (energyValue * 1);
             }
 
             result.Name = i.ToString();

@@ -334,7 +334,6 @@ namespace CarboLifeUI.UI
             designLifeNew = Convert.ToInt32(Utils.ConvertMeToDouble(tb.Text));
             CarboLifeProject.SetDesignLife(designLifeNew);
             RefreshInterFace();
-
         }
 
         private void btn_CalcEnergy_Click(object sender, RoutedEventArgs e)

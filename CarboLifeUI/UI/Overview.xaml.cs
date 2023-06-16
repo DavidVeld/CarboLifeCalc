@@ -161,6 +161,8 @@ namespace CarboLifeUI.UI
                     chx_D.IsChecked = CarboLifeProject.calculateD;
                     chx_Seq.IsChecked = CarboLifeProject.calculateSeq;
                     chx_Added.IsChecked = CarboLifeProject.calculateAdd;
+                    chx_Operational.IsChecked = CarboLifeProject.calculateB67;
+
 
                     RefreshLetiGraph();
                     RefreshPhasePie();
