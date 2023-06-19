@@ -21,6 +21,7 @@ using CarboLifeAPI;
 using Autodesk.Revit.UI;
 using System.Windows.Forms;
 using System.Drawing;
+using CarboLifeRevit.Modeless;
 
 namespace CarboLifeRevit
 {
@@ -139,7 +140,7 @@ namespace CarboLifeRevit
             m_Handler._revitEvent.Dispose();
             m_Handler._revitEvent = null;
             m_Handler = null;
-
+            FormStatusChecker.isWindowOpen = false;
             //You have to call the base class
             base.OnClosing(e);
         }

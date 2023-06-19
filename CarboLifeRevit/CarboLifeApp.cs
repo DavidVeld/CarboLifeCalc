@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using CarboLifeAPI.Data;
+using CarboLifeRevit.Modeless;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -78,6 +79,9 @@ namespace CarboLifeRevit
             pB_ShowCarboCalc.SetContextualHelp(contextualHelp);
             pB_ShowCarboCalc.ToolTip = "Vizualise your project in Revit";
 
+            FormStatusChecker.isWindowOpen = false;
+
+
             /*
             PushButton pB_CarboCalcPlus = CarboCalcPanel.AddItem(new PushButtonData("CarboLifeCalcSettings", "Settings", MyAssemblyPath, "CarboLifeRevit.CarboLifeCalcPlus")) as PushButton;
             //LImage
@@ -126,11 +130,6 @@ namespace CarboLifeRevit
         public void ShowHeatmap(UIApplication uiapp, CarboProject project, List<int> VisibleElements)
         {
 
-            if (CarboRevitUtils.IsWindowOpen<Window>("HeatMapCreatorWin"))
-            {
-                // HeatMapCreator is open
-                MessageBox.Show("Whoop Whoop");
-            }
 
             // If we do not have a dialog yet, create and show it
             if (m_HeatMapCreator == null)
@@ -144,6 +143,7 @@ namespace CarboLifeRevit
                 // We give the objects to the new dialog;
                 // The dialog becomes the owner responsible fore disposing them, eventually.
                 m_HeatMapCreator = new HeatMapCreator(exEvent, handler, project, VisibleElements);
+                FormStatusChecker.isWindowOpen = true;
                 m_HeatMapCreator.Show();
             }
             else
@@ -157,6 +157,7 @@ namespace CarboLifeRevit
                 // We give the objects to the new dialog;
                 // The dialog becomes the owner responsible fore disposing them, eventually.
                 m_HeatMapCreator = new HeatMapCreator(exEvent, handler, project, VisibleElements);
+                FormStatusChecker.isWindowOpen = true;
                 m_HeatMapCreator.Show();
             }
 

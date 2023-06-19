@@ -109,6 +109,7 @@
     <Compile Include="CarboLifeCalc.cs" />
     <Compile Include="CarboLifeRevitImport.cs" />
     <Compile Include="CarboRevitUtils.cs" />
+    <Compile Include="Modeless\FormStatusChecker.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -10,6 +10,8 @@ using CarboLifeRevit;
 using CarboLifeAPI.Data;
 using Microsoft.Win32;
 using System.IO;
+using CarboLifeRevit.Modeless;
+using System.Windows;
 
 namespace CarboLifeRevit
 {
@@ -25,6 +27,15 @@ namespace CarboLifeRevit
                 ///CarboGroupSettings importSettings = new CarboGroupSettings();
                 //importSettings = importSettings.DeSerializeXML();
 
+                //Show the form
+                if (FormStatusChecker.isWindowOpen == true)
+                {
+                    //Window is open.
+                    MessageBox.Show("Window is already open, make sure other instances are cloased and restart the command.");
+                    FormStatusChecker.isWindowOpen = true;
+
+                    return Result.Cancelled;
+                }
 
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
@@ -50,9 +61,8 @@ namespace CarboLifeRevit
                     CarboProject ElementsVisibleOrSelected = CarboLifeRevitImport.CollectVisibleorSelectedElements(app, projectToOpen.RevitImportSettings, "");
 
                     List<int> VisibleElements = ElementsVisibleOrSelected.GetElementIdList();
-
-                    //Show the form
                     CarboLifeApp.thisApp.ShowHeatmap(commandData.Application, projectToOpen, VisibleElements);
+
                 }
 
                 //Return result
