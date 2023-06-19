@@ -32,7 +32,7 @@ Heatmaps:
 https://youtu.be/O0gkl9B8Mvw  
 
 Screenshots:
-![alt text](https://www.davidveld.nl/img/carbocalc/bim1.jpg)
+![alt text]([https://www.davidveld.nl/img/carbocalc/bim1.jpg](https://github.com/DavidVeld/CarboLifeCalc/blob/master/CarboLifeCalc/img/scr/screenshot1.png))
 ![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc1.png)
 ![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc2.png)
 ![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc3.png)
