@@ -33,14 +33,24 @@ namespace CarboLifeAPI.Data
         public string filePath { get; set; }
 
         //Global Calculations:
+        /// <summary>
+        /// A0 global in kgCo2
+        /// </summary>
         public double A0Global { get; set; }
-        public double A0Factor { get; set; }
+
+        //public double A0Factor { get; set; }
+
         public double A5Global { get; set; }
         public double A5Factor { get; set; }
+
         public double b675Global { get; set; }
         public double B67Factor { get; set; }
         public double demoArea { get; set; }
         public double C1Factor { get; set; }
+
+        /// <summary>
+        /// tCo2
+        /// </summary>
         public double C1Global { get; set; }
         //Absolute total including Global Values
         public double ECTotal { get; set; }
@@ -159,12 +169,11 @@ namespace CarboLifeAPI.Data
             calculateA5 = true;
             calculateB = false;
             calculateB67 = false;
-
+            calculateSeq = false;
             calculateC = true;
             calculateD = false;
             calculateAdd = false;
-
-            designLife = 50;
+            designLife = 60;
         }
 
 
@@ -214,12 +223,11 @@ namespace CarboLifeAPI.Data
             calculateA5 = true;
             calculateB = false;
             calculateB67 = false;
-
+            calculateSeq = false;
             calculateC = true;
             calculateD = false;
             calculateAdd = false;
-
-            designLife = 50;
+            designLife = 60;
         }
 
         public void CreateGroups()
@@ -771,7 +779,7 @@ namespace CarboLifeAPI.Data
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
             try
             {
-                CarboDataPoint cb_A0 = new CarboDataPoint("A0", 0);
+                CarboDataPoint cb_A0 = new CarboDataPoint("A0", this.A0Global);
                 CarboDataPoint cb_A1A3 = new CarboDataPoint("A1-A3", 0);
                 CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
                 CarboDataPoint cb_A5 = new CarboDataPoint("A5(Material)",0);
@@ -893,8 +901,6 @@ namespace CarboLifeAPI.Data
             return valueList;
         }
 
-
-
         internal List<CarboMaterial> getUsedmaterials()
         {
             List<CarboMaterial> result = new List<CarboMaterial>();
@@ -942,6 +948,8 @@ namespace CarboLifeAPI.Data
 
             return result;
         }
+        [Obsolete("This is the old version and can be deleted")]
+
         public string getSummaryText(bool materials, bool globals, bool cars, bool trees)
         {
             string result = "";
@@ -1171,8 +1179,9 @@ namespace CarboLifeAPI.Data
          
             EC = 0;
             ECTotal = 0;
+            double globalTotals = 0;
 
-            //This Will calculate all totals and set all the individual element values;
+            //This Will calculate all totals of MATERIAL SPECIFIC VALUES and set all the individual element values;
             foreach (CarboGroup cg in groupList)
             {
                 cg.CalculateTotals(calculateA13, calculateA4, calculateA5, calculateB, calculateC, calculateD, calculateSeq, calculateAdd);
@@ -1190,26 +1199,27 @@ namespace CarboLifeAPI.Data
 
             //Set Global Values if required
 
-            if (calculateA5 == true)
-                A5Global = (A5Factor * (Value / 100000)) / 1000;
+            if (calculateA0 == true)
+                globalTotals += A0Global;
             else
-                A5Global = 0;
+                //Ignore
+
+            if (calculateA5 == true)
+                globalTotals += (A5Factor * (Value / 100000)) / 1000;
+            else
+                //Ignore
                
             if(calculateC == true)
-                C1Global = (demoArea * C1Factor) / 1000;
+                globalTotals += (demoArea * C1Factor) / 1000;
             else
-                C1Global = 0;
+                //Ignore
 
             if (calculateB67 == true)
-            {
                 energyProperties.calculate(this.designLife);
-            }
             else
-            {
-                energyProperties.value = 0;
-            }
+            //Ignore
 
-            ECTotal = EC + A5Global + C1Global + (energyProperties.value / 1000);
+            ECTotal = EC + globalTotals + (energyProperties.value / 1000);
 
             justSaved = false;
 
@@ -1226,11 +1236,13 @@ namespace CarboLifeAPI.Data
         /// <param name="cD"></param>
         /// <param name="cSeq"></param>
         /// <param name="cAdd"></param>
-        public void CalculateProjectByPhase(bool cA13 = true, bool cA4 = true, bool cA5 = true, bool cB = true, bool cC = true, bool cD = true, bool cSeq = true, bool cAdd = true)
+        public void CalculateProjectByPhase(bool cA13 = true, bool cA4 = true, bool cA5 = true, bool cB = true, bool cC = true, bool cD = true, bool cSeq = true, bool cAdd = true, bool cEnergyUse = true, bool cA0 = true)
         {
 
             EC = 0;
             ECTotal = 0;
+            double globalTotals = 0;
+
             //This Will calculate all totals and set all the individual element values;
             foreach (CarboGroup cg in groupList)
             {
@@ -1246,18 +1258,30 @@ namespace CarboLifeAPI.Data
 
             //Set element totals This is not done for a phase calculation
             //setElementotals();
+            //Set Global Values if required
+
+            if (cA0 == true)
+                globalTotals += A0Global;
+            else
+            //Ignore
 
             if (cA5 == true)
-                A5Global = (A5Factor * (Value / 100000)) / 1000;
+                globalTotals += (A5Factor * (Value / 100000)) / 1000;
             else
-                A5Global = 0;
+            //Ignore
 
             if (cC == true)
-                C1Global = (demoArea * C1Factor) / 1000;
+                globalTotals += (demoArea * C1Factor) / 1000;
             else
-                C1Global = 0;
+            //Ignore
 
-            ECTotal = EC + A5Global + C1Global;
+            if (calculateB67 == true)
+                energyProperties.calculate(this.designLife);
+            else
+                //Ignore
+
+            ECTotal = EC + globalTotals + (energyProperties.value / 1000);
+
 
             justSaved = false;
 
@@ -1774,6 +1798,81 @@ namespace CarboLifeAPI.Data
             }
 
             this.CalculateProject();
+        }
+
+        /// <summary>
+        /// Upfront Carbon is A0 - A5 
+        /// </summary>
+        /// <returns></returns>
+        public double getUpfrontTotals(bool substructure = false)
+        {
+            double result = 0;
+            CalculateProject();
+            //
+            List<CarboDataPoint> data = getPhaseTotals(true);
+
+
+
+            /*
+             *                 CarboDataPoint cb_A0 = new CarboDataPoint("A0", 0);
+                CarboDataPoint cb_A1A3 = new CarboDataPoint("A1-A3", 0);
+                CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
+                CarboDataPoint cb_A5 = new CarboDataPoint("A5(Material)",0);
+
+                CarboDataPoint cb_B1B5 = new CarboDataPoint("B1-B7", 0);
+                CarboDataPoint cb_C1C4 = new CarboDataPoint("C1-C4", 0);
+
+                CarboDataPoint cb_D = new CarboDataPoint("D", 0);
+                CarboDataPoint cb_Seq = new CarboDataPoint("Sequestration", 0);
+                CarboDataPoint Added = new CarboDataPoint("Additional", 0);
+
+                //These are global calculated values through settngs
+                CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
+                CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
+                CarboDataPoint cb_B67D2 = new CarboDataPoint("Energy B6-B7 + D2 (Global)", this.energyProperties.value);
+             * */
+
+
+            foreach (CarboDataPoint dp in data)
+            {
+                if (dp.Name == "A0")
+                    result += dp.Value;
+                if (dp.Name == "A1-A3")
+                    result += dp.Value;
+                if (dp.Name == "A4")
+                    result += dp.Value;
+                if (dp.Name == "A5(Material)")
+                    result += dp.Value;
+                if (dp.Name == "A5(Global)")
+                    result += dp.Value;
+            }
+
+
+            return result;
+        }
+
+        /// <summary>
+        /// Embodied Carbon is A0 - C 
+        /// </summary>
+        /// <returns></returns>
+        public double getEmbodiedTotals(bool substructure = false)
+        {
+            CalculateProject();
+
+            double result = getUpfrontTotals(substructure);
+
+            List<CarboDataPoint> data = getPhaseTotals(true);
+            foreach (CarboDataPoint dp in data)
+            {
+                if (dp.Name == "B1-B7")
+                    result += dp.Value;
+                if (dp.Name == "C1-C4")
+                    result += dp.Value;
+                if (dp.Name == "C1(Global)")
+                    result += dp.Value;
+            }
+
+            return result;
         }
     }
 }

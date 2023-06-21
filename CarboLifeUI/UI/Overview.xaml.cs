@@ -182,15 +182,15 @@ namespace CarboLifeUI.UI
             if (CarboLifeProject.Area > 0)
             {
                 //UpfrontOnly
-                List<CarboDataPoint> resultPointsA1A5 = CarboLifeProject.getPhaseTotals(true);
+                double resultPointsA1A5 = CarboLifeProject.getUpfrontTotals();
                 //No Sequestration or D
-                List<CarboDataPoint> resultPointsA1C = CarboLifeProject.getPhaseTotals(true);
+                double resultPointsA1C = CarboLifeProject.getEmbodiedTotals();
 
 
-                double valueA1A5 = getDataTotals(resultPointsA1A5);
-                double valueA1C = getDataTotals(resultPointsA1C);
+                //double valueA1A5 = getDataTotals(resultPointsA1A5);
+                //double valueA1C = getDataTotals(resultPointsA1C);
 
-                IEnumerable<UIElement> letiGraph = ScorsIndicator.generateImage(cnv_Leti, valueA1A5, valueA1C, CarboLifeProject.Area, cbb_BuildingType.Text);
+                IEnumerable<UIElement> letiGraph = ScorsIndicator.generateImage(cnv_Leti, resultPointsA1A5, resultPointsA1C, CarboLifeProject.Area, cbb_BuildingType.Text);
                 foreach (UIElement uielement in letiGraph)
                 {
                     cnv_Leti.Children.Add(uielement);

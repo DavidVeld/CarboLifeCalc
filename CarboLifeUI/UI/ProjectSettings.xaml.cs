@@ -130,7 +130,7 @@ namespace CarboLifeUI.UI
                     txt_EnergyPerYear.Text = CarboLifeProject.energyProperties.value.ToString();
 
                     //Totals
-                    txt_A0Total.Text = CarboLifeProject.A0Global.ToString();
+                    txt_A0Total.Text = ((CarboLifeProject.A0Global) / 1000).ToString();
                     txt_A5Total.Text = CarboLifeProject.A5Global.ToString();
                     txt_EnergyTotal.Text = CarboLifeProject.energyProperties.value.ToString();
                     txt_C1Total.Text = CarboLifeProject.C1Global.ToString();
@@ -309,7 +309,6 @@ namespace CarboLifeUI.UI
         private async void txt_SocialCost_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
-            int startLength = tb.Text.Length;
 
             await Task.Delay(1000);
             CarboLifeProject.SocialCost = Utils.ConvertMeToDouble(tb.Text);
@@ -354,6 +353,15 @@ namespace CarboLifeUI.UI
         private void txt_EnergyPerYear_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private async void txt_A0Value_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+
+            await Task.Delay(1000);
+            CarboLifeProject.A0Global = Utils.ConvertMeToDouble(tb.Text) * 1000;
+            RefreshInterFace();
         }
     }
 }

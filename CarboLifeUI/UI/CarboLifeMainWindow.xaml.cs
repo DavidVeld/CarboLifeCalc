@@ -134,7 +134,20 @@ namespace CarboLifeUI.UI
             {
                 try
                 {
-                    carboLifeProject = new CarboProject();
+                    TemplateSelector templateSelectionDialog = new TemplateSelector();
+                    templateSelectionDialog.ShowDialog();
+
+                    if (templateSelectionDialog.isAccepted == true)
+                    {
+                        string templatePath = templateSelectionDialog.selectedTemplateFile;
+
+                        if (File.Exists(templatePath))
+                        {
+                            carboLifeProject = new CarboProject(templatePath);
+
+                        }
+                    }
+                
 
                     carboLifeProject.Audit();
                     carboLifeProject.CalculateProject();
@@ -510,10 +523,22 @@ namespace CarboLifeUI.UI
         {
             pgr_Exporter.Value = 0;
 
-            if (File.Exists(ExcelExportPath))
+            string exportpath = System.IO.Path.GetDirectoryName(ExcelExportPath);
+            string prefix = System.IO.Path.GetFileNameWithoutExtension(ExcelExportPath);
+
+            if (prefix != "")
+                prefix = prefix + "_";
+
+            string exportpathResult = exportpath + "\\" + prefix + "Results.csv";
+            string exportpathElements = exportpath + "\\" + prefix + "Elements.csv";
+            string exportpathMaterials = exportpath + "\\" + prefix + "Materials.csv";
+
+
+
+            if (File.Exists(exportpathResult) || File.Exists(exportpathElements) || File.Exists(exportpathMaterials))
             {
-                System.Windows.MessageBox.Show("CVS export succesful, click OK to open!", "Success!", MessageBoxButton.OK);
-                System.Diagnostics.Process.Start(ExcelExportPath);
+                System.Windows.MessageBox.Show("CVS export succesful. Click OK to open export directory.", "Success!", MessageBoxButton.OK);
+                System.Diagnostics.Process.Start("explorer.exe", exportpath);
             }
 
         }
@@ -526,8 +551,11 @@ namespace CarboLifeUI.UI
         private void ExportFile_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
             ExportExcel_Completed = true;
-            MessageBox.Show("Export completed");
-            System.Diagnostics.Process.Start(ExcelExportPath);
+            //MessageBox.Show("Export completed");
+
+            //string dirPath = System.IO.Path.GetDirectoryName(ExcelExportPath);
+            //if(System.IO.Directory.Exists(dirPath))
+            //    System.Diagnostics.Process.Start("explorer.exe", dirPath);
 
         }
         private void ExportFile_DoWork(object sender, DoWorkEventArgs e)
