@@ -102,7 +102,7 @@
                 </lvc:PieChart.DataTooltip>
             </lvc:PieChart>
 
-            <Grid Background="White" Grid.Column="2" Grid.Row="2">
+            <Grid Background="White" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Height="300" VerticalAlignment="Top">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -160,9 +160,11 @@
                     
                     
                 </GroupBox>
-                
- 
+
+
             </Grid>
+
+            <CheckBox Name="chx_SubStructure" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,20,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" Checked="chx_SubStructure_Unchecked" Unchecked="chx_SubStructure_Unchecked">Include Substructure</CheckBox>
 
             <!--Settings-->
            <Border  Visibility="Hidden" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" Grid.Column="1"  Margin="0,0,0,0" Grid.Row="1" Grid.RowSpan="2" />

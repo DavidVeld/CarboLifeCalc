@@ -543,5 +543,14 @@ namespace CarboLifeUI.UI
             RefreshInterFace();
         }
 
+        private void chx_SubStructure_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (chx_Operational != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateSubStructure = chx_SubStructure.IsChecked.Value;
+
+                RefreshInterFace();
+            }
+        }
     }
 }

@@ -64,6 +64,8 @@ namespace CarboLifeAPI.Data
                 bool matchesDemolition = false;
                 bool matchesExisting = false;
 
+                bool matchesAdditional = false;
+
                 //Find which conditions match category, Material should always match
 
                 //Category
@@ -82,7 +84,9 @@ namespace CarboLifeAPI.Data
                 //Existing
                 if (cg.isExisting == carboElement.isExisting)
                     matchesExisting = true;
-           
+                //Additional
+                if (cg.additionalData == carboElement.AdditionalData)
+                    matchesAdditional = true;
 
                 //If all passes add to group if not skip and create new group;
                 //IF existing and demo needs to be combined, only create one group.
@@ -97,7 +101,8 @@ namespace CarboLifeAPI.Data
                  matchMaterial == true &&
                  matchesSubStructure == true &&
                  matchesDemolition == true &&
-                 matchesExisting == true)
+                 matchesExisting == true &&
+                 matchesAdditional == true)
                 {
                     cg.AllElements.Add((CarboElement)carboElement.Clone());
                     elementFound = true;

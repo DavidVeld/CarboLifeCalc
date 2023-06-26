@@ -71,6 +71,11 @@ namespace CarboLifeAPI.Data
         public bool calculateAdd { get; set; }
         public bool calculateSeq { get; set; }
 
+        /// <summary>
+        /// Defines Whether Substructure Volumes Are Included
+        /// </summary>
+        public bool calculateSubStructure { get; set; }
+
         public string valueUnit { get; set; }
         public int designLife { get; set; }
 
@@ -1184,7 +1189,7 @@ namespace CarboLifeAPI.Data
             //This Will calculate all totals of MATERIAL SPECIFIC VALUES and set all the individual element values;
             foreach (CarboGroup cg in groupList)
             {
-                cg.CalculateTotals(calculateA13, calculateA4, calculateA5, calculateB, calculateC, calculateD, calculateSeq, calculateAdd);
+                cg.CalculateTotals(calculateA13, calculateA4, calculateA5, calculateB, calculateC, calculateD, calculateSeq, calculateAdd, calculateSubStructure);
                 //EE += cg.EE;
                 EC += cg.EC;
             }
@@ -1246,7 +1251,7 @@ namespace CarboLifeAPI.Data
             //This Will calculate all totals and set all the individual element values;
             foreach (CarboGroup cg in groupList)
             {
-                cg.CalculateTotals(cA13, cA4, cA5, cB, cC, cD, cSeq, cAdd);
+                cg.CalculateTotals(cA13, cA4, cA5, cB, cC, cD, cSeq, cAdd, calculateSubStructure);
                 //EE += cg.EE;
                 EC += cg.EC;
             }

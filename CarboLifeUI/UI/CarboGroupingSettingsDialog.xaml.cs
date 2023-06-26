@@ -58,6 +58,10 @@ namespace CarboLifeUI.UI
             categorylist.Add("Type Parameter");
             categorylist.Add("Instance Parameter");
 
+            cbb_ExtraImportType.Items.Clear();
+            cbb_ExtraImportType.Items.Add("Type Parameter");
+            cbb_ExtraImportType.Items.Add("Instance Parameter");
+            cbb_ExtraImportType.SelectedItem = "Type Parameter";
 
             foreach (string str in categorylist)
             {
@@ -92,6 +96,21 @@ namespace CarboLifeUI.UI
 
             chk_ImportDemolished.IsChecked = importSettings.IncludeDemo;
             chk_CombineExistingAndDemo.IsChecked = importSettings.CombineExistingAndDemo;
+
+            if (importSettings.AdditionalParameter == "" )
+            {
+                cbb_ExtraImportType.Text = "Type Parameter";
+                txt_ExtraImportValue.Text = "";
+            }
+            else
+            {
+                if (importSettings.AdditionalParameterElementType == true)
+                    cbb_ExtraImportType.Text = "Type Parameter";
+                else
+                    cbb_ExtraImportType.Text = "Instance Parameter";
+
+                txt_ExtraImportValue.Text = importSettings.AdditionalParameter;
+            }
 
             CheckCaregoryParam();
 
@@ -141,13 +160,35 @@ namespace CarboLifeUI.UI
             settings.defaultCarboGroupSettings.CategoryName = cbb_MainGroup.Text;
             settings.defaultCarboGroupSettings.CategoryParamName = txt_CategoryparamName.Text;
 
-            settings.defaultCarboGroupSettings.SubStructureParamName = txt_SubstructureParamName.Text;
             settings.defaultCarboGroupSettings.IncludeSubStructure = chk_ImportSubstructure.IsChecked.Value;
+            settings.defaultCarboGroupSettings.SubStructureParamName = txt_SubstructureParamName.Text;
+
 
             settings.defaultCarboGroupSettings.IncludeDemo = chk_ImportDemolished.IsChecked.Value;
             settings.defaultCarboGroupSettings.IncludeExisting = chk_ImportExisting.IsChecked.Value;
             settings.defaultCarboGroupSettings.CombineExistingAndDemo = chk_CombineExistingAndDemo.IsChecked.Value;
 
+            //additional value
+
+            if (txt_ExtraImportValue.Text != "")
+            {
+                //Set value
+                if (cbb_ExtraImportType.Text == "Type Parameter")
+                    settings.defaultCarboGroupSettings.AdditionalParameterElementType = true;
+                else
+                    settings.defaultCarboGroupSettings.AdditionalParameterElementType = false;
+
+                settings.defaultCarboGroupSettings.AdditionalParameter = txt_ExtraImportValue.Text;
+            }
+            else
+            {
+                //Not required
+                settings.defaultCarboGroupSettings.AdditionalParameterElementType = false;
+                settings.defaultCarboGroupSettings.AdditionalParameter = "";
+
+            }
+
+            //Seve as default;
             settings.Save();
 
             importSettings = settings.defaultCarboGroupSettings;
@@ -181,6 +222,11 @@ namespace CarboLifeUI.UI
                 this.projectPath = openFileDialog.FileName;
                 txt_ProjectPath.Text = openFileDialog.FileName;
             }
+        }
+
+        private void chk_ImportSubstructure_Checked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

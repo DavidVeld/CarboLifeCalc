@@ -24,6 +24,12 @@ namespace CarboLifeAPI.Data
         public bool IncludeExisting { get; set; }
         public bool CombineExistingAndDemo { get; set; }
 
+        //Additional parameter
+        public string AdditionalParameter { get; set; }
+        public bool AdditionalParameterElementType { get; set; }
+
+
+
         public CarboGroupSettings()
         {
             CategoryName = "(Revit) Category";

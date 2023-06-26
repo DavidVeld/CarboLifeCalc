@@ -1,5 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
 using CarboLifeAPI;
 using CarboLifeAPI.Data;
@@ -50,6 +51,8 @@ namespace CarboLifeRevit
                     //If it passed it matches all criteria:
                     newCarboElement.MaterialName = setImportedMaterialName;
                     newCarboElement.Volume = Math.Round(setVolume, 4);
+
+
                 }
                 catch
                 {
@@ -190,7 +193,76 @@ namespace CarboLifeRevit
             }
             return result;
         }
-       
+        
+        /// <summary>
+        /// Returns the value of an additional parameter that the user can set to group elements. 
+        /// </summary>
+        /// <param name="el">The Element from revit</param>
+        /// <param name="type">The Element's Type</param>
+        /// <param name="settings">The settings file</param>
+        /// <returns></returns>
+        private static string getAdditionalParameter(Element el, CarboGroupSettings settings)
+        {
+            string result = "";
+
+            try
+            {
+                if (settings.AdditionalParameter != "")
+                {
+                    string paramName = settings.AdditionalParameter;
+
+                    if (settings.AdditionalParameterElementType == true)
+                    {
+                        ElementId elId = el.GetTypeId();
+                        ElementType type = el.Document.GetElement(elId) as ElementType;
+
+                        Parameter carbonpar = type.LookupParameter(paramName);
+                        if (carbonpar != null)
+                        {
+                            if (carbonpar.StorageType == StorageType.String)
+                                result = carbonpar.AsString();
+                            else
+                                result = "";
+
+                            return result;
+                        }
+                        else
+                        {
+                            result = "";
+                        }
+                    }
+                    else
+                    {
+                        //Is Instance Parameter
+                        Parameter carbonpar = el.LookupParameter(paramName);
+                        if (carbonpar != null)
+                        {
+                            if (carbonpar.StorageType == StorageType.String)
+                                result = carbonpar.AsString();
+                            else
+                                result = "";
+
+                            return result;
+                        }
+                        else
+                        {
+                            result = "";
+                        }
+                    }
+                }
+                else
+                {
+                    //not required;
+                    return "";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+            return "";
+        }
+
         /// <summary>
         /// Validates the elements and it's class;
         /// </summary>
@@ -363,6 +435,7 @@ namespace CarboLifeRevit
                 string setName;
                 string setCategory;
                 string setSubCategory;
+                string additionalParameter;
                 double setLevel;
                 bool setIsDemolished;
                 bool setIsSubstructure;
@@ -435,12 +508,16 @@ namespace CarboLifeRevit
                     }
                 }
 
-
                 //Get the right Category name
                 setCategory = getCategoryValue(el, type, settings.CategoryName, doc, settings.CategoryParamName);
 
                 //SubCategory (Not used at the moment)
                 setSubCategory = "";
+
+                //Get Additional Parameter:
+                additionalParameter = getAdditionalParameter(el,settings);
+                if (additionalParameter == null)
+                    additionalParameter = "";
 
                 //Get the level (in meter)
                 Level lvl = doc.GetElement(el.LevelId) as Level;
@@ -484,6 +561,8 @@ namespace CarboLifeRevit
                 newCarboElement.isSubstructure = setIsSubstructure;
                 newCarboElement.includeInCalc = true;
 
+                newCarboElement.AdditionalData = additionalParameter;
+
                 return newCarboElement;
             }
             catch
@@ -491,6 +570,8 @@ namespace CarboLifeRevit
                 return null;
             }
         }
+
+
 
         public static bool IsWindowOpen<T>(string name = "") where T : Window
         {

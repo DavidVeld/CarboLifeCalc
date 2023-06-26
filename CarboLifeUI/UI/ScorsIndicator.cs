@@ -510,7 +510,6 @@ namespace CarboLifeUI
             return result;
 
         }
-
         private static double getYOnCanvas(LetiScore scoreType, double value)
         {
             double result = 0;
