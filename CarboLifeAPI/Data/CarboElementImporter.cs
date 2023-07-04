@@ -49,6 +49,13 @@ namespace CarboLifeAPI.Data
             return result;
         }
 
+        /// <summary>
+        /// The main method to sort elements into their group
+        /// </summary>
+        /// <param name="carboGroupList">The list of groups that already exists</param>
+        /// <param name="carboElement">The element that needs to be grouped</param>
+        /// <param name="importSettings">The User settings</param>
+        /// <returns></returns>
         private static ObservableCollection<CarboGroup> AddToCarboGroupV2(ObservableCollection<CarboGroup> carboGroupList, CarboElement carboElement, CarboGroupSettings importSettings)
         {
             int idbase = 1000;
@@ -88,13 +95,19 @@ namespace CarboLifeAPI.Data
                 if (cg.additionalData == carboElement.AdditionalData)
                     matchesAdditional = true;
 
-                //If all passes add to group if not skip and create new group;
+                //If all passes the element will be added to the group if not skip and create new group;
                 //IF existing and demo needs to be combined, only create one group.
-                
+
                 //if you want existing and demo combined then Demo is always yes
                 //This is a bit of a patch and might need improvements later
                 //if(importSettings.CombineExistingAndDemo)
                 //    matchesDemolition = true;
+
+                if(importSettings.IncludeSubStructure == false) //these will always fall under the same group
+                    matchesSubStructure = true;
+
+                if (importSettings.IncludeAdditionalParameter == false) //these will always fall under the same group
+                    matchesAdditional = true;
 
                 if (
                  matchesCategory == true &&
@@ -115,7 +128,16 @@ namespace CarboLifeAPI.Data
             //NoCategoryWasFound: make new group
             int id = carboGroupList.Count + idbase;
 
+            //If a new group's first element has substructre a fix is required. 
+            //This needs it own method to generate a group name AFTER All elements are loaded. 
             CarboGroup newGroup = new CarboGroup(carboElement);
+            if (importSettings.IncludeSubStructure == false && newGroup.Description.Contains("(Substructure)")) //these will always fall under the same group
+            {
+                string name = newGroup.Description;
+                name = name.Replace("(Substructure)", "");
+                newGroup.Description = name;
+            }
+
             newGroup.Id = idbase + id;
 
             carboGroupList.Add(newGroup);

@@ -52,6 +52,7 @@ namespace CarboLifeAPI.Data
         /// tCo2
         /// </summary>
         public double C1Global { get; set; }
+
         //Absolute total including Global Values
         public double ECTotal { get; set; }
         /// <summary>
@@ -774,17 +775,17 @@ namespace CarboLifeAPI.Data
         }
 
         /// <summary>
-        /// Returns a list of the project totals (9 items)
+        /// Returns a list of the project totals (12 items)
         /// A1-A3, A4, A5 (Material), A5(Global), B1-B7, C1-C4, C1(Global), D, Sequestration, Additional)
         /// These are net values(based on the corrected converted Total Volume
         /// </summary>
-        /// <returns>Returns a list of the project totals (9 items) in kgCO₂</returns>
+        /// <returns>Returns a list of the project totals (12 items) in kgCO₂</returns>
         public List<CarboDataPoint> getPhaseTotals(bool calculateAll = false)
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
             try
             {
-                CarboDataPoint cb_A0 = new CarboDataPoint("A0", this.A0Global);
+                CarboDataPoint cb_A0 = new CarboDataPoint("A0(Global)", this.A0Global);
                 CarboDataPoint cb_A1A3 = new CarboDataPoint("A1-A3", 0);
                 CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
                 CarboDataPoint cb_A5 = new CarboDataPoint("A5(Material)",0);
@@ -940,7 +941,9 @@ namespace CarboLifeAPI.Data
             double totalC1 = C1Global;
             double totalB6B7 = energyProperties.value / 1000;
             double totalTotal = totalMaterials + totalA5 + totalC1 + totalB6B7;
-            
+
+            this.ECTotal = totalTotal;
+
             return totalTotal;
         }
         /// <summary>
@@ -1021,6 +1024,8 @@ namespace CarboLifeAPI.Data
         [Obsolete("This method should move out of the carbo project and into a utils")]
         public List<string> getCalcText()
         {
+            this.CalculateProject();
+
             List<string> result = new List<string>();
 
             string phaseGroup = "";
@@ -1037,7 +1042,7 @@ namespace CarboLifeAPI.Data
             if (calculateA0 == true)
             {
                 phaseGroup += "A0  " + Environment.NewLine;
-                resultvalues += Utils.getString(PieceListLifePoint, "A0") + Environment.NewLine;
+                resultvalues += Utils.getString(PieceListLifePoint, "A0(Global)") + Environment.NewLine;
             }
             else
             {
@@ -1163,18 +1168,28 @@ namespace CarboLifeAPI.Data
                 //result += Math.Round(0f, 1) + Environment.NewLine;
             }
 
-            //Get the social carbon costs
-            double socialCarbonCost = Math.Round(this.SocialCost * this.ECTotal,0,MidpointRounding.AwayFromZero);
-            string generalText = "The Social Cabon cost of this project is: "  + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
-            generalText += "This equals to: " + Math.Round(this.ECTotal / 1.40, 2) + " average car emission per year (1.40 tCO₂/car). (UK)" + Environment.NewLine;
-            generalText += "This requires " + Math.Round((this.ECTotal * 40), 0) + " Trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
-
             result.Add(phaseGroup);
             result.Add(resultvalues);
-            result.Add(generalText);
 
             return result;
         }
+
+        public string getGeneralText()
+        {
+            string result = "";
+
+            //Get the social carbon costs
+            double socialCarbonCost = Math.Round(this.SocialCost * this.getTotalEC(), 0, MidpointRounding.AwayFromZero);
+            string generalText = "The Social Cabon cost of this project is: " + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
+            generalText += "This equals to: " + Math.Round(this.ECTotal / 1.40, 2) + " average car emission per year (1.40 tCO₂/car). (UK)" + Environment.NewLine;
+            generalText += "This requires " + Math.Round((this.ECTotal * 40), 0) + " Trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
+
+            result = generalText;
+
+            return result;
+        }
+
+
 
         /// <summary>
         /// This is the main function that refreshes the entire projects calculation
@@ -1207,21 +1222,22 @@ namespace CarboLifeAPI.Data
             if (calculateA0 == true)
                 globalTotals += A0Global;
             else
-                //Ignore
+            //Ignore
 
             if (calculateA5 == true)
                 globalTotals += (A5Factor * (Value / 100000)) / 1000;
             else
-                //Ignore
-               
-            if(calculateC == true)
+            //Ignore
+
+            if (calculateC == true)
                 globalTotals += (demoArea * C1Factor) / 1000;
             else
-                //Ignore
+            //Ignore
 
             if (calculateB67 == true)
                 energyProperties.calculate(this.designLife);
             else
+            { }
             //Ignore
 
             ECTotal = EC + globalTotals + (energyProperties.value / 1000);
@@ -1806,7 +1822,7 @@ namespace CarboLifeAPI.Data
         }
 
         /// <summary>
-        /// Upfront Carbon is A0 - A5 
+        /// Upfront Carbon is A0 - A5 in kgCO2
         /// </summary>
         /// <returns></returns>
         public double getUpfrontTotals(bool substructure = false)
@@ -1857,7 +1873,7 @@ namespace CarboLifeAPI.Data
         }
 
         /// <summary>
-        /// Embodied Carbon is A0 - C 
+        /// Embodied Carbon is A0 - C in kgCO2
         /// </summary>
         /// <returns></returns>
         public double getEmbodiedTotals(bool substructure = false)

@@ -55,7 +55,7 @@
             <ComboBox Name="cbb_GraphType" Grid.Row="1" Grid.Column="1"  Margin="0,0,0,0" Height="25" Width="219" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_GraphType_DropDownClosed"/>
 
 
-            <lvc:PieChart Name="pie_Chart1"  Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Segoe UI" FontWeight="Light" LegendLocation="Right">
+            <lvc:PieChart Name="pie_Chart1"  Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="#050505" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Segoe UI" FontWeight="Light" LegendLocation="Right">
                 <lvc:PieChart.Resources>
                     <Style TargetType="lvc:PieSeries">
                         <Setter Property="DataLabels" Value="True"></Setter>
@@ -63,10 +63,10 @@
                     </Style>
                 </lvc:PieChart.Resources>
                 <lvc:PieChart.ChartLegend>
-                    <lvc:DefaultLegend BulletSize="20" Background="Red" Margin="10,0,0,0" HorizontalAlignment="Left" />
+                    <lvc:DefaultLegend BulletSize="20" Background="Red" Foreground="#050505" Margin="10,0,0,0" HorizontalAlignment="Left" />
                 </lvc:PieChart.ChartLegend>
                 <lvc:PieChart.DataTooltip>
-                    <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender"/>
+                    <lvc:DefaultTooltip BulletSize="20" Background="Gray" Foreground="#050505" SelectionMode="OnlySender"/>
                 </lvc:PieChart.DataTooltip>
             </lvc:PieChart>
         </Grid>
@@ -87,7 +87,7 @@
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
-            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Segoe UI" LegendLocation="Right" FontWeight="Light"  InnerRadius="42" Visibility="Visible">
+            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="#050505" Background="White" FontFamily="Segoe UI" LegendLocation="Right" FontWeight="Light"  InnerRadius="42" Visibility="Visible">
                 <lvc:PieChart.Resources>
                     <Style TargetType="lvc:PieSeries">
                         <Setter Property="DataLabels" Value="True"></Setter>
@@ -95,10 +95,10 @@
                     </Style>
                 </lvc:PieChart.Resources>
                 <lvc:PieChart.ChartLegend>
-                    <lvc:DefaultLegend BulletSize="20" Background="Red" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Black" />
+                    <lvc:DefaultLegend BulletSize="20" Background="Red" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#050505" />
                 </lvc:PieChart.ChartLegend>
                 <lvc:PieChart.DataTooltip>
-                    <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender" FontStyle="Normal" Foreground="Black"/>
+                    <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender" FontStyle="Normal" Foreground="#050505"/>
                 </lvc:PieChart.DataTooltip>
             </lvc:PieChart>
 

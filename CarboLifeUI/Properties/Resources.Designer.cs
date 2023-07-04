@@ -203,6 +203,16 @@ namespace CarboLifeUI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap rbn_materialmap32 {
+            get {
+                object obj = ResourceManager.GetObject("rbn_materialmap32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rbn_materialselect32 {
             get {
                 object obj = ResourceManager.GetObject("rbn_materialselect32", resourceCulture);

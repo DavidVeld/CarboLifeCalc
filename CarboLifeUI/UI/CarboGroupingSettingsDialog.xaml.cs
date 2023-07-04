@@ -97,20 +97,16 @@ namespace CarboLifeUI.UI
             chk_ImportDemolished.IsChecked = importSettings.IncludeDemo;
             chk_CombineExistingAndDemo.IsChecked = importSettings.CombineExistingAndDemo;
 
-            if (importSettings.AdditionalParameter == "" )
-            {
-                cbb_ExtraImportType.Text = "Type Parameter";
-                txt_ExtraImportValue.Text = "";
-            }
-            else
-            {
-                if (importSettings.AdditionalParameterElementType == true)
-                    cbb_ExtraImportType.Text = "Type Parameter";
-                else
-                    cbb_ExtraImportType.Text = "Instance Parameter";
 
-                txt_ExtraImportValue.Text = importSettings.AdditionalParameter;
-            }
+            if (importSettings.IncludeAdditionalParameter == true)
+                chk_AdditionalImport.IsChecked = true;
+
+            if (importSettings.AdditionalParameterElementType == true)
+                cbb_ExtraImportType.Text = "Type Parameter";
+            else
+                cbb_ExtraImportType.Text = "Instance Parameter";
+
+             txt_ExtraImportValue.Text = importSettings.AdditionalParameter;
 
             CheckCaregoryParam();
 
@@ -169,26 +165,15 @@ namespace CarboLifeUI.UI
             settings.defaultCarboGroupSettings.CombineExistingAndDemo = chk_CombineExistingAndDemo.IsChecked.Value;
 
             //additional value
+            settings.defaultCarboGroupSettings.IncludeAdditionalParameter = chk_AdditionalImport.IsChecked.Value;
+            settings.defaultCarboGroupSettings.AdditionalParameter = txt_ExtraImportValue.Text;
 
-            if (txt_ExtraImportValue.Text != "")
-            {
-                //Set value
-                if (cbb_ExtraImportType.Text == "Type Parameter")
-                    settings.defaultCarboGroupSettings.AdditionalParameterElementType = true;
-                else
-                    settings.defaultCarboGroupSettings.AdditionalParameterElementType = false;
-
-                settings.defaultCarboGroupSettings.AdditionalParameter = txt_ExtraImportValue.Text;
-            }
+            if (cbb_ExtraImportType.Text == "Type Parameter")
+                settings.defaultCarboGroupSettings.AdditionalParameterElementType = true;
             else
-            {
-                //Not required
                 settings.defaultCarboGroupSettings.AdditionalParameterElementType = false;
-                settings.defaultCarboGroupSettings.AdditionalParameter = "";
 
-            }
-
-            //Seve as default;
+            //Seve as default for next time/project;
             settings.Save();
 
             importSettings = settings.defaultCarboGroupSettings;

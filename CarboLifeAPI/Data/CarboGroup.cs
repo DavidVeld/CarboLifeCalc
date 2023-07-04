@@ -313,7 +313,7 @@ namespace CarboLifeAPI.Data
                 suffix = " (Substructure)";
 
             if(carboElement.AdditionalData != "" || carboElement.AdditionalData == null)
-                suffix += "(" + carboElement.AdditionalData + ")";
+                suffix += " (" + carboElement.AdditionalData + ")";
 
             result = prefix + carboElement.Category + suffix;
 

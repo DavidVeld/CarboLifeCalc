@@ -25,10 +25,9 @@ namespace CarboLifeAPI.Data
         public bool CombineExistingAndDemo { get; set; }
 
         //Additional parameter
+        public bool IncludeAdditionalParameter { get; set; }
         public string AdditionalParameter { get; set; }
         public bool AdditionalParameterElementType { get; set; }
-
-
 
         public CarboGroupSettings()
         {
@@ -43,6 +42,10 @@ namespace CarboLifeAPI.Data
             IncludeExisting = false;
             CombineExistingAndDemo = false;
             VolumeConversionFactor = "";
+
+            IncludeAdditionalParameter = false;
+            AdditionalParameter = "";
+            AdditionalParameterElementType = false;
         }
 
         public CarboGroupSettings DeSerializeXML()

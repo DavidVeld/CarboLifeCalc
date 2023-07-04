@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"  Title="Carbo Life Calculator: Revit Import Settings"
-             MinWidth="400" MinHeight="750" Width="400" Height="750" Loaded="Window_Loaded" ResizeMode="NoResize">
+             MinWidth="450" MinHeight="675" Width="450" Height="675" Loaded="Window_Loaded" ResizeMode="NoResize">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -20,13 +20,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="80"/>
-            <RowDefinition Height="80"/>
-            <RowDefinition Height="120"/>
+            <RowDefinition Height="82"/>
+            <RowDefinition Height="82"/>
+            <RowDefinition Height="90"/>
             <RowDefinition Height="95"/>
+            <RowDefinition Height="90"/>
             <RowDefinition Height="80"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="95"/>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
@@ -39,9 +39,9 @@
         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}" Content="Element Import &amp; Grouping Settings"/>
 
         <Label Grid.Column="1" Margin="5,0,5,0" Grid.Row="2" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Update Project:</Label>
-        <TextBox Grid.Column="2" Margin="5,20,5,0" Grid.Row="2" Style="{StaticResource formGreyText}" TextWrapping="Wrap" Height="38" VerticalAlignment="Top" BorderBrush="Transparent">Select an existing project if you want to update the project</TextBox>
+        <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="2" Style="{StaticResource formGreyText}" TextWrapping="Wrap" Height="38" VerticalAlignment="Top" BorderBrush="Transparent">Select an existing project if you want to update the project</TextBox>
         <TextBox Name="txt_ProjectPath" Grid.Column="2" Grid.Row="2" Margin="30,45,52,0" Height="28" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsEnabled="False"/>
-        <Button Name="btn_ProjectPath" Grid.Row="2" Grid.Column="2" Margin="328,47,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="27" Height="24" Style="{StaticResource ButtonStyle}" Click="btn_ProjectPath_Click" RenderTransformOrigin="1.419,1.547">...</Button>
+        <Button Name="btn_ProjectPath" Grid.Row="2" Grid.Column="2" Margin="328,47,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="27" Height="24" Style="{StaticResource ButtonStyle}" Click="btn_ProjectPath_Click" RenderTransformOrigin="1.419,1.547">...</Button>
 
 
         <Label Grid.Column="1" Margin="5,0,5,0" Grid.Row="3" VerticalAlignment="Top" Height="28" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Template:</Label>
@@ -50,32 +50,32 @@
 
         <Label Grid.Column="1" Margin="5,0,5,0" Grid.Row="4" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Category:</Label>
         <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="4" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent">Select or write the parameter that defines the object's category:</TextBox>
-        <ComboBox Name="cbb_MainGroup" IsReadOnly="False" Grid.Column="2" Grid.Row="4" Margin="30,55,30,0" Height="26" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_MainGroup_DropDownClosed" ></ComboBox>
-        <TextBox Name="txt_CategoryparamName" Grid.Column="2" Grid.Row="4" Margin="30,87,30,0" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+        <ComboBox Name="cbb_MainGroup" IsReadOnly="False" Grid.Column="2" Grid.Row="4" Margin="30,52,230,5"  Grid.RowSpan="1" Height="28" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_MainGroup_DropDownClosed" ></ComboBox>
+        <TextBox Name="txt_CategoryparamName" Grid.Column="2" Grid.Row="4" Margin="205,52,5,5" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
 
 
-        <CheckBox x:Name="chk_ImportSubstructure" IsEnabled="True" Grid.Column="2" Grid.Row="5" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Content="Substructure Parameter" Checked="chk_ImportSubstructure_Checked"/>
-        <TextBox Grid.Column="2" Margin="5,20,5,0" Grid.Row="5" Style="{StaticResource formGreyText}" TextWrapping="Wrap" Height="38" VerticalAlignment="Top" BorderBrush="Transparent">The Boolean(Yes/No) Parameter below will define if the element is substructure:</TextBox>
-        <TextBox Name="txt_SubstructureParamName" Grid.Column="2" Grid.Row="5" Margin="30,60,5,0" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+        <CheckBox x:Name="chk_ImportSubstructure" IsEnabled="True" Grid.Column="2" Grid.Row="5" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Content="Split by Substructure Parameter" Checked="chk_ImportSubstructure_Checked"/>
+        <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="5" Style="{StaticResource formGreyText}" TextWrapping="Wrap" Height="38" VerticalAlignment="Top" BorderBrush="Transparent">The Boolean(Yes/No) Instance parameter below will define if the element is substructure:</TextBox>
+        <TextBox Name="txt_SubstructureParamName" Grid.Column="2" Grid.Row="5" Margin="30,60,5,5" Height="28" VerticalAlignment="Bottom" Style="{StaticResource flatTextBox}"/>
 
-        <CheckBox Name="chk_ImportExisting" IsEnabled="True" Grid.Column="2" Grid.Row="6" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include Existing Elements</CheckBox>
-        <TextBox Grid.Column="2" Margin="5,20,5,0" Grid.Row="6" Style="{StaticResource formGreyText}" TextWrapping="Wrap" Height="28" VerticalAlignment="Top" BorderBrush="Transparent" IsReadOnly="True">Type the name of the "existing" phase below:</TextBox>
-        <TextBox Name="txt_ExistingPhaseName" Grid.Column="2" Grid.Row="6" Margin="30,45,5,0" Height="28" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}"/>
+        <CheckBox Name="chk_ImportExisting" IsEnabled="True" Grid.Column="2" Grid.Row="7" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include + Split Existing Elements</CheckBox>
+        <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="7" Style="{StaticResource formGreyText}" TextWrapping="Wrap" Height="28" VerticalAlignment="Top" BorderBrush="Transparent" IsReadOnly="True">Type the name of the "existing" phase below:</TextBox>
+        <TextBox Name="txt_ExistingPhaseName" Grid.Column="2" Grid.Row="7" Margin="30,45,5,0" Height="28" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}"/>
 
-        <CheckBox Name="chk_ImportDemolished" IsEnabled="True" Grid.Column="2" Grid.Row="7" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include Demolished Elements</CheckBox>
+        <CheckBox Name="chk_ImportDemolished" IsEnabled="True" Grid.Column="2" Grid.Row="8" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include + Split Demolished Elements</CheckBox>
         <CheckBox Name="chk_CombineExistingAndDemo" IsEnabled="True" Grid.Column="2" Grid.Row="8" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Visibility="Hidden">Combine Existing and Demolished Elements</CheckBox>
 
-        <CheckBox Name="chk_ExtraImport" IsEnabled="True" Grid.Column="2" Grid.Row="8" Margin="0,7,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Additional Grouping Parameter</CheckBox>
-        <TextBox Grid.Column="2" Margin="5,27,5,0" Grid.Row="8" Style="{StaticResource formGreyText}" TextWrapping="Wrap" Height="28" VerticalAlignment="Top" BorderBrush="Transparent" IsReadOnly="True">A parameter to split the import:</TextBox>
-        <ComboBox Name="cbb_ExtraImportType" IsReadOnly="False" Grid.Column="2" Grid.Row="8" Margin="30,52,185,0" Height="26" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
-        <TextBox Name="txt_ExtraImportValue" Grid.Column="2" Grid.Row="8" Margin="205,52,5,0" Height="28" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}"/>
+        <CheckBox Name="chk_AdditionalImport" IsEnabled="True" Grid.Column="2" Grid.Row="6" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Split by Additional Grouping Parameter</CheckBox>
+        <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="6" Style="{StaticResource formGreyText}" TextWrapping="Wrap" Height="28" VerticalAlignment="Top" BorderBrush="Transparent" IsReadOnly="True">Define an additional parameter to split the import:</TextBox>
+        <ComboBox Name="cbb_ExtraImportType" IsReadOnly="False" Grid.Column="2" Grid.Row="6" Margin="30,52,230,0" Height="28" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
+        <TextBox Name="txt_ExtraImportValue" Grid.Column="2" Grid.Row="6" Margin="205,52,5,0" Height="28" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}"/>
 
 
 
 
 
-        <Button Name="btn_ImportClose" Grid.Row="9" Grid.Column="2" Margin="175,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="95" Height="24" Style="{StaticResource ButtonStyle}" Click="Btn_ImportClose_Click">Ok &amp; Import</Button>
-        <Button Name="btn_Cancel" Grid.Row="9" Grid.Column="2" Margin="275,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="95" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
+        <Button Name="btn_ImportClose" Grid.Row="9" Grid.Column="2" Margin="175,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="95" Height="24" Style="{StaticResource ButtonStyle}" Click="Btn_ImportClose_Click">Ok &amp; Import</Button>
+        <Button Name="btn_Cancel" Grid.Row="9" Grid.Column="2" Margin="275,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="95" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
 
     </Grid>
 </Window>
