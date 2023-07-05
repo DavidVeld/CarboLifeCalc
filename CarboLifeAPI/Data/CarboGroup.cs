@@ -60,11 +60,16 @@ namespace CarboLifeAPI.Data
         /// The group material
         ///</summary>
         public CarboMaterial Material {get;set;}
-
         public List<CarboElement> AllElements { get; set; }
+
+  
+        /// The below values are required to corectly group elements to their home group:
+
         public bool isExisting { get; set; }
         public bool isDemolished { get; set; }
         public bool isSubstructure { get; set; }
+        public string additionalData { get; set; }
+
         public double getVolumeECI
         {
             get
@@ -72,7 +77,6 @@ namespace CarboLifeAPI.Data
                 return Density * ECI;
             }
         }
-
         public double getTotalA1A3
         {
             get
@@ -80,7 +84,6 @@ namespace CarboLifeAPI.Data
                 return (Mass * Material.ECI_A1A3 * inUseProperties.B4);
             }
         }
-
         public double getTotalA4
         {
             get
@@ -88,7 +91,6 @@ namespace CarboLifeAPI.Data
                 return (Mass * Material.ECI_A4 * inUseProperties.B4);
             }
         }
-
         public double getTotalA5
         {
             get
@@ -96,7 +98,6 @@ namespace CarboLifeAPI.Data
                 return (Mass * Material.ECI_A5 * inUseProperties.B4);
             }
         }
-
         public double getTotalB1B7
         {
             get
@@ -104,7 +105,6 @@ namespace CarboLifeAPI.Data
                 return (Mass * Material.ECI_B1B5 * inUseProperties.B4);
             }
         }
-
         public double getTotalC1C4
         {
             get
@@ -112,7 +112,6 @@ namespace CarboLifeAPI.Data
                 return (Mass * Material.ECI_C1C4 * inUseProperties.B4);
             }
         }
-
         public double getTotalD
         {
             get
@@ -127,7 +126,6 @@ namespace CarboLifeAPI.Data
                 return (Mass * Material.ECI_Seq * inUseProperties.B4);
             }
         }
-
         public double getTotalMix
         {
             get
@@ -137,7 +135,6 @@ namespace CarboLifeAPI.Data
                 return (materialAdded + addedManual);
             }
         }
-
 
         public CarboGroup()
         {
@@ -298,8 +295,8 @@ namespace CarboLifeAPI.Data
             isExisting = carboElement.isExisting;
             isDemolished = carboElement.isDemolished;
             isSubstructure = carboElement.isSubstructure;
+            additionalData = carboElement.AdditionalData;
         }
-
         private string GetDescription(CarboElement carboElement)
         {
             string result = "";
@@ -314,6 +311,9 @@ namespace CarboLifeAPI.Data
 
             if (carboElement.isSubstructure == true)
                 suffix = " (Substructure)";
+
+            if(carboElement.AdditionalData != "" || carboElement.AdditionalData == null)
+                suffix += " (" + carboElement.AdditionalData + ")";
 
             result = prefix + carboElement.Category + suffix;
 
@@ -331,7 +331,7 @@ namespace CarboLifeAPI.Data
                 PerCent = 0;
             }
         }
-        public void CalculateTotals(bool cA13 = true, bool cA4 = true, bool cA5 = true, bool cB = true, bool cC = true, bool cD = true, bool cSeq = true, bool cAdd = true)
+        public void CalculateTotals(bool cA13 = true, bool cA4 = true, bool cA5 = true, bool cB = true, bool cC = true, bool cD = true, bool cSeq = true, bool cAdd = true, bool calcSubstructrue = true)
         {
             //Recalculate The materials
             Material.CalculateTotals();
@@ -364,7 +364,7 @@ namespace CarboLifeAPI.Data
             //Get the density from the material.
             Density = Material.Density;
             
-            //Recalculate All the Elements.
+            //Recalculate All the Element's Volumes
             if (AllElements != null)
             {
                 if (AllElements.Count > 0)
@@ -374,8 +374,14 @@ namespace CarboLifeAPI.Data
                     {
                         if (ce.includeInCalc == true)
                         {
-                            ce.Calculate(Material);
-                            Volume += ce.Volume;
+                            if (calcSubstructrue == false && ce.isSubstructure == true) {
+                                int flag = 0; //No Action just a flag for debug
+                            }
+                            else
+                            {
+                                ce.Calculate(Material);
+                                Volume += ce.Volume;
+                            }
                         }
                     }
                 }

@@ -73,7 +73,7 @@
                     <RibbonMenuButton Label="Purge Elements" MouseDown="Mnu_PurgeElements_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_grouppurge32.png"/>
 
                     <RibbonMenuButton Label="Split Group..." PreviewMouseDown="RibbonMenuButton_PreviewMouseDown" Visibility="Visible" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupsplit32.png"/>
-                    <RibbonMenuButton Label="Multi-Map..." PreviewMouseDown="mnu_MapElements_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_del.png"/>
+                    <RibbonMenuButton Label="Multi-Map..." PreviewMouseDown="mnu_MapElements_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_materialmap32.png"/>
                     <!--- Needs a re-think -->
 
                 </RibbonGroup>
@@ -257,9 +257,12 @@
             </MenuItem>
         </Menu>
 
-        <DataGrid x:Name="dgv_Elements" Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="False" Visibility="Visible">
+        <DataGrid x:Name="dgv_Elements" Grid.Row="7" Grid.Column="1" Margin="5,5,5,5" CanUserAddRows="False" IsReadOnly="False" Visibility="Visible" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn MinWidth="25" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True" Visibility="Visible"/>
+                
+                <DataGridCheckBoxColumn MinWidth="100" Header="Include" Binding="{Binding Path=includeInCalc}" IsReadOnly="False"/>
+                <DataGridCheckBoxColumn MinWidth="100" Header="Substructure" Binding="{Binding Path=isSubstructure}" IsReadOnly="False"/>
 
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Category" Binding="{Binding Path=Category, Mode=TwoWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Name" Binding="{Binding Path=Name}" IsReadOnly="True"/>
@@ -280,10 +283,9 @@
                 <DataGridTextColumn MinWidth="100" Header="EC (tCO₂e)" Binding="{Binding Path=EC}" IsReadOnly="True"/>
                 <DataGridTextColumn MinWidth="100" Header="EC_Total (tCO₂e)" Binding="{Binding Path=EC_Total}" IsReadOnly="True"/>
 
-                <DataGridTextColumn MinWidth="100" Header="isDemolished" Binding="{Binding Path=isDemolished}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="100" Header="isExisting" Binding="{Binding Path=isExisting}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="100" Header="isSubstructure" Binding="{Binding Path=isSubstructure}" IsReadOnly="True"/>
-                <DataGridTextColumn MinWidth="100" Header="includeInCalc" Binding="{Binding Path=includeInCalc}" IsReadOnly="False"/>
+                <DataGridCheckBoxColumn MinWidth="100" Header="isDemolished" Binding="{Binding Path=isDemolished}" IsReadOnly="True"/>
+                <DataGridCheckBoxColumn MinWidth="100" Header="isExisting" Binding="{Binding Path=isExisting}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="50" MinWidth="100" Header="Additional" Binding="{Binding Path=AdditionalData, Mode=TwoWay}" IsReadOnly="True"/>
 
 
             </DataGrid.Columns>

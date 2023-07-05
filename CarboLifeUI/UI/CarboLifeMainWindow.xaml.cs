@@ -335,6 +335,9 @@ namespace CarboLifeUI.UI
             {
                 carboLifeProject.CalculateProject();
 
+                this.WindowState = WindowState.Maximized;
+                //this.WindowStyle = WindowStyle.None;
+
                 Bitmap Chart1 = null;
                 Bitmap Chart2 = null;
                 Bitmap LetiChart = null;

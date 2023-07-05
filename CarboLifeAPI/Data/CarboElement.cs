@@ -20,6 +20,7 @@ namespace CarboLifeAPI.Data
         public string CarboMaterialName { get; set; }
         public string Category { get; set; }
         public string SubCategory { get; set; }
+        public string AdditionalData { get; set; }
         public double Volume { get; set; }
         public double Mass { get; set; }
         public double Density { get; set; }
@@ -48,6 +49,8 @@ namespace CarboLifeAPI.Data
             MaterialName = "Other";
             Category = "Other";
             SubCategory = "";
+            AdditionalData = "";
+
             Volume = 0;
             Level = 0;
             Density = 0;
@@ -99,6 +102,7 @@ namespace CarboLifeAPI.Data
 
             clone.Category = this.Category;
             clone.SubCategory = this.SubCategory;
+            clone.AdditionalData = this.AdditionalData;
             clone.Volume = this.Volume;
             clone.Mass = this.Mass;
             clone.Density = this.Density;
@@ -131,6 +135,7 @@ namespace CarboLifeAPI.Data
 
             clone.Category = this.Category;
             clone.SubCategory = this.SubCategory;
+            clone.AdditionalData = this.AdditionalData;
             clone.Volume = this.Volume;
             clone.Mass = this.Mass;
             clone.Density = this.Density;

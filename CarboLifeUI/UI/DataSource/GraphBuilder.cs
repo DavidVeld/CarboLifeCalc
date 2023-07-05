@@ -15,6 +15,7 @@ namespace CarboLifeUI.UI
 {
     public static class GraphBuilder
     {
+
         public static double min;
         public static double max;
 
@@ -225,6 +226,7 @@ namespace CarboLifeUI.UI
         internal static SeriesCollection GetPhasePieChartTotals(CarboProject carboLifeProject)
         {
             SeriesCollection result = new SeriesCollection();
+            SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
 
             try
             {
@@ -309,7 +311,7 @@ namespace CarboLifeUI.UI
                         LabelPoint = labelPoint
                     };
 
-                    newSeries.Foreground = Brushes.Black;
+                    newSeries.Foreground = almostBlack;
                     newSeries.FontWeight = FontWeights.Normal;
                     newSeries.FontStyle = FontStyles.Normal;
                     newSeries.FontSize = 12;
@@ -342,6 +344,8 @@ namespace CarboLifeUI.UI
         internal static SeriesCollection GetPieChart(DataTable resultsTable, string Type = "Material")
         {
             SeriesCollection result = new SeriesCollection();
+            SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
+
             try
             {
                 List<CarboDataPoint> PieceListMaterial = new List<CarboDataPoint>();
@@ -440,6 +444,8 @@ namespace CarboLifeUI.UI
         internal static SeriesCollection GetPieChartCategoryTotals(CarboProject carboLifeProject)
         {
             SeriesCollection result = new SeriesCollection();
+            SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
+
             try
             {
                 List<CarboDataPoint> PieceListCategory = new List<CarboDataPoint>();
@@ -506,7 +512,7 @@ namespace CarboLifeUI.UI
                         LabelPoint = labelPoint
 
                     };
-                    newSeries.Foreground = Brushes.Black;
+                    newSeries.Foreground = almostBlack;
                     newSeries.FontWeight = FontWeights.Normal;
                     newSeries.FontStyle = FontStyles.Normal;
                     newSeries.FontSize = 12;

@@ -135,6 +135,10 @@ namespace CarboLifeUI.UI
                     txt_EnergyTotal.Text = CarboLifeProject.energyProperties.value.ToString();
                     txt_C1Total.Text = CarboLifeProject.C1Global.ToString();
 
+                    lbl_Currency.Content = CarboLifeProject.valueUnit.ToString();
+                    lbl_Currencyunit.Content = "kgCO₂e/" + CarboLifeProject.valueUnit.ToString();
+                   
+
                 }
             }
             catch (Exception ex)
@@ -320,6 +324,7 @@ namespace CarboLifeUI.UI
         private void cbb_Currency_DropDownClosed(object sender, EventArgs e)
         {
             CarboLifeProject.valueUnit = cbb_Currency.Text;
+            RefreshInterFace();
         }
 
         private async void txt_DesignLife_TextChanged(object sender, TextChangedEventArgs e)

@@ -160,6 +160,9 @@
   <data name="rbn_materialedit32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\rbn_materialedit32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="rbn_materialmap32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rbn_materialmap32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="rbn_materialselect32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\rbn_materialselect32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

@@ -428,6 +428,9 @@
     <Resource Include="Resources\rbn_refresh32.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\rbn_materialmap32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="UI\refreshicon.png" />
     <Content Include="UI\editicon.png" />
   </ItemGroup>

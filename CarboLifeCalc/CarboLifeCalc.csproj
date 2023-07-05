@@ -266,33 +266,21 @@
     <Content Include="img\rnb_grouppurge128.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="img\scr\screenshot1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="img\scr\screenshot2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="img\scr\screenshot3.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="img\scr\screenshot4.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="img\scr\screenshot5.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="img\scr\screenshot6.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="img\scr\screenshot7.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="img\scr\screenshot8.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="img\scr\screenshot9.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="img\scr\revit1.png" />
+    <Content Include="img\scr\revit2.png" />
+    <Content Include="img\scr\revit3.png" />
+    <Content Include="img\scr\revit4.png" />
+    <Content Include="img\scr\revit5.png" />
+    <Content Include="img\scr\revit6.png" />
+    <Content Include="img\scr\screenshot1.png" />
+    <Content Include="img\scr\screenshot2.png" />
+    <Content Include="img\scr\screenshot3.png" />
+    <Content Include="img\scr\screenshot4.png" />
+    <Content Include="img\scr\screenshot5.png" />
+    <Content Include="img\scr\screenshot6.png" />
+    <Content Include="img\scr\screenshot7.png" />
+    <Content Include="img\scr\screenshot8.png" />
+    <Content Include="img\scr\screenshot9.png" />
     <Content Include="Resources\DVLogo256.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

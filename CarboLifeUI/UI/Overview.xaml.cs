@@ -47,7 +47,6 @@ namespace CarboLifeUI.UI
         {
             try
             {
-
                 DependencyObject parent = VisualTreeHelper.GetParent(this);
                 Window parentWindow = Window.GetWindow(parent);
                 CarboLifeMainWindow mainViewer = parentWindow as CarboLifeMainWindow;
@@ -234,11 +233,10 @@ namespace CarboLifeUI.UI
                 cnv_Totals.Children.Add(TotalText);
 
                 List<string> textGroups = CarboLifeProject.getCalcText();
-                if (textGroups.Count == 3)
+                if (textGroups.Count == 2)
                 {
                     string textItems = textGroups[0];
                     string textResults = textGroups[1];
-                    string textGeneral = textGroups[2];
 
                     int numLines = textItems.Split('\n').Length;
 
@@ -274,6 +272,10 @@ namespace CarboLifeUI.UI
                     Canvas.SetTop(summaryValues, 25);
                     cnv_Totals.Children.Add(summaryValues);
 
+                    //Add the general text
+
+                    string textGeneral = CarboLifeProject.getGeneralText();
+
                     TextBlock textGeneralValues = new TextBlock();
                     textGeneralValues.Text = textGeneral;
                     //summaryTextMemory += summaryText.Text;
@@ -290,7 +292,10 @@ namespace CarboLifeUI.UI
                     Canvas.SetTop(textGeneralValues, (numLines * 17) + 17);
 
                     cnv_Totals.Children.Add(textGeneralValues);
+
                 }
+
+
 
             }
 
@@ -346,28 +351,7 @@ namespace CarboLifeUI.UI
                 result += "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e" + Environment.NewLine;
 
                 List<string> textGroups = CarboLifeProject.getCalcText();
-                //Merge first string with second;
-                if(textGroups.Count == 3)
-                {
-                    string[] list1 = textGroups[0].Split(new string[] { System.Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                    string[] list2 = textGroups[1].Split(new string[] { System.Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-                    int a = list1.Length;
-                    int b = list2.Length;
-
-                    if(a == b)
-                    {
-                        for(int i=0;i<a-1;i++)
-                        {
-                            result += list1[i] + "   " + list2[i] + Environment.NewLine;
-                        }
-                    }
-
-                    result += textGroups[2] + Environment.NewLine;
-
-                }
-
-
+                result = ReportBuilder.getFlattenedCalText(CarboLifeProject);
 
                 if (CarboLifeProject != null && result != "")
                 {
@@ -439,7 +423,7 @@ namespace CarboLifeUI.UI
 
                     }
                     //Totals
-                    refreshSumary();
+                    //refreshSumary();
                 }
             }
             catch (Exception ex)
@@ -543,5 +527,14 @@ namespace CarboLifeUI.UI
             RefreshInterFace();
         }
 
+        private void chx_SubStructure_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (chx_Operational != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.calculateSubStructure = chx_SubStructure.IsChecked.Value;
+
+                RefreshInterFace();
+            }
+        }
     }
 }
