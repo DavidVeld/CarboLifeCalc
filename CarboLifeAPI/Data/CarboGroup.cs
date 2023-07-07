@@ -81,7 +81,10 @@ namespace CarboLifeAPI.Data
         {
             get
             {
-                return (Mass * Material.ECI_A1A3 * inUseProperties.B4);
+                double result = 0;
+                result = (Mass * Material.ECI_A1A3 * inUseProperties.B4);
+                return result;
+
             }
         }
         public double getTotalA4

@@ -32,26 +32,32 @@
         </Grid.ColumnDefinitions>
 
         <Menu Grid.Row="1" Grid.Column="1"
-              Background="White" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Loaded="Menu_Loaded">
-            <MenuItem Header="File" Background="White" Style="{StaticResource baseStyleLabel}">
-                <MenuItem Name="mnu_newProject" Header="New Project" Click="mnu_newProject_Click"/>
-                <MenuItem Name="mnu_openDataBase" Header="Open Project..." Click="Mnu_openDataBase_Click"/>
-                <MenuItem Name="mnu_saveProject" Header="Save Project" Click="Mnu_saveProject_Click"/>
-                <MenuItem Name="mnu_saveDataBase" Header="Save Project as..." Click="Mnu_saveDataBase_Click"/>
+              Background="Transparent" Width="250" HorizontalAlignment="Left" VerticalAlignment="Top" Loaded="Menu_Loaded" >
+            <MenuItem Header="File" Background="White" Style="{StaticResource formTextStyle}">
+                <MenuItem Name="mnu_newProject" Header="New Project" Click="mnu_newProject_Click" Background="Transparent">
+                    <!--
+                    <MenuItem.Icon>
+                        <Image Source="/CarboLifeUI;component/Resources/rbn_material32.png" Width="20" Height="20" />
+                    </MenuItem.Icon>
+                    -->
+                </MenuItem>
+                <MenuItem Name="mnu_openDataBase" Header="Open Project..." Click="Mnu_openDataBase_Click" Background="Transparent"/>
+                <MenuItem Name="mnu_saveProject" Header="Save Project" Click="Mnu_saveProject_Click" Background="Transparent"/>
+                <MenuItem Name="mnu_saveDataBase" Header="Save Project as..." Click="Mnu_saveDataBase_Click" Background="Transparent"/>
                 <Separator></Separator>
-                <MenuItem Name="mnu_BuildReport" Header="Export Report" Click="mnu_BuildReport_Click"/>
-                <MenuItem Name="mnu_ExportToExcel" Header="Export Data to CSV..." Click="mnu_ExportToExcel_Click"></MenuItem>
+                <MenuItem Name="mnu_BuildReport" Header="Export Report" Click="mnu_BuildReport_Click" Background="Transparent"/>
+                <MenuItem Name="mnu_ExportToExcel" Header="Export Data to CSV..." Click="mnu_ExportToExcel_Click" Background="Transparent"></MenuItem>
                 <Separator></Separator>
-                <MenuItem Name="mnu_EditTemplate" Header="Edit a Material Template..." Click="mnu_EditTemplate_Click"/>
+                <MenuItem Name="mnu_EditTemplate" Header="Edit a Material Template..." Click="mnu_EditTemplate_Click" Background="Transparent"/>
 
                 <Separator></Separator>
-                <MenuItem Name="mnu_CloseMe" Header="Close" Click="mnu_CloseMe_Click"/>
+                <MenuItem Name="mnu_CloseMe" Header="Close" Click="mnu_CloseMe_Click" Background="Transparent"/>
             </MenuItem>
 
-            <MenuItem Header="Help" Background="White" Style="{StaticResource baseStyleLabel}">
+            <MenuItem Header="Help" Background="White" Style="{StaticResource formTextStyle}">
                <!-- <MenuItem Name="mnu_Help" Header="Help" Click="mnu_Help_Click" /> -->
-                <MenuItem Name="mnu_About" Header="Help &amp; About..." Click="Mnu_About_Click" />
-                <MenuItem Name="mnu_Settings" Header="Settings..." Click="mnu_Settings_Click" />
+                <MenuItem Name="mnu_About" Header="Help &amp; About..." Click="Mnu_About_Click" Background="Transparent"/>
+                <MenuItem Name="mnu_Settings" Header="Settings..." Click="mnu_Settings_Click" Background="Transparent"/>
 
             </MenuItem>
         </Menu>

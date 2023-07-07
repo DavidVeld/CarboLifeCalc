@@ -34,9 +34,9 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Embodied Carbon Visulizer</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Carbon Footprint Visualizer: Visualizing Environmental Impact</Label>
 
-        <GroupBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" Header="Value" Style="{StaticResource bigStyle}">
+        <GroupBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" Header="Dataset" Style="{StaticResource bigStyle}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="5"/>

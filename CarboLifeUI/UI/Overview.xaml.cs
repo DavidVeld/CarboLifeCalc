@@ -350,13 +350,16 @@ namespace CarboLifeUI.UI
 
                 result += "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e" + Environment.NewLine;
 
-                List<string> textGroups = CarboLifeProject.getCalcText();
+                //List<string> textGroups = CarboLifeProject.getCalcText();
                 result = ReportBuilder.getFlattenedCalText(CarboLifeProject);
+                result += Environment.NewLine;
+                result += CarboLifeProject.getGeneralText();
+
 
                 if (CarboLifeProject != null && result != "")
                 {
                     Clipboard.SetText(result);
-                    MessageBox.Show("Text copied to clipboard", "Friendly Message", MessageBoxButton.OK);
+                    MessageBox.Show("Text copied to clipboard: " + Environment.NewLine + Environment.NewLine + result, "Friendly Message", MessageBoxButton.OK);
                 }
                 else
                 {

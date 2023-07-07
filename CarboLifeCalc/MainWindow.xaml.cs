@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -141,6 +142,7 @@ namespace CarboLifeCalc
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CarboLifeAPI.PathUtils.CheckFileLocationsNew();
+            lbl_Version.Content = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
