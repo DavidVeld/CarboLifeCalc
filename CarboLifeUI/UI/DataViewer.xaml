@@ -186,7 +186,7 @@
                 <DataGridTemplateColumn x:Name="column_Volume" Header="Total Volume &#x0a;[m³]" MinWidth="100" Width="1*" IsReadOnly="True"  Visibility="Visible">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=TotalVolume, Mode=OneWay, UpdateSourceTrigger=LostFocus}" Background="LightGray"/>
+                            <TextBlock Text="{Binding Path=TotalVolume, Mode=OneWay, UpdateSourceTrigger=LostFocus}" Loaded="RoundValue" Background="LightGray"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

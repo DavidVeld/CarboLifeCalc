@@ -802,7 +802,6 @@ namespace CarboLifeAPI.Data
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
             try
             {
-                CarboDataPoint cb_A0 = new CarboDataPoint("A0(Global)", this.A0Global);
                 CarboDataPoint cb_A1A3 = new CarboDataPoint("A1-A3", 0);
                 CarboDataPoint cb_A4 = new CarboDataPoint("A4", 0);
                 CarboDataPoint cb_A5 = new CarboDataPoint("A5(Material)",0);
@@ -815,6 +814,8 @@ namespace CarboLifeAPI.Data
                 CarboDataPoint Added = new CarboDataPoint("Additional", 0);
 
                 //These are global calculated values through settngs
+
+                CarboDataPoint cb_A0 = new CarboDataPoint("A0(Global)", this.A0Global);
                 CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
                 CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
                 CarboDataPoint cb_B67D2 = new CarboDataPoint("Energy B6-B7 + D2 (Global)", this.energyProperties.value);

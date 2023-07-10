@@ -391,7 +391,7 @@ namespace CarboLifeAPI.Data
             }
 
             //Round the volume;
-            Volume = Math.Round(Volume, 3);
+            //Volume = Math.Round(Volume, 3);
 
             //Convert to Total Volume waste, convertion and B4 factors:
 
@@ -404,17 +404,23 @@ namespace CarboLifeAPI.Data
                 StringToFormula stf = new StringToFormula();
                 double result = stf.Eval(volumeStr + Correction);
 
-                TotalVolume = Math.Round((inUseProperties.B4 * (result * wasteFact)), 3);
+                //TotalVolume = Math.Round((inUseProperties.B4 * (result * wasteFact)), 3);
+                TotalVolume = inUseProperties.B4 * (result * wasteFact);
+
             }
             else
             {
-                TotalVolume = Math.Round(inUseProperties.B4 * (Volume * wasteFact), 3);
+                //TotalVolume = Math.Round(inUseProperties.B4 * (Volume * wasteFact), 3);
+                TotalVolume = inUseProperties.B4 * (Volume * wasteFact);
+
             }
-            
+
 
             //Calculate corrected mass
             Mass = TotalVolume * Density;
             //EC = Total corrected Mass * EE;I
+
+            double inUseReplacementFactor = inUseProperties.B4;
 
             //Get all the B1-B7 per group
             double inuseECI = inUseProperties.totalECI;
@@ -422,7 +428,7 @@ namespace CarboLifeAPI.Data
             inUseProperties.totalValue = ECB1B7;
 
 
-            EC = (Mass * (ECI + inuseECI)) / 1000;
+            EC = (Mass * (ECI + inuseECI) * inUseReplacementFactor) / 1000;
 
         }
         internal void TrucateElements()
