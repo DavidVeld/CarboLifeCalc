@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("2")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("CarboLife UI")]
+[assembly: AssemblyDescription("Interface and dialog interface")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("David Veld")]
 [assembly: AssemblyProduct("CarboLifeUI")]
-[assembly: AssemblyCopyright("Copyright © David Veld 2019")]
+[assembly: AssemblyCopyright("Copyright © David In't Veld 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2.5.0")]
-[assembly: AssemblyFileVersion("1.2.5.0")]
+[assembly: AssemblyVersion("1.3.0.0")]
+[assembly: AssemblyFileVersion("1.3.0.0")]
 [assembly: NeutralResourcesLanguage("en-GB")]

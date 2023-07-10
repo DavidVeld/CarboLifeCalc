@@ -818,7 +818,7 @@ namespace CarboLifeAPI
             //Merge first string with second;
             try
             {
-                if (textGroups.Count == 3)
+                if (textGroups.Count == 2)
                 {
                     string[] list1 = textGroups[0].Split(new string[] { System.Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                     string[] list2 = textGroups[1].Split(new string[] { System.Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
@@ -828,13 +828,13 @@ namespace CarboLifeAPI
 
                     if (a == b)
                     {
-                        for (int i = 0; i < a - 1; i++)
+                        for (int i = 0; i < a; i++)
                         {
                             result += list1[i] + "\t" + list2[i] + Environment.NewLine;
                         }
                     }
 
-                    result += textGroups[2] + Environment.NewLine;
+                    //result += textGroups[2] + Environment.NewLine;
 
                 }
             }

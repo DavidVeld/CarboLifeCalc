@@ -41,12 +41,14 @@ namespace CarboLifeUI.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             txt_Path.Text = settings.templatePath;
+            txt_DesignLife.Text = settings.defaultDesignLife.ToString();
             CheckTemplateFile();
         }
 
         private void btn_Ok_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = true;
+            settings.defaultDesignLife = Convert.ToInt16(Convert.ToDouble(txt_DesignLife.Text));
             settings.Save();
             this.Close();
         }
