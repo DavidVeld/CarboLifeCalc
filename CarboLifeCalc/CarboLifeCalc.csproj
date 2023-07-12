@@ -175,7 +175,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="db\MaterialBuffer.cxml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="db\UserMaterials.cxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -184,6 +184,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="db\IstructE.cxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="db\EPDs.cxml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="db\UserMaterialsII.cxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
@@ -328,7 +334,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="db\RevitImportSettings.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

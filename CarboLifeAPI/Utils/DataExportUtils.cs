@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -792,9 +793,11 @@ namespace CarboLifeAPI
 
         }
 
-        private static string CVSFormat(string str)
+        public static string CVSFormat(string str)
         {
             str = str.Replace("\"", "\"\"");
+            //Flatten
+            str = Regex.Replace(str, @"\t|\n|\r", "");
 
             if (str.Contains(",") | str.Contains("\n") | str.Contains("\r") | str.Contains("\""))
             {
@@ -873,7 +876,7 @@ namespace CarboLifeAPI
             WriteCVSFile(fileString, exportPath);
         }
 
-        private static void WriteCVSFile(string fileString, string exportPath)
+        public static void WriteCVSFile(string fileString, string exportPath)
         {
             try
             {
