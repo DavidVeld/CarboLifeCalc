@@ -126,6 +126,7 @@ namespace CarboLifeRevit
         }
 
         [Obsolete]
+        /*
         public static void xxx(UIApplication app, string parametername)
         {
             // Create Shared Parameter Routine: -->
@@ -172,7 +173,7 @@ namespace CarboLifeRevit
                 // create a group
                 DefinitionGroup apiGroup = parafile.Groups.Create("CarbonSharedParamsGroup");
                 // create a visible "EmbodiedCarbon" of numder type.
-                ExternalDefinitionCreationOptions ExternalDefinitionCreationOptions = new ExternalDefinitionCreationOptions("EmbodiedCarbon", ParameterType.Number);
+                ExternalDefinitionCreationOptions ExternalDefinitionCreationOptions = new ExternalDefinitionCreationOptions("EmbodiedCarbon", ParameterTypeId.Number);
                 roomSharedParamDef = apiGroup.Definitions.Create(ExternalDefinitionCreationOptions);
                 
 
@@ -207,7 +208,7 @@ namespace CarboLifeRevit
                 throw new Exception("Failed to create shared parameter: " + ex.Message);
             }
         }
-
+        */
         internal static bool CreateParameterFromFile(UIApplication app, string parametername)
         {
             // Create Shared Parameter Routine: -->

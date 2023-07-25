@@ -272,6 +272,7 @@
     <Content Include="img\rnb_grouppurge128.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="img\scr\activate.png" />
     <Content Include="img\scr\revit1.png" />
     <Content Include="img\scr\revit2.png" />
     <Content Include="img\scr\revit3.png" />
