@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="740" d:DesignWidth="1160" IsVisibleChanged="UserControl_IsVisibleChanged">
+             d:DesignHeight="580" d:DesignWidth="1300" IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,7 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="0.8*"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="1.5*"/>
             <RowDefinition Height="5"/>
@@ -29,6 +29,7 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width=".3*"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
         <Label Grid.Column="1" Grid.Row="1" Style="{StaticResource formBoldTitleStyle}">Embodied Carbon per :</Label>
@@ -83,11 +84,10 @@
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="0.75*"/>
-
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
-            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="#050505" Background="White" FontFamily="Segoe UI" LegendLocation="Right" FontWeight="Light"  InnerRadius="42" Visibility="Visible">
+            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="#050505" Background="White" FontFamily="Segoe UI" LegendLocation="Right" FontWeight="Light"  InnerRadius="20" Visibility="Visible">
                 <lvc:PieChart.Resources>
                     <Style TargetType="lvc:PieSeries">
                         <Setter Property="DataLabels" Value="True"></Setter>
@@ -102,73 +102,79 @@
                 </lvc:PieChart.DataTooltip>
             </lvc:PieChart>
 
-            <Grid Background="White" Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Height="300" VerticalAlignment="Top">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
 
-                <GroupBox Grid.Column="0" Grid.Row="0" Margin="0,0,0,0" Grid.ColumnSpan="3" Header="Whole Life Carbon"  Style="{StaticResource formTextStyle}">
-                    <Grid Background="White" Grid.Column="2" Grid.Row="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="40"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <GroupBox Grid.Column="0" Grid.Row="0" Margin="0,5,0,0" Grid.ColumnSpan="3" Header="Embodied Carbon"  Style="{StaticResource formTextStyle}">
-                            <Grid Background="White" Grid.Column="2" Grid.Row="2">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="115"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <GroupBox  Grid.Column="0" Grid.Row="0" Margin="0,5,0,0" Grid.ColumnSpan="3" Header="Upfront Carbon"  Style="{StaticResource formTextStyle}">
-                                    <Grid Background="White" Grid.Column="2" Grid.Row="2">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <CheckBox Name="chx_A0" Margin="0,5,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A0_Changed" Unchecked="chx_A0_Changed">A0</CheckBox>
-                                        <CheckBox Name="chx_A1A3" Margin="0,25,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A1A3_Changed" Unchecked="chx_A1A3_Changed">A1-A3</CheckBox>
-                                        <CheckBox Name="chx_A4"  Margin="0,45,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A4_Changed" Unchecked="chx_A4_Changed">A4</CheckBox>
-                                        <CheckBox Name="chx_A5"  Margin="0,65,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A5_Changed" Unchecked="chx_A5_Changed">A5</CheckBox>
-                                    </Grid>
-                                </GroupBox>
-                                <CheckBox Name="chx_B1B7" Grid.Column="0" Grid.Row="1" Margin="0,00,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_B_Changed" Unchecked="chx_B_Changed">B1-B5</CheckBox>
-                                <CheckBox Name="chx_C1C4" Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_C_Changed" Unchecked="chx_C_Changed">C1-C4</CheckBox>
-                                <CheckBox Name="chx_Seq" Grid.Column="0" Grid.Row="1" Margin="0,40,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_Seq_Changed" Unchecked="chx_Seq_Changed">Sequestration</CheckBox>
-                                <CheckBox Name="chx_Added" Grid.Column="0" Grid.Row="1" Margin="0,60,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_Add_Changed" Unchecked="chx_Add_Changed">Additional</CheckBox>
-                            </Grid>
-                        </GroupBox>
-                    
-                    
-                <CheckBox Name="chx_D" Grid.Column="0" Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_D_Changed" Unchecked="chx_D_Changed">D</CheckBox>
-                        <CheckBox Name="chx_Operational" Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_B67D2_Changed" Unchecked="chx_B67D2_Changed">B6-B7 &amp; D2</CheckBox>
-                   
-                    
-                    </Grid>
-                    
-                    
-                </GroupBox>
-
-
-            </Grid>
-
-            <CheckBox Name="chx_SubStructure" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" Margin="0,20,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" Checked="chx_SubStructure_Unchecked" Unchecked="chx_SubStructure_Unchecked">Include Substructure</CheckBox>
 
             <!--Settings-->
-           <Border  Visibility="Hidden" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" Grid.Column="1"  Margin="0,0,0,0" Grid.Row="1" Grid.RowSpan="2" />
+            <Border  Visibility="Hidden" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2" Grid.Column="1"  Margin="0,0,0,0" Grid.Row="1" Grid.RowSpan="2" />
         </Grid>
+
+        <!--Options-->
+        <Grid Background="White" Grid.Column="3" Grid.Row="2" Grid.RowSpan="3" Height="350" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Grid.Column="0" Grid.Row="0" Margin="0,0,0,5" Grid.ColumnSpan="1" Grid.RowSpan="1" Header="Whole Life Carbon"  Style="{StaticResource formTextStyle}">
+                <Grid Background="White" Grid.Column="2" Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="225"/>
+                        <RowDefinition Height="45"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Grid.Column="0" Grid.Row="0" Margin="0,5,0,0" Grid.ColumnSpan="3" Header="Embodied Carbon"  Style="{StaticResource formTextStyle}">
+                        <Grid Background="White" Grid.Column="2" Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="115"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <GroupBox  Grid.Column="0" Grid.Row="0" Margin="0,5,0,0" Grid.ColumnSpan="3" Header="Upfront Carbon"  Style="{StaticResource formTextStyle}">
+                                <Grid Background="White" Grid.Column="2" Grid.Row="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Name="chx_A0" Margin="0,5,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A0_Changed" Unchecked="chx_A0_Changed">A0</CheckBox>
+                                    <CheckBox Name="chx_A1A3" Margin="0,25,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A1A3_Changed" Unchecked="chx_A1A3_Changed">A1-A3</CheckBox>
+                                    <CheckBox Name="chx_A4"  Margin="0,45,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A4_Changed" Unchecked="chx_A4_Changed">A4</CheckBox>
+                                    <CheckBox Name="chx_A5"  Margin="0,65,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_A5_Changed" Unchecked="chx_A5_Changed">A5</CheckBox>
+                                </Grid>
+                            </GroupBox>
+                            <CheckBox Name="chx_B1B7" Grid.Column="0" Grid.Row="1" Margin="0,00,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_B_Changed" Unchecked="chx_B_Changed">B1-B5</CheckBox>
+                            <CheckBox Name="chx_C1C4" Grid.Column="0" Grid.Row="1" Margin="0,20,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_C_Changed" Unchecked="chx_C_Changed">C1-C4</CheckBox>
+                            <CheckBox Name="chx_Seq" Grid.Column="0" Grid.Row="1" Margin="0,40,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_Seq_Changed" Unchecked="chx_Seq_Changed">Sequestration</CheckBox>
+                            <CheckBox Name="chx_Added" Grid.Column="0" Grid.Row="1" Margin="0,60,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_Add_Changed" Unchecked="chx_Add_Changed">Additional</CheckBox>
+                        </Grid>
+                    </GroupBox>
+
+
+                    <CheckBox Name="chx_D" Grid.Column="0" Grid.Row="1" Margin="0,5,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_D_Changed" Unchecked="chx_D_Changed">D</CheckBox>
+                    <CheckBox Name="chx_Operational" Grid.Column="0" Grid.Row="1" Margin="0,25,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_B67D2_Changed" Unchecked="chx_B67D2_Changed">B6-B7 &amp; D2</CheckBox>
+
+
+                </Grid>
+
+
+            </GroupBox>
+
+            <CheckBox Name="chx_SubStructure" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" Margin="0,5,0,0" Grid.ColumnSpan="3" Grid.RowSpan="4" FontFamily="Segoe UI" IsChecked="True" Height="25" Checked="chx_SubStructure_Unchecked" Unchecked="chx_SubStructure_Unchecked">Include Substructure</CheckBox>
+
+
+        </Grid>
+
 
         <!--LEti / SCORS -->
         <Grid Grid.Column="2" Margin="5,5,5,5" Grid.Row="4" Background="White">
@@ -185,8 +191,8 @@
 
             <Label Grid.Column="1" Margin="0,1,10,0" Grid.Row="1" Height="28" Grid.ColumnSpan="2" Width="180"  HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Building Type:</Label>
             <ComboBox Name="cbb_BuildingType" Grid.Row="1" Margin="100,2,295,0" Height="25" Width="170" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_BuildingType_DropDownClosed"/>
-            <Label Margin="290,1,240,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">GAI:</Label>
-            <TextBox Name="txt_Area" Grid.Row="1" Margin="330,0,111,0" Height="30" Width="100" HorizontalAlignment="Left"  Style="{StaticResource flatTextBox}" TextChanged="txt_Area_TextChanged" />
+            <Label Margin="290,0,221,0" Grid.Row="1" Height="28" VerticalAlignment="Center" Style="{StaticResource formTextStyle}">GAI:</Label>
+            <TextBox Name="txt_Area" Grid.Row="1" Margin="347,0,0,0" Height="30" Width="83" HorizontalAlignment="Left"  Style="{StaticResource flatTextBox}" TextChanged="txt_Area_TextChanged" />
             <Label Margin="440,1,5,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">m²</Label>
 
             <Canvas Name="cnv_Leti" Grid.Column="0" Margin="5,5,5,5" Grid.Row="2" Background="White"></Canvas>

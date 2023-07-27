@@ -218,7 +218,7 @@ namespace CarboLifeUI.UI
                 summaryTextMemory = "";
 
                 TextBlock TotalText = new TextBlock();
-                TotalText.Text = "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e";
+                TotalText.Text = "Calculated Carbon Footprint: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e";
                 summaryTextMemory += TotalText.Text + Environment.NewLine;
                 TotalText.FontStyle = FontStyles.Normal;
                 TotalText.FontWeight = FontWeights.Bold;
