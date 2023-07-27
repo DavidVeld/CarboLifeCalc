@@ -1216,12 +1216,11 @@ namespace CarboLifeAPI.Data
             double socialCarbonCost = Math.Round(this.SocialCost * this.getTotalEC(), 0, MidpointRounding.AwayFromZero);
             string generalText = "";
 
-            generalText += "The Upfront Cabon Footprint (A0-A5) is: " + Math.Round((getUpfrontTotals() / 1000),2).ToString("N") + " tCO₂/m²" + Environment.NewLine;
+            generalText += "The Upfront Carbon Footprint (A0-A5) is: " + Math.Round((getUpfrontTotals() / 1000),2).ToString("N") + " tCO₂/m²" + Environment.NewLine;
             generalText += "The Embodied Carbon Footprint (A0-C & Seq) is: " + Math.Round((getEmbodiedTotals() / 1000), 2).ToString("N") + " tCO₂/m²" + Environment.NewLine;
             generalText += Environment.NewLine;
             generalText += "The calculated value equals to: " + Math.Round(this.ECTotal / 1.40, 2) + " average car emission per year (1.40 tCO₂/car). (UK)" + Environment.NewLine;
             generalText += "This requires " + Math.Round((this.ECTotal * 40), 0) + " trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
-            generalText += Environment.NewLine;
             generalText += "The Social Carbon Cost of this project is: " + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
 
             result = generalText;
