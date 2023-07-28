@@ -1,56 +1,30 @@
 # CarboLifeCalc
 
-
-
 ![alt text](https://www.davidveld.nl/img/carbocalc/LogoCLC.png)
 
 Carbo Life Calculator is an embodied carbon calculator for the built environment. The application transforms quantities of materials into embodied carbon. Carbo Life Calculator uses available embodied carbon data from EPDs or various databases and maps these to your design. Thus giving you almost instantaneous results.
 
 Carbo Life Calc is a tool that offers users a free and open-source solution to calculate the embodied carbon of a building design. It's designed to link into Autodesk Revit. Making this tool freely available for all will be key in creating awareness in the built environment.
 
-Upates as per 13.12.22  
-Carbo Life Calculator can now be accesses in Rhino Grasshopper (5,6 & 7), the popular visual programming platform for designers, architects, and engineers. With this compatibility, users can now integrate embodied carbon calculations into their Grasshopper workflow, allowing them to use it more seamlessly and efficiently. This new feature makes Carbo Life Calculator even more versatile and useful for a wide range of design and analysis tasks. We are excited to offer this compatibility and we believe it will be a valuable addition for our users who rely on Grasshopper for their work.
+Carbo Life Calculator can also be accesses through Rhino Grasshopper (5,6 & 7), the popular visual programming platform for designers, architects, and engineers. With this compatibility, users can now integrate embodied carbon calculations into their Grasshopper workflow, allowing them to use it more seamlessly and efficiently. This new feature makes Carbo Life Calculator even more versatile and useful for a wide range of design and analysis tasks. We are excited to offer this compatibility and we believe it will be a valuable addition for our users who rely on Grasshopper for their work.
 
-(build V1.0.0 01.07.21)  
+Screenshots: 
 
-Zip:  
-https://github.com/DavidVeld/CarboLifeCalc/releases/download/1.0.0/210701.V1.0.0.G.zip  
-Installer:  
-https://github.com/DavidVeld/CarboLifeCalc/releases/download/1.0.0/CarboLifeCalcInstaller.msi  
-From Autodesk App Store:  
-https://apps.autodesk.com/RVT/en/Detail/Index?id=5134144936403749174&appLang=en&os=Win64  
-
-For help and quick guide please see:  
-https://github.com/DavidVeld/CarboLifeCalc/wiki  
-Help documentation (formatted pdf):  
-https://drive.google.com/file/d/1Omg-_2WtXjBDKgRInD4yzH7YDLlE1Hy1/view?usp=sharing  
-
-Videos:  
-Quick 5m long demo:  
-https://youtu.be/5_pjdKm7b3w  
-Heatmaps:  
-https://youtu.be/O0gkl9B8Mvw  
-
-Screenshots:
 ![alt text](https://github.com/DavidVeld/CarboLifeCalc/blob/master/CarboLifeCalc/img/scr/screenshot1.png)
 ![alt text](https://github.com/DavidVeld/CarboLifeCalc/blob/master/CarboLifeCalc/img/scr/screenshot2.png)
 ![alt text](https://github.com/DavidVeld/CarboLifeCalc/blob/master/CarboLifeCalc/img/scr/screenshot3.png)
 ![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc3.png)
 ![alt text](https://www.davidveld.nl/img/carbocalc/CarboCalc4.png)
 
-#Roadmap:
-1. Increase database with more materials.
-2. Bug fixing (on-going, please supply feedback)
-3. Carbon sequestering calculator (Fun, but low priority)
-4. Project compare interface added graphs
-6. Import from Excel
-
+#Working on:
+1. Autodesk Release Update
+2. Material database
+3. Import materials from cvs 
 
 Updates as per build V1.0.0 (01.07.21) 
 1. Graph improvements
 2. File handling improvements
-3. Messages and other bits.
-
+3. Messages and other bits. 
 
 Updates as per build 28.04.2021
 1. Moved user materials to AppData Folder
