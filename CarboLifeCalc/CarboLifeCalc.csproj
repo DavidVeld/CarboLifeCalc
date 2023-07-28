@@ -273,6 +273,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Resource Include="img\scr\activate.png" />
+    <Resource Include="img\scr\calc1.png" />
     <Content Include="img\scr\revit1.png" />
     <Content Include="img\scr\revit2.png" />
     <Content Include="img\scr\revit3.png" />
