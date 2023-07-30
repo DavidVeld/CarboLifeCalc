@@ -14,9 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarboLifeAPI", "CarboLifeAPI\CarboLifeAPI.csproj", "{0C38F4ED-1D83-4FFE-AD65-B884410AF824}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarboLifeRevit", "CarboLifeRevit\CarboLifeRevit.csproj", "{7538BFFC-7E84-48AA-845D-250FB8B475C6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DF8B1C1A-DEEF-4A4D-B7C1-427968FE1C49} = {DF8B1C1A-DEEF-4A4D-B7C1-427968FE1C49}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9494B6DF-0677-43EF-BF93-780421B38954}"
 	ProjectSection(SolutionItems) = preProject

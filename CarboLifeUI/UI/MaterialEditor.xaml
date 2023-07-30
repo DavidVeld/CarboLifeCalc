@@ -19,7 +19,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="32"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
@@ -103,7 +103,7 @@
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0"/>
-                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="28"/>
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="32"/>
@@ -199,16 +199,19 @@
                         <Label Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">Total kgCO₂e per kg:</Label>
                         <CheckBox x:Name="chx_Total_Manual" Grid.Row="8" Grid.Column="3" Height="26" Width="23" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.RowSpan="1" IsEnabled="False" Visibility="Hidden" ></CheckBox>
                         <TextBox Name="txt_ECI" Grid.Column="2" Grid.Row="8"  Height="27" Margin="3,3,5,3" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="True"></TextBox>
+                        <Button Name="btn_FromEPD"  Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" Grid.ColumnSpan="2" VerticalAlignment="Center" Width="75" Height="25" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_FromEPD_Click">From EPD...</Button>
+
                     </Grid>
                 </GroupBox>
 
                 <Label Name="Calc" Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="5"  Margin="0,5,0,0" Style="{StaticResource formTextStyle}" Grid.RowSpan="3" Visibility="Hidden">[CALC]</Label>
 
-                <Button Name="btn_Apply"  Grid.Row="13" Grid.Column="4" Grid.ColumnSpan="3" Margin="0,0,0,0" VerticalAlignment="Center" Width="95" Height="25" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="Btn_Apply_Click">Apply Changes</Button>
-                <Button Name="btn_FromEPD"  Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="3" Margin="0,0,105,0" VerticalAlignment="Center" Width="95" Height="25" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_FromEPD_Click">From EPD...</Button>
 
             </Grid>
         </GroupBox>
+
+        <Button Name="btn_Apply"  Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="3" Margin="15,0,0,0" VerticalAlignment="Center" Width="95" Height="25" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_Apply_Click">Apply Values</Button>
+
 
         <Button Name="btn_New"  Grid.Row="3" Grid.Column="1" Height="25" Margin="10,0,0,0" VerticalAlignment="Center" Width="65" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_New_Click" >New</Button>
         <Button Name="btn_Delete"  Grid.Row="3" Grid.Column="1" Height="25" Margin="85,0,0,0" VerticalAlignment="Center" Width="65" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="Btn_Delete_Click" >Delete</Button>
