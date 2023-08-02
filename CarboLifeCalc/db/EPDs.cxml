@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<CarboDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<CarboDatabase xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CarboMaterials>
     <CarboMaterial>
       <Id>20201</Id>
@@ -9,8 +9,8 @@
 The material is with mortar allowance (Approx 13%)</Description>
       <EPDurl>https://www.brick.org.uk/admin/resources/breg-en-epd-000002-v4.pdf</EPDurl>
       <Density>2000</Density>
-      <ECI>0.326973</ECI>
-      <getVolumeECI>653.946</getVolumeECI>
+      <ECI>0.23697300000000002</ECI>
+      <getVolumeECI>473.946</getVolumeECI>
       <ECI_A1A3>0.213</ECI_A1A3>
       <ECI_A4>0.008026</ECI_A4>
       <ECI_A5>0.011466</ECI_A5>
@@ -18,7 +18,7 @@ The material is with mortar allowance (Approx 13%)</Description>
       <ECI_C1C4>0.004481</ECI_C1C4>
       <ECI_D>0</ECI_D>
       <ECI_Seq>0</ECI_Seq>
-      <ECI_Mix>0.09</ECI_Mix>
+      <ECI_Mix>0</ECI_Mix>
       <WasteFactor>10</WasteFactor>
       <isLocked>false</isLocked>
       <materialA1A3Properties>
@@ -646,7 +646,7 @@ Set Value by user as: 0kgCo2/kg
       <Description>This is a Ready mix concrete based on Tarmac's EPD</Description>
       <EPDurl>https://tarmac.com/wp-content/plugins/tarmac.com/components/downloads/file-download.php?download_id=6885</EPDurl>
       <Density>2400</Density>
-      <ECI>0.14442250000000032</ECI>
+      <ECI>0.14442250000000031</ECI>
       <getVolumeECI>346.61400000000077</getVolumeECI>
       <ECI_A1A3>0.131666666666667</ECI_A1A3>
       <ECI_A4>0.00154166666666667</ECI_A4>
@@ -909,6 +909,259 @@ Set Value by user as: 0kgCO₂/kg
       <ECI_Seq>0</ECI_Seq>
       <ECI_Mix>0</ECI_Mix>
       <WasteFactor>5</WasteFactor>
+      <isLocked>false</isLocked>
+      <materialA1A3Properties>
+        <Id>0</Id>
+        <Category />
+        <Name />
+        <Description />
+        <Density>0</Density>
+        <ECI_A1A3>0</ECI_A1A3>
+      </materialA1A3Properties>
+      <materiaA4Properties>
+        <calcResult />
+        <name />
+        <description />
+        <distanceToSite>50</distanceToSite>
+        <materialDensity>500</materialDensity>
+        <emptyRun>80</emptyRun>
+        <emptyReturn>true</emptyReturn>
+        <vehicleSettings>
+          <name>Truck</name>
+          <maxVolume>96</maxVolume>
+          <maxLoad>22000</maxLoad>
+          <kmPer>3.85</kmPer>
+          <carboCostNew>280000</carboCostNew>
+          <totalDistance>250000</totalDistance>
+          <defaultFuel>Diesel</defaultFuel>
+          <description>An unspecified Vehicle</description>
+        </vehicleSettings>
+        <vehicleFuel>
+          <name>Diesel</name>
+          <emission>2.62</emission>
+          <production>0.4</production>
+          <unit>l</unit>
+        </vehicleFuel>
+        <value>0.010820543093270366</value>
+      </materiaA4Properties>
+      <materialA5Properties>
+        <calcResult>A5 calculation to be implemented 
+Set Value by user as: 0kgCO₂/kg
+</calcResult>
+        <name />
+        <value>0</value>
+      </materialA5Properties>
+      <materialC1C4Properties>
+        <calcResult />
+        <propertyName />
+        <c1density>0</c1density>
+        <c1BaseValue>3.4</c1BaseValue>
+        <c1Value>0</c1Value>
+        <c2Properties>
+          <calcResult />
+          <name />
+          <description />
+          <distanceToSite>50</distanceToSite>
+          <materialDensity>500</materialDensity>
+          <emptyRun>80</emptyRun>
+          <emptyReturn>true</emptyReturn>
+          <vehicleSettings>
+            <name>Truck</name>
+            <maxVolume>96</maxVolume>
+            <maxLoad>22000</maxLoad>
+            <kmPer>3.85</kmPer>
+            <carboCostNew>280000</carboCostNew>
+            <totalDistance>250000</totalDistance>
+            <defaultFuel>Diesel</defaultFuel>
+            <description>An unspecified Vehicle</description>
+          </vehicleSettings>
+          <vehicleFuel>
+            <name>Diesel</name>
+            <emission>2.62</emission>
+            <production>0.4</production>
+            <unit>l</unit>
+          </vehicleFuel>
+          <value>0.010820543093270366</value>
+        </c2Properties>
+        <c2Value>0</c2Value>
+        <c3Value>0</c3Value>
+        <c4DisposalName>Generic</c4DisposalName>
+        <c4landfP>50</c4landfP>
+        <c4landfV>0.013</c4landfV>
+        <c4lanfResult>0</c4lanfResult>
+        <c4incfP>0</c4incfP>
+        <c4incfV>0</c4incfV>
+        <c4incResult>0</c4incResult>
+        <c4reUseP>50</c4reUseP>
+        <c4reUseV>0.005</c4reUseV>
+        <c4reUseResult>0</c4reUseResult>
+        <other>0</other>
+        <value>0.009</value>
+      </materialC1C4Properties>
+      <materialSeqProperties>
+        <propertyName>Sequestration</propertyName>
+        <value>0</value>
+        <sequestrationPeriod>40</sequestrationPeriod>
+        <comment />
+      </materialSeqProperties>
+      <materialDProperties>
+        <name />
+        <value>0</value>
+        <calcResult />
+      </materialDProperties>
+      <ECI_A1A3_Override>true</ECI_A1A3_Override>
+      <ECI_A4_Override>true</ECI_A4_Override>
+      <ECI_A5_Override>true</ECI_A5_Override>
+      <ECI_C1C4_Override>true</ECI_C1C4_Override>
+      <ECI_D_Override>true</ECI_D_Override>
+      <ECI_Seq_Override>false</ECI_Seq_Override>
+      <ECI_Mix_Info />
+    </CarboMaterial>
+    <CarboMaterial>
+      <Id>24247</Id>
+      <Name>Polystyrene- EPD</Name>
+      <Category>Other</Category>
+      <Description />
+      <EPDurl>https://www.isover.se/sites/isover.se/files/assets/documents/epd_xps.pdf</EPDurl>
+      <Density>33.7</Density>
+      <ECI>4.7145400593471765</ECI>
+      <getVolumeECI>158.87999999999985</getVolumeECI>
+      <ECI_A1A3>2.80118694362018</ECI_A1A3>
+      <ECI_A4>0.0839762611275964</ECI_A4>
+      <ECI_A5>0</ECI_A5>
+      <ECI_B1B5>0</ECI_B1B5>
+      <ECI_C1C4>3.39970326409495</ECI_C1C4>
+      <ECI_D>-1.57032640949555</ECI_D>
+      <ECI_Seq>0</ECI_Seq>
+      <ECI_Mix>0</ECI_Mix>
+      <WasteFactor>10</WasteFactor>
+      <isLocked>false</isLocked>
+      <materialA1A3Properties>
+        <Id>2548</Id>
+        <Group>ECI</Group>
+        <Category>Other</Category>
+        <Name>Insulation : Polystyrene</Name>
+        <Description>see plastics</Description>
+        <Density>0</Density>
+        <ECI_A1A3>3.43</ECI_A1A3>
+      </materialA1A3Properties>
+      <materiaA4Properties>
+        <calcResult />
+        <name />
+        <description />
+        <distanceToSite>50</distanceToSite>
+        <materialDensity>32</materialDensity>
+        <emptyRun>80</emptyRun>
+        <emptyReturn>true</emptyReturn>
+        <vehicleSettings>
+          <name>Truck</name>
+          <maxVolume>96</maxVolume>
+          <maxLoad>22000</maxLoad>
+          <kmPer>3.85</kmPer>
+          <carboCostNew>280000</carboCostNew>
+          <totalDistance>250000</totalDistance>
+          <defaultFuel>Diesel</defaultFuel>
+          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m³. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+        </vehicleSettings>
+        <vehicleFuel>
+          <name>Diesel</name>
+          <emission>2.62</emission>
+          <production>0.4</production>
+          <unit>l</unit>
+        </vehicleFuel>
+        <value>0.07749086850649349</value>
+      </materiaA4Properties>
+      <materialA5Properties>
+        <calcResult>A5 calculation to be implemented 
+Set Value by user as: 0.01kgCO₂/kg
+</calcResult>
+        <name>Calculated</name>
+        <value>0.01</value>
+      </materialA5Properties>
+      <materialC1C4Properties>
+        <calcResult />
+        <propertyName />
+        <c1density>0</c1density>
+        <c1BaseValue>3.4</c1BaseValue>
+        <c1Value>0</c1Value>
+        <c2Properties>
+          <calcResult />
+          <name>Manual</name>
+          <description />
+          <distanceToSite>50</distanceToSite>
+          <materialDensity>500</materialDensity>
+          <emptyRun>80</emptyRun>
+          <emptyReturn>true</emptyReturn>
+          <vehicleSettings>
+            <name>Truck</name>
+            <maxVolume>96</maxVolume>
+            <maxLoad>22000</maxLoad>
+            <kmPer>3.85</kmPer>
+            <carboCostNew>280000</carboCostNew>
+            <totalDistance>250000</totalDistance>
+            <defaultFuel>Diesel</defaultFuel>
+            <description>An unspecified Vehicle</description>
+          </vehicleSettings>
+          <vehicleFuel>
+            <name>Diesel</name>
+            <emission>2.62</emission>
+            <production>0.4</production>
+            <unit>l</unit>
+          </vehicleFuel>
+          <value>0.010820543093270366</value>
+        </c2Properties>
+        <c2Value>0</c2Value>
+        <c3Value>0</c3Value>
+        <c4DisposalName>Generic</c4DisposalName>
+        <c4landfP>50</c4landfP>
+        <c4landfV>0.013</c4landfV>
+        <c4lanfResult>0</c4lanfResult>
+        <c4incfP>0</c4incfP>
+        <c4incfV>3.43</c4incfV>
+        <c4incResult>0</c4incResult>
+        <c4reUseP>50</c4reUseP>
+        <c4reUseV>0.005</c4reUseV>
+        <c4reUseResult>0</c4reUseResult>
+        <other>0</other>
+        <value>0.009</value>
+      </materialC1C4Properties>
+      <materialSeqProperties>
+        <propertyName />
+        <value>0</value>
+        <sequestrationPeriod>40</sequestrationPeriod>
+        <comment />
+      </materialSeqProperties>
+      <materialDProperties>
+        <name />
+        <value>0</value>
+        <calcResult />
+      </materialDProperties>
+      <ECI_A1A3_Override>true</ECI_A1A3_Override>
+      <ECI_A4_Override>true</ECI_A4_Override>
+      <ECI_A5_Override>true</ECI_A5_Override>
+      <ECI_C1C4_Override>true</ECI_C1C4_Override>
+      <ECI_D_Override>true</ECI_D_Override>
+      <ECI_Seq_Override>false</ECI_Seq_Override>
+      <ECI_Mix_Info />
+    </CarboMaterial>
+    <CarboMaterial>
+      <Id>20352</Id>
+      <Name>Steel - SHS Tata - EPD</Name>
+      <Category>Steel</Category>
+      <Description>Structural Hollow Sections</Description>
+      <EPDurl>https://www.tatasteeleurope.com/construction/download-centre/environmental-product-declarations</EPDurl>
+      <Density>7850</Density>
+      <ECI>1.0035949999999996</ECI>
+      <getVolumeECI>7878.2207499999968</getVolumeECI>
+      <ECI_A1A3>2.59</ECI_A1A3>
+      <ECI_A4>0</ECI_A4>
+      <ECI_A5>0</ECI_A5>
+      <ECI_B1B5>0</ECI_B1B5>
+      <ECI_C1C4>0.023595</ECI_C1C4>
+      <ECI_D>-1.61</ECI_D>
+      <ECI_Seq>0</ECI_Seq>
+      <ECI_Mix>0</ECI_Mix>
+      <WasteFactor>2</WasteFactor>
       <isLocked>false</isLocked>
       <materialA1A3Properties>
         <Id>0</Id>

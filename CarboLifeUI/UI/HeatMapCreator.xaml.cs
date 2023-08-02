@@ -211,8 +211,8 @@ namespace CarboLifeUI.UI
                 //clear if no data
                 if (thisResult.entireProjectData.Count > 0)
                 {
-                    double maxValue = graphData.getMaxValue();
-                    double minValue = graphData.getMinValue();
+                    double maxValue = graphData.getMaxValue() + 1;
+                    double minValue = graphData.getMinValue() - 1;
 
                     //Some Data checks:
                     if (minValue > 0)

@@ -56,10 +56,10 @@ namespace CarboLifeUI.UI
             //List<String> fieldNameList = new List<string>();
             List<CarboMaterial> resultList = new List<CarboMaterial>();
             //Reach row is one element
-            //Loop through datatab;e
+            //Loop through datatable
 
             //int newIdNr = 10000;
-            //int columncount = 0;
+            //int column count = 0;
 
             PropertyInfo[] propertyValues = typeof(CarboMaterial).GetProperties();
             List<PropertyInfo> fullPropertyList = propertyValues.ToList();
@@ -75,7 +75,7 @@ namespace CarboLifeUI.UI
                 }
                 //Set Id;
                 //newMaterial.Id = newIdNr;
-                //columncount = 0;
+                //column count = 0;
                 bool valueisParameter = false; ;
 
                 foreach (DataColumn dc in dt.Columns)

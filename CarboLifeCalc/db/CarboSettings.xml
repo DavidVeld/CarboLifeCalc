@@ -11,12 +11,12 @@
     <IncludeExisting>false</IncludeExisting>
     <CombineExistingAndDemo>false</CombineExistingAndDemo>
     <IncludeAdditionalParameter>true</IncludeAdditionalParameter>
-    <AdditionalParameter>Comments</AdditionalParameter>
+    <AdditionalParameter></AdditionalParameter>
     <AdditionalParameterElementType>false</AdditionalParameterElementType>
   </defaultCarboGroupSettings>
-  <templatePath>C:\000 - Workfiles\001 - Coding\CarboLifeCalcGit\CarboLifeCalc\bin\Debug\db\UserMaterials.cxml</templatePath>
+  <templatePath></templatePath>
   <useLocal>true</useLocal>
-  <firstLaunch>false</firstLaunch>
+  <firstLaunch>true</firstLaunch>
   <colourPresets>
     <CarboColourPreset>
       <name>Preset 1</name>

@@ -212,11 +212,11 @@ namespace CarboLifeUI.UI
 
                     //set the axis:
                     AxesCollection XaxisCollection = new AxesCollection();
-                    Axis XAxis = new Axis { Title = "Years From Construction Completion", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
+                    Axis XAxis = new Axis { Title = "Years from Construction Completion", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
                     XaxisCollection.Add(XAxis);
 
                     AxesCollection YaxisCollection = new AxesCollection();
-                    Axis YAxis = new Axis { Title = "Total embodied Carbon (tCO2)", MinValue = min, Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
+                    Axis YAxis = new Axis { Title = "Total Carbon Footprint (tCO2)", MinValue = min, Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
                     YaxisCollection.Add(YAxis);
 
 
@@ -282,7 +282,7 @@ namespace CarboLifeUI.UI
                     XaxisCollection.Add(XAxis);
 
                     AxesCollection YaxisCollection = new AxesCollection();
-                    Axis YAxis = new Axis { Title = "Total Embodied Carbon (tCO2)", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
+                    Axis YAxis = new Axis { Title = "Total Carbon Footprint (tCO2)", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
                     YaxisCollection.Add(YAxis);
 
                     barchart.AxisX = XaxisCollection;

@@ -813,7 +813,7 @@ namespace CarboLifeAPI.Data
                 CarboDataPoint cb_Seq = new CarboDataPoint("Sequestration", 0);
                 CarboDataPoint Added = new CarboDataPoint("Additional", 0);
 
-                //These are global calculated values through settngs
+                //These are global calculated values through settings
 
                 CarboDataPoint cb_A0 = new CarboDataPoint("A0(Global)", this.A0Global);
                 CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
@@ -1055,7 +1055,6 @@ namespace CarboLifeAPI.Data
         /// 1. Values
         /// 2. A bit of Text
         /// </returns>
-        [Obsolete("This method should move out of the carbo project and into a utils")]
         public List<string> getCalcText()
         {
             this.CalculateProject();

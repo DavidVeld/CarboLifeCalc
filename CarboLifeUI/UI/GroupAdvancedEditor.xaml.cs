@@ -115,12 +115,12 @@ namespace CarboLifeUI.UI
                 }
                 else
                 {
-                    MessageBox.Show("File: " + myPath + " was locked, make sure you don't have it open or you cannot load it's data");
+                    MessageBox.Show("File: " + myPath + " was locked, make sure you don't have it open or you cannot load it's data.");
                 }
             }
             else
             {
-                MessageBox.Show("File: " + myPath + " could not be found, make sure you have the Eol list located in indicated folder");
+                MessageBox.Show("File: " + myPath + " could not be found, make sure you have the Eol list located in indicated folder.");
             }
 
             return result;

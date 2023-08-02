@@ -811,7 +811,7 @@ namespace CarboLifeAPI
         {
             string result = "";
 
-            result += "Total Embodied Carbon: " + carboLifeProject.getTotalEC().ToString() + " tCO₂e" + Environment.NewLine;
+            result += "Total Carbon Footprint: " + carboLifeProject.getTotalEC().ToString() + " tCO₂e" + Environment.NewLine;
 
             List<string> textGroups = carboLifeProject.getCalcText();
 
