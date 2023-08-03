@@ -487,7 +487,7 @@ namespace CarboLifeUI.UI
                     }
                     else
                     {
-                        MessageBox.Show("The file is open by another process, or cannot be openend, please specify another location");
+                        MessageBox.Show("The file is open by another process, or cannot be opened, please specify another location.");
                     }
                 }
 
@@ -540,7 +540,7 @@ namespace CarboLifeUI.UI
 
             if (File.Exists(exportpathResult) || File.Exists(exportpathElements) || File.Exists(exportpathMaterials))
             {
-                System.Windows.MessageBox.Show("CVS export succesful. Click OK to open export directory.", "Success!", MessageBoxButton.OK);
+                System.Windows.MessageBox.Show("CVS export successful. Click OK to open export directory.", "Success!", MessageBoxButton.OK);
                 System.Diagnostics.Process.Start("explorer.exe", exportpath);
             }
 

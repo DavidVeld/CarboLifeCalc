@@ -895,7 +895,7 @@ Set Value by user as: 0kgCO₂/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>24844</Id>
+      <Id>27778</Id>
       <Name>Concrete Global - C32/40 Mean</Name>
       <Category>Concrete</Category>
       <Description>Global Average
@@ -1274,7 +1274,7 @@ CARES sector average (EAF production)
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>23738</Id>
+      <Id>21923</Id>
       <Name>Steel Global - Reinforcement - Mean</Name>
       <Category>Steel</Category>
       <Description>Global recommended value</Description>
@@ -2400,7 +2400,7 @@ Dense blocks for other uses</Description>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>23698</Id>
+      <Id>29415</Id>
       <Name>Brick UK BDA Generic Brick</Name>
       <Category>Blocks and Bricks</Category>
       <Description>Engineering bricks
@@ -2525,7 +2525,7 @@ Dense blocks for other uses</Description>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>23735</Id>
+      <Id>23875</Id>
       <Name>Stone - Granite</Name>
       <Category>Blocks and Bricks</Category>
       <Description>Generic Granite</Description>
@@ -2649,7 +2649,7 @@ Dense blocks for other uses</Description>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>21085</Id>
+      <Id>22239</Id>
       <Name>Stone - Limestone</Name>
       <Category>Blocks and Bricks</Category>
       <Description>Generic Limestone</Description>
@@ -2773,7 +2773,7 @@ Dense blocks for other uses</Description>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>20203</Id>
+      <Id>25827</Id>
       <Name>Stone - Sandstone</Name>
       <Category>Blocks and Bricks</Category>
       <Description>Generic Limestone</Description>
@@ -2897,7 +2897,7 @@ Dense blocks for other uses</Description>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>24080</Id>
+      <Id>24747</Id>
       <Name>Timber Global - Softwood</Name>
       <Category>Timber</Category>
       <Description>Timber - Global
@@ -3150,7 +3150,7 @@ CLT, 100% FSC/PEFC
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>28547</Id>
+      <Id>26383</Id>
       <Name>Timber Global - CLT</Name>
       <Category>Timber</Category>
       <Description>Manufactured structural timber - Global
@@ -3402,7 +3402,7 @@ Glulam, 100% FSC/PEFC
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>23180</Id>
+      <Id>22795</Id>
       <Name>Timber Global - Glulam</Name>
       <Category>Timber</Category>
       <Description>Manufactured structural timber - Global
@@ -3652,7 +3652,7 @@ LVL, 100% FSC/PEFC</Description>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>22765</Id>
+      <Id>29207</Id>
       <Name>Timber Global - Plywood</Name>
       <Category>Timber</Category>
       <Description>Global
@@ -3778,7 +3778,7 @@ FSC/PEFC</Description>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>26130</Id>
+      <Id>20843</Id>
       <Name>Timber Global - OSB</Name>
       <Category>Timber</Category>
       <Description>Global
@@ -4651,7 +4651,7 @@ OSB, 100% FSC/PEFC</Description>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>26421</Id>
+      <Id>27255</Id>
       <Name>Plasterboard</Name>
       <Category>Other</Category>
       <Description>Partitioning/ceilings
@@ -5535,7 +5535,7 @@ Set Value by user as: 0kgCO₂/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>22608</Id>
+      <Id>28335</Id>
       <Name>Steel UK - Global Closed Sections</Name>
       <Category>Steel</Category>
       <Description>Global
@@ -5660,7 +5660,7 @@ Rolled closed sections</Description>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>29375</Id>
+      <Id>20287</Id>
       <Name>Steel Global - Structural Plate</Name>
       <Category>Steel</Category>
       <Description>Global Plates</Description>
@@ -6160,7 +6160,7 @@ Set Value by user as: 0kgCO₂/kg
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>25788</Id>
+      <Id>28891</Id>
       <Name>Granular fill - Global</Name>
       <Category>Other</Category>
       <Description>Granular fill - Global</Description>
@@ -7431,7 +7431,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>25385</Id>
+      <Id>24955</Id>
       <Name>Concrete Global - C32/40 Low Bound</Name>
       <Category>Concrete</Category>
       <Description>Global 20th Percentile
@@ -7557,7 +7557,7 @@ C32/40</Description>
       <ECI_Mix_Info />
     </CarboMaterial>
     <CarboMaterial>
-      <Id>20846</Id>
+      <Id>21367</Id>
       <Name>Concrete Global - C32/40 Upper Bound</Name>
       <Category>Concrete</Category>
       <Description>Global 80th Percentile
@@ -8364,6 +8364,7 @@ Rolled open sections
         <value>INF</value>
       </materiaA4Properties>
       <materialA5Properties>
+        <calcResult />
         <name />
         <value>0</value>
       </materialA5Properties>
@@ -8489,6 +8490,7 @@ CLT, 100% FSC/PEFC
         <value>0.010820543093270366</value>
       </materiaA4Properties>
       <materialA5Properties>
+        <calcResult />
         <name />
         <value>0</value>
       </materialA5Properties>
@@ -8614,6 +8616,7 @@ CLT, 100% FSC/PEFC
         <value>0.010820543093270366</value>
       </materiaA4Properties>
       <materialA5Properties>
+        <calcResult />
         <name />
         <value>0</value>
       </materialA5Properties>
@@ -8739,6 +8742,7 @@ Glulam, 100% FSC/PEFC
         <value>0.010820543093270366</value>
       </materiaA4Properties>
       <materialA5Properties>
+        <calcResult />
         <name />
         <value>0</value>
       </materialA5Properties>
@@ -8864,6 +8868,7 @@ Glulam, 100% FSC/PEFC
         <value>0.010820543093270366</value>
       </materiaA4Properties>
       <materialA5Properties>
+        <calcResult />
         <name />
         <value>0</value>
       </materialA5Properties>

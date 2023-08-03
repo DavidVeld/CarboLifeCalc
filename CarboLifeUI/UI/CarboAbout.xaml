@@ -77,13 +77,13 @@
         </TextBlock>
         <TextBlock Grid.Column="3" Grid.Row="2" Width="527" Height="19" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,220,0,0" FontFamily="Segoe UI" FontSize="14">
             <Hyperlink NavigateUri="https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/"  RequestNavigate="Hyperlink_RequestNavigate"  FontFamily="Segoe UI" FontSize="12">
-        (IStructE) How to calculate embodied carbon
+        (IStructE) How to calculate embodied carbon (Second Edition)
         </Hyperlink>
         </TextBlock>
 
-        <TextBlock Grid.Column="3" Grid.Row="2" Width="527" Height="19" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,240,0,0" FontFamily="Segoe UI" FontSize="14">Logo Design Paola Ferrarotti:
-            <Hyperlink NavigateUri="https://www.bandiera.co.uk"  RequestNavigate="Hyperlink_RequestNavigate"  FontFamily="Segoe UI" FontSize="12">
-        https://www.bandiera.co.uk
+        <TextBlock Grid.Column="3" Grid.Row="2" Width="527" Height="19" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,240,0,0" FontFamily="Segoe UI" FontSize="14">Do a bit more:
+            <Hyperlink NavigateUri="https://www.architectsdeclare.com/"  RequestNavigate="Hyperlink_RequestNavigate"  FontFamily="Segoe UI" FontSize="12">
+        https://www.architectsdeclare.com/
         </Hyperlink>
         </TextBlock>
         <Button Name="btn_Accept" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Ok, Thanks</Button>

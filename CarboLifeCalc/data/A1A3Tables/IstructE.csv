@@ -1,50 +1,73 @@
-﻿Id,Name,Description,Category,Density,ECI_A1A3
-4000,Concrete - Insitu - UK C16/20 (0% SCM),Concrete - Insitu - UK C16/20 (0% SCM),Concrete - Insitu,2.4,0.113
-4001,Concrete - Insitu - UK C20/25 (25% GGBS),Concrete - Insitu - UK C20/25 (25% GGBS),Concrete - Insitu,2.4,0.093
-4002,Concrete - Insitu - UK C25/30 (25% GGBS),Concrete - Insitu - UK C25/30 (25% GGBS),Concrete - Insitu,2.4,0.1
-4003,Concrete - Insitu - UK C32/40 (25% GGBS),Concrete - Insitu - UK C32/40 (25% GGBS),Concrete - Insitu,2.4,0.12
-4004,Concrete - Insitu - UK C40/50 (25% GGBS),Concrete - Insitu - UK C40/50 (25% GGBS),Concrete - Insitu,2.4,0.138
-4005,Concrete - Insitu - Global Avg C32/40 ±10% (Excludes China),Concrete - Insitu - Global Avg C32/40 ±10% (Excludes China),Concrete - Insitu,2.4,0.175
-4006,Concrete - Mortar_screed - 1:4 cement:sand mix CEM I,Concrete - Mortar_screed - 1:4 cement:sand mix CEM I,Concrete - Mortar_screed,2.2,0.163
-4007,Concrete - Mortar_screed - 1:4 cement:sand mix avg UK cement mix,Concrete - Mortar_screed - 1:4 cement:sand mix avg UK cement mix,Concrete - Mortar_screed,2.2,0.149
-4008,Concrete - Precast_concrete - C40/50 avg UK cement mix,Concrete - Precast_concrete - C40/50 avg UK cement mix,Concrete - Precast,2.4,0.178
-4009,Concrete - Precast_concrete - Reinforced - 150mm hollow core slab,Concrete - Precast_concrete - Reinforced - 150mm hollow core slab,Concrete - Precast,2,0.166
-4010,Steel - Rebar - UK 97% recycled EAF production,Steel - Rebar - UK 97% recycled EAF production,Steel - Rebar,7.85,0.76
-4011,Steel - Rebar - Global avg,Steel - Rebar - Global avg,Steel - Rebar,7.85,1.96
-4012,Steel - PT_strands - UK 97% recycled EAF production,Steel - PT_strands - UK 97% recycled EAF production,Steel - Rebar,7.85,0.76
-4013,Steel - PT_strands - Global avg,Steel - PT_strands - Global avg,Steel - Rebar,7.85,1.96
-4014,Steel - Structural_sections - UK open rolled sections,Steel - Structural_sections - UK open rolled sections,Steel - Structural_sections,7.85,1.74
-4015,Steel - Structural_sections - Global open rolled sections,Steel - Structural_sections - Global open rolled sections,Steel - Structural_sections,7.85,1.58
-4016,Steel - Structural_sections - UK closed sections,Steel - Structural_sections - UK closed sections,Steel - Structural_sections,7.85,2.5
-4017,Steel - Structural_sections - Global closed sections,Steel - Structural_sections - Global closed sections,Steel - Structural_sections,7.85,2.5
-4018,Steel - Plate - ,Steel - Plate - ,Steel - Structural_sections,7.85,2.45
-4019,Steel - Galvanised_profiled_sheet - UK,Steel - Galvanised_profiled_sheet - UK,Steel - Structural_sections,7.85,2.83
-4020,Steel - Galvanised_profiled_sheet - Global hot dip galvanised,Steel - Galvanised_profiled_sheet - Global hot dip galvanised,Steel - Structural_sections,7.85,2.67
-4021,"Timber - Studwork_framing_flooring - Softwood, 100% FSC/PEFC","Timber - Studwork_framing_flooring - Softwood, 100% FSC/PEFC",Timber - floor,0.48,0.263
-4022,Timber - Manufactured_structural_timber - UK CLT 100% FSC/PEFC,Timber - Manufactured_structural_timber - UK CLT 100% FSC/PEFC,Timber - frame,0.47,0.25
-4023,Timber - Manufactured_structural_timber - Global CLT 100% FSC/PEFC,Timber - Manufactured_structural_timber - Global CLT 100% FSC/PEFC,Timber - frame,0.47,0.437
-4024,Timber - Manufactured_structural_timber - UK Glulam 100% FSC/PEFC,Timber - Manufactured_structural_timber - UK Glulam 100% FSC/PEFC,Timber - frame,0.47,0.28
-4025,Timber - Manufactured_structural_timber - Global Glulam 100% FSC/PEFC,Timber - Manufactured_structural_timber - Global Glulam 100% FSC/PEFC,Timber - frame,0.47,0.512
-4026,Timber - Manufactured_structural_timber - LVL 100% FSC/PEFC,Timber - Manufactured_structural_timber - LVL 100% FSC/PEFC,Timber - frame,0.49,0.39
-4027,Timber - Sheet_materials - Plywood 100% FSC/PEFC,Timber - Sheet_materials - Plywood 100% FSC/PEFC,Timber - formwork,0.49,0.681
-4028,Timber - Sheet_materials - OSB 100% FSC/PEFC,Timber - Sheet_materials - OSB 100% FSC/PEFC,Timber - formwork,0.49,0.455
-4029,Other - Brickwork - UK: BDA generic brick,Other - Brickwork - UK: BDA generic brick,Brickwork,1.49,0.213
-4030,Other - Brickwork - Single skin wall with mortar 1:4 CEM I cement:sand mix,Other - Brickwork - Single skin wall with mortar 1:4 CEM I cement:sand mix,Brickwork,1.6,0.2
-4031,Other - Brickwork - Double skin wall with mortar 1:4 CEM I cement:sand mix,Other - Brickwork - Double skin wall with mortar 1:4 CEM I cement:sand mix,Brickwork,1.6,0.216
-4032,Other - Blockwork - PCC Lightweight (AAC) blocks,Other - Blockwork - PCC Lightweight (AAC) blocks,Blockwork,0.7,0.28
-4033,Other - Blockwork - PCC Dense blocks,Other - Blockwork - PCC Dense blocks,Blockwork,2,0.093
-4034,Other - Stone - Granite,Other - Stone - Granite,Stone,2.73,0.093
-4035,Other - Stone - Limestone,Other - Stone - Limestone,Stone,2.2,0.09
-4036,Other - Stone - Sandstone,Other - Stone - Sandstone,Stone,2.35,0.06
-4037,Other - Glass - General,Other - Glass - General,Glass,2.5,1.44
-4038,Other - Glass - Toughened,Other - Glass - Toughened,Glass,2.5,1.67
-4039,Other - Granular_fill - UK,Other - Granular_fill - UK,Fill,2.24,0.008
-4040,Other - Granular_fill - Global,Other - Granular_fill - Global,,2.24,0.004
-4041,Other - Aluminium - Sheet - European - 31% recycled content,Other - Aluminium - Sheet - European - 31% recycled content,Aluminium,2.71,6.58
-4042,Other - Aluminium - Sheet - Worldwide- 31% recycled content,Other - Aluminium - Sheet - Worldwide- 31% recycled content,Aluminium,2.71,13
-4043,Other - Aluminium - Extruded profile - European - 31% recycled content,Other - Aluminium - Extruded profile - European - 31% recycled content,Aluminium,2.71,6.83
-4044,Other - Aluminium - Extruded profile - Worldwide - 31% recycled content,Other - Aluminium - Extruded profile - Worldwide - 31% recycled content,Aluminium,2.71,13.2
-4045,Other - Plasterboard - Partitioning / ceilings (min 60% recycled content),Other - Plasterboard - Partitioning / ceilings (min 60% recycled content),Plasterboard,0.9,0.39
-4046,Other - Steel_fire_protection - Amotherm steel WB EPD,Other - Steel_fire_protection - Amotherm steel WB EPD,Paint,1.3,2.399
-4047,Other - Steel_fire_protection - Amotherm concrete WB EPD,Other - Steel_fire_protection - Amotherm concrete WB EPD,Paint,1.3,2.366
-4048,Other - Steel_fire_protection - Cementitous spray,Other - Steel_fire_protection - Cementitous spray,Paint,1.3,0.725
+Id,Name,Description,Category,Density,ECI_A1A3
+24105,Concrete - Mortar/screed,1:4 cement: sand mix with average UK cement mix,Concrete,2200,0.149
+24628,Concrete UK - C40/50 - Precast,No description provided,Concrete,2400,0.178
+26024,Concrete UK - C32/40 - 25% GGBS,In situ concrete(unreinforced),Concrete,2400,0.12
+29612,Concrete UK - C25/30 - 25% GGBS,In situ concrete(unreinforced),Concrete,2400,0.1
+25163,Concrete UK - C20/25 - 25% GGBS,In situ concrete(unreinforced),Concrete,2400,0.093
+25152,Concrete UK - C16/20 - 25% GGBS,In situ concrete(unreinforced),Concrete,2400,0.087
+23515,Concrete UK - C40/50 - 25% GGBS,In situ concrete(unreinforced),Concrete,2400,0.138
+24844,Concrete Global - C32/40 Mean,Global Average(excludes China)C32/40,Concrete,2400,0.175
+22420,Concrete UK - C40/50 - Precast 150mm Hollowcore,150mm reinforced hollowcore slabs: British PrecastFlooring Federation average,Concrete,2000,0.166
+24550,Steel UK - Reinforcement,UKCARES sector average (EAF production)(97% recycled EAF production),Steel,7850,0.76
+23738,Steel Global - Reinforcement - Mean,Global recommended value,Steel,7850,1.96
+27935,Steel UK - Structural Open Sections - Mean,UKRolled open sections(consumption average),Steel,7850,1.74
+28277,Steel Global - Structural Open Sections,GlobalRolled open sections,Steel,7850,1.58
+29470,Steel UK - Structural Closed Sections,UK & GlobalRolled closed sections,Steel,7850,2.5
+21997,Steel UK - Structural Plate,UK Plates,Steel,7850,2.45
+24056,Steel UK - TATA Comflor (Average), TATA Comflor,Steel,7850,2.83
+26117,Steel Global - Galvanised Steel Plates,GlobalHot dip galvanised steel,Steel,7850,2.67
+29489,UK - Precast Lightweight Concrete Blocks,UKLightweight AAC blocks forbuilding envelope (600kg/m³),Blocks and Bricks,700,0.28
+24009,UK - Precast Dense Concrete Blocks,UKDense blocks for other uses,Blocks and Bricks,2000,0.093
+23698,Brick UK BDA Generic Brick,Engineering bricks,Blocks and Bricks,1490,0.213
+23735,Stone - Granite,Generic Granite,Blocks and Bricks,2500,0.093
+21085,Stone - Limestone,Generic Limestone,Blocks and Bricks,2500,0.09
+20203,Stone - Sandstone,Generic Limestone,Blocks and Bricks,2350,0.06
+24080,Timber Global - Softwood,Timber - GlobalStudwork/framing/flooring,Timber,480,0.263
+22528,Timber UK and Europe - CLT,"Manufactured structural timber - UK and EuropeCLT, 100% FSC/PEFC(European production average)",Timber,470,0.25
+28547,Timber Global - CLT,"Manufactured structural timber - GlobalCLT, 100% FSC/PEFC",Timber,470,0.437
+21765,Timber UK and Europe - Glulam,"Manufactured structural timber - UK and EuropeGlulam, 100% FSC/PEFC(European production average)",Timber,470,0.28
+23180,Timber Global - Glulam,"Manufactured structural timber - GlobalGlulam, 100% FSC/PEFC",Timber,470,0.512
+26790,Timber Global - LVL,"Manufactured structural timber - GlobalLVL, 100% FSC/PEFC",Timber,490,0.39
+22765,Timber Global - Plywood,"GlobalFormwork plywood, 100%FSC/PEFC",Timber,490,0.681
+26130,Timber Global - OSB,"GlobalOSB, 100% FSC/PEFC",Timber,490,0.455
+28696,Aluminium EU - Sheet - 31% Recycled,European consumption31% recycled content,Other,2710,6.58
+28017,Aluminium Global - Sheet - 31% Recycled,Global consumption31% recycled content,Other,2710,13
+29146,Aluminium EU - Profiles - 31% Recycled,European consumption31% recycled content,Other,2710,6.83
+22095,Aluminium Global - Profiles - 31% Recycled,Global consumption31% recycled content,Other,2710,13.2
+28676,Glass - General,Generic Glass,Other,2500,1.44
+21956,Glass - Toughened,Toughened Glass,Other,2500,1.67
+26421,Plasterboard,Partitioning/ceilingsMin. 60% recycled content,Other,900,0.39
+20696,Intumescent Coating - Steel,Paint coating for steelAmotherm Steel WB,Other,3000,2.399
+29669,Intumescent Coating - Concrete,Paint coating for concreteAmotherm Concrete WB,Other,3000,2.366
+25881,Cementitous Spray,Cementitious CoatingIsolatek International product average,Other,1300,0.725
+28614,Concrete UK - C16/20 - 0% SCM,"In situ concrete (unreinforced)Supplementary cementitious materials (SCMs) are often used to replace Portland Cement, such as GGBS (Section 2.2.2.3). 25% GGBS is the defaultassumption for UK concrete. In 2021 the average SCM in UK concretes was 25.8% and GGBS is the predominant SCM used in the UK due to diminishinguse of PFA resulting from the phasing out of coal fired power.",Concrete,2400,0.113
+23150,Steel Global - PT Strands,Global recommended value,Steel,7850,1.96
+20623,Steel UK - PT Strands,UKCARES sector average (EAF production)(97% recycled EAF production),Steel,7850,0.76
+22608,Steel UK - Global Closed Sections,GlobalRolled closed sections,Steel,7850,2.5
+29375,Steel Global - Structural Plate,Global Plates,Steel,7850,2.45
+28847,Brick - Single Skin Wall with Mortar,Single skin wall with mortar 1:4 CEM I cement:sand mix,Blocks and Bricks,1600,0.2
+23981,Brick - Double Skin Wall with Mortar,Double skin wall with mortar 1:4 CEM I cement:sand mix,Blocks and Bricks,1600,0.216
+25253,Granular fill - UK,Granular fill - UK,Other,2240,0.008
+25788,Granular fill - Global,Granular fill - Global,Other,2240,0.004
+23999,Concrete UK - C16/20 - 70% GGBS,In situ concrete(unreinforced)70% GGBS is not recommended by the IstructE,Concrete,2400,0.05
+20156,Concrete UK - C20/25 - 70% GGBS,In situ concrete(unreinforced)70% GGBS is not recommended by the IstructE,Concrete,2400,0.053
+25564,Concrete UK - C20/25 - 0% SCM,"In situ concrete (unreinforced)Supplementary cementitious materials (SCMs) are often used to replace Portland Cement, such as GGBS (Section 2.2.2.3). 25% GGBS is the defaultassumption for UK concrete. In 2021 the average SCM in UK concretes was 25.8% and GGBS is the predominant SCM used in the UK due to diminishinguse of PFA resulting from the phasing out of coal fired power.",Concrete,2400,0.112
+20775,Concrete UK - C32/40 - 70% GGBS,In situ concrete(unreinforced)70% GGBS is not recommended by the IstructE,Concrete,2400,0.063
+24335,Concrete UK - C40/50 - 70% GGBS,In situ concrete(unreinforced)70% GGBS is not recommended by the IstructE,Concrete,2400,0.072
+26583,Concrete UK - C32/40 - 0% SCM,"In situ concrete (unreinforced)Supplementary cementitious materials (SCMs) are often used to replace Portland Cement, such as GGBS (Section 2.2.2.3). 25% GGBS is the defaultassumption for UK concrete. In 2021 the average SCM in UK concretes was 25.8% and GGBS is the predominant SCM used in the UK due to diminishinguse of PFA resulting from the phasing out of coal fired power.",Concrete,2400,0.149
+23207,Concrete UK - C40/50 - 0% SCM,"In situ concrete (unreinforced)Supplementary cementitious materials (SCMs) are often used to replace Portland Cement, such as GGBS (Section 2.2.2.3). 25% GGBS is the defaultassumption for UK concrete. In 2021 the average SCM in UK concretes was 25.8% and GGBS is the predominant SCM used in the UK due to diminishinguse of PFA resulting from the phasing out of coal fired power.",Concrete,2400,0.159
+21878,Concrete UK - C25/30 - 70% GGBS,In situ concrete(unreinforced)70% GGBS is not recommended by the IstructE,Concrete,2400,0.056
+20159,Concrete UK - C25/30 - 0% SCM,"In situ concrete (unreinforced)Supplementary cementitious materials (SCMs) are often used to replace Portland Cement, such as GGBS (Section 2.2.2.3). 25% GGBS is the defaultassumption for UK concrete. In 2021 the average SCM in UK concretes was 25.8% and GGBS is the predominant SCM used in the UK due to diminishinguse of PFA resulting from the phasing out of coal fired power.",Concrete,2400,0.119
+25385,Concrete Global - C32/40 Low Bound,Global 20th Percentile(excludes China)C32/40,Concrete,2400,0.139
+20846,Concrete Global - C32/40 Upper Bound,Global 80th Percentile(excludes China)C32/40,Concrete,2400,0.21
+29228,Concrete UK - C40/50 - Precast - 70% GGBS,No description provided,Concrete,2400,0.09
+27569,Concrete UK - C40/50 - Precast - 0% SCM,No description provided,Concrete,2400,0.191
+24350,Steel Global - Reinforcement - Lower Bound,Global recommended value(EAF production),Steel,7850,0.395
+20879,Steel Global - Reinforcement - Upper Bound,Global recommended value(BOF production),Steel,7850,3.97
+27329,Steel UK - Structural Open Sections - Lower Bounds,UKRolled open sections(EAF production),Steel,7850,0.567
+27411,Steel UK - Structural Open Sections - Upper Bounds,UKRolled open sections(EAF production),Steel,7850,2.45
+26404,Timber UK and Europe - CLT - Lower Bound,"Manufactured structural timber - UK and EuropeCLT, 100% FSC/PEFC(Stora Enso)",Timber,465,0.11
+24645,Timber UK and Europe - CLT - Upper Bound,"Manufactured structural timber - UK and EuropeCLT, 100% FSC/PEFC(Wood for Good)",Timber,465,0.63
+24619,Timber UK and Europe - Glulam - Lower Bound,"Manufactured structural timber - UK and EuropeGlulam, 100% FSC/PEFC(EPD Norge)",Timber,470,0.1
+28278,Timber UK and Europe - Glulam - Upper Bound ,"Manufactured structural timber - UK and EuropeGlulam, 100% FSC/PEFC(Wood for Good)",Timber,470,0.64
+

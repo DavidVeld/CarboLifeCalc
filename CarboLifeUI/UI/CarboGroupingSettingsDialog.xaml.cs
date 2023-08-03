@@ -130,7 +130,7 @@ namespace CarboLifeUI.UI
             }
             else
             {
-               System.Windows.MessageBox.Show("The Selected Template could not be found");
+               System.Windows.MessageBox.Show("The selected template could not be found");
             }
 
             dialogOk = MessageBoxResult.Yes;

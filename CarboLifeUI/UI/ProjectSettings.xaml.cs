@@ -132,7 +132,7 @@ namespace CarboLifeUI.UI
                     //Totals
                     txt_A0Total.Text = ((CarboLifeProject.A0Global) / 1000).ToString();
                     txt_A5Total.Text = CarboLifeProject.A5Global.ToString();
-                    txt_EnergyTotal.Text = CarboLifeProject.energyProperties.value.ToString();
+                    txt_EnergyTotal.Text = (CarboLifeProject.energyProperties.value / 1000).ToString();
                     txt_C1Total.Text = CarboLifeProject.C1Global.ToString();
 
                     lbl_Currency.Content = CarboLifeProject.valueUnit.ToString();

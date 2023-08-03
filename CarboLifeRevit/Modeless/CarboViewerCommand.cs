@@ -31,7 +31,7 @@ namespace CarboLifeRevit
                 if (FormStatusChecker.isWindowOpen == true)
                 {
                     //Window is open.
-                    MessageBox.Show("Window is already open, make sure other instances are cloased and restart the command.");
+                    MessageBox.Show("Window is already open, make sure other instances are closed and restart the command.");
                     FormStatusChecker.isWindowOpen = true;
 
                     return Result.Cancelled;

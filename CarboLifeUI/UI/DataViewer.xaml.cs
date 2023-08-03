@@ -262,7 +262,7 @@ namespace CarboLifeUI.UI
                         {
                             if (carboGroup.AllElements.Count > 0)
                             {
-                                MessageBox.Show("The volume of this group is calculated using the element volumes extracted from the 3D model," + Environment.NewLine + " you need to purge the elements before overriding the volume");
+                                MessageBox.Show("The volume of this group is calculated using the elements' volumes extracted from the 3D model," + Environment.NewLine + " you need to purge the elements before overriding the volume");
                                 carboGroup.CalculateTotals();
                                 CarboLifeProject.UpdateGroup(carboGroup);
 
@@ -552,7 +552,7 @@ namespace CarboLifeUI.UI
                     //Add the new group
                     CarboLifeProject.AddGroup(newGroup);
 
-                    MessageBox.Show(selectedCarboElementList.Count + " Elements moved to new group", "Message", MessageBoxButton.OK);
+                    MessageBox.Show(selectedCarboElementList.Count + " elements moved to new group", "Message", MessageBoxButton.OK);
 
                     CarboLifeProject.CalculateProject();
                     refreshData();
@@ -780,7 +780,7 @@ namespace CarboLifeUI.UI
             }
 
             if (selectedGroups.Count > 1)
-                MessageBox.Show("Please slect only a single group");
+                MessageBox.Show("Please select only a single group");
             else
             {
                 GroupWindow splitter = new GroupWindow(selectedGroups[0]);

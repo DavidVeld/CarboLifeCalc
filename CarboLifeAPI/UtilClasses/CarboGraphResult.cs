@@ -186,7 +186,7 @@ namespace CarboLifeAPI
                 }
 
                 if (SortedList.Count > 0)
-                    return SortedList[SortedList.Count - 1].Value;
+                    return (SortedList[SortedList.Count - 1].Value);
                 else
                     return 9999;
             }
@@ -218,7 +218,7 @@ namespace CarboLifeAPI
                 }
 
                 if (SortedList.Count > 0)
-                    return SortedList[0].Value;
+                    return (SortedList[0].Value);
                 else
                     return -99999;
             }

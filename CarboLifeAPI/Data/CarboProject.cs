@@ -169,7 +169,7 @@ namespace CarboLifeAPI.Data
             A5Global = 0;
             A5Factor = 1400; //kg CO₂ per vaue
             //Social
-            SocialCost = 100;
+            SocialCost = 150;
             //Other
 
             //Totals
@@ -229,7 +229,7 @@ namespace CarboLifeAPI.Data
             A5Global = 0;
             A5Factor = 1400; //kg CO₂ per vaue
             //Social
-            SocialCost = 100;
+            SocialCost = 150;
             //Other
 
             //Totals
@@ -813,7 +813,7 @@ namespace CarboLifeAPI.Data
                 CarboDataPoint cb_Seq = new CarboDataPoint("Sequestration", 0);
                 CarboDataPoint Added = new CarboDataPoint("Additional", 0);
 
-                //These are global calculated values through settngs
+                //These are global calculated values through settings
 
                 CarboDataPoint cb_A0 = new CarboDataPoint("A0(Global)", this.A0Global);
                 CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
@@ -1055,7 +1055,6 @@ namespace CarboLifeAPI.Data
         /// 1. Values
         /// 2. A bit of Text
         /// </returns>
-        [Obsolete("This method should move out of the carbo project and into a utils")]
         public List<string> getCalcText()
         {
             this.CalculateProject();
@@ -1211,18 +1210,22 @@ namespace CarboLifeAPI.Data
         public string getGeneralText()
         {
             string result = "";
+            double calculatedCo2 = this.getTotalEC();
 
             //Get the social carbon costs
-            double socialCarbonCost = Math.Round(this.SocialCost * this.getTotalEC(), 0, MidpointRounding.AwayFromZero);
+            double socialCarbonCost = Math.Round(this.SocialCost * calculatedCo2, 0, MidpointRounding.AwayFromZero);
+            //DOuble 4,434 tCo2/death
+            double carbonDeathCost = Math.Round(calculatedCo2 / 4.434, 0, MidpointRounding.AwayFromZero);
+
             string generalText = "";
 
-            generalText += "The Upfront cabon footprint (A0-A5) of this project is: " + Math.Round((getUpfrontTotals() / 1000),2).ToString("N") + " tCO₂/m²" + Environment.NewLine;
-            generalText += "The Embodied Carbon (A0-C) footprint of this project is: " + Math.Round((getEmbodiedTotals() / 1000), 2).ToString("N") + " tCO₂/m²" + Environment.NewLine;
+            generalText += "The Upfront Carbon Footprint (A0-A5) is: " + Math.Round((getUpfrontTotals() / 1000),2).ToString("N") + " tCO₂/m²" + Environment.NewLine;
+            generalText += "The Embodied Carbon Footprint (A0-C & Seq) is: " + Math.Round((getEmbodiedTotals() / 1000), 2).ToString("N") + " tCO₂/m²" + Environment.NewLine;
             generalText += Environment.NewLine;
-            generalText += "The calculated values equals to: " + Math.Round(this.ECTotal / 1.40, 2) + " average car emission per year (1.40 tCO₂/car). (UK)" + Environment.NewLine;
-            generalText += "This requires " + Math.Round((this.ECTotal * 40), 0) + " Trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
-            generalText += Environment.NewLine;
-            generalText += "The Social Cabon cost of this project is: " + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
+            generalText += "The calculated value equals to: " + Math.Round(calculatedCo2 / 1.40, 2) + " average car emission per year (1.40 tCO₂/car). (UK)" + Environment.NewLine;
+            generalText += "This requires " + Math.Round((calculatedCo2 * 40), 0) + " trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
+            generalText += "The Social Carbon Cost (SCC) of this project is: " + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
+            generalText += "Between now and 2100 this will likely cause the death of: " + carbonDeathCost.ToString("N") + " people." + Environment.NewLine;
 
             result = generalText;
 

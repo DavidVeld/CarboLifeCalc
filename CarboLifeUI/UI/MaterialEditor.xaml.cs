@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.WebRequestMethods;
 
 namespace CarboLifeUI.UI
 {
@@ -991,7 +992,7 @@ namespace CarboLifeUI.UI
                 string templatePath = templateSelectionDialog.selectedTemplateFile;
                 List<CarboMaterial> list = liv_materialList.SelectedItems.Cast<CarboMaterial>().ToList();
 
-                if (File.Exists(templatePath) && list.Count > 0)
+                if (System.IO.File.Exists(templatePath) && list.Count > 0)
                 {
 
 
@@ -1123,6 +1124,29 @@ namespace CarboLifeUI.UI
                 StoreGeneralProperties();
                 //RefreshMaterialList();
             }
+        }
+
+        private void btn_Sync_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            CarboDatabase cdb = returnedDatabase;
+            string file = "";
+            string path = @"C:\Temp\file.csv";
+
+            file = "Id,Name,Description,Category,Density,ECI_A1A3" + Environment.NewLine;
+
+            foreach (CarboMaterial mat in cdb.CarboMaterialList)
+            {
+                file += mat.Id + "," +
+                    DataExportUtils.CVSFormat(mat.Name) + "," +
+                    DataExportUtils.CVSFormat(mat.Description) + "," +
+                    DataExportUtils.CVSFormat(mat.Category) + "," + 
+                    mat.Density + "," + 
+                    mat.ECI_A1A3 + Environment.NewLine; ;
+            }
+
+            DataExportUtils.WriteCVSFile(file, path);
+
+
         }
     }
 }
