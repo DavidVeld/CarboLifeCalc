@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Carbo Life Calculator"
-             d:DesignHeight="744" MinHeight="744" Height="744" d:DesignWidth="1366" MinWidth="1366"  Width="1366" Closing="Window_Closing">
+             d:DesignHeight="744" MinHeight="744" Height="744" d:DesignWidth="1366" MinWidth="1366"  Width="1366" Closing="Window_Closing" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

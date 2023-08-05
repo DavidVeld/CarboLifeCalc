@@ -616,5 +616,27 @@ namespace CarboLifeUI.UI
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            System.Drawing.Rectangle resolution = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
+            int height = resolution.Height;
+
+            if(height > 744)
+            {
+                this.Height = (height - 100);
+
+                //centre the window 
+
+                double screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+                double screenHeight = System.Windows.SystemParameters.PrimaryScreenHeight;
+                double windowWidth = this.Width;
+                double windowHeight = this.Height;
+                this.Left = (screenWidth / 2) - (windowWidth / 2);
+                this.Top = (screenHeight / 2) - (windowHeight / 2);
+
+            }
+
+        }
     }
 }
