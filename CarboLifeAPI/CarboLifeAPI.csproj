@@ -59,12 +59,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="LiveCharts">
-      <HintPath>..\..\..\CarboLifeCalc\LiveCharts.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
     </Reference>
     <Reference Include="LiveCharts.Wpf">
-      <HintPath>..\..\..\CarboLifeCalc\LiveCharts.Wpf.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

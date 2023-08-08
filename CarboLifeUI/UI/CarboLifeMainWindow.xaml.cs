@@ -622,7 +622,7 @@ namespace CarboLifeUI.UI
             System.Drawing.Rectangle resolution = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
             int height = resolution.Height;
 
-            if(height > 744)
+            if(height > 768)
             {
                 this.Height = (height - 100);
 
