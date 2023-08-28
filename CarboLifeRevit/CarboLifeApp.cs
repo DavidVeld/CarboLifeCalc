@@ -66,7 +66,7 @@ namespace CarboLifeRevit
             */
 
             /// Visual Menu
-            PushButton pB_ShowCarboCalc = CarboCalcPanel.AddItem(new PushButtonData("Show CarboLife Calc", "Show Project", MyAssemblyPath, "CarboLifeRevit.CarboViewerCommand")) as PushButton;
+            PushButton pB_ShowCarboCalc = CarboCalcPanel.AddItem(new PushButtonData("Show CarboLife Calc", "Heatmap", MyAssemblyPath, "CarboLifeRevit.CarboViewerCommand")) as PushButton;
             //LImage
             Uri pB_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_CarboLife32.png");
             BitmapImage limg_pB_ShowCarboCalc2 = new BitmapImage(pB_ShowCarboCalc2);
