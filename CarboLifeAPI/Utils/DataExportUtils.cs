@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -26,8 +27,8 @@ namespace CarboLifeAPI
         {
             //Create a File and save it as a HTML File
             SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Title = "Specify report file prefix";
-            saveDialog.Filter = "csv file prefix|*.csv";
+            saveDialog.Title = "Save CSV file";
+            saveDialog.Filter = "csv file |*.csv";
             saveDialog.FilterIndex = 2;
             saveDialog.RestoreDirectory = true;
 
@@ -58,6 +59,41 @@ namespace CarboLifeAPI
             return path;
 
         }
+
+        public static string GetOpenCSVLocation()
+        {
+            //Create a File and save it as a HTML File
+            OpenFileDialog openDialog = new OpenFileDialog();
+            openDialog.Title = "Open CSV File";
+            openDialog.Filter = "csv file |*.csv";
+            openDialog.FilterIndex = 2;
+            openDialog.RestoreDirectory = true;
+
+            openDialog.ShowDialog();
+
+            string path = openDialog.FileName;
+
+            //Check if the file can be read and written to.
+            if (File.Exists(path))
+            {
+                //File Should exist
+                bool isInUse = IsFileLocked(path);
+
+                if (isInUse == true)
+                    return null;
+            }
+            else
+            {
+                //File doesnt Exist
+                if (path != "")
+                    return null;
+            }
+
+
+            //If this part is reached; return the valid path;
+            return path;
+
+        }
         private static bool IsFileLocked(string file)
         {
             try
@@ -76,9 +112,10 @@ namespace CarboLifeAPI
             //All is ok
             return false;
         }
+        [Obsolete("Not Used")]
         public static void ExportToExcel(CarboProject carboProject, string Path, bool exportResults, bool exportElements, bool exportMaterials)
         {
-            
+
             reportpath = Path;
 
             //Check if user has excel
@@ -110,11 +147,11 @@ namespace CarboLifeAPI
             xlWorkBook = xlApp.Workbooks.Add(misValue);
             /////////////////////
             ///GroupTable
-            if(exportResults == true)
-            { 
-            xlWorkSheet = (Excel.Worksheet)xlApp.Worksheets.Add();
-            if (xlWorkSheet != null)
+            if (exportResults == true)
             {
+                xlWorkSheet = (Excel.Worksheet)xlApp.Worksheets.Add();
+                if (xlWorkSheet != null)
+                {
                     xlWorkSheet.Name = "GroupData";
 
                     row = 1;
@@ -187,53 +224,53 @@ namespace CarboLifeAPI
                     i++;
 
                     foreach (CarboGroup grp in carboProject.getGroupList)
-                {
-                    row++;
+                    {
+                        row++;
 
-                    xlWorkSheet.Cells[row, col] = grp.Category;
-                    xlWorkSheet.Cells[row, col + 1] = grp.MaterialName;
-                    xlWorkSheet.Cells[row, col + 2] = grp.Description;
-                    xlWorkSheet.Cells[row, col + 3] = grp.TotalVolume;
-                    xlWorkSheet.Cells[row, col + 4] = grp.Density;
-                    xlWorkSheet.Cells[row, col + 5] = grp.Mass;
-                    xlWorkSheet.Cells[row, col + 6] = grp.ECI;
-                    xlWorkSheet.Cells[row, col + 7] = grp.EC;
-                    xlWorkSheet.Cells[row, col + 8] = grp.PerCent;
-                    xlWorkSheet.Cells[row, col + 9] = (grp.inUseProperties.B4 * (grp.Material.ECI_A1A3 * grp.Mass)) / 1000;
-                    xlWorkSheet.Cells[row, col + 10] = (grp.inUseProperties.B4 * (grp.Material.ECI_A4 * grp.Mass)) / 1000;
-                    xlWorkSheet.Cells[row, col + 11] = (grp.inUseProperties.B4 * (grp.Material.ECI_A5 * grp.Mass)) / 1000;
-                    xlWorkSheet.Cells[row, col + 12] = (grp.inUseProperties.B4 * (grp.Material.ECI_B1B5)) / 1000;
-                    xlWorkSheet.Cells[row, col + 13] = (grp.inUseProperties.B4 * (grp.Material.ECI_C1C4 * grp.Mass)) / 1000;
-                    xlWorkSheet.Cells[row, col + 14] = (grp.inUseProperties.B4 * (grp.Material.ECI_D * grp.Mass)) / 1000;
-                    xlWorkSheet.Cells[row, col + 15] = (grp.inUseProperties.B4 * (grp.Material.ECI_Mix * grp.Mass)) / 1000;
+                        xlWorkSheet.Cells[row, col] = grp.Category;
+                        xlWorkSheet.Cells[row, col + 1] = grp.MaterialName;
+                        xlWorkSheet.Cells[row, col + 2] = grp.Description;
+                        xlWorkSheet.Cells[row, col + 3] = grp.TotalVolume;
+                        xlWorkSheet.Cells[row, col + 4] = grp.Density;
+                        xlWorkSheet.Cells[row, col + 5] = grp.Mass;
+                        xlWorkSheet.Cells[row, col + 6] = grp.ECI;
+                        xlWorkSheet.Cells[row, col + 7] = grp.EC;
+                        xlWorkSheet.Cells[row, col + 8] = grp.PerCent;
+                        xlWorkSheet.Cells[row, col + 9] = (grp.inUseProperties.B4 * (grp.Material.ECI_A1A3 * grp.Mass)) / 1000;
+                        xlWorkSheet.Cells[row, col + 10] = (grp.inUseProperties.B4 * (grp.Material.ECI_A4 * grp.Mass)) / 1000;
+                        xlWorkSheet.Cells[row, col + 11] = (grp.inUseProperties.B4 * (grp.Material.ECI_A5 * grp.Mass)) / 1000;
+                        xlWorkSheet.Cells[row, col + 12] = (grp.inUseProperties.B4 * (grp.Material.ECI_B1B5)) / 1000;
+                        xlWorkSheet.Cells[row, col + 13] = (grp.inUseProperties.B4 * (grp.Material.ECI_C1C4 * grp.Mass)) / 1000;
+                        xlWorkSheet.Cells[row, col + 14] = (grp.inUseProperties.B4 * (grp.Material.ECI_D * grp.Mass)) / 1000;
+                        xlWorkSheet.Cells[row, col + 15] = (grp.inUseProperties.B4 * (grp.Material.ECI_Mix * grp.Mass)) / 1000;
 
-                    xlWorkSheet.Cells[row, col + 16] = grp.Correction;
-                    xlWorkSheet.Cells[row, col + 17] = grp.Waste;
-                    xlWorkSheet.Cells[row, col + 18] = grp.inUseProperties.B4;
-                    xlWorkSheet.Cells[row, col + 19] = grp.Additional;
-                    xlWorkSheet.Cells[row, col + 20] = grp.Volume;
+                        xlWorkSheet.Cells[row, col + 16] = grp.Correction;
+                        xlWorkSheet.Cells[row, col + 17] = grp.Waste;
+                        xlWorkSheet.Cells[row, col + 18] = grp.inUseProperties.B4;
+                        xlWorkSheet.Cells[row, col + 19] = grp.Additional;
+                        xlWorkSheet.Cells[row, col + 20] = grp.Volume;
 
 
                         i++;
-                }
-                //Totals
-                row++;
-                xlWorkSheet.Cells[row, col + 7].Formula = string.Format("=SUM(H3:H{0})", (row - 1));
-                xlWorkSheet.Cells[row, col + 8].Formula = string.Format("=SUM(I3:I{0})", (row - 1));
-                xlWorkSheet.Cells[row, col + 9].Formula = string.Format("=SUM(J3:J{0})", (row - 1));
-                xlWorkSheet.Cells[row, col + 10].Formula = string.Format("=SUM(K3:K{0})", (row - 1));
-                xlWorkSheet.Cells[row, col + 11].Formula = string.Format("=SUM(L3:L{0})", (row - 1));
-                xlWorkSheet.Cells[row, col + 12].Formula = string.Format("=SUM(M3:M{0})", (row - 1));
-                xlWorkSheet.Cells[row, col + 13].Formula = string.Format("=SUM(N3:N{0})", (row - 1));
-                xlWorkSheet.Cells[row, col + 14].Formula = string.Format("=SUM(O3:O{0})", (row - 1));
-                xlWorkSheet.Cells[row, col + 15].Formula = string.Format("=SUM(P3:P{0})", (row - 1));
-               // xlWorkSheet.Cells[row, col + 15].Formula = string.Format("=SUM(U3:P{0})", (row - 1));
+                    }
+                    //Totals
+                    row++;
+                    xlWorkSheet.Cells[row, col + 7].Formula = string.Format("=SUM(H3:H{0})", (row - 1));
+                    xlWorkSheet.Cells[row, col + 8].Formula = string.Format("=SUM(I3:I{0})", (row - 1));
+                    xlWorkSheet.Cells[row, col + 9].Formula = string.Format("=SUM(J3:J{0})", (row - 1));
+                    xlWorkSheet.Cells[row, col + 10].Formula = string.Format("=SUM(K3:K{0})", (row - 1));
+                    xlWorkSheet.Cells[row, col + 11].Formula = string.Format("=SUM(L3:L{0})", (row - 1));
+                    xlWorkSheet.Cells[row, col + 12].Formula = string.Format("=SUM(M3:M{0})", (row - 1));
+                    xlWorkSheet.Cells[row, col + 13].Formula = string.Format("=SUM(N3:N{0})", (row - 1));
+                    xlWorkSheet.Cells[row, col + 14].Formula = string.Format("=SUM(O3:O{0})", (row - 1));
+                    xlWorkSheet.Cells[row, col + 15].Formula = string.Format("=SUM(P3:P{0})", (row - 1));
+                    // xlWorkSheet.Cells[row, col + 15].Formula = string.Format("=SUM(U3:P{0})", (row - 1));
 
 
                     //Format the table
-                xlWorkSheet.Columns[1].ColumnWidth = 20;
-                xlWorkSheet.Columns[2].ColumnWidth = 40;
-                xlWorkSheet.Columns[3].ColumnWidth = 40;
+                    xlWorkSheet.Columns[1].ColumnWidth = 20;
+                    xlWorkSheet.Columns[2].ColumnWidth = 40;
+                    xlWorkSheet.Columns[3].ColumnWidth = 40;
 
                     Marshal.ReleaseComObject(xlWorkSheet);
 
@@ -433,9 +470,9 @@ namespace CarboLifeAPI
                 }
             }
 
-                    ////////////////////
-                    ///Save File
-                    xlWorkBook.SaveAs(reportpath, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+            ////////////////////
+            ///Save File
+            xlWorkBook.SaveAs(reportpath, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
             xlWorkBook.Close(true, misValue, misValue);
             xlApp.Quit();
 
@@ -579,13 +616,13 @@ namespace CarboLifeAPI
 
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-        ////////////////////
-        ///Save File
-        xlWorkBook.SaveAs(path, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+            ////////////////////
+            ///Save File
+            xlWorkBook.SaveAs(path, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
             xlWorkBook.Close(true, misValue, misValue);
             xlApp.Quit();
 
@@ -616,7 +653,7 @@ namespace CarboLifeAPI
                 File.Exists(exportpathElements) == true ||
                 File.Exists(exportpathMaterials) == true)
             {
-                var result =  System.Windows.MessageBox.Show("Do you want to override the existing files?", "Question", MessageBoxButton.YesNo);
+                var result = System.Windows.MessageBox.Show("Do you want to override the existing files?", "Question", MessageBoxButton.YesNo);
                 if (result != MessageBoxResult.Yes) //Anything but YES should cancel the command
                     return;
             }
@@ -646,7 +683,7 @@ namespace CarboLifeAPI
 
 
             //Create Headers;
-            fileString = 
+            fileString =
                 "Category" + "," + //0
                 "Material" + "," + //1
                 "Description" + "," + //2
@@ -671,7 +708,7 @@ namespace CarboLifeAPI
                 "D (tCO₂e)" + "," + //19
                 "Sequestration (tCO₂e)" + "," + //20
                 "Additional (tCO₂e)" + //21
-                Environment.NewLine; 
+                Environment.NewLine;
             //Advanced
             foreach (CarboGroup grp in carboLifeProject.getGroupList)
             {
@@ -892,21 +929,146 @@ namespace CarboLifeAPI
             }
         }
 
-    }
-
-
-    public class LookupItem
-    {
-        public string name { get; set; }
-        public double value { get; set; }
-
-        public LookupItem()
+        //MaterialDatabase
+        public static bool CreateMaterialDatabaseCVSFile(CarboDatabase materialDataBase, string exportPath)
         {
-            name = "name";
-            value = 0;
+            if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
+                return false;
+
+            string fileString = "";
+
+            //Create Headers;
+            fileString =
+                "Id" + "," + //0
+                "Name" + "," + //1
+                "Category" + "," + //2
+                "Description" + "," + //3
+                "Density" + "," + //4
+                "WasteFactor" + "," + //5
+                "ECI" + "," + //6
+                "ECI_A1A3" + "," + //7
+                "ECI_A4" + "," + //8
+                "ECI_A5" + "," + //9
+                "ECI_B1B5" + "," + //10
+                "ECI_C1C4" + "," + //11
+                "ECI_D" + "," + //12
+                "ECI_Seq" + "," + //13
+                "ECI_Mix" + "," + //14
+
+                Environment.NewLine;
+            //Advanced
+            foreach (CarboMaterial cm in materialDataBase.CarboMaterialList)
+            {
+                try
+                {
+                    string resultString = "";
+
+                    resultString += cm.Id + ","; //1
+                    resultString += CVSFormat(cm.Name) + ","; //2
+                    resultString += CVSFormat(cm.Category) + ","; //3
+                    resultString += CVSFormat(cm.Description) + ","; //3
+                    resultString += cm.Density + ","; //4
+                    resultString += cm.WasteFactor + ","; //5
+                    resultString += cm.ECI + ","; //6
+                    resultString += cm.ECI_A1A3 + ","; //7
+                    resultString += cm.ECI_A4 + ","; //8
+                    resultString += cm.ECI_A5 + ","; //9
+                    resultString += cm.ECI_B1B5 + ","; //10
+                    resultString += cm.ECI_C1C4 + ","; //11
+                    resultString += cm.ECI_D + ","; //12
+                    resultString += cm.ECI_Seq + ","; //13
+                    resultString += cm.ECI_Mix + ","; //14
+
+                    resultString += Environment.NewLine;
+
+                    fileString += resultString;
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine("An error occurred while writing the file: " + ex.Message);
+                }
+            }
+
+            try
+            {
+                WriteCVSFile(fileString, exportPath);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
+
+        public static List<CarboMaterial> GetMaterialDatabaseFromCVSFile(string importPath)
+        {
+            List<CarboMaterial> cmList = new List<CarboMaterial>();
+
+            if (File.Exists(importPath) && IsFileLocked(importPath) == false)
+            {
+                DataTable profileTable = Utils.LoadCSV(importPath);
+
+                foreach (DataRow dr in profileTable.Rows)
+                {
+                    CarboMaterial cm = new CarboMaterial();
+                    cm.Id = Convert.ToInt32(Utils.ConvertMeToDouble(dr[0].ToString()));
+                    cm.Name = dr[1].ToString();
+                    cm.Category = dr[2].ToString();
+                    cm.Description = dr[3].ToString();
+
+                    cm.Density = Convert.ToInt32(Utils.ConvertMeToDouble(dr[4].ToString()));
+                    cm.WasteFactor = Convert.ToInt32(Utils.ConvertMeToDouble(dr[5].ToString()));
+
+                    cm.ECI = Convert.ToInt32(Utils.ConvertMeToDouble(dr[6].ToString()));
+
+                    cm.ECI_A1A3 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[7].ToString()));
+                    cm.ECI_A4 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[8].ToString()));
+                    cm.ECI_A5 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[9].ToString()));
+                    cm.ECI_B1B5 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[10].ToString()));
+                    cm.ECI_C1C4 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[11].ToString()));
+                    cm.ECI_D = Convert.ToInt32(Utils.ConvertMeToDouble(dr[12].ToString()));
+                    cm.ECI_Seq = Convert.ToInt32(Utils.ConvertMeToDouble(dr[13].ToString()));
+                    cm.ECI_Mix = Convert.ToInt32(Utils.ConvertMeToDouble(dr[14].ToString()));
+
+
+                    /*
+            "Id" + "," + //0
+            "Name" + "," + //1
+            "Category" + "," + //2
+            "Description" + "," + //3
+            "Density" + "," + //4
+            "WasteFactor" + "," + //5
+            "ECI" + "," + //6
+            "ECI_A1A3" + "," + //7
+            "ECI_A4" + "," + //8
+            "ECI_A5" + "," + //9
+            "ECI_B1B5" + "," + //10
+            "ECI_C1C4" + "," + //11
+            "ECI_D" + "," + //12
+            "ECI_Seq" + "," + //13
+            "ECI_Mix" + "," + //14
+
+                     */
+                    cmList.Add(cm);
+                }
+            }
+
+            return cmList;
+        }
+
+
+        public class LookupItem
+        {
+            public string name { get; set; }
+            public double value { get; set; }
+
+            public LookupItem()
+            {
+                name = "name";
+                value = 0;
+            }
+        }
+
     }
-
-
 }
 

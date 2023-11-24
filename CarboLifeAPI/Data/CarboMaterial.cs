@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace CarboLifeAPI.Data
@@ -112,7 +108,7 @@ namespace CarboLifeAPI.Data
         //Life
         //public CarboB1B7Properties materialB1B5Properties { get; set; }
         //EndofLift
-        public CarboC1C4Properties materialC1C4Properties { get;set;}
+        public CarboC1C4Properties materialC1C4Properties { get; set; }
         //Sequestration
         public CarboSeqProperties materialSeqProperties { get; set; }
         //Suplemental

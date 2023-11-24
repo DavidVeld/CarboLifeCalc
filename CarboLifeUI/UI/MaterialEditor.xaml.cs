@@ -1148,5 +1148,23 @@ namespace CarboLifeUI.UI
 
 
         }
+
+        /// <summary>
+        /// Imports multiple materials based on csv format
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_Import_Click(object sender, RoutedEventArgs e)
+        {
+            MaterialImportDialog matImpDia = new MaterialImportDialog(this.returnedDatabase);
+            matImpDia.ShowDialog();
+
+            if(matImpDia.isAccepted == true)
+            {
+                this.returnedDatabase.SyncMaterials(matImpDia.importedDb);
+            }
+            RefreshMaterialList();
+
+        }
     }
 }
