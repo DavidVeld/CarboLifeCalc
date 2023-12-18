@@ -47,6 +47,8 @@
                 <Separator></Separator>
                 <MenuItem Name="mnu_BuildReport" Header="Export Report" Click="mnu_BuildReport_Click" Background="Transparent"/>
                 <MenuItem Name="mnu_ExportToExcel" Header="Export Data to CSV..." Click="mnu_ExportToExcel_Click" Background="Transparent"></MenuItem>
+                <MenuItem Name="mnu_ExportToProject" Header="Export Project..." Click="mnu_ExportToLCAPr_Click" Background="Transparent"></MenuItem>
+
                 <Separator></Separator>
                 <MenuItem Name="mnu_EditTemplate" Header="Edit a Material Template..." Click="mnu_EditTemplate_Click" Background="Transparent"/>
 

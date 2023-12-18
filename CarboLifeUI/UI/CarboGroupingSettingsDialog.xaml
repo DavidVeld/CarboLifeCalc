@@ -58,11 +58,11 @@
         <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="5" Style="{StaticResource formGreyText}" TextWrapping="Wrap" Height="38" VerticalAlignment="Top" BorderBrush="Transparent">The Boolean(Yes/No) Instance parameter below will define if the element is substructure:</TextBox>
         <TextBox Name="txt_SubstructureParamName" Grid.Column="2" Grid.Row="5" Margin="30,60,5,5" Height="28" VerticalAlignment="Bottom" Style="{StaticResource flatTextBox}"/>
 
-        <CheckBox Name="chk_ImportExisting" IsEnabled="True" Grid.Column="2" Grid.Row="7" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include + Split Existing Elements</CheckBox>
+        <CheckBox Name="chk_ImportExisting" IsEnabled="True" Grid.Column="2" Grid.Row="7" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include &amp; Split Existing Elements</CheckBox>
         <TextBox Grid.Column="2" Margin="5,22,5,0" Grid.Row="7" Style="{StaticResource formGreyText}" TextWrapping="Wrap" Height="28" VerticalAlignment="Top" BorderBrush="Transparent" IsReadOnly="True">Type the name of the "existing" phase below:</TextBox>
         <TextBox Name="txt_ExistingPhaseName" Grid.Column="2" Grid.Row="7" Margin="30,45,5,0" Height="28" VerticalAlignment="Top"  Style="{StaticResource flatTextBox}"/>
 
-        <CheckBox Name="chk_ImportDemolished" IsEnabled="True" Grid.Column="2" Grid.Row="8" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include + Split Demolished Elements</CheckBox>
+        <CheckBox Name="chk_ImportDemolished" IsEnabled="True" Grid.Column="2" Grid.Row="8" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Include &amp; Split Demolished Elements</CheckBox>
         <CheckBox Name="chk_CombineExistingAndDemo" IsEnabled="True" Grid.Column="2" Grid.Row="8" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Visibility="Hidden">Combine Existing and Demolished Elements</CheckBox>
 
         <CheckBox Name="chk_AdditionalImport" IsEnabled="True" Grid.Column="2" Grid.Row="6" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Split by Additional Grouping Parameter</CheckBox>

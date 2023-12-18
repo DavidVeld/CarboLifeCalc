@@ -1,5 +1,6 @@
 ﻿using CarboLifeAPI;
 using CarboLifeAPI.Data;
+using LiveCharts.Wpf.Charts.Base;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -637,6 +638,20 @@ namespace CarboLifeUI.UI
 
             }
 
+        }
+
+        private void mnu_ExportToLCAPr_Click(object sender, RoutedEventArgs e)
+        {
+
+            string path = JsonExportUtils.GetSaveAsLocation();
+            if (path != null)
+            {
+                bool ok = JsonExportUtils.ExportToJson(path, carboLifeProject);
+                if(ok == true)
+                {
+                    MessageBox.Show("File exported to: " + path);
+                }
+            }
         }
     }
 }
