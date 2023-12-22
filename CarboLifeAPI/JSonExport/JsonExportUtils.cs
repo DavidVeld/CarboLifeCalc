@@ -1,4 +1,5 @@
 ﻿using CarboLifeAPI.Data;
+using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using System;
 using System.IO;
@@ -19,9 +20,13 @@ namespace CarboLifeAPI
         public static bool ExportToJson(string path, CarboProject carboLifeProject)
         {
             bool result = false;
+
+
+            JsCarboProject jsProject = converToJsProject(carboLifeProject);
+
             try
             {
-                var json = new JavaScriptSerializer().Serialize(carboLifeProject);
+                var json = new JavaScriptSerializer().Serialize(jsProject);
                 File.WriteAllText(path, json);
 
                 result = true;
@@ -94,7 +99,66 @@ namespace CarboLifeAPI
             return false;
         }
 
+        public static JsCarboProject converToJsProject(CarboProject carboProject) 
+        {
+            JsCarboProject jsProject = new JsCarboProject();
 
+            jsProject.Name = carboProject.Name;
+            jsProject.Number = carboProject.Number;
+            jsProject.Category = carboProject.Category;
+            jsProject.Description = carboProject.Description;
+            jsProject.SocialCost = carboProject.SocialCost;
+            jsProject.GIA = carboProject.Area;
+            jsProject.A0Global = carboProject.A0Global;
+            jsProject.A5Global = carboProject.A5Global;
+            jsProject.b675Global = carboProject.b675Global;
+            jsProject.C1Global = carboProject.C1Global;
+            jsProject.valueUnit = carboProject.valueUnit;
+            jsProject.designLife = carboProject.designLife;
 
+            CarboGroup cg = carboProject.getTotalsGroup();
+
+            if (cg.AllElements.Count > 0)
+            {
+                foreach (CarboElement ce in cg.AllElements)
+                {
+                    JsCarboElement JsCe = CopyCe(ce, carboProject);
+                    jsProject.elementList.Add(JsCe);
+                }
+            }
+            return jsProject;
+        }
+
+        private static JsCarboElement CopyCe(CarboElement ce, CarboProject carboProject)
+        {
+            JsCarboElement JsCe = new JsCarboElement();
+
+            JsCe.Name = ce.Name;
+            JsCe.Id = ce.Id;
+            JsCe.MaterialName = ce.MaterialName;
+            JsCe.Category = ce.Category;
+            JsCe.SubCategory = ce.SubCategory;
+            JsCe.AdditionalData = ce.AdditionalData;
+            JsCe.Grade = ce.Grade;
+            JsCe.LevelName = ce.LevelName;
+
+            JsCe.Volume = ce.Volume;
+            JsCe.Level = ce.Level;
+            JsCe.Density = ce.Density;
+
+            JsCe.ECI = ce.ECI;
+            JsCe.EC = ce.EC;
+            JsCe.ECI_Total = ce.ECI_Total;
+            JsCe.EC_Total = ce.EC_Total;
+            JsCe.Volume_Total = ce.Volume_Total;
+
+            JsCe.isDemolished = ce.isDemolished;
+            JsCe.isExisting = ce.isExisting;
+            JsCe.isSubstructure = ce.isSubstructure;
+            JsCe.includeInCalc = ce.includeInCalc;
+
+            return JsCe;
+
+        }
     }
 }

@@ -83,6 +83,8 @@
     <Compile Include="Data\CarboColourPreset.cs" />
     <Compile Include="Data\CarboEnergyProperties.cs" />
     <Compile Include="Data\CarboGroupSettings.cs" />
+    <Compile Include="JSonExport\JsCarboElement.cs" />
+    <Compile Include="JSonExport\JsCarboProject.cs" />
     <Compile Include="UtilClasses\CarboGraphResult.cs" />
     <Compile Include="UtilClasses\CarboValues.cs" />
     <Compile Include="Data\CarboC1C4Properties.cs" />
@@ -110,7 +112,7 @@
     <Compile Include="Utils\HeatMapCollector.cs" />
     <Compile Include="Utils\HeatMapBarBuilder.cs" />
     <None Include="Superseded\HeatMapBuilderClasses.cs" />
-    <Compile Include="Utils\JsonExportUtils.cs" />
+    <Compile Include="JSonExport\JsonExportUtils.cs" />
     <Compile Include="Utils\ReadWriteCsv.cs" />
     <None Include="Superseded\HeatMapBuilderUtils.cs" />
     <Compile Include="Utils\DataExportUtils.cs" />

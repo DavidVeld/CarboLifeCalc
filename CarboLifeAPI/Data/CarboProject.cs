@@ -123,6 +123,10 @@ namespace CarboLifeAPI.Data
             foreach (CarboGroup cgr in getGroupList)
             {
                 totals += cgr.EC;
+                foreach(CarboElement ca in cgr.AllElements)
+                {
+                    newGroup.AllElements.Add(ca);
+                }
             }
             newGroup.EC = Math.Round(totals,2);
             newGroup.PerCent = 100;

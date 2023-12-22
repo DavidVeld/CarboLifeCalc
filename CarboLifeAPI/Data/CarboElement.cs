@@ -21,10 +21,12 @@ namespace CarboLifeAPI.Data
         public string Category { get; set; }
         public string SubCategory { get; set; }
         public string AdditionalData { get; set; }
+        public string Grade { get; set; }
         public double Volume { get; set; }
         public double Mass { get; set; }
         public double Density { get; set; }
         public double Level { get; set; }
+        public string LevelName { get; set; }
         public double ECI { get; set; }
         public double EC { get; set; }
         public double ECI_Total { get; set; }
@@ -50,7 +52,9 @@ namespace CarboLifeAPI.Data
             Category = "Other";
             SubCategory = "";
             AdditionalData = "";
-
+            Grade = "";
+            LevelName = "";
+            
             Volume = 0;
             Level = 0;
             Density = 0;
