@@ -437,6 +437,7 @@ namespace CarboLifeRevit
                 string setSubCategory;
                 string additionalParameter;
                 double setLevel;
+                string levelname;
                 bool setIsDemolished;
                 bool setIsSubstructure;
                 bool setIsExisting;
@@ -519,15 +520,19 @@ namespace CarboLifeRevit
                 if (additionalParameter == null)
                     additionalParameter = "";
 
+                //Get MaterialGrade
+
                 //Get the level (in meter)
                 Level lvl = doc.GetElement(el.LevelId) as Level;
                 if (lvl != null)
                 {
+                    levelname = lvl.Name;
                     setLevel = Convert.ToDouble((lvl.Elevation) * 304.8);
                 }
                 else
                 {
                     setLevel = 0;
+                    levelname = "";
                 }
 
 
@@ -554,6 +559,7 @@ namespace CarboLifeRevit
                 newCarboElement.Name = setName;
                 newCarboElement.Category = setCategory;
                 newCarboElement.SubCategory = setSubCategory;
+                newCarboElement.LevelName = levelname;
                 newCarboElement.Level = Math.Round(setLevel, 3);
 
                 newCarboElement.isDemolished = setIsDemolished;

@@ -1,4 +1,5 @@
-﻿using CarboLifeAPI;
+﻿using Autodesk.Revit.DB;
+using CarboLifeAPI;
 using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,7 @@ namespace CarboLifeUI.UI
             cbb_ExtraImportType.Items.Add("Instance Parameter");
             cbb_ExtraImportType.SelectedItem = "Type Parameter";
 
+
             foreach (string str in categorylist)
             {
                 cbb_MainGroup.Items.Add(str);
@@ -96,7 +98,12 @@ namespace CarboLifeUI.UI
 
             chk_ImportDemolished.IsChecked = importSettings.IncludeDemo;
             chk_CombineExistingAndDemo.IsChecked = importSettings.CombineExistingAndDemo;
+            //Substructure
 
+            cbb_SubstructureImportType.Items.Add("Parameter (Instance Boolean)");
+            cbb_SubstructureImportType.Items.Add("Workset Name");
+
+            //Additional Parameter
 
             if (importSettings.IncludeAdditionalParameter == true)
                 chk_AdditionalImport.IsChecked = true;
@@ -107,6 +114,26 @@ namespace CarboLifeUI.UI
                 cbb_ExtraImportType.Text = "Instance Parameter";
 
              txt_ExtraImportValue.Text = importSettings.AdditionalParameter;
+
+            //Material grade
+            cbb_GradeImportType.Items.Add("Type Parameter");
+            cbb_GradeImportType.Items.Add("Instance Parameter");
+            cbb_GradeImportType.Items.Add("Material Parameter");
+
+            if(importSettings.IncludeGradeParameter == true)
+            {
+                cbb_GradeImportType.Text = importSettings.GradeParameterType.ToString();
+                txt_GradeImportValue.Text = importSettings.GradeParameterName.ToString();
+                chk_MaterialGrade.IsChecked = true;
+            }
+            else
+            {
+                chk_MaterialGrade.IsChecked = false;
+                cbb_GradeImportType.Text = "Type Parameter";
+                txt_GradeImportValue.Text = "";
+            }
+
+            txt_GradeImportValue.Text = importSettings.GradeParameterName;
 
             CheckCaregoryParam();
 
@@ -210,6 +237,11 @@ namespace CarboLifeUI.UI
         }
 
         private void chk_ImportSubstructure_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_ReinforcementImport_Click(object sender, RoutedEventArgs e)
         {
 
         }

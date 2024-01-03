@@ -94,6 +94,9 @@
     <Compile Include="UI\MaterialImportDialog.xaml.cs">
       <DependentUpon>MaterialImportDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\MaterialConcreteMapper.xaml.cs">
+      <DependentUpon>MaterialConcreteMapper.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\TemplateSelector.xaml.cs">
       <DependentUpon>TemplateSelector.xaml</DependentUpon>
     </Compile>
@@ -246,6 +249,10 @@
     <Page Include="UI\MaterialImportDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\MaterialConcreteMapper.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UI\TemplateSelector.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -29,6 +29,11 @@ namespace CarboLifeAPI.Data
         public string AdditionalParameter { get; set; }
         public bool AdditionalParameterElementType { get; set; }
 
+        //Additional parameter
+        public bool IncludeGradeParameter { get; set; }
+        public string GradeParameterName { get; set; }
+        public string GradeParameterType { get; set; }
+
         public CarboGroupSettings()
         {
             CategoryName = "(Revit) Category";
@@ -46,6 +51,11 @@ namespace CarboLifeAPI.Data
             IncludeAdditionalParameter = false;
             AdditionalParameter = "";
             AdditionalParameterElementType = false;
+
+            IncludeGradeParameter = false;
+            GradeParameterName = "";
+            GradeParameterType = "";
+
         }
 
         public CarboGroupSettings DeSerializeXML()

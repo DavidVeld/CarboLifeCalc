@@ -640,7 +640,7 @@ namespace CarboLifeUI.UI
 
         }
 
-        private void mnu_ExportToLCAPr_Click(object sender, RoutedEventArgs e)
+        private void mnu_ExportToJSON_Click(object sender, RoutedEventArgs e)
         {
 
             string path = JsonExportUtils.GetSaveAsLocation();
@@ -648,6 +648,19 @@ namespace CarboLifeUI.UI
             {
                 bool ok = JsonExportUtils.ExportToJson(path, carboLifeProject);
                 if(ok == true)
+                {
+                    MessageBox.Show("File exported to: " + path);
+                }
+            }
+        }
+
+        private void mnu_ExportToLCAx_Click(object sender, RoutedEventArgs e)
+        {
+            string path = JsonExportUtils.GetSaveAsLocation();
+            if (path != null)
+            {
+                bool ok = JsonExportUtils.ExportToLCAx(path, carboLifeProject);
+                if (ok == true)
                 {
                     MessageBox.Show("File exported to: " + path);
                 }

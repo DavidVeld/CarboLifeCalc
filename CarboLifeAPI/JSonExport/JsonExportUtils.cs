@@ -1,7 +1,9 @@
 ﻿using CarboLifeAPI.Data;
+using LCAx;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Web.Script.Serialization;
 using System.Windows;
@@ -120,13 +122,56 @@ namespace CarboLifeAPI
 
             if (cg.AllElements.Count > 0)
             {
-                foreach (CarboElement ce in cg.AllElements)
+                List<CarboElement> elements = cg.AllElements;
+
+                foreach (CarboElement ce in elements)
                 {
-                    JsCarboElement JsCe = CopyCe(ce, carboProject);
-                    jsProject.elementList.Add(JsCe);
+                    CarboMaterial material = carboProject.CarboDatabase.getClosestMatch(ce.CarboMaterialName);
+                    if (material != null)
+                    {
+                        JsCarboElement JsCe = CopyCe(ce, carboProject);
+
+                        //IndividualElements
+                        JsCe.Density = material.Density;
+                        double mass = ce.Mass;
+                        if (mass == 0)
+                            mass = ce.Volume_Total * JsCe.Density;
+
+                        JsCe.EC_A1A3_Total = mass * material.ECI_A1A3;
+                        JsCe.EC_A4_Total = mass * material.ECI_A4;
+                        JsCe.EC_A5_Total = mass * material.ECI_A5;
+                        JsCe.EC_B1B7_Total = mass * material.ECI_B1B5;
+                        JsCe.EC_C1C4_Total = mass * material.ECI_C1C4;
+                        JsCe.EC_D_Total = mass * material.ECI_D;
+                        JsCe.EC_Mix_Total = mass * material.ECI_Mix;
+                        JsCe.EC_Sequestration_Total = mass * material.ECI_Seq;
+
+                        jsProject.elementList.Add(JsCe);
+                    }
                 }
             }
             return jsProject;
+        }
+
+        public static Lcax convertToLCAx(JsCarboProject jsProject)
+        {
+            Lcax lcaxProject = new Lcax();
+
+            lcaxProject.Name = jsProject.Name;
+            lcaxProject.Description = jsProject.Number + Environment.NewLine + jsProject.Description;
+            lcaxProject.LifeSpan = jsProject.designLife;
+            lcaxProject.MetaData.Add("GIA", jsProject.GIA.ToString());
+            lcaxProject.MetaData.Add("A0Global", jsProject.A0Global.ToString());
+            lcaxProject.MetaData.Add("C1Global", jsProject.C1Global.ToString());
+            lcaxProject.MetaData.Add("b675Global", jsProject.b675Global.ToString());
+            lcaxProject.MetaData.Add("SocialCost", jsProject.SocialCost.ToString());
+            lcaxProject.MetaData.Add("ECTotal", jsProject.ECTotal.ToString());
+
+            //Build the assemblies
+
+
+
+            return lcaxProject;
         }
 
         private static JsCarboElement CopyCe(CarboElement ce, CarboProject carboProject)
@@ -158,6 +203,29 @@ namespace CarboLifeAPI
             JsCe.includeInCalc = ce.includeInCalc;
 
             return JsCe;
+
+        }
+
+        public static bool ExportToLCAx(string path, CarboProject carboLifeProject)
+        {
+            bool result = false;
+
+            JsCarboProject jsProject = converToJsProject(carboLifeProject);
+            Lcax lcaProject = convertToLCAx(jsProject);
+
+            try
+            {
+                var json = new JavaScriptSerializer().Serialize(lcaProject);
+                File.WriteAllText(path, json);
+
+                result = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return result;
 
         }
     }

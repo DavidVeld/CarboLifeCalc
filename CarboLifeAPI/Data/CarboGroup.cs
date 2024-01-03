@@ -17,8 +17,9 @@ namespace CarboLifeAPI.Data
         public string SubCategory { get; set; }
         public string Description { get; set; }
         public double Volume { get; set; }
+
         /// <summary>
-        /// This is a reserved value to get voilumes from another group to calculate current. Useful for Reinforce,emt/
+        /// This is a reserved value to get volumes from another group to calculate current. Useful for Reinforce,emt/
         /// </summary>
         public int VolumeLink { get; set; }
 
