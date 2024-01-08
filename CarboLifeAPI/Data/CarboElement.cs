@@ -23,15 +23,20 @@ namespace CarboLifeAPI.Data
         public string AdditionalData { get; set; }
         public string Grade { get; set; }
         public double Volume { get; set; }
+        public double Volume_Total { get; set; }
+
         public double Mass { get; set; }
         public double Density { get; set; }
         public double Level { get; set; }
         public string LevelName { get; set; }
         public double ECI { get; set; }
         public double EC { get; set; }
-        public double ECI_Total { get; set; }
-        public double EC_Total { get; set; }
-        public double Volume_Total { get; set; }
+
+
+        public double Volume_Cumulative { get; set; }
+        public double ECI_Cumulative { get; set; }
+        public double EC_Cumulative { get; set; }
+
         public bool isDemolished { get; set; }
         public bool isExisting { get; set; }
         public bool isSubstructure { get; set; }
@@ -56,14 +61,17 @@ namespace CarboLifeAPI.Data
             LevelName = "";
             
             Volume = 0;
+            Volume_Total = 0;
+
             Level = 0;
             Density = 0;
 
             ECI = 0;
             EC = 0;
-            ECI_Total = 0;
-            EC_Total = 0;
-            Volume_Total = 0;
+
+            ECI_Cumulative = 0;
+            EC_Cumulative = 0;
+            Volume_Cumulative = 0;
 
             isDemolished = false;
             isExisting = false;
@@ -87,8 +95,9 @@ namespace CarboLifeAPI.Data
             {
                 ///This calculation can be made;
                 ECI = material.ECI;
-                EC = material.ECI * (material.Density * Volume);
-                Mass = material.Density * Volume;
+                EC = material.ECI * (material.Density * Volume_Total);
+                Mass = material.Density * Volume_Total;
+                Density = material.Density;
             }
 
         }
@@ -108,15 +117,17 @@ namespace CarboLifeAPI.Data
             clone.SubCategory = this.SubCategory;
             clone.AdditionalData = this.AdditionalData;
             clone.Volume = this.Volume;
+            clone.Volume_Total = this.Volume_Total;
+
             clone.Mass = this.Mass;
             clone.Density = this.Density;
             clone.Level = this.Level;
 
             clone.ECI = this.ECI;
             clone.EC = this.EC;
-            clone.ECI_Total = this.ECI_Total;
-            clone.EC_Total = this.EC_Total;
-            clone.Volume_Total = this.Volume_Total;
+            clone.ECI_Cumulative = this.ECI_Cumulative;
+            clone.EC_Cumulative = this.EC_Cumulative;
+            clone.Volume_Cumulative = this.EC_Cumulative;
 
             clone.isDemolished = this.isDemolished;
             clone.isExisting = this.isExisting;
@@ -141,6 +152,8 @@ namespace CarboLifeAPI.Data
             clone.SubCategory = this.SubCategory;
             clone.AdditionalData = this.AdditionalData;
             clone.Volume = this.Volume;
+            clone.Volume_Total = this.Volume_Total;
+
             clone.Mass = this.Mass;
             clone.Density = this.Density;
             clone.Level = this.Level;
@@ -150,9 +163,9 @@ namespace CarboLifeAPI.Data
 
             clone.ECI = this.ECI;
             clone.EC = this.EC;
-            clone.ECI_Total = this.ECI_Total;
-            clone.EC_Total = this.EC_Total;
-            clone.Volume_Total = this.Volume_Total;
+            clone.ECI_Cumulative = this.ECI_Cumulative;
+            clone.EC_Cumulative = this.EC_Cumulative;
+            clone.Volume_Cumulative = this.EC_Cumulative;
 
             clone.includeInCalc = this.includeInCalc;
 

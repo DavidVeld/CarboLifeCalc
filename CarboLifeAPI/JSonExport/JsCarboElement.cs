@@ -23,15 +23,18 @@ namespace CarboLifeAPI.Data
         public string AdditionalData { get; set; }
         public string Grade { get; set; }
         public double Volume { get; set; }
+        /// <summary>
+        /// This is the main property to be used for calculations
+        /// </summary>
+        public double Volume_Total { get; set; }
         public double Mass { get; set; }
         public double Density { get; set; }
         public double Level { get; set; }
         public string LevelName { get; set; }
         public double ECI { get; set; }
         public double EC { get; set; }
-        public double ECI_Total { get; set; }
-        public double EC_Total { get; set; }
-        public double Volume_Total { get; set; }
+
+
         public double EC_A1A3_Total { get; set; }
         public double EC_A4_Total { get; set; }
         public double EC_A5_Total { get; set; }
@@ -43,8 +46,12 @@ namespace CarboLifeAPI.Data
         public bool isDemolished { get; set; }
         public bool isExisting { get; set; }
         public bool isSubstructure { get; set; }
-        public bool includeInCalc { get; set; }       
+        public bool includeInCalc { get; set; }
 
+        //Cumulative
+        public double Volume_Cumulative { get; internal set; }
+        public double EC_Cumulative { get; internal set; }
+        public double ECI_Cumulative { get; internal set; }
         public JsCarboElement()
         {
             Id = -999;
@@ -57,14 +64,16 @@ namespace CarboLifeAPI.Data
             LevelName = "";
 
             Volume = 0;
+            Volume_Total = 0;
             Level = 0;
             Density = 0;
 
             ECI = 0;
             EC = 0;
-            ECI_Total = 0;
-            EC_Total = 0;
-            Volume_Total = 0;
+
+            Volume_Cumulative = 0;
+            ECI_Cumulative = 0;
+            EC_Cumulative = 0;
 
             isDemolished = false;
             isExisting = false;

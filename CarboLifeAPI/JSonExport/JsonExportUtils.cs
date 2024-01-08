@@ -5,8 +5,10 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web.Script.Serialization;
 using System.Windows;
+using System.Windows.Media.Media3D;
 
 namespace CarboLifeAPI
 {
@@ -150,6 +152,20 @@ namespace CarboLifeAPI
                     }
                 }
             }
+
+            // get all the groups without elements
+            foreach(CarboGroup grp in carboProject.getGroupList)
+            {
+                if(grp.AllElements.Count == 0)
+                {
+                    //
+                    JsCarboElement JsCe = new JsCarboElement();
+                    JsCe = CopyCe(grp, carboProject);
+                    jsProject.elementList.Add(JsCe);
+
+                }
+            }
+
             return jsProject;
         }
 
@@ -160,6 +176,8 @@ namespace CarboLifeAPI
             lcaxProject.Name = jsProject.Name;
             lcaxProject.Description = jsProject.Number + Environment.NewLine + jsProject.Description;
             lcaxProject.LifeSpan = jsProject.designLife;
+
+            lcaxProject.MetaData = new Dictionary<string, string>();
             lcaxProject.MetaData.Add("GIA", jsProject.GIA.ToString());
             lcaxProject.MetaData.Add("A0Global", jsProject.A0Global.ToString());
             lcaxProject.MetaData.Add("C1Global", jsProject.C1Global.ToString());
@@ -168,10 +186,94 @@ namespace CarboLifeAPI
             lcaxProject.MetaData.Add("ECTotal", jsProject.ECTotal.ToString());
 
             //Build the assemblies
+            //Run through each element and combine where Id's are identical
+            lcaxProject.EmissionParts = new Dictionary<string, Assembly>();
+
+            foreach (JsCarboElement jsCe in jsProject.elementList)
+            {
+                try
+                {
+                    bool exists = false;
+                    foreach (var dict in lcaxProject.EmissionParts)
+                    {
+                        Assembly assTest = dict.Value as Assembly;
+                        string assKey = dict.Key as string;
+                        if (assTest != null)
+                        {
+                            if (assKey == jsCe.Id.ToString())
+                            {
+                                EpdPart newPart = getEpdPart(jsCe);
+                                assTest.Parts.Add(jsCe.Id.ToString() + "." + assTest.Parts.Count, newPart);
+                                assTest.Quantity += newPart.PartQuantity;
+                                assTest.Unit = newPart.PartUnit;
+
+                                exists = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (exists == false)
+                    {
+                        Assembly newAss = getAssembly(jsCe);
+                        lcaxProject.EmissionParts.Add(jsCe.Id.ToString(), newAss);
 
 
+                    }
+                }
+                catch (Exception ex)
+                { 
 
-            return lcaxProject;
+                }
+
+            }
+
+            //Calculate Totals;
+            foreach (var dict in lcaxProject.EmissionParts)
+            {
+
+            }
+
+                return lcaxProject;
+        }
+
+        private static Assembly getAssembly(JsCarboElement jsCe)
+        {
+            Assembly assembly = new Assembly();
+            try
+            {
+                string id = jsCe.Id.ToString();
+
+                assembly.Id = id;
+                assembly.Name = jsCe.Name;
+                assembly.Comment = "";
+                assembly.Category = jsCe.Category;
+                assembly.Parts = new Dictionary<string, EpdPart>();
+
+                EpdPart newPart = getEpdPart(jsCe);
+                assembly.Parts.Add(id, newPart);
+
+                assembly.Quantity += newPart.PartQuantity;
+                assembly.Unit = newPart.PartUnit;
+            }
+
+            catch (Exception ex)
+            {
+
+            }
+            return assembly;
+        }
+
+        private static EpdPart getEpdPart(JsCarboElement jsCe)
+        {
+            string id = jsCe.Id.ToString();
+
+            EpdPart newPart = new EpdPart();
+            newPart.Id = id;
+            newPart.Name = jsCe.Name;
+            newPart.PartQuantity = jsCe.Volume;
+            newPart.PartUnit = Unit.M3;
+            return newPart;
         }
 
         private static JsCarboElement CopyCe(CarboElement ce, CarboProject carboProject)
@@ -188,19 +290,65 @@ namespace CarboLifeAPI
             JsCe.LevelName = ce.LevelName;
 
             JsCe.Volume = ce.Volume;
+            JsCe.Volume_Total = ce.Volume_Total;
+            JsCe.Mass = ce.Mass;
             JsCe.Level = ce.Level;
             JsCe.Density = ce.Density;
 
             JsCe.ECI = ce.ECI;
             JsCe.EC = ce.EC;
-            JsCe.ECI_Total = ce.ECI_Total;
-            JsCe.EC_Total = ce.EC_Total;
-            JsCe.Volume_Total = ce.Volume_Total;
+
+            JsCe.Volume_Cumulative = ce.Volume_Cumulative;
+            JsCe.ECI_Cumulative = ce.ECI_Cumulative;
+            JsCe.EC_Cumulative = ce.EC_Cumulative;
 
             JsCe.isDemolished = ce.isDemolished;
             JsCe.isExisting = ce.isExisting;
             JsCe.isSubstructure = ce.isSubstructure;
             JsCe.includeInCalc = ce.includeInCalc;
+
+            return JsCe;
+
+        }
+        private static JsCarboElement CopyCe(CarboGroup grp, CarboProject carboProject)
+        {
+            JsCarboElement JsCe = new JsCarboElement();
+
+            JsCe.Name = grp.Description;
+            JsCe.Id = grp.Id;
+            JsCe.MaterialName = grp.MaterialName;
+            JsCe.Category = grp.Category;
+            JsCe.SubCategory = grp.SubCategory;
+            JsCe.AdditionalData = grp.additionalData;
+            JsCe.Grade = "";
+            JsCe.LevelName = "";
+
+            JsCe.Volume = grp.Volume;
+            JsCe.Volume_Total = grp.TotalVolume;
+
+            JsCe.Level = 0;
+            JsCe.Density = grp.Density;
+
+            JsCe.ECI = grp.ECI;
+            JsCe.EC = grp.EC;
+            JsCe.EC_Cumulative = grp.ECI;
+            JsCe.EC_Cumulative = grp.EC;
+
+            JsCe.isDemolished = grp.isDemolished;
+            JsCe.isExisting = grp.isExisting;
+            JsCe.isSubstructure = grp.isSubstructure;
+            JsCe.includeInCalc = true;
+
+            //ToalValues
+            JsCe.EC_A1A3_Total = grp.getTotalA1A3;
+            JsCe.EC_A4_Total = grp.getTotalA4;
+            JsCe.EC_A5_Total = grp.getTotalA5;
+            JsCe.EC_B1B7_Total = grp.getTotalB1B7;
+            JsCe.EC_C1C4_Total = grp.getTotalC1C4;
+            JsCe.EC_D_Total = grp.getTotalD;
+            JsCe.EC_Mix_Total = grp.getTotalMix;
+            JsCe.EC_Sequestration_Total = grp.getTotalSeq;
+
 
             return JsCe;
 

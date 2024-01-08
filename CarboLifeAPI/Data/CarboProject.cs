@@ -1373,6 +1373,7 @@ namespace CarboLifeAPI.Data
 
         }
 
+
         private void setElementotals()
         {
             //Generate a new ALL elements list from the calculated values in the Groups
@@ -1399,7 +1400,7 @@ namespace CarboLifeAPI.Data
         }
 
         /// <summary>
-        /// Returns a full list of elements with their Revit element totals, usefull if elements are constructred using layer or parts. This is a copy 0f the elements containing their id's and total mass, volue EC and ECi values.
+        /// Returns a full list of elements with their Revit element totals, useful if elements are constructred using layer or parts. This is a copy 0f the elements containing their id's and total mass, volue EC and ECi values.
         /// </summary>
         /// <returns></returns>
         public List<CarboElement> getTemporaryElementListWithTotals()
@@ -1473,9 +1474,12 @@ namespace CarboLifeAPI.Data
                             if (buffer_CE.Id == cElement.Id)
                             {
                                 //Set the values;
-                                cElement.EC_Total = buffer_CE.EC_Total;
-                                cElement.ECI_Total = buffer_CE.ECI_Total;
-                                cElement.Volume_Total = buffer_CE.Volume_Total;
+                                cElement.EC_Cumulative = buffer_CE.EC_Cumulative;
+                                cElement.ECI_Cumulative = buffer_CE.ECI_Cumulative;
+                                cElement.Volume_Cumulative = buffer_CE.Volume_Cumulative;
+
+                                //Do not add mass!
+
                                 ok = true;
                                 break;
                             }
@@ -1507,24 +1511,24 @@ namespace CarboLifeAPI.Data
                             {
                                 //Merge Elements
                                 //double density = buffer_CE.EC_Total / (buffer_CE.Volume * buffer_CE.ECI_Total);
-                                double volume_Total = buffer_CE.Volume + cElement.Volume;
-                                double mass_Total = buffer_CE.Mass + cElement.Mass;
-                                double mass_TotalCheck = (buffer_CE.EC / buffer_CE.ECI) + (cElement.EC / cElement.ECI);
+                                double volume_Cumulative = buffer_CE.Volume_Cumulative + cElement.Volume_Total;
+                                double mass_Cumulative = buffer_CE.Mass + cElement.Mass;
+                                //double mass_TotalCheck = (buffer_CE.EC / buffer_CE.ECI) + (cElement.EC / cElement.ECI);
 
                                 //double Density_Total = mass_Total / volume_Total;
 
-                                double EC_Total = buffer_CE.EC_Total + cElement.EC;
+                                double EC_Cumulative = buffer_CE.EC_Cumulative + cElement.EC;
                                 //Calculate combined ECI.
-                                double ECI_Total = EC_Total / mass_Total;
+                                double ECI_Cumulative = EC_Cumulative / mass_Cumulative;
 
                                 //Total EC:
-                                buffer_CE.EC_Total = EC_Total;
+                                buffer_CE.EC_Cumulative = EC_Cumulative;
                                 //Total Volume
-                                buffer_CE.Volume_Total = volume_Total;
+                                buffer_CE.Volume_Cumulative = volume_Cumulative;
                                 //Total ECI
-                                buffer_CE.ECI_Total = ECI_Total;
+                                buffer_CE.ECI_Cumulative = ECI_Cumulative;
                                 //mass Total
-                                buffer_CE.Mass = mass_Total;
+                                buffer_CE.Mass = mass_Cumulative;
                                 //Density Total
                                 // n/a
 
@@ -1547,9 +1551,9 @@ namespace CarboLifeAPI.Data
                         newElement.Id = cElement.Id;
                         newElement.Volume = cElement.Volume;
 
-                        newElement.ECI_Total = cElement.ECI;
-                        newElement.EC_Total = cElement.EC;
-                        newElement.Volume_Total = cElement.Volume;
+                        newElement.ECI_Cumulative = cElement.ECI;
+                        newElement.EC_Cumulative = cElement.EC;
+                        newElement.Volume_Cumulative = cElement.Volume;
 
                         newElement.Mass = cElement.Mass;
                         

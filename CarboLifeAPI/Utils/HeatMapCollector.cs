@@ -55,7 +55,7 @@ namespace CarboLifeAPI
                     CarboValues value = new CarboValues();
 
                     value.Id = carboElement.Id;
-                    value.Value = carboElement.ECI_Total;
+                    value.Value = carboElement.ECI_Cumulative;
                     value.ValueName = carboElement.CarboMaterialName;
                     value.ValueCategory = carboElement.Category;
 
@@ -88,7 +88,7 @@ namespace CarboLifeAPI
                 {
                     CarboValues value = new CarboValues();
                     value.Id = carboElement.Id;
-                    value.Value = (carboElement.EC_Total / carboElement.Volume);
+                    value.Value = (carboElement.EC_Cumulative / carboElement.Volume);
                     value.ValueName = carboElement.CarboMaterialName;
                     value.ValueCategory = carboElement.Category;
 
@@ -154,7 +154,7 @@ namespace CarboLifeAPI
                 {
                     CarboValues value = new CarboValues();
                     value.Id = carboElement.Id;
-                    value.Value = carboElement.EC_Total;
+                    value.Value = carboElement.EC_Cumulative;
                     value.ValueName = carboElement.CarboMaterialName;
                     value.ValueCategory = carboElement.Category;
 

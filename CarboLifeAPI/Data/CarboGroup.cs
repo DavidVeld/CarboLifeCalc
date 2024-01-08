@@ -75,7 +75,6 @@ namespace CarboLifeAPI.Data
         public bool isDemolished { get; set; }
         public bool isSubstructure { get; set; }
         public string additionalData { get; set; }
-
         public double getVolumeECI
         {
             get
@@ -372,7 +371,7 @@ namespace CarboLifeAPI.Data
 
             //Get the density from the material.
             Density = Material.Density;
-            
+               
             //Recalculate All the Element's Volumes
             if (AllElements != null)
             {
@@ -389,7 +388,34 @@ namespace CarboLifeAPI.Data
                             else
                             {
                                 ce.Calculate(Material);
+
                                 Volume += ce.Volume;
+
+                                //Calculate the Volume Totals;
+                                //Calculate the real volume based on a correction if required. 
+                                double ElWasteFact = 1 + (Waste / 100);
+
+                                if (Utils.isValidExpression(Correction) == true)
+                                {
+                                    string ElVolumeStr = ce.Volume.ToString();
+                                    StringToFormula stf = new StringToFormula();
+                                    double result = stf.Eval(ElVolumeStr + Correction);
+
+                                    //TotalVolume = Math.Round((inUseProperties.B4 * (result * wasteFact)), 3);
+                                    ce.Volume_Total = inUseProperties.B4 * (result * ElWasteFact);
+
+                                }
+                                else
+                                {
+                                    //TotalVolume = Math.Round(inUseProperties.B4 * (Volume * wasteFact), 3);
+                                    ce.Volume_Total = inUseProperties.B4 * (ce.Volume * ElWasteFact);
+
+                                }
+
+
+
+
+
                             }
                         }
                     }
@@ -433,7 +459,7 @@ namespace CarboLifeAPI.Data
             double ECB1B7 = Mass * inuseECI;
             inUseProperties.totalValue = ECB1B7;
 
-
+            //The final calc:
             EC = (Mass * (ECI + inuseECI) * inUseReplacementFactor) / 1000;
 
         }
