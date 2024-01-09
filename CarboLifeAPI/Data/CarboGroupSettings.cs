@@ -1,11 +1,15 @@
 ﻿using CarboLifeAPI;
+using CarboLifeAPI.Data.Superseded;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
+using System.Xml.Serialization.Configuration;
 
 namespace CarboLifeAPI.Data
 {
@@ -15,11 +19,13 @@ namespace CarboLifeAPI.Data
         public string CategoryName { get; set; }
         public string CategoryParamName { get; set; }
 
-        public string SubStructureParamName { get; set; }
         public string ExistingPhaseName { get; set; }
         public string VolumeConversionFactor { get; set; }
 
         public bool IncludeSubStructure { get; set; }
+        public string SubStructureParamType { get; set; }
+        public string SubStructureParamName { get; set; }
+
         public bool IncludeDemo { get; set; }
         public bool IncludeExisting { get; set; }
         public bool CombineExistingAndDemo { get; set; }
@@ -29,10 +35,17 @@ namespace CarboLifeAPI.Data
         public string AdditionalParameter { get; set; }
         public bool AdditionalParameterElementType { get; set; }
 
-        //Additional parameter
+        //Grade parameter
         public bool IncludeGradeParameter { get; set; }
         public string GradeParameterName { get; set; }
         public string GradeParameterType { get; set; }
+
+        //RC parameter
+        public bool mapReinforcement { get; set; }
+        public string RCParameterName { get; set; }
+        public string RCParameterType { get; set; }
+        public string RCMaterialName { get; set; }
+        public List<CarboNumProperty> rcQuantityMap { get; set; }
 
         public CarboGroupSettings()
         {
@@ -40,6 +53,7 @@ namespace CarboLifeAPI.Data
             CategoryParamName = "";
 
             SubStructureParamName = "IsSubstructure";
+            SubStructureParamType = "Parameter (Instance Boolean)";
             ExistingPhaseName = "Existing";
 
             IncludeSubStructure = false;
@@ -56,6 +70,12 @@ namespace CarboLifeAPI.Data
             GradeParameterName = "";
             GradeParameterType = "";
 
+            mapReinforcement = true;
+            RCParameterName = "";
+            RCParameterType = "";
+
+            rcQuantityMap = new List<CarboNumProperty>();
+            
         }
 
         public CarboGroupSettings DeSerializeXML()
@@ -74,6 +94,8 @@ namespace CarboLifeAPI.Data
                         bufferproject = ser.Deserialize(fs) as CarboGroupSettings;
                     }
 
+
+
                     return bufferproject;
                 }
                 catch (Exception ex)
@@ -89,6 +111,40 @@ namespace CarboLifeAPI.Data
                 return newsettings;
             }
         }
+
+        private List<CarboNumProperty> getCurrentRCMap()
+        {
+            List<CarboNumProperty> result = new List<CarboNumProperty>();
+
+            //Find Profilelist;
+            string myPath = Utils.getAssemblyPath() + "\\data\\" + "ReinforcementCats.csv";
+
+            if (File.Exists(myPath))
+            {
+                DataTable table = Utils.LoadCSV(myPath);
+                foreach (DataRow dr in table.Rows)
+                {
+                    CarboNumProperty property = new CarboNumProperty();
+
+                    string category = dr[0].ToString();
+                    double value = Utils.ConvertMeToDouble(dr[1].ToString());
+
+                    property.PropertyName = category;
+                    property.Value = value;
+
+
+                    result.Add(property);
+                }
+            }
+            else
+            {
+                MessageBox.Show("File: " + myPath + " could not be found, make sure you have the Eol list located in indicated folder");
+            }
+
+            return result;
+
+        }
+
         public bool SerializeXML()
         {
             string importSettingsPath = PathUtils.getRevitImportSettingspath();
@@ -112,5 +168,9 @@ namespace CarboLifeAPI.Data
             return result;
         }
 
+        public void ReloadRCMap()
+        {
+            rcQuantityMap = getCurrentRCMap();
+        }
     }
 }

@@ -83,6 +83,7 @@
     <Compile Include="Data\CarboColourPreset.cs" />
     <Compile Include="Data\CarboEnergyProperties.cs" />
     <Compile Include="Data\CarboGroupSettings.cs" />
+    <Compile Include="Data\CarboNumProperty.cs" />
     <Compile Include="JSonExport\JsCarboElement.cs" />
     <Compile Include="JSonExport\JsCarboProject.cs" />
     <Compile Include="JSonExport\lcax.cs" />

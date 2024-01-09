@@ -98,7 +98,7 @@ namespace CarboLifeRevit
 
                                 if (clearValue == false)
                                 {
-                                    valueNumber = Math.Round(ce.EC_Total, 3);
+                                    valueNumber = Math.Round(ce.EC_Cumulative, 3);
                                     carboPar.Set(valueNumber);
                                 }
                                 else

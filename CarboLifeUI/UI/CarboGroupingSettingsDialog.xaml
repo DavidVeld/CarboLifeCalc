@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"  Title="Carbo Life Calculator: Revit Import Settings"
-             MinWidth="850" MinHeight="610" Width="850" Height="610" Loaded="Window_Loaded" ResizeMode="NoResize">
+             MinWidth="850" MinHeight="650" Width="850" Height="650" Loaded="Window_Loaded" ResizeMode="NoResize">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -86,7 +86,7 @@
         <CheckBox Name="chk_CombineExistingAndDemo" IsEnabled="True" Grid.Column="4" Grid.Row="6" Margin="0,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Visibility="Hidden">Combine Existing and Demolished Elements</CheckBox>
 
         <CheckBox Name="chk_MapReinforcement" IsEnabled="True" Grid.Column="4" Grid.Row="7" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Map Reinforcement Quantities on Import</CheckBox>
-        <Button x:Name="btn_ReinforcementImport" Grid.Row="7" Grid.Column="4" Margin="30,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="95" Height="24" Style="{StaticResource ButtonStyle}" Click="btn_ReinforcementImport_Click" Content="Import Settings"/>
+        <Button x:Name="btn_ReinforcementImport" Grid.Row="7" Grid.Column="4" Margin="30,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="95" Height="24" Style="{StaticResource ButtonStyle}" Click="btn_ReinforcementImport_Click" Content="Settings"/>
 
 
         <Button Name="btn_ImportClose" Grid.Row="9" Grid.Column="4" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="95" Height="24" Style="{StaticResource ButtonStyle}" Click="Btn_ImportClose_Click">Ok &amp; Import</Button>

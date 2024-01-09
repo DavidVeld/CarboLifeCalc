@@ -2,10 +2,12 @@
 using CarboLifeAPI.Data.Superseded;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace CarboLifeAPI.Data
@@ -45,12 +47,10 @@ namespace CarboLifeAPI.Data
         {
             return DeSerializeXML();
         }
-
         public bool Save()
         {
             return SerializeXML();
         }
-
         private CarboSettings DeSerializeXML()
         {
 
@@ -68,6 +68,12 @@ namespace CarboLifeAPI.Data
                         bufferproject = ser.Deserialize(fs) as CarboSettings;
                     }
 
+                    if (bufferproject.defaultCarboGroupSettings.rcQuantityMap.Count == 0)
+                    {
+                        bufferproject.defaultCarboGroupSettings.rcQuantityMap = getCurrentRCMap();
+                    }
+
+                    //If the settings exists and all is well use this:
                     return bufferproject;
                 }
                 catch (Exception ex)
@@ -109,5 +115,37 @@ namespace CarboLifeAPI.Data
             return result;
         }
 
+        private List<CarboNumProperty> getCurrentRCMap()
+        {
+            List<CarboNumProperty> result = new List<CarboNumProperty>();
+
+            //Find Profilelist;
+            string myPath = Utils.getAssemblyPath() + "\\data\\" + "ReinforcementCats.csv";
+
+            if (File.Exists(myPath))
+            {
+                DataTable table = Utils.LoadCSV(myPath);
+                foreach (DataRow dr in table.Rows)
+                {
+                    CarboNumProperty property = new CarboNumProperty();
+
+                    string category = dr[0].ToString();
+                    double value = Utils.ConvertMeToDouble(dr[1].ToString());
+
+                    property.PropertyName = category;
+                    property.Value = value;
+
+
+                    result.Add(property);
+                }
+            }
+            else
+            {
+                MessageBox.Show("File: " + myPath + " could not be found, make sure you have the Eol list located in indicated folder");
+            }
+
+            return result;
+
+        }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using Autodesk.Revit.DB;
 using CarboLifeAPI;
 using CarboLifeAPI.Data;
+using CarboLifeAPI.Data.Superseded;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -42,6 +45,8 @@ namespace CarboLifeUI.UI
         public CarboGroupingSettingsDialog(CarboGroupSettings settings)
         {
             importSettings = settings;
+            settings.ReloadRCMap();
+
 
             dialogOk = MessageBoxResult.Cancel;
            // carboLevelList = levelList;
@@ -64,6 +69,7 @@ namespace CarboLifeUI.UI
             cbb_ExtraImportType.Items.Add("Instance Parameter");
             cbb_ExtraImportType.SelectedItem = "Type Parameter";
 
+            
 
             foreach (string str in categorylist)
             {
@@ -101,7 +107,7 @@ namespace CarboLifeUI.UI
             //Substructure
 
             cbb_SubstructureImportType.Items.Add("Parameter (Instance Boolean)");
-            cbb_SubstructureImportType.Items.Add("Workset Name");
+            cbb_SubstructureImportType.Items.Add("Workset Name Contains");
 
             //Additional Parameter
 
@@ -134,6 +140,16 @@ namespace CarboLifeUI.UI
             }
 
             txt_GradeImportValue.Text = importSettings.GradeParameterName;
+
+            //RC
+            if(importSettings.mapReinforcement == true)
+            {
+                chk_MapReinforcement.IsChecked = true;
+            }
+            else
+            {
+                chk_MapReinforcement.IsChecked = false;
+            }
 
             CheckCaregoryParam();
 
@@ -185,7 +201,7 @@ namespace CarboLifeUI.UI
 
             settings.defaultCarboGroupSettings.IncludeSubStructure = chk_ImportSubstructure.IsChecked.Value;
             settings.defaultCarboGroupSettings.SubStructureParamName = txt_SubstructureParamName.Text;
-
+            settings.defaultCarboGroupSettings.SubStructureParamType = cbb_SubstructureImportType.Text;
 
             settings.defaultCarboGroupSettings.IncludeDemo = chk_ImportDemolished.IsChecked.Value;
             settings.defaultCarboGroupSettings.IncludeExisting = chk_ImportExisting.IsChecked.Value;
@@ -199,6 +215,19 @@ namespace CarboLifeUI.UI
                 settings.defaultCarboGroupSettings.AdditionalParameterElementType = true;
             else
                 settings.defaultCarboGroupSettings.AdditionalParameterElementType = false;
+
+            //Grade
+            settings.defaultCarboGroupSettings.IncludeGradeParameter = chk_MaterialGrade.IsChecked.Value;
+            settings.defaultCarboGroupSettings.GradeParameterName = txt_GradeImportValue.Text;
+            settings.defaultCarboGroupSettings.GradeParameterType = cbb_GradeImportType.Text;
+
+            //RC
+            settings.defaultCarboGroupSettings.mapReinforcement = chk_MapReinforcement.IsChecked.Value;
+
+            settings.defaultCarboGroupSettings.RCParameterName = importSettings.RCParameterName;
+            settings.defaultCarboGroupSettings.RCParameterType = importSettings.RCParameterType;
+            settings.defaultCarboGroupSettings.RCMaterialName = importSettings.RCMaterialName;
+            settings.defaultCarboGroupSettings.rcQuantityMap = importSettings.rcQuantityMap;
 
             //Seve as default for next time/project;
             settings.Save();
@@ -243,7 +272,21 @@ namespace CarboLifeUI.UI
 
         private void btn_ReinforcementImport_Click(object sender, RoutedEventArgs e)
         {
+            MaterialConcreteMapper rcMapper = new MaterialConcreteMapper(importSettings);
+            rcMapper.ShowDialog();
+            if(rcMapper.isAccepted == true)
+            {
+                importSettings.RCMaterialName = rcMapper.carboMaterialName;
+                importSettings.RCParameterName = rcMapper.categoryName;
+                importSettings.RCParameterType = rcMapper.categoryType;
+                    
+                importSettings.rcQuantityMap = rcMapper.rcMap;
+            }
+
 
         }
+
+
+
     }
 }
