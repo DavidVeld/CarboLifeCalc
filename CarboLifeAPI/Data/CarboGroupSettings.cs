@@ -46,6 +46,7 @@ namespace CarboLifeAPI.Data
         public string RCParameterType { get; set; }
         public string RCMaterialName { get; set; }
         public List<CarboNumProperty> rcQuantityMap { get; set; }
+        public string RCMaterialCategory { get; set; }
 
         public CarboGroupSettings()
         {

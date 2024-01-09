@@ -63,7 +63,7 @@
         <Label Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}" Content="Advanced Element Import Settings"/>
 
         <!--2-->
-        <CheckBox x:Name="chk_ImportSubstructure" IsEnabled="True" Grid.Column="4" Grid.Row="2" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Content="Split by Substructure Parameter" Checked="chk_ImportSubstructure_Checked"/>
+        <CheckBox x:Name="chk_ImportSubstructure" IsEnabled="True" Grid.Column="4" Grid.Row="2" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Content="Split by Substructure Parameter"/>
         <TextBox Grid.Column="4" Margin="5,22,5,0" Grid.Row="2" Style="{StaticResource formGreyText}" TextWrapping="Wrap" Height="38" VerticalAlignment="Top" BorderBrush="Transparent">The Boolean(Yes/No) Instance parameter below will define if the element is substructure:</TextBox>
         <ComboBox Name="cbb_SubstructureImportType" IsReadOnly="False" Grid.Column="4" Grid.Row="2" Margin="30,0,260,10" Height="28" VerticalAlignment="Bottom" Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
         <TextBox Name="txt_SubstructureParamName" Grid.Column="4" Grid.Row="2" Margin="150,0,5,10" Height="28" VerticalAlignment="Bottom" Style="{StaticResource flatTextBox}"/>

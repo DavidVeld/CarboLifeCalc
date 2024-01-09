@@ -108,6 +108,7 @@ namespace CarboLifeUI.UI
 
             cbb_SubstructureImportType.Items.Add("Parameter (Instance Boolean)");
             cbb_SubstructureImportType.Items.Add("Workset Name Contains");
+            cbb_SubstructureImportType.SelectedItem = importSettings.SubStructureParamType;
 
             //Additional Parameter
 
@@ -228,6 +229,7 @@ namespace CarboLifeUI.UI
             settings.defaultCarboGroupSettings.RCParameterType = importSettings.RCParameterType;
             settings.defaultCarboGroupSettings.RCMaterialName = importSettings.RCMaterialName;
             settings.defaultCarboGroupSettings.rcQuantityMap = importSettings.rcQuantityMap;
+            settings.defaultCarboGroupSettings.RCMaterialCategory = importSettings.RCMaterialCategory;
 
             //Seve as default for next time/project;
             settings.Save();
@@ -265,11 +267,6 @@ namespace CarboLifeUI.UI
             }
         }
 
-        private void chk_ImportSubstructure_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void btn_ReinforcementImport_Click(object sender, RoutedEventArgs e)
         {
             MaterialConcreteMapper rcMapper = new MaterialConcreteMapper(importSettings);
@@ -279,7 +276,8 @@ namespace CarboLifeUI.UI
                 importSettings.RCMaterialName = rcMapper.carboMaterialName;
                 importSettings.RCParameterName = rcMapper.categoryName;
                 importSettings.RCParameterType = rcMapper.categoryType;
-                    
+                importSettings.RCMaterialCategory = rcMapper.carboMaterialCategory;
+
                 importSettings.rcQuantityMap = rcMapper.rcMap;
             }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using LiveCharts.Maps;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -1668,6 +1669,17 @@ namespace CarboLifeAPI.Data
 
             justSaved = false;
         }
+
+        public void AddGroups(List<CarboGroup> groupList)
+        {
+            foreach (CarboGroup cg in groupList)
+            {
+                AddGroup(cg);
+            }
+
+            justSaved = false;
+        }
+
         private int getNewId()
         {
             int id = 0;
@@ -1944,5 +1956,6 @@ namespace CarboLifeAPI.Data
 
             return result;
         }
+
     }
 }

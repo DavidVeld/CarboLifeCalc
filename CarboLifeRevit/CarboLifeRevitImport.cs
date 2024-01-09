@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
 using CarboLifeAPI.Data;
+using CarboLifeAPI.Data.Superseded;
 using CarboLifeUI.UI;
 
 namespace CarboLifeRevit
@@ -50,6 +54,10 @@ namespace CarboLifeRevit
                 {
                     //Create groups from all the individual elements
                     myProject.CreateGroups();
+
+                    if (myProject.RevitImportSettings.mapReinforcement == true)
+                        myProject = mapReinforcement(app, myProject);
+
                     projectToOpen = myProject;
                 }
                 else //upadte an existing file:
@@ -59,6 +67,8 @@ namespace CarboLifeRevit
                     projectToUpdate.CalculateProject();
                     projectToOpen = projectToUpdate;
                 }
+
+
 
                 //Open the interface
                 CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(projectToOpen);
@@ -231,7 +241,144 @@ namespace CarboLifeRevit
 
             //Apply settings to new projectfile
             myProject.RevitImportSettings = settings;
+
+
+
+
             return myProject;
+        }
+
+        /// <summary>
+        /// Returns the project with the revit elements mapped accordingly.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <returns></returns>
+        private static CarboProject mapReinforcement(UIApplication app, CarboProject myProject)
+        {
+            UIDocument uidoc = app.ActiveUIDocument;
+            Document doc = uidoc.Document;
+
+            //get the 
+            CarboGroupSettings settings = myProject.RevitImportSettings;
+            List<CarboNumProperty> rcMap = settings.rcQuantityMap;
+            string categoryType = settings.RCParameterType;
+            string categoryName = settings.RCParameterName;
+            string rcMaterialName = settings.RCMaterialName;
+            string carboMaterialCategory = settings.RCMaterialCategory;
+            CarboMaterial reinforcementMaterial = myProject.CarboDatabase.getClosestMatch(rcMaterialName);
+
+
+            List<CarboGroup> RCgroups = new List<CarboGroup>();
+             
+            //Iterate through each element, check the conditions, and reinforce if needed;
+            foreach (CarboElement cEl in myProject.getElementsFromGroups())
+            {
+                Element rEl = doc.GetElement(new ElementId(cEl.Id));
+                Parameter rPar = null;
+
+                string ElementCateg = "";
+                string materialName = "";
+                string materialCate = "";
+
+                if (categoryType == "Type Parameter")
+                {
+                    //Name (Type)
+                    ElementId elId = rEl.GetTypeId();
+                    ElementType type = doc.GetElement(elId) as ElementType;
+
+                    rPar = type.LookupParameter(categoryName);
+                }
+                else //instance
+                {
+
+                    rPar = rEl.LookupParameter(categoryName);
+                }
+
+                if(rPar == null)
+                {
+                    ElementCateg = rEl.Category.Name;
+                }
+                else
+                {
+                    ElementCateg = rPar.AsString();
+                }
+
+                //Add to grouplist or create new:
+                //get the category material:
+                CarboMaterial carboMaterial = myProject.CarboDatabase.getClosestMatch(cEl.CarboMaterialName);
+
+                if(carboMaterial.Category == carboMaterialCategory)
+                    RCgroups = addRCQuants(ElementCateg, cEl.Volume, RCgroups, myProject);
+
+
+            }
+            
+            foreach(CarboGroup carboGroup in RCgroups)
+            {
+                
+                //map the groups
+                carboGroup.Material = reinforcementMaterial;
+                carboGroup.MaterialName = reinforcementMaterial.Name;
+
+                bool found = false;
+
+                foreach (CarboNumProperty key in myProject.RevitImportSettings.rcQuantityMap)
+                {
+                    if(key.PropertyName == carboGroup.Category)
+                    {
+                        carboGroup.Correction = "*" + Math.Round((key.Value / reinforcementMaterial.Density),3).ToString();
+                        carboGroup.Description = "Reinforcement " + key.Value.ToString() +  " kg/m³";
+                        found = true;
+                        break;
+                    }
+                }
+
+                if(found == false)
+                {
+                    if (carboGroup.Correction == "" && carboGroup.Volume > 0)
+                    {
+                        //default 100kg/m³
+                        carboGroup.Correction = "*" + Math.Round((100 / reinforcementMaterial.Density), 3).ToString();
+                        carboGroup.Description = "Reinforcement " + "100 kg/m³" + " (default)";
+                    }
+                    else
+                    {
+                        carboGroup.Description = "User to check";
+                    }
+                }
+
+            }
+
+
+                myProject.AddGroups(RCgroups);
+
+            return myProject;
+
+        }
+
+        private static List<CarboGroup> addRCQuants(string elementCateg, double volume, List<CarboGroup> rCgroups, CarboProject myProject)
+        {
+            bool contains = false;
+
+            foreach(CarboGroup cbg in rCgroups)
+            {
+                if(cbg.Category == elementCateg)
+                {
+                    cbg.Volume += volume;
+                    contains = true;
+                }
+            }
+           if(contains == false)
+            {
+                CarboGroup newGroup = new CarboGroup();
+                newGroup.Category = elementCateg;
+                newGroup.Volume = volume;
+                rCgroups.Add(newGroup);
+            }
+
+            return rCgroups;
+
+
         }
 
         /// <summary>
