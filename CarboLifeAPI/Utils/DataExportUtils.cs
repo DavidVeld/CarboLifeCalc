@@ -772,6 +772,7 @@ namespace CarboLifeAPI
                 "Material Name" + "," + //2
                 "Carbo Material Name" + "," + //3
                 "Level" + "," + //4
+                "Level Name" + "," + //4.1
 
                 "Volume (m³)" + "," + //5
                 "Volume Total (m³)" + "," + //6.1
@@ -779,6 +780,7 @@ namespace CarboLifeAPI
 
                 "Density (kg/m³)" + "," + //7
                 "Mass (kg)" + "," + //8
+                "Grade" + //8.1
 
                 "ECI (kgCO2e/kg)" + "," + //9
                 "ECI Cumulative (kgCO2e/kg)" + "," + //10
@@ -800,64 +802,72 @@ namespace CarboLifeAPI
                 "EC Mix Total (kgCO2e/kg)" + "," + //24
                 "EC Sequestration Total (kgCO2e/kg)" + "," + //25
 
+                "Correction" + "," + //26
+                "RC Density" + //27
+
 
         Environment.NewLine;
 
         IList<CarboElement> elementList = carboLifeProject.getElementsFromGroups().ToList();
 
-        
+
             foreach (CarboElement el in elementList)
-{
-    string resultString = "";
+            {
+                string resultString = "";
 
-    resultString += el.Id + ","; //-1
-    resultString += CVSFormat(el.Category) + ","; //0
-    resultString += CVSFormat(el.Name) + ","; //1
-    resultString += CVSFormat(el.MaterialName) + ","; //2
-    resultString += CVSFormat(el.CarboMaterialName) + ","; //3
-    resultString += el.Level + ","; //4
+                resultString += el.Id + ","; //-1
+                resultString += CVSFormat(el.Category) + ","; //0
+                resultString += CVSFormat(el.Name) + ","; //1
+                resultString += CVSFormat(el.MaterialName) + ","; //2
+                resultString += CVSFormat(el.CarboMaterialName) + ","; //3
+                resultString += el.Level + ","; //4
+                resultString += el.LevelName = ","; //4.1
 
-    resultString += el.Volume + ","; //5
-    resultString += el.Volume_Total + ","; //6.1
-    resultString += el.Volume_Cumulative + ","; //6.1
+                resultString += el.Volume + ","; //5
+                resultString += el.Volume_Total + ","; //6.1
+                resultString += el.Volume_Cumulative + ","; //6.1
 
-    resultString += el.Density + ","; //7
-    resultString += el.Mass + ","; //8
+                resultString += el.Density + ","; //7
+                resultString += el.Mass + ","; //8
+                resultString += el.Grade + ","; //8
 
-    resultString += el.ECI + ","; //9
-    resultString += el.ECI_Cumulative + ","; //10
-    resultString += el.EC + ","; //11
-    resultString += el.EC_Cumulative + ","; //12
+                resultString += el.ECI + ","; //9
+                resultString += el.ECI_Cumulative + ","; //10
+                resultString += el.EC + ","; //11
+                resultString += el.EC_Cumulative + ","; //12
 
-    resultString += el.isExisting + ","; //13
-    resultString += el.isDemolished + ","; //14
-    resultString += el.isSubstructure + ","; //15
-    resultString += el.includeInCalc + ","; //16
+                resultString += el.isExisting + ","; //13
+                resultString += el.isDemolished + ","; //14
+                resultString += el.isSubstructure + ","; //15
+                resultString += el.includeInCalc + ","; //16
 
-    resultString += CVSFormat(el.AdditionalData) + ","; //17
+                resultString += CVSFormat(el.AdditionalData) + ","; //17
 
-    //Individual Totals Elements
-    CarboMaterial material = carboLifeProject.CarboDatabase.getClosestMatch(el.CarboMaterialName);
-    double mass = el.Mass;
-    if (mass == 0)
-        mass = el.Volume_Total * el.Density;
+                //Individual Totals Elements
+                CarboMaterial material = carboLifeProject.CarboDatabase.getClosestMatch(el.CarboMaterialName);
+                double mass = el.Mass;
+                if (mass == 0)
+                    mass = el.Volume_Total * el.Density;
 
-    resultString += mass * material.ECI_A1A3 + ","; //18
-    resultString += mass * material.ECI_A4 + ","; //18
-    resultString += mass * material.ECI_A5 + ","; //18
-    resultString += mass * material.ECI_B1B5 + ","; //18
-    resultString += mass * material.ECI_C1C4 + ","; //18
-    resultString += mass * material.ECI_D + ","; //18
-    resultString += mass * material.ECI_Mix + ","; //18
-    resultString += mass * material.ECI_Seq + ","; //18
+                resultString += mass * material.ECI_A1A3 + ","; //18
+                resultString += mass * material.ECI_A4 + ","; //19
+                resultString += mass * material.ECI_A5 + ","; //20
+                resultString += mass * material.ECI_B1B5 + ","; //21
+                resultString += mass * material.ECI_C1C4 + ","; //22
+                resultString += mass * material.ECI_D + ","; //23
+                resultString += mass * material.ECI_Mix + ","; //24
+                resultString += mass * material.ECI_Seq + ","; //25
 
-    resultString += Environment.NewLine; //enter
+                resultString += el.Correction + ","; //26
+                resultString += el.rcDensity + ","; //27
 
-    fileString += resultString;
+                resultString += Environment.NewLine; //enter
 
-}
+                fileString += resultString;
 
-        foreach (CarboGroup grp in carboLifeProject.getGroupList)
+            }
+
+            foreach (CarboGroup grp in carboLifeProject.getGroupList)
             {
                 if (grp.AllElements.Count == 0)
                 {
@@ -869,12 +879,14 @@ namespace CarboLifeAPI
                     resultString += CVSFormat(grp.Material.Name) + ","; //2
                     resultString += CVSFormat(grp.Material.Name) + ","; //3
                     resultString += "" + ","; //4
+                    resultString += "" + ","; //4.1
 
                     resultString += grp.Volume + ","; //5
                     resultString += grp.TotalVolume + ","; //6.1
                     resultString += grp.TotalVolume + ","; //6.1
                     resultString += grp.Density + ","; //7
                     resultString += grp.Mass + ","; //8
+                    resultString += grp.Grade + ","; //8.1
 
                     resultString += grp.ECI + ","; //9
                     resultString += grp.ECI + ","; //10
@@ -898,6 +910,9 @@ namespace CarboLifeAPI
                     resultString += grp.getTotalD + ","; //23
                     resultString += grp.getTotalMix + ","; //24
                     resultString += grp.getTotalSeq + ","; //25
+
+                    resultString += grp.Correction + ","; //26
+                    resultString += "N//A" + ","; //27
 
                     resultString += Environment.NewLine; //enter
 

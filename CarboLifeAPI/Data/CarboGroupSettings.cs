@@ -33,12 +33,17 @@ namespace CarboLifeAPI.Data
         //Additional parameter
         public bool IncludeAdditionalParameter { get; set; }
         public string AdditionalParameter { get; set; }
-        public bool AdditionalParameterElementType { get; set; }
+        public string AdditionalParameterElementType { get; set; }
 
         //Grade parameter
         public bool IncludeGradeParameter { get; set; }
         public string GradeParameterName { get; set; }
         public string GradeParameterType { get; set; }
+
+        //Correction parameter
+        public bool IncludeCorrectionParameter { get; set; }
+        public string CorrectionParameterName { get; set; }
+        public string CorrectionParameterType { get; set; }
 
         //RC parameter
         public bool mapReinforcement { get; set; }
@@ -65,7 +70,7 @@ namespace CarboLifeAPI.Data
 
             IncludeAdditionalParameter = false;
             AdditionalParameter = "";
-            AdditionalParameterElementType = false;
+            AdditionalParameterElementType = "";
 
             IncludeGradeParameter = false;
             GradeParameterName = "";

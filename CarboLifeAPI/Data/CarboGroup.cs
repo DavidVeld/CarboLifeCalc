@@ -21,8 +21,9 @@ namespace CarboLifeAPI.Data
         /// <summary>
         /// This is a reserved value to get volumes from another group to calculate current. Useful for Reinforce,emt/
         /// </summary>
-        public int VolumeLink { get; set; }
+        public string VolumeLink { get; set; }
 
+        public string Grade {  get; set; }
         public double TotalVolume { get; set; }
         //Calculated Values;
         public double Density { get; set; }
@@ -155,6 +156,7 @@ namespace CarboLifeAPI.Data
             Volume = 0;
             Density = 0;
             Mass = 0;
+            Grade = "";
 
             ECI = 0;
             EC = 0;
@@ -214,7 +216,7 @@ namespace CarboLifeAPI.Data
             Mass = Material.Density * Volume;
 
         }
-        public CarboGroup(int id, string materialName, string category, string description, double volume, double density, double mass, double eei, double eci, double ee, double ec)
+        public CarboGroup(int id, string materialName, string category, string description, double volume, double density, double mass, double eei, double eci, double ee, double ec, string grade)
         {
             Id = id;
             MaterialName = materialName;
@@ -224,6 +226,7 @@ namespace CarboLifeAPI.Data
             Volume = volume;
             Density = density;
             Mass = mass;
+            Grade = grade;
 
             //EEI = eei;
             ECI = eci;
@@ -268,6 +271,7 @@ namespace CarboLifeAPI.Data
             Volume = carboElement.Volume;
             Density = carboElement.Density;
             Mass = 0;
+            Grade = carboElement.Grade;
 
             Description = GetDescription(carboElement);
 
@@ -493,6 +497,8 @@ namespace CarboLifeAPI.Data
             result.ECI = this.ECI;
             result.Id = this.Id;
             result.Mass = this.Mass;
+            result.Grade = this.Grade;
+            result.VolumeLink = this.VolumeLink;
 
             //Correction Formula
             result.Correction = this.Correction;
@@ -538,6 +544,8 @@ namespace CarboLifeAPI.Data
                 ECI = this.ECI,
                 Id = this.Id,
                 Mass = this.Mass,
+                Grade = this.Grade,
+                VolumeLink = this.VolumeLink,
 
                 AllElements = new List<CarboElement>(),
 

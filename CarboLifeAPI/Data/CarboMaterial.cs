@@ -31,6 +31,10 @@ namespace CarboLifeAPI.Data
         /// </summary>
         public string EPDurl { get; set; }
 
+        /// <summary>
+        /// The material Grade can be used for grouping
+        /// </summary>
+        public string Grade { get; set; }
 
         //Technical Properties 
 
@@ -129,6 +133,8 @@ namespace CarboLifeAPI.Data
             Category = "";
             Description = "";
             Density = 500;
+            Grade = "";
+
             ECI = 0;
             ECI_A1A3 = 0;
             ECI_A4 = 0;
@@ -169,6 +175,7 @@ namespace CarboLifeAPI.Data
             Category = "New Carbo material";
             Description = "Carbon material and properties not set.";
             Density = 1;
+            Grade = "";
             //EEI = 1;
             ECI = 0;
             ECI_A1A3 = 0;

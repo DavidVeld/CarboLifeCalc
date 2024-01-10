@@ -22,9 +22,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="75"/>
+            <RowDefinition Height="95"/>
             <RowDefinition Height="120"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition/>
             <RowDefinition Height="0"/>
             <RowDefinition Height="35"/>
             <RowDefinition Height="5"/>
@@ -40,17 +40,18 @@
 
         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Concrete Reinforcement Mapper</Label>
 
-        <TextBox Grid.Column="2" Margin="5,5,5,0" Grid.Row="2" Style="{StaticResource baseStyle}" TextWrapping="Wrap" Height="28" VerticalAlignment="Top" BorderBrush="Transparent" IsReadOnly="True">Use Either the Revit Category or the Specified Parameter Below (if present)</TextBox>
-        <ComboBox Name="cbb_RCImportType" IsReadOnly="False" Grid.Column="2" Grid.Row="2" Margin="30,0,0,10" Height="28" Width="150" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
-        <TextBox Name="txt_RCImportValue" Grid.Column="2" Grid.Row="2" Margin="185,0,5,10" Height="28" VerticalAlignment="Bottom" Style="{StaticResource flatTextBox}" />
+        <TextBox Visibility="Visible" Grid.Column="2" Margin="5,5,5,0" Grid.Row="2" Style="{StaticResource baseStyle}" TextWrapping="Wrap" Height="28" VerticalAlignment="Top" BorderBrush="Transparent" IsReadOnly="True">The parameter below defines a local override to reinforcement density (kg/m³).</TextBox>
+        <ComboBox Visibility="Visible"  Name="cbb_RCImportType" IsReadOnly="False" Grid.Column="2" Grid.Row="2" Margin="30,0,0,10" Height="28" Width="150" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
+        <TextBox Visibility="Visible"  Name="txt_RCImportValue" Grid.Column="2" Grid.Row="2" Margin="185,0,5,10" Height="28" VerticalAlignment="Bottom" Style="{StaticResource flatTextBox}" />
 
         <TextBox Grid.Column="2" Margin="5,5,416,0" Grid.Row="3" Style="{StaticResource baseStyle}" TextWrapping="Wrap" Height="41" VerticalAlignment="Top" BorderBrush="Transparent" IsReadOnly="True">The Default Reinforcement Material to be Used for Reinforcement Quantities:</TextBox>
         <ComboBox Name="cbb_RCImportMaterial" IsReadOnly="False" Grid.Column="2" Grid.Row="3" Margin="0,5,5,0" Height="28" Width="400" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
         <TextBox Grid.Column="2" Margin="5,60,418,0" Grid.Row="3" Style="{StaticResource baseStyle}" TextWrapping="Wrap" Height="37" VerticalAlignment="Top" BorderBrush="Transparent" IsReadOnly="True">The Default Material Category to be Used for Reinforcement Mapping:</TextBox>
         <ComboBox Name="cbb_RCMaterialCategory" IsReadOnly="False" Grid.Column="2" Grid.Row="3" Margin="0,58,5,0" Height="28" Width="400" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
 
+        <TextBox Grid.Column="2" Margin="5,5,5,0" Grid.Row="4" Style="{StaticResource baseStyle}" TextWrapping="Wrap" Height="28" VerticalAlignment="Top" BorderBrush="Transparent" IsReadOnly="True">The mapping table:</TextBox>
 
-        <DataGrid Name="dgData2" AutoGenerateColumns="False" ItemsSource="{Binding rcMap}" CanUserAddRows="False" Grid.Column="2" Grid.Row="4" Margin="5,0,5,10">
+        <DataGrid Name="dgData2" AutoGenerateColumns="False" ItemsSource="{Binding rcMap}" CanUserAddRows="True" Grid.Column="2" Grid.Row="4" Margin="5,35,5,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding PropertyName}" Header="Category" Width="1*"/>
                 <DataGridTextColumn Binding="{Binding Value}" Header=" Density kg/m³" Width="135"/>

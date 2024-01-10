@@ -58,29 +58,6 @@ namespace CarboLifeUI.UI
         {
             dialogOk = MessageBoxResult.Cancel;
 
-            //Category Settings
-            List<string> categorylist = new List<string>();
-            categorylist.Add("(Revit) Category");
-            categorylist.Add("Type Parameter");
-            categorylist.Add("Instance Parameter");
-
-            cbb_ExtraImportType.Items.Clear();
-            cbb_ExtraImportType.Items.Add("Type Parameter");
-            cbb_ExtraImportType.Items.Add("Instance Parameter");
-            cbb_ExtraImportType.SelectedItem = "Type Parameter";
-
-            
-
-            foreach (string str in categorylist)
-            {
-                cbb_MainGroup.Items.Add(str);
-            }
-
-            cbb_MainGroup.Text = "(Revit) Category";
-
-            txt_CategoryparamName.Text = importSettings.CategoryParamName;
-            txt_CategoryparamName.IsEnabled = false;
-
             //TemplateList
 
             //get DefaultTemplate:
@@ -93,41 +70,49 @@ namespace CarboLifeUI.UI
                 }
                 cbb_Template.SelectedIndex = 0;
             }
-            //cbb_Template.Text = defaultfimeName;
+
+            //Category Settings
+            List<string> categorylist = new List<string>();
+            categorylist.Add("(Revit) Category");
+            categorylist.Add("Type Parameter");
+            categorylist.Add("Instance Parameter");
+
+            foreach (string str in categorylist)
+            {
+                cbb_MainGroup.Items.Add(str);
+            }
+
             cbb_MainGroup.Text = "(Revit) Category";
-            
+
+            txt_CategoryparamName.Text = importSettings.CategoryParamName;
+            txt_CategoryparamName.IsEnabled = false;
+
+            CheckCaregoryParam();
+
+            //RC
+            if (importSettings.mapReinforcement == true)
+            {
+                chk_MapReinforcement.IsChecked = true;
+            }
+            else
+            {
+                chk_MapReinforcement.IsChecked = false;
+            }
+
+            //Substructure
             txt_SubstructureParamName.Text = importSettings.SubStructureParamName;
             chk_ImportSubstructure.IsChecked = importSettings.IncludeSubStructure;
-            
-            chk_ImportExisting.IsChecked = importSettings.IncludeExisting;
-            txt_ExistingPhaseName.Text = importSettings.ExistingPhaseName;
-
-            chk_ImportDemolished.IsChecked = importSettings.IncludeDemo;
-            chk_CombineExistingAndDemo.IsChecked = importSettings.CombineExistingAndDemo;
-            //Substructure
 
             cbb_SubstructureImportType.Items.Add("Parameter (Instance Boolean)");
             cbb_SubstructureImportType.Items.Add("Workset Name Contains");
             cbb_SubstructureImportType.SelectedItem = importSettings.SubStructureParamType;
 
-            //Additional Parameter
-
-            if (importSettings.IncludeAdditionalParameter == true)
-                chk_AdditionalImport.IsChecked = true;
-
-            if (importSettings.AdditionalParameterElementType == true)
-                cbb_ExtraImportType.Text = "Type Parameter";
-            else
-                cbb_ExtraImportType.Text = "Instance Parameter";
-
-             txt_ExtraImportValue.Text = importSettings.AdditionalParameter;
-
-            //Material grade
+            //Grade
             cbb_GradeImportType.Items.Add("Type Parameter");
             cbb_GradeImportType.Items.Add("Instance Parameter");
             cbb_GradeImportType.Items.Add("Material Parameter");
 
-            if(importSettings.IncludeGradeParameter == true)
+            if (importSettings.IncludeGradeParameter == true)
             {
                 cbb_GradeImportType.Text = importSettings.GradeParameterType.ToString();
                 txt_GradeImportValue.Text = importSettings.GradeParameterName.ToString();
@@ -142,17 +127,55 @@ namespace CarboLifeUI.UI
 
             txt_GradeImportValue.Text = importSettings.GradeParameterName;
 
-            //RC
-            if(importSettings.mapReinforcement == true)
-            {
-                chk_MapReinforcement.IsChecked = true;
+
+
+            //CorrectionList
+            cbb_CorrectionImportType.Items.Clear();
+            cbb_CorrectionImportType.Items.Add("Type Parameter");
+            cbb_CorrectionImportType.Items.Add("Instance Parameter");
+            cbb_CorrectionImportType.SelectedItem = "Type Parameter";
+
+            if (importSettings.IncludeCorrectionParameter == true)
+            { 
+                chk_doCorrection.IsChecked = true;
             }
             else
             {
-                chk_MapReinforcement.IsChecked = false;
+                chk_doCorrection.IsChecked =  false;
             }
 
-            CheckCaregoryParam();
+
+
+
+
+                //Existing            
+                chk_ImportExisting.IsChecked = importSettings.IncludeExisting;
+            txt_ExistingPhaseName.Text = importSettings.ExistingPhaseName;
+
+            //Demolished
+            chk_ImportDemolished.IsChecked = importSettings.IncludeDemo;
+            chk_CombineExistingAndDemo.IsChecked = importSettings.CombineExistingAndDemo;
+
+            //Additional Parameter
+            cbb_ExtraImportType.Items.Clear();
+            cbb_ExtraImportType.Items.Add("Type Parameter");
+            cbb_ExtraImportType.Items.Add("Instance Parameter");
+            cbb_ExtraImportType.SelectedItem = "Type Parameter";
+
+            if (importSettings.IncludeAdditionalParameter == true)
+                chk_AdditionalImport.IsChecked = true;
+
+            if (importSettings.AdditionalParameterElementType.ToLower().Contains("type"))
+                cbb_ExtraImportType.Text = "Type Parameter";
+            else
+                cbb_ExtraImportType.Text = "Instance Parameter";
+
+             txt_ExtraImportValue.Text = importSettings.AdditionalParameter;
+
+
+
+
+
 
         }
 
@@ -213,9 +236,9 @@ namespace CarboLifeUI.UI
             settings.defaultCarboGroupSettings.AdditionalParameter = txt_ExtraImportValue.Text;
 
             if (cbb_ExtraImportType.Text == "Type Parameter")
-                settings.defaultCarboGroupSettings.AdditionalParameterElementType = true;
+                settings.defaultCarboGroupSettings.AdditionalParameterElementType = "Type Parameter";
             else
-                settings.defaultCarboGroupSettings.AdditionalParameterElementType = false;
+                settings.defaultCarboGroupSettings.AdditionalParameterElementType = "Instance Parameter";
 
             //Grade
             settings.defaultCarboGroupSettings.IncludeGradeParameter = chk_MaterialGrade.IsChecked.Value;

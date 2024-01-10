@@ -57,7 +57,7 @@ namespace CarboLifeAPI.Data
         /// </summary>
         /// <param name="materialToLookup"></param>
         /// <returns></returns>
-        public CarboMaterial getClosestMatch(CarboMaterial materialToLookup)
+        public CarboMaterial getClosestMatch(CarboMaterial materialToLookup, string grade = "")
         {
             CarboMaterial result = new CarboMaterial();
             int basedist = 100;
@@ -75,11 +75,13 @@ namespace CarboLifeAPI.Data
             }
             return result;
         }
-        public CarboMaterial getClosestMatch(string materialToLookup)
+        public CarboMaterial getClosestMatch(string materialToLookup, string grade = "")
         {
             int score = 0;
             int highscore = -50;
             int basescore = materialToLookup.Length;
+
+            int gradebase = grade.Length;
 
             CarboMaterial result = new CarboMaterial();
             string[] wordsInMaterialToLookup = materialToLookup.Split(' ');
@@ -100,6 +102,13 @@ namespace CarboLifeAPI.Data
                 score += (basescore - dist);
 
                 //Get additional score points;
+
+                // GRADE points
+                if (cm.Grade != "" && grade != "")
+                {
+                    int gradeDist = Utils.CalcLevenshteinDistance(cm.Grade.ToLower(), grade.ToLower());
+                    score += (gradebase - gradeDist);
+                }
 
                 //See if any of the words have a direct match in the lookup;
                 foreach (string word in wordsInMaterialToLookup)

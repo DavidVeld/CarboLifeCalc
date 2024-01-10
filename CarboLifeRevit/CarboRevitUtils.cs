@@ -143,50 +143,59 @@ namespace CarboLifeRevit
         /// <returns> category value based on inputs</returns>
         private static string getCategoryValue(Element el, ElementType type, string searchString, Document doc, string paramName = "")
         {
-            string result = "";
+            string result = null;
+            string testResult = null;
+
             try
             {
-                if (searchString == "(Revit) Category")
+
+                Parameter carbonpar = null;
+
+                if(searchString == "(Revit) Category")
                 {
-                    result = el.Category.Name;
+                    result = el.Category.Name.ToString();
                 }
                 else if (searchString == "Type Parameter")
                 {
-                    Parameter carbonpar = type.LookupParameter(paramName);
-                    if (carbonpar != null)
-                    {
-                        if (carbonpar.StorageType == StorageType.String)
-                            result = carbonpar.AsString();
-                        else
-                            result = "Wrong Category Type";
-                    }
-                    else
-                    {
-                        result = "No Category Found";
-                    }
-                }
-                else if (searchString == "Instance Parameter")
-                {
-                    Parameter carbonpar = el.LookupParameter(paramName);
+                    carbonpar = type.LookupParameter(paramName);
 
                     if (carbonpar != null)
                     {
                         if (carbonpar.StorageType == StorageType.String)
-                            result = carbonpar.AsString();
+                            testResult = carbonpar.AsString();
                         else
-                            result = "Wrong Category Type";
+                            testResult = null;
                     }
                     else
                     {
-                        result = "No Category Found";
+                        testResult = null;
                     }
                 }
                 else
                 {
-                    result = el.Category.Name;
+                    carbonpar = el.LookupParameter(paramName);
+
+                    if (carbonpar != null)
+                    {
+                        if (carbonpar.StorageType == StorageType.String)
+                            testResult = carbonpar.AsString();
+                        else
+                            testResult = null;
+                    }
+                    else
+                    {
+                        testResult = null;
+                    }
                 }
+
+                //if no category could be found make sure the revit category is used:
+                if(testResult != null)
+                    result = testResult;
+                else
+                    result = el.Category.Name.ToString();
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 result = "Export Error";
 
@@ -211,7 +220,7 @@ namespace CarboLifeRevit
                 {
                     string paramName = settings.AdditionalParameter;
 
-                    if (settings.AdditionalParameterElementType == true)
+                    if (settings.AdditionalParameterElementType.ToLower().Contains("type"))
                     {
                         ElementId elId = el.GetTypeId();
                         ElementType type = el.Document.GetElement(elId) as ElementType;
@@ -442,6 +451,11 @@ namespace CarboLifeRevit
                 bool setIsSubstructure;
                 bool setIsExisting;
                 //int layernr;
+                //new ones to add:
+                string grade;
+                double rcDensity;
+                string correction;
+
 
                 //Get Phasing;
                 Phase elCreatedPhase = doc.GetElement(el.CreatedPhaseId) as Phase;
@@ -516,11 +530,19 @@ namespace CarboLifeRevit
                 setSubCategory = "";
 
                 //Get Additional Parameter:
-                additionalParameter = getAdditionalParameter(el,settings);
-                if (additionalParameter == null)
-                    additionalParameter = "";
+               // additionalParameter = getAdditionalParameter(el,settings);
+               // if (additionalParameter == null)
+               //     additionalParameter = "";
 
-                //Get MaterialGrade
+                //
+                //
+                additionalParameter = getParametervalue(el, settings.AdditionalParameterElementType,settings.AdditionalParameter);
+
+                grade = getParametervalue(el, settings.GradeParameterType, settings.GradeParameterName);
+                rcDensity = Utils.ConvertMeToDouble(getParametervalue(el, settings.RCParameterType, settings.RCParameterName));
+                correction = getParametervalue(el, settings.CorrectionParameterType, settings.CorrectionParameterName);
+
+
 
                 //Get the level (in meter)
                 Level lvl = doc.GetElement(el.LevelId) as Level;
@@ -544,15 +566,35 @@ namespace CarboLifeRevit
                 //Is Substructure
                 setIsSubstructure = false;
 
-                Parameter substructParam = el.LookupParameter(settings.SubStructureParamName);
-                if (substructParam != null)
+                if (settings.SubStructureParamType.ToLower().Contains("workset"))
                 {
-                    if (substructParam.StorageType == StorageType.Integer)
+                    Parameter worksetvalue = el.LookupParameter("Workset");
+
+                    if(worksetvalue != null)
                     {
-                        if (substructParam.AsInteger() == 1)
+                        string worksetName = worksetvalue.AsValueString().ToLower();
+
+                        if (worksetName.Contains(settings.SubStructureParamName.ToLower()))
+                            {
+                            //substructure workset
                             setIsSubstructure = true;
+                        }
                     }
                 }
+                else
+                {
+                    //Check a boolean parameter
+                    Parameter substructParam = el.LookupParameter(settings.SubStructureParamName);
+                    if (substructParam != null)
+                    {
+                        if (substructParam.StorageType == StorageType.Integer)
+                        {
+                            if (substructParam.AsInteger() == 1)
+                                setIsSubstructure = true;
+                        }
+                    }
+                }
+
 
                 //If it passed it matches all criteria:
                 newCarboElement.Id = setId;
@@ -568,6 +610,9 @@ namespace CarboLifeRevit
                 newCarboElement.includeInCalc = true;
 
                 newCarboElement.AdditionalData = additionalParameter;
+                newCarboElement.Grade = grade;
+                newCarboElement.rcDensity = rcDensity;
+                newCarboElement.Correction = correction;
 
                 return newCarboElement;
             }
@@ -577,7 +622,58 @@ namespace CarboLifeRevit
             }
         }
 
+        private static string getParametervalue(Element el, string gradeParameterType, string gradeParameterName)
+        {
+            string result = "";
 
+            try
+            {
+                if (gradeParameterName != "" && gradeParameterType != "")
+                {
+                    Parameter parameterToSnoop = null;
+
+                    if (gradeParameterType.ToLower().Contains("type"))
+                    {
+                        //use a type parameter
+                        ElementId elId = el.GetTypeId();
+                        ElementType type = el.Document.GetElement(elId) as ElementType;
+
+                        parameterToSnoop = type.LookupParameter(gradeParameterName);
+                    }
+                    else
+                    {
+                        //Is Instance Parameter
+                        parameterToSnoop = el.LookupParameter(gradeParameterName);
+                    }
+
+                    if (parameterToSnoop != null)
+                    {
+                        if (parameterToSnoop.StorageType == StorageType.String)
+                            result = parameterToSnoop.AsString();
+                        else
+                            result = parameterToSnoop.AsValueString();
+                        
+                        if(result != null)
+                            return result;
+                    }
+                    else
+                    {
+                        result = "";
+                    }
+
+                }
+                else
+                {
+                    //not required / no value;
+                    return "";
+                }
+            }
+            catch (Exception ex)
+            {
+                return "";
+            }
+            return "";
+        }
 
         public static bool IsWindowOpen<T>(string name = "") where T : Window
         {

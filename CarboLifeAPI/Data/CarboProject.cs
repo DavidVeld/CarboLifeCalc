@@ -1446,7 +1446,7 @@ namespace CarboLifeAPI.Data
                     {
                         foreach (CarboElement ce in cg.AllElements)
                         {
-                            elementbuffer.Add(ce);
+                            elementbuffer.Add(ce.CopyMe());
                         }
                     }
                 }
