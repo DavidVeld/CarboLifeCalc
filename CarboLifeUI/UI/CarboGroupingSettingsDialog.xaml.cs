@@ -71,85 +71,60 @@ namespace CarboLifeUI.UI
                 cbb_Template.SelectedIndex = 0;
             }
 
+            loadSettingsToUI();
+ 
+        }
+
+        /// <summary>
+        /// loads the active importsettings to the UI
+        /// </summary>
+        private void loadSettingsToUI()
+        {
             //Category Settings
-            List<string> categorylist = new List<string>();
-            categorylist.Add("(Revit) Category");
-            categorylist.Add("Type Parameter");
-            categorylist.Add("Instance Parameter");
+            cbb_MainGroup.Items.Clear();
+            cbb_MainGroup.Items.Add("(Revit) Category");
+            cbb_MainGroup.Items.Add("Type Parameter");
+            cbb_MainGroup.Items.Add("Instance Parameter");
 
-            foreach (string str in categorylist)
-            {
-                cbb_MainGroup.Items.Add(str);
-            }
-
-            cbb_MainGroup.Text = "(Revit) Category";
-
+            cbb_MainGroup.SelectedItem = importSettings.CategoryName;
             txt_CategoryparamName.Text = importSettings.CategoryParamName;
-            txt_CategoryparamName.IsEnabled = false;
 
-            CheckCaregoryParam();
+            //CheckCaregoryParam();
 
             //RC
-            if (importSettings.mapReinforcement == true)
-            {
-                chk_MapReinforcement.IsChecked = true;
-            }
-            else
-            {
-                chk_MapReinforcement.IsChecked = false;
-            }
+            chk_MapReinforcement.IsChecked = importSettings.mapReinforcement;
 
             //Substructure
-            txt_SubstructureParamName.Text = importSettings.SubStructureParamName;
-            chk_ImportSubstructure.IsChecked = importSettings.IncludeSubStructure;
-
+            cbb_SubstructureImportType.Items.Clear();
             cbb_SubstructureImportType.Items.Add("Parameter (Instance Boolean)");
             cbb_SubstructureImportType.Items.Add("Workset Name Contains");
+
+            chk_ImportSubstructure.IsChecked = importSettings.IncludeSubStructure;
             cbb_SubstructureImportType.SelectedItem = importSettings.SubStructureParamType;
+            txt_SubstructureParamName.Text = importSettings.SubStructureParamName;
+
 
             //Grade
+            cbb_GradeImportType.Items.Clear();
             cbb_GradeImportType.Items.Add("Type Parameter");
             cbb_GradeImportType.Items.Add("Instance Parameter");
-            cbb_GradeImportType.Items.Add("Material Parameter");
+            //cbb_GradeImportType.Items.Add("Material Parameter");
 
-            if (importSettings.IncludeGradeParameter == true)
-            {
-                cbb_GradeImportType.Text = importSettings.GradeParameterType.ToString();
-                txt_GradeImportValue.Text = importSettings.GradeParameterName.ToString();
-                chk_MaterialGrade.IsChecked = true;
-            }
-            else
-            {
-                chk_MaterialGrade.IsChecked = false;
-                cbb_GradeImportType.Text = "Type Parameter";
-                txt_GradeImportValue.Text = "";
-            }
-
-            txt_GradeImportValue.Text = importSettings.GradeParameterName;
-
-
+            chk_MaterialGrade.IsChecked = importSettings.IncludeGradeParameter;
+            cbb_GradeImportType.SelectedItem = importSettings.GradeParameterType.ToString();
+            txt_GradeImportValue.Text = importSettings.GradeParameterName.ToString();
 
             //CorrectionList
             cbb_CorrectionImportType.Items.Clear();
             cbb_CorrectionImportType.Items.Add("Type Parameter");
             cbb_CorrectionImportType.Items.Add("Instance Parameter");
-            cbb_CorrectionImportType.SelectedItem = "Type Parameter";
 
-            if (importSettings.IncludeCorrectionParameter == true)
-            { 
-                chk_doCorrection.IsChecked = true;
-            }
-            else
-            {
-                chk_doCorrection.IsChecked =  false;
-            }
+            chk_doCorrection.IsChecked = importSettings.IncludeCorrectionParameter;
+            cbb_CorrectionImportType.SelectedItem = importSettings.CorrectionParameterType.ToString();
+            txt_CorrectionImportValue.Text = importSettings.CorrectionParameterName.ToString();
 
-
-
-
-
-                //Existing            
-                chk_ImportExisting.IsChecked = importSettings.IncludeExisting;
+            //Existing            
+            chk_ImportExisting.IsChecked = importSettings.IncludeExisting;
             txt_ExistingPhaseName.Text = importSettings.ExistingPhaseName;
 
             //Demolished
@@ -160,25 +135,11 @@ namespace CarboLifeUI.UI
             cbb_ExtraImportType.Items.Clear();
             cbb_ExtraImportType.Items.Add("Type Parameter");
             cbb_ExtraImportType.Items.Add("Instance Parameter");
-            cbb_ExtraImportType.SelectedItem = "Type Parameter";
 
-            if (importSettings.IncludeAdditionalParameter == true)
-                chk_AdditionalImport.IsChecked = true;
-
-            if (importSettings.AdditionalParameterElementType.ToLower().Contains("type"))
-                cbb_ExtraImportType.Text = "Type Parameter";
-            else
-                cbb_ExtraImportType.Text = "Instance Parameter";
-
-             txt_ExtraImportValue.Text = importSettings.AdditionalParameter;
-
-
-
-
-
-
+            chk_AdditionalImport.IsChecked = importSettings.IncludeAdditionalParameter;
+            cbb_ExtraImportType.SelectedItem = importSettings.AdditionalParameterElementType;
+            txt_ExtraImportValue.Text = importSettings.AdditionalParameter;
         }
-
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -234,18 +195,19 @@ namespace CarboLifeUI.UI
             //additional value
             settings.defaultCarboGroupSettings.IncludeAdditionalParameter = chk_AdditionalImport.IsChecked.Value;
             settings.defaultCarboGroupSettings.AdditionalParameter = txt_ExtraImportValue.Text;
-
-            if (cbb_ExtraImportType.Text == "Type Parameter")
-                settings.defaultCarboGroupSettings.AdditionalParameterElementType = "Type Parameter";
-            else
-                settings.defaultCarboGroupSettings.AdditionalParameterElementType = "Instance Parameter";
+            settings.defaultCarboGroupSettings.AdditionalParameterElementType = cbb_ExtraImportType.Text;
 
             //Grade
             settings.defaultCarboGroupSettings.IncludeGradeParameter = chk_MaterialGrade.IsChecked.Value;
             settings.defaultCarboGroupSettings.GradeParameterName = txt_GradeImportValue.Text;
             settings.defaultCarboGroupSettings.GradeParameterType = cbb_GradeImportType.Text;
 
-            //RC
+            //CorrectionList
+            settings.defaultCarboGroupSettings.IncludeCorrectionParameter = chk_doCorrection.IsChecked.Value;
+            settings.defaultCarboGroupSettings.CorrectionParameterType = cbb_CorrectionImportType.Text;
+            settings.defaultCarboGroupSettings.CorrectionParameterName = txt_CorrectionImportValue.Text;
+
+            //RC, materials and density map
             settings.defaultCarboGroupSettings.mapReinforcement = chk_MapReinforcement.IsChecked.Value;
 
             settings.defaultCarboGroupSettings.RCParameterName = importSettings.RCParameterName;

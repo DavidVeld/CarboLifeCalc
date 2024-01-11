@@ -776,11 +776,11 @@ namespace CarboLifeAPI
 
                 "Volume (m³)" + "," + //5
                 "Volume Total (m³)" + "," + //6.1
-                "Volume Cumulative (m³)" + "," + //6.2
+                "Volume Cumulative (m³)" + "," + //6.2 (10)
 
                 "Density (kg/m³)" + "," + //7
                 "Mass (kg)" + "," + //8
-                "Grade" + //8.1
+                "Grade" + ","+  //8.1
 
                 "ECI (kgCO2e/kg)" + "," + //9
                 "ECI Cumulative (kgCO2e/kg)" + "," + //10
@@ -825,7 +825,7 @@ namespace CarboLifeAPI
 
                 resultString += el.Volume + ","; //5
                 resultString += el.Volume_Total + ","; //6.1
-                resultString += el.Volume_Cumulative + ","; //6.1
+                resultString += el.Volume_Cumulative + ","; //6.2 (10)
 
                 resultString += el.Density + ","; //7
                 resultString += el.Mass + ","; //8
@@ -883,7 +883,8 @@ namespace CarboLifeAPI
 
                     resultString += grp.Volume + ","; //5
                     resultString += grp.TotalVolume + ","; //6.1
-                    resultString += grp.TotalVolume + ","; //6.1
+                    resultString += grp.TotalVolume + ","; //6.2 (10)
+
                     resultString += grp.Density + ","; //7
                     resultString += grp.Mass + ","; //8
                     resultString += grp.Grade + ","; //8.1
