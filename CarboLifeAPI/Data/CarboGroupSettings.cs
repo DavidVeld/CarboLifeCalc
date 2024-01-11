@@ -76,6 +76,10 @@ namespace CarboLifeAPI.Data
             GradeParameterName = "";
             GradeParameterType = "";
 
+            IncludeCorrectionParameter = false;
+            CorrectionParameterName = "";
+            CorrectionParameterType = "";
+
             mapReinforcement = true;
             RCParameterName = "";
             RCParameterType = "";

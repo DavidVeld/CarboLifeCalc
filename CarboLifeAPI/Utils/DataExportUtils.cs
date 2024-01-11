@@ -821,7 +821,7 @@ namespace CarboLifeAPI
                 resultString += CVSFormat(el.MaterialName) + ","; //2
                 resultString += CVSFormat(el.CarboMaterialName) + ","; //3
                 resultString += el.Level + ","; //4
-                resultString += el.LevelName = ","; //4.1
+                resultString += el.LevelName + ","; //4.1
 
                 resultString += el.Volume + ","; //5
                 resultString += el.Volume_Total + ","; //6.1
