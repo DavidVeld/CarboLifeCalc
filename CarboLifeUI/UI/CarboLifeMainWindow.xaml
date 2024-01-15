@@ -45,11 +45,12 @@
                 <MenuItem Name="mnu_saveProject" Header="Save Project" Click="Mnu_saveProject_Click" Background="Transparent"/>
                 <MenuItem Name="mnu_saveDataBase" Header="Save Project as..." Click="Mnu_saveDataBase_Click" Background="Transparent"/>
                 <Separator></Separator>
-                <MenuItem Name="mnu_BuildReport" Header="Export Report" Click="mnu_BuildReport_Click" Background="Transparent"/>
-                <MenuItem Name="mnu_ExportToExcel" Header="Export Data to CSV..." Click="mnu_ExportToExcel_Click" Background="Transparent"></MenuItem>
-                <MenuItem Name="mnu_ExportToJson" Header="Export JSon..." Click="mnu_ExportToJSON_Click" Background="Transparent"></MenuItem>
-                <MenuItem Name="mnu_ExportToLCAx" Header="Export LCAx..." Click="mnu_ExportToLCAx_Click" Visibility="Visible" Background="Transparent"></MenuItem>
-
+                <MenuItem Header="Export to">
+                    <MenuItem Name="mnu_BuildReport" Header="Export HTML Report" Click="mnu_BuildReport_Click" Background="Transparent"/>
+                    <MenuItem Name="mnu_ExportToExcel" Header="Export Data to CSV..." Click="mnu_ExportToExcel_Click" Background="Transparent"></MenuItem>
+                    <MenuItem Name="mnu_ExportToJson" Header="Export JSon..." Click="mnu_ExportToJSON_Click" Background="Transparent"></MenuItem>
+                    <MenuItem Name="mnu_ExportToLCAx" Header="Export LCAx..." Click="mnu_ExportToLCAx_Click" Visibility="Visible" Background="Transparent"></MenuItem>
+                </MenuItem>
                 <Separator></Separator>
                 <MenuItem Name="mnu_EditTemplate" Header="Edit a Material Template..." Click="mnu_EditTemplate_Click" Background="Transparent"/>
 

@@ -145,6 +145,9 @@ namespace CarboLifeAPI.Data
             }
         }
 
+        public double RcDensity { get; set; }
+        public bool isAutoReinforcementGroup { get; set; }
+
         public CarboGroup()
         {
             Id = -999;
@@ -180,6 +183,9 @@ namespace CarboLifeAPI.Data
             isDemolished = false;
             isSubstructure = false;
             isExisting = false;
+
+            isAutoReinforcementGroup = false;
+            RcDensity = 0;
         }
         internal void RefreshValuesFromElements()
         {
@@ -251,6 +257,7 @@ namespace CarboLifeAPI.Data
 
             Material = new CarboMaterial();
             AllElements = new List<CarboElement>();
+            isAutoReinforcementGroup = false;
         }
         internal void setMaterial(CarboMaterial material)
         {
@@ -258,6 +265,7 @@ namespace CarboLifeAPI.Data
             this.Material = material;
             this.Density = material.Density;
             this.Waste = material.WasteFactor;
+            this.Grade = material.Grade;
 
             CalculateTotals();
         }
@@ -281,7 +289,7 @@ namespace CarboLifeAPI.Data
             EC = 0;
 
             //Correction Formula
-            Correction = "";
+            Correction = carboElement.Correction;
             CorrectionDescription = "";
             //Waste
             Waste = 0;
@@ -308,6 +316,10 @@ namespace CarboLifeAPI.Data
             isDemolished = carboElement.isDemolished;
             isSubstructure = carboElement.isSubstructure;
             additionalData = carboElement.AdditionalData;
+
+            VolumeLink = "";
+            
+
         }
         private string GetDescription(CarboElement carboElement)
         {
@@ -326,6 +338,21 @@ namespace CarboLifeAPI.Data
 
             if(carboElement.AdditionalData != "" || carboElement.AdditionalData == null)
                 suffix += " (" + carboElement.AdditionalData + ")";
+
+            if(carboElement.Grade != "")
+            {
+                suffix += " Grade: " + carboElement.Grade;
+            }
+
+            if(carboElement.Correction != "")
+            {
+                suffix += " Corrected";
+            }
+
+            if(carboElement.rcDensity != 0)
+            {
+                suffix += " RC Override";
+            }
 
             result = prefix + carboElement.Category + suffix;
 
@@ -485,7 +512,11 @@ namespace CarboLifeAPI.Data
             result.Material = this.Material;
             result.MaterialName = this.MaterialName;
 
-            result.AllElements = this.AllElements;
+            result.AllElements = new List<CarboElement>();
+            foreach( CarboElement element in this.AllElements )
+            {
+                result.AllElements.Add((CarboElement)element.Clone());
+            }
 
             result.Volume = this.Volume;
             result.TotalVolume = this.TotalVolume;
@@ -517,6 +548,10 @@ namespace CarboLifeAPI.Data
 
             result.PerCent = this.PerCent;
 
+            result.isAutoReinforcementGroup = this.isAutoReinforcementGroup;
+            result.Grade = this.Grade;
+            result.VolumeLink = this.VolumeLink;
+            result.RcDensity = this.RcDensity;
             return result;
 
         }
@@ -528,6 +563,7 @@ namespace CarboLifeAPI.Data
         public object Clone()
         {
             return new CarboGroup
+
             {
                 Category = this.Category,
                 SubCategory = this.SubCategory,
@@ -563,10 +599,15 @@ namespace CarboLifeAPI.Data
                 isDemolished = this.isDemolished,
                 isSubstructure = this.isSubstructure,
 
-                PerCent = this.PerCent
+                PerCent = this.PerCent,
+
+                isAutoReinforcementGroup = this.isAutoReinforcementGroup,
+                RcDensity = this.RcDensity
         };
 
         }
+
+        [Obsolete("this should be embedded into a copy method.")]
         internal void copyValues(CarboGroup carboGroup)
         {
             Category = carboGroup.Category;
@@ -592,6 +633,8 @@ namespace CarboLifeAPI.Data
             isSubstructure = carboGroup.isSubstructure;
 
             PerCent = carboGroup.PerCent;
+            isAutoReinforcementGroup = carboGroup.isAutoReinforcementGroup;
+            RcDensity = carboGroup.RcDensity;
 
         }
     }

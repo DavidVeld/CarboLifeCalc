@@ -73,6 +73,10 @@ namespace CarboLifeAPI.Data
 
                 bool matchesAdditional = false;
 
+                bool matchesCorrection = false;
+                bool matchesGrade = false;
+                bool matchesRCDensity = false;
+
                 //Find which conditions match category, Material should always match
 
                 //Category
@@ -91,9 +95,21 @@ namespace CarboLifeAPI.Data
                 //Existing
                 if (cg.isExisting == carboElement.isExisting)
                     matchesExisting = true;
+                
+                //Optional settings below:
                 //Additional
                 if (cg.additionalData == carboElement.AdditionalData)
                     matchesAdditional = true;
+                //Matches Correction
+                if (cg.Correction == carboElement.Correction)
+                    matchesCorrection = true;
+                //Matches Grade
+                if (cg.Grade == carboElement.Grade)
+                    matchesGrade = true;
+                //Matches RC Density
+                if (cg.RcDensity == carboElement.rcDensity)
+                    matchesRCDensity = true;
+
 
                 //If all passes the element will be added to the group if not skip and create new group;
                 //IF existing and demo needs to be combined, only create one group.
@@ -103,11 +119,22 @@ namespace CarboLifeAPI.Data
                 //if(importSettings.CombineExistingAndDemo)
                 //    matchesDemolition = true;
 
-                if(importSettings.IncludeSubStructure == false) //these will always fall under the same group
+                if (importSettings.IncludeSubStructure == false) //Setting defines grouped together
                     matchesSubStructure = true;
 
-                if (importSettings.IncludeAdditionalParameter == false) //these will always fall under the same group
+                if (importSettings.IncludeAdditionalParameter == false) //Setting defines grouped together
                     matchesAdditional = true;
+
+                if (importSettings.IncludeCorrectionParameter == false) //Setting defines grouped together
+                    matchesCorrection = true;
+
+                if (importSettings.IncludeGradeParameter == false) //Setting defines grouped together
+                    matchesGrade = true;
+
+                if (importSettings.mapReinforcement == false) //Setting defines grouped together
+                    matchesRCDensity = true;
+
+
 
                 if (
                  matchesCategory == true &&
@@ -115,8 +142,13 @@ namespace CarboLifeAPI.Data
                  matchesSubStructure == true &&
                  matchesDemolition == true &&
                  matchesExisting == true &&
-                 matchesAdditional == true)
+                 matchesAdditional == true &&
+                 matchesCorrection == true && 
+                 matchesGrade == true && 
+                 matchesRCDensity == true
+                 )
                 {
+                    //Element matches all criteria: add to existing group;
                     cg.AllElements.Add((CarboElement)carboElement.Clone());
                     elementFound = true;
                     break;

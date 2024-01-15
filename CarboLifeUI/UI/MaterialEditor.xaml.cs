@@ -128,6 +128,7 @@ namespace CarboLifeUI.UI
                 txt_ECI.Text = selectedMaterial.ECI.ToString();
                 txt_EPDLink.Text = selectedMaterial.EPDurl;
                 txt_Waste.Text = selectedMaterial.WasteFactor.ToString();
+                txt_Grade.Text = selectedMaterial.Grade;
 
                 chx_A4_Manual.IsChecked = selectedMaterial.ECI_A4_Override;
                 chx_A5_Manual.IsChecked = selectedMaterial.ECI_A5_Override;
@@ -563,6 +564,7 @@ namespace CarboLifeUI.UI
                 selectedMaterial.Category = cbb_Category.Text;
                 selectedMaterial.Density = Utils.ConvertMeToDouble(txt_Density.Text);
                 selectedMaterial.EPDurl = txt_EPDLink.Text;
+                selectedMaterial.Grade = txt_Grade.Text;
             }
         }
         private void StoreEmissionProperties()
@@ -1165,6 +1167,17 @@ namespace CarboLifeUI.UI
             }
             RefreshMaterialList();
 
+        }
+
+        private async void txt_Grade_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            await Task.Delay(1000);
+            if (selectedMaterial != null)
+            {
+                selectedMaterial.Grade = txt_Grade.Text;
+
+                StoreGeneralProperties();
+            }
         }
     }
 }

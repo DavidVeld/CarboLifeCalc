@@ -46,7 +46,6 @@ namespace CarboLifeAPI.Data
         public double rcDensity { get; set; }
 
 
-
         //public CarboMaterial Material {get;set; }
 
         [NonSerialized]

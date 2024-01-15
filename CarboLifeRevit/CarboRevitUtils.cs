@@ -163,12 +163,6 @@ namespace CarboLifeRevit
                     {
                         if (carbonpar.StorageType == StorageType.String)
                             testResult = carbonpar.AsString();
-                        else
-                            testResult = null;
-                    }
-                    else
-                    {
-                        testResult = null;
                     }
                 }
                 else
@@ -179,14 +173,11 @@ namespace CarboLifeRevit
                     {
                         if (carbonpar.StorageType == StorageType.String)
                             testResult = carbonpar.AsString();
-                        else
-                            testResult = null;
-                    }
-                    else
-                    {
-                        testResult = null;
                     }
                 }
+                //empty parameters should be seen as null
+                if (testResult == "")
+                    testResult = null;
 
                 //if no category could be found make sure the revit category is used:
                 if(testResult != null)
@@ -201,75 +192,6 @@ namespace CarboLifeRevit
 
             }
             return result;
-        }
-        
-        /// <summary>
-        /// Returns the value of an additional parameter that the user can set to group elements. 
-        /// </summary>
-        /// <param name="el">The Element from revit</param>
-        /// <param name="type">The Element's Type</param>
-        /// <param name="settings">The settings file</param>
-        /// <returns></returns>
-        private static string getAdditionalParameter(Element el, CarboGroupSettings settings)
-        {
-            string result = "";
-
-            try
-            {
-                if (settings.AdditionalParameter != "")
-                {
-                    string paramName = settings.AdditionalParameter;
-
-                    if (settings.AdditionalParameterElementType.ToLower().Contains("type"))
-                    {
-                        ElementId elId = el.GetTypeId();
-                        ElementType type = el.Document.GetElement(elId) as ElementType;
-
-                        Parameter carbonpar = type.LookupParameter(paramName);
-                        if (carbonpar != null)
-                        {
-                            if (carbonpar.StorageType == StorageType.String)
-                                result = carbonpar.AsString();
-                            else
-                                result = "";
-
-                            return result;
-                        }
-                        else
-                        {
-                            result = "";
-                        }
-                    }
-                    else
-                    {
-                        //Is Instance Parameter
-                        Parameter carbonpar = el.LookupParameter(paramName);
-                        if (carbonpar != null)
-                        {
-                            if (carbonpar.StorageType == StorageType.String)
-                                result = carbonpar.AsString();
-                            else
-                                result = "";
-
-                            return result;
-                        }
-                        else
-                        {
-                            result = "";
-                        }
-                    }
-                }
-                else
-                {
-                    //not required;
-                    return "";
-                }
-            }
-            catch (Exception ex)
-            {
-                return "";
-            }
-            return "";
         }
 
         /// <summary>

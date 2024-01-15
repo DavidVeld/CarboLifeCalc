@@ -6,19 +6,22 @@
     <ExistingPhaseName>Existing</ExistingPhaseName>
     <VolumeConversionFactor />
     <IncludeSubStructure>true</IncludeSubStructure>
-    <SubStructureParamType />
-    <SubStructureParamName>CLC_IsSubstructure</SubStructureParamName>
+    <SubStructureParamType>Workset Name Contains</SubStructureParamType>
+    <SubStructureParamName>Substructure</SubStructureParamName>
     <IncludeDemo>false</IncludeDemo>
     <IncludeExisting>false</IncludeExisting>
     <CombineExistingAndDemo>false</CombineExistingAndDemo>
     <IncludeAdditionalParameter>false</IncludeAdditionalParameter>
-    <AdditionalParameter>Comment</AdditionalParameter>
-    <AdditionalParameterElementType>false</AdditionalParameterElementType>
+    <AdditionalParameter>abc</AdditionalParameter>
+    <AdditionalParameterElementType>Type Parameter</AdditionalParameterElementType>
     <IncludeGradeParameter>false</IncludeGradeParameter>
-    <GradeParameterName>CLC_Grade</GradeParameterName>
-    <GradeParameterType>Type Parameter</GradeParameterType>
+    <GradeParameterName>Comments</GradeParameterName>
+    <GradeParameterType>Instance Parameter</GradeParameterType>
+    <IncludeCorrectionParameter>true</IncludeCorrectionParameter>
+    <CorrectionParameterName>Type Comment</CorrectionParameterName>
+    <CorrectionParameterType>Type Parameter</CorrectionParameterType>
     <mapReinforcement>true</mapReinforcement>
-    <RCParameterName>CLC_RC Density</RCParameterName>
+    <RCParameterName>Mark</RCParameterName>
     <RCParameterType>Instance Parameter</RCParameterType>
     <RCMaterialName>Steel UK - Reinforcement</RCMaterialName>
     <rcQuantityMap>
@@ -139,6 +142,7 @@
         <Value>109</Value>
       </CarboNumProperty>
     </rcQuantityMap>
+    <RCMaterialCategory>Concrete</RCMaterialCategory>
   </defaultCarboGroupSettings>
   <templatePath>C:\001 - Working Files\001 - Coding\CarboLifeCalc\CarboLifeCalc\bin\Debug\db\UserMaterials.cxml</templatePath>
   <useLocal>true</useLocal>

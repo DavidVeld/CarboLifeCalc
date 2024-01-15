@@ -95,7 +95,13 @@
 
                 <Label Grid.Column="1" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="0,5,0,0">Default Waste:</Label>
                 <TextBox Name="txt_Waste" Grid.Column="2" Grid.Row="6" Height="26" Margin="0,5,208,5"  Style="{StaticResource flatTextBox}" TextChanged="txt_Waste_TextChanged"></TextBox>
-                <Label Grid.Column="3" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="5,5,0,0">%</Label>
+                <Label Grid.Column="2" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="75,5,0,0">%</Label>
+
+                <Label Grid.Column="2" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Margin="100,5,0,0">Grade:</Label>
+                <TextBox Name="txt_Grade" Grid.Column="2" Grid.Row="6" Height="26" Margin="150,5,5,5"  Style="{StaticResource flatTextBox}" TextChanged="txt_Grade_TextChanged" ></TextBox>
+
+
+
             </Grid>
         </GroupBox>
 

@@ -1,14 +1,19 @@
-﻿using LiveCharts.Maps;
+﻿using CarboLifeAPI.Data.Superseded;
+using LiveCharts.Maps;
 using Microsoft.Office.Interop.Excel;
+using Microsoft.Vbe.Interop;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Xml.Serialization;
@@ -1701,7 +1706,9 @@ namespace CarboLifeAPI.Data
                 // 
                 if (cg.Id == carboGroup.Id)
                 {
-                    cg.copyValues(carboGroup);
+                    cg = carboGroup.Copy();
+
+                    //cg.copyValues(carboGroup);
 
                     cg.CalculateTotals();
                     break;
@@ -1957,5 +1964,126 @@ namespace CarboLifeAPI.Data
             return result;
         }
 
+        public void CreateReinforcementGroup()
+        {
+            CarboMaterial reinforcementMaterial = CarboDatabase.getClosestMatch(RevitImportSettings.RCMaterialName);
+
+            //Delete all the previous reinforcement groups;
+            for (int i = groupList.Count - 1; i > 0; i--)
+            {
+                CarboGroup grp = (CarboGroup)groupList[i];
+                if (grp.isAutoReinforcementGroup == true)
+                {
+                    grp.AllElements.Clear();
+                    groupList.RemoveAt(i);
+                }
+
+            }
+            //the project should now be without automated groups
+            //create the reinforcment groups
+            List<CarboGroup> newRCGroups = new List<CarboGroup>();
+
+            foreach(CarboGroup grp in groupList)
+            {
+                if(grp.Material.Category == RevitImportSettings.RCMaterialCategory)
+                {
+                    //this is a RC group that needs to be mapped
+                    CarboGroup rcGroup = getRCGroup(grp, reinforcementMaterial);
+                    if(rcGroup != null)
+                    {
+                        newRCGroups.Add(rcGroup);
+                    }
+                }
+            }
+            if(newRCGroups.Count > 0)
+            {
+                AddGroups(newRCGroups);
+            }
+
+
+
+        }
+
+        private CarboGroup getRCGroup(CarboGroup grp, CarboMaterial reinforcementMaterial)
+        {
+            CarboGroup result = grp.Copy();
+            result.AllElements.Clear();
+
+            result.setMaterial(reinforcementMaterial);
+            result.isAutoReinforcementGroup = true;
+            result.VolumeLink = grp.Id.ToString();
+
+            //if there is an override to the values check this now?
+            CarboNumProperty rcDensityProperty = null;
+
+            if (result.RcDensity == null || result.RcDensity == 0)
+            {
+                foreach (CarboNumProperty property in RevitImportSettings.rcQuantityMap)
+                {
+                    if (property.PropertyName == result.Category)
+                    {
+                        rcDensityProperty = property;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                rcDensityProperty = new CarboNumProperty
+                {
+                    PropertyName = "Manually Specified",
+                    Value = result.RcDensity
+                };
+            }
+
+            if(rcDensityProperty == null)
+            {
+                rcDensityProperty = new CarboNumProperty();
+                rcDensityProperty.PropertyName = "Not Specified";
+                rcDensityProperty.Value = 100;
+            }
+
+
+            //correction, if a correction exists add it to the existing;
+            if (result.Correction != "")
+            {
+                result.Correction = result.Correction +
+                    "*(" + rcDensityProperty.Value.ToString() + "/" + reinforcementMaterial.Density.ToString() + ")";
+            }
+            else
+            {
+                result.Correction = "*(" + rcDensityProperty.Value.ToString() + "/" + reinforcementMaterial.Density.ToString() + ")";
+            }
+
+            //Description;
+            result.Category = "Reinforcement";
+            result.Description = "Reinforcement " + rcDensityProperty.Value.ToString() + " kg/m³";
+
+            //based on the values set a volume;
+            if (grp.AllElements.Count > 0)
+            {
+                //this is the script for element based groups
+
+                foreach(CarboElement ce in grp.AllElements)
+                {
+                    CarboElement rcElement = ce.CopyMe();
+                    rcElement.Category = "Reinforcement";
+                    rcElement.Name = "Reinforcement of " + ce.Name;
+                    rcElement.MaterialName = reinforcementMaterial.Name;
+                    rcElement.CarboMaterialName = reinforcementMaterial.Name;
+
+                    rcElement.rcDensity = rcDensityProperty.Value;
+                    result.AllElements.Add(rcElement);
+                }
+            }
+            else
+            {
+                //this is the script for non-element based groups
+                //No element needs to be created at the moment.
+
+            }
+
+            return result;
+        }
     }
 }
