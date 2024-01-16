@@ -2057,7 +2057,7 @@ namespace CarboLifeAPI.Data
 
             //Description;
             result.Category = "Reinforcement";
-            result.Description = "Reinforcement " + rcDensityProperty.Value.ToString() + " kg/m³";
+            result.Description = grp.Category + " reinforcement " + rcDensityProperty.Value.ToString() + " kg/m³";
 
             //based on the values set a volume;
             if (grp.AllElements.Count > 0)

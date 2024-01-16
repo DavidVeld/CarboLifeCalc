@@ -793,17 +793,17 @@ namespace CarboLifeAPI
                 "includeInCalc" + "," + //16
                 "Additional" + "," + //17
                 
-                "EC A1A3 Total (kgCO2e/kg)" + "," + //18
-                "EC A4 Total (kgCO2e/kg)" + "," + //19
-                "EC A5 Total (kgCO2e/kg)" + "," + //20
-                "EC B1B7 Total (kgCO2e/kg)" + "," + //21
-                "EC C1C4 Total (kgCO2e/kg)" + "," + //22
-                "EC D Total (kgCO2e/kg)" + "," + //23
-                "EC Mix Total (kgCO2e/kg)" + "," + //24
-                "EC Sequestration Total (kgCO2e/kg)" + "," + //25
+                "EC A1A3 (kgCO2e)" + "," + //18
+                "EC A4 (kgCO2e)" + "," + //19
+                "EC A5 (kgCO2e)" + "," + //20
+                "EC B1B7 (kgCO2e)" + "," + //21
+                "EC C1C4 (kgCO2e)" + "," + //22
+                "EC D (kgCO2e)" + "," + //23
+                "EC Misc (kgCO2e)" + "," + //24
+                "EC Sequestration (kgCO2e)" + "," + //25
 
                 "Correction" + "," + //26
-                "RC Density" + //27
+                "RC Density (kg/m3)" + //27
 
 
         Environment.NewLine;
@@ -913,7 +913,7 @@ namespace CarboLifeAPI
                     resultString += grp.getTotalSeq + ","; //25
 
                     resultString += grp.Correction + ","; //26
-                    resultString += "N//A" + ","; //27
+                    resultString += grp.RcDensity + ","; //27
 
                     resultString += Environment.NewLine; //enter
 

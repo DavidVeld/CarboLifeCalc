@@ -128,10 +128,10 @@ namespace CarboLifeAPI
 
                 foreach (CarboElement ce in elements)
                 {
-                    CarboMaterial material = carboProject.CarboDatabase.getClosestMatch(ce.CarboMaterialName);
+                    CarboMaterial material = carboProject.CarboDatabase.getClosestMatch(ce.CarboMaterialName, ce.Grade);
                     if (material != null)
                     {
-                        JsCarboElement JsCe = CopyCe(ce, carboProject);
+                        JsCarboElement JsCe = ConvertoToJsCarboElement(ce, carboProject);
 
                         //IndividualElements
                         JsCe.Density = material.Density;
@@ -148,6 +148,7 @@ namespace CarboLifeAPI
                         JsCe.EC_Mix_Total = mass * material.ECI_Mix;
                         JsCe.EC_Sequestration_Total = mass * material.ECI_Seq;
 
+
                         jsProject.elementList.Add(JsCe);
                     }
                 }
@@ -160,7 +161,7 @@ namespace CarboLifeAPI
                 {
                     //
                     JsCarboElement JsCe = new JsCarboElement();
-                    JsCe = CopyCe(grp, carboProject);
+                    JsCe = ConvertoToJsCarboElement(grp, carboProject);
                     jsProject.elementList.Add(JsCe);
 
                 }
@@ -184,6 +185,10 @@ namespace CarboLifeAPI
             lcaxProject.MetaData.Add("b675Global", jsProject.b675Global.ToString());
             lcaxProject.MetaData.Add("SocialCost", jsProject.SocialCost.ToString());
             lcaxProject.MetaData.Add("ECTotal", jsProject.ECTotal.ToString());
+
+            //Build the masterial Assembly;
+            Assembly materials = getMaterialAssembly(jsProject); 
+
 
             //Build the assemblies
             //Run through each element and combine where Id's are identical
@@ -217,8 +222,6 @@ namespace CarboLifeAPI
                     {
                         Assembly newAss = getAssembly(jsCe);
                         lcaxProject.EmissionParts.Add(jsCe.Id.ToString(), newAss);
-
-
                     }
                 }
                 catch (Exception ex)
@@ -235,6 +238,40 @@ namespace CarboLifeAPI
             }
 
                 return lcaxProject;
+        }
+
+        private static Assembly getMaterialAssembly(JsCarboProject jsCarboProject)
+        {
+            Assembly materialAssembly = new Assembly();
+            materialAssembly.Name = "Materials";
+            materialAssembly.Comment = "This assembly contains all the used materials in the project";
+
+            foreach (JsCarboMaterial jsMaterial in jsCarboProject.materialList)
+            {
+                EpdPart newpart = new EpdPart();
+                Epd newEpd = new Epd();
+                newEpd.Id = jsMaterial.Id.ToString();
+                newEpd.Name = jsMaterial.Name;
+                newEpd.Comment = jsMaterial.Description;
+                newEpd.Source.Name = "URL";
+                newEpd.Source.Url = jsMaterial.EPDurl;
+
+                newEpd.DeclaredUnit = Unit.Kg;
+
+                newEpd.Gwp.A1A3 = jsMaterial.ECI_A1A3;
+                newEpd.Gwp.A4 = jsMaterial.ECI_A4;
+                newEpd.Gwp.A5 = jsMaterial.ECI_A5;
+                newEpd.Gwp.B1 = jsMaterial.ECI_B1B5;
+                newEpd.Gwp.C1 = jsMaterial.ECI_C1C4;
+                newEpd.Gwp.D = jsMaterial.ECI_D;
+
+
+                newpart.EpdSource.Epd = newEpd;
+
+            }
+
+
+            return materialAssembly;
         }
 
         private static Assembly getAssembly(JsCarboElement jsCe)
@@ -276,7 +313,7 @@ namespace CarboLifeAPI
             return newPart;
         }
 
-        private static JsCarboElement CopyCe(CarboElement ce, CarboProject carboProject)
+        private static JsCarboElement ConvertoToJsCarboElement(CarboElement ce, CarboProject carboProject)
         {
             JsCarboElement JsCe = new JsCarboElement();
 
@@ -288,6 +325,9 @@ namespace CarboLifeAPI
             JsCe.AdditionalData = ce.AdditionalData;
             JsCe.Grade = ce.Grade;
             JsCe.LevelName = ce.LevelName;
+
+            JsCe.RCDensity = ce.rcDensity;
+            JsCe.Correction = ce.Correction;
 
             JsCe.Volume = ce.Volume;
             JsCe.Volume_Total = ce.Volume_Total;
@@ -310,7 +350,7 @@ namespace CarboLifeAPI
             return JsCe;
 
         }
-        private static JsCarboElement CopyCe(CarboGroup grp, CarboProject carboProject)
+        private static JsCarboElement ConvertoToJsCarboElement(CarboGroup grp, CarboProject carboProject)
         {
             JsCarboElement JsCe = new JsCarboElement();
 
@@ -322,6 +362,9 @@ namespace CarboLifeAPI
             JsCe.AdditionalData = grp.additionalData;
             JsCe.Grade = "";
             JsCe.LevelName = "";
+
+            JsCe.RCDensity = 0;
+            JsCe.Correction = grp.Correction;
 
             JsCe.Volume = grp.Volume;
             JsCe.Volume_Total = grp.TotalVolume;

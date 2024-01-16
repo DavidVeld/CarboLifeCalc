@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +34,8 @@ namespace CarboLifeAPI.Data
         public string LevelName { get; set; }
         public double ECI { get; set; }
         public double EC { get; set; }
-
+        public double RCDensity { get; set; }
+        public string Correction { get; set; }
 
         public double EC_A1A3_Total { get; set; }
         public double EC_A4_Total { get; set; }
@@ -49,9 +51,12 @@ namespace CarboLifeAPI.Data
         public bool includeInCalc { get; set; }
 
         //Cumulative
-        public double Volume_Cumulative { get; internal set; }
-        public double EC_Cumulative { get; internal set; }
-        public double ECI_Cumulative { get; internal set; }
+        public double Volume_Cumulative { get; set; }
+        public double EC_Cumulative { get; set; }
+        public double ECI_Cumulative { get; set; }
+
+
+
         public JsCarboElement()
         {
             Id = -999;
@@ -62,6 +67,8 @@ namespace CarboLifeAPI.Data
             AdditionalData = "";
             Grade = "";
             LevelName = "";
+            RCDensity = 0;
+            Correction = "";
 
             Volume = 0;
             Volume_Total = 0;

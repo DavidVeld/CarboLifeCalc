@@ -85,6 +85,7 @@
     <Compile Include="Data\CarboGroupSettings.cs" />
     <Compile Include="Data\CarboNumProperty.cs" />
     <Compile Include="JSonExport\JsCarboElement.cs" />
+    <Compile Include="JSonExport\JsCarboMaterial.cs" />
     <Compile Include="JSonExport\JsCarboProject.cs" />
     <Compile Include="JSonExport\lcax.cs" />
     <Compile Include="UtilClasses\CarboGraphResult.cs" />

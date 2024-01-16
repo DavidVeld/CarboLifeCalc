@@ -18,6 +18,8 @@ namespace CarboLifeAPI.Data
     
     public class JsCarboProject
     {
+        public List<JsCarboMaterial> materialList { get; set; }
+
         public List<JsCarboElement> elementList { get; set; }
         public string Name { get; set; }
         public string Number { get; set; }
