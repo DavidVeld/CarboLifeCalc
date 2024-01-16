@@ -163,12 +163,8 @@ namespace CarboLifeAPI.Data
             //If a new group's first element has substructre a fix is required. 
             //This needs it own method to generate a group name AFTER All elements are loaded. 
             CarboGroup newGroup = new CarboGroup(carboElement);
-            if (importSettings.IncludeSubStructure == false && newGroup.Description.Contains("(Substructure)")) //these will always fall under the same group
-            {
-                string name = newGroup.Description;
-                name = name.Replace("(Substructure)", "");
-                newGroup.Description = name;
-            }
+            newGroup.getDescription(importSettings);
+
 
             newGroup.Id = idbase + id;
 

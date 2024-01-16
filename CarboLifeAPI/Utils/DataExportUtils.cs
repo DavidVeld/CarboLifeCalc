@@ -1029,125 +1029,114 @@ WriteCVSFile(fileString, exportPath);
 
         //MaterialDatabase
         public static bool CreateMaterialDatabaseCVSFile(CarboDatabase materialDataBase, string exportPath)
-{
-if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
-    return false;
+        {
+            if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
+                return false;
 
-string fileString = "";
+           /* string fileString = "DO NOT REMOVE THIS LINE: " +
+                            "edit the data below and use as import template, do not change column layout. " +
+                            "materials with identical ID's will be ovewritten. " +
+                            "New Ids will be imported as a new material" + Environment.NewLine; */
 
+            string fileString = "";
 //Create Headers;
 fileString =
-    "Id" + "," + //0
-    "Name" + "," + //1
-    "Category" + "," + //2
-    "Description" + "," + //3
-    "Density" + "," + //4
-    "WasteFactor" + "," + //5
-    "ECI" + "," + //6
-    "ECI_A1A3" + "," + //7
-    "ECI_A4" + "," + //8
-    "ECI_A5" + "," + //9
-    "ECI_B1B5" + "," + //10
-    "ECI_C1C4" + "," + //11
-    "ECI_D" + "," + //12
-    "ECI_Seq" + "," + //13
-    "ECI_Mix" + "," + //14
+                "Id" + "," + //0
+                "Name" + "," + //1
+                "Category" + "," + //2
+                "Description" + "," + //3
+                "Density" + "," + //4
+                "WasteFactor" + "," + //5
+                "Grade" + "," + //5.1
+                "ECI" + "," + //6
+                "ECI_A1A3" + "," + //7
+                "ECI_A4" + "," + //8
+                "ECI_A5" + "," + //9
+                "ECI_B1B5" + "," + //10
+                "ECI_C1C4" + "," + //11
+                "ECI_D" + "," + //12
+                "ECI_Seq" + "," + //13
+                "ECI_Mix" + "," + //14
 
-    Environment.NewLine;
-//Advanced
-foreach (CarboMaterial cm in materialDataBase.CarboMaterialList)
-{
-    try
-    {
-        string resultString = "";
+                Environment.NewLine;
+            //Advanced
+            foreach (CarboMaterial cm in materialDataBase.CarboMaterialList)
+            {
+                try
+                {
+                    string resultString = "";
 
-        resultString += cm.Id + ","; //1
-        resultString += CVSFormat(cm.Name) + ","; //2
-        resultString += CVSFormat(cm.Category) + ","; //3
-        resultString += CVSFormat(cm.Description) + ","; //3
-        resultString += cm.Density + ","; //4
-        resultString += cm.WasteFactor + ","; //5
-        resultString += cm.ECI + ","; //6
-        resultString += cm.ECI_A1A3 + ","; //7
-        resultString += cm.ECI_A4 + ","; //8
-        resultString += cm.ECI_A5 + ","; //9
-        resultString += cm.ECI_B1B5 + ","; //10
-        resultString += cm.ECI_C1C4 + ","; //11
-        resultString += cm.ECI_D + ","; //12
-        resultString += cm.ECI_Seq + ","; //13
-        resultString += cm.ECI_Mix + ","; //14
+                    resultString += cm.Id + ","; //1
+                    resultString += CVSFormat(cm.Name) + ","; //2
+                    resultString += CVSFormat(cm.Category) + ","; //3
+                    resultString += CVSFormat(cm.Description) + ","; //3
+                    resultString += cm.Density + ","; //4
+                    resultString += cm.WasteFactor + ","; //5
+                    resultString += cm.Grade + ","; //5.1
 
-        resultString += Environment.NewLine;
+                    resultString += cm.ECI + ","; //6
+                    resultString += cm.ECI_A1A3 + ","; //7
+                    resultString += cm.ECI_A4 + ","; //8
+                    resultString += cm.ECI_A5 + ","; //9
+                    resultString += cm.ECI_B1B5 + ","; //10
+                    resultString += cm.ECI_C1C4 + ","; //11
+                    resultString += cm.ECI_D + ","; //12
+                    resultString += cm.ECI_Seq + ","; //13
+                    resultString += cm.ECI_Mix + ","; //14
 
-        fileString += resultString;
-    }
-    catch (IOException ex)
-    {
-        Console.WriteLine("An error occurred while writing the file: " + ex.Message);
-    }
-}
+                    resultString += Environment.NewLine;
 
-try
-{
-    WriteCVSFile(fileString, exportPath);
-}
-catch
-{
-    return false;
-}
-return true;
-}
+                    fileString += resultString;
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine("An error occurred while writing the file: " + ex.Message);
+                }
+            }
 
-public static List<CarboMaterial> GetMaterialDatabaseFromCVSFile(string importPath)
-{
-List<CarboMaterial> cmList = new List<CarboMaterial>();
+            try
+            {
+                WriteCVSFile(fileString, exportPath);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
 
-if (File.Exists(importPath) && IsFileLocked(importPath) == false)
-{
-    DataTable profileTable = Utils.LoadCSV(importPath);
+        public static List<CarboMaterial> GetMaterialDatabaseFromCVSFile(string importPath)
+        {
+            List<CarboMaterial> cmList = new List<CarboMaterial>();
 
-    foreach (DataRow dr in profileTable.Rows)
-    {
-        CarboMaterial cm = new CarboMaterial();
-        cm.Id = Convert.ToInt32(Utils.ConvertMeToDouble(dr[0].ToString()));
-        cm.Name = dr[1].ToString();
-        cm.Category = dr[2].ToString();
-        cm.Description = dr[3].ToString();
+            if (File.Exists(importPath) && IsFileLocked(importPath) == false)
+            {
+                DataTable profileTable = Utils.LoadCSV(importPath);
 
-        cm.Density = Convert.ToInt32(Utils.ConvertMeToDouble(dr[4].ToString()));
-        cm.WasteFactor = Convert.ToInt32(Utils.ConvertMeToDouble(dr[5].ToString()));
+                foreach (DataRow dr in profileTable.Rows)
+                {
+                    CarboMaterial cm = new CarboMaterial();
+                    cm.Id = Convert.ToInt32(Utils.ConvertMeToDouble(dr[0].ToString()));
+                    cm.Name = dr[1].ToString();
+                    cm.Category = dr[2].ToString();
+                    cm.Description = dr[3].ToString();
 
-        cm.ECI = Convert.ToInt32(Utils.ConvertMeToDouble(dr[6].ToString()));
+                    cm.Density = Convert.ToInt32(Utils.ConvertMeToDouble(dr[4].ToString()));
+                    cm.WasteFactor = Convert.ToInt32(Utils.ConvertMeToDouble(dr[5].ToString()));
+                    cm.Grade = dr[6].ToString();
 
-        cm.ECI_A1A3 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[7].ToString()));
-        cm.ECI_A4 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[8].ToString()));
-        cm.ECI_A5 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[9].ToString()));
-        cm.ECI_B1B5 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[10].ToString()));
-        cm.ECI_C1C4 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[11].ToString()));
-        cm.ECI_D = Convert.ToInt32(Utils.ConvertMeToDouble(dr[12].ToString()));
-        cm.ECI_Seq = Convert.ToInt32(Utils.ConvertMeToDouble(dr[13].ToString()));
-        cm.ECI_Mix = Convert.ToInt32(Utils.ConvertMeToDouble(dr[14].ToString()));
+                    cm.ECI = Convert.ToInt32(Utils.ConvertMeToDouble(dr[7].ToString()));
 
+                    cm.ECI_A1A3 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[8].ToString()));
+                    cm.ECI_A4 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[9].ToString()));
+                    cm.ECI_A5 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[10].ToString()));
+                    cm.ECI_B1B5 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[11].ToString()));
+                    cm.ECI_C1C4 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[12].ToString()));
+                    cm.ECI_D = Convert.ToInt32(Utils.ConvertMeToDouble(dr[13].ToString()));
+                    cm.ECI_Seq = Convert.ToInt32(Utils.ConvertMeToDouble(dr[14].ToString()));
+                    cm.ECI_Mix = Convert.ToInt32(Utils.ConvertMeToDouble(dr[15].ToString()));
 
-        /*
-"Id" + "," + //0
-"Name" + "," + //1
-"Category" + "," + //2
-"Description" + "," + //3
-"Density" + "," + //4
-"WasteFactor" + "," + //5
-"ECI" + "," + //6
-"ECI_A1A3" + "," + //7
-"ECI_A4" + "," + //8
-"ECI_A5" + "," + //9
-"ECI_B1B5" + "," + //10
-"ECI_C1C4" + "," + //11
-"ECI_D" + "," + //12
-"ECI_Seq" + "," + //13
-"ECI_Mix" + "," + //14
-
-         */
-            cmList.Add(cm);
+                    cmList.Add(cm);
                 }
             }
 

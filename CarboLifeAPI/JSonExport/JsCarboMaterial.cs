@@ -43,7 +43,7 @@
         /// <summary>
         /// Total ECI kgCO₂e/m³
         /// </summary>
-        public double getVolumeECI { get { return Density * ECI; } set { } }
+        public double VolumeECI { get; set; }
 
         /// <summary>
         /// Fabrication kgCO₂e/kg

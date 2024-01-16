@@ -7,6 +7,7 @@
       <Category>Concrete</Category>
       <Description>1:4 cement: sand mix with average UK cement mix</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2200</Density>
       <ECI>0.181116</ECI>
       <getVolumeECI>398.4552</getVolumeECI>
@@ -134,6 +135,7 @@ Set Value by user as: 0kgCo2/kg
       <Category>Concrete</Category>
       <Description>No description provided</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C40/50</Grade>
       <Density>2400</Density>
       <ECI>0.23027999999999999</ECI>
       <getVolumeECI>552.67199999999991</getVolumeECI>
@@ -262,6 +264,7 @@ Set Value by user as: 0kgCo2/kg
       <Description>In situ concrete
 (unreinforced)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C32/40</Grade>
       <Density>2400</Density>
       <ECI>0.150579</ECI>
       <getVolumeECI>361.3896</getVolumeECI>
@@ -389,6 +392,7 @@ Set Value by user as: 0kgCo2/kg
       <Description>In situ concrete
 (unreinforced)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C25/30</Grade>
       <Density>2400</Density>
       <ECI>0.129519</ECI>
       <getVolumeECI>310.8456</getVolumeECI>
@@ -517,6 +521,7 @@ Set Value by user as: 0kgCo2/kg
       <Description>In situ concrete
 (unreinforced)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C20/25</Grade>
       <Density>2400</Density>
       <ECI>0.122148</ECI>
       <getVolumeECI>293.15520000000004</getVolumeECI>
@@ -645,6 +650,7 @@ Set Value by user as: 0kgCo2/kg
       <Description>In situ concrete
 (unreinforced)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C16/20</Grade>
       <Density>2400</Density>
       <ECI>0.116</ECI>
       <getVolumeECI>278.40000000000003</getVolumeECI>
@@ -773,6 +779,7 @@ Set Value by user as: 0kgCo2/kg
       <Description>In situ concrete
 (unreinforced)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C40/50</Grade>
       <Density>2400</Density>
       <ECI>0.16953300000000002</ECI>
       <getVolumeECI>406.8792</getVolumeECI>
@@ -902,6 +909,7 @@ Set Value by user as: 0kgCO₂/kg
 (excludes China)
 C32/40</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C32/40</Grade>
       <Density>2400</Density>
       <ECI>0.208</ECI>
       <getVolumeECI>499.2</getVolumeECI>
@@ -1028,6 +1036,7 @@ C32/40</Description>
 core slabs: British Precast
 Flooring Federation average</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C40/50</Grade>
       <Density>2000</Density>
       <ECI>0.21816</ECI>
       <getVolumeECI>436.32</getVolumeECI>
@@ -1155,6 +1164,7 @@ Flooring Federation average</Description>
 CARES sector average (EAF production)
 (97% recycled EAF production)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S435</Grade>
       <Density>7850</Density>
       <ECI>1.2040000000000002</ECI>
       <getVolumeECI>9451.4000000000015</getVolumeECI>
@@ -1279,6 +1289,7 @@ CARES sector average (EAF production)
       <Category>Steel</Category>
       <Description>Global recommended value</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>1.4859999999999998</ECI>
       <getVolumeECI>11665.099999999999</getVolumeECI>
@@ -1405,6 +1416,7 @@ CARES sector average (EAF production)
 Rolled open sections
 (consumption average)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>0.888</ECI>
       <getVolumeECI>6970.8</getVolumeECI>
@@ -1530,6 +1542,7 @@ Rolled open sections
       <Description>Global
 Rolled open sections</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>1.459</ECI>
       <getVolumeECI>11453.150000000002</getVolumeECI>
@@ -1655,6 +1668,7 @@ Rolled open sections</Description>
       <Description>UK &amp; Global
 Rolled closed sections</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>1.0459999999999996</ECI>
       <getVolumeECI>8211.0999999999967</getVolumeECI>
@@ -1779,6 +1793,7 @@ Rolled closed sections</Description>
       <Category>Steel</Category>
       <Description>UK Plates</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>1.365</ECI>
       <getVolumeECI>10715.25</getVolumeECI>
@@ -1903,6 +1918,7 @@ Rolled closed sections</Description>
       <Category>Steel</Category>
       <Description> TATA Comflor</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>1.759</ECI>
       <getVolumeECI>13808.15</getVolumeECI>
@@ -2028,6 +2044,7 @@ Rolled closed sections</Description>
       <Description>Global
 Hot dip galvanised steel</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>1.5799999999999994</ECI>
       <getVolumeECI>12402.999999999995</getVolumeECI>
@@ -2154,6 +2171,7 @@ Hot dip galvanised steel</Description>
 Lightweight AAC blocks for
 building envelope (600kg/m³)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>700</Density>
       <ECI>0.38600000000000007</ECI>
       <getVolumeECI>270.20000000000005</getVolumeECI>
@@ -2281,6 +2299,7 @@ Set Value by user as: 0kgCO₂/kg
       <Description>UK
 Dense blocks for other uses</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2000</Density>
       <ECI>0.153</ECI>
       <getVolumeECI>306</getVolumeECI>
@@ -2406,6 +2425,7 @@ Dense blocks for other uses</Description>
       <Description>Engineering bricks
 </Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>1490</Density>
       <ECI>0.30300000000000005</ECI>
       <getVolumeECI>451.47000000000008</getVolumeECI>
@@ -2530,6 +2550,7 @@ Dense blocks for other uses</Description>
       <Category>Blocks and Bricks</Category>
       <Description>Generic Granite</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2500</Density>
       <ECI>0.159</ECI>
       <getVolumeECI>397.5</getVolumeECI>
@@ -2654,6 +2675,7 @@ Dense blocks for other uses</Description>
       <Category>Blocks and Bricks</Category>
       <Description>Generic Limestone</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2500</Density>
       <ECI>0.156</ECI>
       <getVolumeECI>390</getVolumeECI>
@@ -2778,6 +2800,7 @@ Dense blocks for other uses</Description>
       <Category>Blocks and Bricks</Category>
       <Description>Generic Limestone</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2350</Density>
       <ECI>0.122</ECI>
       <getVolumeECI>286.7</getVolumeECI>
@@ -2903,6 +2926,7 @@ Dense blocks for other uses</Description>
       <Description>Timber - Global
 Studwork/framing/flooring</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>480</Density>
       <ECI>0.15900000000000003</ECI>
       <getVolumeECI>76.320000000000022</getVolumeECI>
@@ -3031,6 +3055,7 @@ Set Value by user as: 0kgCO₂/kg
 CLT, 100% FSC/PEFC
 (European production average)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>470</Density>
       <ECI>-0.064999999999999725</ECI>
       <getVolumeECI>-30.549999999999869</getVolumeECI>
@@ -3157,6 +3182,7 @@ CLT, 100% FSC/PEFC
 CLT, 100% FSC/PEFC
 </Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>470</Density>
       <ECI>0.12400000000000033</ECI>
       <getVolumeECI>58.280000000000157</getVolumeECI>
@@ -3283,6 +3309,7 @@ CLT, 100% FSC/PEFC
 Glulam, 100% FSC/PEFC
 (European production average)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>470</Density>
       <ECI>-0.03499999999999992</ECI>
       <getVolumeECI>-16.449999999999964</getVolumeECI>
@@ -3408,6 +3435,7 @@ Glulam, 100% FSC/PEFC
       <Description>Manufactured structural timber - Global
 Glulam, 100% FSC/PEFC</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>470</Density>
       <ECI>0.19900000000000007</ECI>
       <getVolumeECI>93.53000000000003</getVolumeECI>
@@ -3533,6 +3561,7 @@ Glulam, 100% FSC/PEFC</Description>
       <Description>Manufactured structural timber - Global
 LVL, 100% FSC/PEFC</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>490</Density>
       <ECI>0.07600000000000029</ECI>
       <getVolumeECI>37.240000000000144</getVolumeECI>
@@ -3659,6 +3688,7 @@ LVL, 100% FSC/PEFC</Description>
 Formwork plywood, 100%
 FSC/PEFC</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>490</Density>
       <ECI>0.623</ECI>
       <getVolumeECI>305.27</getVolumeECI>
@@ -3784,6 +3814,7 @@ FSC/PEFC</Description>
       <Description>Global
 OSB, 100% FSC/PEFC</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>490</Density>
       <ECI>0.37200000000000011</ECI>
       <getVolumeECI>182.28000000000006</getVolumeECI>
@@ -3909,6 +3940,7 @@ OSB, 100% FSC/PEFC</Description>
       <Description>European consumption
 31% recycled content</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2710</Density>
       <ECI>3.7359999999999998</ECI>
       <getVolumeECI>10124.56</getVolumeECI>
@@ -4034,6 +4066,7 @@ OSB, 100% FSC/PEFC</Description>
       <Description>Global consumption
 31% recycled content</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2710</Density>
       <ECI>4.6430000000000007</ECI>
       <getVolumeECI>12582.530000000003</getVolumeECI>
@@ -4159,6 +4192,7 @@ OSB, 100% FSC/PEFC</Description>
       <Description>European consumption
 31% recycled content</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2710</Density>
       <ECI>3.8680000000000003</ECI>
       <getVolumeECI>10482.28</getVolumeECI>
@@ -4284,6 +4318,7 @@ OSB, 100% FSC/PEFC</Description>
       <Description>Global consumption
 31% recycled content</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2710</Density>
       <ECI>4.8450000000000006</ECI>
       <getVolumeECI>13129.950000000003</getVolumeECI>
@@ -4408,6 +4443,7 @@ OSB, 100% FSC/PEFC</Description>
       <Category>Other</Category>
       <Description>Generic Glass</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2500</Density>
       <ECI>1.569</ECI>
       <getVolumeECI>3922.5</getVolumeECI>
@@ -4532,6 +4568,7 @@ OSB, 100% FSC/PEFC</Description>
       <Category>Other</Category>
       <Description>Toughened Glass</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2500</Density>
       <ECI>1.811</ECI>
       <getVolumeECI>4527.5</getVolumeECI>
@@ -4657,6 +4694,7 @@ OSB, 100% FSC/PEFC</Description>
       <Description>Partitioning/ceilings
 Min. 60% recycled content</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>900</Density>
       <ECI>0.56800000000000006</ECI>
       <getVolumeECI>511.20000000000005</getVolumeECI>
@@ -4782,6 +4820,7 @@ Min. 60% recycled content</Description>
       <Description>Paint coating for steel
 Amotherm Steel WB</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>3000</Density>
       <ECI>2.714</ECI>
       <getVolumeECI>8142</getVolumeECI>
@@ -4909,6 +4948,7 @@ Set Value by user as: 0kgCO₂/kg
       <Description>Paint coating for concrete
 Amotherm Concrete WB</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>3000</Density>
       <ECI>2.6790000000000003</ECI>
       <getVolumeECI>8037.0000000000009</getVolumeECI>
@@ -5034,6 +5074,7 @@ Amotherm Concrete WB</Description>
       <Description>Cementitious Coating
 Isolatek International product average</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>1300</Density>
       <ECI>1.003</ECI>
       <getVolumeECI>1303.8999999999999</getVolumeECI>
@@ -5161,6 +5202,7 @@ Supplementary cementitious materials (SCMs) are often used to replace Portland C
 assumption for UK concrete. In 2021 the average SCM in UK concretes was 25.8% and GGBS is the predominant SCM used in the UK due to diminishing
 use of PFA resulting from the phasing out of coal fired power.</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C16/20</Grade>
       <Density>2400</Density>
       <ECI>0.143208</ECI>
       <getVolumeECI>343.6992</getVolumeECI>
@@ -5288,6 +5330,7 @@ Set Value by user as: 0.007208kgCO₂/kg
       <Category>Steel</Category>
       <Description>Global recommended value</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>1.4859999999999998</ECI>
       <getVolumeECI>11665.099999999999</getVolumeECI>
@@ -5414,6 +5457,7 @@ Set Value by user as: 0.007208kgCO₂/kg
 CARES sector average (EAF production)
 (97% recycled EAF production)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S435</Grade>
       <Density>7850</Density>
       <ECI>1.2040000000000002</ECI>
       <getVolumeECI>9451.4000000000015</getVolumeECI>
@@ -5541,6 +5585,7 @@ Set Value by user as: 0kgCO₂/kg
       <Description>Global
 Rolled closed sections</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>1.1979999999999997</ECI>
       <getVolumeECI>9404.2999999999975</getVolumeECI>
@@ -5665,6 +5710,7 @@ Rolled closed sections</Description>
       <Category>Steel</Category>
       <Description>Global Plates</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>1.518</ECI>
       <getVolumeECI>11916.3</getVolumeECI>
@@ -5790,6 +5836,7 @@ Rolled closed sections</Description>
       <Description>Single skin wall with mortar 
 1:4 CEM I cement:sand mix</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>1600</Density>
       <ECI>0.28600000000000003</ECI>
       <getVolumeECI>457.6</getVolumeECI>
@@ -5915,6 +5962,7 @@ Rolled closed sections</Description>
       <Description>Double skin wall with mortar 
 1:4 CEM I cement:sand mix</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>1600</Density>
       <ECI>0.30600000000000005</ECI>
       <getVolumeECI>489.60000000000008</getVolumeECI>
@@ -6039,6 +6087,7 @@ Rolled closed sections</Description>
       <Category>Other</Category>
       <Description>Granular fill - UK</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2240</Density>
       <ECI>0.033</ECI>
       <getVolumeECI>73.92</getVolumeECI>
@@ -6165,6 +6214,7 @@ Set Value by user as: 0kgCO₂/kg
       <Category>Other</Category>
       <Description>Granular fill - Global</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>2240</Density>
       <ECI>0.028</ECI>
       <getVolumeECI>62.72</getVolumeECI>
@@ -6291,6 +6341,7 @@ Set Value by user as: 0kgCO₂/kg
 (unreinforced)
 70% GGBS is not recommended by the IstructE</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C16/20</Grade>
       <Density>2400</Density>
       <ECI>0.077</ECI>
       <getVolumeECI>184.8</getVolumeECI>
@@ -6418,6 +6469,7 @@ Set Value by user as: 0kgCO₂/kg
 (unreinforced)
 70% GGBS is not recommended by the IstructE</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C20/25</Grade>
       <Density>2400</Density>
       <ECI>0.08</ECI>
       <getVolumeECI>192</getVolumeECI>
@@ -6546,6 +6598,7 @@ Supplementary cementitious materials (SCMs) are often used to replace Portland C
 assumption for UK concrete. In 2021 the average SCM in UK concretes was 25.8% and GGBS is the predominant SCM used in the UK due to diminishing
 use of PFA resulting from the phasing out of coal fired power.</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C20/25</Grade>
       <Density>2400</Density>
       <ECI>0.14200000000000002</ECI>
       <getVolumeECI>340.8</getVolumeECI>
@@ -6673,6 +6726,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
 (unreinforced)
 70% GGBS is not recommended by the IstructE</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C32/40</Grade>
       <Density>2400</Density>
       <ECI>0.090000000000000011</ECI>
       <getVolumeECI>216.00000000000003</getVolumeECI>
@@ -6800,6 +6854,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
 (unreinforced)
 70% GGBS is not recommended by the IstructE</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C40/50</Grade>
       <Density>2400</Density>
       <ECI>0.099</ECI>
       <getVolumeECI>237.60000000000002</getVolumeECI>
@@ -6928,6 +6983,7 @@ Supplementary cementitious materials (SCMs) are often used to replace Portland C
 assumption for UK concrete. In 2021 the average SCM in UK concretes was 25.8% and GGBS is the predominant SCM used in the UK due to diminishing
 use of PFA resulting from the phasing out of coal fired power.</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C32/40</Grade>
       <Density>2400</Density>
       <ECI>0.181</ECI>
       <getVolumeECI>434.4</getVolumeECI>
@@ -7056,6 +7112,7 @@ Supplementary cementitious materials (SCMs) are often used to replace Portland C
 assumption for UK concrete. In 2021 the average SCM in UK concretes was 25.8% and GGBS is the predominant SCM used in the UK due to diminishing
 use of PFA resulting from the phasing out of coal fired power.</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C40/50</Grade>
       <Density>2400</Density>
       <ECI>0.194</ECI>
       <getVolumeECI>465.6</getVolumeECI>
@@ -7183,6 +7240,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
 (unreinforced)
 70% GGBS is not recommended by the IstructE</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C25/30</Grade>
       <Density>2400</Density>
       <ECI>0.083</ECI>
       <getVolumeECI>199.20000000000002</getVolumeECI>
@@ -7311,6 +7369,7 @@ Supplementary cementitious materials (SCMs) are often used to replace Portland C
 assumption for UK concrete. In 2021 the average SCM in UK concretes was 25.8% and GGBS is the predominant SCM used in the UK due to diminishing
 use of PFA resulting from the phasing out of coal fired power.</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C25/30</Grade>
       <Density>2400</Density>
       <ECI>0.15</ECI>
       <getVolumeECI>360</getVolumeECI>
@@ -7438,6 +7497,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
 (excludes China)
 C32/40</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C32/40</Grade>
       <Density>2400</Density>
       <ECI>0.171</ECI>
       <getVolumeECI>410.40000000000003</getVolumeECI>
@@ -7564,6 +7624,7 @@ C32/40</Description>
 (excludes China)
 C32/40</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C32/40</Grade>
       <Density>2400</Density>
       <ECI>0.245</ECI>
       <getVolumeECI>588</getVolumeECI>
@@ -7688,6 +7749,7 @@ C32/40</Description>
       <Category>Concrete</Category>
       <Description>No description provided</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C40/50</Grade>
       <Density>2400</Density>
       <ECI>0.141</ECI>
       <getVolumeECI>338.4</getVolumeECI>
@@ -7813,6 +7875,7 @@ C32/40</Description>
       <Category>Concrete</Category>
       <Description>No description provided</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C40/50</Grade>
       <Density>2400</Density>
       <ECI>0.243</ECI>
       <getVolumeECI>583.19999999999993</getVolumeECI>
@@ -7939,6 +8002,7 @@ C32/40</Description>
       <Description>Global recommended value
 (EAF production)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>-0.18099999999999994</ECI>
       <getVolumeECI>-1420.8499999999995</getVolumeECI>
@@ -8064,6 +8128,7 @@ C32/40</Description>
       <Description>Global recommended value
 (BOF production)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>3.6020000000000003</ECI>
       <getVolumeECI>28275.7</getVolumeECI>
@@ -8190,6 +8255,7 @@ C32/40</Description>
 Rolled open sections
 (EAF production)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>-0.29700000000000004</ECI>
       <getVolumeECI>-2331.4500000000003</getVolumeECI>
@@ -8316,6 +8382,7 @@ Rolled open sections
 Rolled open sections
 (EAF production)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
       <Density>7850</Density>
       <ECI>1.605</ECI>
       <getVolumeECI>12599.25</getVolumeECI>
@@ -8442,6 +8509,7 @@ Rolled open sections
 CLT, 100% FSC/PEFC
 (Stora Enso)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>465</Density>
       <ECI>-0.20699999999999985</ECI>
       <getVolumeECI>-96.254999999999924</getVolumeECI>
@@ -8568,6 +8636,7 @@ CLT, 100% FSC/PEFC
 CLT, 100% FSC/PEFC
 (Wood for Good)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>465</Density>
       <ECI>0.31900000000000017</ECI>
       <getVolumeECI>148.33500000000009</getVolumeECI>
@@ -8694,6 +8763,7 @@ CLT, 100% FSC/PEFC
 Glulam, 100% FSC/PEFC
 (EPD Norge)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>470</Density>
       <ECI>-0.21699999999999986</ECI>
       <getVolumeECI>-101.98999999999994</getVolumeECI>
@@ -8820,6 +8890,7 @@ Glulam, 100% FSC/PEFC
 Glulam, 100% FSC/PEFC
 (Wood for Good)</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
       <Density>470</Density>
       <ECI>0.3290000000000004</ECI>
       <getVolumeECI>154.63000000000019</getVolumeECI>

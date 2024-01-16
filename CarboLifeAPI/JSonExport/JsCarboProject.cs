@@ -61,6 +61,7 @@ namespace CarboLifeAPI.Data
         public JsCarboProject()
         {
             elementList = new List<JsCarboElement>();
+            materialList = new List<JsCarboMaterial>();
 
             Name = "New Project";
             Number = "000000";

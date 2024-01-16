@@ -452,19 +452,11 @@ namespace CarboLifeRevit
                 setSubCategory = "";
 
                 //Get Additional Parameter:
-               // additionalParameter = getAdditionalParameter(el,settings);
-               // if (additionalParameter == null)
-               //     additionalParameter = "";
-
-                //
-                //
                 additionalParameter = getParametervalue(el, settings.AdditionalParameterElementType,settings.AdditionalParameter);
 
                 grade = getParametervalue(el, settings.GradeParameterType, settings.GradeParameterName);
                 rcDensity = Utils.ConvertMeToDouble(getParametervalue(el, settings.RCParameterType, settings.RCParameterName));
                 correction = getParametervalue(el, settings.CorrectionParameterType, settings.CorrectionParameterName);
-
-
 
                 //Get the level (in meter)
                 Level lvl = doc.GetElement(el.LevelId) as Level;
@@ -479,11 +471,7 @@ namespace CarboLifeRevit
                     levelname = "";
                 }
 
-
-
                 //Makepass;
-
-
 
                 //Is Substructure
                 setIsSubstructure = false;

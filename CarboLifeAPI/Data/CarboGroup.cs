@@ -336,24 +336,6 @@ namespace CarboLifeAPI.Data
             if (carboElement.isSubstructure == true)
                 suffix = " (Substructure)";
 
-            if(carboElement.AdditionalData != "" || carboElement.AdditionalData == null)
-                suffix += " (" + carboElement.AdditionalData + ")";
-
-            if(carboElement.Grade != "")
-            {
-                suffix += " Grade: " + carboElement.Grade;
-            }
-
-            if(carboElement.Correction != "")
-            {
-                suffix += " Corrected";
-            }
-
-            if(carboElement.rcDensity != 0)
-            {
-                suffix += " RC Override";
-            }
-
             result = prefix + carboElement.Category + suffix;
 
             return result;
@@ -635,6 +617,41 @@ namespace CarboLifeAPI.Data
             PerCent = carboGroup.PerCent;
             isAutoReinforcementGroup = carboGroup.isAutoReinforcementGroup;
             RcDensity = carboGroup.RcDensity;
+
+        }
+
+        internal void getDescription(CarboGroupSettings importSettings)
+        {
+            string description = Description;
+            
+            //check if substructure note is required.
+            if (importSettings.IncludeSubStructure == true && isSubstructure==true)
+            {
+                description += "(Substructure)";
+            }
+
+            if (importSettings.IncludeAdditionalParameter == true && additionalData != "")
+            {
+                description += additionalData;
+            }
+
+            if (importSettings.IncludeGradeParameter == true && Grade != "")
+            {
+                description += " Grade: " + Grade;
+            }
+
+            if (importSettings.IncludeCorrectionParameter == true && Correction != "")
+            {
+                description += " Corrected";
+            }
+
+            if (importSettings.mapReinforcement == true && RcDensity != 0 )
+            {
+                description += " RC Override";
+            }
+
+            //Apply description
+            Description = description;
 
         }
     }

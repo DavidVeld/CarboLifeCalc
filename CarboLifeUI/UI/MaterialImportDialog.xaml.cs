@@ -39,7 +39,7 @@ namespace CarboLifeUI.UI
         {
             InitializeComponent();
             currentDb = db.Copy();
-            importedDb = new CarboDatabase();
+            importedDb = currentDb.Copy();
 
             dgv_Preview.ItemsSource = importedDb.CarboMaterialList;
         }

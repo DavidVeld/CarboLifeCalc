@@ -122,6 +122,7 @@ namespace CarboLifeAPI
 
             CarboGroup cg = carboProject.getTotalsGroup();
 
+            //get all elements
             if (cg.AllElements.Count > 0)
             {
                 List<CarboElement> elements = cg.AllElements;
@@ -167,7 +168,57 @@ namespace CarboLifeAPI
                 }
             }
 
+            //Get the materials
+            List<CarboMaterial> materialList = carboProject.getUsedmaterials();
+
+            if (materialList.Count > 0)
+            {
+                foreach (CarboMaterial cm in materialList)
+                {
+                    JsCarboMaterial jsMaterial = converToJsMaterial(cm);
+
+                    if (jsMaterial != null)
+                        jsProject.materialList.Add(jsMaterial);
+                }
+            }
+
+
             return jsProject;
+        }
+
+        private static JsCarboMaterial converToJsMaterial(CarboMaterial cm)
+        {
+            JsCarboMaterial result = new JsCarboMaterial();
+
+            try
+            {
+                result.Id = cm.Id;
+                result.Name = cm.Name;
+                result.Description = cm.Description;
+                result.Category = cm.Category;
+                result.Grade = cm.Grade;
+                result.Density = cm.Density;
+                result.EPDurl = cm.EPDurl;
+                result.WasteFactor = cm.WasteFactor;
+                result.isLocked = cm.isLocked;
+
+                result.ECI_A1A3 = cm.ECI_A1A3;
+                result.ECI_A4 = cm.ECI_A4;
+                result.ECI_A5 = cm.ECI_A5;
+                result.ECI_B1B5 = cm.ECI_B1B5;
+                result.ECI_C1C4 = cm.ECI_C1C4;
+                result.ECI_D = cm.ECI_D;
+                result.ECI_Mix = cm.ECI_Mix;
+                result.ECI_Seq = cm.ECI_Seq;
+                result.ECI = cm.ECI;
+                result.VolumeECI = cm.getVolumeECI;
+            }
+            catch
+            {
+                return null;
+            }
+
+            return result;
         }
 
         public static Lcax convertToLCAx(JsCarboProject jsProject)
@@ -187,8 +238,8 @@ namespace CarboLifeAPI
             lcaxProject.MetaData.Add("ECTotal", jsProject.ECTotal.ToString());
 
             //Build the masterial Assembly;
-            Assembly materials = getMaterialAssembly(jsProject); 
-
+            Assembly materials = getMaterialAssembly(jsProject);
+            lcaxProject.EmissionParts.Add("Material EPDs", materials);
 
             //Build the assemblies
             //Run through each element and combine where Id's are identical
@@ -231,6 +282,9 @@ namespace CarboLifeAPI
 
             }
 
+
+
+
             //Calculate Totals;
             foreach (var dict in lcaxProject.EmissionParts)
             {
@@ -249,15 +303,20 @@ namespace CarboLifeAPI
             foreach (JsCarboMaterial jsMaterial in jsCarboProject.materialList)
             {
                 EpdPart newpart = new EpdPart();
+                newpart.Id = jsMaterial.Id.ToString();
+                newpart.Name = jsMaterial.Name;
+
                 Epd newEpd = new Epd();
                 newEpd.Id = jsMaterial.Id.ToString();
                 newEpd.Name = jsMaterial.Name;
                 newEpd.Comment = jsMaterial.Description;
+                
+                newEpd.Source = new Source();
                 newEpd.Source.Name = "URL";
                 newEpd.Source.Url = jsMaterial.EPDurl;
-
                 newEpd.DeclaredUnit = Unit.Kg;
 
+                newEpd.Gwp = new ImpactCategory();
                 newEpd.Gwp.A1A3 = jsMaterial.ECI_A1A3;
                 newEpd.Gwp.A4 = jsMaterial.ECI_A4;
                 newEpd.Gwp.A5 = jsMaterial.ECI_A5;
@@ -265,6 +324,11 @@ namespace CarboLifeAPI
                 newEpd.Gwp.C1 = jsMaterial.ECI_C1C4;
                 newEpd.Gwp.D = jsMaterial.ECI_D;
 
+                newEpd.MetaData = new Dictionary<string, string>();
+                newEpd.MetaData.Add("Grade", jsMaterial.Grade);
+                newEpd.MetaData.Add("Sequestration", jsMaterial.ECI_Seq.ToString());
+                newEpd.MetaData.Add("Category", jsMaterial.Category);
+                newEpd.MetaData.Add("Default Waste Factor (%)", jsMaterial.WasteFactor.ToString());
 
                 newpart.EpdSource.Epd = newEpd;
 
@@ -308,8 +372,25 @@ namespace CarboLifeAPI
             EpdPart newPart = new EpdPart();
             newPart.Id = id;
             newPart.Name = jsCe.Name;
+
             newPart.PartQuantity = jsCe.Volume;
             newPart.PartUnit = Unit.M3;
+            //material
+            newPart.EpdSource = new EpdSource();
+            newPart.EpdSource.Internalepd.Path = jsCe.CarboMaterialName;
+
+            newPart.MetaData = new Dictionary<string, string>();
+
+
+            newPart.MetaData.Add("Grade", jsCe.Grade);
+            newPart.MetaData.Add("Density", jsCe.Density.ToString());
+            newPart.MetaData.Add("Category", jsCe.Category);
+            newPart.MetaData.Add("IsSubstructure", jsCe.isSubstructure.ToString());
+            newPart.MetaData.Add("MaterialName", jsCe.CarboMaterialName);
+            newPart.MetaData.Add("RevitMaterialName", jsCe.MaterialName);
+            newPart.MetaData.Add("Mass", jsCe.Mass.ToString());
+
+
             return newPart;
         }
 

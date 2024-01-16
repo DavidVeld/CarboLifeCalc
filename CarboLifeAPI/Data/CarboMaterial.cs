@@ -6,7 +6,7 @@ namespace CarboLifeAPI.Data
     [Serializable]
     [XmlRoot("CarboMaterial")]
 
-    public class CarboMaterial
+    public class CarboMaterial : ICloneable
     {
 
         /// <summary>
@@ -261,6 +261,42 @@ namespace CarboLifeAPI.Data
                 var targetField = type.GetField(sourceField.Name);
                 targetField.SetValue(this, sourceField.GetValue(cmNew));
             }
+        }
+
+        public object Clone()
+        {
+            CarboMaterial clone = new CarboMaterial();
+
+            clone.Id = this.Id;
+            clone.Name = this.Name;
+            clone.Description = this.Description;
+            clone.Category = this.Category;
+            clone.Density = this.Density;
+            clone.Grade = this.Grade;
+            clone.WasteFactor = this.WasteFactor;
+            clone.isLocked = this.isLocked;
+
+            //results
+            clone.ECI = this.ECI;
+
+            clone.ECI_A1A3 = this.ECI_A1A3;
+            clone.ECI_A4 = this.ECI_A4;
+            clone.ECI_A5 = this.ECI_A5;
+            clone.ECI_B1B5 = this.ECI_B1B5;
+            clone.ECI_C1C4 = this.ECI_C1C4;
+            clone.ECI_D = this.ECI_D;
+            clone.ECI_Mix = this.ECI_Mix;
+            clone.ECI_Seq = this.ECI_Seq;
+            clone.ECI = this.ECI;
+
+            clone.ECI_A1A3_Override = this.ECI_A1A3_Override;
+            clone.ECI_A4_Override = this.ECI_A4_Override;
+            clone.ECI_A5_Override = this.ECI_A5_Override;
+            clone.ECI_C1C4_Override = this.ECI_C1C4_Override;
+            clone.ECI_D_Override = this.ECI_D_Override;
+            clone.ECI_Seq_Override = this.ECI_Seq_Override;
+
+            return clone;
         }
     }
 }

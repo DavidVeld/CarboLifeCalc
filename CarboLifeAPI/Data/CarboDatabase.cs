@@ -439,8 +439,10 @@ namespace CarboLifeAPI.Data
             foreach(CarboMaterial cm in this.CarboMaterialList)
             {
                 CarboMaterial newcarboMaterial = new CarboMaterial();
-                newcarboMaterial.Copy(cm);
-                copy.AddMaterial(newcarboMaterial);
+                //newcarboMaterial.Copy(cm);
+                newcarboMaterial = (CarboMaterial)cm.Clone();
+                if(newcarboMaterial != null)
+                    copy.AddMaterial(newcarboMaterial);
             }
 
             return copy;
