@@ -134,8 +134,10 @@ namespace CarboLifeAPI
                     {
                         JsCarboElement JsCe = ConvertoToJsCarboElement(ce, carboProject);
 
-                        //IndividualElements
+                        //
                         JsCe.Density = material.Density;
+
+
                         double mass = ce.Mass;
                         if (mass == 0)
                             mass = ce.Volume_Total * JsCe.Density;
@@ -237,13 +239,14 @@ namespace CarboLifeAPI
             lcaxProject.MetaData.Add("SocialCost", jsProject.SocialCost.ToString());
             lcaxProject.MetaData.Add("ECTotal", jsProject.ECTotal.ToString());
 
+            lcaxProject.EmissionParts = new Dictionary<string, Assembly>();
+
             //Build the masterial Assembly;
             Assembly materials = getMaterialAssembly(jsProject);
             lcaxProject.EmissionParts.Add("Material EPDs", materials);
 
             //Build the assemblies
             //Run through each element and combine where Id's are identical
-            lcaxProject.EmissionParts = new Dictionary<string, Assembly>();
 
             foreach (JsCarboElement jsCe in jsProject.elementList)
             {
@@ -330,6 +333,7 @@ namespace CarboLifeAPI
                 newEpd.MetaData.Add("Category", jsMaterial.Category);
                 newEpd.MetaData.Add("Default Waste Factor (%)", jsMaterial.WasteFactor.ToString());
 
+                newpart.EpdSource = new EpdSource();
                 newpart.EpdSource.Epd = newEpd;
 
             }
@@ -370,26 +374,34 @@ namespace CarboLifeAPI
             string id = jsCe.Id.ToString();
 
             EpdPart newPart = new EpdPart();
-            newPart.Id = id;
-            newPart.Name = jsCe.Name;
+            try
+            {
+                newPart.Id = id;
+                newPart.Name = jsCe.Name;
 
-            newPart.PartQuantity = jsCe.Volume;
-            newPart.PartUnit = Unit.M3;
-            //material
-            newPart.EpdSource = new EpdSource();
-            newPart.EpdSource.Internalepd.Path = jsCe.CarboMaterialName;
+                newPart.PartQuantity = jsCe.Volume_Total;
+                newPart.PartUnit = Unit.M3;
+                //material
+                newPart.EpdSource = new EpdSource();
+                newPart.EpdSource.Internalepd = new InternalEpd();
+                newPart.EpdSource.Internalepd.Path = jsCe.CarboMaterialName;
 
-            newPart.MetaData = new Dictionary<string, string>();
+                newPart.MetaData = new Dictionary<string, string>();
 
 
-            newPart.MetaData.Add("Grade", jsCe.Grade);
-            newPart.MetaData.Add("Density", jsCe.Density.ToString());
-            newPart.MetaData.Add("Category", jsCe.Category);
-            newPart.MetaData.Add("IsSubstructure", jsCe.isSubstructure.ToString());
-            newPart.MetaData.Add("MaterialName", jsCe.CarboMaterialName);
-            newPart.MetaData.Add("RevitMaterialName", jsCe.MaterialName);
-            newPart.MetaData.Add("Mass", jsCe.Mass.ToString());
-
+                newPart.MetaData.Add("Grade", jsCe.Grade);
+                newPart.MetaData.Add("Density", jsCe.Density.ToString());
+                newPart.MetaData.Add("Category", jsCe.Category);
+                newPart.MetaData.Add("IsSubstructure", jsCe.isSubstructure.ToString());
+                newPart.MetaData.Add("MaterialName", jsCe.CarboMaterialName);
+                newPart.MetaData.Add("RevitMaterialName", jsCe.MaterialName);
+                newPart.MetaData.Add("Mass", jsCe.Mass.ToString());
+            }
+            catch(Exception ex)
+            {
+                newPart.Name = ex.Message;
+                newPart.PartQuantity = 0;
+            }
 
             return newPart;
         }
@@ -401,6 +413,7 @@ namespace CarboLifeAPI
             JsCe.Name = ce.Name;
             JsCe.Id = ce.Id;
             JsCe.MaterialName = ce.MaterialName;
+            JsCe.CarboMaterialName = ce.CarboMaterialName;
             JsCe.Category = ce.Category;
             JsCe.SubCategory = ce.SubCategory;
             JsCe.AdditionalData = ce.AdditionalData;

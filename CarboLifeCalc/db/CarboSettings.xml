@@ -1,27 +1,27 @@
 <?xml version="1.0"?>
 <CarboSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <defaultCarboGroupSettings>
-    <CategoryName>(Revit) Category</CategoryName>
-    <CategoryParamName />
+    <CategoryName>Instance Parameter</CategoryName>
+    <CategoryParamName>Comments</CategoryParamName>
     <ExistingPhaseName>Existing</ExistingPhaseName>
     <VolumeConversionFactor />
     <IncludeSubStructure>true</IncludeSubStructure>
-    <SubStructureParamType>Workset Name Contains</SubStructureParamType>
-    <SubStructureParamName>Substructure</SubStructureParamName>
+    <SubStructureParamType>Parameter (Instance Boolean)</SubStructureParamType>
+    <SubStructureParamName>CLC_IsSubstructure</SubStructureParamName>
     <IncludeDemo>false</IncludeDemo>
     <IncludeExisting>false</IncludeExisting>
     <CombineExistingAndDemo>false</CombineExistingAndDemo>
     <IncludeAdditionalParameter>false</IncludeAdditionalParameter>
-    <AdditionalParameter>abc</AdditionalParameter>
+    <AdditionalParameter>Additional</AdditionalParameter>
     <AdditionalParameterElementType>Type Parameter</AdditionalParameterElementType>
     <IncludeGradeParameter>false</IncludeGradeParameter>
-    <GradeParameterName>Comments</GradeParameterName>
+    <GradeParameterName>Type Comment</GradeParameterName>
     <GradeParameterType>Instance Parameter</GradeParameterType>
-    <IncludeCorrectionParameter>true</IncludeCorrectionParameter>
+    <IncludeCorrectionParameter>false</IncludeCorrectionParameter>
     <CorrectionParameterName>Type Comment</CorrectionParameterName>
     <CorrectionParameterType>Type Parameter</CorrectionParameterType>
     <mapReinforcement>true</mapReinforcement>
-    <RCParameterName>Mark</RCParameterName>
+    <RCParameterName />
     <RCParameterType>Instance Parameter</RCParameterType>
     <RCMaterialName>Steel UK - Reinforcement</RCMaterialName>
     <rcQuantityMap>

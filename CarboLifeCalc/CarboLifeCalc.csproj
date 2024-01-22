@@ -296,7 +296,7 @@
     <Content Include="Resources\DVLogo256.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="samples\CarboLifeCalc_basic_sample_project.rvt">
+    <Content Include="samples\CarboLifeCalc_sample_project_R20.rvt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
