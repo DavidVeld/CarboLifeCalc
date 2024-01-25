@@ -303,40 +303,49 @@ namespace CarboLifeAPI
             materialAssembly.Name = "Materials";
             materialAssembly.Comment = "This assembly contains all the used materials in the project";
             materialAssembly.Description = "This assembly contains all the used materials in the project";
+            materialAssembly.Parts = new Dictionary<string, EpdPart>();
 
             foreach (JsCarboMaterial jsMaterial in jsCarboProject.materialList)
             {
                 EpdPart newpart = new EpdPart();
-                newpart.Id = jsMaterial.Id.ToString();
-                newpart.Name = jsMaterial.Name;
 
-                Epd newEpd = new Epd();
-                newEpd.Id = jsMaterial.Id.ToString();
-                newEpd.Name = jsMaterial.Name;
-                newEpd.Comment = jsMaterial.Description;
-                
-                newEpd.Source = new Source();
-                newEpd.Source.Name = "URL";
-                newEpd.Source.Url = jsMaterial.EPDurl;
-                newEpd.DeclaredUnit = Unit.Kg;
+                try
+                {
+                    newpart.Id = jsMaterial.Id.ToString();
+                    newpart.Name = jsMaterial.Name;
 
-                newEpd.Gwp = new ImpactCategory();
-                newEpd.Gwp.A1A3 = jsMaterial.ECI_A1A3;
-                newEpd.Gwp.A4 = jsMaterial.ECI_A4;
-                newEpd.Gwp.A5 = jsMaterial.ECI_A5;
-                newEpd.Gwp.B1 = jsMaterial.ECI_B1B5;
-                newEpd.Gwp.C1 = jsMaterial.ECI_C1C4;
-                newEpd.Gwp.D = jsMaterial.ECI_D;
+                    Epd newEpd = new Epd();
+                    newEpd.Id = jsMaterial.Id.ToString();
+                    newEpd.Name = jsMaterial.Name;
+                    newEpd.Comment = jsMaterial.Description;
 
-                newEpd.MetaData = new Dictionary<string, string>();
-                newEpd.MetaData.Add("Grade", jsMaterial.Grade);
-                newEpd.MetaData.Add("Sequestration", jsMaterial.ECI_Seq.ToString());
-                newEpd.MetaData.Add("Category", jsMaterial.Category);
-                newEpd.MetaData.Add("Default Waste Factor (%)", jsMaterial.WasteFactor.ToString());
+                    newEpd.Source = new Source();
+                    newEpd.Source.Name = "URL";
+                    newEpd.Source.Url = jsMaterial.EPDurl;
+                    newEpd.DeclaredUnit = Unit.Kg;
 
-                newpart.EpdSource = new EpdSource();
-                newpart.EpdSource.Epd = newEpd;
+                    newEpd.Gwp = new ImpactCategory();
+                    newEpd.Gwp.A1A3 = jsMaterial.ECI_A1A3;
+                    newEpd.Gwp.A4 = jsMaterial.ECI_A4;
+                    newEpd.Gwp.A5 = jsMaterial.ECI_A5;
+                    newEpd.Gwp.B1 = jsMaterial.ECI_B1B5;
+                    newEpd.Gwp.C1 = jsMaterial.ECI_C1C4;
+                    newEpd.Gwp.D = jsMaterial.ECI_D;
 
+                    newEpd.MetaData = new Dictionary<string, string>();
+                    newEpd.MetaData.Add("Grade", jsMaterial.Grade);
+                    newEpd.MetaData.Add("Sequestration", jsMaterial.ECI_Seq.ToString());
+                    newEpd.MetaData.Add("Category", jsMaterial.Category);
+                    newEpd.MetaData.Add("Default Waste Factor (%)", jsMaterial.WasteFactor.ToString());
+
+                    newpart.EpdSource = new EpdSource();
+                    newpart.EpdSource.Epd = newEpd;
+
+                }
+                catch
+                {
+                }
+                materialAssembly.Parts.Add(newpart.Id, newpart);
             }
 
 
