@@ -20,6 +20,25 @@ namespace LCAx
         public Dictionary<string, string> MetaData { get; set; }
         public string Name { get; set; }
         public Dictionary<string, Dictionary<string, double>> Results { get; set; }
+
+        public Lcax()
+        {
+            ClassificationSystem = "";
+            Comment = "";
+            Description = "";
+            EmissionParts = new Dictionary<string, Assembly>();
+            FormatVersion = "";
+            Id = "";
+            ImpactCategories = new List<ImpactCategoryKey>().ToArray();
+            LciaMethod = "CarboLifeCalclulator";
+            LifeCycleStages = new List<LifeCycleStage>().ToArray();
+            LifeSpan = 50;
+            Location = "";
+            MetaData = new Dictionary<string, string>();
+            Name = "";
+            //Results = new Dictionary<string, Dictionary<string, double>>();
+        }
+
     }
 
     public partial class Assembly
@@ -35,6 +54,22 @@ namespace LCAx
         public double Quantity { get; set; }
         public Dictionary<string, Dictionary<string, double>> Results { get; set; }
         public Unit Unit { get; set; }
+
+        public Assembly()
+        {
+            Category = "";
+            Classification = null;
+            Comment = "";
+            Description = "";
+            Id = "";
+            MetaData = new Dictionary<string, string>();
+            Name = "";
+            Parts = new Dictionary<string, EpdPart>();
+            Quantity = 0;
+            Results = null;
+            Unit = Unit.Kg;
+        }
+
     }
 
     public partial class Classification
@@ -54,6 +89,19 @@ namespace LCAx
         public Unit PartUnit { get; set; }
         public double ReferenceServiceLife { get; set; }
         public Transport Transport { get; set; }
+
+        public EpdPart()
+        {
+            EpdSource = null;
+            Id = "";
+            MetaData = new Dictionary<string, string>();
+            Name = "";
+            PartQuantity = 0;
+            PartUnit = Unit.Kg;
+            ReferenceServiceLife = 50;
+            Transport = null;
+        }
+
     }
 
     public partial class EpdSource

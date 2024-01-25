@@ -302,6 +302,7 @@ namespace CarboLifeAPI
             Assembly materialAssembly = new Assembly();
             materialAssembly.Name = "Materials";
             materialAssembly.Comment = "This assembly contains all the used materials in the project";
+            materialAssembly.Description = "This assembly contains all the used materials in the project";
 
             foreach (JsCarboMaterial jsMaterial in jsCarboProject.materialList)
             {
