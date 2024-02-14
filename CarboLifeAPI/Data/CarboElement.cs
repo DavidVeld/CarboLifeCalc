@@ -143,7 +143,7 @@ namespace CarboLifeAPI.Data
             clone.EC = this.EC;
             clone.ECI_Cumulative = this.ECI_Cumulative;
             clone.EC_Cumulative = this.EC_Cumulative;
-            clone.Volume_Cumulative = this.EC_Cumulative;
+            clone.Volume_Cumulative = this.Volume_Cumulative;
 
             clone.isDemolished = this.isDemolished;
             clone.isExisting = this.isExisting;
