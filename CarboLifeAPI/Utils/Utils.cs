@@ -208,6 +208,14 @@ namespace CarboLifeAPI
             return result;
 
         }
+        public static double convertToSqreMtrs(double areaSqrFt)
+        {
+            double result = 0;
+            double factor = Math.Pow((0.3048), 2);
+            result = areaSqrFt * factor;
+            return result;
+
+        }
 
         public static bool isValidExpression(string correction)
         {

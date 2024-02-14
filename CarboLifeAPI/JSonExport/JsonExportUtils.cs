@@ -428,6 +428,7 @@ namespace CarboLifeAPI
             JsCe.Mass = ce.Mass;
             JsCe.Level = ce.Level;
             JsCe.Density = ce.Density;
+            JsCe.Area = ce.Area;
 
             JsCe.ECI = ce.ECI;
             JsCe.EC = ce.EC;
@@ -462,6 +463,8 @@ namespace CarboLifeAPI
 
             JsCe.Volume = grp.Volume;
             JsCe.Volume_Total = grp.TotalVolume;
+
+            JsCe.Area = 0;
 
             JsCe.Level = 0;
             JsCe.Density = grp.Density;

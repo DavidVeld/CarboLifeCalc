@@ -288,6 +288,7 @@
                 <DataGridTextColumn Width="50" MinWidth="100" Header="Additional" Binding="{Binding Path=AdditionalData, Mode=TwoWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="50" MinWidth="100" Header="EC Cumulative" Binding="{Binding Path=EC_Cumulative, Mode=TwoWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="50" MinWidth="100" Header="Volume Cumulative" Binding="{Binding Path=Volume_Cumulative, Mode=TwoWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Width="50" MinWidth="100" Header="Area (m²)" Binding="{Binding Path=Area, Mode=TwoWay}" IsReadOnly="True"/>
 
 
             </DataGrid.Columns>

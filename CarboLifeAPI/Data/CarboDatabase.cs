@@ -272,8 +272,23 @@ namespace CarboLifeAPI.Data
         {
             bool result = false;
             bool exists = false;
-            int id = getUniqueId();
-            newMaterial.Id = id;
+            bool uniqueId = true;
+
+            //int id = getUniqueId();
+            //newMaterial.Id = id;
+
+            foreach (CarboMaterial cm in CarboMaterialList)
+            {
+                if (cm.Id == newMaterial.Id)
+                {
+                    uniqueId = false;
+                    break;
+                }
+            }
+            if(newMaterial.Id < 0 || uniqueId == false)
+            {
+                newMaterial.Id = getUniqueId();
+            }
 
             foreach (CarboMaterial cm in CarboMaterialList)
             {
@@ -299,14 +314,14 @@ namespace CarboLifeAPI.Data
 
         private int getUniqueId()
         {
-            Found:
+            Again:
             Random rnd = new Random();
-            int id = rnd.Next(20000, 30000);  // creates a number between 1 and 12
+            int id = rnd.Next(200000, 300000);  // creates a number between 1 and 12
 
             bool isUnique = isUniqueId(id);
 
             if (isUnique == false)
-                goto Found;
+                goto Again;
             else
                 return id;
         }
@@ -447,6 +462,111 @@ namespace CarboLifeAPI.Data
 
             return copy;
 
+        }
+
+        public bool SyncCSVMaterials(CarboDatabase importedDb, object deleteMaterials)
+        {
+            //validate Ids
+            foreach(CarboMaterial cm in importedDb.CarboMaterialList)
+            {
+                if(cm.Id == 0)
+                {
+                    cm.Id = getUniqueId();
+                }
+            }
+
+            try
+            {
+                //Loop though all materials and update the current ones
+                for (int i = importedDb.CarboMaterialList.Count - 1; i >= 0; i--)
+                {
+                    CarboMaterial newcarboMaterial = importedDb.CarboMaterialList[i];
+                    bool matchfound = false;
+
+                    //Find a match in current database
+                    foreach (CarboMaterial carboMaterial in this.CarboMaterialList)
+                    {
+                        if (newcarboMaterial.Id == carboMaterial.Id)
+                        {
+                            //Copy properties, if different;
+
+                            carboMaterial.Name = newcarboMaterial.Name;
+
+                            carboMaterial.Category = newcarboMaterial.Category;
+
+                            carboMaterial.Description = newcarboMaterial.Name;
+
+                            carboMaterial.Density = newcarboMaterial.Density;
+
+                            carboMaterial.WasteFactor = newcarboMaterial.WasteFactor;
+                            carboMaterial.Grade = newcarboMaterial.Grade;
+                            carboMaterial.EPDurl = newcarboMaterial.EPDurl;
+
+
+                            if (newcarboMaterial.ECI_A1A3 != carboMaterial.ECI_A1A3)
+                            {
+                                carboMaterial.ECI_A1A3_Override = true;
+                                carboMaterial.ECI_A1A3 = newcarboMaterial.ECI_A1A3;
+                            }
+                            if (newcarboMaterial.ECI_A4 != carboMaterial.ECI_A4)
+                            {
+                                carboMaterial.ECI_A4_Override = true;
+                                carboMaterial.ECI_A4 = newcarboMaterial.ECI_A4;
+                            }
+                            if (newcarboMaterial.ECI_A5 != carboMaterial.ECI_A5)
+                            {
+                                carboMaterial.ECI_A5_Override = true;
+                                carboMaterial.ECI_A5 = newcarboMaterial.ECI_A5;
+                            }
+                            if (newcarboMaterial.ECI_B1B5 != carboMaterial.ECI_B1B5)
+                            {
+                                //carboMaterial.ECI_B1B5 = true;
+                                carboMaterial.ECI_B1B5 = newcarboMaterial.ECI_B1B5;
+                            }
+                            if (newcarboMaterial.ECI_C1C4 != carboMaterial.ECI_C1C4)
+                            {
+                                carboMaterial.ECI_C1C4_Override = true;
+                                carboMaterial.ECI_C1C4 = newcarboMaterial.ECI_C1C4;
+                            }
+                            if (newcarboMaterial.ECI_D != carboMaterial.ECI_D)
+                            {
+                                carboMaterial.ECI_D_Override = true;
+                                carboMaterial.ECI_D = newcarboMaterial.ECI_D;
+                            }
+                            if (newcarboMaterial.ECI_Mix != carboMaterial.ECI_Mix)
+                            {
+                                carboMaterial.ECI_Mix_Info = "Imported Value";
+                                carboMaterial.ECI_Mix = newcarboMaterial.ECI_Mix;
+                            }
+                            if (newcarboMaterial.ECI_Seq != carboMaterial.ECI_Seq)
+                            {
+                                carboMaterial.ECI_Seq_Override = true;
+                                carboMaterial.ECI_Seq = newcarboMaterial.ECI_Seq;
+                            }
+
+
+                            matchfound = true;
+                            //next'
+                            break;
+                        }
+                    }
+
+                    //If this part has been reached; 
+                    //the material doesn't exist in the database and a new material will be created:
+                    if (matchfound == false)
+                    {
+                        AddMaterial(newcarboMaterial);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Utils.WriteToLog(ex.Message);
+                return false;
+            }
+
+            //success:
+            return true;
         }
     }
 }

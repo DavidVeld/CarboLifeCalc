@@ -1163,7 +1163,7 @@ namespace CarboLifeUI.UI
 
             if(matImpDia.isAccepted == true)
             {
-                this.returnedDatabase.SyncMaterials(matImpDia.importedDb);
+                this.returnedDatabase.SyncCSVMaterials(matImpDia.importedDb, matImpDia.deleteMaterials);
             }
             RefreshMaterialList();
 

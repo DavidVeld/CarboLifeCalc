@@ -24,6 +24,8 @@ namespace CarboLifeAPI.Data
         public string AdditionalData { get; set; }
         public string Grade { get; set; }
         public double Volume { get; set; }
+        public double Area { get; set; }
+
         /// <summary>
         /// This is the main property to be used for calculations
         /// </summary>
@@ -71,6 +73,7 @@ namespace CarboLifeAPI.Data
             Correction = "";
 
             Volume = 0;
+            Area = 0;
             Volume_Total = 0;
             Level = 0;
             Density = 0;

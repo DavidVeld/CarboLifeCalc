@@ -21,6 +21,8 @@ namespace CarboLifeAPI.Data
         public string Category { get; set; }
         public string SubCategory { get; set; }
         public string AdditionalData { get; set; }
+        public double Area { get; set; }
+
         public string Grade { get; set; }
         public string Correction { get; set; }
 
@@ -59,7 +61,8 @@ namespace CarboLifeAPI.Data
             Category = "Other";
             SubCategory = "";
             AdditionalData = "";
-            
+            Area = 0;
+
             Grade = "";
             Correction = "";
             rcDensity = 0;
@@ -126,6 +129,8 @@ namespace CarboLifeAPI.Data
             clone.Volume = this.Volume;
             clone.Volume_Total = this.Volume_Total;
 
+            clone.Area = this.Area;
+
             clone.Mass = this.Mass;
             clone.Density = this.Density;
             clone.Level = this.Level;
@@ -164,6 +169,8 @@ namespace CarboLifeAPI.Data
             clone.AdditionalData = this.AdditionalData;
             clone.Volume = this.Volume;
             clone.Volume_Total = this.Volume_Total;
+
+            clone.Area = this.Area;
 
             clone.Mass = this.Mass;
             clone.Density = this.Density;

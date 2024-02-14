@@ -38,23 +38,29 @@ namespace CarboLifeRevit
                 {
                     newCarboElement = getNewElementProps(el, doc, settings);
 
-                    string setImportedMaterialName;
-                    double setVolume;
+                string setImportedMaterialName;
+                double setVolume;
+                double setArea;
 
-                    //MaterialName
-                    setImportedMaterialName = doc.GetElement(materialId).Name.ToString();
+                //MaterialName
+                setImportedMaterialName = doc.GetElement(materialId).Name.ToString();
 
                     //Volume
-                    double volumeCubicFt = el.GetMaterialVolume(materialId);
-                    setVolume = Utils.convertToCubicMtrs(volumeCubicFt);
+                double volumeCubicFt = el.GetMaterialVolume(materialId);
+                setVolume = Utils.convertToCubicMtrs(volumeCubicFt);
 
-                    //If it passed it matches all criteria:
-                    newCarboElement.MaterialName = setImportedMaterialName;
-                    newCarboElement.Volume = Math.Round(setVolume, 4);
+                double area = el.GetMaterialArea(materialId,false);
+                setArea = Utils.convertToSqreMtrs(area);
 
 
-                }
-                catch
+                //If it passed it matches all criteria:
+                newCarboElement.MaterialName = setImportedMaterialName;
+                newCarboElement.Volume = Math.Round(setVolume, 4);
+                newCarboElement.Area = Math.Round(setArea, 4);
+
+
+            }
+            catch
                 {
                     return null;
                 }
@@ -377,7 +383,8 @@ namespace CarboLifeRevit
                 string grade;
                 double rcDensity;
                 string correction;
-
+                
+                double area;
 
                 //Get Phasing;
                 Phase elCreatedPhase = doc.GetElement(el.CreatedPhaseId) as Phase;
@@ -459,6 +466,7 @@ namespace CarboLifeRevit
                 correction = getParametervalue(el, settings.CorrectionParameterType, settings.CorrectionParameterName);
 
                 //Get the level (in meter)
+
                 Level lvl = doc.GetElement(el.LevelId) as Level;
                 if (lvl != null)
                 {
@@ -467,9 +475,23 @@ namespace CarboLifeRevit
                 }
                 else
                 {
+                    Parameter levelParam = el.LookupParameter("Reference Level");
+                    Parameter levelValueParam = el.LookupParameter("Reference Level Elevation");
+
+
+                    if (levelParam != null && levelValueParam != null)
+                    {
+                        levelname = levelParam.AsValueString();
+                        setLevel = Convert.ToDouble((levelValueParam.AsDouble()) * 304.8);
+                    }
+                    else
+                    { 
                     setLevel = 0;
                     levelname = "";
+                    }
                 }
+
+
 
                 //Makepass;
 

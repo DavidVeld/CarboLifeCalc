@@ -23,12 +23,17 @@ namespace CarboLifeUI.UI
     public partial class MaterialImportDialog : Window
     {
         internal bool isAccepted;
+
+
         public CarboDatabase currentDb = null;
         public CarboDatabase importedDb = null;
+
+        public bool deleteMaterials { get; set; }
 
         public MaterialImportDialog()
         {
             InitializeComponent();
+            chx_DeleteEmpty.DataContext = this;
         }
 
         /// <summary>
@@ -42,6 +47,7 @@ namespace CarboLifeUI.UI
             importedDb = currentDb.Copy();
 
             dgv_Preview.ItemsSource = importedDb.CarboMaterialList;
+            chx_DeleteEmpty.DataContext = this;
         }
 
         private void btn_SelectFile_Click(object sender, RoutedEventArgs e)
@@ -68,8 +74,18 @@ namespace CarboLifeUI.UI
                 {
                     bool ok = DataExportUtils.CreateMaterialDatabaseCVSFile(importedDb, exportPath);
 
-                    if(ok)
-                        MessageBox.Show("cvs file created");
+                    if (ok)
+                    {
+                        MessageBox.Show("CSV file created. "
+                            + Environment.NewLine +
+                            "Edit the file or use as a template for a new import. " + Environment.NewLine +
+                            "Do not change the column order." + Environment.NewLine +
+                            "Import the file back after changes");
+
+                        string exportDir = System.IO.Path.GetDirectoryName(exportPath);
+                        System.Diagnostics.Process.Start("explorer.exe", exportDir); 
+
+                    }
                 }
             }
 

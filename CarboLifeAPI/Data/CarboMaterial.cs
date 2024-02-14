@@ -275,6 +275,7 @@ namespace CarboLifeAPI.Data
             clone.Grade = this.Grade;
             clone.WasteFactor = this.WasteFactor;
             clone.isLocked = this.isLocked;
+            clone.EPDurl = this.EPDurl;
 
             //results
             clone.ECI = this.ECI;

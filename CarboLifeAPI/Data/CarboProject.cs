@@ -429,8 +429,8 @@ namespace CarboLifeAPI.Data
             for (int i = this.groupList.Count - 1; i >= 0; i--)
             {
                 CarboGroup group = this.groupList[i] as CarboGroup;
-                
-                if(group != null)
+
+                if (group != null && group.isAutoReinforcementGroup == false)
                 {
                     bool deletegroup = false;
 

@@ -185,6 +185,7 @@ namespace CarboLifeAPI.Data
             isExisting = false;
 
             isAutoReinforcementGroup = false;
+
             RcDensity = 0;
         }
         internal void RefreshValuesFromElements()

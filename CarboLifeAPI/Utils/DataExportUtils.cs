@@ -804,6 +804,7 @@ namespace CarboLifeAPI
 
                 "Correction" + "," + //26
                 "RC Density (kg/m3)" + //27
+                                "Area (m2)" + //27
 
 
         Environment.NewLine;
@@ -860,6 +861,7 @@ namespace CarboLifeAPI
 
                 resultString += el.Correction + ","; //26
                 resultString += el.rcDensity + ","; //27
+                resultString += el.Area + ","; //27
 
                 resultString += Environment.NewLine; //enter
 
@@ -914,6 +916,7 @@ namespace CarboLifeAPI
 
                     resultString += grp.Correction + ","; //26
                     resultString += grp.RcDensity + ","; //27
+                    resultString += "0" + ","; //28 (Area)
 
                     resultString += Environment.NewLine; //enter
 
@@ -1048,6 +1051,8 @@ fileString =
                 "Density" + "," + //4
                 "WasteFactor" + "," + //5
                 "Grade" + "," + //5.1
+                "EPDURL" + "," + //5.2
+
                 "ECI" + "," + //6
                 "ECI_A1A3" + "," + //7
                 "ECI_A4" + "," + //8
@@ -1073,6 +1078,7 @@ fileString =
                     resultString += cm.Density + ","; //4
                     resultString += cm.WasteFactor + ","; //5
                     resultString += cm.Grade + ","; //5.1
+                    resultString += cm.EPDurl + ","; //5.2
 
                     resultString += cm.ECI + ","; //6
                     resultString += cm.ECI_A1A3 + ","; //7
@@ -1124,17 +1130,18 @@ fileString =
                     cm.Density = Convert.ToInt32(Utils.ConvertMeToDouble(dr[4].ToString()));
                     cm.WasteFactor = Convert.ToInt32(Utils.ConvertMeToDouble(dr[5].ToString()));
                     cm.Grade = dr[6].ToString();
+                    cm.EPDurl = dr[7].ToString();
 
-                    cm.ECI = Convert.ToInt32(Utils.ConvertMeToDouble(dr[7].ToString()));
+                    cm.ECI = Utils.ConvertMeToDouble(dr[8].ToString());
 
-                    cm.ECI_A1A3 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[8].ToString()));
-                    cm.ECI_A4 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[9].ToString()));
-                    cm.ECI_A5 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[10].ToString()));
-                    cm.ECI_B1B5 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[11].ToString()));
-                    cm.ECI_C1C4 = Convert.ToInt32(Utils.ConvertMeToDouble(dr[12].ToString()));
-                    cm.ECI_D = Convert.ToInt32(Utils.ConvertMeToDouble(dr[13].ToString()));
-                    cm.ECI_Seq = Convert.ToInt32(Utils.ConvertMeToDouble(dr[14].ToString()));
-                    cm.ECI_Mix = Convert.ToInt32(Utils.ConvertMeToDouble(dr[15].ToString()));
+                    cm.ECI_A1A3 = Utils.ConvertMeToDouble(dr[9].ToString());
+                    cm.ECI_A4 = Utils.ConvertMeToDouble(dr[10].ToString());
+                    cm.ECI_A5 = Utils.ConvertMeToDouble(dr[11].ToString());
+                    cm.ECI_B1B5 = Utils.ConvertMeToDouble(dr[12].ToString());
+                    cm.ECI_C1C4 = Utils.ConvertMeToDouble(dr[13].ToString());
+                    cm.ECI_D = Utils.ConvertMeToDouble(dr[14].ToString());
+                    cm.ECI_Seq = Utils.ConvertMeToDouble(dr[15].ToString());
+                    cm.ECI_Mix = Utils.ConvertMeToDouble(dr[16].ToString());
 
                     cmList.Add(cm);
                 }

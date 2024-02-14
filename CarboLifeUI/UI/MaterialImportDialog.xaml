@@ -50,23 +50,24 @@
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Description" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="False"/>
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Density" Binding="{Binding Path=Density, Mode=TwoWay}" IsReadOnly="False"/>
                 <DataGridTextColumn Width="1*" MinWidth="90" Header="WasteFactor" Binding="{Binding Path=WasteFactor}" IsReadOnly="False"/>
-                <DataGridTextColumn Width="1*" MinWidth="90" Header="Grade" Binding="{Binding Path=Grade}" IsReadOnly="False"/>
+                <DataGridTextColumn Width="1*" MinWidth="90" Header="Grade" Binding="{Binding Path=Grade, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn Width="1*" MinWidth="90" Header="EPDurl" Binding="{Binding Path=EPDurl, Mode=TwoWay}" IsReadOnly="False" FontSize="10" />
 
                 <DataGridTextColumn MinWidth="50" Header="ECI" Binding="{Binding Path=ECI}" IsReadOnly="True"/>
                 <DataGridTextColumn MinWidth="50" Header="A1A3" Binding="{Binding Path=ECI_A1A3, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
                 <DataGridTextColumn MinWidth="50" Header="A4" Binding="{Binding Path=ECI_A4, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
-                <DataGridTextColumn MinWidth="50" Header="A5" Binding="{Binding Path=ECI_A5}" IsReadOnly="False"/>
-                <DataGridTextColumn MinWidth="50" Header="B1B5" Binding="{Binding Path=ECI_B1B5}" IsReadOnly="False"/>
-                <DataGridTextColumn MinWidth="50" Header="C1C4" Binding="{Binding Path=ECI_C1C4}" IsReadOnly="False"/>
-                <DataGridTextColumn MinWidth="50" Header="D" Binding="{Binding Path=ECI_D}" IsReadOnly="False"/>
-                <DataGridTextColumn MinWidth="50" Header="Seq" Binding="{Binding Path=ECI_Seq}" IsReadOnly="False"/>
-                <DataGridTextColumn MinWidth="50" Header="Mix" Binding="{Binding Path=ECI_Mix}" IsReadOnly="False"/>
+                <DataGridTextColumn MinWidth="50" Header="A5" Binding="{Binding Path=ECI_A5, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn MinWidth="50" Header="B1B5" Binding="{Binding Path=ECI_B1B5, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn MinWidth="50" Header="C1C4" Binding="{Binding Path=ECI_C1C4, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn MinWidth="50" Header="D" Binding="{Binding Path=ECI_D, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn MinWidth="50" Header="Seq" Binding="{Binding Path=ECI_Seq, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn MinWidth="50" Header="Mix" Binding="{Binding Path=ECI_Mix, Mode=TwoWay}" IsReadOnly="False"/>
 
             </DataGrid.Columns>
         </DataGrid>
 
-
-        <Button Name="btn_Accept" Grid.Row="5" Grid.Column="1" Margin="818,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="87" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Import_Click">Accept Data</Button>
+        <CheckBox x:Name="chx_DeleteEmpty" Grid.Row="5" Grid.Column="1" Height="26" Margin="5,0,210,5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.RowSpan="2" IsChecked="{Binding deleteMaterials}" >Delete Materials Not in List</CheckBox>
+        <Button Name="btn_Accept" Grid.Row="5" Grid.Column="1" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="87" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Import_Click">Accept Data</Button>
         <Button Name="btn_Cancel" Grid.Row="5" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
 
     </Grid>
