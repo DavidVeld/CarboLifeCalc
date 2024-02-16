@@ -123,11 +123,9 @@ namespace CarboLifeAPI
             CarboGroup cg = carboProject.getTotalsGroup();
 
             //get all elements
-            if (cg.AllElements.Count > 0)
-            {
-                List<CarboElement> elements = cg.AllElements;
+            IList<CarboElement> elementList = carboProject.getElementsFromGroups().ToList();
 
-                foreach (CarboElement ce in elements)
+                foreach (CarboElement ce in elementList)
                 {
                     CarboMaterial material = carboProject.CarboDatabase.getClosestMatch(ce.CarboMaterialName, ce.Grade);
                     if (material != null)
@@ -155,7 +153,7 @@ namespace CarboLifeAPI
                         jsProject.elementList.Add(JsCe);
                     }
                 }
-            }
+            
 
             // get all the groups without elements
             foreach(CarboGroup grp in carboProject.getGroupList)

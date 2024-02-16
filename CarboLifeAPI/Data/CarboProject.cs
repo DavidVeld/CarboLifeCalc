@@ -13,6 +13,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -2084,6 +2085,20 @@ namespace CarboLifeAPI.Data
             }
 
             return result;
+        }
+
+        public List<string> getSortedLevelList()
+        {
+            List<string> levelList = new List<string>();
+            try
+            {
+                IList<CarboElement> elementList = getElementsFromGroups().ToList();
+                levelList = elementList.Select(x => x.LevelName).Distinct().ToList();
+            
+            }
+            catch (Exception ex) { }
+
+            return levelList;
         }
     }
 }

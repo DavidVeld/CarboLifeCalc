@@ -109,6 +109,7 @@
     <Compile Include="UtilClasses\CarboLevel.cs" />
     <Compile Include="UtilClasses\EoLElement.cs" />
     <Compile Include="UtilClasses\VehicleAndFuel.cs" />
+    <Compile Include="Utils\CarboByLevelData.cs" />
     <Compile Include="Utils\CarboDataPoint.cs" />
     <Compile Include="Utils\CarboCalcTextUtils.cs" />
     <Compile Include="Utils\CarboTimeLine.cs" />

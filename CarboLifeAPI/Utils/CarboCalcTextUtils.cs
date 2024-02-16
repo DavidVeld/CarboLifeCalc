@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -114,6 +115,112 @@ namespace CarboLifeAPI
             return result;
         }
 
+        public static DataTable getByLevelTable(CarboProject project, bool fullResult = false)
+        {
+            if (fullResult == true)
+                project.CalculateProjectByPhase();
+            else
+                project.CalculateProject();
+
+            DataTable result = new DataTable();
+            result.Columns.Add("Level"); //0
+            result.Columns.Add("Elevation");//1
+            result.Columns.Add("Category"); //2
+            result.Columns.Add("SubCategory");
+            result.Columns.Add("Material"); //4
+            result.Columns.Add("IsSubstructure");//5
+
+            result.Columns.Add("TotalEC"); //6
+
+            result.Columns.Add("A1-A3");
+            result.Columns.Add("A4");
+            result.Columns.Add("A5");
+            result.Columns.Add("B1-B7");
+            result.Columns.Add("C1-C4");
+            result.Columns.Add("D");
+            result.Columns.Add("Sequestration");
+            result.Columns.Add("Mix");
+
+            //IList<CarboElement> elementList = project.getElementsFromGroups().ToList();
+            JsCarboProject jsProject = JsonExportUtils.converToJsProject(project);
+
+            foreach (JsCarboElement ce in jsProject.elementList)
+            {
+                if (ce.isSubstructure == true && project.calculateSubStructure == false)
+                    continue;
+
+                DataRow dr = result.NewRow();
+
+                dr["Level"] = ce.LevelName;
+                dr["Elevation"] = ce.Level.ToString();
+
+                dr["Category"] = ce.Category;
+                dr["SubCategory"] = ce.SubCategory;
+                dr["Material"] = ce.CarboMaterialName;
+                dr["IsSubstructure"] = ce.isSubstructure;
+
+                double totalEC = 0;
+
+                if (project.calculateA13 == true || fullResult == true)
+                {
+                    dr["A1-A3"] = ce.EC_A1A3_Total;
+                    totalEC += ce.EC_A1A3_Total;
+                }
+
+                if (project.calculateA4 == true || fullResult == true)
+                {
+                    dr["A4"] = ce.EC_A4_Total;
+                    totalEC += ce.EC_A4_Total;
+                }
+
+                if (project.calculateA5 == true || fullResult == true)
+                {
+                    dr["A5"] = ce.EC_A5_Total;
+                    totalEC += ce.EC_A5_Total;
+                }
+
+                if (project.calculateB == true || fullResult == true)
+                {
+                    dr["B1-B7"] = ce.EC_B1B7_Total;
+                    totalEC += ce.EC_B1B7_Total;
+
+                }
+
+                if (project.calculateC == true || fullResult == true)
+                {
+                    dr["C1-C4"] = ce.EC_C1C4_Total;
+                    totalEC += ce.EC_C1C4_Total;
+                }
+
+                if (project.calculateD == true || fullResult == true)
+                {
+                    dr["D"] = ce.EC_D_Total;
+                    totalEC += ce.EC_D_Total;
+                }
+
+
+                if (project.calculateSeq == true || fullResult == true)
+                {
+                    dr["Sequestration"] = ce.EC_Sequestration_Total;
+                    totalEC += ce.EC_Sequestration_Total;
+                }
+
+                if (project.calculateAdd == true || fullResult == true)
+                {
+                    dr["Mix"] = ce.EC_Mix_Total;
+                    totalEC += ce.EC_Mix_Total;
+                }
+
+                dr["TotalEC"] = totalEC;
+
+
+                result.Rows.Add(dr);
+            }
+
+
+            return result;
+        }
+
         /// <summary>
         /// Converts a ResultTable to a DataPoint List for use in graphs
         /// </summary>
@@ -162,6 +269,7 @@ namespace CarboLifeAPI
             //Values should return now;
             return valueList;
         }
+
 
     }
 }

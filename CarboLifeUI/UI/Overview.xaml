@@ -56,7 +56,7 @@
             <ComboBox Name="cbb_GraphType" Grid.Row="1" Grid.Column="1"  Margin="0,0,0,0" Height="25" Width="219" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_GraphType_DropDownClosed"/>
 
 
-            <lvc:PieChart Name="pie_Chart1"  Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="#050505" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Segoe UI" FontWeight="Light" LegendLocation="Right">
+            <lvc:PieChart Name="pie_Chart1" Visibility="Hidden" Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="#050505" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Segoe UI" FontWeight="Light" LegendLocation="Right">
                 <lvc:PieChart.Resources>
                     <Style TargetType="lvc:PieSeries">
                         <Setter Property="DataLabels" Value="True"></Setter>
@@ -70,6 +70,34 @@
                     <lvc:DefaultTooltip BulletSize="20" Background="Gray" Foreground="#050505" SelectionMode="OnlySender"/>
                 </lvc:PieChart.DataTooltip>
             </lvc:PieChart>
+            
+            <lvc:CartesianChart Visibility="Visible" Name="chart_Level" Grid.Column="1" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
+                
+                <lvc:CartesianChart.Resources>
+                    <Style TargetType="lvc:StackedRowSeries">
+                        <Setter Property="DataLabels" Value="True"></Setter>
+                        <Setter Property="LabelsPosition" Value="Merged"></Setter>
+                        <Setter Property="ToolTip" Value="False"></Setter>
+
+                    </Style>
+                </lvc:CartesianChart.Resources>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Carbon Totals" 
+                         LabelFormatter="{Binding Formatter}" >
+                        <lvc:Axis.Separator>
+                            <lvc:Separator Stroke="Gray" Width="20"/>
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Level" Labels="{Binding levelLabels}" >
+
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart.DataTooltip>
+                    <lvc:DefaultTooltip SelectionMode="SharedYValues"></lvc:DefaultTooltip>
+                </lvc:CartesianChart.DataTooltip>
+            </lvc:CartesianChart>
         </Grid>
 
         <!-- Cart 2 Per phase-->

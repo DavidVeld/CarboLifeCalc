@@ -770,6 +770,9 @@ namespace CarboLifeAPI
                 "Id" + "," + //-1
                 "Category" + "," + //0
                 "Name" + "," + //1
+                "SubCategory" + "," + //1.1
+                "Additional" + "," + //1.2
+
                 "Material Name" + "," + //2
                 "Carbo Material Name" + "," + //3
                 "Level" + "," + //4
@@ -820,6 +823,8 @@ namespace CarboLifeAPI
                 resultString += el.Id + ","; //-1
                 resultString += CVSFormat(el.Category) + ","; //0
                 resultString += CVSFormat(el.Name) + ","; //1
+                resultString += CVSFormat(el.SubCategory) + ","; //1.1
+                resultString += CVSFormat(el.AdditionalData) + ","; //1.2
                 resultString += CVSFormat(el.MaterialName) + ","; //2
                 resultString += CVSFormat(el.CarboMaterialName) + ","; //3
                 resultString += el.Level + ","; //4
@@ -879,6 +884,8 @@ namespace CarboLifeAPI
                     resultString += grp.Id + ","; //-1
                     resultString += CVSFormat(grp.Category) + ","; //0
                     resultString += CVSFormat(grp.Description) + ","; //1
+                    resultString += CVSFormat(grp.SubCategory) + ","; //1.1
+                    resultString += CVSFormat(grp.additionalData) + ","; //1.2
                     resultString += CVSFormat(grp.Material.Name) + ","; //2
                     resultString += CVSFormat(grp.Material.Name) + ","; //3
                     resultString += "" + ","; //4

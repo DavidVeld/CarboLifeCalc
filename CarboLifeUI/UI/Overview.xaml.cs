@@ -29,6 +29,10 @@ namespace CarboLifeUI.UI
     {
         public CarboProject CarboLifeProject;
         string summaryTextMemory = "";
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] levelLabels { get; set; }
+        public Func<double, string> Formatter { get; set; }
+
         public Overview()
         {
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
@@ -81,6 +85,10 @@ namespace CarboLifeUI.UI
                 {
                     cbb_GraphType.Items.Add("Material");
                     cbb_GraphType.Items.Add("Category");
+                    cbb_GraphType.Items.Add("By Level, Material");
+                    cbb_GraphType.Items.Add("By Level, Category");
+                    cbb_GraphType.Items.Add("By Level, Totals");
+
 
                 }
                 cbb_GraphType.SelectedItem = "Material";
@@ -102,7 +110,12 @@ namespace CarboLifeUI.UI
                 {
 
                     SeriesCollection pieSeries = null;
+                    SeriesCollection levelSeries = null;
+
                     //SeriesCollection pieLifeSeries = GraphBuilder.GetPieChartTotals(CarboLifeProject);
+
+                    chart_Level.Visibility = Visibility.Hidden;
+                    pie_Chart1.Visibility = Visibility.Visible;
 
                     if (cbb_GraphType.SelectedValue == null)
                     {
@@ -126,6 +139,51 @@ namespace CarboLifeUI.UI
                             pieSeries = GraphBuilder.GetPieChart(currentProjectResult, "Category");
 
                     }
+                    else if (cbb_GraphType.SelectedValue.ToString() == "By Level, Material" ||
+                        cbb_GraphType.SelectedValue.ToString() == "By Level, Category" ||
+                        cbb_GraphType.SelectedValue.ToString() == "By Level, Totals")
+                    {
+                        string graphType = "";
+
+                        chart_Level.Visibility = Visibility.Visible;
+                        pie_Chart1.Visibility = Visibility.Hidden;
+
+                        if (cbb_GraphType.SelectedValue.ToString() == "By Level, Material")
+                            graphType = "Material";
+                        else if(cbb_GraphType.SelectedValue.ToString() == "By Level, Category")
+                            graphType = "Category";
+                        else
+                            graphType = "Totals";
+
+                        //JsCarboProject convertedProject = JsonExportUtils.converToJsProject(CarboLifeProject);
+                        List<string> labels = new List<string>();
+
+                        List<string> levelList = CarboLifeProject.getSortedLevelList();
+
+                        DataTable currentProjectResult = CarboCalcTextUtils.getByLevelTable(CarboLifeProject);
+
+                        if (currentProjectResult != null)
+                            levelSeries = GraphBuilder.getLevelChartMaterial(currentProjectResult, graphType, out labels);
+
+                        //refresh:
+                        chart_Level.Series = null;
+                        levelLabels = null; ;
+                        DataContext = this;
+
+                        levelLabels = labels.ToArray();
+                        DataContext = this;
+
+                        if (levelSeries != null)
+                        {
+                            chart_Level.Series = levelSeries;
+                            chart_Level.SeriesColors = GraphBuilder.getColours();
+
+                            levelLabels = labels.ToArray();
+                            Formatter = x => x + "tCO2";
+                            DataContext = this;
+                        }
+
+                    }
                     else
                     {
                         DataTable currentProjectResult = CarboCalcTextUtils.getResultTable(CarboLifeProject);
@@ -140,6 +198,8 @@ namespace CarboLifeUI.UI
                         pie_Chart1.SeriesColors = GraphBuilder.getColours();
 
                     }
+
+
                     /*
                     if (pieLifeSeries != null)
                     {
