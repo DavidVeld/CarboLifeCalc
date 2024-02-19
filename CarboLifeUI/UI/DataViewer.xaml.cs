@@ -1,5 +1,7 @@
-﻿using CarboLifeAPI;
+﻿using Autodesk.Revit.DB;
+using CarboLifeAPI;
 using CarboLifeAPI.Data;
+using LiveCharts.Maps;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -480,20 +482,20 @@ namespace CarboLifeUI.UI
             if (chx_AdvancedShow.IsChecked == true)
             {
                 //column_Volume.Visibility = Visibility.Visible;
-                column_Correction.Visibility = Visibility.Visible;
-                column_Addition.Visibility = Visibility.Visible;
-                column_Waste.Visibility = Visibility.Visible;
-                column_B4.Visibility = Visibility.Visible;
-                column_B1B7ECI.Visibility = Visibility.Visible;
+                column_Correction.Visibility = System.Windows.Visibility.Visible;
+                column_Addition.Visibility = System.Windows.Visibility.Visible;
+                column_Waste.Visibility = System.Windows.Visibility.Visible;
+                column_B4.Visibility = System.Windows.Visibility.Visible;
+                column_B1B7ECI.Visibility = System.Windows.Visibility.Visible;
             }
             else
             {
                 // column_Volume.Visibility = Visibility.Hidden;
-                column_Correction.Visibility = Visibility.Hidden;
-                column_Addition.Visibility = Visibility.Hidden;
-                column_Waste.Visibility = Visibility.Hidden;
-                column_B4.Visibility = Visibility.Hidden;
-                column_B1B7ECI.Visibility = Visibility.Hidden;
+                column_Correction.Visibility = System.Windows.Visibility.Hidden;
+                column_Addition.Visibility = System.Windows.Visibility.Hidden;
+                column_Waste.Visibility = System.Windows.Visibility.Hidden;
+                column_B4.Visibility = System.Windows.Visibility.Hidden;
+                column_B1B7ECI.Visibility = System.Windows.Visibility.Hidden;
             }
         }
 
@@ -611,14 +613,14 @@ namespace CarboLifeUI.UI
             {
                 grd_Elements.Height = new GridLength(0, GridUnitType.Pixel);
                 btn_Collaps.Content = "▲";
-                mnu_EditElements.Visibility = Visibility.Hidden;
+                mnu_EditElements.Visibility = System.Windows.Visibility.Hidden;
 
             }
             else
             {
                 grd_Elements.Height = new GridLength(200, GridUnitType.Pixel);
                 btn_Collaps.Content = "▼";
-                mnu_EditElements.Visibility = Visibility.Visible;
+                mnu_EditElements.Visibility = System.Windows.Visibility.Visible;
 
             }
         }
@@ -873,6 +875,29 @@ namespace CarboLifeUI.UI
 
         }
 
+        private void Mnu_AutoRCGroups(object sender, RoutedEventArgs e)
+        {
+            if(CarboLifeProject.RevitImportSettings == null)
+            {
+                CarboLifeProject.RevitImportSettings = CarboLifeProject.RevitImportSettings.DeSerializeXML();
+            }
 
+            MaterialConcreteMapper concreteMapper = new MaterialConcreteMapper(CarboLifeProject.RevitImportSettings);
+            concreteMapper.ShowDialog();
+            if (concreteMapper.isAccepted == true)
+            {
+                try
+                {
+                    CarboLifeProject.RevitImportSettings.rcQuantityMap = concreteMapper.rcMap;
+                    CarboLifeProject.RevitImportSettings.RCParameterType = concreteMapper.categoryType;
+                    CarboLifeProject.RevitImportSettings.RCParameterName = concreteMapper.categoryName;
+                    CarboLifeProject.RevitImportSettings.RCMaterialName = concreteMapper.carboMaterialName;
+                    CarboLifeProject.RevitImportSettings.RCMaterialCategory = concreteMapper.carboMaterialCategory;
+
+                    CarboLifeProject.CreateReinforcementGroup();
+                }
+                catch (Exception ex) { }
+            }
+        }
     }
 }

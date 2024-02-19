@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media.Media3D;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -1142,6 +1143,14 @@ fileString =
 
                     cm.ECI = Utils.ConvertMeToDouble(dr[8].ToString());
 
+                    cm.ECI_A1A3_Override = true;
+                    cm.ECI_A4_Override = true;
+                    cm.ECI_A5_Override = true;
+                    cm.ECI_C1C4_Override = true;
+                    cm.ECI_D_Override = true;
+                    cm.ECI_Seq_Override = true;
+
+
                     cm.ECI_A1A3 = Utils.ConvertMeToDouble(dr[9].ToString());
                     cm.ECI_A4 = Utils.ConvertMeToDouble(dr[10].ToString());
                     cm.ECI_A5 = Utils.ConvertMeToDouble(dr[11].ToString());
@@ -1151,6 +1160,8 @@ fileString =
                     cm.ECI_Seq = Utils.ConvertMeToDouble(dr[15].ToString());
                     cm.ECI_Mix = Utils.ConvertMeToDouble(dr[16].ToString());
 
+
+
                     cmList.Add(cm);
                 }
             }
@@ -1158,6 +1169,79 @@ fileString =
             return cmList;
         }
 
+        public static bool CreateElementImportTemplate(string exportPath)
+        {
+            if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
+                return false;
+
+            string fileString = "";
+            //Create Headers;
+            fileString =
+                            "Id" + "," + //0
+                            "Name" + "," + //1
+                            "Category" + "," + //2
+                            "MaterialName" + "," + //3
+                            "Volume" + "," + //4
+                            "IsSubstructure" + "," + //5
+                            "Level" + "," + //6
+                            "AdditionalData" + "," + //7
+                            Environment.NewLine;
+                    string resultString =
+                                    "999999" + "," + //0
+                                    "Example Element" + "," + //1
+                                    "Floor" + "," + //2
+                                    "Concrete" + "," + //3
+                                    "100" + "," + //4
+                                    "FALSE" + "," + //5
+                                    "Level 01" + "," + //6
+                                    "Transfer slab" + "," + //7
+                                    Environment.NewLine;
+
+                    fileString += resultString;
+
+            try
+            {
+                WriteCVSFile(fileString, exportPath);
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
+        }
+        public static List<CarboElement> GetElementsFromCVSFile(string importPath)
+        {
+            List<CarboElement> elementList = new List<CarboElement>();
+
+            if (File.Exists(importPath) && IsFileLocked(importPath) == false)
+            {
+                DataTable profileTable = Utils.LoadCSV(importPath);
+
+                foreach (DataRow dr in profileTable.Rows)
+                {
+                    try
+                    {
+                        CarboElement element = new CarboElement();
+
+                        element.Id = Convert.ToInt32(Utils.ConvertMeToDouble(dr[0].ToString()));
+                        element.Name = dr[1].ToString();
+                        element.Category = dr[2].ToString();
+                        element.MaterialName = dr[3].ToString();
+                        element.Volume = Convert.ToInt32(Utils.ConvertMeToDouble(dr[4].ToString()));
+                        element.isSubstructure = bool.Parse((dr[5].ToString()));
+                        element.LevelName = dr[6].ToString();
+                        element.AdditionalData = dr[7].ToString();
+                        elementList.Add(element);
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+                }
+            }
+            return elementList;
+
+        }
 
         public class LookupItem
         {

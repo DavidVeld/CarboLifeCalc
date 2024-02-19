@@ -83,6 +83,7 @@ namespace CarboLifeAPI.Data
             mapReinforcement = true;
             RCParameterName = "";
             RCParameterType = "";
+            RCMaterialName = "Reinforcement";
 
             rcQuantityMap = new List<CarboNumProperty>();
             

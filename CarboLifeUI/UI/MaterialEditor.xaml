@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Material Editor"
-             d:DesignHeight="744" d:DesignWidth="900" Height="744" Width="900" MinHeight="744" MinWidth="900" Loaded="Window_Loaded" ShowInTaskbar="True" SizeChanged="Window_SizeChanged" Background="LightGray">
+             d:DesignHeight="744" d:DesignWidth="900" Height="760" Width="900" MinHeight="760" MinWidth="900" Loaded="Window_Loaded" ShowInTaskbar="True" SizeChanged="Window_SizeChanged" Background="LightGray">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

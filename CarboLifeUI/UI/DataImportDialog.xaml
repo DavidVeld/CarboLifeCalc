@@ -1,0 +1,61 @@
+﻿<Window x:Class="CarboLifeUI.UI.DataImportDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarboLifeUI.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="1000" MinWidth="1000"  Width="1000" MinHeight="450" Height="450">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="MyStyles.xaml"/>
+                <ResourceDictionary Source="MyDataGrid.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="1" Height="35" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource formTitleStyle}">Import Elements</Label>
+
+        <Button Name="btn_Import" Grid.Row="2" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="85" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_SelectFile_Click">Import CSV...</Button>
+        <Button Name="btn_Export" Grid.Row="2" Grid.Column="1" Margin="105,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="115" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_Export_Click">Export Template...</Button>
+
+        <Label Grid.Column="1" Margin="0,0,10,0" Grid.Row="3" Height="35" Grid.ColumnSpan="2" VerticalAlignment="Top" Style="{StaticResource formGreyText}">
+            Import elements from a text file: each row will be imported as an element and divided into groups accordingly on import.
+        </Label>
+
+        <DataGrid AutoGenerateColumns="False" Name="dgv_Preview" Grid.Column="1" Grid.Row="4" Grid.RowSpan="1" Margin="5,5,5,5" IsReadOnly="False"  FontSize="8" EnableRowVirtualization="false"  CanUserAddRows="True" CanUserDeleteRows="True" CanUserReorderColumns="False" ColumnWidth="*" HorizontalScrollBarVisibility="Visible">
+            <DataGrid.Columns>
+                <DataGridTextColumn MinWidth="25" Header="Id" Binding="{Binding Path=Id}" IsReadOnly="False" Visibility="Visible"  FontSize="12"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Name" Binding="{Binding Path=Name, Mode=TwoWay}" IsReadOnly="False" FontSize="12"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Category" Binding="{Binding Path=Category}" IsReadOnly="False" FontSize="12" />
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Material Name" Binding="{Binding Path=MaterialName, Mode=TwoWay}" IsReadOnly="False" FontSize="12"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Volume" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" FontSize="12"/>
+                <DataGridCheckBoxColumn Width="1*" MinWidth="100" Header="Is Substructure" Binding="{Binding Path=isSubstructure, Mode=TwoWay}" IsReadOnly="False"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="Level" Binding="{Binding Path=LevelName, Mode=TwoWay}" IsReadOnly="False" FontSize="12"/>
+                <DataGridTextColumn Width="1*" MinWidth="100" Header="AdditionalData" Binding="{Binding Path=AdditionalData, Mode=TwoWay}" IsReadOnly="False" FontSize="12"/>
+
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Name="btn_Accept" Grid.Row="5" Grid.Column="1" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="87" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Import_Click">Accept Data</Button>
+        <Button Name="btn_Cancel" Grid.Row="5" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
+
+    </Grid>
+</Window>

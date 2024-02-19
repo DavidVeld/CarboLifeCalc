@@ -57,7 +57,16 @@ namespace CarboLifeUI.UI
 
             IsRevit = false;
             carboLifeProject = new CarboProject();
-            InitializeComponent();
+
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                // Log error (including InnerExceptions!)
+                // Handle exception
+            }
         }
 
         public CarboLifeMainWindow(CarboProject myProject)
@@ -663,6 +672,38 @@ namespace CarboLifeUI.UI
                 if (ok == true)
                 {
                     MessageBox.Show("File exported to: " + path);
+                }
+            }
+        }
+
+        private void mnu_ImportElements_Click(object sender, RoutedEventArgs e)
+        {
+
+            DataImportDialog elementImportDialog = new DataImportDialog();
+            elementImportDialog.ShowDialog();
+
+            if (elementImportDialog.isAccepted == true)
+            {
+                List<CarboElement> elements = elementImportDialog.elementList;
+                if (elements.Count > 0)
+                {
+                    try
+                    {
+                        foreach (CarboElement ce in elements)
+                        {
+                            carboLifeProject.AddorUpdateElement(ce);
+                        }
+
+                        //run once;
+                        carboLifeProject.CreateGroups();
+                        //carboLifeProject.CreateReinforcementGroup();
+                        carboLifeProject.CalculateProject();
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                    
                 }
             }
         }

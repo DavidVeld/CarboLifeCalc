@@ -217,7 +217,7 @@ namespace CarboLifeAPI.Data
             CarboSettings settings = new CarboSettings();
             settings = settings.Load();
 
-            RevitImportSettings = new CarboGroupSettings();
+            RevitImportSettings = settings.defaultCarboGroupSettings;
             CarboDatabase = new CarboDatabase();
             CarboDatabase = CarboDatabase.DeSerializeXML(selectedTemplateFile);
 
@@ -1828,6 +1828,53 @@ namespace CarboLifeAPI.Data
             elementList.Add(carboElement);
             justSaved = false;
         }
+
+        public void AddorUpdateElement(CarboElement carboElement)
+        {
+            
+            bool found = false;
+            /*
+            for(int i = 0; i<elementList.Count; i++)
+            {
+                CarboElement ce = elementList[i] as CarboElement;
+                if (ce != null)
+                {
+                    if (ce.Id == carboElement.Id)
+                    {
+                        ce = carboElement;
+                        found = true;
+                        i = elementList.Count;
+                    }
+                }
+            }
+
+            
+
+            */
+
+            for (int i = elementList.Count - 1; i >= 0; i--)
+            {
+                CarboElement ce = elementList[i] as CarboElement;
+                if (ce != null)
+                {
+                    if (ce.Id == carboElement.Id)
+                    {
+                        elementList.RemoveAt(i);
+                        elementList.Insert(i, carboElement);
+                        found = true;
+
+                        break;
+                    }
+                }
+            }
+
+            if (found == false)
+            {
+                elementList.Add(carboElement);
+            }
+
+            justSaved = false;
+        }
         public CarboProject DeSerializeXML(string myPath)
         { 
             if (File.Exists(myPath))
@@ -2017,7 +2064,7 @@ namespace CarboLifeAPI.Data
             //if there is an override to the values check this now?
             CarboNumProperty rcDensityProperty = null;
 
-            if (result.RcDensity == null || result.RcDensity == 0)
+            if (result.RcDensity == 0)
             {
                 foreach (CarboNumProperty property in RevitImportSettings.rcQuantityMap)
                 {
@@ -2069,6 +2116,7 @@ namespace CarboLifeAPI.Data
                 {
                     CarboElement rcElement = ce.CopyMe();
                     rcElement.Category = "Reinforcement";
+                    rcElement.SubCategory = ce.Category;
                     rcElement.Name = "Reinforcement of " + ce.Name;
                     rcElement.MaterialName = reinforcementMaterial.Name;
                     rcElement.CarboMaterialName = reinforcementMaterial.Name;
