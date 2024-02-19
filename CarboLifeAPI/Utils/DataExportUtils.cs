@@ -768,22 +768,21 @@ namespace CarboLifeAPI
 
             //Create Headers;
             fileString =
-                "Id" + "," + //-1
-                "Category" + "," + //0
-                "Name" + "," + //1
-                "SubCategory" + "," + //1.1
-                "Additional" + "," + //1.2
+                "Id" + "," + //0
+                "Category" + "," + //1
+                "Name" + "," + //2
+                "SubCategory" + "," + //3
 
-                "Material Name" + "," + //2
-                "Carbo Material Name" + "," + //3
-                "Level" + "," + //4
-                "Level Name" + "," + //4.1
+                "Material Name" + "," + //4
+                "Carbo Material Name" + "," + //5
+                "Level" + "," + //6
+                "Level Name" + "," + //7
 
-                "Volume (m³)" + "," + //5
-                "Volume Total (m³)" + "," + //6.1
-                "Volume Cumulative (m³)" + "," + //6.2 (10)
+                "Volume (m3)" + "," + //7.1
+                "Volume Total (m3)" + "," + //7.2
+                "Volume Cumulative (m3)" + "," + //7.3
 
-                "Density (kg/m³)" + "," + //7
+                "Density (kg/m3)" + "," + //7.4
                 "Mass (kg)" + "," + //8
                 "Grade" + ","+  //8.1
 
@@ -808,8 +807,8 @@ namespace CarboLifeAPI
                 "EC Sequestration (kgCO2e)" + "," + //25
 
                 "Correction" + "," + //26
-                "RC Density (kg/m3)" + //27
-                                "Area (m2)" + //27
+                "RC Density (kg/m3)" + "," + //27
+                "Area (m2)" + //27
 
 
         Environment.NewLine;
@@ -821,21 +820,20 @@ namespace CarboLifeAPI
             {
                 string resultString = "";
 
-                resultString += el.Id + ","; //-1
-                resultString += CVSFormat(el.Category) + ","; //0
-                resultString += CVSFormat(el.Name) + ","; //1
-                resultString += CVSFormat(el.SubCategory) + ","; //1.1
-                resultString += CVSFormat(el.AdditionalData) + ","; //1.2
-                resultString += CVSFormat(el.MaterialName) + ","; //2
-                resultString += CVSFormat(el.CarboMaterialName) + ","; //3
-                resultString += el.Level + ","; //4
-                resultString += el.LevelName + ","; //4.1
+                resultString += el.Id + ","; //0
+                resultString += CVSFormat(el.Category) + ","; //1
+                resultString += CVSFormat(el.Name) + ","; //2
+                resultString += CVSFormat(el.SubCategory) + ","; //3
+                resultString += CVSFormat(el.MaterialName) + ","; //4
+                resultString += CVSFormat(el.CarboMaterialName) + ","; //5
+                resultString += el.Level + ","; //6
+                resultString += el.LevelName + ","; //7
 
-                resultString += el.Volume + ","; //5
-                resultString += el.Volume_Total + ","; //6.1
-                resultString += el.Volume_Cumulative + ","; //6.2 (10)
+                resultString += el.Volume + ","; //7.1
+                resultString += el.Volume_Total + ","; //7.2
+                resultString += el.Volume_Cumulative + ","; //7.3
 
-                resultString += el.Density + ","; //7
+                resultString += el.Density + ","; //7.4
                 resultString += el.Mass + ","; //8
                 resultString += el.Grade + ","; //8
 
@@ -882,21 +880,20 @@ namespace CarboLifeAPI
                 {
                     string resultString = "";
 
-                    resultString += grp.Id + ","; //-1
-                    resultString += CVSFormat(grp.Category) + ","; //0
-                    resultString += CVSFormat(grp.Description) + ","; //1
-                    resultString += CVSFormat(grp.SubCategory) + ","; //1.1
-                    resultString += CVSFormat(grp.additionalData) + ","; //1.2
-                    resultString += CVSFormat(grp.Material.Name) + ","; //2
-                    resultString += CVSFormat(grp.Material.Name) + ","; //3
-                    resultString += "" + ","; //4
-                    resultString += "" + ","; //4.1
+                    resultString += grp.Id + ","; //0
+                    resultString += CVSFormat(grp.Category) + ","; //1
+                    resultString += CVSFormat(grp.Description) + ","; //2
+                    resultString += CVSFormat(grp.SubCategory) + ","; //3
+                    resultString += CVSFormat(grp.Material.Name) + ","; //4
+                    resultString += CVSFormat(grp.Material.Name) + ","; //5
+                    resultString += "" + ","; //6
+                    resultString += "" + ","; //7
 
-                    resultString += grp.Volume + ","; //5
-                    resultString += grp.TotalVolume + ","; //6.1
-                    resultString += grp.TotalVolume + ","; //6.2 (10)
+                    resultString += grp.Volume + ","; //7.1
+                    resultString += grp.TotalVolume + ","; //7.2
+                    resultString += grp.TotalVolume + ","; //7.3
 
-                    resultString += grp.Density + ","; //7
+                    resultString += grp.Density + ","; //7.4
                     resultString += grp.Mass + ","; //8
                     resultString += grp.Grade + ","; //8.1
 

@@ -30,7 +30,10 @@ namespace CarboLifeAPI
 
             try
             {
-                var json = new JavaScriptSerializer().Serialize(jsProject);
+                var JsonSerializer = new JavaScriptSerializer();
+                JsonSerializer.MaxJsonLength = Int32.MaxValue;
+
+                var json = JsonSerializer.Serialize(jsProject);
                 File.WriteAllText(path, json);
 
                 result = true;
@@ -511,7 +514,10 @@ namespace CarboLifeAPI
 
             try
             {
-                var json = new JavaScriptSerializer().Serialize(lcaProject);
+                var JsonSerializer = new JavaScriptSerializer();
+                JsonSerializer.MaxJsonLength = Int32.MaxValue;
+
+                var json = JsonSerializer.Serialize(lcaProject);
                 File.WriteAllText(path, json);
 
                 result = true;
