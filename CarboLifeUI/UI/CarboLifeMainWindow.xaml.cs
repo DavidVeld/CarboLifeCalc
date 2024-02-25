@@ -49,6 +49,9 @@ namespace CarboLifeUI.UI
 
         /////////////
 
+        //public static CarboLifeMainWindow Instance;
+
+
         //public CarboDatabase carboDataBase { get; set; }
         public CarboLifeMainWindow()
         {
@@ -61,6 +64,7 @@ namespace CarboLifeUI.UI
             try
             {
                 InitializeComponent();
+                //Instance = this;
             }
             catch (Exception ex)
             {

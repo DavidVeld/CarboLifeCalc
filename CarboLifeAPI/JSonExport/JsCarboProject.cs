@@ -31,6 +31,7 @@ namespace CarboLifeAPI.Data
         /// m²
         /// </summary>
         public double GIA { get; set; }
+        public double GIANew { get; internal set; }
 
         /// <summary>
         /// tCo2
@@ -69,6 +70,8 @@ namespace CarboLifeAPI.Data
             Description = "New Project";
             valueUnit = "£";
             GIA = 1;
+            GIANew = 1;
+
             designLife = 0;
 
             A0Global = 0;

@@ -73,20 +73,26 @@
 
 
                 <Label Grid.Column="1" Margin="0,2,10,0" Grid.Row="5"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Total Area (GIA):</Label>
-                <TextBox Name="txt_Area" Grid.Column="2" Grid.Row="5" Margin="5,0,5,0" Height="25" Style="{StaticResource flatTextBox}" TextChanged="txt_Area_TextChanged"></TextBox>
-                <Label Grid.Column="3" Margin="3,0,0,0" Grid.Row="5"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
-                <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="5" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">This is the Gross Internal Area of the part of the building you are analysing</Label>
+                <TextBox Name="txt_Area" Grid.Column="2" Grid.Row="5" Margin="5,0,5,0" Height="28" Width="125" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" TextChanged="txt_Area_TextChanged"></TextBox>
+                <Label Grid.Column="2" Margin="135,0,0,0" Grid.Row="5"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
 
+                <Label Grid.Column="2" Margin="175,2,10,0" Grid.Row="5" Width="120" HorizontalAlignment="Left" Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">New Area (GIA):</Label>
+                <TextBox Name="txt_AreaNew" Grid.Column="2" Grid.Row="5" Margin="280,0,5,0" Height="28" Width="125" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" TextChanged="txt_AreaNew_TextChanged"></TextBox>
+                <Label Grid.Column="2" Margin="410,0,0,0" Grid.Row="5"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
+
+                <CheckBox Name="chx_IsTotalBuilding" Grid.Column="2" Grid.Row="5" Margin="450,5,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_IsTotalBuilding_Checked" Unchecked="chx_IsTotalBuilding_Checked">New Area = Total</CheckBox>
+
+                <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="5" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">This is the Gross Internal Area of the part of the building you are analysing</Label>
                 <Label Grid.Column="1" Margin="0,2,10,0" Grid.Row="6"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Currency:</Label>
                 <ComboBox Name="cbb_Currency" Grid.Column="2" Grid.Row="6" Margin="5,0,329,0" Height="30" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_Currency_DropDownClosed"/>
 
                 <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="7"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Design life:</Label>
-                <TextBox Name="txt_DesignLife" Grid.Column="2" Grid.Row="7" Margin="5,0,0,5" Width="110" HorizontalAlignment="Left" Height="25"  Style="{StaticResource flatTextBox}" TextChanged="txt_DesignLife_TextChanged"></TextBox>
+                <TextBox Name="txt_DesignLife" Grid.Column="2" Grid.Row="7" Margin="5,0,0,5" Width="110" HorizontalAlignment="Left" Height="28"  Style="{StaticResource flatTextBox}" TextChanged="txt_DesignLife_TextChanged"></TextBox>
                 <Label Grid.Column="3" Margin="118,0,223,0" Grid.Row="7"   Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Year</Label>
                 <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="7" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}" Content="The expected time this building will exist"/>
 
                 <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="8"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Social Carbon Cost:</Label>
-                <TextBox Name="txt_SocialCost" Grid.Column="2" Grid.Row="8" Margin="5,0,0,4" Width="110" HorizontalAlignment="Left" Height="25"  Style="{StaticResource flatTextBox}" TextChanged="txt_SocialCost_TextChanged"></TextBox>
+                <TextBox Name="txt_SocialCost" Grid.Column="2" Grid.Row="8" Margin="5,0,0,4" Width="110" HorizontalAlignment="Left" Height="28"  Style="{StaticResource flatTextBox}" TextChanged="txt_SocialCost_TextChanged"></TextBox>
                 <Label Grid.Column="3" Margin="118,0,223,0" Grid.Row="8"   Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">$/£/€ per tCO₂</Label>
                 <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="8" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">Social Carbon Cost is estimated between 100-200 pounds / dollar per tCO₂</Label>
 

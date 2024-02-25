@@ -1,4 +1,5 @@
-﻿using CarboLifeAPI;
+﻿using Autodesk.Revit.DB.Electrical;
+using CarboLifeAPI;
 using CarboLifeAPI.Data.Superseded;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace CarboLifeUI
         static List<int> labelYvalues = new List<int>();
         static SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
 
-        internal static IEnumerable<UIElement> generateImage(Canvas myCanvas, double CarbonA15, double CarbonA1C, double GIA, string buildingType)
+        internal static IEnumerable<UIElement> generateImage(Canvas myCanvas, double CarbonA15, double CarbonA1C, double GIA, string buildingType, double GIANew)
         {
             IList<UIElement> result = new List<UIElement>();
             labelYvalues = new List<int>();
@@ -30,6 +31,9 @@ namespace CarboLifeUI
             double XOffset = canvasWidth / 10;
             double YOffset = 0;
             double YCurrent = YOffset;
+
+            //Check if the SCO2RES rating needs to be calculater for two values.
+
 
             double CarbonPerAreaA15 = CarbonA15 / GIA;
             double CarbonPerAreaA1C = CarbonA1C / GIA;
@@ -50,6 +54,14 @@ namespace CarboLifeUI
             scoreTypeA15 = getLetiScore(ScoresList, buildingType, false);
             scoreTypeA1C = getLetiScore(ScoresList, buildingType, true);
 
+            if (GIA != GIANew)
+            {
+                if (scoreTypeA1C == null)
+                {
+                    scoreTypeA1C = scoreTypeA15;
+                    CarbonPerAreaA1C = CarbonA15 / GIANew;
+                }
+            }
 
             IEnumerable<UIElement> arrowListAAA = generateArrows("A++");
             IEnumerable<UIElement> arrowListAA = generateArrows("A+");
@@ -408,7 +420,15 @@ namespace CarboLifeUI
 
             //Add the text kgCO₂e/m²
             TextBlock label = new TextBlock();
-            label.Text = "A1-A5 / A1-C " + "kgCO₂e/m²";
+            //this below corrects the legend in case a scores rating is drawn where scoreTypeA15 and A1C are equal
+            if (scoreTypeA15 == scoreTypeA1C)
+            {
+                label.Text = "A1-A5 " + "kgCO₂e/m²";
+            }
+            else
+            { 
+                label.Text = "A1-A5 / A1-C " + "kgCO₂e/m²";
+            }
             label.FontStyle = FontStyles.Normal;
             label.FontWeight = FontWeights.Normal;
             label.Foreground = almostBlack;

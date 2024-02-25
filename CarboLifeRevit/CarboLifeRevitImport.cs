@@ -236,9 +236,17 @@ namespace CarboLifeRevit
             */
 
             // If Project contained area, make sure it is updated.
-            if(myProject.Area == 1)
-                myProject.Area = Math.Round((area * (0.3048 * 0.3048)), 2); //to sqr m2
+            double m2Area = Math.Round((area * (0.3048 * 0.3048)), 2);
 
+            if (myProject.Area == 1)
+            {
+                myProject.Area = m2Area; //to sqr m2
+            }
+
+            if (myProject.AreaNew == 1)
+            {
+                myProject.AreaNew = m2Area; //to sqr m2
+            }
             //Apply settings to new projectfile
             myProject.RevitImportSettings = settings;
 

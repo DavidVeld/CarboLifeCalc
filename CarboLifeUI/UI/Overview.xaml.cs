@@ -94,7 +94,7 @@ namespace CarboLifeUI.UI
                 cbb_GraphType.SelectedItem = "Material";
                 cbb_BuildingType.SelectedItem = CarboLifeProject.Category;
                 txt_Area.Text = CarboLifeProject.Area.ToString();
-
+                txt_AreaNew.Text = CarboLifeProject.AreaNew.ToString();
             }
             catch (Exception ex)
             {
@@ -238,18 +238,18 @@ namespace CarboLifeUI.UI
         {
             cnv_Leti.Children.Clear();
 
-            if (CarboLifeProject.Area > 0)
+            if (CarboLifeProject.Area > 0 || CarboLifeProject.AreaNew > 0)
             {
+                double areaTotal = CarboLifeProject.Area;
+                double areaNew = CarboLifeProject.AreaNew;
+
                 //UpfrontOnly
                 double resultPointsA1A5 = CarboLifeProject.getUpfrontTotals();
                 //No Sequestration or D
                 double resultPointsA1C = CarboLifeProject.getEmbodiedTotals();
 
 
-                //double valueA1A5 = getDataTotals(resultPointsA1A5);
-                //double valueA1C = getDataTotals(resultPointsA1C);
-
-                IEnumerable<UIElement> letiGraph = ScorsIndicator.generateImage(cnv_Leti, resultPointsA1A5, resultPointsA1C, CarboLifeProject.Area, cbb_BuildingType.Text);
+                IEnumerable<UIElement> letiGraph = ScorsIndicator.generateImage(cnv_Leti, resultPointsA1A5, resultPointsA1C, areaTotal, cbb_BuildingType.Text, areaNew);
                 foreach (UIElement uielement in letiGraph)
                 {
                     cnv_Leti.Children.Add(uielement);
@@ -467,6 +467,31 @@ namespace CarboLifeUI.UI
                 //Resume async error.
             }
         }
+        private async void txt_AreaNew_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = txt_AreaNew.Text;
+            try
+            {
+                TextBox tb = (TextBox)sender;
+                int startLength = tb.Text.Length;
+
+                await Task.Delay(500);
+                if (startLength == tb.Text.Length)
+                {
+                    double convertedText = Utils.ConvertMeToDouble(tb.Text);
+                    if (convertedText != 0)
+                    {
+                        CarboLifeProject.AreaNew = convertedText;
+                        txt_AreaNew.Text = convertedText.ToString();
+                        RefreshLetiGraph();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //Resume async error.
+            }
+        }
 
         private void RefreshPhasePie()
         {
@@ -599,5 +624,7 @@ namespace CarboLifeUI.UI
                 RefreshInterFace();
             }
         }
+
+
     }
 }

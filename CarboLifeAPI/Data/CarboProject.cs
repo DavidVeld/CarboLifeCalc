@@ -37,7 +37,13 @@ namespace CarboLifeAPI.Data
         public double EC { get; set; }
         public double Value { get; set; }
         public double Area { get; set; }
+        public double AreaNew { get; set; }
         public string filePath { get; set; }
+
+        /// <summary>
+        /// This propery sets whether the elements analyses is only a part of a building, if false this is a refurb.
+        /// </summary>
+        public bool totalAreaIsNew { get; set; }
 
         //Global Calculations:
         /// <summary>
@@ -110,6 +116,8 @@ namespace CarboLifeAPI.Data
         {
             get {return groupList;}
         }
+
+
         //System field
         public bool justSaved;
         public CarboGroup getTotalsGroup()
@@ -172,6 +180,8 @@ namespace CarboLifeAPI.Data
             Description = "New Project";
             valueUnit = "£";
             Area = 1;
+            AreaNew = 1;
+            totalAreaIsNew = true;
             //C1 Global
             demoArea = 0;
             C1Global = 0;
@@ -232,6 +242,9 @@ namespace CarboLifeAPI.Data
             Description = "New Project";
             valueUnit = "£";
             Area = 1;
+            AreaNew = 1;
+            totalAreaIsNew = true;
+
             //C1 Global
             demoArea = 0;
             C1Global = 0;

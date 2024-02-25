@@ -113,7 +113,22 @@ namespace CarboLifeUI.UI
                     cbb_Currency.Text = CarboLifeProject.valueUnit;
                     txt_Desctiption.Text = CarboLifeProject.Description;
 
+                    chx_IsTotalBuilding.IsChecked = CarboLifeProject.totalAreaIsNew;
+
+                    if (CarboLifeProject.totalAreaIsNew == true)
+                    {
+                        //these two need to be equal if above is true;
+                        CarboLifeProject.Area = CarboLifeProject.AreaNew;
+                        txt_AreaNew.IsEnabled = false;
+                    }
+                    else
+                    {
+                        txt_AreaNew.IsEnabled = true;
+                    }
+
                     txt_Area.Text = CarboLifeProject.Area.ToString();
+                    txt_AreaNew.Text = CarboLifeProject.AreaNew.ToString();
+
                     txt_DesignLife.Text = CarboLifeProject.designLife.ToString();
                     
                     //A5
@@ -259,6 +274,35 @@ namespace CarboLifeUI.UI
                         txt_Area.Text = convertedText.ToString();
                     }
                 }
+                RefreshInterFace();
+
+            }
+            catch (Exception ex)
+            {
+                //Resume async error.
+            }
+        }
+
+        private async void txt_AreaNew_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string text = txt_AreaNew.Text;
+            try
+            {
+                TextBox tb = (TextBox)sender;
+                int startLength = tb.Text.Length;
+
+                await Task.Delay(500);
+                if (startLength == tb.Text.Length)
+                {
+                    double convertedText = Utils.ConvertMeToDouble(tb.Text);
+                    if (convertedText != 0)
+                    {
+                        CarboLifeProject.AreaNew = convertedText;
+                        txt_AreaNew.Text = convertedText.ToString();
+                    }
+                }
+                RefreshInterFace();
+
             }
             catch (Exception ex)
             {
@@ -367,6 +411,15 @@ namespace CarboLifeUI.UI
             await Task.Delay(1000);
             CarboLifeProject.A0Global = Utils.ConvertMeToDouble(tb.Text) * 1000;
             RefreshInterFace();
+        }
+
+        private void chx_IsTotalBuilding_Checked(object sender, RoutedEventArgs e)
+        {
+            if (chx_IsTotalBuilding != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.totalAreaIsNew = chx_IsTotalBuilding.IsChecked.Value;
+                RefreshInterFace();
+            }
         }
     }
 }
