@@ -20,7 +20,7 @@ namespace CarboLifeUI
         static List<int> labelYvalues = new List<int>();
         static SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
 
-        internal static IEnumerable<UIElement> generateImage(Canvas myCanvas, double CarbonA15, double CarbonA1C, double GIA, string buildingType, double GIANew)
+        internal static IEnumerable<UIElement> generateImage(Canvas myCanvas, double CarbonA15, double CarbonA1C, double GIA, string buildingType)
         {
             IList<UIElement> result = new List<UIElement>();
             labelYvalues = new List<int>();
@@ -53,15 +53,6 @@ namespace CarboLifeUI
 
             scoreTypeA15 = getLetiScore(ScoresList, buildingType, false);
             scoreTypeA1C = getLetiScore(ScoresList, buildingType, true);
-
-            if (GIA != GIANew)
-            {
-                if (scoreTypeA1C == null)
-                {
-                    scoreTypeA1C = scoreTypeA15;
-                    CarbonPerAreaA1C = CarbonA15 / GIANew;
-                }
-            }
 
             IEnumerable<UIElement> arrowListAAA = generateArrows("A++");
             IEnumerable<UIElement> arrowListAA = generateArrows("A+");

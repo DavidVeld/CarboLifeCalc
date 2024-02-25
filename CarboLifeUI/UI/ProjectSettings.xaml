@@ -80,7 +80,7 @@
                 <TextBox Name="txt_AreaNew" Grid.Column="2" Grid.Row="5" Margin="280,0,5,0" Height="28" Width="125" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" TextChanged="txt_AreaNew_TextChanged"></TextBox>
                 <Label Grid.Column="2" Margin="410,0,0,0" Grid.Row="5"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
 
-                <CheckBox Name="chx_IsTotalBuilding" Grid.Column="2" Grid.Row="5" Margin="450,5,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_IsTotalBuilding_Checked" Unchecked="chx_IsTotalBuilding_Checked">New Area = Total</CheckBox>
+                <CheckBox Name="chx_IsTotalBuilding" Visibility="Hidden" Grid.Column="2" Grid.Row="5" Margin="450,5,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Checked="chx_IsTotalBuilding_Checked" Unchecked="chx_IsTotalBuilding_Checked">Total = New Area</CheckBox>
 
                 <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="5" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">This is the Gross Internal Area of the part of the building you are analysing</Label>
                 <Label Grid.Column="1" Margin="0,2,10,0" Grid.Row="6"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Currency:</Label>

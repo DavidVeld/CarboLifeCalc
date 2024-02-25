@@ -220,14 +220,14 @@
             <Label Grid.Column="1" Margin="0,1,10,0" Grid.Row="1" Height="28" Grid.ColumnSpan="2" Width="180"  HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Building Type:</Label>
             <ComboBox Name="cbb_BuildingType" Grid.Row="1" Margin="100,2,250,0" Height="25" Width="170" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_BuildingType_DropDownClosed"/>
 
-            <RadioButton Style="{DynamicResource RadioButtonStyle1}" Margin="290,8,0,0" Grid.Row="1" Height="28" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="True">Total GAI:</RadioButton>
-            <TextBox Name="txt_Area" Grid.Row="1" Margin="375,00,0,0" Height="28" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top"   Style="{StaticResource flatTextBox}" TextChanged="txt_Area_TextChanged" />
+            <RadioButton Name="rad_AreaTotal" Margin="290,4,0,0" Grid.Row="1" Height="28" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="rad_AreaNew_Checked" Unchecked="rad_AreaNew_Checked" IsChecked="True">Total GAI:</RadioButton>
+            <TextBox Name="txt_Area" Grid.Row="1" Margin="380,00,0,0" Height="28" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top"   Style="{StaticResource flatTextBox}" TextChanged="txt_Area_TextChanged" />
 
-            <RadioButton Style="{DynamicResource RadioButtonStyle1}" Margin="290,38,0,0" Grid.Row="1" Height="28" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" >New GAI:</RadioButton>
-            <TextBox Name="txt_AreaNew" Grid.Row="1" Margin="375,30,0,0" Height="28" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top"   Style="{StaticResource flatTextBox}" TextChanged="txt_AreaNew_TextChanged" />
+            <RadioButton Name="rad_AreaNew" Margin="290,34,0,0" Grid.Row="1" Height="28" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="rad_AreaNew_Checked" Unchecked="rad_AreaNew_Checked">New GAI:</RadioButton>
+            <TextBox Name="txt_AreaNew" Grid.Row="1" Margin="380,30,0,0" Height="28" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top"   Style="{StaticResource flatTextBox}" TextChanged="txt_AreaNew_TextChanged" />
 
-            <Label Margin="475,0,0,0" Grid.Row="1" Height="28" Width="30" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
-            <Label Margin="475,30,0,0" Grid.Row="1" Height="28" Width="30" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
+            <Label Margin="480,0,0,0" Grid.Row="1" Height="28" Width="30" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
+            <Label Margin="480,30,0,0" Grid.Row="1" Height="28" Width="30" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
 
             <Canvas Name="cnv_Leti" Grid.Column="0" Margin="5,5,5,5" Grid.Row="2" Background="White"></Canvas>
 

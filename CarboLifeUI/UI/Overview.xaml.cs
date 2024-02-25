@@ -19,6 +19,7 @@ using LiveCharts.Wpf;
 using CarboLifeAPI;
 using System.Data;
 using System.IO;
+using Autodesk.Revit.DB.Visual;
 
 namespace CarboLifeUI.UI
 {
@@ -243,13 +244,18 @@ namespace CarboLifeUI.UI
                 double areaTotal = CarboLifeProject.Area;
                 double areaNew = CarboLifeProject.AreaNew;
 
+                double area = areaTotal;
+
+                if(rad_AreaNew.IsChecked == true && areaNew > 0)
+                    area = areaNew;
+
                 //UpfrontOnly
                 double resultPointsA1A5 = CarboLifeProject.getUpfrontTotals();
                 //No Sequestration or D
                 double resultPointsA1C = CarboLifeProject.getEmbodiedTotals();
 
 
-                IEnumerable<UIElement> letiGraph = ScorsIndicator.generateImage(cnv_Leti, resultPointsA1A5, resultPointsA1C, areaTotal, cbb_BuildingType.Text, areaNew);
+                IEnumerable<UIElement> letiGraph = ScorsIndicator.generateImage(cnv_Leti, resultPointsA1A5, resultPointsA1C, area, cbb_BuildingType.Text);
                 foreach (UIElement uielement in letiGraph)
                 {
                     cnv_Leti.Children.Add(uielement);
@@ -625,6 +631,12 @@ namespace CarboLifeUI.UI
             }
         }
 
-
+        private void rad_AreaNew_Checked(object sender, RoutedEventArgs e)
+        {
+            if (rad_AreaNew != null && rad_AreaTotal != null && CarboLifeProject != null)
+            {
+                RefreshLetiGraph();
+            }
+        }
     }
 }

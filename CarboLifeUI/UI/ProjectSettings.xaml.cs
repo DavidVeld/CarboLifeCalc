@@ -113,21 +113,33 @@ namespace CarboLifeUI.UI
                     cbb_Currency.Text = CarboLifeProject.valueUnit;
                     txt_Desctiption.Text = CarboLifeProject.Description;
 
-                    chx_IsTotalBuilding.IsChecked = CarboLifeProject.totalAreaIsNew;
 
+
+                    chx_IsTotalBuilding.IsChecked = CarboLifeProject.totalAreaIsNew;
+                    txt_Area.Text = CarboLifeProject.Area.ToString();
+                    txt_AreaNew.Text = CarboLifeProject.AreaNew.ToString();
+
+                    /*
                     if (CarboLifeProject.totalAreaIsNew == true)
                     {
                         //these two need to be equal if above is true;
-                        CarboLifeProject.Area = CarboLifeProject.AreaNew;
+                        CarboLifeProject.AreaNew = CarboLifeProject.Area;
                         txt_AreaNew.IsEnabled = false;
+                        txt_AreaNew.Foreground = new SolidColorBrush(Colors.DarkGray);
                     }
                     else
                     {
                         txt_AreaNew.IsEnabled = true;
-                    }
+                        txt_AreaNew.Foreground = new SolidColorBrush(Colors.Black);
 
-                    txt_Area.Text = CarboLifeProject.Area.ToString();
-                    txt_AreaNew.Text = CarboLifeProject.AreaNew.ToString();
+                    }
+                    */
+
+
+
+
+
+
 
                     txt_DesignLife.Text = CarboLifeProject.designLife.ToString();
                     
@@ -264,16 +276,21 @@ namespace CarboLifeUI.UI
                 TextBox tb = (TextBox)sender;
                 int startLength = tb.Text.Length;
 
-                await Task.Delay(500);
-                if (startLength == tb.Text.Length)
-                {
+                await Task.Delay(1200);
+
                     double convertedText = Utils.ConvertMeToDouble(tb.Text);
                     if (convertedText != 0)
                     {
                         CarboLifeProject.Area = convertedText;
                         txt_Area.Text = convertedText.ToString();
+                        /*
+                        if (chx_IsTotalBuilding.IsChecked == true)
+                        {
+                            CarboLifeProject.AreaNew = convertedText;
+                            txt_AreaNew.Text = convertedText.ToString();
+                        }*/
                     }
-                }
+                
                 RefreshInterFace();
 
             }
@@ -291,16 +308,21 @@ namespace CarboLifeUI.UI
                 TextBox tb = (TextBox)sender;
                 int startLength = tb.Text.Length;
 
-                await Task.Delay(500);
-                if (startLength == tb.Text.Length)
-                {
+                await Task.Delay(1000);
+
                     double convertedText = Utils.ConvertMeToDouble(tb.Text);
                     if (convertedText != 0)
                     {
                         CarboLifeProject.AreaNew = convertedText;
                         txt_AreaNew.Text = convertedText.ToString();
+                        /*
+                        if(chx_IsTotalBuilding.IsChecked == true)
+                        {
+                            CarboLifeProject.Area = convertedText;
+                            txt_Area.Text = convertedText.ToString();
+                        }*/
                     }
-                }
+                
                 RefreshInterFace();
 
             }
@@ -309,7 +331,14 @@ namespace CarboLifeUI.UI
                 //Resume async error.
             }
         }
-
+        private void chx_IsTotalBuilding_Checked(object sender, RoutedEventArgs e)
+        {
+            if (chx_IsTotalBuilding != null && CarboLifeProject != null)
+            {
+                CarboLifeProject.totalAreaIsNew = chx_IsTotalBuilding.IsChecked.Value;
+                RefreshInterFace();
+            }
+        }
         private async void txt_DemoArea_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
@@ -413,13 +442,6 @@ namespace CarboLifeUI.UI
             RefreshInterFace();
         }
 
-        private void chx_IsTotalBuilding_Checked(object sender, RoutedEventArgs e)
-        {
-            if (chx_IsTotalBuilding != null && CarboLifeProject != null)
-            {
-                CarboLifeProject.totalAreaIsNew = chx_IsTotalBuilding.IsChecked.Value;
-                RefreshInterFace();
-            }
-        }
+
     }
 }
