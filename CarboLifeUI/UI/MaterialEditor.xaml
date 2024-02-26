@@ -224,7 +224,11 @@
         <Button Name="btn_Duplicate"  Grid.Row="3" Grid.Column="1" Height="24" Margin="110,8,0,8" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Duplicate_Click" >Duplicate</Button>
         <Button Name="btn_ToTemplate"  Grid.Row="3" Grid.Column="1" Height="24" Margin="170,8,0,8" VerticalAlignment="Center" Width="80" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_TemplateSync_Click">To Template</Button>
         <Button Name="btn_Sync"  Grid.Row="3" Grid.Column="1" Height="25" Margin="274,8,0,8" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Sync_Click">Sync...</Button>
-        <Button Name="btn_Import"  Grid.Row="3" Grid.Column="1" Height="25" Margin="334,8,0,8" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Import_Click">CSV...</Button>
+        <Button Name="btn_Import"  Grid.Row="3" Grid.Column="1" Height="25" Margin="334,8,0,8" VerticalAlignment="Center" Width="60" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_Import_Click">
+            <StackPanel>
+                <TextBlock>CVS...</TextBlock>
+                <Image Source="/CarboLifeUI;component/Resources/rbn_groupmerge32.png" Stretch="None" />
+            </StackPanel></Button>
 
         <Button Name="btn_CopyProperties"  Grid.Row="3" Grid.Column="1" Height="25" Margin="225,0,0,0" VerticalAlignment="Center" Width="70" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Visibility="Hidden">Copy From</Button>
 
