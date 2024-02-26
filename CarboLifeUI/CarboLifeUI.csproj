@@ -450,6 +450,12 @@
     <Resource Include="Resources\rbn_materialmap32.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\ui_table.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\ui_table16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="UI\ico_CarboLife.ico" />
     <Content Include="UI\refreshicon.png" />
     <Content Include="UI\editicon.png" />
