@@ -368,8 +368,8 @@ namespace CarboLifeAPI.Data
 
             }
 
-            if (ok == true)
-                MessageBox.Show(name + " deleted.", "Deleted", MessageBoxButton.OK);
+            //if (ok == true)
+                //MessageBox.Show(name + " deleted.", "Deleted", MessageBoxButton.OK);
         }
 
         public bool deleteMaterial(string name)

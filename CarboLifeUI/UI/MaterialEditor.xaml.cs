@@ -638,10 +638,20 @@ namespace CarboLifeUI.UI
 
                 if (idList.Count > 0)
                 {
-                    foreach (int i in idList)
+                    try
                     {
-                        returnedDatabase.deleteMaterial(i);
+                        foreach (int i in idList)
+                        {
+                            returnedDatabase.deleteMaterial(i);
+                        }
+                        //if (ok == true)
                     }
+                    catch(Exception ex)
+                    {
+                        MessageBox.Show("Error while deleting materials", "Deleted", MessageBoxButton.OK);
+                    }
+
+                    MessageBox.Show(idList.Count + " material(s) deleted.", "Deleted", MessageBoxButton.OK);
                 }
                 RefreshMaterialList();
 
