@@ -139,7 +139,7 @@ namespace CarboLifeAPI
 
                         //
                         JsCe.Density = material.Density;
-
+                        JsCe.Grade = material.Grade;
 
                         double mass = ce.Mass;
                         if (mass == 0)

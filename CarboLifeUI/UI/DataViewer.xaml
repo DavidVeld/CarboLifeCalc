@@ -269,7 +269,7 @@
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="MaterialName" Binding="{Binding Path=MaterialName, Mode=TwoWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="CarboMaterialName" Binding="{Binding Path=CarboMaterialName, Mode=TwoWay}" IsReadOnly="True"/>
 
-                <DataGridTextColumn MinWidth="50" Header="Level" Binding="{Binding Path=Level}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="50" Header="Level" Binding="{Binding Path=LevelName}" IsReadOnly="True"/>
 
                 <DataGridTextColumn MinWidth="90" Header="Volume (m³)" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="True" Visibility="Visible"/>
                 <DataGridTextColumn MinWidth="90" Header="Volume_Total (m³)" Binding="{Binding Path=Volume_Total, Mode=TwoWay}" IsReadOnly="True" Visibility="Visible"/>
@@ -289,6 +289,9 @@
                 <DataGridTextColumn Width="50" MinWidth="100" Header="EC Cumulative" Binding="{Binding Path=EC_Cumulative, Mode=TwoWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="50" MinWidth="100" Header="Volume Cumulative" Binding="{Binding Path=Volume_Cumulative, Mode=TwoWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Width="50" MinWidth="100" Header="Area (m²)" Binding="{Binding Path=Area, Mode=TwoWay}" IsReadOnly="True"/>
+                
+                <DataGridTextColumn MinWidth="50" Header="Grade" Binding="{Binding Path=Grade}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="50" Header="Elevation" Binding="{Binding Path=Level}" IsReadOnly="True"/>
 
 
             </DataGrid.Columns>

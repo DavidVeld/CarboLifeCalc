@@ -108,6 +108,7 @@ namespace CarboLifeAPI.Data
                 EC = material.ECI * (material.Density * Volume_Total);
                 Mass = material.Density * Volume_Total;
                 Density = material.Density;
+                Grade = material.Grade;
             }
 
         }

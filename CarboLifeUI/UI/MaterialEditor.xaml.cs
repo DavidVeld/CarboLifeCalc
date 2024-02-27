@@ -61,6 +61,19 @@ namespace CarboLifeUI.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            ReloadMaterialCategories();
+
+
+            RefreshMaterialList();
+            selectMaterial(selectedMaterial.Name);
+
+            UpdateMaterialSettings();  
+        }
+
+        private void ReloadMaterialCategories()
+        {
+            cbb_Categories.Items.Clear();
+
             List<string> materialCategories = new List<string>();
             materialCategories = returnedDatabase.getCategoryList();
             materialCategories.Sort();
@@ -73,11 +86,6 @@ namespace CarboLifeUI.UI
 
             cbb_Categories.Items.Add("All");
             cbb_Categories.Text = "All";
-
-            RefreshMaterialList();
-            selectMaterial(selectedMaterial.Name);
-
-            UpdateMaterialSettings();  
         }
 
         private void selectMaterial(string name)
@@ -1164,6 +1172,7 @@ namespace CarboLifeUI.UI
             if(matImpDia.isAccepted == true)
             {
                 this.returnedDatabase.SyncCSVMaterials(matImpDia.importedDb, matImpDia.deleteMaterials);
+                ReloadMaterialCategories();
             }
             RefreshMaterialList();
 

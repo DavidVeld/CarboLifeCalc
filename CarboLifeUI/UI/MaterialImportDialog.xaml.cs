@@ -52,14 +52,13 @@ namespace CarboLifeUI.UI
 
         private void btn_SelectFile_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Select a csv to import");
+            //MessageBox.Show("Select a csv to import");
             string openPath = DataExportUtils.GetOpenCSVLocation();
 
             if (openPath != null && openPath != "")
             {
                 importedDb.CarboMaterialList = DataExportUtils.GetMaterialDatabaseFromCVSFile(openPath);
                 dgv_Preview.ItemsSource = importedDb.CarboMaterialList;
-
             }
         }
 

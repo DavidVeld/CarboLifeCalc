@@ -464,7 +464,7 @@ namespace CarboLifeAPI.Data
 
         }
 
-        public bool SyncCSVMaterials(CarboDatabase importedDb, object deleteMaterials)
+        public bool SyncCSVMaterials(CarboDatabase importedDb, bool deleteMaterials)
         {
             //validate Ids
             foreach(CarboMaterial cm in importedDb.CarboMaterialList)
@@ -473,6 +473,12 @@ namespace CarboLifeAPI.Data
                 {
                     cm.Id = getUniqueId();
                 }
+            }
+
+            //delete if required
+            if(deleteMaterials == true)
+            {
+                this.CarboMaterialList.Clear();
             }
 
             try
@@ -494,7 +500,7 @@ namespace CarboLifeAPI.Data
 
                             carboMaterial.Category = newcarboMaterial.Category;
 
-                            carboMaterial.Description = newcarboMaterial.Name;
+                            carboMaterial.Description = newcarboMaterial.Description;
 
                             carboMaterial.Density = newcarboMaterial.Density;
 
