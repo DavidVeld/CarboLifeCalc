@@ -369,6 +369,7 @@ namespace CarboLifeRevit
             try
             {
                 int setId;
+                string setGUID = "";
                 string setName;
                 string setCategory;
                 string setSubCategory;
@@ -426,6 +427,7 @@ namespace CarboLifeRevit
 
                 //Id:
                 setId = el.Id.IntegerValue;
+                setGUID = el.UniqueId;
 
                 //Name (Type)
                 ElementId elId = el.GetTypeId();
@@ -530,6 +532,7 @@ namespace CarboLifeRevit
 
                 //If it passed it matches all criteria:
                 newCarboElement.Id = setId;
+                newCarboElement.GUID = setGUID;
                 newCarboElement.Name = setName;
                 newCarboElement.Category = setCategory;
                 newCarboElement.SubCategory = setSubCategory;

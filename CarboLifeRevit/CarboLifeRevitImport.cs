@@ -184,7 +184,6 @@ namespace CarboLifeRevit
 
                     if (enumCategory == BuiltInCategory.OST_Railings ||
                         enumCategory == BuiltInCategory.OST_Ramps)
-
                     {
                         carboElementList = CarboRevitUtils.getGeometryElement(doc, el, settings);
                     }

@@ -260,9 +260,11 @@ namespace CarboLifeAPI
                     {
                         Assembly assTest = dict.Value as Assembly;
                         string assKey = dict.Key as string;
+                        assTest.Id = jsCe.GUID;
+
                         if (assTest != null)
                         {
-                            if (assKey == jsCe.Id.ToString())
+                            if (assKey == jsCe.GUID)
                             {
                                 EpdPart newPart = getEpdPart(jsCe);
                                 assTest.Parts.Add(jsCe.Id.ToString() + "." + assTest.Parts.Count, newPart);
@@ -287,9 +289,6 @@ namespace CarboLifeAPI
                 }
 
             }
-
-
-
 
             //Calculate Totals;
             foreach (var dict in lcaxProject.EmissionParts)
@@ -435,6 +434,7 @@ namespace CarboLifeAPI
 
             JsCe.RCDensity = ce.rcDensity;
             JsCe.Correction = ce.Correction;
+            JsCe.GUID = ce.GUID;
 
             JsCe.Volume = ce.Volume;
             JsCe.Volume_Total = ce.Volume_Total;
@@ -473,6 +473,7 @@ namespace CarboLifeAPI
 
             JsCe.RCDensity = 0;
             JsCe.Correction = grp.Correction;
+            JsCe.GUID = "";
 
             JsCe.Volume = grp.Volume;
             JsCe.Volume_Total = grp.TotalVolume;

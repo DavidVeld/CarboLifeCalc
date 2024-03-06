@@ -56,6 +56,7 @@ namespace CarboLifeAPI.Data
         public double Volume_Cumulative { get; set; }
         public double EC_Cumulative { get; set; }
         public double ECI_Cumulative { get; set; }
+        public string GUID { get; set; }
 
 
 
@@ -71,6 +72,8 @@ namespace CarboLifeAPI.Data
             LevelName = "";
             RCDensity = 0;
             Correction = "";
+
+            GUID = "";
 
             Volume = 0;
             Area = 0;
