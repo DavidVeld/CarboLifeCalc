@@ -808,7 +808,8 @@ namespace CarboLifeAPI
 
                 "Correction" + "," + //26
                 "RC Density (kg/m3)" + "," + //27
-                "Area (m2)" + //27
+                "Area (m2)" + "," + //28
+                "GUID" + //29
 
 
         Environment.NewLine;
@@ -866,7 +867,8 @@ namespace CarboLifeAPI
 
                 resultString += el.Correction + ","; //26
                 resultString += el.rcDensity + ","; //27
-                resultString += el.Area + ","; //27
+                resultString += el.Area + ","; //28
+                resultString += el.GUID + ","; //28
 
                 resultString += Environment.NewLine; //enter
 

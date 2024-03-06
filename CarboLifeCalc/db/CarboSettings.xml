@@ -17,8 +17,8 @@
     <IncludeGradeParameter>false</IncludeGradeParameter>
     <GradeParameterName>Type Comment</GradeParameterName>
     <GradeParameterType>Instance Parameter</GradeParameterType>
-    <IncludeCorrectionParameter>false</IncludeCorrectionParameter>
-    <CorrectionParameterName>Type Comment</CorrectionParameterName>
+    <IncludeCorrectionParameter>true</IncludeCorrectionParameter>
+    <CorrectionParameterName>CLC_VolumeCorrection</CorrectionParameterName>
     <CorrectionParameterType>Type Parameter</CorrectionParameterType>
     <mapReinforcement>true</mapReinforcement>
     <RCParameterName />

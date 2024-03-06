@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace CarboLifeAPI.Data
 {
@@ -46,6 +47,7 @@ namespace CarboLifeAPI.Data
         public bool isSubstructure { get; set; }
         public bool includeInCalc { get; set; }
         public double rcDensity { get; set; }
+        public string GUID { get; set; }
 
 
         //public CarboMaterial Material {get;set; }
@@ -66,6 +68,7 @@ namespace CarboLifeAPI.Data
             Grade = "";
             Correction = "";
             rcDensity = 0;
+            GUID = "";
 
             LevelName = "";
             
@@ -139,6 +142,7 @@ namespace CarboLifeAPI.Data
             clone.Correction = this.Correction;
             clone.Grade = this.Grade;
             clone.rcDensity = this.rcDensity;
+            clone.GUID = this.GUID;
 
             clone.ECI = this.ECI;
             clone.EC = this.EC;
@@ -180,6 +184,7 @@ namespace CarboLifeAPI.Data
             clone.Correction = this.Correction;
             clone.Grade = this.Grade;
             clone.rcDensity = this.rcDensity;
+            clone.GUID = this.GUID;
 
             clone.isDemolished = this.isDemolished;
             clone.isExisting = this.isExisting;
