@@ -2161,5 +2161,14 @@ namespace CarboLifeAPI.Data
 
             return levelList;
         }
+
+        public void DeleteAllGroups()
+        {
+            try
+            {
+                this.groupList.Clear();
+            }
+            catch (Exception ex) { }
+        }
     }
 }
