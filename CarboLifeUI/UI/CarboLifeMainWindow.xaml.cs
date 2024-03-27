@@ -693,6 +693,9 @@ namespace CarboLifeUI.UI
                 {
                     try
                     {
+                        //
+                        carboLifeProject.DeleteAllGroups();
+
                         foreach (CarboElement ce in elements)
                         {
                             carboLifeProject.AddorUpdateElement(ce);
