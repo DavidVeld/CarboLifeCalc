@@ -40,8 +40,8 @@ namespace CarboLifeUI.UI
 
         public MaterialMapper(CarboProject carboProject)
         {
-            List<CarboMaterial> list = carboProject.CarboDatabase.CarboMaterialList;
-
+            List<CarboMaterial> list = carboProject.CarboDatabase.CarboMaterialList.OrderBy(o => o.Name).ToList();
+            //list.Sort();
 
 
             this.InitializeComponent();
@@ -66,7 +66,7 @@ namespace CarboLifeUI.UI
             materialList = new List<CarboName>();
             foreach (CarboMaterial cm in list)
             {
-                materialList.Add(new CarboName { carboNAME = cm.Name });
+                materialList.Add(new CarboName {carboNAME = cm.Name});
             }
 
             DataContext = this;

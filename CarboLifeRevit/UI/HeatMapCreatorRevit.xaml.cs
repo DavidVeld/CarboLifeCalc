@@ -29,6 +29,7 @@ namespace CarboLifeRevit
     /// <summary>
     /// Interaction logic for HeatMapCreator.xaml
     /// </summary>
+    [Obsolete]
     public partial class HeatMapCreator : Window
     {
         //Used for colour 

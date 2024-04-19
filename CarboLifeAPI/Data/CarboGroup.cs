@@ -334,8 +334,8 @@ namespace CarboLifeAPI.Data
             if (carboElement.isExisting == true && carboElement.isDemolished == false)
                 prefix = "Existing ";
 
-            if (carboElement.isSubstructure == true)
-                suffix = " (Substructure)";
+//            if (carboElement.isSubstructure == true)
+//               suffix = " (Substructure)";
 
             result = prefix + carboElement.Category + suffix;
 
@@ -628,7 +628,7 @@ namespace CarboLifeAPI.Data
             //check if substructure note is required.
             if (importSettings.IncludeSubStructure == true && isSubstructure==true)
             {
-                description += "(Substructure)";
+                description += " (Substructure)";
             }
 
             if (importSettings.IncludeAdditionalParameter == true && additionalData != "")
