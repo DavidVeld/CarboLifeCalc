@@ -46,7 +46,7 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="220"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="15"/>
                     <ColumnDefinition Width="5"/>
@@ -60,6 +60,7 @@
                 <Label Name="lbl_debug" Grid.Column="2" Margin="0,0,0,0" Grid.Row="3" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">VALUE</Label>
 
                 <Button x:Name="btn_Open" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="85" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Open_Click"  Content="Open Project"/>
+                <Button x:Name="btn_Edit" Grid.Row="3" Grid.Column="1" Margin="100,00,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="85" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Edit_Click"  Content="Edit Project" Visibility="Hidden"/>
 
             </Grid>
         </GroupBox>
@@ -122,7 +123,7 @@
                             <Slider x:Name="sld_Min" Grid.Row="1" Grid.Column="4" Margin="5,5,5,5" Maximum="1" ValueChanged="sld_Min_ValueChanged"></Slider>
 
                             <Label Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Out of scope elements:"/>
-                            <ComboBox x:Name="cbb_outofBounds" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,0,0"  Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
+                            <ComboBox x:Name="cbb_outofBounds" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,1,0,1"  Style="{StaticResource ComboBoxFlatStyle}" ></ComboBox>
 
                             <Label Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" Height="27" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Content="Colour Presets:"/>
                             <ComboBox x:Name="cbb_colours" Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" Margin="0,0,35,0" DropDownClosed="cbb_colours_DropDownClosed"  Style="{StaticResource ComboBoxFlatStyle}"  ></ComboBox>
@@ -177,10 +178,10 @@
                         <CheckBox x:Name="chc_ImportCarbon" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="1" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Visibility="Hidden">Import total EC values to Parameter:</CheckBox>
 
                         <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" >Import total EC values to Parameter:</TextBlock>
-                        <ComboBox x:Name="cbb_Parameter" Grid.Row="1" Grid.Column="3" Margin="0,0,0,0"  Style="{StaticResource ComboBoxFlatStyle}" IsEditable="True"></ComboBox>
+                        <TextBox x:Name="txt_Parameter" Grid.Row="1" Grid.Column="3"  Style="{StaticResource flatTextBox}" />
                         <Button x:Name="btn_Importvalues"  Grid.Row="1" Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Importvalues_Click" Content="Import values" Visibility="Visible"/>
 
-                       
+
                         <TextBlock  Grid.Row="3" Grid.Column="1" Margin="0,5,0,0"   Grid.ColumnSpan="5"  TextWrapping="WrapWithOverflow">
                             The total embodied carbon will be written to the selected or given parameter name. 
                             The Parameter to write to will need to be a Number and Instance Parameter. 

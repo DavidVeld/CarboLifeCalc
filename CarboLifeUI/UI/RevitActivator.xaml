@@ -69,7 +69,9 @@
 
                 <Label Name="lbl_2024" Grid.Column="1" Margin="45,152,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}" Grid.RowSpan="1">2024</Label>
                 <CheckBox Name="chx_2024" Grid.Column="1" Grid.Row="1" Margin="25,158,5,4" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
-
+                
+                <Label Name="lbl_2025" Grid.Column="1" Margin="45,182,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}" Grid.RowSpan="1">2025</Label>
+                <CheckBox Name="chx_2025" Grid.Column="1" Grid.Row="1" Margin="25,188,5,4" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
 
             </Grid>
         </GroupBox>

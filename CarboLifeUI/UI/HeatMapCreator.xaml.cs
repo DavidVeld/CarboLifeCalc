@@ -26,6 +26,9 @@ namespace CarboLifeUI.UI
     /// <summary>
     /// Interaction logic for HeatMapCreator.xaml
     /// </summary>
+    ///     
+    [Obsolete]
+
     public partial class HeatMapCreator : Window
     {
         private CarboProject carboProject;

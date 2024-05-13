@@ -256,6 +256,33 @@ namespace CarboLifeAPI
             }
         }
 
+        public static void MatchLogDelete()
+        {
+            string fileName = "db\\matchlog.txt";
+
+            string myPath = Utils.getAssemblyPath() + "\\" + fileName;
+            try 
+            { 
+               File.Delete(myPath); 
+            } catch 
+            { 
+            }
+        }
+
+            public static void MatchLogWrite(string text)
+        {
+            
+            string fileName = "db\\matchlog.txt";
+
+            string myPath = Utils.getAssemblyPath() + "\\" + fileName;
+
+            using (StreamWriter sw = File.AppendText(myPath))
+            {
+                sw.WriteLine(text);
+            }
+            
+        }
+
         public static void WriteToLog(string text)
         {
             /*

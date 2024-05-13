@@ -29,7 +29,6 @@ namespace CarboLifeRevit
     /// <summary>
     /// Interaction logic for HeatMapCreator.xaml
     /// </summary>
-    [Obsolete]
     public partial class HeatMapCreator : Window
     {
         //Used for colour 
@@ -108,8 +107,8 @@ namespace CarboLifeRevit
         }
         private void btn_Importvalues_Click(object sender, RoutedEventArgs e)
         {
-            string selectedParam = cbb_Parameter.Text;
-            if (cbb_Parameter.Text != "")
+            string selectedParam = txt_Parameter.Text;
+            if (txt_Parameter.Text != "")
             {
                 m_Handler.Importvalues(carboProject, selectedParam, false);
                 m_ExEvent.Raise();
@@ -119,7 +118,7 @@ namespace CarboLifeRevit
 
         private void btn_ClearValues_Click(object sender, RoutedEventArgs e)
         {
-            string selectedParam = cbb_Parameter.Text;
+            string selectedParam = txt_Parameter.Text;
 
             if (selectedParam != "")
             {
@@ -155,6 +154,9 @@ namespace CarboLifeRevit
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            CarboSettings settings = new CarboSettings();
+            settings = settings.Load();
+            
             //this is just to confirm the window loaded
             if (carboProject != null)
             {
@@ -173,8 +175,16 @@ namespace CarboLifeRevit
             cbb_outofBounds.Items.Add("No Override");
             cbb_outofBounds.SelectedIndex = 0;
 
-            cbb_Parameter.Items.Add("EC Total");
-            cbb_Parameter.SelectedIndex = 0;
+            if (settings.ecRevitParameter != "")
+            {
+                txt_Parameter.Text = settings.ecRevitParameter;
+            }
+            else
+            {
+                txt_Parameter.Text = "CLC_EmbodiedCarbon";
+
+            }
+            //cbb_Parameter.SelectedIndex = 0;
 
         }
 
@@ -228,6 +238,11 @@ namespace CarboLifeRevit
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
+        }
+
+        private void btn_Edit_Click(object sender, RoutedEventArgs e)
+        {
+
         }
         private void btn_Update_Click(object sender, RoutedEventArgs e)
         {

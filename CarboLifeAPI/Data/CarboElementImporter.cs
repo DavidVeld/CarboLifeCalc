@@ -154,14 +154,14 @@ namespace CarboLifeAPI.Data
                     break;
                 }
             }
+
+            //An element was added no further action is needed.
             if(elementFound == true)
                 return carboGroupList;
 
             //NoCategoryWasFound: make new group
             int id = carboGroupList.Count + idbase;
 
-            //If a new group's first element has substructre a fix is required. 
-            //This needs it own method to generate a group name AFTER All elements are loaded. 
             CarboGroup newGroup = new CarboGroup(carboElement);
             newGroup.getDescription(importSettings);
 
@@ -457,12 +457,19 @@ namespace CarboLifeAPI.Data
 
         public static ObservableCollection<CarboGroup> mapGroupMaterials(ObservableCollection<CarboGroup> group, CarboDatabase materialData)
         {
+            string mappingtable = "";
+            Utils.MatchLogDelete();
+
             if (group.Count > 0)
             {
                 foreach (CarboGroup cg in group)
                 {
+                    double value = 0;
+
                     //The materialname was given by the elements, the values now need to be matched with a own one.
-                    CarboMaterial closestGroupMaterial = materialData.getClosestMatch(cg.MaterialName);
+                    CarboMaterial closestGroupMaterial = materialData.getClosestMatch(cg.MaterialName,cg.Grade);
+                    string map = cg.MaterialName + "," + closestGroupMaterial.Name + "," + value.ToString() + Environment.NewLine;
+                    mappingtable += map;
                     //cg.MaterialName = closestGroupMaterial.Name;
                     cg.setMaterial(closestGroupMaterial);
                     cg.CalculateTotals();

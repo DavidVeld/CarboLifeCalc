@@ -652,7 +652,7 @@ namespace CarboLifeUI.UI
             {
                 double value = Utils.ConvertMeToDouble(tb.Text);
 
-                tb.Text = Math.Round(value, 2).ToString();
+                tb.Text = Math.Round(value, 3).ToString();
             }
         }
 

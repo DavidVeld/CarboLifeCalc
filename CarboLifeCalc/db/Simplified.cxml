@@ -1642,7 +1642,7 @@ Min. 60% recycled content</Description>
     </CarboMaterial>
     <CarboMaterial>
       <Id>23689</Id>
-      <Name>Reinforced Concrete</Name>
+      <Name>Reinforced Concrete - General</Name>
       <Category>Concrete</Category>
       <Description>Global Average
 (excludes China)
@@ -2289,9 +2289,9 @@ Set Value by user as: 0kgCo2/kg
       <EPDurl />
       <Grade>C32/40</Grade>
       <Density>2400</Density>
-      <ECI>0.30175505488888887</ECI>
-      <getVolumeECI>724.21213173333331</getVolumeECI>
-      <ECI_A1A3>0.053834916</ECI_A1A3>
+      <ECI>0.49792013888888892</ECI>
+      <getVolumeECI>1195.0083333333334</getVolumeECI>
+      <ECI_A1A3>0.25</ECI_A1A3>
       <ECI_A4>0.020920138888888891</ECI_A4>
       <ECI_A5>0.02</ECI_A5>
       <ECI_B1B5>0</ECI_B1B5>
@@ -2401,7 +2401,7 @@ Set Value by user as: 0kgCo2/kg
         <value>0</value>
         <calcResult />
       </materialDProperties>
-      <ECI_A1A3_Override>false</ECI_A1A3_Override>
+      <ECI_A1A3_Override>true</ECI_A1A3_Override>
       <ECI_A4_Override>false</ECI_A4_Override>
       <ECI_A5_Override>true</ECI_A5_Override>
       <ECI_C1C4_Override>false</ECI_C1C4_Override>

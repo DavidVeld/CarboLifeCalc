@@ -20,6 +20,7 @@ namespace CarboLifeAPI.Data
         public bool firstLaunch { get; set; }
         public int defaultDesignLife { get; set; }
         public string Currency { get; set; }
+        public string ecRevitParameter { get; set; }
 
 
         public List<CarboColourPreset> colourPresets {get; set;}
@@ -33,6 +34,7 @@ namespace CarboLifeAPI.Data
             defaultDesignLife = 60;
             Currency = "£";
             colourPresets = new List<CarboColourPreset>();
+            ecRevitParameter = "CLC_EmbodiedCarbon";
 
             defaultCarboGroupSettings = new CarboGroupSettings();
 

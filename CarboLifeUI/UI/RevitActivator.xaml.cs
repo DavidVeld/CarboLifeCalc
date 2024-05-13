@@ -20,6 +20,8 @@ namespace CarboLifeUI.UI
         bool has2022;
         bool has2023;
         bool has2024;
+        bool has2025;
+
 
         bool checked2019;
 
@@ -42,6 +44,7 @@ namespace CarboLifeUI.UI
             has2022 = false;
             has2023 = false;
             has2024 = false;
+            has2025 = false;
 
 
             if (Directory.Exists(path))
@@ -278,6 +281,44 @@ namespace CarboLifeUI.UI
                         lbl_2024.Content = "Revit 2024 Not Found";
                     }
                     //End 2024
+                    //2025
+                    has2025 = false;
+                    foreach (string str in dirlist)
+                    {
+                        string filepath = str + "\\" + "CarboLifeCalc.addin";
+
+                        if (str.Contains("2025"))
+                        {
+                            //Check if user has addin in the folder
+                            if (File.Exists(filepath))
+                            {
+                                //addin is installed
+                                chx_2025.IsChecked = true;
+                                chx_2025.IsEnabled = true;
+                                lbl_2025.Foreground = Brushes.Green;
+                                lbl_2025.Content = "2025 Addin Installed";
+                            }
+                            else
+                            {
+                                //User has revit version but not addin installed
+                                chx_2025.IsChecked = false;
+                                chx_2025.IsEnabled = true;
+                                lbl_2025.Foreground = Brushes.Black;
+                                lbl_2025.Content = "2025 Addin Not Installed";
+                            }
+                            has2025 = true;
+                            break;
+                        }
+                    }
+
+                    if (has2025 == false)
+                    {
+                        //revit version not found
+                        chx_2025.IsEnabled = false;
+                        lbl_2025.Foreground = Brushes.Gray;
+                        lbl_2025.Content = "Revit 2025 Not Found";
+                    }
+                    //End 2025
                 }
                 else
                 {
@@ -358,6 +399,13 @@ namespace CarboLifeUI.UI
                         {
                             if (File.Exists(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2024 + "\\CarboLifeCalc.addin"))
                                 File.Delete(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2024 + "\\CarboLifeCalc.addin");
+                        }
+                        if (chx_2025.IsChecked == true)
+                            CopyFile(filePath, "2025");
+                        else
+                        {
+                            if (File.Exists(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2025 + "\\CarboLifeCalc.addin"))
+                                File.Delete(@"C:\ProgramData\Autodesk\Revit\Addins\" + 2025 + "\\CarboLifeCalc.addin");
                         }
 
                         //deletebuffer

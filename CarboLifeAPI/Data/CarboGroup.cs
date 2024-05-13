@@ -282,7 +282,7 @@ namespace CarboLifeAPI.Data
             Mass = 0;
             Grade = carboElement.Grade;
 
-            Description = GetDescription(carboElement);
+            Description = "New Group";
 
             //EEI = 0;
             ECI = 0;
@@ -322,6 +322,57 @@ namespace CarboLifeAPI.Data
             
 
         }
+        internal void getDescription(CarboGroupSettings importSettings)
+        {
+            string description = "";
+
+            //check if substructure note is required.
+            if (importSettings.IncludeSubStructure == true && isSubstructure == true)
+            {
+                description += "(Substructure)";
+            }
+
+            description += this.Category;
+
+
+            if (this.isExisting == true && this.isDemolished == true)
+            {
+                description += "Existing & Demolished ";
+            }
+
+            if (this.isExisting == true && this.isDemolished == false)
+            {
+                description = "Existing ";
+            }
+
+            if (importSettings.IncludeAdditionalParameter == true && additionalData != "")
+            {
+                description += additionalData;
+            }
+
+            if (importSettings.IncludeGradeParameter == true && Grade != "")
+            {
+                description += " Grade: " + Grade;
+            }
+
+            if (importSettings.IncludeCorrectionParameter == true && Correction != "")
+            {
+                description += " Corrected";
+            }
+
+            if (importSettings.mapReinforcement == true && RcDensity != 0)
+            {
+                description += " RC Override";
+            }
+
+            //Apply description
+            Description = description;
+
+        }
+
+        /*
+        [Obsolete]
+        
         private string GetDescription(CarboElement carboElement)
         {
             string result = "";
@@ -341,6 +392,7 @@ namespace CarboLifeAPI.Data
 
             return result;
         }
+        */
         internal void SetPercentageOf(double eCTotal)
         {
             if (EC > 0)
@@ -458,6 +510,16 @@ namespace CarboLifeAPI.Data
             {
                 //TotalVolume = Math.Round(inUseProperties.B4 * (Volume * wasteFact), 3);
                 TotalVolume = inUseProperties.B4 * (Volume * wasteFact);
+
+            }
+
+            //Use Correct ECi to write into Elements based on Chosen switches (A-D)
+            if(this.AllElements.Count > 0)
+            {
+                foreach(CarboElement el in  this.AllElements)
+                {
+                    el.ECI = this.ECI;
+                }
 
             }
 
@@ -621,39 +683,5 @@ namespace CarboLifeAPI.Data
 
         }
 
-        internal void getDescription(CarboGroupSettings importSettings)
-        {
-            string description = Description;
-            
-            //check if substructure note is required.
-            if (importSettings.IncludeSubStructure == true && isSubstructure==true)
-            {
-                description += " (Substructure)";
-            }
-
-            if (importSettings.IncludeAdditionalParameter == true && additionalData != "")
-            {
-                description += additionalData;
-            }
-
-            if (importSettings.IncludeGradeParameter == true && Grade != "")
-            {
-                description += " Grade: " + Grade;
-            }
-
-            if (importSettings.IncludeCorrectionParameter == true && Correction != "")
-            {
-                description += " Corrected";
-            }
-
-            if (importSettings.mapReinforcement == true && RcDensity != 0 )
-            {
-                description += " RC Override";
-            }
-
-            //Apply description
-            Description = description;
-
-        }
     }
 }

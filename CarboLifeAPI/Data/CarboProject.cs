@@ -277,6 +277,9 @@ namespace CarboLifeAPI.Data
             
         }
 
+        /// <summary>
+        /// Generates groups from the lose elements.
+        /// </summary>
         public void CreateGroups()
         {
             //get default group settings;
@@ -1287,7 +1290,9 @@ namespace CarboLifeAPI.Data
                 cg.SetPercentageOf(EC);
             }
 
-            //Set element totals
+            //Once all Group Totals are calculated, print back the ECI and EC to each individual element.
+            bakeToElements();
+
             setElementotals();
 
             //Set Global Values if required
@@ -1328,6 +1333,31 @@ namespace CarboLifeAPI.Data
             ECTotal = EC + globalTotals;
 
             justSaved = false;
+
+        }
+
+        /// <summary>
+        /// Iterates over all Grouped elments and applies most accurate information;
+        /// </summary>
+        private void bakeToElements()
+        {
+            foreach (CarboGroup cg in groupList)
+            {
+                if (cg.AllElements != null)
+                {
+                    if (cg.AllElements.Count > 0)
+                    {
+                        for (int i = 0; i <= cg.AllElements.Count - 1; i++)
+                        {
+                            CarboElement ce = cg.AllElements[i];
+                            ce.ECI = cg.ECI;
+                            ce.Correction = cg.Correction;
+                            ce.EC = cg.ECI * ce.Mass;
+                        }
+                    }
+                }
+            }
+
 
         }
 
@@ -1564,28 +1594,35 @@ namespace CarboLifeAPI.Data
 
                         }
                     }
-                    //The element doesnt exist yet in the list; add to the list as a new element.
-                    if (isUnique == true)
-                    {
-                        CarboElement newElement = new CarboElement();
-                        newElement.Id = cElement.Id;
-                        newElement.Volume = cElement.Volume;
+                //The element doesnt exist yet in the list; add to the list as a new element.
+                if (isUnique == true)
+                {
+                    CarboElement newElement = new CarboElement();
+                    newElement.Id = cElement.Id;
+                    newElement.Volume = cElement.Volume;
 
-                        newElement.ECI_Cumulative = cElement.ECI;
-                        newElement.EC_Cumulative = cElement.EC;
-                        newElement.Volume_Cumulative = cElement.Volume;
 
-                        newElement.Mass = cElement.Mass;
-                        
-                        elementbuffer.Add(newElement);
-                        ok = true;
-                    }
-                
+                    newElement.ECI_Cumulative = cElement.ECI;
+
+                    //Recalculate:
+                    newElement.EC = cElement.ECI * cElement.Mass;
+
+                    newElement.EC_Cumulative = cElement.EC;
+                    newElement.Volume_Cumulative = cElement.Volume;
+
+                    newElement.Mass = cElement.Mass;
+
+                    elementbuffer.Add(newElement);
+                    ok = true;
+                }
+
             }
             justSaved = false;
 
             return elementbuffer;
         }
+       
+        /*
         public void GenerateDummyList()
         {
             //Create a large list of dummy elements;
@@ -1618,6 +1655,8 @@ namespace CarboLifeAPI.Data
 
             CalculateProject();
         }
+        */
+
         public void Audit()
         {
             //Check if all groups have unique Id;
@@ -1688,7 +1727,6 @@ namespace CarboLifeAPI.Data
 
             justSaved = false;
         }
-
         public void AddGroups(List<CarboGroup> groupList)
         {
             foreach (CarboGroup cg in groupList)
@@ -1698,7 +1736,6 @@ namespace CarboLifeAPI.Data
 
             justSaved = false;
         }
-
         private int getNewId()
         {
             int id = 0;
@@ -1838,10 +1875,10 @@ namespace CarboLifeAPI.Data
         }
         public void AddElement(CarboElement carboElement)
         {
-            elementList.Add(carboElement);
+            AddorUpdateElement(carboElement);
+            //elementList.Add(carboElement);
             justSaved = false;
         }
-
         public void AddorUpdateElement(CarboElement carboElement)
         {
             
@@ -2024,7 +2061,6 @@ namespace CarboLifeAPI.Data
 
             return result;
         }
-
         public void CreateReinforcementGroup()
         {
             CarboMaterial reinforcementMaterial = CarboDatabase.getClosestMatch(RevitImportSettings.RCMaterialName);
