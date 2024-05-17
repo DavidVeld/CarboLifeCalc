@@ -24,6 +24,8 @@ namespace CarboCroc
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Carbo Elements", "CE", "Carbo Elements", GH_ParamAccess.list);
+            pManager.AddBooleanParameter("Switches", "CS", "Carbo Switches", GH_ParamAccess.list);
+
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -38,15 +40,21 @@ namespace CarboCroc
         {
             string errors = "";
             List<string> resultList = new List<string>();
+
             //string path = "";
 
             var provided_as_goo = new List<GH_ObjectWrapper>();
+            List<bool> switches = new List<bool>(); ;
+
             List<CarboElement> listOfElements = new List<CarboElement>();
 
             CarboProject runtimeProject = new CarboProject();
 
             //Get the save as.. path :
             //DA.GetData<string>(1, ref path);
+            //Get the switches
+            bool okSwitches = DA.GetDataList(1, switches);
+                        
 
             //Get the data
             if (DA.GetDataList(0, provided_as_goo))
@@ -64,12 +72,21 @@ namespace CarboCroc
 
             if (listOfElements.Count != 0)
             {
-                runtimeProject = CarboCrocProcess.ProcessData(listOfElements);
+                runtimeProject = CarboCrocProcess.ProcessData(listOfElements, switches);
             }
 
-            List<CarboDataPoint> list = runtimeProject.getPhaseTotals(true);
+            List<CarboDataPoint> list = runtimeProject.getPhaseTotals();
 
-            double totals = runtimeProject.getTotalEC();
+            //double totals = runtimeProject.getTotalEC();
+            double totals = 0;
+
+
+            foreach (CarboDataPoint cdp in list)
+            {
+                totals += cdp.Value;
+            }
+
+            //double totals = runtimeProject.getTotalEC();
 
             foreach(CarboDataPoint cdp in list)
                 resultList.Add(cdp.Name + ";" + cdp.Value.ToString());

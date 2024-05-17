@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,8 @@ namespace CarboCroc
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Carbo Groups", "CG", "Carbo Groups", GH_ParamAccess.list);
+            pManager.AddBooleanParameter("Switches", "CS", "Carbo Switches", GH_ParamAccess.list);
+
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -44,6 +47,8 @@ namespace CarboCroc
 
             CarboProject runtimeProject = new CarboProject();
 
+            List<bool> switches = new List<bool>(); ;
+
             //Get the save as.. path :
             //DA.GetData<string>(1, ref path);
 
@@ -51,6 +56,7 @@ namespace CarboCroc
             Type carboGType = typeof(CarboGroup);
             //Type carboGType2 = listOfGroups[0].GetType();
 
+            bool okSwitches = DA.GetDataList(1, switches);
 
 
             if (DA.GetDataList(0, provided_as_goo))
@@ -72,12 +78,18 @@ namespace CarboCroc
 
             if (listOfGroups.Count != 0)
             {
-                runtimeProject = CarboCrocProcess.ProcessData(listOfGroups);
+                runtimeProject = CarboCrocProcess.ProcessData(listOfGroups, switches);
             }
 
-            List<CarboDataPoint> list = runtimeProject.getPhaseTotals(true);
+            List<CarboDataPoint> list = runtimeProject.getPhaseTotals();
 
-            double totals = runtimeProject.getTotalEC();
+            //double totals = runtimeProject.getTotalEC();
+            double totals = 0;
+
+            foreach (CarboDataPoint cdp in list)
+            {
+                totals += cdp.Value;
+            }
 
             foreach (CarboDataPoint cdp in list)
                 resultList.Add(cdp.Name + ";" + cdp.Value.ToString());
