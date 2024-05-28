@@ -1,6 +1,7 @@
 ﻿using CarboLifeAPI.Data;
 using LCAx;
 using Microsoft.Office.Interop.Excel;
+using Microsoft.Vbe.Interop;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -418,6 +419,18 @@ namespace CarboLifeAPI
             return newPart;
         }
 
+        private static CarboProject convertToCarboCalcProject(Lcax lcaxFile)
+        {
+            CarboProject result = new CarboProject();
+
+            result.Name = lcaxFile.Name;
+            result.Description = lcaxFile.Description;
+            result.designLife = Convert.ToInt16(lcaxFile.LifeSpan);
+
+            return result;
+
+        }
+
         private static JsCarboElement ConvertoToJsCarboElement(CarboElement ce, CarboProject carboProject)
         {
             JsCarboElement JsCe = new JsCarboElement();
@@ -533,5 +546,64 @@ namespace CarboLifeAPI
             return result;
 
         }
+
+        public static bool openLCAx(string path, out CarboProject carboLifeProject)
+        {
+            bool result = false;
+
+            carboLifeProject = new CarboProject();
+
+            try
+            {
+                var JsonSerializer = new JavaScriptSerializer();
+                JsonSerializer.MaxJsonLength = Int32.MaxValue;
+                Lcax lcaxFile = null;
+
+                var lcaxFile2 = JsonSerializer.DeserializeObject(path);
+
+                lcaxFile = lcaxFile2 as Lcax;
+
+                carboLifeProject = convertToCarboCalcProject(lcaxFile);
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                carboLifeProject = null;
+                return false;
+            }
+
+            result = true;
+            return result;
+
+        }
+
+
+
+        public static string GetLCAxFileLocation()
+        {
+            string result = "";
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "LCAx File (*.json)|*.json|All files (*.*)|*.*";
+
+                var path = openFileDialog.ShowDialog();
+
+                if (openFileDialog.FileName != "")
+                {
+                    result = openFileDialog.FileName;
+                }
+            }
+            catch
+            {
+                return "";
+            }
+
+            return result;
+        }
+
+
     }
 }

@@ -22,6 +22,9 @@ namespace CarboCroc
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Material Name", "Material Name", "Material Name", GH_ParamAccess.item);
+            pManager.AddTextParameter("Material Category", "Material Category", "Material Category", GH_ParamAccess.item,"");
+            pManager.AddTextParameter("Material Grade", "Material Grade", "Material Grade", GH_ParamAccess.item, "");
+
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -35,6 +38,9 @@ namespace CarboCroc
             try
             {
                 string searchName = "";
+                string searchCategory = "";
+                string searchGrade = "";
+
                 CarboProject CP = new CarboProject();
                 CarboDatabase DB = CP.CarboDatabase;
                 CarboMaterial CM = null;
@@ -42,8 +48,10 @@ namespace CarboCroc
                 List<string> listofCarboMaterials = new List<string>();
 
                 DA.GetData<string>(0, ref searchName);
+                DA.GetData<string>(1, ref searchCategory);
+                DA.GetData<string>(2, ref searchGrade);
 
-                CM = DB.getClosestMatch(searchName);
+                CM = DB.getClosestMatch(searchName,searchCategory,searchGrade);
 
                 if (CM != null)
                 {

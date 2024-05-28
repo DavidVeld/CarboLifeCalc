@@ -465,9 +465,16 @@ namespace CarboLifeAPI.Data
                 foreach (CarboGroup cg in group)
                 {
                     double value = 0;
+                    string materialCategory = "";
+                    CarboElement ce = null;
+                    if(cg.AllElements.Count > 0)
+                        ce = cg.AllElements[0];
+
+                    if (ce != null)
+                        materialCategory = ce.MaterialCategoryName;
 
                     //The materialname was given by the elements, the values now need to be matched with a own one.
-                    CarboMaterial closestGroupMaterial = materialData.getClosestMatch(cg.MaterialName,cg.Grade);
+                    CarboMaterial closestGroupMaterial = materialData.getClosestMatch(cg.MaterialName, materialCategory, cg.Grade);
                     string map = cg.MaterialName + "," + closestGroupMaterial.Name + "," + value.ToString() + Environment.NewLine;
                     mappingtable += map;
                     //cg.MaterialName = closestGroupMaterial.Name;

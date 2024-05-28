@@ -38,26 +38,43 @@ namespace CarboLifeRevit
                 {
                     newCarboElement = getNewElementProps(el, doc, settings);
 
-                string setImportedMaterialName;
-                double setVolume;
-                double setArea;
+                Material ImportedMaterial = null;
+                string importedMaterialName = "";
+                string importedMaterialCategoryName = "";
 
-                //MaterialName
-                setImportedMaterialName = doc.GetElement(materialId).Name.ToString();
+                double setVolume = 0;
+                double setArea = 0;
 
-                    //Volume
+                ImportedMaterial = doc.GetElement(materialId) as Material;
+
+                //MaterialCategoryName
+
+                //MaterialCategoryName
+                if (ImportedMaterial != null )
+                {
+                    importedMaterialName = ImportedMaterial.Name.ToString();
+
+                    if (ImportedMaterial.MaterialClass != "")
+                    {
+                        importedMaterialCategoryName = ImportedMaterial.MaterialClass;
+                    }
+                    else if(ImportedMaterial.MaterialCategory != "")
+                    { 
+                        importedMaterialCategoryName = ImportedMaterial.MaterialCategory;
+                    }
+                }
+                //Volume
                 double volumeCubicFt = el.GetMaterialVolume(materialId);
                 setVolume = Utils.convertToCubicMtrs(volumeCubicFt);
 
                 double area = el.GetMaterialArea(materialId,false);
                 setArea = Utils.convertToSqreMtrs(area);
 
-
                 //If it passed it matches all criteria:
-                newCarboElement.MaterialName = setImportedMaterialName;
+                newCarboElement.MaterialName = importedMaterialName;
+                newCarboElement.MaterialCategoryName = importedMaterialCategoryName;
                 newCarboElement.Volume = Math.Round(setVolume, 4);
                 newCarboElement.Area = Math.Round(setArea, 4);
-
 
             }
             catch
@@ -285,6 +302,8 @@ namespace CarboLifeRevit
                 foreach (Solid solidShape in lisofGeos)
                 {
                     string materialName = "";
+                    string materialCategory = "";
+
                     double volume = 0;
 
                     if (solidShape.Volume > 0)
@@ -304,11 +323,16 @@ namespace CarboLifeRevit
                             if (faceMat != null)
                             {
                                 materialName = faceMat.Name;
+
+                                if (faceMat.MaterialClass != "")
+                                    materialCategory = faceMat.MaterialClass;
+                                else if(faceMat.MaterialCategory != "")
+                                    materialCategory = faceMat.MaterialCategory;
                             }
                         }
 
                         if (materialName != "" && volume > 0 && faceMat != null)
-                            result = CarboRevitUtils.addToCarboElement(result, materialName, volume, el, doc, settings);
+                            result = CarboRevitUtils.addToCarboElement(result, materialName, materialCategory, volume, el, doc, settings);
 
                     }
                 }
@@ -327,7 +351,7 @@ namespace CarboLifeRevit
 
         }
 
-        private static List<CarboElement> addToCarboElement(List<CarboElement> result, string materialName, double volume, Element el, Document doc, CarboGroupSettings settings)
+        private static List<CarboElement> addToCarboElement(List<CarboElement> result, string materialName,string materialCategoryName, double volume, Element el, Document doc, CarboGroupSettings settings)
         {
             if(result.Count > 0)
             {

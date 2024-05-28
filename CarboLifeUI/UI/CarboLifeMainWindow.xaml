@@ -53,7 +53,8 @@
                 </MenuItem>
                 <Separator></Separator>
                 <MenuItem Name="mnu_EditTemplate" Header="Edit a Material Template..." Click="mnu_EditTemplate_Click" Background="Transparent"/>
-                <MenuItem Name="mnu_ImportElements" Header="Import Elements From CSV..." Click="mnu_ImportElements_Click" Background="Transparent"/>
+                <MenuItem Name="mnu_ImportElements" Header="Import Elements From CSV..." Click="mnu_ImportElements_Click" Background="Transparent" Visibility="Hidden"/>
+                <MenuItem Name="mnu_ImportLCAx" Header="Import Elements From LCAx..." Click="mnu_ImportLCAx_Click" Background="Transparent"/>
 
                 <Separator></Separator>
                 <MenuItem Name="mnu_CloseMe" Header="Close" Click="mnu_CloseMe_Click" Background="Transparent"/>

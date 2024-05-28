@@ -19,12 +19,14 @@ namespace CarboLifeAPI.Data
         public string MaterialName { get; set; }
         //Matched To Material Name
         public string CarboMaterialName { get; set; }
+        public string MaterialCategoryName { get; set; }
+        public string Grade { get; set; }
+
         public string Category { get; set; }
         public string SubCategory { get; set; }
         public string AdditionalData { get; set; }
         public double Area { get; set; }
 
-        public string Grade { get; set; }
         public string Correction { get; set; }
 
         public double Volume { get; set; }
@@ -60,12 +62,14 @@ namespace CarboLifeAPI.Data
             Id = -999;
             Name = "";
             MaterialName = "Other";
+            MaterialCategoryName = "";
+            Grade = "";
+
             Category = "Other";
             SubCategory = "";
             AdditionalData = "";
             Area = 0;
 
-            Grade = "";
             Correction = "";
             rcDensity = 0;
             GUID = "";
@@ -97,6 +101,7 @@ namespace CarboLifeAPI.Data
         {
             //this.Material = carboMaterial;
             MaterialName = carboMaterial.Name;
+            MaterialCategoryName = carboMaterial.Category;
             Density = carboMaterial.Density;
             ECI = carboMaterial.ECI;
             Grade = carboMaterial.Grade;
@@ -126,6 +131,7 @@ namespace CarboLifeAPI.Data
             clone.MaterialName = this.MaterialName;
             //Matched To Material Name
             clone.CarboMaterialName = this.CarboMaterialName;
+            clone.MaterialCategoryName = this.MaterialCategoryName;
 
             clone.Category = this.Category;
             clone.SubCategory = this.SubCategory;
@@ -168,6 +174,7 @@ namespace CarboLifeAPI.Data
             clone.MaterialName = this.MaterialName;
             //Matched To Material Name
             clone.CarboMaterialName = this.CarboMaterialName;
+            clone.MaterialCategoryName = this.MaterialCategoryName;
 
             clone.Category = this.Category;
             clone.SubCategory = this.SubCategory;

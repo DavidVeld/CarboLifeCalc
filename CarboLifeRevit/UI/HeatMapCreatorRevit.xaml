@@ -59,8 +59,8 @@
                 <Label Name="lbl_total" Grid.Column="2" Margin="0,0,0,0" Grid.Row="2" Height="27" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">VALUE</Label>
                 <Label Name="lbl_debug" Grid.Column="2" Margin="0,0,0,0" Grid.Row="3" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">VALUE</Label>
 
-                <Button x:Name="btn_Open" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="85" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Open_Click"  Content="Open Project"/>
-                <Button x:Name="btn_Edit" Grid.Row="3" Grid.Column="1" Margin="100,00,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="85" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Edit_Click"  Content="Edit Project" Visibility="Hidden"/>
+                <Button x:Name="btn_Open" Grid.Row="3" Grid.Column="1" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="85" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Open_Click"  Content="Load Project..."/>
+                <Button x:Name="btn_Edit" Grid.Row="3" Grid.Column="1" Margin="100,00,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="85" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Edit_Click"  Content="Edit Project..." Visibility="Visible"/>
 
             </Grid>
         </GroupBox>

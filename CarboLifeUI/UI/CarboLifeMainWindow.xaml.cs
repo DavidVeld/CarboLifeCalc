@@ -714,5 +714,21 @@ namespace CarboLifeUI.UI
                 }
             }
         }
+
+        private void mnu_ImportLCAx_Click(object sender, RoutedEventArgs e)
+        {
+            string path = JsonExportUtils.GetLCAxFileLocation();
+            if (path != null && path != "")
+            {
+                CarboProject carboLifeProject = null;
+                bool ok = JsonExportUtils.openLCAx(path,out carboLifeProject);
+                if (ok == true)
+                {
+                    this.carboLifeProject = carboLifeProject;
+                    
+                }
+            }
+        }
+
     }
 }

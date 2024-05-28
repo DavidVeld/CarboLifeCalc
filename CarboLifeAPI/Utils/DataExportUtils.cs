@@ -820,7 +820,7 @@ namespace CarboLifeAPI
             foreach (CarboElement el in elementList)
             {
                 string resultString = "";
-                CarboMaterial material = carboLifeProject.CarboDatabase.getClosestMatch(el.CarboMaterialName);
+                CarboMaterial material = carboLifeProject.CarboDatabase.getClosestMatch(el.CarboMaterialName, el.Category);
 
                 resultString += el.Id + ","; //0
                 resultString += CVSFormat(el.Category) + ","; //1

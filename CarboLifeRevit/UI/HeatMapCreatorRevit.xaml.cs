@@ -22,6 +22,7 @@ using Autodesk.Revit.UI;
 using System.Windows.Forms;
 using System.Drawing;
 using CarboLifeRevit.Modeless;
+using CarboLifeUI.UI;
 
 namespace CarboLifeRevit
 {
@@ -242,8 +243,42 @@ namespace CarboLifeRevit
 
         private void btn_Edit_Click(object sender, RoutedEventArgs e)
         {
+            if (carboProject != null)
+            {
+                try
+                {
+                    CarboLifeUI.UI.CarboLifeMainWindow CarboApp = new CarboLifeMainWindow(carboProject);
+                    CarboApp.ShowDialog();
 
+                    carboProject = CarboApp.carboLifeProject;
+
+                    carboProject.Audit();
+                    carboProject.CalculateProject();
+                    this.Visibility = Visibility.Visible;
+                }
+                catch { }
+            }
+
+            //When Opened the entire dataset is considered;
+            if (Utils.IsEmpty(visibleElements))
+            {
+                visibleElements = carboProject.GetElementIdList();
+            }
+            else
+            {
+                //The list is not empty thus use the selected data to progress;
+            }
+
+            //Show the data
+            lbl_name.Content = carboProject.Name;
+            lbl_total.Content = carboProject.getTotalEC().ToString("N") + " tCO2";
+
+
+            //Get all the visible elements (all project)
+
+            UpdateDataSource();
         }
+
         private void btn_Update_Click(object sender, RoutedEventArgs e)
         {
             RefreshGraph();
