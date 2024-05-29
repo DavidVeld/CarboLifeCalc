@@ -288,7 +288,7 @@ namespace CarboLifeAPI.Data
             calculateA5 = true;
             calculateB = false;
             calculateB67 = false;
-            calculateSeq = false;
+            calculateSeq = true;
             calculateC = true;
             calculateD = false;
             calculateAdd = false;

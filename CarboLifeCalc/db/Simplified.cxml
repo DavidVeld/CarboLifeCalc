@@ -1642,9 +1642,9 @@ Min. 60% recycled content</Description>
     </CarboMaterial>
     <CarboMaterial>
       <Id>23689</Id>
-      <Name>Reinforced Concrete - General</Name>
+      <Name>Reinforced Concrete Cast-in-Place - General</Name>
       <Category>Concrete</Category>
-      <Description>Global Average
+      <Description>Global Average No GGBS
 (excludes China)
 C32/40</Description>
       <EPDurl />

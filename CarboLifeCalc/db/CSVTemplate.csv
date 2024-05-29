@@ -1,26 +1,28 @@
-Id,Name,Category,Description,Density,WasteFactor,Grade,EPDURL,ECI (kgCO2e/kg),ECI_A1A3 (kgCO2e/kg),ECI_A4 (kgCO2e/kg),ECI_A5 (kgCO2e/kg),ECI_B1B5 (kgCO2e/kg),ECI_C1C4 (kgCO2e/kg),ECI_D (kgCO2e/kg),ECI_Seq (kgCO2e/kg),ECI_Mix (kgCO2e/kg)
-99000,Blockwork,Blocks and Bricks,UKLightweight AAC blocks forbuilding envelope (600kg/m³),700,20,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.386,0.28,0.011,0.077,0,0.018,0,0,0
-99001,Granite,Blocks and Bricks,Generic Granite,2500,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.159,0.093,0.032,0.016,0,0.018,0,0,0
-99002,Limestone,Blocks and Bricks,Generic Limestone,2500,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.156,0.09,0.032,0.016,0,0.018,0,0,0
-99003,Masonry,Blocks and Bricks,Engineering bricks,1490,20,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.303,0.213,0.011,0.061,0,0.018,0,0,0
-99004,Sandstone,Blocks and Bricks,Generic Limestone,2350,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.122,0.06,0.032,0.012,0,0.018,0,0,0
-99005,Mortar,Cement,Concrete - MortarICE Values,2200,5,,,0.252835151,0.200194065,0.010820543,0.002,0,0.039820543,0,0,0
-99006,Screed,Cement,A 1:3 cement:sand screedICE Values,2200,5,,,0.230835151,0.200194065,0.010820543,0,0,0.019820543,0,0,0
-99007,Precast Concrete,Concrete,No description provided,2400,1,C40/50,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.23028,0.178,0.032,0.00228,0,0.018,0,0,0
-99008,Reinforced Concrete - Generic,Concrete,Global Average(excludes China)C32/40,2400,5,C32/40,,0.208,0.175,0.005,0.01,0,0.018,0,0,0
-99009,Mass Concrete,Mass Concrete,A Generic - CEM II Mass concrete infill,2400,5,,,0.169467757,0.097099819,0.023726852,0.01,0,0.038641086,0,0,0
-99010,Asphalt,Other,ICE Asphalt Values,2100,0,,,58.58070513,53.19358873,0.027116402,0.025,0,5.335,0,0,0
-99011,Glass - General,Other,Generic Glass,2500,5,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,1.569,1.44,0.032,0.079,0,0.018,0,0,0
-99012,Insulation,Other,,100,0,,,1.139820543,1.12,0.010820543,0,0,0.009,0,0,0
-99013,Plasterboard,Other,Partitioning/ceilingsMin. 60% recycled content,900,22.5,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.568,0.39,0.032,0.128,0,0.018,0,0,0
-99014,Sand,Other,ICE Values,1800,5,,,0.596860731,0.007469645,0.010820543,0,0,0.578570543,0,0,0
-99015,Aluminum,Steel,Generic Aluminium MaterialICE Values,2700,1,,,6.712308617,6.668717531,0.021641086,0.02,0,0.00195,0,0,0
-99016,Reinforcement,Steel,UKCARES sector average (EAF production)(97% recycled EAF production),7850,5,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,1.204,0.76,0.032,0.043,0,0.018,0.351,0,0
-99017,Steel Plate,Steel,Global Plates,7850,5,S355,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,1.518,2.45,0.183,0.027,0,0.018,-1.16,0,0
-99018,Steel Structural,Steel,UKRolled open sections(EAF production),7850,1,S355,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,1.605,2.45,0.032,0.025,0,0.018,-0.92,0,0
-99019,Hardcore,Stone,,2600,10,,,0.1,0.05,0,0.05,0,0,0,0,0
-99020,CLT,Timber,"Manufactured structural timber - GlobalCLT, 100% FSC/PEFC",470,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.124,0.437,0.161,0.023,0,1.667,-0.524,-1.64,0
-99021,Glulam,Timber,"Manufactured structural timber - GlobalGlulam, 100% FSC/PEFC",470,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.199,0.512,0.161,0.023,0,1.667,-0.524,-1.64,0
-99022,OSB,Timber,"GlobalOSB, 100% FSC/PEFC",490,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.372,0.455,0.161,0.253,0,1.667,-0.524,-1.64,0
-99023,Plywood,Timber,"GlobalFormwork plywood, 100%FSC/PEFC",490,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.623,0.681,0.161,0.278,0,1.667,-0.524,-1.64,0
-99024,Softwood Timber,Timber,Timber based on IC Values,480,5,C24,,0.209272997,0.262594458,0.110209235,0.232,0,1.557469303,-0.4,-1.553,0
+Id,Name,Category,Description,Density,WasteFactor,Grade,EPDURL,ECI (kgCO2e/kg),ECI_A1A3 (kgCO2e/kg),ECI_A4 (kgCO2e/kg),ECI_A5 (kgCO2e/kg),ECI_B1B5 (kgCO2e/kg),ECI_C1C4 (kgCO2e/kg),ECI_D (kgCO2e/kg),ECI_Seq (kgCO2e/kg),ECI_Mix (kgCO2e/kg),
+24550,Reinforcement,Steel,UKCARES sector average (EAF production)(97% recycled EAF production),7850,5,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,1.204,0.76,0.032,0.043,0,0.018,0.351,0,0,
+29489,Blockwork,Blocks and Bricks,UKLightweight AAC blocks forbuilding envelope (600kg/m³),700,20,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.386,0.28,0.011,0.077,0,0.018,0,0,0,
+29415,Masonry,Blocks and Bricks,Engineering bricks,1490,20,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.303,0.213,0.011,0.061,0,0.018,0,0,0,
+23875,Granite,Blocks and Bricks,Generic Granite,2500,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.159,0.093,0.032,0.016,0,0.018,0,0,0,
+22239,Limestone,Blocks and Bricks,Generic Limestone,2500,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.156,0.09,0.032,0.016,0,0.018,0,0,0,
+25827,Sandstone,Blocks and Bricks,Generic Limestone,2350,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.122,0.06,0.032,0.012,0,0.018,0,0,0,
+26383,CLT,Timber,"Manufactured structural timber - GlobalCLT, 100% FSC/PEFC",470,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.124,0.437,0.161,0.023,0,1.667,-0.524,-1.64,0,
+22795,Glulam,Timber,"Manufactured structural timber - GlobalGlulam, 100% FSC/PEFC",470,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.199,0.512,0.161,0.023,0,1.667,-0.524,-1.64,0,
+29207,Plywood,Timber,"GlobalFormwork plywood, 100%FSC/PEFC",490,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.623,0.681,0.161,0.278,0,1.667,-0.524,-1.64,0,
+20843,OSB,Timber,"GlobalOSB, 100% FSC/PEFC",490,10,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.372,0.455,0.161,0.253,0,1.667,-0.524,-1.64,0,
+28676,Glass - General,Other,Generic Glass,2500,5,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,1.569,1.44,0.032,0.079,0,0.018,0,0,0,
+27255,Plasterboard,Other,Partitioning/ceilingsMin. 60% recycled content,900,22.5,,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.568,0.39,0.032,0.128,0,0.018,0,0,0,
+20287,Steel Plate,Steel,Global Plates,7850,5,S355,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,1.518,2.45,0.183,0.027,0,0.018,-1.16,0,0,
+23689,Reinforced Concrete Cast-in-Place - General,Concrete,Global Average No GGBS(excludes China)C32/40,2400,5,C32/40,,0.208,0.175,0.005,0.01,0,0.018,0,0,0,
+26899,Asphalt,Other,ICE Asphalt Values,2100,0,,,58.5807051321164,53.19358873,0.0271164021164021,0.025,0,5.335,0,0,0,
+20488,Sand,Other,ICE Values,1800,5,,,0.596860731186541,0.007469645,0.0108205430932704,0,0,0.57857054309327,0,0,0,
+26244,Screed,Cement,A 1:3 cement:sand screedICE Values,2200,5,,,0.230835151186541,0.200194065,0.0108205430932704,0,0,0.0198205430932704,0,0,0,
+29832,Mortar,Cement,Concrete - MortarICE Values,2200,5,,,0.252835151186541,0.200194065,0.0108205430932704,0.002,0,0.0398205430932704,0,0,0,
+25394,Water Resistent Concrete,Concrete,No description provided,2400,5,C32/40,,0.497920138888889,0.25,0.0209201388888889,0.02,0,0.007,0,0,0.2,
+24248,Mass Concrete,Mass Concrete,A Generic - CEM II Mass concrete infill,2400,5,,,0.169467757038393,0.097099819,0.0237268518518519,0.01,0,0.0386410861865407,0,0,0,
+27368,Aluminum,Steel,Generic Aluminium MaterialICE Values,2700,1,,,6.71230861718654,6.668717531,0.0216410861865407,0.02,0,0.00195,0,0,0,
+26409,Hardcore,Stone,,2600,10,,,0.1,0.05,0,0.05,0,0,0,0,0,
+26245,Insulation,Other,,100,0,,,1.13982054309327,1.12,0.0108205430932704,0,0,0.009,0,0,0,
+29392,Precast Concrete,Concrete,No description provided,2400,1,C40/50,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.23028,0.178,0.032,0.00228,0,0.018,0,0,0,
+23580,Steel Structural,Steel,UKRolled open sections(EAF production),7850,1,S355,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,1.605,2.45,0.032,0.025,0,0.018,-0.92,0,0,
+282044,Softwood Timber,Timber,Timber based on IC Values,480,5,C24,,0.209272996633084,0.262594458,0.110209235209235,0.232,0,1.55746930342385,-0.4,-1.553,0,
+
