@@ -41,7 +41,6 @@ namespace CarboLifeAPI
         {
             //This is the most usefull set of Data To work with for now:
             IEnumerable<CarboElement> bufferList = carboProject.getElementsFromGroups();
-
             CarboGraphResult thisResult = new CarboGraphResult();
 
             try

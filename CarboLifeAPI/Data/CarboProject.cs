@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -229,7 +230,27 @@ namespace CarboLifeAPI.Data
 
             RevitImportSettings = settings.defaultCarboGroupSettings;
             CarboDatabase = new CarboDatabase();
-            CarboDatabase = CarboDatabase.DeSerializeXML(selectedTemplateFile);
+            if (selectedTemplateFile.EndsWith("cxml"))
+            {
+                CarboDatabase = CarboDatabase.DeSerializeXML(selectedTemplateFile);
+            }
+            else if (selectedTemplateFile.EndsWith("csv"))
+            {
+                try
+                {
+                    List<CarboMaterial> materiallist = DataExportUtils.GetMaterialDatabaseFromCVSFile(selectedTemplateFile);
+
+                    foreach (CarboMaterial cm in materiallist)
+                    {
+
+                        CarboDatabase.CarboMaterialList.Add(cm);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("Error importing materials from CSV, please review","Error",MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
 
             groupList = new ObservableCollection<CarboGroup>();
             elementList = new ObservableCollection<CarboElement>();

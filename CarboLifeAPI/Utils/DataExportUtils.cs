@@ -953,7 +953,7 @@ namespace CarboLifeAPI
             return str;
         }
 
-        [Obsolete("Replaced by CreateMaterialDatabaseCVSFile")]
+        [Obsolete("Replaced by CreateMaterialDatabaseCSVFile")]
         private static void CreateMaterialsCVSFile(CarboProject carboLifeProject, string exportPath)
         {
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)

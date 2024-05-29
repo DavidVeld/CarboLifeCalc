@@ -554,7 +554,7 @@ namespace CarboLifeUI.UI
 
             if (File.Exists(exportpathResult) || File.Exists(exportpathElements) || File.Exists(exportpathMaterials))
             {
-                System.Windows.MessageBox.Show("CVS export successful. Click OK to open export directory.", "Success!", MessageBoxButton.OK);
+                System.Windows.MessageBox.Show("CSV export successful. Click OK to open export directory.", "Success!", MessageBoxButton.OK);
                 System.Diagnostics.Process.Start("explorer.exe", exportpath);
             }
 

@@ -340,6 +340,7 @@ namespace CarboLifeAPI
                 //get the other files in the local database
                 string myLocalPath = PathUtils.getAssemblyPath() + "\\db\\";
                 string[] files = System.IO.Directory.GetFiles(myLocalPath, "*.cxml");
+                string[] filescvs = System.IO.Directory.GetFiles(myLocalPath, "*.csv");
 
                 if (files.Length > 0)
                 {
@@ -362,6 +363,18 @@ namespace CarboLifeAPI
                             }
                         }
                     }
+
+                    foreach (string file in filescvs)
+                    {
+                        string fileName = System.IO.Path.GetFileName(file);
+
+                        if (System.IO.File.Exists(file))
+                        {
+                            result.Add(fileName, file);
+                        }
+                    }
+
+
                 }
             }
             catch (Exception ex)

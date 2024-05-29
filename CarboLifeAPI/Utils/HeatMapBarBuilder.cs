@@ -300,7 +300,12 @@ namespace CarboLifeAPI
 
                     rect.StrokeThickness = 1;
                     rect.Width = barwidth;
-                    rect.Height = value * scaley;
+                    //Correct for -
+                    if (value >= 0)
+                        rect.Height = value * scaley;
+                    else
+                        rect.Height = (value * scaley * -1);
+
 
                     Canvas.SetLeft(rect, Xorigin + (i * barwidth));
                     Canvas.SetBottom(rect, Yorigin);
