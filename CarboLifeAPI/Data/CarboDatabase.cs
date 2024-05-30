@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Xml.Serialization;
+using System.Xml;
 
 namespace CarboLifeAPI.Data
 {
@@ -229,7 +230,9 @@ namespace CarboLifeAPI.Data
 
             try
             {
-                XmlSerializer ser = new XmlSerializer(typeof(CarboDatabase));
+
+
+
 
                 //delete all resultdata
                 foreach (CarboMaterial cm in CarboMaterialList)
@@ -239,10 +242,31 @@ namespace CarboLifeAPI.Data
                     cm.materialC1C4Properties.calcResult = "";
                 }
 
+                //
+                XmlSerializer ser = new XmlSerializer(typeof(CarboDatabase));
+
+                //New Way
+                //MemoryStream memoryStreamSerialize = new MemoryStream();
+                //XmlSerializer xmlSerializerSerialize = new XmlSerializer(typeof(CarboDatabase));
+                //XmlTextWriter xmlTextWriterSerialize = new XmlTextWriter(memoryStreamSerialize, Encoding.UTF8);
+
+                //xmlSerializerSerialize.Serialize(xmlTextWriterSerialize, this);
+                //memoryStreamSerialize = (MemoryStream)xmlTextWriterSerialize.BaseStream;
+
+                // converts a byte array of unicode values (UTF-8 enabled) to a string
+                //UTF8Encoding encodingSerialize = new UTF8Encoding();
+                //string serializedXml = encodingSerialize.GetString(memoryStreamSerialize.ToArray());
+
+
                 using (FileStream fs = new FileStream(myPath, FileMode.Create))
                 {
                     ser.Serialize(fs, this);
+
                 }
+
+                //xmlTextWriterSerialize.Close();
+                //memoryStreamSerialize.Close();
+                //memoryStreamSerialize.Dispose();
             }
             catch (Exception ex)
             {

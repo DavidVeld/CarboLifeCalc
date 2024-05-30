@@ -60,17 +60,19 @@ namespace CarboLifeAPI
     /// Class to read data from a CSV file
     /// </summary>
     public class CsvFileReader : StreamReader
+
     {
-        public CsvFileReader(Stream stream)
+        public CsvFileReader(Stream stream, Encoding encodeType, bool byteOrder)
             : base(stream)
         {
         }
 
-        public CsvFileReader(string filename)
+        public CsvFileReader(string filename, Encoding encodeType,bool byteOrder )
             : base(filename)
         {
         }
 
+        
         /// <summary>
         /// Reads a row of data from a CSV file
         /// </summary>
@@ -78,6 +80,8 @@ namespace CarboLifeAPI
         /// <returns></returns>
         public bool ReadRow(CsvRow row)
         {
+            
+
             row.LineText = ReadLine();
             if (String.IsNullOrEmpty(row.LineText))
                 return false;

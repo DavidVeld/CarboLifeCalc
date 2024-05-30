@@ -177,6 +177,9 @@
     <Content Include="data\A1A3Tables\User.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="db\matchlog.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="db\MaterialBuffer.cxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -196,10 +199,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="db\Simplified.cxml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="db\Ökobaudat.cxml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="db\CSVTemplate.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

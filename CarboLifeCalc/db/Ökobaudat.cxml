@@ -129,7 +129,7 @@
     <CarboMaterial>
       <Id>10758</Id>
       <Name>GUTEX Thermofibre</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>GUTEX Thermofibre</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/81635c6b-192e-4661-9f82-f63f335c4047</EPDurl>
       <Grade />
@@ -253,8 +253,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12255</Id>
-      <Name>Zellulose-Einblasd�mmung STEICOfloc und STEICOfloc NB</Name>
-      <Category>D�mmstoffe</Category>
+      <Name>Zellulose-Einblasdämmung STEICOfloc und STEICOfloc NB</Name>
+      <Category>Dämmstoffe</Category>
       <Description>Cellulose air injected insulation STEICOfloc and STEICOfloc NB</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/a1e19031-7d7f-4eb6-b415-a9b82958fcef</EPDurl>
       <Grade />
@@ -379,7 +379,7 @@
     <CarboMaterial>
       <Id>11991</Id>
       <Name>Thermofloc</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>Thermofloc</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/c27d239e-e13e-4d4b-ad17-a92ba4a4201b</EPDurl>
       <Grade />
@@ -503,8 +503,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11159</Id>
-      <Name>Lose Zellulosed�mmung</Name>
-      <Category>D�mmstoffe</Category>
+      <Name>Lose Zellulosedämmung</Name>
+      <Category>Dämmstoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/44fd7c73-fdbd-462b-9bec-f08e62af10b1</EPDurl>
       <Grade />
@@ -754,7 +754,7 @@
     <CarboMaterial>
       <Id>10576</Id>
       <Name>FOAMGLAS F</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>FOAMGLAS F</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/f27b04a9-2fa2-4ac2-8c5f-03addd0a643a</EPDurl>
       <Grade />
@@ -879,7 +879,7 @@
     <CarboMaterial>
       <Id>10577</Id>
       <Name>FOAMGLAS S3</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>FOAMGLAS S3</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/f0b20a40-b4cb-4c34-9f2e-145e3d9af024</EPDurl>
       <Grade />
@@ -1004,7 +1004,7 @@
     <CarboMaterial>
       <Id>10580</Id>
       <Name>FOAMGLAS T4+</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>FOAMGLAS T4+</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/c93da4c3-94c9-4c86-b092-610cf1cf012f</EPDurl>
       <Grade />
@@ -1129,7 +1129,7 @@
     <CarboMaterial>
       <Id>10579</Id>
       <Name>FOAMGLAS T3+</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>FOAMGLAS T3+</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/44d20812-1ed2-4e11-9cf0-54a3b7eb56fa</EPDurl>
       <Grade />
@@ -1255,7 +1255,7 @@
       <Id>11999</Id>
       <Name>Tor - Condoor BV - Industrie- und Garagentor Stahl 40 mm (PG 3)</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
-      <Description> 1 m� Fl�che</Description>
+      <Description> 1 m² Fläche</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/4fd7d37c-40aa-4433-80af-8dbe8544d856</EPDurl>
       <Grade />
       <Density>470</Density>
@@ -1380,7 +1380,7 @@
       <Id>11997</Id>
       <Name>Tor - Condoor BV - Industrie- und Garagentor Alu 40 mm (PG 2)</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
-      <Description> 1 m� Fl�che</Description>
+      <Description> 1 m² Fläche</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/f2779d72-a491-4547-8e18-1437f8e66f92</EPDurl>
       <Grade />
       <Density>368</Density>
@@ -1505,7 +1505,7 @@
       <Id>11998</Id>
       <Name>Tor - Condoor BV - Industrie- und Garagentor Alu 80 mm (PG 1)</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
-      <Description> 1 m� Fl�che</Description>
+      <Description> 1 m² Fläche</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/775c913f-860e-490e-a22e-2ca4591e89f6</EPDurl>
       <Grade />
       <Density>409</Density>
@@ -1628,7 +1628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12252</Id>
-      <Name>Zargen - rema AG / spa - Zargen f�r Dreht�ren</Name>
+      <Name>Zargen - rema AG / spa - Zargen für Drehtüren</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/2afc3bbf-ab96-4c7f-8fe8-fb6d4fcc6719</EPDurl>
@@ -1753,7 +1753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12087</Id>
-      <Name>T�r - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Haust�r</Name>
+      <Name>Tür - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Haustür</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Door - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Front door door</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/a6d946bb-b0a8-41e0-9e29-84663162caf8</EPDurl>
@@ -2380,7 +2380,7 @@
       <Id>11963</Id>
       <Name>Tensar TriAX TX 7 Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.273 kg/m�</Description>
+      <Description> Flächengewicht: 0.273 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/ffd9a444-d0cb-47a2-bc25-32c19c85979b</EPDurl>
       <Grade />
       <Density>19</Density>
@@ -2505,7 +2505,7 @@
       <Id>11962</Id>
       <Name>Tensar TriAX TX 5 Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.189 kg/m�</Description>
+      <Description> Flächengewicht: 0.189 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/63bb567f-e2c7-46c7-947f-edf620f1064f</EPDurl>
       <Grade />
       <Density>19</Density>
@@ -2630,7 +2630,7 @@
       <Id>11961</Id>
       <Name>Tensar TriAX TX 190L-GN Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.628 kg/m�</Description>
+      <Description> Flächengewicht: 0.628 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/54611e43-ebcd-41a4-a16c-356e8780e3c9</EPDurl>
       <Grade />
       <Density>63</Density>
@@ -2755,7 +2755,7 @@
       <Id>11960</Id>
       <Name>Tensar TriAX TX 190L-GD Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.496 kg/m�</Description>
+      <Description> Flächengewicht: 0.496 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/9acfcfb5-e1ad-4490-bad1-096a76cf23b6</EPDurl>
       <Grade />
       <Density>100</Density>
@@ -2880,7 +2880,7 @@
       <Id>11959</Id>
       <Name>Tensar TriAX TX 190L-G Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.434 kg/m�</Description>
+      <Description> Flächengewicht: 0.434 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/55141e01-120e-4766-a4ec-15f62d40017a</EPDurl>
       <Grade />
       <Density>43</Density>
@@ -3005,7 +3005,7 @@
       <Id>11958</Id>
       <Name>Tensar TriAX TX 190L Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.318 kg/m�</Description>
+      <Description> Flächengewicht: 0.318 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/055e59ef-f034-430d-9ee1-db993dfa3a7a</EPDurl>
       <Grade />
       <Density>32</Density>
@@ -3130,7 +3130,7 @@
       <Id>11957</Id>
       <Name>Tensar TriAX TX 180 Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.315 kg/m�</Description>
+      <Description> Flächengewicht: 0.315 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/2912f061-b8eb-4173-aeac-cf71ff9d9e62</EPDurl>
       <Grade />
       <Density>32</Density>
@@ -3255,7 +3255,7 @@
       <Id>11956</Id>
       <Name>Tensar TriAX TX 170-GD Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.437 kg/m�</Description>
+      <Description> Flächengewicht: 0.437 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/1e7a529a-d2fa-4ef5-92de-0af69eeb7b86</EPDurl>
       <Grade />
       <Density>44</Density>
@@ -3380,7 +3380,7 @@
       <Id>11955</Id>
       <Name>Tensar TriAX TX 170 Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.273 kg/m�</Description>
+      <Description> Flächengewicht: 0.273 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/a4a4bf14-7133-48ed-89d4-b3fc68e86c7c</EPDurl>
       <Grade />
       <Density>27</Density>
@@ -3505,7 +3505,7 @@
       <Id>11954</Id>
       <Name>Tensar TriAX TX 160-G Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.348 kg/m�</Description>
+      <Description> Flächengewicht: 0.348 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/23e32f6f-42b1-4468-abae-e8be9fe9fd46</EPDurl>
       <Grade />
       <Density>35</Density>
@@ -3630,7 +3630,7 @@
       <Id>11953</Id>
       <Name>Tensar TriAX TX 160 Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.231 kg/m�</Description>
+      <Description> Flächengewicht: 0.231 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/eb987474-1dbc-4b50-a9c5-36b138bb051e</EPDurl>
       <Grade />
       <Density>23</Density>
@@ -3755,7 +3755,7 @@
       <Id>11952</Id>
       <Name>Tensar TriAX TX 150-GD Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.367 kg/m�</Description>
+      <Description> Flächengewicht: 0.367 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/5427c2a5-0158-479a-826d-64d467556edb</EPDurl>
       <Grade />
       <Density>37</Density>
@@ -3880,7 +3880,7 @@
       <Id>11951</Id>
       <Name>Tensar TriAX TX 150 Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.186 kg/m�</Description>
+      <Description> Flächengewicht: 0.186 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/1c8b079d-8a3e-4eef-ab8e-3f1c185dcffa</EPDurl>
       <Grade />
       <Density>19</Density>
@@ -4005,7 +4005,7 @@
       <Id>11950</Id>
       <Name>Tensar TriAX TX 140 Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.175 kg/m�</Description>
+      <Description> Flächengewicht: 0.175 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/8fcd6530-5227-465f-9f5a-0dd17fb0a11e</EPDurl>
       <Grade />
       <Density>18</Density>
@@ -4130,7 +4130,7 @@
       <Id>11949</Id>
       <Name>Tensar TriAX TX 130S Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.184 kg/m�</Description>
+      <Description> Flächengewicht: 0.184 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/ff763631-3fad-4cfe-bcd8-3a6ae400520f</EPDurl>
       <Grade />
       <Density>18</Density>
@@ -4255,7 +4255,7 @@
       <Id>11948</Id>
       <Name>Tensar TriAX TX 130 S-GD Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.368 kg/m�</Description>
+      <Description> Flächengewicht: 0.368 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/30d039df-678c-4a2b-9b0d-0985348d9bc1</EPDurl>
       <Grade />
       <Density>37</Density>
@@ -4380,7 +4380,7 @@
       <Id>11947</Id>
       <Name>Tensar TriAX TX 130 S-G Geogitter</Name>
       <Category>Kunststoffe</Category>
-      <Description> Fl�chengewicht: 0.281 kg/m�</Description>
+      <Description> Flächengewicht: 0.281 kg/m²</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/79512d1c-6c63-4d30-b368-16b24737ddb1</EPDurl>
       <Grade />
       <Density>28</Density>
@@ -5380,7 +5380,7 @@
       <Id>10732</Id>
       <Name>Glaskeramik - MAGNA Glaskeramik GmbH - MAGNA Glaskeramik</Name>
       <Category> 21 mm Dicke Komponenten von Fenstern und Vorhangfassaden</Category>
-      <Description> 1 m� Fl�che</Description>
+      <Description> 1 m² Fläche</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/ecef0675-6125-418b-a558-5fde99809570</EPDurl>
       <Grade />
       <Density>2400</Density>
@@ -5505,7 +5505,7 @@
       <Id>10480</Id>
       <Name>Fassaden - Moeding Keramikfassaden GmbH - Alphaton</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
-      <Description>Fa�ades - Moeding Keramikfassaden GmbH - Alphaton</Description>
+      <Description>Façades - Moeding Keramikfassaden GmbH - Alphaton</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/0e9fd868-9656-489e-be6c-8251b3d43283</EPDurl>
       <Grade />
       <Density>1765</Density>
@@ -5753,7 +5753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12085</Id>
-      <Name>T�r - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Brandschutzt�r</Name>
+      <Name>Tür - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Brandschutztür</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Door - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium fire door</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/dd27fa61-ba73-4886-83dc-c337dfd8969b</EPDurl>
@@ -6003,7 +6003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10551</Id>
-      <Name>Flachglas - Guardian - Verbundsicherheitsglas (VSG); 1 m� Fl�che, 1 mm Dicke</Name>
+      <Name>Flachglas - Guardian - Verbundsicherheitsglas (VSG); 1 m² Fläche, 1 mm Dicke</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/8edefd8f-607c-47d5-9b02-d64942204a3a</EPDurl>
@@ -6128,7 +6128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10550</Id>
-      <Name>Flachglas - Guardian - Flachglas unbeschichtet; 1 m� Fl�che, 1 mm Dicke</Name>
+      <Name>Flachglas - Guardian - Flachglas unbeschichtet; 1 m² Fläche, 1 mm Dicke</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/096273e5-a370-4edd-852c-f2abfa9cfb83</EPDurl>
@@ -6253,7 +6253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10549</Id>
-      <Name>Flachglas - Guardian - Flachglas beschichtet; 1 m� Fl�che, 1 mm Dicke</Name>
+      <Name>Flachglas - Guardian - Flachglas beschichtet; 1 m² Fläche, 1 mm Dicke</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/a94761d9-2c1e-467b-a062-846b099ba375</EPDurl>
@@ -6380,7 +6380,7 @@
       <Id>10478</Id>
       <Name>Fassaden - heroal-Johann Henkenjohann GmbH &amp; Co. KG - C50</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
-      <Description>Fa�ades - heroal-Johann Henkenjohann GmbH &amp; Co. KG - C50</Description>
+      <Description>Façades - heroal-Johann Henkenjohann GmbH &amp; Co. KG - C50</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/bd3639a9-e293-494e-8933-ff849a530411</EPDurl>
       <Grade />
       <Density>119</Density>
@@ -6503,7 +6503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10318</Id>
-      <Name>Dachziegel - Gebr. Laumans GmbH &amp; Co. KG - Fl�chenziegel inkl. Formziegel (Zubeh�r)</Name>
+      <Name>Dachziegel - Gebr. Laumans GmbH &amp; Co. KG - Flächenziegel inkl. Formziegel (Zubehör)</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Roof Tiles - Gebr. Laumans GmbH &amp; Co. KG - Roofing tiles incl. fitting tiles (accessories)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/6c4c2d92-aaaf-4b12-b531-a4728cb32714</EPDurl>
@@ -6628,7 +6628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10317</Id>
-      <Name>Dachziegel - Gebr. Laumans GmbH &amp; Co. KG - Fl�chenziegel</Name>
+      <Name>Dachziegel - Gebr. Laumans GmbH &amp; Co. KG - Flächenziegel</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Roof Tiles - Gebr. Laumans GmbH &amp; Co. KG - Roofing tiles</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/5259608b-67a9-440f-84a5-a72739a68ace</EPDurl>
@@ -7378,7 +7378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10506</Id>
-      <Name>Fenster - heroal-Johann Henkenjohann GmbH &amp; Co. KG - W72 Aluminiumfenster-Erg�nzungssysteme</Name>
+      <Name>Fenster - heroal-Johann Henkenjohann GmbH &amp; Co. KG - W72 Aluminiumfenster-Ergänzungssysteme</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Windows - heroal-Johann Henkenjohann GmbH &amp; Co. KG - W72 Aluminium window-additional systems</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/ca7abfef-95cc-4677-a5b8-1427f944141b</EPDurl>
@@ -7503,7 +7503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10502</Id>
-      <Name>Fenster - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Schiebet�r</Name>
+      <Name>Fenster - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Schiebetür</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Windows - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium sliding doors</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/6477dff4-c6bc-4084-a270-e2c8d99945b2</EPDurl>
@@ -7628,7 +7628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12089</Id>
-      <Name>T�r - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Objektt�r</Name>
+      <Name>Tür - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Objekttür</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Door - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium commercial door</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/d0d75f31-67ae-4dfd-b3e6-a2e87757da3a</EPDurl>
@@ -8128,7 +8128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10500</Id>
-      <Name>Fenster - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Hebe-Schiebet�r / -PSK</Name>
+      <Name>Fenster - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Hebe-Schiebetür / -PSK</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Windows - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium lifting-sliding door / -PSK</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/6e6411e1-3e85-4981-8520-25b4b5f46a20</EPDurl>
@@ -8253,7 +8253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12254</Id>
-      <Name>Zargen - rema AG / spa - Zargen f�r Verglasungsrahmen</Name>
+      <Name>Zargen - rema AG / spa - Zargen für Verglasungsrahmen</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/bb4606bd-6b38-4e84-8730-a778c60b2e39</EPDurl>
@@ -8378,7 +8378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12105</Id>
-      <Name>T�r - HT Labor+Hospitaltechnik GmbH - Schiebet�r</Name>
+      <Name>Tür - HT Labor+Hospitaltechnik GmbH - Schiebetür</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/14cac35f-a23d-44cd-a1f3-d86bc1d806d5</EPDurl>
@@ -8503,7 +8503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12253</Id>
-      <Name>Zargen - rema AG / spa - Zargen f�r Schiebet�ren</Name>
+      <Name>Zargen - rema AG / spa - Zargen für Schiebetüren</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/2f4bd2bc-2916-4411-80d4-9c3dcead6301</EPDurl>
@@ -9128,7 +9128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11668</Id>
-      <Name>Rohr- und Schachtsysteme aus Beton - Betonwerk Bieren GmbH - C40/50 sofort entschalt; Rohdichte 2,25 � 2,45 kg/dm�</Name>
+      <Name>Rohr- und Schachtsysteme aus Beton - Betonwerk Bieren GmbH - C40/50 sofort entschalt; Rohdichte 2,25 – 2,45 kg/dm³</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/e5936a83-c5ec-4902-a4d4-202fae5382ad</EPDurl>
@@ -9253,7 +9253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12104</Id>
-      <Name>T�r - HT Labor+Hospitaltechnik GmbH - Dreht�r</Name>
+      <Name>Tür - HT Labor+Hospitaltechnik GmbH - Drehtür</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/e0ddceb1-806c-425b-b8fc-62a62bc5bc17</EPDurl>
@@ -9378,7 +9378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10059</Id>
-      <Name>Au�en- und Innenwandbekleidungen - MN Metall GmbH - Fassadenbekleidungen; 1 m� Fl�che, 1 mm Dicke</Name>
+      <Name>Außen- und Innenwandbekleidungen - MN Metall GmbH - Fassadenbekleidungen; 1 m² Fläche, 1 mm Dicke</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>External and internal wall claddings - MN Metall GmbH - Facade claddings</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/266bb793-3f6d-4dd3-bcb8-89ecf597e05c</EPDurl>
@@ -9503,7 +9503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11669</Id>
-      <Name>Rohr- und Schachtsysteme aus Beton - Betonwerk Bieren GmbH - C60/75 schalungserh�rtet; Rohdichte 2,25 � 2,45 kg/dm�</Name>
+      <Name>Rohr- und Schachtsysteme aus Beton - Betonwerk Bieren GmbH - C60/75 schalungserhärtet; Rohdichte 2,25 – 2,45 kg/dm³</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/8b01a03e-108c-406d-ab13-02252d6cf116</EPDurl>
@@ -9878,7 +9878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11113</Id>
-      <Name>Lava K�rnung</Name>
+      <Name>Lava Körnung</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Lava granulate</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/e2799f93-b221-48c5-b7ee-9dd39850e379</EPDurl>
@@ -10378,7 +10378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10642</Id>
-      <Name>Getuftete Bahnenware mit einem Polmaterial aus 95% recyceltem Polyamid 6, einem maximalen Poleinsatzgewicht von 1215 g/m2 und einem SBR-Schaumr�cken</Name>
+      <Name>Getuftete Bahnenware mit einem Polmaterial aus 95% recyceltem Polyamid 6, einem maximalen Poleinsatzgewicht von 1215 g/m2 und einem SBR-Schaumrücken</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet, 95% recycled polyamide 6 with a maximum total pile weight of 1215 g/m2 and a foam backing</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/25051eb9-043c-4920-a773-1fe9932cd81e</EPDurl>
@@ -10503,7 +10503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10643</Id>
-      <Name>Getuftete Bahnenware mit einem Polmaterial aus 95% recyceltem Polyamid 6, einem maximalen Poleinsatzgewicht von 1215 g/m2 und einem SBR-Textilr�cken</Name>
+      <Name>Getuftete Bahnenware mit einem Polmaterial aus 95% recyceltem Polyamid 6, einem maximalen Poleinsatzgewicht von 1215 g/m2 und einem SBR-Textilrücken</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet, 95% recycled polyamide 6 with a maximum total pile weight of 1215 g/m2 and a textile backing</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/67b83112-35c8-4b54-a1e9-073a9ac3c8f7</EPDurl>
@@ -10628,7 +10628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10644</Id>
-      <Name>Getuftete Bahnenware mit einem Polmaterial aus Polypropylen, einem maximalen Poleinsatzgewicht von 1275 g/m2 und einem SBR-Schaumr�cken</Name>
+      <Name>Getuftete Bahnenware mit einem Polmaterial aus Polypropylen, einem maximalen Poleinsatzgewicht von 1275 g/m2 und einem SBR-Schaumrücken</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet, polypropylene with a maximum total pile weight of 1275 g/m2 and a foam backing</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/774fbe44-55b0-4a74-8cf8-1fe430ee9f70</EPDurl>
@@ -10878,7 +10878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10638</Id>
-      <Name>Genadelte Teppichfliesen mit einer Faserzusammensetzung aus 80% PP, 20% PET und einem NSF Pr�geschaumr�cken</Name>
+      <Name>Genadelte Teppichfliesen mit einer Faserzusammensetzung aus 80% PP, 20% PET und einem NSF Prägeschaumrücken</Name>
       <Category>Kunststoffe</Category>
       <Description>Needled carpet tiles, yarn mixture of 80% polypropylene, 20% polyester and an NSF foam backing</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/7a8815b1-4b5d-44c8-ac1d-a14950f510d1</EPDurl>
@@ -11128,7 +11128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11285</Id>
-      <Name>Naturbims K�rnung</Name>
+      <Name>Naturbims Körnung</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Pumice gravel</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/8de12467-96a0-459e-9f97-90e95fb7b23f</EPDurl>
@@ -11628,7 +11628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11019</Id>
-      <Name>Kies (Korngr��e 2/32)</Name>
+      <Name>Kies (Korngröße 2/32)</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Gravel (Grain size 2/32)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/ed8da770-fc78-40cd-acb1-40f062330f9c</EPDurl>
@@ -13254,7 +13254,7 @@
     <CarboMaterial>
       <Id>10462</Id>
       <Name>Extrudiertes Polystyrol (XPS) Schaumstoffisolierung mit halogenfreiem Treibmittel</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>Extruded Polystyrene (XPS) Foam Insulation with halogen free blowing agent</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/dbde6a17-26eb-4312-ac6d-8accbe6a10ab</EPDurl>
       <Grade />
@@ -13753,7 +13753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11202</Id>
-      <Name>Mauerm�rtel-Normalmauerm�rtel (v.2019)</Name>
+      <Name>Mauermörtel-Normalmauermörtel (v.2019)</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/9ba8d296-ee24-4d84-bb9f-8cd0db2c846f</EPDurl>
@@ -14129,7 +14129,7 @@
     <CarboMaterial>
       <Id>11567</Id>
       <Name>Propan (R290)</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Propane (R290)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/9e9a625d-28eb-4dbd-8278-6da8088ab8a1</EPDurl>
       <Grade />
@@ -14253,7 +14253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11026</Id>
-      <Name>Kleber f�r Gipsplatten</Name>
+      <Name>Kleber für Gipsplatten</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Adhesive for gypsum board</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/43c3fd78-c67e-438b-b726-dd512df5d881</EPDurl>
@@ -14753,9 +14753,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10185</Id>
-      <Name>Betonpflasterstein mit schwarz-wei� meliertem Vorsatz</Name>
+      <Name>Betonpflasterstein mit schwarz-weiß meliertem Vorsatz</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Betonpflasterstein mit schwarz-wei� meliertem Vorsatz</Description>
+      <Description>Betonpflasterstein mit schwarz-weiß meliertem Vorsatz</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/284efda1-bb16-453a-bc32-070f3bab4cb3</EPDurl>
       <Grade />
       <Density>2250</Density>
@@ -14878,7 +14878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10452</Id>
-      <Name>Estrichm�rtel-Calciumsulfatestrich</Name>
+      <Name>Estrichmörtel-Calciumsulfatestrich</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/1b3f2d93-96a8-4f4f-a0fe-0ed5b11c7c8d</EPDurl>
@@ -15378,7 +15378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11587</Id>
-      <Name>Putzm�rtel-Normalputz/Edelputz</Name>
+      <Name>Putzmörtel-Normalputz/Edelputz</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/02428321-77d1-426f-a1d1-48a83de490c0</EPDurl>
@@ -15503,9 +15503,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11249</Id>
-      <Name>Mineral pre-made mortar: rendering and plastering mortar � normal/finishing render or plaster</Name>
+      <Name>Mineral pre-made mortar: rendering and plastering mortar – normal/finishing render or plaster</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Mineral pre-made mortar: rendering and plastering mortar � normal/finishing render or plaster</Description>
+      <Description>Mineral pre-made mortar: rendering and plastering mortar – normal/finishing render or plaster</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/0cd9a40d-dc97-4ca8-92ba-9dd80a68b579</EPDurl>
       <Grade />
       <Density>1550</Density>
@@ -16003,7 +16003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10453</Id>
-      <Name>Estrichm�rtel-Zementestrich</Name>
+      <Name>Estrichmörtel-Zementestrich</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/f2053ffa-dd55-47c6-92ed-e98d726db546</EPDurl>
@@ -16253,7 +16253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11203</Id>
-      <Name>Mauerm�rtel-Vormauerm�rtel/M�rtel mit besonderen Eigenschaften</Name>
+      <Name>Mauermörtel-Vormauermörtel/Mörtel mit besonderen Eigenschaften</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/ff8fe692-d457-48d5-947d-51c9c123f07a</EPDurl>
@@ -16504,7 +16504,7 @@
     <CarboMaterial>
       <Id>10792</Id>
       <Name>Heradesign Akustikplatten</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>Heradesign acoustic panels</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/daf4db38-add6-47b0-bd72-4140a739c263</EPDurl>
       <Grade />
@@ -16628,7 +16628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11586</Id>
-      <Name>Putzm�rtel-Leichtputz</Name>
+      <Name>Putzmörtel-Leichtputz</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/da57ac9b-96ef-4509-b855-222c821f971f</EPDurl>
@@ -16753,7 +16753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11588</Id>
-      <Name>Putzm�rtel-Normalputz/Edelputz mit besonderen Eigenschaften</Name>
+      <Name>Putzmörtel-Normalputz/Edelputz mit besonderen Eigenschaften</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/d154c187-5117-46e1-9b78-a3a9a39a3abf</EPDurl>
@@ -16878,9 +16878,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11250</Id>
-      <Name>Mineral pre-made mortar: rendering and plastering mortar � normal/finishing render or plaster with special properties</Name>
+      <Name>Mineral pre-made mortar: rendering and plastering mortar – normal/finishing render or plaster with special properties</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Mineral pre-made mortar: rendering and plastering mortar � normal/finishing render or plaster with special properties</Description>
+      <Description>Mineral pre-made mortar: rendering and plastering mortar – normal/finishing render or plaster with special properties</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/8ed3a0e3-2676-4070-9f08-3843f7dcee03</EPDurl>
       <Grade />
       <Density>1550</Density>
@@ -17128,7 +17128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10223</Id>
-      <Name>Bl�hglas Granulat</Name>
+      <Name>Blähglas Granulat</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Expanded glass granulate</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/03df95b7-c807-461d-a163-56a98528d8e8</EPDurl>
@@ -18253,7 +18253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10226</Id>
-      <Name>Bl�hschiefer</Name>
+      <Name>Blähschiefer</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Expanded shale</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/d908dcf0-4db3-4f92-be60-79c6f5183aca</EPDurl>
@@ -18378,7 +18378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10235</Id>
-      <Name>Bl�hton Sand</Name>
+      <Name>Blähton Sand</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Light-weight sand expanded clay</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/3749834e-307f-4cb2-b903-4ef4bd463446</EPDurl>
@@ -18628,7 +18628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11585</Id>
-      <Name>Putzm�rtel-Armierungsputz</Name>
+      <Name>Putzmörtel-Armierungsputz</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/94484394-df6b-4953-8d25-4774caa4ad14</EPDurl>
@@ -18753,9 +18753,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11251</Id>
-      <Name>Mineral pre-made mortar: rendering mortar � Reinforcement Fibre Plaster</Name>
+      <Name>Mineral pre-made mortar: rendering mortar – Reinforcement Fibre Plaster</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Mineral pre-made mortar: rendering mortar � Reinforcement Fibre Plaster</Description>
+      <Description>Mineral pre-made mortar: rendering mortar – Reinforcement Fibre Plaster</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/8494730f-8583-4af2-ab22-376422e1f54b</EPDurl>
       <Grade />
       <Density>1600</Density>
@@ -19003,7 +19003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10227</Id>
-      <Name>Bl�hton Granulat</Name>
+      <Name>Blähton Granulat</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Expanded clay granulate</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/d5df3d3b-abfa-4ba9-9ec0-60e7fe21b72a</EPDurl>
@@ -19378,7 +19378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11200</Id>
-      <Name>Mauerm�rtel-D�nnbettm�rtel/M�rtel mit besonderen Eigenschaften</Name>
+      <Name>Mauermörtel-Dünnbettmörtel/Mörtel mit besonderen Eigenschaften</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/38e211af-42ef-40fc-9609-725d9b5e16f4</EPDurl>
@@ -19879,7 +19879,7 @@
     <CarboMaterial>
       <Id>10041</Id>
       <Name>Ammoniak (R717)</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Ammonia (R717)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/2b3bf368-34e6-4e7c-917e-6f455d4c4bb8</EPDurl>
       <Grade />
@@ -20003,8 +20003,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10891</Id>
-      <Name>Holzfaser-Einblasd�mmung STEICOzell</Name>
-      <Category>D�mmstoffe</Category>
+      <Name>Holzfaser-Einblasdämmung STEICOzell</Name>
+      <Category>Dämmstoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/412ed0b4-0506-4e0b-b527-8dbbac69a360</EPDurl>
       <Grade />
@@ -20128,7 +20128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11201</Id>
-      <Name>Mauerm�rtel-Leichtmauerm�rtel</Name>
+      <Name>Mauermörtel-Leichtmauermörtel</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/e98074e5-837f-4ece-a1ba-b215f53fd56a</EPDurl>
@@ -20503,7 +20503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11589</Id>
-      <Name>Putzm�rtel-W�rmed�mmputz</Name>
+      <Name>Putzmörtel-Wärmedämmputz</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>0</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/42bbe9d3-94ba-44c1-b289-a90ce8d5bd1e</EPDurl>
@@ -20754,7 +20754,7 @@
     <CarboMaterial>
       <Id>11969</Id>
       <Name>Tetrafluorpropen (R1234ze)</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Tetrafluoropropene (R1234ze)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/b3875fa1-4d62-40dc-ab2d-68fe1fbaf352</EPDurl>
       <Grade />
@@ -21504,7 +21504,7 @@
     <CarboMaterial>
       <Id>12143</Id>
       <Name>Vacupor NT-B2-S</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>Vacupor NT-B2-S</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/2f301b5d-917e-4ca8-8f65-cb9f15064541</EPDurl>
       <Grade />
@@ -23003,7 +23003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10295</Id>
-      <Name>COMAX R�ckbiegeanschluss-System</Name>
+      <Name>COMAX Rückbiegeanschluss-System</Name>
       <Category>Metalle</Category>
       <Description>COMAX Reinforcement Continuity System</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/c269589f-1224-487b-8280-b0a6407edae7</EPDurl>
@@ -24379,7 +24379,7 @@
     <CarboMaterial>
       <Id>11828</Id>
       <Name>Stahlrohr</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Steel pipe</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/8622539c-592c-45b0-9a4b-e5f8b4fea367</EPDurl>
       <Grade />
@@ -25128,7 +25128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11009</Id>
-      <Name>Kalziumhydroxid (Ca(OH)2, trocken; gel�scht)</Name>
+      <Name>Kalziumhydroxid (Ca(OH)2, trocken; gelöscht)</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Calcium hydroxide (Ca(OH)2 dry slaked lime)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/759f9742-cd53-4b8f-b8ae-dec49c3378e9</EPDurl>
@@ -25378,9 +25378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11819</Id>
-      <Name>Stahl Feinblech (20�m bandverzinkt)</Name>
+      <Name>Stahl Feinblech (20µm bandverzinkt)</Name>
       <Category>Metalle</Category>
-      <Description>Steel sheet (20�m hot dip galvanized)</Description>
+      <Description>Steel sheet (20µm hot dip galvanized)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/93edef71-49e3-4e1f-ba6d-1e449e7d328d</EPDurl>
       <Grade />
       <Density>7850</Density>
@@ -25878,7 +25878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10784</Id>
-      <Name>Heiz- und K�hldeckensystem aus Stahl</Name>
+      <Name>Heiz- und Kühldeckensystem aus Stahl</Name>
       <Category>Komposite</Category>
       <Description>Heated and chilled ceiling systems made of steel</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/5777aa03-e01c-4b0f-8813-a14fc227391c</EPDurl>
@@ -26129,7 +26129,7 @@
     <CarboMaterial>
       <Id>11042</Id>
       <Name>Kohlenstoffdioxid (R744)</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Carbon dioxide (R744)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/d2ca1ae9-8d5e-480e-bd57-70c73dd1da50</EPDurl>
       <Grade />
@@ -26629,7 +26629,7 @@
     <CarboMaterial>
       <Id>11698</Id>
       <Name>SAGLAN Glaswolle, mit bio-basiertem Bindemittel +A1</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>SAGLAN glass wool, bonded with bio-based adhesive +A1</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/797ad7c5-bf5b-4332-8a3f-13cb09d1beb0</EPDurl>
       <Grade />
@@ -27754,7 +27754,7 @@
     <CarboMaterial>
       <Id>11699</Id>
       <Name>SAGLAN Glaswolle, mit bio-basiertem Bindemittel +A2</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>SAGLAN glass wool, bonded with bio-based adhesive +A2</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/006c17a5-bfbd-4786-8c96-7546e5317f9c</EPDurl>
       <Grade />
@@ -28254,7 +28254,7 @@
     <CarboMaterial>
       <Id>11700</Id>
       <Name>SAGLAN Glaswolle, phenolharzgebunden +A1</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>SAGLAN glass wool, bonded with phenolic resin +A1</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/dd0b50b2-0a5d-4cce-b28b-27a6782d9c38</EPDurl>
       <Grade />
@@ -28378,8 +28378,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11694</Id>
-      <Name>ROMA-Schnellbau-D�mmpaneel mit einem Kern aus Mineralwolle</Name>
-      <Category>D�mmstoffe</Category>
+      <Name>ROMA-Schnellbau-Dämmpaneel mit einem Kern aus Mineralwolle</Name>
+      <Category>Dämmstoffe</Category>
       <Description>roma sandwich panels with a core made of mineral wool</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/fb10ca51-54f2-423a-a383-fb6b5e8305d4</EPDurl>
       <Grade />
@@ -28753,7 +28753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11275</Id>
-      <Name>Nachhaltige Fl�chenbefestigung: TTE-MultiDrainPLUS</Name>
+      <Name>Nachhaltige Flächenbefestigung: TTE-MultiDrainPLUS</Name>
       <Category>Kunststoffe</Category>
       <Description>Sustainable and permeable paving: TTE-MultiDrainPLUS</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/0b18da3f-d5d3-4237-b33d-d885cd5ef4a5</EPDurl>
@@ -29754,7 +29754,7 @@
     <CarboMaterial>
       <Id>11701</Id>
       <Name>SAGLAN Glaswolle, phenolharzgebunden +A2</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>SAGLAN glass wool, bonded with phenolic resin +A2</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/ceaaae5b-c6f1-4710-beb9-f38d0d94308c</EPDurl>
       <Grade />
@@ -30253,7 +30253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11243</Id>
-      <Name>Metalldeckensysteme aus Stahl als Heiz- und K�hldecke</Name>
+      <Name>Metalldeckensysteme aus Stahl als Heiz- und Kühldecke</Name>
       <Category>Komposite</Category>
       <Description>Metal ceiling systems made of steel as heating and cooling ceilings</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/161b9889-8aaa-4d79-8635-8cf34a7c92c6</EPDurl>
@@ -30378,8 +30378,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11184</Id>
-      <Name>L�ftungskanal (verzinktes Stahlblech)</Name>
-      <Category>Geb�udetechnik</Category>
+      <Name>Lüftungskanal (verzinktes Stahlblech)</Name>
+      <Category>Gebäudetechnik</Category>
       <Description>Air ventilation duct (zinc coated steel plate)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/ffa736f4-51b1-4c03-8cdd-3f098993b363</EPDurl>
       <Grade />
@@ -31504,7 +31504,7 @@
     <CarboMaterial>
       <Id>12230</Id>
       <Name>Wedi Fundo</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Wedi Fundo</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/ca59ef72-6928-4f3f-86f1-04aba47d4792</EPDurl>
       <Grade />
@@ -32003,9 +32003,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11490</Id>
-      <Name>PILOTE� - getuftete Teppichfliesen</Name>
+      <Name>PILOTE² - getuftete Teppichfliesen</Name>
       <Category>Kunststoffe</Category>
-      <Description>PILOTE� - tufted carpet tiles</Description>
+      <Description>PILOTE² - tufted carpet tiles</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/3632b9d7-39c2-4a3d-b41c-92b19cc9de8b</EPDurl>
       <Grade />
       <Density>724</Density>
@@ -33379,7 +33379,7 @@
     <CarboMaterial>
       <Id>11491</Id>
       <Name>PIPELANE Rohrschalen aus Glaswolle, phenolharzgebunden +A1</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>PIPELANE pipe sections +A1</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/5a0fb7c7-90a4-45ef-984c-d429d412b77f</EPDurl>
       <Grade />
@@ -33753,7 +33753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11107</Id>
-      <Name>Lacksysteme Holzfenster Zwischenbeschichtung deckend wei�</Name>
+      <Name>Lacksysteme Holzfenster Zwischenbeschichtung deckend weiß</Name>
       <Category>Beschichtungen</Category>
       <Description>Application intermediate coating water based (windows, white)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/b347b33b-8a05-4d0a-83c4-1337c986a775</EPDurl>
@@ -33879,7 +33879,7 @@
     <CarboMaterial>
       <Id>11574</Id>
       <Name>Pufferspeicher (Stahl)</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Buffer storage (steel)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/b273afc9-27a1-4a82-a390-8780fd631008</EPDurl>
       <Grade />
@@ -34003,7 +34003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11105</Id>
-      <Name>Lacksysteme Holzfenster Grundierung wei�</Name>
+      <Name>Lacksysteme Holzfenster Grundierung weiß</Name>
       <Category>Beschichtungen</Category>
       <Description>Application primer water based (windows, white)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/9b8c0626-bb59-43f5-86dd-97484cc5d4c1</EPDurl>
@@ -34128,7 +34128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11103</Id>
-      <Name>Lacksysteme Holzfenster Decklack wei�</Name>
+      <Name>Lacksysteme Holzfenster Decklack weiß</Name>
       <Category>Beschichtungen</Category>
       <Description>Application top-coating water based (windows, white)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/9a0a1631-fccc-43bc-8911-817cbb79f49b</EPDurl>
@@ -34254,7 +34254,7 @@
     <CarboMaterial>
       <Id>10485</Id>
       <Name>Fassadenanker Isolink</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>Fassadenanker Isolink</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/8ede9ece-bea3-493d-bc17-ccca81ae897c</EPDurl>
       <Grade />
@@ -34629,7 +34629,7 @@
     <CarboMaterial>
       <Id>11492</Id>
       <Name>PIPELANE Rohrschalen aus Glaswolle, phenolharzgebunden +A2</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>PIPELANE pipe sections +A2</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/9e1a22fd-86f4-4497-a4db-8332cfdbcf62</EPDurl>
       <Grade />
@@ -34878,7 +34878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10501</Id>
-      <Name>Fenster - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Hebe-Schiebet�r / -PSK (EN 15804+A2)</Name>
+      <Name>Fenster - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Hebe-Schiebetür / -PSK (EN 15804+A2)</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Windows - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium lifting-sliding door / -PSK (EN 15804+A2)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/38a17e37-f623-4960-b46e-341fdcadee3c</EPDurl>
@@ -35253,7 +35253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12090</Id>
-      <Name>T�r - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Objektt�r (EN 15804+A2)</Name>
+      <Name>Tür - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Objekttür (EN 15804+A2)</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Door - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium commercial door (EN 15804+A2)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/835b163b-3a44-4c9f-9fb8-9a2beb20d520</EPDurl>
@@ -35378,7 +35378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12088</Id>
-      <Name>T�r - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Haust�r (EN 15804+A2)</Name>
+      <Name>Tür - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Aluminium-Haustür (EN 15804+A2)</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Door - heroal-Johann Henkenjohann GmbH &amp; Co. KG - Front door door (EN 15804+A2)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/04cc7f79-334d-4f91-87df-88a091e7563c</EPDurl>
@@ -37003,8 +37003,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11709</Id>
-      <Name>Sanit�rkeramik</Name>
-      <Category>Geb�udetechnik</Category>
+      <Name>Sanitärkeramik</Name>
+      <Category>Gebäudetechnik</Category>
       <Description>Sanitary ceramic</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/cace7e48-3fb4-4e11-8cc4-fcefc8b4116a</EPDurl>
       <Grade />
@@ -37378,8 +37378,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10785</Id>
-      <Name>Heizk�rper</Name>
-      <Category>Geb�udetechnik</Category>
+      <Name>Heizkörper</Name>
+      <Category>Gebäudetechnik</Category>
       <Description>Radiator</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/c6de5beb-ffe9-4b5f-aba8-c0c2d3528c58</EPDurl>
       <Grade />
@@ -37878,7 +37878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10526</Id>
-      <Name>Fenstersch�rze BFX</Name>
+      <Name>Fensterschürze BFX</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Collar BFX</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/a61e5138-cec4-4f38-8eca-fb6247873088</EPDurl>
@@ -38503,7 +38503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10525</Id>
-      <Name>Fenstersch�rze BDX</Name>
+      <Name>Fensterschürze BDX</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Collar BDX</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/288e42a1-9396-4d99-874e-30a8472ffaf8</EPDurl>
@@ -39003,7 +39003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10649</Id>
-      <Name>Getuftete Fliesen mit einem Polmaterial aus 100% recyceltem Polyamid 6, einem maximalen Poleinsatzgewicht von 780 g/m2 und einer EcoFlex Echo R�ckenbeschichtung</Name>
+      <Name>Getuftete Fliesen mit einem Polmaterial aus 100% recyceltem Polyamid 6, einem maximalen Poleinsatzgewicht von 780 g/m2 und einer EcoFlex Echo Rückenbeschichtung</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted tiles, 100% recycled polyamide 6 with a maximum total pile weight of 780 g/m2 , EcoFlex Echo backing</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/0ceeaf6a-34c8-4371-a4bb-15b1d0a45395</EPDurl>
@@ -40379,7 +40379,7 @@
     <CarboMaterial>
       <Id>11053</Id>
       <Name>Kooltherm K12</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>Kooltherm K12</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/6136bc06-715a-4ec8-b198-335771bc752f</EPDurl>
       <Grade />
@@ -41128,7 +41128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11161</Id>
-      <Name>L�semittellack wei�</Name>
+      <Name>Lösemittellack weiß</Name>
       <Category>Beschichtungen</Category>
       <Description>Solvent based lacquer, white</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/511b2af7-f9b9-4e1f-8b9e-fd4ac548aa6c</EPDurl>
@@ -41255,7 +41255,7 @@
       <Id>10757</Id>
       <Name>Gussteile aus Aluminium</Name>
       <Category>Metalle</Category>
-      <Description>4.3.03�Aluminium die-cast parts</Description>
+      <Description>4.3.03 Aluminium die-cast parts</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/568f2c96-2d04-43ff-bf03-8e48de9f11ff</EPDurl>
       <Grade />
       <Density>2700</Density>
@@ -41628,8 +41628,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12127</Id>
-      <Name>�bergabestation Fernw�rme</Name>
-      <Category>Geb�udetechnik</Category>
+      <Name>Übergabestation Fernwärme</Name>
+      <Category>Gebäudetechnik</Category>
       <Description>District heating transfer station</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/dcd5e23a-9bec-40b6-b07c-1642fe696a2e</EPDurl>
       <Grade />
@@ -42128,9 +42128,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12083</Id>
-      <Name>Tufted modular carpet tiles with CQuest Bio backing, aqueous dyed surface and a max. total pile material of 1500 g/m� PA 6 with 100% recycled content</Name>
+      <Name>Tufted modular carpet tiles with CQuest Bio backing, aqueous dyed surface and a max. total pile material of 1500 g/m² PA 6 with 100% recycled content</Name>
       <Category>Kunststoffe</Category>
-      <Description>Tufted modular carpet tiles with CQuest Bio backing, aqueous dyed surface and a max. total pile material of 1500 g/m� PA 6 with 100% recycled content</Description>
+      <Description>Tufted modular carpet tiles with CQuest Bio backing, aqueous dyed surface and a max. total pile material of 1500 g/m² PA 6 with 100% recycled content</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/e8006d40-f5c2-4a86-8d26-298e21bc2ad8</EPDurl>
       <Grade />
       <Density>52</Density>
@@ -42254,7 +42254,7 @@
     <CarboMaterial>
       <Id>11054</Id>
       <Name>Kooltherm K15</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>Kooltherm K15</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/906a624c-2360-4a27-8493-c10fe7d398b2</EPDurl>
       <Grade />
@@ -42504,7 +42504,7 @@
     <CarboMaterial>
       <Id>11861</Id>
       <Name>Stiferite CLASS SH mittlere Dicke</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>Stiferite CLASS SH average thickness</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/47368b2d-58fa-4a68-8d63-fbceb6aff44a</EPDurl>
       <Grade />
@@ -43004,7 +43004,7 @@
     <CarboMaterial>
       <Id>10780</Id>
       <Name>Harnstoff-Formaldehydharz Ortschaum</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>Urea formaldehyde resin in-situ foam</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/1bf43844-2f42-499e-a177-e65d98cbbf68</EPDurl>
       <Grade />
@@ -43379,7 +43379,7 @@
     <CarboMaterial>
       <Id>11740</Id>
       <Name>Schornstein Polypropylen (PP)</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Chimney polypropylene (PP)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/3cf1e41b-66b6-4475-b69c-8866e267a02f</EPDurl>
       <Grade />
@@ -43628,7 +43628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11446</Id>
-      <Name>Parkettlack Grundierung, Holz, wasserverd�nnt</Name>
+      <Name>Parkettlack Grundierung, Holz, wasserverdünnt</Name>
       <Category>Beschichtungen</Category>
       <Description>Parquet primer, water diluted</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/b97c7ace-c925-4c13-be59-d338fcc77f6b</EPDurl>
@@ -43753,7 +43753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11246</Id>
-      <Name>Methacrylatharze als Bindemittel f�r Methacrylatharzprodukte</Name>
+      <Name>Methacrylatharze als Bindemittel für Methacrylatharzprodukte</Name>
       <Category>Beschichtungen</Category>
       <Description>Methacrylate resins as binding agents for methacrylate resin products</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/e5823554-63df-46c5-8b2a-91edb50c1e58</EPDurl>
@@ -43878,7 +43878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10547</Id>
-      <Name>Fixit 222 Aerogel Hochleistungsd�mmputz</Name>
+      <Name>Fixit 222 Aerogel Hochleistungsdämmputz</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Fixit 222 Aerogel High Performance Insulating Plaster</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/98a062cc-c556-4bab-a090-edf8049310cd</EPDurl>
@@ -44003,7 +44003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10591</Id>
-      <Name>Fugendichtungsb�nder PE/PP-Folie</Name>
+      <Name>Fugendichtungsbänder PE/PP-Folie</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Joint sealing strips, PE/PP foil</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/aadadf2a-2896-4681-bc4c-61ea4616f801</EPDurl>
@@ -46003,8 +46003,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11568</Id>
-      <Name>PU-D�mmplatten aus Blockschaumstoff</Name>
-      <Category>D�mmstoffe</Category>
+      <Name>PU-Dämmplatten aus Blockschaumstoff</Name>
+      <Category>Dämmstoffe</Category>
       <Description>PU block foam</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/880e05ea-55c6-4346-a3ea-5af0e5f299e2</EPDurl>
       <Grade />
@@ -46254,7 +46254,7 @@
     <CarboMaterial>
       <Id>10795</Id>
       <Name>Hilti CFS-F FX</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>Hilti CFS-F FX</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/0347f3ef-4113-4ae9-987f-6f3b324f35c7</EPDurl>
       <Grade />
@@ -46378,7 +46378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10656</Id>
-      <Name>Getuftete Teppichbahnenware mit 100% recyceltem PA6 Polmaterial und textilem R�cken, LC1</Name>
+      <Name>Getuftete Teppichbahnenware mit 100% recyceltem PA6 Polmaterial und textilem Rücken, LC1</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with 100% recycled PA6 pile material and textile backing, LC1</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/fe64ddf7-d556-4589-98cc-c97a0aad0c8e</EPDurl>
@@ -46753,7 +46753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10657</Id>
-      <Name>Getuftete Teppichbahnenware mit 100% recyceltem PA6 Polmaterial und textilem R�cken, LC2</Name>
+      <Name>Getuftete Teppichbahnenware mit 100% recyceltem PA6 Polmaterial und textilem Rücken, LC2</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with 100% recycled PA6 pile material and textile backing, LC2</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/b6139a20-b574-405d-aaaf-5cb2797da697</EPDurl>
@@ -46878,7 +46878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10658</Id>
-      <Name>Getuftete Teppichbahnenware mit 100% recyceltem PA6 Polmaterial und textilem R�cken, LC3</Name>
+      <Name>Getuftete Teppichbahnenware mit 100% recyceltem PA6 Polmaterial und textilem Rücken, LC3</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with 100% recycled PA6 pile material and textile backing, LC3</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/8a768ef9-ae0b-489c-a29e-b202c9940a3d</EPDurl>
@@ -47004,7 +47004,7 @@
     <CarboMaterial>
       <Id>11510</Id>
       <Name>Polyethylen-Schaum</Name>
-      <Category>D�mmstoffe</Category>
+      <Category>Dämmstoffe</Category>
       <Description>Polyethylene foam</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/fa802cb7-a64d-48b3-b928-0f9976420d37</EPDurl>
       <Grade />
@@ -47128,7 +47128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10659</Id>
-      <Name>Getuftete Teppichbahnenware mit 100% recyceltem PA6 Polmaterial und textilem R�cken, LC4</Name>
+      <Name>Getuftete Teppichbahnenware mit 100% recyceltem PA6 Polmaterial und textilem Rücken, LC4</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with 100% recycled PA6 pile material and textile backing, LC4</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/f90a94ed-f648-4ef6-9fde-2ebd8d0b9f26</EPDurl>
@@ -47628,7 +47628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10660</Id>
-      <Name>Getuftete Teppichbahnenware mit 100% recyceltem PA6 Polmaterial und textilem R�cken, LC5</Name>
+      <Name>Getuftete Teppichbahnenware mit 100% recyceltem PA6 Polmaterial und textilem Rücken, LC5</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with 100% recycled PA6 pile material and textile backing, LC5</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/3a9576f5-ef71-467a-91e7-ea2879380b56</EPDurl>
@@ -47753,7 +47753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10593</Id>
-      <Name>Fugendichtungsb�nder Polyisobutylen</Name>
+      <Name>Fugendichtungsbänder Polyisobutylen</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Joint sealing strips, polyisobutylene</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/98e0caab-5f0b-452f-a3d2-4e0256a799f3</EPDurl>
@@ -48254,7 +48254,7 @@
     <CarboMaterial>
       <Id>10071</Id>
       <Name>Badewannen, Duschwannen und Wannenverkleidungen aus Acryl</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Acrylic bathtubs, shower trays and bath panels</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/2556af6f-0e61-42f4-9bca-8bd35c7521e0</EPDurl>
       <Grade />
@@ -48503,9 +48503,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10355</Id>
-      <Name>DuPont� Tyvek laminated (2528B)</Name>
+      <Name>DuPont™ Tyvek laminated (2528B)</Name>
       <Category>Kunststoffe</Category>
-      <Description>DuPont� Tyvek laminated (2528B)</Description>
+      <Description>DuPont™ Tyvek laminated (2528B)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/f840abd4-cbda-4041-b624-751face684eb</EPDurl>
       <Grade />
       <Density>412</Density>
@@ -48628,7 +48628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10524</Id>
-      <Name>Fenstersch�rze BBX</Name>
+      <Name>Fensterschürze BBX</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Collar BBX</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/eda6640b-aef9-4ccc-aaf4-e29d4370c30f</EPDurl>
@@ -48753,9 +48753,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10354</Id>
-      <Name>DuPont� Tyvek laminated (2523B)</Name>
+      <Name>DuPont™ Tyvek laminated (2523B)</Name>
       <Category>Kunststoffe</Category>
-      <Description>DuPont� Tyvek laminated (2523B)</Description>
+      <Description>DuPont™ Tyvek laminated (2523B)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/979c544d-47ff-447a-a491-5d85728e157e</EPDurl>
       <Grade />
       <Density>330</Density>
@@ -49004,7 +49004,7 @@
     <CarboMaterial>
       <Id>10069</Id>
       <Name>Bade- und Duschwanne Acryl</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Acrylic bath and shower tub</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/f2e34135-bdd8-4e8a-8805-ad089d6d1b92</EPDurl>
       <Grade />
@@ -50128,7 +50128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10665</Id>
-      <Name>Getuftete Teppichbahnenware mit PP Polmaterial und textilem R�cken, LC1</Name>
+      <Name>Getuftete Teppichbahnenware mit PP Polmaterial und textilem Rücken, LC1</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with PP pile material and textile backing, LC1</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/0de7fe78-e95e-431f-bc72-bf04ee99b09b</EPDurl>
@@ -50503,9 +50503,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10352</Id>
-      <Name>DuPont� Tyvek Firecurb� (2066B)</Name>
+      <Name>DuPont™ Tyvek Firecurb™ (2066B)</Name>
       <Category>Kunststoffe</Category>
-      <Description>DuPont� Tyvek Firecurb� (2066B)</Description>
+      <Description>DuPont™ Tyvek Firecurb™ (2066B)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/f8466fdd-6193-4dcf-b31b-28602d66ca41</EPDurl>
       <Grade />
       <Density>340</Density>
@@ -50628,9 +50628,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10353</Id>
-      <Name>DuPont� Tyvek Firecurb� (2566B)</Name>
+      <Name>DuPont™ Tyvek Firecurb™ (2566B)</Name>
       <Category>Kunststoffe</Category>
-      <Description>DuPont� Tyvek Firecurb� (2566B)</Description>
+      <Description>DuPont™ Tyvek Firecurb™ (2566B)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/ba5eca55-4df3-4f71-be50-8c380482a79c</EPDurl>
       <Grade />
       <Density>220</Density>
@@ -50878,7 +50878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10666</Id>
-      <Name>Getuftete Teppichbahnenware mit PP Polmaterial und textilem R�cken, LC2</Name>
+      <Name>Getuftete Teppichbahnenware mit PP Polmaterial und textilem Rücken, LC2</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with PP pile material and textile backing, LC2</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/a085f6e6-7424-43f0-982e-ea531d918acf</EPDurl>
@@ -51003,9 +51003,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11752</Id>
-      <Name>Sch�co AWS 70.HI Fenstersystem Rahmenprofil (ohne Dreifachverglasung); 42,6 kg/m�</Name>
+      <Name>Schüco AWS 70.HI Fenstersystem Rahmenprofil (ohne Dreifachverglasung); 42,6 kg/m²</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
-      <Description>Sch�co AWS 70.HI frame profile for windows without triple glazing</Description>
+      <Description>Schüco AWS 70.HI frame profile for windows without triple glazing</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/67c0a87a-0750-4439-8b29-3035198d32f9</EPDurl>
       <Grade />
       <Density>609</Density>
@@ -51128,7 +51128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10394</Id>
-      <Name>Elastomer Fugenb�nder, Polyurethan</Name>
+      <Name>Elastomer Fugenbänder, Polyurethan</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Elastomer joint tape, polyurethane</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/19dc7f68-bf0a-4437-b1c1-2dd997d16632</EPDurl>
@@ -51378,9 +51378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11754</Id>
-      <Name>Sch�co AWS 75.SI+ Fenstersystem Rahmenprofil (ohne Dreifachverglasung) 43.1 kg/m�</Name>
+      <Name>Schüco AWS 75.SI+ Fenstersystem Rahmenprofil (ohne Dreifachverglasung) 43.1 kg/m²</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
-      <Description>Sch�co AWS 75.SI+ frame profile for windows without triple glazing</Description>
+      <Description>Schüco AWS 75.SI+ frame profile for windows without triple glazing</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/12aea785-4cb5-4468-99b9-bf36a0921f76</EPDurl>
       <Grade />
       <Density>575</Density>
@@ -51503,7 +51503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10587</Id>
-      <Name>Fugendichtungsb�nder Butyl</Name>
+      <Name>Fugendichtungsbänder Butyl</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Joint sealing strips, butyl</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/b060ccb6-2e27-456e-87c4-0b5d4453d917</EPDurl>
@@ -51753,9 +51753,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10351</Id>
-      <Name>DuPont� Tyvek Airguard Smart (2009B)</Name>
+      <Name>DuPont™ Tyvek Airguard Smart (2009B)</Name>
       <Category>Kunststoffe</Category>
-      <Description>DuPont� Tyvek Airguard Smart (2009B)</Description>
+      <Description>DuPont™ Tyvek Airguard Smart (2009B)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/b06c28b9-c7e5-4451-b621-e61ad09a7dc5</EPDurl>
       <Grade />
       <Density>307</Density>
@@ -51878,7 +51878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10667</Id>
-      <Name>Getuftete Teppichbahnenware mit PP Polmaterial und textilem R�cken, LC3</Name>
+      <Name>Getuftete Teppichbahnenware mit PP Polmaterial und textilem Rücken, LC3</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with PP pile material and textile backing, LC3</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/99bb7192-61c6-42e9-8664-2df6a740e5ec</EPDurl>
@@ -52128,7 +52128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10661</Id>
-      <Name>Getuftete Teppichbahnenware mit PA6 Polmaterial und textilem R�cken, LC1</Name>
+      <Name>Getuftete Teppichbahnenware mit PA6 Polmaterial und textilem Rücken, LC1</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with PA6 pile material and textile backing, LC1</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/9139f098-d691-43ee-a8fb-07722ecaf4e6</EPDurl>
@@ -52503,9 +52503,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10676</Id>
-      <Name>Gewebter Teppichboden, Poleinsatzmaterial max. 800 g/m� PA 6.6, w�ssriges F�rbeverfahren</Name>
+      <Name>Gewebter Teppichboden, Poleinsatzmaterial max. 800 g/m² PA 6.6, wässriges Färbeverfahren</Name>
       <Category>Kunststoffe</Category>
-      <Description>Woven broadloom carpet, total pile material max. 800 g/m� PA 6.6, aqueous dyeing method</Description>
+      <Description>Woven broadloom carpet, total pile material max. 800 g/m² PA 6.6, aqueous dyeing method</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/483f46dd-2d04-4565-bceb-ba2fcc53c350</EPDurl>
       <Grade />
       <Density>492</Density>
@@ -52628,7 +52628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10668</Id>
-      <Name>Getuftete Teppichbahnenware mit PP Polmaterial und textilem R�cken, LC5</Name>
+      <Name>Getuftete Teppichbahnenware mit PP Polmaterial und textilem Rücken, LC5</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with PP pile material and textile backing, LC5</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/ba120150-d061-4cd6-9e58-70ff480f7ba5</EPDurl>
@@ -52753,7 +52753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10662</Id>
-      <Name>Getuftete Teppichbahnenware mit PA6 Polmaterial und textilem R�cken, LC2</Name>
+      <Name>Getuftete Teppichbahnenware mit PA6 Polmaterial und textilem Rücken, LC2</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with PA6 pile material and textile backing, LC2</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/cf578910-b53c-462f-97f2-a241d0fb3b67</EPDurl>
@@ -52878,7 +52878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10590</Id>
-      <Name>Fugendichtungsb�nder Gewebeb�nder</Name>
+      <Name>Fugendichtungsbänder Gewebebänder</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Joint sealing strips, fabric</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/1c56ee59-c832-42fb-bf86-ad86adcd1666</EPDurl>
@@ -53003,9 +53003,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11755</Id>
-      <Name>Sch�co AWS 90 BS.SI+ Fenstersystem Rahmenprofil (ohne Dreifachverglasung); 44,5 kg/m�</Name>
+      <Name>Schüco AWS 90 BS.SI+ Fenstersystem Rahmenprofil (ohne Dreifachverglasung); 44,5 kg/m²</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
-      <Description>Sch�co AWS 90BS-SI+ frame profile for windows without triple glazing</Description>
+      <Description>Schüco AWS 90BS-SI+ frame profile for windows without triple glazing</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/c1946b6b-7439-4413-95a7-bdb40b38c030</EPDurl>
       <Grade />
       <Density>494</Density>
@@ -53378,9 +53378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10350</Id>
-      <Name>DuPont� AirGuard Dampfsperre (5816X)</Name>
+      <Name>DuPont™ AirGuard Dampfsperre (5816X)</Name>
       <Category>Kunststoffe</Category>
-      <Description>DuPont� AirGuard Air &amp; Vapour Control Layers (5816X)</Description>
+      <Description>DuPont™ AirGuard Air &amp; Vapour Control Layers (5816X)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/9d445672-95f5-4273-9147-1986fd2f5a96</EPDurl>
       <Grade />
       <Density>1143</Density>
@@ -53753,7 +53753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10663</Id>
-      <Name>Getuftete Teppichbahnenware mit PA6 Polmaterial und textilem R�cken, LC3</Name>
+      <Name>Getuftete Teppichbahnenware mit PA6 Polmaterial und textilem Rücken, LC3</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with PA6 pile material and textile backing, LC3</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/2c3e89e9-4965-4ad7-8afa-0977af8866cb</EPDurl>
@@ -53878,9 +53878,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11756</Id>
-      <Name>Sch�co AWS 90.SI+ Fenstersystem Rahmenprofil (ohne Dreifachverglasung); 45,5 kg/m�</Name>
+      <Name>Schüco AWS 90.SI+ Fenstersystem Rahmenprofil (ohne Dreifachverglasung); 45,5 kg/m²</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
-      <Description>Sch�co AWS 90.SI+ frame profile for windows without triple glazing</Description>
+      <Description>Schüco AWS 90.SI+ frame profile for windows without triple glazing</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/2a007a28-73b0-44ab-8c0e-1c514d480b46</EPDurl>
       <Grade />
       <Density>506</Density>
@@ -54128,7 +54128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10664</Id>
-      <Name>Getuftete Teppichbahnenware mit PA6 Polmaterial und textilem R�cken, LC4</Name>
+      <Name>Getuftete Teppichbahnenware mit PA6 Polmaterial und textilem Rücken, LC4</Name>
       <Category>Kunststoffe</Category>
       <Description>Tufted wall-to-wall carpet with PA6 pile material and textile backing, LC4</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/d73dbc99-3b99-4538-80e0-641675f4fa07</EPDurl>
@@ -54378,9 +54378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11751</Id>
-      <Name>Sch�co AWS 120 CC.SI+ Fenstersystem Rahmenprofil (ohne Dreifachverglasung); 59,6 kg/m�</Name>
+      <Name>Schüco AWS 120 CC.SI+ Fenstersystem Rahmenprofil (ohne Dreifachverglasung); 59,6 kg/m²</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
-      <Description>Sch�co AWS 120 CC.SI frame profile for windows without triple glazing</Description>
+      <Description>Schüco AWS 120 CC.SI frame profile for windows without triple glazing</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/af0f2162-f010-454e-8a8a-5f34c5314e37</EPDurl>
       <Grade />
       <Density>497</Density>
@@ -54503,7 +54503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10396</Id>
-      <Name>Elastomer Fugenb�nder, Silikonkautschuk</Name>
+      <Name>Elastomer Fugenbänder, Silikonkautschuk</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Elastomer joint tape, silicone rubber</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/e39f8b09-c362-4a42-a96a-1a192c0899a3</EPDurl>
@@ -55504,7 +55504,7 @@
     <CarboMaterial>
       <Id>11152</Id>
       <Name>Lithiumbromid</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Lithium bromide</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/446ba42f-701c-4bf5-84cb-9b0963860182</EPDurl>
       <Grade />
@@ -56128,7 +56128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10402</Id>
-      <Name>Elementw�nde</Name>
+      <Name>Elementwände</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>wall elements</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/af11b0b9-b6da-49fc-b7f3-6a3a06d42862</EPDurl>
@@ -56878,7 +56878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11199</Id>
-      <Name>Massivw�nde</Name>
+      <Name>Massivwände</Name>
       <Category>Mineralische Baustoffe</Category>
       <Description>Precast solid concrete walls</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/e5554aea-f1f3-4d84-b93d-cc548d42a54e</EPDurl>
@@ -57003,9 +57003,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10810</Id>
-      <Name>Holcim Binder Sackware Werk H�ver</Name>
+      <Name>Holcim Binder Sackware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Binder Bagged plant H�ver</Description>
+      <Description>Holcim Binder Bagged plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/26855c20-be97-45c8-afd0-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -58378,9 +58378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10849</Id>
-      <Name>Holcim ECOPlanet B4 LH/SR/NA Siloware Werk H�ver</Name>
+      <Name>Holcim ECOPlanet B4 LH/SR/NA Siloware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim ECOPlanet B4 LH/SR/NA Bulk plant H�ver</Description>
+      <Description>Holcim ECOPlanet B4 LH/SR/NA Bulk plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/dd645dcc-0f43-4296-afd8-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -59628,9 +59628,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10848</Id>
-      <Name>Holcim ECOPlanet B4 LH/SR/NA Sackware Werk H�ver</Name>
+      <Name>Holcim ECOPlanet B4 LH/SR/NA Sackware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim ECOPlanet B4 LH/SR/NA Bagged plant H�ver</Description>
+      <Description>Holcim ECOPlanet B4 LH/SR/NA Bagged plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/df232880-f56e-4ec3-afda-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -60628,9 +60628,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10830</Id>
-      <Name>Holcim Duo 4 N-NA Siloware Werk H�ver</Name>
+      <Name>Holcim Duo 4 N-NA Siloware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Duo 4 N-NA Bulk plant H�ver</Description>
+      <Description>Holcim Duo 4 N-NA Bulk plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/0f7587f4-31d5-4e0f-afd6-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -60753,9 +60753,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10825</Id>
-      <Name>Holcim Duo 4 N Siloware Werk H�ver</Name>
+      <Name>Holcim Duo 4 N Siloware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Duo 4 N Bulk plant H�ver</Description>
+      <Description>Holcim Duo 4 N Bulk plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/a4e71f19-49eb-4b02-afd2-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -61003,9 +61003,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10843</Id>
-      <Name>Holcim ECOPlanet A3 Siloware Werk L�gerdorf</Name>
+      <Name>Holcim ECOPlanet A3 Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim ECOPlanet A3 Bulk plant L�gerdorf</Description>
+      <Description>Holcim ECOPlanet A3 Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/e5a0a4a9-21e9-470d-affc-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -61128,9 +61128,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10838</Id>
-      <Name>Holcim ECOPlanet A3 LH/SR/NA Siloware Werk L�gerdorf</Name>
+      <Name>Holcim ECOPlanet A3 LH/SR/NA Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim ECOPlanet A3 LH/SR/NA Bulk plant L�gerdorf</Description>
+      <Description>Holcim ECOPlanet A3 LH/SR/NA Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/457d9854-33d0-41ad-b002-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -61253,9 +61253,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10837</Id>
-      <Name>Holcim ECOPlanet A3 LH/NA Siloware Werk L�gerdorf</Name>
+      <Name>Holcim ECOPlanet A3 LH/NA Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim ECOPlanet A3 LH/NA Bulk plant L�gerdorf</Description>
+      <Description>Holcim ECOPlanet A3 LH/NA Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/4a08216d-09db-403f-b000-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -61378,9 +61378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10820</Id>
-      <Name>Holcim Duo 3 N-LH/NA Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Duo 3 N-LH/NA Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Duo 3 N-LH/NA Bulk plant L�gerdorf</Description>
+      <Description>Holcim Duo 3 N-LH/NA Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/a6ec38bc-0ea2-49a2-aff6-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -61503,9 +61503,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10812</Id>
-      <Name>Holcim Duo 3 N LH/SR/NA Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Duo 3 N LH/SR/NA Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Duo 3 N LH/SR/NA Bulk plant L�gerdorf</Description>
+      <Description>Holcim Duo 3 N LH/SR/NA Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/56ae13d0-4181-4691-aff4-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -61628,9 +61628,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10811</Id>
-      <Name>Holcim Duo 3 N  Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Duo 3 N  Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Duo 3 N  Bulk plant L�gerdorf</Description>
+      <Description>Holcim Duo 3 N  Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/d7b85dd7-79c5-4781-aff0-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -61753,9 +61753,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10822</Id>
-      <Name>Holcim Duo 4 N Sackware Werk H�ver</Name>
+      <Name>Holcim Duo 4 N Sackware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Duo 4 N Bagged plant H�ver</Description>
+      <Description>Holcim Duo 4 N Bagged plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/98d04b5a-f09d-4721-afd4-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -61878,9 +61878,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10840</Id>
-      <Name>Holcim ECOPlanet A3 Sackware Werk L�gerdorf</Name>
+      <Name>Holcim ECOPlanet A3 Sackware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim ECOPlanet A3 Bagged plant L�gerdorf</Description>
+      <Description>Holcim ECOPlanet A3 Bagged plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/d05efb90-9a77-4c3d-affe-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -62003,9 +62003,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10813</Id>
-      <Name>Holcim Duo 3 N Sackware Werk L�gerdorf</Name>
+      <Name>Holcim Duo 3 N Sackware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Duo 3 N Bagged plant L�gerdorf</Description>
+      <Description>Holcim Duo 3 N Bagged plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/c214ed5a-ec69-4f18-aff2-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -63003,7 +63003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10064</Id>
-      <Name>Automatische Faltfl�gelt�r FFT FLEX Green</Name>
+      <Name>Automatische Faltflügeltür FFT FLEX Green</Name>
       <Category>Komponenten von Fenstern und Vorhangfassaden</Category>
       <Description>Automatic folding door FFT FLEX Green</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/3d681712-89e7-4605-8b68-cb0c42a94376</EPDurl>
@@ -63378,9 +63378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10370</Id>
-      <Name>EcoSheetPiles�</Name>
+      <Name>EcoSheetPiles™</Name>
       <Category>Metalle</Category>
-      <Description>EcoSheetPiles�</Description>
+      <Description>EcoSheetPiles™</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/1cd669bd-b5b9-4352-91c0-c7b9d9c376d7</EPDurl>
       <Grade />
       <Density>7850</Density>
@@ -63753,9 +63753,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10831</Id>
-      <Name>Holcim Duo 4 N-NA Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Duo 4 N-NA Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Duo 4 N-NA Bulk plant L�gerdorf</Description>
+      <Description>Holcim Duo 4 N-NA Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/f5a257c0-15d0-4fff-affa-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -63878,9 +63878,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10826</Id>
-      <Name>Holcim Duo 4 N Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Duo 4 N Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Duo 4 N Bulk plant L�gerdorf</Description>
+      <Description>Holcim Duo 4 N Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/3137016e-0c83-4475-aff8-08dadef1256a</EPDurl>
       <Grade />
       <Density>3000</Density>
@@ -64003,9 +64003,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10886</Id>
-      <Name>Holcim Trass Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Trass Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Trass Bulk plant L�gerdorf</Description>
+      <Description>Holcim Trass Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/54529c9f-fe32-4273-b028-08dadef1256a</EPDurl>
       <Grade />
       <Density>3050</Density>
@@ -64128,9 +64128,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10885</Id>
-      <Name>Holcim Trass Sackware Werk L�gerdorf</Name>
+      <Name>Holcim Trass Sackware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Trass Bagged plant L�gerdorf</Description>
+      <Description>Holcim Trass Bagged plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/810af879-476f-40a5-b02a-08dadef1256a</EPDurl>
       <Grade />
       <Density>3050</Density>
@@ -64253,9 +64253,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>12243</Id>
-      <Name>XCarb� Recycled and renewably produced Structural steel sections and merchant bars</Name>
+      <Name>XCarb™ Recycled and renewably produced Structural steel sections and merchant bars</Name>
       <Category>Metalle</Category>
-      <Description>XCarb� Recycled and renewably produced Structural steel sections and merchant bars</Description>
+      <Description>XCarb™ Recycled and renewably produced Structural steel sections and merchant bars</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/1e9f6891-0d94-4aac-a29f-31b53fc9fbae</EPDurl>
       <Grade />
       <Density>7850</Density>
@@ -64503,9 +64503,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10861</Id>
-      <Name>Holcim Fluvio 4 N Siloware Werk H�ver</Name>
+      <Name>Holcim Fluvio 4 N Siloware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Fluvio 4 N Bulk plant H�ver</Description>
+      <Description>Holcim Fluvio 4 N Bulk plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/c245601d-b6fe-4eae-afde-08dadef1256a</EPDurl>
       <Grade />
       <Density>3050</Density>
@@ -64878,9 +64878,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10860</Id>
-      <Name>Holcim Fluvio 4 N Sackware Werk H�ver</Name>
+      <Name>Holcim Fluvio 4 N Sackware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Fluvio 4 N Bagged plant H�ver</Description>
+      <Description>Holcim Fluvio 4 N Bagged plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/0ece4e4b-032d-40cc-afe0-08dadef1256a</EPDurl>
       <Grade />
       <Density>3050</Density>
@@ -65003,9 +65003,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10857</Id>
-      <Name>Holcim Ferro 4 R Siloware Werk H�ver</Name>
+      <Name>Holcim Ferro 4 R Siloware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Ferro 4 R Bulk plant H�ver</Description>
+      <Description>Holcim Ferro 4 R Bulk plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/a563de27-93d2-48f4-afdc-08dadef1256a</EPDurl>
       <Grade />
       <Density>3050</Density>
@@ -65128,9 +65128,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10853</Id>
-      <Name>Holcim Ferro 3 R-NA Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Ferro 3 R-NA Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Ferro 3 R-NA Bulk plant L�gerdorf</Description>
+      <Description>Holcim Ferro 3 R-NA Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/41858b79-baea-4812-b008-08dadef1256a</EPDurl>
       <Grade />
       <Density>3050</Density>
@@ -65253,9 +65253,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10852</Id>
-      <Name>Holcim Ferro 3 R Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Ferro 3 R Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Ferro 3 R Bulk plant L�gerdorf</Description>
+      <Description>Holcim Ferro 3 R Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/7d7ef812-bdc2-459e-b004-08dadef1256a</EPDurl>
       <Grade />
       <Density>3050</Density>
@@ -65378,9 +65378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10851</Id>
-      <Name>Holcim Ferro 3 R Sackware Werk L�gerdorf</Name>
+      <Name>Holcim Ferro 3 R Sackware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Ferro 3 R Bagged plant L�gerdorf</Description>
+      <Description>Holcim Ferro 3 R Bagged plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/4b2637d2-5502-4991-b006-08dadef1256a</EPDurl>
       <Grade />
       <Density>3050</Density>
@@ -65503,9 +65503,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10862</Id>
-      <Name>Holcim Fluvio 5 R Siloware Werk H�ver</Name>
+      <Name>Holcim Fluvio 5 R Siloware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Fluvio 5 R Bulk plant H�ver</Description>
+      <Description>Holcim Fluvio 5 R Bulk plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/35a4169b-795d-4b86-afe2-08dadef1256a</EPDurl>
       <Grade />
       <Density>3050</Density>
@@ -66128,9 +66128,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10872</Id>
-      <Name>Holcim Pur 4 R Siloware Werk H�ver</Name>
+      <Name>Holcim Pur 4 R Siloware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 4 R Bulk plant H�ver</Description>
+      <Description>Holcim Pur 4 R Bulk plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/649c2619-fec9-4962-afe8-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -66253,9 +66253,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10875</Id>
-      <Name>Holcim Pur 5 N Siloware Werk H�ver</Name>
+      <Name>Holcim Pur 5 N Siloware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 5 N Bulk plant H�ver</Description>
+      <Description>Holcim Pur 5 N Bulk plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/dccdc87f-c782-4b7f-afec-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -66378,9 +66378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10866</Id>
-      <Name>Holcim Pur 4 N Siloware Werk H�ver</Name>
+      <Name>Holcim Pur 4 N Siloware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 4 N Bulk plant H�ver</Description>
+      <Description>Holcim Pur 4 N Bulk plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/7930a6c1-3c91-465b-afe4-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -66503,9 +66503,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10869</Id>
-      <Name>Holcim Pur 4 R Sackware Werk H�ver</Name>
+      <Name>Holcim Pur 4 R Sackware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 4 R Bagged plant H�ver</Description>
+      <Description>Holcim Pur 4 R Bagged plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/5d1322c7-5940-4db5-afea-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -66628,9 +66628,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10864</Id>
-      <Name>Holcim Pur 4 N Sackware Werk H�ver</Name>
+      <Name>Holcim Pur 4 N Sackware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 4 N Bagged plant H�ver</Description>
+      <Description>Holcim Pur 4 N Bagged plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/c0661360-8499-475f-afe6-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -67004,7 +67004,7 @@
     <CarboMaterial>
       <Id>10335</Id>
       <Name>Difluormethan (R32)</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Difluoromethane (R32)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/d05ec06c-0443-4357-8915-ba745dcc84a5</EPDurl>
       <Grade />
@@ -67128,9 +67128,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10858</Id>
-      <Name>Holcim Ferro 4 R Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Ferro 4 R Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Ferro 4 R Bulk plant L�gerdorf</Description>
+      <Description>Holcim Ferro 4 R Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/fa44c10f-ad26-4213-b00a-08dadef1256a</EPDurl>
       <Grade />
       <Density>3050</Density>
@@ -67253,9 +67253,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10878</Id>
-      <Name>Holcim Pur 5 Premium Siloware Werk H�ver</Name>
+      <Name>Holcim Pur 5 Premium Siloware Werk Höver</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 5 Premium Bulk plant H�ver</Description>
+      <Description>Holcim Pur 5 Premium Bulk plant Höver</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/de0e6377-5a2e-4aaf-afee-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -67378,9 +67378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10371</Id>
-      <Name>EcoSheetPile� Plus</Name>
+      <Name>EcoSheetPile™ Plus</Name>
       <Category>Metalle</Category>
-      <Description>EcoSheetPile� Plus</Description>
+      <Description>EcoSheetPile™ Plus</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/a85fbb4a-60a0-4ba9-9cfa-cdfbe1ec7f00</EPDurl>
       <Grade />
       <Density>7850</Density>
@@ -67628,7 +67628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10101</Id>
-      <Name>Baust�hle: Offene Walzprofile und Grobbleche</Name>
+      <Name>Baustähle: Offene Walzprofile und Grobbleche</Name>
       <Category>Metalle</Category>
       <Description>Structural Steel: Sections and Plates</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/5cb2c568-76fe-4803-8b46-0084e79800c8</EPDurl>
@@ -67753,9 +67753,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10868</Id>
-      <Name>Holcim Pur 4 N-NA Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Pur 4 N-NA Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 4 N-NA Bulk plant L�gerdorf</Description>
+      <Description>Holcim Pur 4 N-NA Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/77ed0864-1a40-4870-b012-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -67878,9 +67878,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10867</Id>
-      <Name>Holcim Pur 4 N Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Pur 4 N Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 4 N Bulk plant L�gerdorf</Description>
+      <Description>Holcim Pur 4 N Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/9c7db368-55e2-49f5-b00e-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -68003,9 +68003,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10874</Id>
-      <Name>Holcim Pur 4 R-NA Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Pur 4 R-NA Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 4 R-NA Bulk plant L�gerdorf</Description>
+      <Description>Holcim Pur 4 R-NA Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/314b12bb-12db-48af-b018-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -68128,9 +68128,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10873</Id>
-      <Name>Holcim Pur 4 R Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Pur 4 R Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 4 R Bulk plant L�gerdorf</Description>
+      <Description>Holcim Pur 4 R Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/b15257c9-0b2a-4a08-b014-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -68378,9 +68378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10876</Id>
-      <Name>Holcim Pur 5 N Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Pur 5 N Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 5 N Bulk plant L�gerdorf</Description>
+      <Description>Holcim Pur 5 N Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/3964e0e7-80ca-4cd2-b01a-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -68503,9 +68503,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10730</Id>
-      <Name>Glasfaserbeton concrete skin und �ko skin</Name>
+      <Name>Glasfaserbeton concrete skin und öko skin</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Glasfaserbeton concrete skin und �ko Skin</Description>
+      <Description>Glasfaserbeton concrete skin und öko Skin</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/82845dd3-7bfd-4981-b42d-d6f05d30d1f1</EPDurl>
       <Grade />
       <Density>0</Density>
@@ -68628,9 +68628,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10865</Id>
-      <Name>Holcim Pur 4 N Sackware Werk L�gerdorf</Name>
+      <Name>Holcim Pur 4 N Sackware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 4 N Bagged plant L�gerdorf</Description>
+      <Description>Holcim Pur 4 N Bagged plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/986d77fa-e3db-43a4-b010-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -68753,9 +68753,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10870</Id>
-      <Name>Holcim Pur 4 R Sackware Werk L�gerdorf</Name>
+      <Name>Holcim Pur 4 R Sackware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 4 R Bagged plant L�gerdorf</Description>
+      <Description>Holcim Pur 4 R Bagged plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/9008e90c-aac3-4798-b016-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -68878,9 +68878,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10863</Id>
-      <Name>Holcim Hydroport Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Hydroport Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Hydroport Bulk plant L�gerdorf</Description>
+      <Description>Holcim Hydroport Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/aea58e1d-50ce-452b-b00c-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -69253,9 +69253,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10881</Id>
-      <Name>Holcim Pur 5 R-NA Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Pur 5 R-NA Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 5 R-NA Bulk plant L�gerdorf</Description>
+      <Description>Holcim Pur 5 R-NA Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/329c6c4a-c258-48cb-b020-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -69378,9 +69378,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10880</Id>
-      <Name>Holcim Pur 5 R Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Pur 5 R Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 5 R Bulk plant L�gerdorf</Description>
+      <Description>Holcim Pur 5 R Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/5717c624-c704-4c09-b01c-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -69753,9 +69753,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10884</Id>
-      <Name>Holcim Sulfo 5 R Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Sulfo 5 R Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Sulfo 5 R Bulk plant L�gerdorf</Description>
+      <Description>Holcim Sulfo 5 R Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/f6ec90be-d755-42fe-b024-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -69878,9 +69878,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10882</Id>
-      <Name>Holcim Sulfo 5 N Siloware Werk L�gerdorf</Name>
+      <Name>Holcim Sulfo 5 N Siloware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Sulfo 5 N Bulk plant L�gerdorf</Description>
+      <Description>Holcim Sulfo 5 N Bulk plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/85b00b59-cc00-4de9-b022-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -70003,9 +70003,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10879</Id>
-      <Name>Holcim Pur 5 R Sackware Werk L�gerdorf</Name>
+      <Name>Holcim Pur 5 R Sackware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Pur 5 R Bagged plant L�gerdorf</Description>
+      <Description>Holcim Pur 5 R Bagged plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/6a29ced5-a04c-47ed-b01e-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -70128,9 +70128,9 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10883</Id>
-      <Name>Holcim Sulfo 5 R Sackware Werk L�gerdorf</Name>
+      <Name>Holcim Sulfo 5 R Sackware Werk Lägerdorf</Name>
       <Category>Mineralische Baustoffe</Category>
-      <Description>Holcim Sulfo 5 R Bagged plant L�gerdorf</Description>
+      <Description>Holcim Sulfo 5 R Bagged plant Lägerdorf</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/cca7554b-b06a-46be-b026-08dadef1256a</EPDurl>
       <Grade />
       <Density>3100</Density>
@@ -71878,7 +71878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>10193</Id>
-      <Name>Betonstahlmatten und Gittertr�ger</Name>
+      <Name>Betonstahlmatten und Gitterträger</Name>
       <Category>Metalle</Category>
       <Description>Steel Welded Fabrics &amp; Lattice Girders</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/065c4bb7-df48-458d-87f2-37e237a6ab90</EPDurl>
@@ -73754,7 +73754,7 @@
     <CarboMaterial>
       <Id>11968</Id>
       <Name>Tetrafluorethan (R134a)</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Tetrafluoroethane (R134a)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/6af11f95-8ce6-4226-876b-7e14d486e5ec</EPDurl>
       <Grade />
@@ -73878,8 +73878,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11003</Id>
-      <Name>K�ltemittel R407c</Name>
-      <Category>Geb�udetechnik</Category>
+      <Name>Kältemittel R407c</Name>
+      <Category>Gebäudetechnik</Category>
       <Description>Refrigerant R407c</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/242540e0-6b44-4080-bf2e-72fa45376cab</EPDurl>
       <Grade />
@@ -74503,8 +74503,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11248</Id>
-      <Name>Mikropor�se Calciumsilikat-W�rmed�mmstoffe</Name>
-      <Category>D�mmstoffe</Category>
+      <Name>Mikroporöse Calciumsilikat-Wärmedämmstoffe</Name>
+      <Category>Dämmstoffe</Category>
       <Description>Microporous calcium silicate thermal agents</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/20423545-1df0-4afa-91e7-a7c5046f4db0</EPDurl>
       <Grade />
@@ -74628,8 +74628,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11005</Id>
-      <Name>K�ltemittel R410a</Name>
-      <Category>Geb�udetechnik</Category>
+      <Name>Kältemittel R410a</Name>
+      <Category>Gebäudetechnik</Category>
       <Description>Refrigerant R410a</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/988bb7c3-0a15-4626-a6c0-0883d4ff33dd</EPDurl>
       <Grade />
@@ -74879,7 +74879,7 @@
     <CarboMaterial>
       <Id>10279</Id>
       <Name>Chlorodifluormethan (R22)</Name>
-      <Category>Geb�udetechnik</Category>
+      <Category>Gebäudetechnik</Category>
       <Description>Chlorodifluoromethane (R22)</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/3e5bc771-47de-4d5f-b01c-d64eec397dce</EPDurl>
       <Grade />
@@ -75503,8 +75503,8 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>11001</Id>
-      <Name>K�ltemittel R404a</Name>
-      <Category>Geb�udetechnik</Category>
+      <Name>Kältemittel R404a</Name>
+      <Category>Gebäudetechnik</Category>
       <Description>Refrigerant R404a</Description>
       <EPDurl>https://oekobaudat.de/OEKOBAU.DAT/resource/datastocks/cd2bda71-760b-4fcc-8a0b-3877c10000a8/processes/01ccf18a-a8cf-4da8-8e3d-951a2d136a3a</EPDurl>
       <Grade />

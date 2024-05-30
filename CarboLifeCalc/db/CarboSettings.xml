@@ -144,11 +144,12 @@
     </rcQuantityMap>
     <RCMaterialCategory>Concrete</RCMaterialCategory>
   </defaultCarboGroupSettings>
-  <templatePath>C:\001 - Working Files\001 - Coding\CarboLifeCalc\CarboLifeCalc\bin\Debug\db\UserMaterials.cxml</templatePath>
+  <templatePath>C:\Users\d.veld\source\repos\CarboLifeCalc\CarboLifeCalc\bin\x64\Release\db\UserMaterials.cxml</templatePath>
   <useLocal>true</useLocal>
   <firstLaunch>false</firstLaunch>
   <defaultDesignLife>60</defaultDesignLife>
   <Currency>£</Currency>
+  <ecRevitParameter>CLC_EmbodiedCarbon</ecRevitParameter>
   <colourPresets>
     <CarboColourPreset>
       <name>Preset 1</name>

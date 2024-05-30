@@ -25,4 +25,5 @@ Id,Name,Category,Description,Density,WasteFactor,Grade,EPDURL,ECI (kgCO2e/kg),EC
 29392,Precast Concrete,Concrete,No description provided,2400,1,C40/50,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,0.23028,0.178,0.032,0.00228,0,0.018,0,0,0,
 23580,Steel Structural,Steel,UKRolled open sections(EAF production),7850,1,S355,https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/,1.605,2.45,0.032,0.025,0,0.018,-0.92,0,0,
 282044,Softwood Timber,Timber,Timber based on IC Values,480,5,C24,,0.209272996633084,0.262594458,0.110209235209235,0.232,0,1.55746930342385,-0.4,-1.553,0,
+287673,Polystyrene,Other,,32,0,,,3.449,3.43,0.01,0,0,0.009,0,0,0,
 

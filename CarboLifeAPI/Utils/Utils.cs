@@ -9,6 +9,8 @@ using System.Reflection;
 using System.Drawing;
 using System.Windows;
 using System.Linq;
+using System.Reflection.Emit;
+using System.Text;
 
 namespace CarboLifeAPI
 {
@@ -21,7 +23,7 @@ namespace CarboLifeAPI
 
             //Variable used for headers
             int rowcount = 0;
-            using (CsvFileReader reader = new CsvFileReader(strFilePath))
+            using (CsvFileReader reader = new CsvFileReader(strFilePath, Encoding.UTF8, true))
             {
                 CsvRow row = new CsvRow();
                 while (reader.ReadRow(row))
