@@ -175,6 +175,8 @@ namespace CarboLifeAPI
             //make sure all carbo materials are written in the elements;
             //This is the most usefull set of Data To work with for now:
             CarboGraphResult thisResult = new CarboGraphResult();
+            CarboGraphResult result = new CarboGraphResult();
+
             try
             {
                 carboProject.CalculateProject();
@@ -184,7 +186,7 @@ namespace CarboLifeAPI
                 thisResult.ValueName = "EC";
                 thisResult.Unit = "tCO₂e";
 
-                List<CarboDataPoint> materialist = carboProject.getMaterialTotals();
+                //List<CarboDataPoint> materialist = carboProject.getMaterialTotals();
 
                 //add the elements per material;
 
@@ -205,13 +207,39 @@ namespace CarboLifeAPI
                     }
 
                 }
+
+                //Combine if materials were combined
+
+                foreach (CarboValues value in thisResult.entireProjectData)
+                {
+                    bool exists = false;
+
+                    foreach (CarboValues valueNew in result.entireProjectData)
+                    {
+                        if(valueNew.Id == value.Id)
+                        {
+                            //This element has already a material assigned, add the values
+                            valueNew.Value += value.Value;
+                            valueNew.ValueName = valueNew.ValueName + " + " + value.ValueName;
+                            exists = true;
+                        }
+                    }
+
+                    if (exists == false)
+                    {
+                        result.entireProjectData.Add(value);
+                    }
+
+                }
+
+
             }
             catch (Exception ex)
             {
                 //MessageBox.Show(ex.Message);
             }
 
-            return thisResult;
+            return result;
         }
 
     }

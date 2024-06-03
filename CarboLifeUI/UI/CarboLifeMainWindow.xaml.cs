@@ -46,6 +46,7 @@ namespace CarboLifeUI.UI
         public bool ExcelExportResult { get; private set; }
         public bool ExcelExportElements { get; private set; }
         public bool ExcelExportMaterials { get; private set; }
+        public bool ExcelExportProject { get; private set; }
 
         /////////////
 
@@ -479,6 +480,7 @@ namespace CarboLifeUI.UI
                 ExcelExportResult = exportMenu.results;
                 ExcelExportElements = exportMenu.elements;
                 ExcelExportMaterials = exportMenu.materials;
+                ExcelExportProject = exportMenu.project;
 
                 //Async Attempt 2:
 
@@ -549,10 +551,11 @@ namespace CarboLifeUI.UI
             string exportpathResult = exportpath + "\\" + prefix + "Results.csv";
             string exportpathElements = exportpath + "\\" + prefix + "Elements.csv";
             string exportpathMaterials = exportpath + "\\" + prefix + "Materials.csv";
+            string exportpathProject = exportpath + "\\" + prefix + "Project.csv";
 
 
 
-            if (File.Exists(exportpathResult) || File.Exists(exportpathElements) || File.Exists(exportpathMaterials))
+            if (File.Exists(exportpathResult) || File.Exists(exportpathElements) || File.Exists(exportpathMaterials) || File.Exists(exportpathProject))
             {
                 System.Windows.MessageBox.Show("CSV export successful. Click OK to open export directory.", "Success!", MessageBoxButton.OK);
                 System.Diagnostics.Process.Start("explorer.exe", exportpath);
@@ -578,7 +581,7 @@ namespace CarboLifeUI.UI
         private void ExportFile_DoWork(object sender, DoWorkEventArgs e)
         {
             //DataExportUtils.ExportToExcel(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials);
-            DataExportUtils.ExportToCSV(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials);
+            DataExportUtils.ExportToCSV(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials, ExcelExportProject);
 
         }
 

@@ -28,6 +28,7 @@ namespace CarboLifeUI.UI
         public bool results;
         public bool elements;
         public bool materials;
+        public bool project;
 
         public ExportPicker()
         {
@@ -35,6 +36,8 @@ namespace CarboLifeUI.UI
             results = true;
             elements = true;
             materials = true;
+            project = true;
+
             InitializeComponent();
         }
 
@@ -52,17 +55,24 @@ namespace CarboLifeUI.UI
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = true;
+
             results = check_Results.IsChecked.Value;
             elements = check_Elements.IsChecked.Value;
             materials = check_Materials.IsChecked.Value;
+            project = check_Project.IsChecked.Value;
+
             this.Close();
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
         {
             isAccepted = false;
+
             results = false;
             elements = false;
+            materials = false;
+            project = false;
+
             this.Close();
         }
     }

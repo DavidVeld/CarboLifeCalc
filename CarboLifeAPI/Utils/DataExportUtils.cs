@@ -634,7 +634,7 @@ namespace CarboLifeAPI
 
         }
 
-        public static void ExportToCSV(CarboProject carboLifeProject, string cvsExportPath, bool exportResult, bool exportElements, bool exportMaterials)
+        public static void ExportToCSV(CarboProject carboLifeProject, string cvsExportPath, bool exportResult, bool exportElements, bool exportMaterials, bool exportProject)
         {
             string exportpath = Path.GetDirectoryName(cvsExportPath);
             string prefix = Path.GetFileNameWithoutExtension(cvsExportPath);
@@ -651,10 +651,13 @@ namespace CarboLifeAPI
             string exportpathResult = exportpath + "\\" + prefix + "Results.csv";
             string exportpathElements = exportpath + "\\" + prefix + "Elements.csv";
             string exportpathMaterials = exportpath + "\\" + prefix + "Materials.csv";
+            string exportpathProject = exportpath + "\\" + prefix + "Project.csv";
+
 
             if (File.Exists(exportpathResult) == true ||
                 File.Exists(exportpathElements) == true ||
-                File.Exists(exportpathMaterials) == true)
+                File.Exists(exportpathMaterials) == true ||
+                File.Exists(exportpathProject) == true)
             {
                 var result = System.Windows.MessageBox.Show("Do you want to override the existing files?", "Question", MessageBoxButton.YesNo);
                 if (result != MessageBoxResult.Yes) //Anything but YES should cancel the command
@@ -670,6 +673,76 @@ namespace CarboLifeAPI
 
             if (exportMaterials == true)
                 CreateMaterialDatabaseCVSFile(carboLifeProject.CarboDatabase, exportpathMaterials);
+
+            if (exportProject == true)
+                CreateProjectDatabaseCVSFile(carboLifeProject, exportpathProject);
+
+        }
+
+        private static void CreateProjectDatabaseCVSFile(CarboProject carboLifeProject, string exportPath)
+        {
+            if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
+                return;
+
+            string fileString = "";
+
+
+
+            //Create Headers;
+            fileString =
+                "Name" + "," + //0
+                "Number" + "," + //1
+                "Category" + "," + //2
+                "Description" + "," + //3
+                "SocialCost" + "," + //4
+                "Area" + "," + //5
+                "AreaNew" + "," + //6
+
+                "A0Global" + "," + //7
+                "A5Global" + "," + //8
+                "b675Global" + "," + //9
+                "C1Global" + "," + //10
+
+                "valueUnit" + "," + //11
+                "designLife" + "," + //12
+                "story" + "," + //13
+
+                Environment.NewLine;
+            //Advanced
+
+                try
+                {
+                    string resultString = "";
+
+                    resultString += carboLifeProject.Name + ","; //1
+                    resultString += carboLifeProject.Number + ","; //2
+                    resultString += carboLifeProject.Category + ","; //3
+                    resultString += carboLifeProject.Description + ","; //3
+                    resultString += carboLifeProject.SocialCost + ","; //4
+                    resultString += carboLifeProject.Area + ","; //5
+                    resultString += carboLifeProject.AreaNew + ","; //6
+                    resultString += carboLifeProject.A0Global + ","; //7
+                    resultString += carboLifeProject.A5Global + ","; //8
+                    resultString += carboLifeProject.b675Global + ","; //9
+                    resultString += carboLifeProject.C1Global + ","; //10
+
+                    resultString += carboLifeProject.valueUnit + ","; //11
+                    resultString += carboLifeProject.designLife + ","; //12
+
+                resultString += CVSFormat(carboLifeProject.getGeneralText()) + ","; //13
+
+
+                resultString += Environment.NewLine;
+
+                    fileString += resultString;
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine("An error occurred while writing the file: " + ex.Message);
+                }
+            
+
+            WriteCVSFile(fileString, exportPath);
 
         }
 

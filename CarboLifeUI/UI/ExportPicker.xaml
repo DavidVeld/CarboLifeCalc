@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
         Title="Export"
-             d:DesignHeight="300" d:DesignWidth="300" MinWidth="300" MinHeight="300" Width="300" Height="300"  Loaded="Window_Loaded">
+             d:DesignHeight="320" d:DesignWidth="320" MinWidth="320" MinHeight="320" Width="320" Height="320"  Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -58,6 +58,10 @@
 
                 <CheckBox Name="check_Materials" Grid.Column="1" Grid.Row="1" Margin="0,65,5,4" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Visible" IsChecked="True"></CheckBox>
                 <Label Grid.Column="1" Margin="16,64,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2" Visibility="Visible">Materials</Label>
+
+                <CheckBox Name="check_Project" Grid.Column="1" Grid.Row="1" Margin="0,95,5,4" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Visible" IsChecked="True"></CheckBox>
+                <Label Grid.Column="1" Margin="16,94,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.RowSpan="2" Visibility="Visible">Project Data</Label>
+
 
                 <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Margin="0" Style="{StaticResource formTextStyle}" VerticalAlignment="Bottom" Content="(Each Table exports to a separate file)"/>
 
