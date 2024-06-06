@@ -297,7 +297,7 @@ namespace CarboLifeAPI
                         AssemblySource elementAssemblySource = new AssemblySource();
                         elementAssemblySource.Assembly = newAss;
 
-                        lcaxProject.Assemblies.Add(jsCe.Id.ToString(), elementAssemblySource);
+                        lcaxProject.Assemblies.Add(newAss.Id.ToString(), elementAssemblySource);
                     }
                 }
                 catch (Exception ex)
