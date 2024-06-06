@@ -232,8 +232,11 @@ namespace CarboLifeAPI
             Lcax lcaxProject = new Lcax();
 
             lcaxProject.Name = jsProject.Name;
-            lcaxProject.Description = jsProject.Number + Environment.NewLine + jsProject.Description;
-            lcaxProject.LifeSpan = jsProject.designLife;
+
+            lcaxProject.Description =  jsProject.Description;
+            lcaxProject.Id = jsProject.Number;
+
+            lcaxProject.ReferenceStudyPeriod = jsProject.designLife;
 
             lcaxProject.MetaData = new Dictionary<string, string>();
             lcaxProject.MetaData.Add("GIA", jsProject.GIA.ToString());
@@ -243,11 +246,13 @@ namespace CarboLifeAPI
             lcaxProject.MetaData.Add("SocialCost", jsProject.SocialCost.ToString());
             lcaxProject.MetaData.Add("ECTotal", jsProject.ECTotal.ToString());
 
-            lcaxProject.EmissionParts = new Dictionary<string, Assembly>();
+            lcaxProject.Assemblies = new Dictionary<string, AssemblySource>();
 
             //Build the masterial Assembly;
             Assembly materials = getMaterialAssembly(jsProject);
-            lcaxProject.EmissionParts.Add("Material EPDs", materials);
+            AssemblySource materialSource = new AssemblySource();
+
+            lcaxProject.Assemblies.Add("Material EPDs", materialSource);
 
             //Build the assemblies
             //Run through each element and combine where Id's are identical
@@ -257,23 +262,31 @@ namespace CarboLifeAPI
                 try
                 {
                     bool exists = false;
-                    foreach (var dict in lcaxProject.EmissionParts)
+                    foreach (var dict in lcaxProject.Assemblies)
                     {
-                        Assembly assTest = dict.Value as Assembly;
-                        string assKey = dict.Key as string;
-                        assTest.Id = jsCe.GUID;
+                        AssemblySource elementAssemblySource = dict.Value as AssemblySource;
 
-                        if (assTest != null)
+                        if (elementAssemblySource != null)
                         {
-                            if (assKey == jsCe.GUID)
-                            {
-                                EpdPart newPart = getEpdPart(jsCe);
-                                assTest.Parts.Add(jsCe.Id.ToString() + "." + assTest.Parts.Count, newPart);
-                                assTest.Quantity += newPart.PartQuantity;
-                                assTest.Unit = newPart.PartUnit;
+                            Assembly assTest = elementAssemblySource.Assembly;
 
-                                exists = true;
-                                break;
+                            string assKey = dict.Key as string;
+                            assTest.Id = jsCe.GUID;
+
+                            if (assTest != null)
+                            {
+                                if (assKey == jsCe.GUID)
+                                {
+                                    //this assembly already exists ant the elment needs to be added to the assembly
+                                    ProductSource newPart = getEpdPart(jsCe);
+
+                                    assTest.Products.Add(jsCe.Id.ToString() + "." + assTest.Products.Count, newPart);
+                                    assTest.Quantity += newPart.Product.Quantity;
+                                    assTest.Unit = newPart.Product.Unit;
+
+                                    exists = true;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -281,7 +294,10 @@ namespace CarboLifeAPI
                     if (exists == false)
                     {
                         Assembly newAss = getAssembly(jsCe);
-                        lcaxProject.EmissionParts.Add(jsCe.Id.ToString(), newAss);
+                        AssemblySource elementAssemblySource = new AssemblySource();
+                        elementAssemblySource.Assembly = newAss;
+
+                        lcaxProject.Assemblies.Add(jsCe.Id.ToString(), elementAssemblySource);
                     }
                 }
                 catch (Exception ex)
@@ -292,10 +308,9 @@ namespace CarboLifeAPI
             }
 
             //Calculate Totals;
-            foreach (var dict in lcaxProject.EmissionParts)
-            {
-
-            }
+            //foreach (var dict in lcaxProject.EmissionParts)
+            //{
+            //}
 
                 return lcaxProject;
         }
@@ -306,11 +321,13 @@ namespace CarboLifeAPI
             materialAssembly.Name = "Materials";
             materialAssembly.Comment = "This assembly contains all the used materials in the project";
             materialAssembly.Description = "This assembly contains all the used materials in the project";
-            materialAssembly.Parts = new Dictionary<string, EpdPart>();
+            materialAssembly.Products = new Dictionary<string, ProductSource>();
+
 
             foreach (JsCarboMaterial jsMaterial in jsCarboProject.materialList)
             {
-                EpdPart newpart = new EpdPart();
+                ProductSource productSource = new ProductSource();
+                Product newpart = new Product();
 
                 try
                 {
@@ -327,33 +344,44 @@ namespace CarboLifeAPI
                     newEpd.Source.Url = jsMaterial.EPDurl;
                     newEpd.DeclaredUnit = Unit.Kg;
 
-                    newEpd.Gwp = new ImpactCategory();
-                    newEpd.Gwp.A1A3 = jsMaterial.ECI_A1A3;
-                    newEpd.Gwp.A4 = jsMaterial.ECI_A4;
-                    newEpd.Gwp.A5 = jsMaterial.ECI_A5;
-                    newEpd.Gwp.B1 = jsMaterial.ECI_B1B5;
-                    newEpd.Gwp.C1 = jsMaterial.ECI_C1C4;
-                    newEpd.Gwp.D = jsMaterial.ECI_D;
+                    ImpactDataSource impactDataSource = new ImpactDataSource();
+                    impactDataSource.Epd = new Epd();
 
-                    newEpd.MetaData = new Dictionary<string, string>();
+
+                    Dictionary<string,double?> data = new Dictionary<string,double?>();
+                    data.Add("A1A3", jsMaterial.ECI_A1A3);
+                    data.Add("A4", jsMaterial.ECI_A4);
+                    data.Add("A5", jsMaterial.ECI_A5);
+                    data.Add("B1", jsMaterial.ECI_B1B5);
+                    data.Add("C1", jsMaterial.ECI_C1C4);
+                    data.Add("D", jsMaterial.ECI_D);
+                    data.Add("Sequestration", jsMaterial.ECI_Seq);
+                    data.Add("Extra", jsMaterial.ECI_Mix);
+
+                    impactDataSource.Epd.Impacts.Add("Gwp", data);
+
+                    newEpd.Comment = jsMaterial.Description;
+
                     newEpd.MetaData.Add("Grade", jsMaterial.Grade);
                     newEpd.MetaData.Add("Sequestration", jsMaterial.ECI_Seq.ToString());
                     newEpd.MetaData.Add("Category", jsMaterial.Category);
                     newEpd.MetaData.Add("Default Waste Factor (%)", jsMaterial.WasteFactor.ToString());
 
-                    newpart.EpdSource = new EpdSource();
-                    newpart.EpdSource.Epd = newEpd;
+                    //newpart.EpdSource = new EpdSource();
+                    //newpart.EpdSource.Epd = newEpd;
 
+                    productSource.Product = newpart;
                 }
                 catch
                 {
                 }
-                materialAssembly.Parts.Add(newpart.Id, newpart);
+                materialAssembly.Products.Add(newpart.Id, productSource);
             }
 
 
             return materialAssembly;
         }
+
 
         private static Assembly getAssembly(JsCarboElement jsCe)
         {
@@ -362,17 +390,21 @@ namespace CarboLifeAPI
             {
                 string id = jsCe.Id.ToString();
 
+                if (jsCe.GUID != "")
+                    id = jsCe.GUID.ToString();
+                
+
                 assembly.Id = id;
                 assembly.Name = jsCe.Name;
-                assembly.Comment = "";
-                assembly.Category = jsCe.Category;
-                assembly.Parts = new Dictionary<string, EpdPart>();
+                assembly.Description = "";
+                assembly.Comment = jsCe.Category;
+                assembly.Products = new Dictionary<string, ProductSource>();
 
-                EpdPart newPart = getEpdPart(jsCe);
-                assembly.Parts.Add(id, newPart);
+                ProductSource newPart = getEpdPart(jsCe);
+                assembly.Products.Add(id, newPart);
 
-                assembly.Quantity += newPart.PartQuantity;
-                assembly.Unit = newPart.PartUnit;
+                assembly.Quantity += newPart.Product.Quantity;
+                assembly.Unit = newPart.Product.Unit;
             }
 
             catch (Exception ex)
@@ -382,22 +414,26 @@ namespace CarboLifeAPI
             return assembly;
         }
 
-        private static EpdPart getEpdPart(JsCarboElement jsCe)
+        private static ProductSource getEpdPart(JsCarboElement jsCe)
         {
             string id = jsCe.Id.ToString();
 
-            EpdPart newPart = new EpdPart();
+
+            ProductSource productSource = new ProductSource();
+            Product newPart = new Product();
+
             try
             {
                 newPart.Id = id;
                 newPart.Name = jsCe.Name;
 
-                newPart.PartQuantity = jsCe.Volume_Total;
-                newPart.PartUnit = Unit.M3;
+                newPart.Quantity = jsCe.Volume_Total;
+                newPart.Unit = Unit.M3;
                 //material
-                newPart.EpdSource = new EpdSource();
-                newPart.EpdSource.Internalepd = new InternalEpd();
-                newPart.EpdSource.Internalepd.Path = jsCe.CarboMaterialName;
+                newPart.ImpactData.Epd = new Epd();
+                //newPart.EpdSource.Internalepd = new InternalEpd();
+                newPart.ImpactData.Epd.Name = jsCe.CarboMaterialName;
+                //newPart.ImpactData.Epd.Comment = jsCe.CarboMaterialName;
 
                 newPart.MetaData = new Dictionary<string, string>();
 
@@ -409,14 +445,29 @@ namespace CarboLifeAPI
                 newPart.MetaData.Add("MaterialName", jsCe.CarboMaterialName);
                 newPart.MetaData.Add("RevitMaterialName", jsCe.MaterialName);
                 newPart.MetaData.Add("Mass", jsCe.Mass.ToString());
+
+                Dictionary<string,double?> data = new Dictionary<string, double?>();
+                data.Add("A1A3",jsCe.EC_A1A3_Total);
+                data.Add("A4", jsCe.EC_A4_Total);
+                data.Add("A5", jsCe.EC_A5_Total);
+                data.Add("B", jsCe.EC_B1B7_Total);
+                data.Add("C1C4", jsCe.EC_C1C4_Total);
+                data.Add("D", jsCe.EC_D_Total);
+                data.Add("Seq", jsCe.EC_Sequestration_Total);
+                data.Add("Mix", jsCe.EC_Mix_Total);
+
+                newPart.Results.Add("GWp",data);
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 newPart.Name = ex.Message;
-                newPart.PartQuantity = 0;
+                newPart.Quantity = 0;
             }
+            if(newPart != null)
+                productSource.Product = newPart;
 
-            return newPart;
+            return productSource;
         }
 
         private static CarboProject convertToCarboCalcProject(Lcax lcaxFile)
@@ -425,7 +476,7 @@ namespace CarboLifeAPI
 
             result.Name = lcaxFile.Name;
             result.Description = lcaxFile.Description;
-            result.designLife = Convert.ToInt16(lcaxFile.LifeSpan);
+            result.designLife = Convert.ToInt16(lcaxFile.ReferenceStudyPeriod);
 
             return result;
 
@@ -437,6 +488,7 @@ namespace CarboLifeAPI
 
             JsCe.Name = ce.Name;
             JsCe.Id = ce.Id;
+            JsCe.GUID = ce.GUID;
             JsCe.MaterialName = ce.MaterialName;
             JsCe.CarboMaterialName = ce.CarboMaterialName;
             JsCe.Category = ce.Category;

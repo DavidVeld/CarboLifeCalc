@@ -49,12 +49,12 @@
                     <MenuItem Name="mnu_BuildReport" Header="Export HTML Report" Click="mnu_BuildReport_Click" Background="Transparent"/>
                     <MenuItem Name="mnu_ExportToExcel" Header="Export Data to CSV..." Click="mnu_ExportToExcel_Click" Background="Transparent"></MenuItem>
                     <MenuItem Name="mnu_ExportToJson" Header="Export JSon..." Click="mnu_ExportToJSON_Click" Background="Transparent"></MenuItem>
-                    <MenuItem Name="mnu_ExportToLCAx" Header="Export LCAx..." Click="mnu_ExportToLCAx_Click" Visibility="Visible" Background="Transparent"></MenuItem>
+                    <MenuItem Name="mnu_ExportToLCAx" Header="Export LCAx (v2.2.1) BETA..." Click="mnu_ExportToLCAx_Click" Visibility="Visible" Background="Transparent"></MenuItem>
                 </MenuItem>
                 <Separator></Separator>
                 <MenuItem Name="mnu_EditTemplate" Header="Edit a Material Template..." Click="mnu_EditTemplate_Click" Background="Transparent"/>
-                <MenuItem Name="mnu_ImportElements" Header="Import Elements From CSV..." Click="mnu_ImportElements_Click" Background="Transparent" Visibility="Hidden"/>
-                <MenuItem Name="mnu_ImportLCAx" Header="Import Elements From LCAx..." Click="mnu_ImportLCAx_Click" Background="Transparent"/>
+                <MenuItem Name="mnu_ImportElements" Header="Import Elements From CSV..." Click="mnu_ImportElements_Click" Background="Transparent" Visibility="Visible"/>
+                <!--<MenuItem Name="mnu_ImportLCAx" Header="Import Elements From LCAx..." Click="mnu_ImportLCAx_Click" Background="Transparent"/>-->
 
                 <Separator></Separator>
                 <MenuItem Name="mnu_CloseMe" Header="Close" Click="mnu_CloseMe_Click" Background="Transparent"/>

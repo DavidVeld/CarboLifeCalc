@@ -7,6 +7,10 @@
         /// </summary>
         public int Id { get; set; }
         /// <summary>
+        /// GUID
+        /// </summary>
+        public string GUID { get; set; }
+        /// <summary>
         /// Preferably Unique name for a material
         /// </summary>
         public string Name { get; set; }
@@ -93,6 +97,7 @@
         public JsCarboMaterial()
         {
             Id = 0;
+            GUID = "";
             Name = "";
             Category = "";
             Description = "";
