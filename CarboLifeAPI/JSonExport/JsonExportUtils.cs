@@ -230,6 +230,7 @@ namespace CarboLifeAPI
         public static Lcax convertToLCAx(JsCarboProject jsProject)
         {
             Lcax lcaxProject = new Lcax();
+            List<string> test = new List<string>();
 
             lcaxProject.Name = jsProject.Name;
 
@@ -237,6 +238,13 @@ namespace CarboLifeAPI
             lcaxProject.Id = jsProject.Number;
 
             lcaxProject.ReferenceStudyPeriod = jsProject.designLife;
+
+            lcaxProject.ProjectInfo.BuildingInfo.GrossFloorArea.Unit = Unit.M2;
+            lcaxProject.ProjectInfo.BuildingInfo.GrossFloorArea.Value = jsProject.GIA;
+            lcaxProject.ProjectInfo.BuildingInfo.BuildingType = BuildingType.New;
+            lcaxProject.ProjectInfo.BuildingInfo.BuildingTypology = BuildingTypology.Other;
+
+
 
             lcaxProject.MetaData = new Dictionary<string, string>();
             lcaxProject.MetaData.Add("GIA", jsProject.GIA.ToString());
@@ -251,12 +259,13 @@ namespace CarboLifeAPI
             //Build the masterial Assembly;
             Assembly materials = getMaterialAssembly(jsProject);
             AssemblySource materialSource = new AssemblySource();
+            materialSource.Assembly = materials;
 
             lcaxProject.Assemblies.Add("Material EPDs", materialSource);
+            test.Add(materialSource.Assembly.Id);
 
             //Build the assemblies
             //Run through each element and combine where Id's are identical
-
             foreach (JsCarboElement jsCe in jsProject.elementList)
             {
                 try
@@ -271,7 +280,7 @@ namespace CarboLifeAPI
                             Assembly assTest = elementAssemblySource.Assembly;
 
                             string assKey = dict.Key as string;
-                            assTest.Id = jsCe.GUID;
+                            //string id = jsCe.GUID;
 
                             if (assTest != null)
                             {
@@ -280,7 +289,7 @@ namespace CarboLifeAPI
                                     //this assembly already exists ant the elment needs to be added to the assembly
                                     ProductSource newPart = getEpdPart(jsCe);
 
-                                    assTest.Products.Add(jsCe.Id.ToString() + "." + assTest.Products.Count, newPart);
+                                    assTest.Products.Add(jsCe.GUID.ToString() + "." + assTest.Products.Count, newPart);
                                     assTest.Quantity += newPart.Product.Quantity;
                                     assTest.Unit = newPart.Product.Unit;
 
@@ -291,13 +300,19 @@ namespace CarboLifeAPI
                         }
                     }
 
+                    //This element requires a new Assembly
                     if (exists == false)
                     {
-                        Assembly newAss = getAssembly(jsCe);
-                        AssemblySource elementAssemblySource = new AssemblySource();
-                        elementAssemblySource.Assembly = newAss;
+                        AssemblySource newAssSrc = getAssembly(jsCe);
+                        //AssemblySource elementAssemblySource = new AssemblySource();
 
-                        lcaxProject.Assemblies.Add(newAss.Id.ToString(), elementAssemblySource);
+                        //elementAssemblySource.Assembly = newAss;
+                        //elementAssemblySource.Assembly.Id = newAss.Id;
+                        //elementAssemblySource.Assembly.Products = newAss.Products;
+
+                        lcaxProject.Assemblies.Add(jsCe.GUID.ToString(), newAssSrc);
+                        test.Add(newAssSrc.Assembly.Id);
+
                     }
                 }
                 catch (Exception ex)
@@ -383,41 +398,44 @@ namespace CarboLifeAPI
         }
 
 
-        private static Assembly getAssembly(JsCarboElement jsCe)
+        private static AssemblySource getAssembly(JsCarboElement jsCe)
         {
-            Assembly assembly = new Assembly();
+            AssemblySource assemblyrsc = new AssemblySource();
+            //Assembly assembly = new Assembly();
             try
             {
                 string id = jsCe.Id.ToString();
 
                 if (jsCe.GUID != "")
                     id = jsCe.GUID.ToString();
-                
 
-                assembly.Id = id;
-                assembly.Name = jsCe.Name;
-                assembly.Description = "";
-                assembly.Comment = jsCe.Category;
-                assembly.Products = new Dictionary<string, ProductSource>();
+
+                assemblyrsc.Assembly.Id = id.ToString();
+                assemblyrsc.Assembly.Name = jsCe.Name;
+                assemblyrsc.Assembly.Description = "";
+                assemblyrsc.Assembly.Comment = jsCe.Category;
+                assemblyrsc.Assembly.Products = new Dictionary<string, ProductSource>();
 
                 ProductSource newPart = getEpdPart(jsCe);
-                assembly.Products.Add(id, newPart);
+                assemblyrsc.Assembly.Products.Add(id, newPart);
 
-                assembly.Quantity += newPart.Product.Quantity;
-                assembly.Unit = newPart.Product.Unit;
+                assemblyrsc.Assembly.Quantity += newPart.Product.Quantity;
+                assemblyrsc.Assembly.Unit = newPart.Product.Unit;
             }
 
             catch (Exception ex)
             {
 
             }
-            return assembly;
+            return assemblyrsc;
         }
 
         private static ProductSource getEpdPart(JsCarboElement jsCe)
         {
-            string id = jsCe.Id.ToString();
+            string id = jsCe.GUID.ToString();
 
+            if (jsCe.GUID != "")
+                id = jsCe.GUID.ToString();
 
             ProductSource productSource = new ProductSource();
             Product newPart = new Product();
