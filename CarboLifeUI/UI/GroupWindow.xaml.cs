@@ -50,11 +50,16 @@ namespace CarboLifeUI.UI
         {
             dialogOk = false;
 
-            foreach (var prop in elementList[0].GetType().GetProperties())
+            if (elementList.Count > 0)
             {
-                cbb_MainGroup.Items.Add(prop.Name);
-            }
+                foreach (var prop in elementList[0].GetType().GetProperties())
+                {
+                    if(prop.PropertyType == typeof(string))
+                    cbb_MainGroup.Items.Add(prop.Name);
+                }
+            
             cbb_MainGroup.Text = "Name";
+        }
             //load elements
             //passedElementList = getDataTablefromList(elementList);
 

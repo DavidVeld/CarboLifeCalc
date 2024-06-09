@@ -71,7 +71,21 @@ namespace CarboLifeUI.UI
             carboMaterialName = carboSettings.RCMaterialName;
             carboMaterialCategory = carboSettings.RCMaterialCategory;
 
-        DataContext = this;
+            if (rcMap.Count == 0)
+            {
+                System.Windows.MessageBox.Show("No RC properties found in the project, default mapping table will be used.", "Warning", MessageBoxButton.OK);
+
+                CarboSettings settings = new CarboSettings();
+                settings = settings.Load();
+
+                rcMap = settings.defaultCarboGroupSettings.rcQuantityMap;
+                categoryType = settings.defaultCarboGroupSettings.RCParameterType;
+                categoryName = settings.defaultCarboGroupSettings.RCParameterName;
+                carboMaterialName = settings.defaultCarboGroupSettings.RCMaterialName;
+                carboMaterialCategory = settings.defaultCarboGroupSettings.RCMaterialCategory;
+            }
+
+                DataContext = this;
 
         }
 
