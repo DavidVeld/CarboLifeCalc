@@ -17,6 +17,7 @@ namespace CarboLifeAPI
     {
         public string ValueName { get; set; }
         public string Unit { get; set; }
+        public string ColourLegendName { get; set; }
 
         /// <summary>
         /// This paramater owns all the data for import to Revit
@@ -62,7 +63,8 @@ namespace CarboLifeAPI
             outOfBoundsMinData = new List<CarboValues>();
             notSelectedData = new List<CarboValues>();
             selectedData = new List<CarboValues>();
-
+            ColourLegendName = "CLC_ColourLegend";
+            Unit = "";
             max = double.PositiveInfinity;
             min = double.NegativeInfinity;
         }

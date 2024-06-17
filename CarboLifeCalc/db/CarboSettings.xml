@@ -14,10 +14,10 @@
     <IncludeAdditionalParameter>false</IncludeAdditionalParameter>
     <AdditionalParameter>Additional</AdditionalParameter>
     <AdditionalParameterElementType>Type Parameter</AdditionalParameterElementType>
-    <IncludeGradeParameter>false</IncludeGradeParameter>
-    <GradeParameterName>Type Comment</GradeParameterName>
-    <GradeParameterType>Instance Parameter</GradeParameterType>
-    <IncludeCorrectionParameter>true</IncludeCorrectionParameter>
+    <IncludeGradeParameter>true</IncludeGradeParameter>
+    <GradeParameterName>CLC_MaterialGrade</GradeParameterName>
+    <GradeParameterType>Type Parameter</GradeParameterType>
+    <IncludeCorrectionParameter>false</IncludeCorrectionParameter>
     <CorrectionParameterName>CLC_VolumeCorrection</CorrectionParameterName>
     <CorrectionParameterType>Type Parameter</CorrectionParameterType>
     <mapReinforcement>true</mapReinforcement>
@@ -144,9 +144,9 @@
     </rcQuantityMap>
     <RCMaterialCategory>Concrete</RCMaterialCategory>
   </defaultCarboGroupSettings>
-  <templatePath>C:\Users\d.veld\source\repos\CarboLifeCalc\CarboLifeCalc\bin\x64\Release\db\UserMaterials.cxml</templatePath>
+  <templatePath></templatePath>
   <useLocal>true</useLocal>
-  <firstLaunch>false</firstLaunch>
+  <firstLaunch>true</firstLaunch>
   <defaultDesignLife>60</defaultDesignLife>
   <Currency>£</Currency>
   <ecRevitParameter>CLC_EmbodiedCarbon</ecRevitParameter>

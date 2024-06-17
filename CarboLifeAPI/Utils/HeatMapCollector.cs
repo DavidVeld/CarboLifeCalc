@@ -146,6 +146,7 @@ namespace CarboLifeAPI
 
             thisResult.ValueName = "EC";
             thisResult.Unit = "tCO₂e";
+
             try
             {
                 //This part collects the required data we need to build the graph later on.
@@ -177,14 +178,16 @@ namespace CarboLifeAPI
             CarboGraphResult thisResult = new CarboGraphResult();
             CarboGraphResult result = new CarboGraphResult();
 
+            thisResult.ValueName = "EC";
+            thisResult.Unit = "tCO₂e";
+
             try
             {
                 carboProject.CalculateProject();
                 List<CarboDataPoint> materialData = carboProject.getMaterialTotals();
                 IEnumerable<CarboElement> bufferList = carboProject.getElementsFromGroups();
 
-                thisResult.ValueName = "EC";
-                thisResult.Unit = "tCO₂e";
+
 
                 //List<CarboDataPoint> materialist = carboProject.getMaterialTotals();
 

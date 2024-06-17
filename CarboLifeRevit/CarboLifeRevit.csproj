@@ -95,6 +95,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modeless\CarboLegendCreator.cs" />
     <Compile Include="Modeless\CarboLifeImportData.cs" />
     <Compile Include="Modeless\CarboViewerCommand.cs" />
     <Compile Include="Modeless\ColourViewerHandler.cs" />

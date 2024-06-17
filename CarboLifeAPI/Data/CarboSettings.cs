@@ -22,6 +22,9 @@ namespace CarboLifeAPI.Data
         public string Currency { get; set; }
         public string ecRevitParameter { get; set; }
 
+        public string carboLegendName { get; set; }
+        public string carboDashboardName { get; set; }
+
 
         public List<CarboColourPreset> colourPresets {get; set;}
 
@@ -35,6 +38,8 @@ namespace CarboLifeAPI.Data
             Currency = "£";
             colourPresets = new List<CarboColourPreset>();
             ecRevitParameter = "CLC_EmbodiedCarbon";
+            carboLegendName = "CLC_ColourLegend";
+            carboLegendName = "CLC_carboDashboardName";
 
             defaultCarboGroupSettings = new CarboGroupSettings();
 

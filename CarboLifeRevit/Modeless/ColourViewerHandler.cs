@@ -6,6 +6,10 @@ using System.Linq;
 using CarboLifeAPI;
 using CarboLifeAPI.Data;
 using System.CodeDom;
+using System.Collections.Generic;
+using Autodesk.Revit.DB.Structure;
+using System.Windows.Controls;
+using System.Text.RegularExpressions;
 
 namespace CarboLifeRevit
 {
@@ -20,12 +24,16 @@ namespace CarboLifeRevit
         private static bool colourOutOfBoundsSwitch;
         private static bool clearValueSwitch;
 
+        private static bool createLegend;
+
         private CarboProject targetProject;
         private string parameterName;
 
         public ExternalEvent _revitEvent;
 
         public int commandSwitch = 0; //0 = colour 1 = import 
+
+        public bool drawLegendView { get; private set; }
 
         public CarboGraphResult resultModel { get { return resultList; } set { resultList = value; } }
         public ColourViewerHandler(UIApplication uiapp)
@@ -138,6 +146,11 @@ namespace CarboLifeRevit
                             }
                         }
 
+                        if (drawLegendView == true)
+                        {
+                            bool ok = CarboLegendCreator.CreateALegendForData(resultList, doc);
+                        }
+
                     }
 
 
@@ -150,6 +163,8 @@ namespace CarboLifeRevit
                 }
             }
         }
+
+
 
         private void ImportvaluesToElements(UIApplication uiapp)
         {
@@ -190,7 +205,7 @@ namespace CarboLifeRevit
             return "CarboLifeCalc : Modify the Model";
         }
 
-        public void ColourTheModel(CarboGraphResult colourResults, bool colourMe, bool colourOutOfBounds)
+        public void ColourTheModel(CarboGraphResult colourResults, bool colourMe, bool colourOutOfBounds,bool createLegend)
         {
             if (doc != null && colourResults != null)
             {
@@ -200,6 +215,7 @@ namespace CarboLifeRevit
                     colourMeSwitch = colourMe;
                     colourOutOfBoundsSwitch = colourOutOfBounds;
                     commandSwitch = 0;
+                    drawLegendView = createLegend;
                 }
                 catch(Exception ex)
                 {

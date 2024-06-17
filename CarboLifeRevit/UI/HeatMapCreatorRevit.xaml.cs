@@ -92,7 +92,7 @@ namespace CarboLifeRevit
 
         private void Btn_Clear_Click(object sender, RoutedEventArgs e)
         {
-            m_Handler.ColourTheModel(graphData, false, true);
+            m_Handler.ColourTheModel(graphData, false, true,chk_Legend.IsChecked.Value);
             m_ExEvent.Raise();
         }
         private void btn_Show_Click(object sender, RoutedEventArgs e)
@@ -103,7 +103,9 @@ namespace CarboLifeRevit
                 colourOutOfBounds = true;
             }
 
-            m_Handler.ColourTheModel(graphData, true, colourOutOfBounds);
+            graphData.ColourLegendName = txt_LegendName.Text;
+
+            m_Handler.ColourTheModel(graphData, true, colourOutOfBounds, chk_Legend.IsChecked.Value);
             m_ExEvent.Raise();
         }
         private void btn_Importvalues_Click(object sender, RoutedEventArgs e)
@@ -185,6 +187,12 @@ namespace CarboLifeRevit
                 txt_Parameter.Text = "CLC_EmbodiedCarbon";
 
             }
+
+            if(settings.carboLegendName != "")
+                txt_LegendName.Text = settings.carboLegendName;
+            else
+                txt_LegendName.Text = "CLC_ColourLegend";
+
             //cbb_Parameter.SelectedIndex = 0;
 
         }
@@ -457,6 +465,9 @@ namespace CarboLifeRevit
 
         private void Btn_Ok_Click(object sender, RoutedEventArgs e)
         {
+            carboSettings.carboLegendName = txt_LegendName.Text;
+            carboSettings.Save();
+
             this.Close();
         }
 
@@ -814,6 +825,13 @@ namespace CarboLifeRevit
             }
         }
 
+        private void chk_Legend_Click(object sender, RoutedEventArgs e)
+        {
+        }
 
+        private void txt_LegendName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            carboSettings.carboLegendName = txt_LegendName.Text;
+        }
     }
 }

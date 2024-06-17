@@ -8761,17 +8761,16 @@ Glulam, 100% FSC/PEFC
       <Id>23689</Id>
       <Name>Concrete - Reinforced Generic</Name>
       <Category>Concrete</Category>
-      <Description>Global Average
-(excludes China)
-C32/40</Description>
+      <Description>Based ON:
+Concrete UK - C32/40 - 25% GGBS</Description>
       <EPDurl />
       <Grade>C32/40</Grade>
       <Density>2400</Density>
-      <ECI>0.208</ECI>
-      <getVolumeECI>499.2</getVolumeECI>
-      <ECI_A1A3>0.175</ECI_A1A3>
+      <ECI>0.150579</ECI>
+      <getVolumeECI>361.3896</getVolumeECI>
+      <ECI_A1A3>0.12</ECI_A1A3>
       <ECI_A4>0.005</ECI_A4>
-      <ECI_A5>0.01</ECI_A5>
+      <ECI_A5>0.007579</ECI_A5>
       <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.018</ECI_C1C4>
       <ECI_D>0</ECI_D>
@@ -10045,16 +10044,16 @@ Set Value by user as: 0kgCo2/kg
       <Id>21538</Id>
       <Name>Concrete - Cast-in-Place Concrete</Name>
       <Category>Concrete</Category>
-      <Description>In situ concrete
-(unreinforced)</Description>
+      <Description>Based On:
+Concrete UK - C32/40 - 25% GGBS</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
       <Grade>C32/40</Grade>
       <Density>2400</Density>
-      <ECI>0.129519</ECI>
-      <getVolumeECI>310.8456</getVolumeECI>
-      <ECI_A1A3>0.1</ECI_A1A3>
+      <ECI>0.150579</ECI>
+      <getVolumeECI>361.3896</getVolumeECI>
+      <ECI_A1A3>0.12</ECI_A1A3>
       <ECI_A4>0.005</ECI_A4>
-      <ECI_A5>0.006519</ECI_A5>
+      <ECI_A5>0.007579</ECI_A5>
       <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>0.018</ECI_C1C4>
       <ECI_D>0</ECI_D>
