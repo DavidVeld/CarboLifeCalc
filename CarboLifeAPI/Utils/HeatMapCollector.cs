@@ -181,6 +181,9 @@ namespace CarboLifeAPI
             thisResult.ValueName = "EC";
             thisResult.Unit = "tCO₂e";
 
+            result.ValueName = "EC";
+            result.Unit = "tCO₂e";
+
             try
             {
                 carboProject.CalculateProject();

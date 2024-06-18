@@ -163,8 +163,9 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
-                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="10"/>
                             <RowDefinition Height="90"/>
+                            <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="28"/>
@@ -191,7 +192,14 @@
                             To remove all embodied carbon information from the parameter use the "Clear" Values Button.
                         </TextBlock>
 
-                        <Button x:Name="btn_ClearValues"  Grid.Row="6" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="28" Style="{StaticResource ButtonStyle}" Visibility="Visible" Click="btn_ClearValues_Click">Clear Values</Button>
+                        <Button x:Name="btn_ClearValues"  Grid.Row="3" Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="94" Height="28" Style="{StaticResource ButtonStyle}" Visibility="Visible" Click="btn_ClearValues_Click">Clear Values</Button>
+
+
+                        <TextBlock Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" >Create a View with a results overview</TextBlock>
+                        <Button x:Name="btn_createDashBoard"  Grid.Row="5" Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_createDashBoard_Click" Content="Create View" Visibility="Visible"/>
+                        <TextBox x:Name="txt_DashBoardName" Grid.Row="5" Grid.Column="3"  Style="{StaticResource flatTextBox}" />
+
+
 
                     </Grid>
                 </GroupBox>

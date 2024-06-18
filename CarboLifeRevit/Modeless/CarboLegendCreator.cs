@@ -21,78 +21,21 @@ namespace CarboLifeRevit
         internal static bool CreateALegendForData(CarboGraphResult resultData, Document doc)
         {
             bool result = false;
-            bool exists = false;
 
             string legendName = resultData.ColourLegendName;
             if (legendName == "")
                 legendName = "CLC_ColourLegend";
 
-            try
-            {
-                //Get all the Views in uidoc
-                ElementClassFilter filter = new ElementClassFilter(typeof(Autodesk.Revit.DB.View));
-                FilteredElementCollector collection = new FilteredElementCollector(doc);
-                IList<Element> AllViews = collection.WherePasses(filter).OfClass(typeof(Autodesk.Revit.DB.View)).ToElements();
+            try { 
+                
+                View clcLegendView = getOrCreateView(doc,legendName);
 
-                View clcLegendView = null;
-
-                //Check if a legend already exists:
-
-                foreach (Element el in AllViews)
-                {
-                    View viewElement = el as View;
-                    if (viewElement != null)
-                    {
-                        //this is a valid View
-                        if (viewElement.Name == legendName)
-                        {
-                            clcLegendView = viewElement;
-                            exists = true;
-                            break;
-                        }
-                    }
-                }
-                //Delete it and create a new view;
-                if (exists == true && clcLegendView != null)
-                {
-
-                    //Go though each element
-                    IEnumerable<Element> Textcollector = new FilteredElementCollector(doc, clcLegendView.Id).OfCategory(BuiltInCategory.OST_TextNotes).WhereElementIsNotElementType().ToElements();
-                    IEnumerable<Element> Hatchcollector = new FilteredElementCollector(doc, clcLegendView.Id).OfCategory(BuiltInCategory.OST_DetailComponents).WhereElementIsNotElementType().ToElements();
-                    //IEnumerable<Element> Hatchcollector2 = new FilteredElementCollector(doc, clcLegendView.Id).OfClass(typeof(FilledRegion)).WhereElementIsNotElementType().ToElements();
-
-                    IList<ElementId> AllViewsIds = new List<ElementId>();
-
-                    foreach (Element el in Textcollector)
-                    {
-                        if (el.Id != clcLegendView.Id)
-                            AllViewsIds.Add(el.Id);
-                    }
-                    foreach (Element el in Hatchcollector)
-                    {
-                        if (el.Id != clcLegendView.Id)
-                            AllViewsIds.Add(el.Id);
-                    }
-
-                    doc.Delete(AllViewsIds);
-                }
-
-                //Create a new view is it doesnt;
-
-
-                if (exists == false)
-                {
-                    //ViewFamilyType vdTExt = new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).Cast<ViewFamilyType>().FirstOrDefault(q => q.ViewFamily == ViewFamily.Legend);
-                    //vdTExt.Duplicate("Newleged");
-
-                    ViewFamilyType vd = new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).Cast<ViewFamilyType>().FirstOrDefault(q => q.ViewFamily == ViewFamily.Drafting);
-                    clcLegendView = ViewDrafting.Create(doc, vd.Id);
-                    clcLegendView.Scale = 1; //1:1
-                    clcLegendView.Name = legendName;
-                }
                 if (clcLegendView != null)
                 {
-                    createLegendData(resultData, doc, clcLegendView);
+                    createLegendData(resultData, doc, clcLegendView, null);
+                    
+                    result = true;
+
                 }
             }
             catch (Exception ex)
@@ -103,7 +46,36 @@ namespace CarboLifeRevit
             return result;
         }
 
-        private static void createLegendData(CarboGraphResult resultData, Document doc, View clcLegendView)
+        internal static bool CreateResultsView(CarboProject targetProject, Document doc, string viewname)
+        {
+            bool result = false;
+
+            try
+            {
+                if (viewname == "")
+                    viewname = "CLC_Results";
+                //Get or make the view
+                View resultView = getOrCreateView(doc, viewname);
+
+                if (resultView != null)
+                {
+                    createLegendData(null, doc, resultView, targetProject);
+                    result = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                MessageBox.Show(ex.Message);
+            }
+            //Get or make the text
+            //Build the table
+
+            return result;
+
+        }
+
+        private static void createLegendData(CarboGraphResult resultData, Document doc, View clcLegendView, CarboProject project)
         {
 
             #region COLLECT CLC_Hatch
@@ -280,10 +252,36 @@ namespace CarboLifeRevit
             }
             #endregion
 
-            createColourLegend(resultData, doc, clcLegendView, clc_TextTitleType, clc_TextType, clc_HatchType, invisible);
+            if(project == null)
+                createColourLegend(resultData, doc, clcLegendView, clc_TextTitleType, clc_TextType, clc_HatchType, invisible);
+            else
+                createResultLegend(project, doc, clcLegendView, clc_TextTitleType, clc_TextType, clc_HatchType, invisible);
 
         }
 
+        private static void createResultLegend(CarboProject project, Document doc, View clcLegendView, TextNoteType clc_TextTitleType, TextNoteType clc_TextType, FilledRegionType clc_HatchType, GraphicsStyle invisibleline)
+        {
+            double liney = 0.0;
+
+            TextNoteOptions clc_TitleTextOptions = new TextNoteOptions();
+            clc_TitleTextOptions.HorizontalAlignment = HorizontalTextAlignment.Left;
+            clc_TitleTextOptions.TypeId = clc_TextTitleType.Id;
+
+            //Create the annotation;
+            TextNoteOptions clc_TextOptions = new TextNoteOptions();
+            clc_TextOptions.HorizontalAlignment = HorizontalTextAlignment.Left;
+            clc_TextOptions.TypeId = clc_TextType.Id;
+
+
+
+            TextNote.Create(doc, clcLegendView.Id, new XYZ(0.0, (5.0 / 304.8), 0.0), "RESULTS", clc_TitleTextOptions);
+            liney = liney - (5.0 / 304.8);
+
+            string text = project.getGeneralText();
+
+            TextNote.Create(doc, clcLegendView.Id, new XYZ(0, liney - (1.25 / 308.4), 0.0), text,clc_TextOptions);
+
+        }
 
         private static void createColourLegend(CarboGraphResult resultData, Document doc, View clcLegendView, TextNoteType clc_titleText, TextNoteType clc_textText, FilledRegionType clc_HatchType, GraphicsStyle clc_invisibleLine)
         {
@@ -371,7 +369,7 @@ namespace CarboLifeRevit
 
                 TextNote.Create(doc, clcLegendView.Id, 
                     new XYZ(x_text_offset, liney - (1.25 / 308.4), 0.0),
-                    resultData.outOfBoundsMinData.Min(x => x.Value).ToString() + " " + resultData.Unit,
+                    Math.Round(resultData.outOfBoundsMinData.Min(x => x.Value),3).ToString() + " " + resultData.Unit,
                     clc_TextOptions);
 
                 liney = liney - (5 / 304.8);
@@ -454,7 +452,7 @@ namespace CarboLifeRevit
 
                 TextNote.Create(doc, clcLegendView.Id, 
                     new XYZ(x_text_offset, liney - (1.25 / 308.4), 0.0),
-                    resultData.outOfBoundsMaxData.Max(x => x.Value).ToString() + " " + resultData.Unit,
+                    Math.Round(resultData.outOfBoundsMaxData.Max(x => x.Value),3).ToString() + " " + resultData.Unit,
                     clc_TextOptions);
 
                 liney = liney - (5 / 304.8);
@@ -501,5 +499,84 @@ namespace CarboLifeRevit
 
             return result;
         }
+
+
+
+        private static View getOrCreateView(Document doc, string viewname)
+        {                
+            View clcLegendView = null;
+
+            try
+            {
+
+                //Get all the Views in uidoc
+                ElementClassFilter filter = new ElementClassFilter(typeof(Autodesk.Revit.DB.View));
+                FilteredElementCollector collection = new FilteredElementCollector(doc);
+                IList<Element> AllViews = collection.WherePasses(filter).OfClass(typeof(Autodesk.Revit.DB.View)).ToElements();
+
+
+                //Check if a legend already exists:
+
+                foreach (Element el in AllViews)
+                {
+                    View viewElement = el as View;
+                    if (viewElement != null)
+                    {
+                        //this is a valid View
+                        if (viewElement.Name == viewname)
+                        {
+                            clcLegendView = viewElement;
+                            break;
+                        }
+                    }
+                }
+                //Delete it and clear it
+                if (clcLegendView != null)
+                {
+
+                    //Go though each element
+                    IEnumerable<Element> Textcollector = new FilteredElementCollector(doc, clcLegendView.Id).OfCategory(BuiltInCategory.OST_TextNotes).WhereElementIsNotElementType().ToElements();
+                    IEnumerable<Element> Hatchcollector = new FilteredElementCollector(doc, clcLegendView.Id).OfCategory(BuiltInCategory.OST_DetailComponents).WhereElementIsNotElementType().ToElements();
+                    //IEnumerable<Element> LineCollector = new FilteredElementCollector(doc, clcLegendView.Id).OfClass(typeof(FilledRegion)).WhereElementIsNotElementType().ToElements();
+                    IEnumerable<Element> LineCollector = new FilteredElementCollector(doc, clcLegendView.Id).OfCategory(BuiltInCategory.OST_Lines).WhereElementIsNotElementType().ToElements();
+
+                    IList<ElementId> AllViewsIds = new List<ElementId>();
+
+                    foreach (Element el in Textcollector)
+                    {
+                        if (el.Id != clcLegendView.Id)
+                            AllViewsIds.Add(el.Id);
+                    }
+                    foreach (Element el in Hatchcollector)
+                    {
+                        if (el.Id != clcLegendView.Id)
+                            AllViewsIds.Add(el.Id);
+                    }
+                    foreach (Element el in LineCollector)
+                    {
+                        if (el.Id != clcLegendView.Id)
+                            AllViewsIds.Add(el.Id);
+                    }
+
+                    doc.Delete(AllViewsIds);
+                }
+                else
+                {
+                    //ViewFamilyType vdTExt = new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).Cast<ViewFamilyType>().FirstOrDefault(q => q.ViewFamily == ViewFamily.Legend);
+                    //vdTExt.Duplicate("Newleged");
+
+                    ViewFamilyType vd = new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).Cast<ViewFamilyType>().FirstOrDefault(q => q.ViewFamily == ViewFamily.Drafting);
+                    clcLegendView = ViewDrafting.Create(doc, vd.Id);
+                    clcLegendView.Scale = 1; //1:1
+                    clcLegendView.Name = viewname;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            return clcLegendView;
+    }
     }
 }

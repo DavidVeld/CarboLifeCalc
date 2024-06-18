@@ -28,6 +28,8 @@ namespace CarboLifeRevit
 
         private CarboProject targetProject;
         private string parameterName;
+        private string viewname;
+
 
         public ExternalEvent _revitEvent;
 
@@ -61,6 +63,10 @@ namespace CarboLifeRevit
                     {
                         ImportvaluesToElements(uiapp);
                     }
+                    else if (commandSwitch == 3)
+                    {
+                        drawResultViewCmd(uiapp);
+                    }
                     else
                     {
                         TaskDialog.Show("Error", "Revit did not receive a valid command");
@@ -70,6 +76,21 @@ namespace CarboLifeRevit
             catch (Exception ex)
             {
                 TaskDialog.Show("Error", ex.Message);
+            }
+        }
+
+        private void drawResultViewCmd(UIApplication uiapp)
+        {
+            if (doc != null)
+            {
+                using (Transaction t = new Transaction(doc, "Create Results View"))
+                {
+                    t.Start();
+                    
+                    bool ok = CarboLegendCreator.CreateResultsView(targetProject, doc, viewname);
+                    
+                    t.Commit();
+                }
             }
         }
 
@@ -248,6 +269,26 @@ namespace CarboLifeRevit
             }
         }
 
+        public void drawResultView(CarboProject carboProject, string viewName)
+        {
+            if (doc != null && carboProject != null)
+            {
+                try
+                {
+                    targetProject = carboProject;
+                    commandSwitch = 3;
+                    viewname = viewName;
+                }
+                catch (Exception ex)
+                {
+                    TaskDialog.Show("Error", ex.Message);
+                    colourMeSwitch = false;
+                    commandSwitch = 999;
+                    parameterName = "";
+                    clearValueSwitch = false;
+                }
+            }
+        }
     }
 }
     

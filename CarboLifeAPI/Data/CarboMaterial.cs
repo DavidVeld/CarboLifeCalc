@@ -297,6 +297,13 @@ namespace CarboLifeAPI.Data
             clone.ECI_D_Override = this.ECI_D_Override;
             clone.ECI_Seq_Override = this.ECI_Seq_Override;
 
+            clone.materialA1A3Properties = this.materialA1A3Properties;
+            clone.materiaA4Properties = this.materiaA4Properties;
+            clone.materialA5Properties = this.materialA5Properties;
+            clone.materialC1C4Properties = this.materialC1C4Properties;
+            clone.materialDProperties = this.materialDProperties;
+            clone.materialSeqProperties = this.materialSeqProperties;
+
             return clone;
         }
     }

@@ -833,5 +833,15 @@ namespace CarboLifeRevit
         {
             carboSettings.carboLegendName = txt_LegendName.Text;
         }
+
+        private void btn_createDashBoard_Click(object sender, RoutedEventArgs e)
+        {
+            string viewName = txt_DashBoardName.Text;
+            if (viewName != "")
+            {
+                m_Handler.drawResultView(carboProject, viewName);
+                m_ExEvent.Raise();
+            }
+        }
     }
 }
