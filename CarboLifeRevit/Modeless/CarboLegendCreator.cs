@@ -13,6 +13,9 @@ using System.Text.RegularExpressions;
 using Autodesk.Revit.DB.Visual;
 using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Documents;
+using System.Collections.ObjectModel;
+using System.Collections;
+using System.Windows.Media.Media3D;
 
 namespace CarboLifeRevit
 {
@@ -277,10 +280,183 @@ namespace CarboLifeRevit
             TextNote.Create(doc, clcLegendView.Id, new XYZ(0.0, (5.0 / 304.8), 0.0), "RESULTS", clc_TitleTextOptions);
             liney = liney - (5.0 / 304.8);
 
-            string text = project.getGeneralText();
+            string text = getResultText(project);
 
-            TextNote.Create(doc, clcLegendView.Id, new XYZ(0, liney - (1.25 / 308.4), 0.0), text,clc_TextOptions);
+            TextNote resultText = TextNote.Create(doc, clcLegendView.Id, new XYZ(0, liney - (1.25 / 308.4), 0.0), text,clc_TextOptions);
+            resultText.Width = (200 / 304.8);
+            doc.Regenerate();
 
+            if(resultText.Height == 0)
+                liney = liney - (50 / 304.8);
+            else
+                liney = liney - resultText.Height;
+
+            liney = liney - (5.0 / 304.8);
+
+            writeResultTable(liney, project, doc, clcLegendView, clc_TitleTextOptions, clc_TextOptions, clc_HatchType, invisibleline);
+
+
+
+        }
+
+        private static void writeResultTable(double y, CarboProject project, Document doc, View clcLegendView, TextNoteOptions clc_TitleTextOptions, TextNoteOptions clc_TextOptions, FilledRegionType clc_HatchType, GraphicsStyle invisibleline)
+        {
+
+            TextNote.Create(doc, clcLegendView.Id, new XYZ(0.0, y, 0.0), "MATERIAL QUANTITIES AND EMBODIED CARBON SCHEDULE", clc_TitleTextOptions);
+            y = y - (10.0 / 304.8);
+
+            double x1 = 0.0;
+            double x2 = x1 + (50 / 304.8);
+            double x3 = x2 + (50 / 304.8);
+            double x4 = x3 + (50 / 304.8);
+
+            double x5 = x4 + (25 / 304.8);
+            double x6 = x5 + (25 / 304.8);
+            double x7 = x6 + (25 / 304.8);
+            double x8 = x7 + (25 / 304.8);
+
+
+            try
+            {
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x1, y, 0.0), "Category", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x2, y, 0.0), "Material", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x3, y, 0.0), "Description", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x4, y, 0.0), "Volume", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x5, y, 0.0), "Total Volume", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x6, y, 0.0), "Density", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x7, y, 0.0), "Mass", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), "End", clc_TextOptions);
+
+                y = y - (3.5 / 304.8);
+
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x4, y, 0.0), "m³", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x5, y, 0.0), "m³", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x6, y, 0.0), "kg/m³", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x7, y, 0.0), "kg", clc_TextOptions);
+
+                Line L1 = Line.CreateBound(new XYZ(x1, y - (5.0 / 304.8), 0.0), new XYZ(x5, y - (5.0 / 304.8), 0.0));
+                doc.Create.NewDetailCurve(clcLegendView, L1);
+
+                y = y - (5.5 / 304.8);
+
+
+                ObservableCollection<CarboGroup> cglist = project.getGroupList;
+                cglist = new ObservableCollection<CarboGroup>(cglist.OrderBy(i => i.MaterialName));
+
+                string material = "";
+
+                foreach (CarboGroup cbg in cglist)
+                {
+                    //If this is the first instance of a group, then write the title of the material
+                    if (cbg.MaterialName != material)
+                    {
+                        material = cbg.MaterialName;
+                        TextNote.Create(doc, clcLegendView.Id, new XYZ(x1, y, 0.0), material, clc_TextOptions);
+                        y = y - (5 / 304.8);
+                    }
+
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x1, y, 0.0), cbg.Category, clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x2, y, 0.0), cbg.Material.Name, clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x3, y, 0.0), cbg.Description, clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x4, y, 0.0), Math.Round(cbg.Volume, 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x5, y, 0.0), Math.Round(cbg.TotalVolume, 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x6, y, 0.0), cbg.Density.ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x7, y, 0.0), Math.Round(cbg.Mass, 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), "End", clc_TextOptions);
+
+                    doc.Regenerate();
+
+                    //Next Line
+                    y = y - (4 / 304.8);
+                }
+            }
+            catch
+            {
+            }
+
+            /*
+//Write Headers:
+html += "<TR>" + System.Environment.NewLine;
+
+
+html += "<TD width=" + 40 + "><B>" + "Correction Formula" + "</B></TD>" + System.Environment.NewLine;
+html += "<TD width=" + 40 + "><B>" + "Waste" + "</B></TD>" + System.Environment.NewLine;
+html += "<TD width=" + 40 + "><B>" + "[B4]" + "</B></TD>" + System.Environment.NewLine;
+html += "<TD width=" + 40 + "><B>" + "Total Volume" + "</B></TD>" + System.Environment.NewLine;
+
+html += "<TD width=" + 40 + "><B>" + "Density" + "</B></TD>" + System.Environment.NewLine;
+html += "<TD width=" + 40 + "><B>" + "Mass" + "</B></TD>" + System.Environment.NewLine;
+
+html += "</TR>" + System.Environment.NewLine;
+
+//Write 10 units
+html += "<TR>" + System.Environment.NewLine;
+
+
+html += "</TR>" + System.Environment.NewLine;
+
+ObservableCollection<CarboGroup> cglist = carboProject.getGroupList;
+cglist = new ObservableCollection<CarboGroup>(cglist.OrderBy(i => i.MaterialName));
+
+string material = "";
+
+foreach (CarboGroup cbg in cglist)
+{
+    //If this is the first instance of a group, then write the title of the material
+    if (cbg.MaterialName != material)
+    {
+        material = cbg.MaterialName;
+        html += getTitleRow(material);
+    }
+
+    html += "<TR>" + System.Environment.NewLine;
+
+    html += "<TD align='left' valign='middle'>" + cbg.Category + "</td>" + System.Environment.NewLine;
+    html += "<TD align='left' valign='middle'>" + cbg.Material.Name + "</td>" + System.Environment.NewLine;
+    html += "<TD align='left' valign='middle'>" + cbg.Description + "</td>" + System.Environment.NewLine;
+    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Volume, 2) + "</td>" + System.Environment.NewLine;
+
+    //Advanced settings
+    html += "<TD align='left' valign='middle'>" + cbg.Correction + "</td>" + System.Environment.NewLine;
+    html += "<TD align='left' valign='middle'>" + cbg.Waste + "%" + "</td>" + System.Environment.NewLine;
+    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.inUseProperties.B4, 2) + "</td>" + System.Environment.NewLine;
+    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.TotalVolume, 2) + "</td>" + System.Environment.NewLine;
+
+    html += "<TD align='left' valign='middle'>" + cbg.Density + "</td>" + System.Environment.NewLine;
+    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Mass, 2) + "</td>" + System.Environment.NewLine;
+
+    html += "</TR>" + System.Environment.NewLine;
+}
+
+
+html += "</TABLE>";
+        */
+
+
+
+
+        }
+
+        public static string getResultText(CarboProject CarboLifeProject)
+        {
+            string result = "";
+
+            try
+            {
+
+                result += "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e" + Environment.NewLine;
+
+                //List<string> textGroups = CarboLifeProject.getCalcText();
+                result = ReportBuilder.getFlattenedCalText(CarboLifeProject);
+                result += Environment.NewLine;
+                result += CarboLifeProject.getGeneralText();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error Message", MessageBoxButton.OK);
+            }
+            return result;
         }
 
         private static void createColourLegend(CarboGraphResult resultData, Document doc, View clcLegendView, TextNoteType clc_titleText, TextNoteType clc_textText, FilledRegionType clc_HatchType, GraphicsStyle clc_invisibleLine)
