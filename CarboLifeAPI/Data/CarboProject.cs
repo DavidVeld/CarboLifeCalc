@@ -133,18 +133,25 @@ namespace CarboLifeAPI.Data
             newGroup.ECI = 0;
             newGroup.EC = 0;
             newGroup.Id = getNewId();
-            double totals = 0;
+            //double totals = 0;
 
 
             foreach (CarboGroup cgr in getGroupList)
             {
-                totals += cgr.EC;
-                foreach(CarboElement ca in cgr.AllElements)
+                newGroup.EC += cgr.EC;
+                newGroup.Mass += cgr.Mass;
+                newGroup.Volume += cgr.Volume;
+                newGroup.TotalVolume += cgr.TotalVolume;
+
+                newGroup.Density += newGroup.Mass / newGroup.TotalVolume;
+
+
+                foreach (CarboElement ca in cgr.AllElements)
                 {
-                    newGroup.AllElements.Add(ca);
+                    newGroup.AllElements.Add(ca.CopyMe());
                 }
             }
-            newGroup.EC = Math.Round(totals,2);
+            newGroup.EC = Math.Round(newGroup.EC, 2);
             newGroup.PerCent = 100;
 
             return newGroup;

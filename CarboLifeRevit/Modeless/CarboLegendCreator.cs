@@ -363,7 +363,7 @@ namespace CarboLifeRevit
 
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), "kgCO₂/kg", clc_TextOptions);
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x9, y, 0.0), "kgCO₂/m³", clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x10, y, 0.0), "kgCO₂", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x10, y, 0.0), "tCO₂", clc_TextOptions);
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x11, y, 0.0), "%", clc_TextOptions);
 
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), "tCO₂", clc_TextOptions);
@@ -386,6 +386,15 @@ namespace CarboLifeRevit
                 cglist = new ObservableCollection<CarboGroup>(cglist.OrderBy(i => i.MaterialName));
 
                 string material = "";
+
+                double totalA1 = 0;
+                double totalA4 = 0;
+                double totalA5 = 0;
+                double totalB = 0;
+                double totalC = 0;
+                double totalD = 0;
+                double totalM = 0;
+                double totalS = 0;
 
                 foreach (CarboGroup cbg in cglist)
                 {
@@ -421,19 +430,28 @@ namespace CarboLifeRevit
                     TextNote.Create(doc, clcLegendView.Id, new XYZ(x6, y, 0.0), cbg.Density.ToString(), clc_TextOptions);
                     TextNote.Create(doc, clcLegendView.Id, new XYZ(x7, y, 0.0), Math.Round(cbg.Mass, 2).ToString(), clc_TextOptions);
 
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), Math.Round((cbg.getVolumeECI), 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x9, y, 0.0), Math.Round((cbg.ECI), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), Math.Round((cbg.ECI), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x9, y, 0.0), Math.Round((cbg.getVolumeECI), 2).ToString(), clc_TextOptions);
                     TextNote.Create(doc, clcLegendView.Id, new XYZ(x10, y, 0.0), Math.Round((cbg.EC), 2).ToString(), clc_TextOptions);
                     TextNote.Create(doc, clcLegendView.Id, new XYZ(x11, y, 0.0), Math.Round((cbg.PerCent), 2).ToString(), clc_TextOptions);
 
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A1A3 * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A4 * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A5 * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_B1B5 * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_C1C4 * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_D * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_Mix * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_Seq * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
+                    totalA1 += (cbg.Material.ECI_A1A3 * cbg.Mass);
+                    totalA4 += (cbg.Material.ECI_A4 * cbg.Mass);
+                    totalA5 += (cbg.Material.ECI_A5 * cbg.Mass);
+                    totalB += (cbg.Material.ECI_B1B5 * cbg.Mass);
+                    totalC += (cbg.Material.ECI_C1C4 * cbg.Mass);
+                    totalD += (cbg.Material.ECI_D * cbg.Mass);
+                    totalM += (cbg.Material.ECI_Mix * cbg.Mass);
+                    totalS += (cbg.Material.ECI_Seq * cbg.Mass);
+
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A1A3 * cbg.Mass, 3)/1000, 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A4 * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A5 * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_B1B5 * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_C1C4 * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_D * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_Mix * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_Seq * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
 
 
                     doc.Regenerate();
@@ -454,6 +472,39 @@ namespace CarboLifeRevit
                         y = y - (4 / 304.8);
                     }
                 }
+
+                CarboGroup totalGroup = project.getTotalsGroup();
+                if(totalGroup != null)
+                {
+
+                y = y - (2.5 / 304.8);
+                
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x1, y, 0.0), "Totals", clc_TextOptions);
+
+
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x4, y, 0.0), Math.Round(totalGroup.Volume, 2).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x5, y, 0.0), Math.Round(totalGroup.TotalVolume, 2).ToString(), clc_TextOptions);
+               // TextNote.Create(doc, clcLegendView.Id, new XYZ(x6, y, 0.0), cbg.Density.ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x7, y, 0.0), Math.Round(totalGroup.Mass, 2).ToString(), clc_TextOptions);
+
+                //TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), Math.Round((cbg.ECI), 2).ToString(), clc_TextOptions);
+                //TextNote.Create(doc, clcLegendView.Id, new XYZ(x9, y, 0.0), Math.Round((cbg.getVolumeECI), 2).ToString(), clc_TextOptions);
+                //TextNote.Create(doc, clcLegendView.Id, new XYZ(x10, y, 0.0), Math.Round((totalGroup.EC), 2).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x11, y, 0.0), "100%", clc_TextOptions);
+
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), Math.Round(Math.Round(totalA1, 3) / 1000, 2).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), Math.Round(Math.Round(totalA4 * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), Math.Round(Math.Round(totalA5 * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), Math.Round(Math.Round(totalB * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), Math.Round(Math.Round(totalC * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), Math.Round(Math.Round(totalD * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), Math.Round(Math.Round(totalM * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), Math.Round(Math.Round(totalS, 3) / 1000, 2).ToString(), clc_TextOptions);
+
+            }
+
+
+
             }
             catch
             {
