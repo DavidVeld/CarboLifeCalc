@@ -276,7 +276,6 @@ namespace CarboLifeRevit
             clc_TextOptions.TypeId = clc_TextType.Id;
 
 
-
             TextNote.Create(doc, clcLegendView.Id, new XYZ(0.0, (5.0 / 304.8), 0.0), "RESULTS", clc_TitleTextOptions);
             liney = liney - (5.0 / 304.8);
 
@@ -310,10 +309,23 @@ namespace CarboLifeRevit
             double x3 = x2 + (50 / 304.8);
             double x4 = x3 + (50 / 304.8);
 
-            double x5 = x4 + (25 / 304.8);
-            double x6 = x5 + (25 / 304.8);
-            double x7 = x6 + (25 / 304.8);
-            double x8 = x7 + (25 / 304.8);
+            double x5 = x4 + (20 / 304.8);
+            double x6 = x5 + (20 / 304.8);
+            double x7 = x6 + (20 / 304.8);
+            double x8 = x7 + (20 / 304.8);
+
+            double x9 = x8 + (20 / 304.8);
+            double x10 = x9 + (20 / 304.8);
+            double x11 = x10 + (20 / 304.8);
+            double x12 = x11 + (20 / 304.8);
+            double x13 = x12 + (20 / 304.8);
+            double x14 = x13 + (20 / 304.8);
+            double x15 = x14 + (20 / 304.8);
+            double x16 = x15 + (20 / 304.8);
+            double x17 = x16 + (20 / 304.8);
+            double x18 = x17 + (20 / 304.8);
+            double x19 = x18 + (20 / 304.8);
+            double x20 = x19 + (20 / 304.8);
 
 
             try
@@ -325,16 +337,46 @@ namespace CarboLifeRevit
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x5, y, 0.0), "Total Volume", clc_TextOptions);
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x6, y, 0.0), "Density", clc_TextOptions);
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x7, y, 0.0), "Mass", clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), "End", clc_TextOptions);
+
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), "ECI", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x9, y, 0.0), "ECI", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x10, y, 0.0), "EC", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x11, y, 0.0), "Total", clc_TextOptions);
+
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), "A1-A3", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), "A4", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), "A5", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), "B1-B7", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), "C1-C4", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), "D", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), "Added", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), "Sequestration", clc_TextOptions);
+
 
                 y = y - (3.5 / 304.8);
 
+                //Units
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x4, y, 0.0), "m³", clc_TextOptions);
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x5, y, 0.0), "m³", clc_TextOptions);
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x6, y, 0.0), "kg/m³", clc_TextOptions);
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x7, y, 0.0), "kg", clc_TextOptions);
 
-                Line L1 = Line.CreateBound(new XYZ(x1, y - (5.0 / 304.8), 0.0), new XYZ(x5, y - (5.0 / 304.8), 0.0));
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), "kgCO₂/kg", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x9, y, 0.0), "kgCO₂/m³", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x10, y, 0.0), "kgCO₂", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x11, y, 0.0), "%", clc_TextOptions);
+
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), "tCO₂", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), "tCO₂", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), "tCO₂", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), "tCO₂", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), "tCO₂", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), "tCO₂", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), "tCO₂", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), "tCO₂", clc_TextOptions);
+
+
+                Line L1 = Line.CreateBound(new XYZ(x1, y - (5.0 / 304.8), 0.0), new XYZ(x20, y - (5.0 / 304.8), 0.0));
                 doc.Create.NewDetailCurve(clcLegendView, L1);
 
                 y = y - (5.5 / 304.8);
@@ -347,93 +389,75 @@ namespace CarboLifeRevit
 
                 foreach (CarboGroup cbg in cglist)
                 {
+                    double h1 = 0;
+                    double h2 = 0;
+                    double h3 = 0;
+
                     //If this is the first instance of a group, then write the title of the material
                     if (cbg.MaterialName != material)
                     {
+                        y = y - (2 / 304.8);
+
                         material = cbg.MaterialName;
-                        TextNote.Create(doc, clcLegendView.Id, new XYZ(x1, y, 0.0), material, clc_TextOptions);
+                        
+                        TextNote title = TextNote.Create(doc, clcLegendView.Id, new XYZ(x1, y, 0.0), material, clc_TextOptions);
+                        FormattedText titleText = title.GetFormattedText();
+                        titleText.SetBoldStatus(true);
+                        title.SetFormattedText(titleText);
+
                         y = y - (5 / 304.8);
                     }
 
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x1, y, 0.0), cbg.Category, clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x2, y, 0.0), cbg.Material.Name, clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x3, y, 0.0), cbg.Description, clc_TextOptions);
+                    TextNote cat = TextNote.Create(doc, clcLegendView.Id, new XYZ(x1, y, 0.0), cbg.Category, clc_TextOptions);
+                    TextNote mat = TextNote.Create(doc, clcLegendView.Id, new XYZ(x2, y, 0.0), cbg.Material.Name, clc_TextOptions);
+                    TextNote des = TextNote.Create(doc, clcLegendView.Id, new XYZ(x3, y, 0.0), cbg.Description, clc_TextOptions);
+
+                    cat.Width = (50 / 304.8);
+                    mat.Width = (50 / 304.8);
+                    des.Width = (50 / 304.8);
+
                     TextNote.Create(doc, clcLegendView.Id, new XYZ(x4, y, 0.0), Math.Round(cbg.Volume, 2).ToString(), clc_TextOptions);
                     TextNote.Create(doc, clcLegendView.Id, new XYZ(x5, y, 0.0), Math.Round(cbg.TotalVolume, 2).ToString(), clc_TextOptions);
                     TextNote.Create(doc, clcLegendView.Id, new XYZ(x6, y, 0.0), cbg.Density.ToString(), clc_TextOptions);
                     TextNote.Create(doc, clcLegendView.Id, new XYZ(x7, y, 0.0), Math.Round(cbg.Mass, 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), "End", clc_TextOptions);
+
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), Math.Round((cbg.getVolumeECI), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x9, y, 0.0), Math.Round((cbg.ECI), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x10, y, 0.0), Math.Round((cbg.EC), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x11, y, 0.0), Math.Round((cbg.PerCent), 2).ToString(), clc_TextOptions);
+
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A1A3 * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A4 * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A5 * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_B1B5 * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_C1C4 * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_D * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_Mix * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_Seq * cbg.Mass, 3), 2).ToString(), clc_TextOptions);
+
 
                     doc.Regenerate();
 
+                    h1 = cat.Height * 304.8;
+                    h2 = mat.Height * 304.8;
+                    h3 = des.Height * 304.8;
+
+                    double max = Math.Max(h1, Math.Max(h2, h3));
+
                     //Next Line
-                    y = y - (4 / 304.8);
+                    if (max > 4)
+                    {
+                        y = y - (max / 304.8);
+                    }
+                    else
+                    {
+                        y = y - (4 / 304.8);
+                    }
                 }
             }
             catch
             {
             }
-
-            /*
-//Write Headers:
-html += "<TR>" + System.Environment.NewLine;
-
-
-html += "<TD width=" + 40 + "><B>" + "Correction Formula" + "</B></TD>" + System.Environment.NewLine;
-html += "<TD width=" + 40 + "><B>" + "Waste" + "</B></TD>" + System.Environment.NewLine;
-html += "<TD width=" + 40 + "><B>" + "[B4]" + "</B></TD>" + System.Environment.NewLine;
-html += "<TD width=" + 40 + "><B>" + "Total Volume" + "</B></TD>" + System.Environment.NewLine;
-
-html += "<TD width=" + 40 + "><B>" + "Density" + "</B></TD>" + System.Environment.NewLine;
-html += "<TD width=" + 40 + "><B>" + "Mass" + "</B></TD>" + System.Environment.NewLine;
-
-html += "</TR>" + System.Environment.NewLine;
-
-//Write 10 units
-html += "<TR>" + System.Environment.NewLine;
-
-
-html += "</TR>" + System.Environment.NewLine;
-
-ObservableCollection<CarboGroup> cglist = carboProject.getGroupList;
-cglist = new ObservableCollection<CarboGroup>(cglist.OrderBy(i => i.MaterialName));
-
-string material = "";
-
-foreach (CarboGroup cbg in cglist)
-{
-    //If this is the first instance of a group, then write the title of the material
-    if (cbg.MaterialName != material)
-    {
-        material = cbg.MaterialName;
-        html += getTitleRow(material);
-    }
-
-    html += "<TR>" + System.Environment.NewLine;
-
-    html += "<TD align='left' valign='middle'>" + cbg.Category + "</td>" + System.Environment.NewLine;
-    html += "<TD align='left' valign='middle'>" + cbg.Material.Name + "</td>" + System.Environment.NewLine;
-    html += "<TD align='left' valign='middle'>" + cbg.Description + "</td>" + System.Environment.NewLine;
-    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Volume, 2) + "</td>" + System.Environment.NewLine;
-
-    //Advanced settings
-    html += "<TD align='left' valign='middle'>" + cbg.Correction + "</td>" + System.Environment.NewLine;
-    html += "<TD align='left' valign='middle'>" + cbg.Waste + "%" + "</td>" + System.Environment.NewLine;
-    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.inUseProperties.B4, 2) + "</td>" + System.Environment.NewLine;
-    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.TotalVolume, 2) + "</td>" + System.Environment.NewLine;
-
-    html += "<TD align='left' valign='middle'>" + cbg.Density + "</td>" + System.Environment.NewLine;
-    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Mass, 2) + "</td>" + System.Environment.NewLine;
-
-    html += "</TR>" + System.Environment.NewLine;
-}
-
-
-html += "</TABLE>";
-        */
-
-
-
 
         }
 

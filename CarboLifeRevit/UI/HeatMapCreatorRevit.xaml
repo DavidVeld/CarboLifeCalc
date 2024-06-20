@@ -197,7 +197,7 @@
 
                         <TextBlock Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" >Create a View with a results overview</TextBlock>
                         <Button x:Name="btn_createDashBoard"  Grid.Row="5" Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_createDashBoard_Click" Content="Create View" Visibility="Visible"/>
-                        <TextBox x:Name="txt_DashBoardName" Grid.Row="5" Grid.Column="3"  Style="{StaticResource flatTextBox}" />
+                        <TextBox x:Name="txt_DashBoardName" Grid.Row="5" Grid.Column="3"  Style="{StaticResource flatTextBox}" SizeChanged="txt_DashBoardName_SizeChanged" />
 
 
 

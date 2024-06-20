@@ -39,7 +39,7 @@ namespace CarboLifeAPI.Data
             colourPresets = new List<CarboColourPreset>();
             ecRevitParameter = "CLC_EmbodiedCarbon";
             carboLegendName = "CLC_ColourLegend";
-            carboLegendName = "CLC_carboDashboardName";
+            carboLegendName = "CLC_ResultsView";
 
             defaultCarboGroupSettings = new CarboGroupSettings();
 

@@ -193,6 +193,10 @@ namespace CarboLifeRevit
             else
                 txt_LegendName.Text = "CLC_ColourLegend";
 
+            if (settings.carboDashboardName != "")
+                txt_DashBoardName.Text = settings.carboLegendName;
+            else
+                txt_DashBoardName.Text = "ResultsView";
             //cbb_Parameter.SelectedIndex = 0;
 
         }
@@ -466,6 +470,8 @@ namespace CarboLifeRevit
         private void Btn_Ok_Click(object sender, RoutedEventArgs e)
         {
             carboSettings.carboLegendName = txt_LegendName.Text;
+            carboSettings.carboDashboardName = txt_DashBoardName.Text;
+
             carboSettings.Save();
 
             this.Close();
@@ -842,6 +848,12 @@ namespace CarboLifeRevit
                 m_Handler.drawResultView(carboProject, viewName);
                 m_ExEvent.Raise();
             }
+        }
+
+        private void txt_DashBoardName_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            carboSettings.carboDashboardName = txt_DashBoardName.Text;
+
         }
     }
 }
