@@ -182,7 +182,7 @@
                         <CheckBox x:Name="chc_ImportCarbon" Grid.Column="1" Grid.Row="1" Margin="0,0,0,0" Grid.ColumnSpan="1" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top" Visibility="Hidden">Import total EC values to Parameter:</CheckBox>
 
                         <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" >Import total EC values to Parameter:</TextBlock>
-                        <TextBox x:Name="txt_Parameter" Grid.Row="1" Grid.Column="3"  Style="{StaticResource flatTextBox}" />
+                        <TextBox x:Name="txt_Parameter" Grid.Row="1" Grid.Column="3"  Style="{StaticResource flatTextBox}" TextChanged="txt_Parameter_TextChanged" />
                         <Button x:Name="btn_Importvalues"  Grid.Row="1" Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_Importvalues_Click" Content="Import values" Visibility="Visible"/>
 
 
@@ -197,7 +197,7 @@
 
                         <TextBlock Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" >Create a View with a results overview</TextBlock>
                         <Button x:Name="btn_createDashBoard"  Grid.Row="5" Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_createDashBoard_Click" Content="Create View" Visibility="Visible"/>
-                        <TextBox x:Name="txt_DashBoardName" Grid.Row="5" Grid.Column="3"  Style="{StaticResource flatTextBox}" SizeChanged="txt_DashBoardName_SizeChanged" />
+                        <TextBox x:Name="txt_DashBoardName" Grid.Row="5" Grid.Column="3"  Style="{StaticResource flatTextBox}" TextChanged="txt_DashBoardName_TextChanged" />
 
 
 

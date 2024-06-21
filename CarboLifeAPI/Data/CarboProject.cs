@@ -1903,8 +1903,8 @@ namespace CarboLifeAPI.Data
         }
         public void AddElement(CarboElement carboElement)
         {
-            AddorUpdateElement(carboElement);
-            //elementList.Add(carboElement);
+            //AddorUpdateElement(carboElement);
+            elementList.Add(carboElement);
             justSaved = false;
         }
         public void AddorUpdateElement(CarboElement carboElement)

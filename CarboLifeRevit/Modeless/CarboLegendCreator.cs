@@ -444,14 +444,14 @@ namespace CarboLifeRevit
                     totalM += (cbg.Material.ECI_Mix * cbg.Mass);
                     totalS += (cbg.Material.ECI_Seq * cbg.Mass);
 
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A1A3 * cbg.Mass, 3)/1000, 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A4 * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_A5 * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_B1B5 * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_C1C4 * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_D * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_Mix * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), Math.Round(Math.Round(cbg.Material.ECI_Seq * cbg.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), Math.Round((cbg.Material.ECI_A1A3 * cbg.Mass) / 1000, 3).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), Math.Round((cbg.Material.ECI_A4 * cbg.Mass) / 1000, 3).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), Math.Round((cbg.Material.ECI_A5 * cbg.Mass) / 1000, 3).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), Math.Round((cbg.Material.ECI_B1B5 * cbg.Mass) / 1000, 3).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), Math.Round((cbg.Material.ECI_C1C4 * cbg.Mass) / 1000, 3).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), Math.Round((cbg.Material.ECI_D * cbg.Mass) / 1000, 3).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), Math.Round((cbg.Material.ECI_Mix * cbg.Mass) / 1000, 3).ToString(), clc_TextOptions);
+                    TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), Math.Round((cbg.Material.ECI_Seq * cbg.Mass) / 1000, 3).ToString(), clc_TextOptions);
 
 
                     doc.Regenerate();
@@ -492,14 +492,14 @@ namespace CarboLifeRevit
                 //TextNote.Create(doc, clcLegendView.Id, new XYZ(x10, y, 0.0), Math.Round((totalGroup.EC), 2).ToString(), clc_TextOptions);
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x11, y, 0.0), "100%", clc_TextOptions);
 
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), Math.Round(Math.Round(totalA1, 3) / 1000, 2).ToString(), clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), Math.Round(Math.Round(totalA4 * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), Math.Round(Math.Round(totalA5 * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), Math.Round(Math.Round(totalB * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), Math.Round(Math.Round(totalC * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), Math.Round(Math.Round(totalD * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), Math.Round(Math.Round(totalM * totalGroup.Mass, 3) / 1000, 2).ToString(), clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), Math.Round(Math.Round(totalS, 3) / 1000, 2).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), Math.Round(totalA1 / 1000, 3).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), Math.Round(totalA4 / 1000, 3).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), Math.Round(totalA5 / 1000, 3).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), Math.Round(totalB / 1000, 3).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), Math.Round(totalC / 1000, 3).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), Math.Round(totalD / 1000, 3).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), Math.Round(totalM / 1000, 3).ToString(), clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), Math.Round(totalS / 1000, 3).ToString(), clc_TextOptions);
 
             }
 
@@ -565,7 +565,6 @@ namespace CarboLifeRevit
             int totalDataPoint = SortedList.Count;
             double y_offset = totalHeight / totalDataPoint;
             double x_text_offset = 0.11;
-            double minTextGap = 2.5 / 304.8; //(2.5mm)
             double liney = 0;
 
             //Write Title
@@ -630,11 +629,18 @@ namespace CarboLifeRevit
 
             try
             {
+                //vars for check Spacing check
+                double minTextGap = 2.6 / 304.8; //(2.5mm)
+                double lastTexty = 0;
+
                 for (int i = 0; i < totalDataPoint; i++)
                 {
                     //min linespacing;
 
                     CarboValues dataPoint = SortedList[i];
+
+                    //List<CurveLoop> box = getBox(liney, y_offset, clc_invisibleLine);
+
                     //Draw Rectangles = Text
                     List<CurveLoop> profileList = new List<CurveLoop>();
 
@@ -647,9 +653,6 @@ namespace CarboLifeRevit
                     points[2] = new XYZ(0.090, this_y_offset - y_offset, 0.0);
                     points[3] = new XYZ(0.0, this_y_offset - y_offset, 0.0);
                     points[4] = new XYZ(0.0, this_y_offset, 0.0);
-
-                    //The Location Of the the text
-                    XYZ textPoint = new XYZ(x_text_offset, this_y_offset - (y_offset / 2) + (1.25 / 304.8), 0.0);
 
                     CurveLoop profileloop = new CurveLoop();
 
@@ -675,10 +678,18 @@ namespace CarboLifeRevit
                     ogs.SetProjectionLineWeight(1);
                     clcLegendView.SetElementOverrides(filledRegion.Id, ogs);
 
+                    //The Location Of the the text
+                    double textY = this_y_offset - (y_offset / 2) + (1.25 / 304.8);
+                    XYZ textPoint = new XYZ(x_text_offset, textY, 0.0);
 
+                    double deltaText = lastTexty - textY;
 
+                    if(deltaText >= minTextGap)
+                    {
+                        lastTexty = this_y_offset - (y_offset / 2) + (1.25 / 304.8);
+                        TextNote note = TextNote.Create(doc, clcLegendView.Id, textPoint, dataPoint.Value.ToString() + " " + resultData.Unit, clc_TextOptions);
+                    }
 
-                    TextNote note = TextNote.Create(doc, clcLegendView.Id, textPoint, dataPoint.Value.ToString() + " " + resultData.Unit, clc_TextOptions);
                 }
             }
             catch (Exception ex)

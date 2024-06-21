@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -484,7 +485,7 @@ namespace CarboLifeAPI
 
         }
 
-        public static void ExportComaringGraphs(CarboProject carboLifeProject, List<CarboProject> projectListToCompareTo)
+        public static void ExportComaringGraphs(CarboProject carboLifeProject, List<CarboProject> projectListToCompareTo, bool exportCurrentProject)
         {
 
             //Check if user has excel
@@ -492,28 +493,31 @@ namespace CarboLifeAPI
 
             if (path != null)
             {
-                Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
-                if (xlApp == null)
+                try
                 {
-                    System.Windows.MessageBox.Show("You need to have excel installed to continue", "Computer says no", MessageBoxButton.OK);
-                    return;
+                    //Export a csv of all the projects with all the totals
+                    List<CarboProject> listToExport = new List<CarboProject>();
+                    foreach (CarboProject project in projectListToCompareTo)
+                    {
+                        listToExport.Add(project);
+                    }
+
+                    if (exportCurrentProject == true)
+                    { 
+                        listToExport.Add(carboLifeProject); 
+                    }
+
+                    CreateProjectTotalsCVSFile(listToExport, path, carboLifeProject);
                 }
-
-                if (carboLifeProject != null)
-                    projectListToCompareTo.Insert(0, carboLifeProject);
-
-                CreateTotalsExcelFile(projectListToCompareTo, xlApp, path);
-
-                if (File.Exists(path))
+                catch(Exception ex)
                 {
-                    System.Windows.MessageBox.Show("Excel export succesful, click OK to open!", "Success!", MessageBoxButton.OK);
-                    System.Diagnostics.Process.Start(path);
+                    MessageBox.Show(ex.Message);
                 }
-
             }
-
         }
 
+
+        [Obsolete]
         private static void CreateTotalsExcelFile(List<CarboProject> projectList, Excel.Application xlApp, string path)
         {
             int row = 1;
@@ -746,6 +750,138 @@ namespace CarboLifeAPI
 
         }
 
+        private static void CreateProjectTotalsCVSFile(List<CarboProject> projectListToCompareTo, string exportPath, CarboProject baseProject)
+        {
+            if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
+                return;
+
+            string fileString = "";
+
+            //Create Headers;
+            fileString =
+                "Name" + "," + //0
+                "Number" + "," + //1
+                "Category" + "," + //2
+                "Description" + "," + //3
+                "SocialCost" + "," + //4
+                "Area" + "," + //5
+                "AreaNew" + "," + //6
+
+                "A0Global" + "," + //7
+                "A5Global" + "," + //8
+                "b675Global" + "," + //9
+                "C1Global" + "," + //10
+
+                "TotalEC" + "," + //11
+                "Total_A1A3" + "," + //12
+                "Total_A4" + "," + //13
+                "Total_A5" + "," + //14
+                "Total_B" + "," + //15
+                "Total_C1C4" + "," + //16
+                "Total_D" + "," + //17
+                "Total_Mix" + "," + //18
+                "Total_Seq" + "," + //19
+
+                "valueUnit" + "," + //20
+                "designLife" + "," + //21
+                "story" + "," + //22
+
+                Environment.NewLine;
+            //Advanced
+
+
+            foreach (CarboProject carboLifeProject in projectListToCompareTo)
+            {
+                try
+                {
+                    //Apply Baseproject Settings For Totals;
+                    carboLifeProject.calculateA0 = baseProject.calculateA0;
+                    carboLifeProject.calculateA13 = baseProject.calculateA13;
+                    carboLifeProject.calculateA4 = baseProject.calculateA4;
+                    carboLifeProject.calculateA5 = baseProject.calculateA5;
+                    carboLifeProject.calculateB = baseProject.calculateB;
+                    carboLifeProject.calculateC = baseProject.calculateC;
+                    carboLifeProject.calculateD = baseProject.calculateD;
+                    carboLifeProject.calculateAdd = baseProject.calculateAdd;
+                    carboLifeProject.calculateSeq = baseProject.calculateSeq;
+                    carboLifeProject.calculateSubStructure = baseProject.calculateSubStructure;
+
+                    //Recalculate the Project
+                    carboLifeProject.CalculateProject();
+
+                    //Get all the Groups In the Project:
+                    ObservableCollection<CarboGroup> cglist = carboLifeProject.getGroupList;
+                    cglist = new ObservableCollection<CarboGroup>(cglist.OrderBy(i => i.MaterialName));
+
+                    string material = "";
+
+                    double totalA1 = 0;
+
+                    double totalEC = 0;
+                    double totalA4 = 0;
+                    double totalA5 = 0;
+                    double totalB = 0;
+                    double totalC = 0;
+                    double totalD = 0;
+                    double totalM = 0;
+                    double totalS = 0;
+
+                    foreach (CarboGroup cbg in cglist)
+                    {
+                        totalEC += cbg.EC;
+                        totalA1 += (cbg.Material.ECI_A1A3 * cbg.Mass);
+                        totalA4 += (cbg.Material.ECI_A4 * cbg.Mass);
+                        totalA5 += (cbg.Material.ECI_A5 * cbg.Mass);
+                        totalB += (cbg.Material.ECI_B1B5 * cbg.Mass);
+                        totalC += (cbg.Material.ECI_C1C4 * cbg.Mass);
+                        totalD += (cbg.Material.ECI_D * cbg.Mass);
+                        totalM += (cbg.Material.ECI_Mix * cbg.Mass);
+                        totalS += (cbg.Material.ECI_Seq * cbg.Mass);
+                    }
+
+
+                    string resultString = "";
+
+                    resultString += CVSFormat(carboLifeProject.Name) + ","; //1
+                    resultString += carboLifeProject.Number + ","; //2
+                    resultString += CVSFormat(carboLifeProject.Category) + ","; //3
+                    resultString += CVSFormat(carboLifeProject.Description) + ","; //3
+                    resultString += carboLifeProject.SocialCost + ","; //4
+                    resultString += carboLifeProject.Area + ","; //5
+                    resultString += carboLifeProject.AreaNew + ","; //6
+
+                    resultString += carboLifeProject.A0Global + ","; //7
+                    resultString += carboLifeProject.A5Global + ","; //8
+                    resultString += carboLifeProject.b675Global + ","; //9
+                    resultString += carboLifeProject.C1Global + ","; //10
+
+                    resultString += totalEC.ToString() + ","; //11
+                    resultString += Math.Round(totalA1/1000, 3).ToString() + ","; //12
+                    resultString += Math.Round(totalA4 / 1000, 3).ToString() + ","; //13
+                    resultString += Math.Round(totalA5 / 1000, 3).ToString() + ","; //14
+                    resultString += Math.Round(totalB / 1000, 3).ToString() + ","; //15
+                    resultString += Math.Round(totalC / 1000, 3).ToString() + ","; //16
+                    resultString += Math.Round(totalD / 1000, 3).ToString() + ","; //17
+                    resultString += Math.Round(totalM / 1000, 3).ToString() + ","; //18
+                    resultString += Math.Round(totalS / 1000, 3).ToString() + ","; //19
+
+                    resultString += carboLifeProject.valueUnit + ","; //20
+                    resultString += carboLifeProject.designLife + ","; //21
+                    resultString += CVSFormat(carboLifeProject.getGeneralText()) + ","; //22
+
+                    resultString += Environment.NewLine;
+
+                    fileString += resultString;
+                }
+                catch (IOException ex)
+                {
+                    
+                }
+            }
+
+            WriteCVSFile(fileString, exportPath);
+            MessageBox.Show("Export File Created at: " + exportPath);
+        }
         private static void CreateResultsCVSFile(CarboProject carboLifeProject, string exportPath)
         {
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)

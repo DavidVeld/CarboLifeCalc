@@ -179,22 +179,17 @@ namespace CarboLifeRevit
             cbb_outofBounds.SelectedIndex = 0;
 
             if (settings.ecRevitParameter != "")
-            {
                 txt_Parameter.Text = settings.ecRevitParameter;
-            }
             else
-            {
                 txt_Parameter.Text = "CLC_EmbodiedCarbon";
-
-            }
-
+            
             if(settings.carboLegendName != "")
                 txt_LegendName.Text = settings.carboLegendName;
             else
                 txt_LegendName.Text = "CLC_ColourLegend";
 
             if (settings.carboDashboardName != "")
-                txt_DashBoardName.Text = settings.carboLegendName;
+                txt_DashBoardName.Text = settings.carboDashboardName;
             else
                 txt_DashBoardName.Text = "ResultsView";
             //cbb_Parameter.SelectedIndex = 0;
@@ -471,6 +466,7 @@ namespace CarboLifeRevit
         {
             carboSettings.carboLegendName = txt_LegendName.Text;
             carboSettings.carboDashboardName = txt_DashBoardName.Text;
+            carboSettings.ecRevitParameter = txt_Parameter.Text;
 
             carboSettings.Save();
 
@@ -850,9 +846,14 @@ namespace CarboLifeRevit
             }
         }
 
-        private void txt_DashBoardName_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void txt_DashBoardName_TextChanged(object sender, TextChangedEventArgs e)
         {
             carboSettings.carboDashboardName = txt_DashBoardName.Text;
+        }
+
+        private void txt_Parameter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            carboSettings.ecRevitParameter = txt_Parameter.Text;
 
         }
     }

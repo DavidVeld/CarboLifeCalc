@@ -20,13 +20,14 @@ using CarboLifeAPI;
 using Microsoft.Win32;
 using LiveCharts.Helpers;
 using LiveCharts.Definitions.Charts;
+using System.Windows.Forms;
 
 namespace CarboLifeUI.UI
 {
     /// <summary>
     /// Interaction logic for DataViewer.xaml
     /// </summary>
-    public partial class CarboCompare : UserControl
+    public partial class CarboCompare : System.Windows.Controls.UserControl
     {
         public CarboProject CarboLifeProject;
 
@@ -88,7 +89,7 @@ namespace CarboLifeUI.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
@@ -177,7 +178,7 @@ namespace CarboLifeUI.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
@@ -233,7 +234,7 @@ namespace CarboLifeUI.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
@@ -299,7 +300,7 @@ namespace CarboLifeUI.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
 
@@ -324,7 +325,7 @@ namespace CarboLifeUI.UI
 
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
+                System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
                 openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|Carbo Life Project File (*.xml)| *.xml|All files (*.*)|*.*";
 
                 var path = openFileDialog.ShowDialog();
@@ -340,7 +341,55 @@ namespace CarboLifeUI.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message);
+                return null;
+            }
+
+            return result;
+
+        }
+
+         private List<CarboProject> openNewProjects()
+        {
+            List<CarboProject> result = new List<CarboProject>();
+
+            try
+            {
+                System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
+                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|Carbo Life Project File (*.xml)| *.xml|All files (*.*)|*.*";
+                openFileDialog.Multiselect = true;
+                openFileDialog.Title = "Select Project to Compare";
+
+                DialogResult dr = openFileDialog.ShowDialog();
+
+                if (dr == System.Windows.Forms.DialogResult.OK)
+                {
+                    // Read the files
+                    foreach (String file in openFileDialog.FileNames)
+                    {
+                        // Create a PictureBox.
+                        try
+                        {
+                            CarboProject buffer = new CarboProject();
+
+
+                            CarboProject project = buffer.DeSerializeXML(file);
+
+                            project.Audit();
+                            project.CalculateProject();
+
+                            result.Add(project);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Windows.MessageBox.Show(ex.Message);
+                         }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
                 return null;
             }
 
@@ -362,9 +411,16 @@ namespace CarboLifeUI.UI
 
         private void btn_Add_Click(object sender, RoutedEventArgs e)
         {
-            CarboProject clp = openNewProject();
-            if (clp != null)
-                setProject(clp);
+            //CarboProject clp = openNewProject();
+           // if (clp != null)
+            //    setProject(clp);
+
+            List<CarboProject> clp_list = openNewProjects();
+
+            if(clp_list != null)
+                foreach(CarboProject proj in clp_list)
+                    setProject(proj);
+
         }
 
         private void chx_Project0_Click(object sender, RoutedEventArgs e)
@@ -377,7 +433,7 @@ namespace CarboLifeUI.UI
 
         private void btn_Export_Click(object sender, RoutedEventArgs e)
         {
-            DataExportUtils.ExportComaringGraphs(CarboLifeProject, projectListToCompareTo);
+            DataExportUtils.ExportComaringGraphs(CarboLifeProject, projectListToCompareTo, chx_Project0.IsChecked.Value);
         }
 
 
