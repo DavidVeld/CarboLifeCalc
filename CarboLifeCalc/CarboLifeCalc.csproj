@@ -317,6 +317,8 @@
     <Content Include="samples\Unit Test CLC R2023.rvt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="samples\CarboLifeCalc_sample_project_R22.clcx" />
+    <Content Include="samples\CarboLifeCalc_sample_project_R22.rvt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
