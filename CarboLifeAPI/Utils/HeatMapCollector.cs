@@ -154,6 +154,7 @@ namespace CarboLifeAPI
                 {
                     CarboValues value = new CarboValues();
                     value.Id = carboElement.Id;
+                    value.GUID = carboElement.GUID;
                     value.Value = carboElement.EC_Cumulative;
                     value.ValueName = carboElement.CarboMaterialName;
                     value.ValueCategory = carboElement.Category;

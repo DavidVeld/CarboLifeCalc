@@ -1,0 +1,84 @@
+﻿<Window x:Class="CarboCircle.UI.CarboCircleMain"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CarboCircle.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="MyStyles.xaml">
+                </ResourceDictionary>
+
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="1.2*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Carbo Circle : Reuse Materials</Label>
+        <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource baseStyleBold}">Available Materials</Label>
+        <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource baseStyleBold}">Required Materials</Label>
+
+        <Button x:Name="btn_ImportmaterialsRevit" Grid.Row="3" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit"/>
+        <Button x:Name="btn_ImportmaterialsCSV" Grid.Row="3" Grid.Column="1" Margin="85,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV"/>
+        <Button x:Name="btn_ImportmaterialsWeb" Grid.Row="3" Grid.Column="1" Margin="170,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Web"/>
+        <Button x:Name="btn_Exportmaterials" Grid.Row="3" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
+
+        <ListView Name="liv_availableMaterialList" Grid.Column="1" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Category}"/>
+                    <GridViewColumn Header="Type" Width="150" DisplayMemberBinding="{Binding Type}"/>
+                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=Length, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                    <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=Grade}" TextBlock.TextAlignment="Right"/>
+                    <GridViewColumn Header="Id" Width="75" DisplayMemberBinding="{Binding Id}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button x:Name="btn_ImportProjectRevit" Grid.Row="3" Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit"/>
+        <Button x:Name="btn_ImportProjectCSV" Grid.Row="3" Grid.Column="3" Margin="85,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV"/>
+        <Button x:Name="btn_ExportProject" Grid.Row="3" Grid.Column="3" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
+
+
+        <ListView Name="liv_requiredMaterialList" Grid.Column="3" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
+            <ListView.View>
+                <GridView AllowsColumnReorder="False">
+                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=Category}"/>
+                    <GridViewColumn Header="Type" Width="150" DisplayMemberBinding="{Binding Path=Type}"/>
+                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=Length, StringFormat=N3}"/>
+                    <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=Grade}"/>
+                    <GridViewColumn Header="Id" Width="60" DisplayMemberBinding="{Binding Path=Id}"/>
+                    <GridViewColumn Header="Match" Width="60" DisplayMemberBinding="{Binding Path=Match}"/>
+                    <GridViewColumn Header="MatchId" Width="60" DisplayMemberBinding="{Binding Path=MatchId}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button x:Name="btn_TryMatch" Grid.Row="5" Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Try Match"/>
+        <Button x:Name="btn_Report" Grid.Row="5" Grid.Column="3" Margin="85,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Report"/>
+        <Button x:Name="btn_Close" Grid.Row="5" Grid.Column="3" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Close"/>
+
+    </Grid>
+    </Window>

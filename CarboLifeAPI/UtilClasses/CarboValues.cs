@@ -29,6 +29,10 @@ namespace CarboLifeAPI
         public int Id { get; set; }
 
         /// <summary>
+        /// (Revit) GUID
+        /// </summary>
+        public string GUID { get; set; }
+        /// <summary>
         /// The xValue
         /// </summary>
         //public double xValue { get; set; }

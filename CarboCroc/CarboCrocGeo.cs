@@ -5,13 +5,16 @@ using Grasshopper.Kernel;
 using System.Windows;
 using CarboLifeAPI.Data;
 
+using Rhino.Geometry;
+using Grasshopper.Kernel.Types;
+
 namespace CarboCroc
 {
-    public class CarboCrocElement : GH_Component
+    public class CarboCrocGeo : GH_Component
     {
         // Methods
-        public CarboCrocElement()
-        : base("Carbo Life Element", "Carbo Life Element", "Build a Carbo Life Element", "CarboCroc", "Builder")
+        public CarboCrocGeo()
+        : base("Carbo Life Geo Element", "Carbo Life Geo Element", "Build a Carbo Life Element from Brep", "CarboCroc", "Builder")
         {
         }
 
@@ -20,10 +23,8 @@ namespace CarboCroc
             pManager.AddIntegerParameter("Id/GUID", "Id", "Identifier", GH_ParamAccess.item);
             pManager.AddTextParameter("Name", "Element Name", "Element Name", GH_ParamAccess.item);
             pManager.AddTextParameter("MaterialName", "Material", "Material Name", GH_ParamAccess.item);
-            pManager.AddNumberParameter("Volume", "Volume", "Element Volume", GH_ParamAccess.item);
+            pManager.AddGeometryParameter("Geometry", "Geometry", "Geometry With Volume", GH_ParamAccess.item);
             pManager.AddTextParameter("Category", "Category", "Category", GH_ParamAccess.item);
-            pManager.AddTextParameter("GUID", "GUID", "GUID (Rhino Element Id)", GH_ParamAccess.item);
-
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -38,31 +39,57 @@ namespace CarboCroc
             int id = -999;
             string name = "";
             string materialname = "";
-            double volume = 0;
+            //double volume = 0;
             string category = "";
             string guid = "";
 
             try
             {
+                IGH_GeometricGoo geometry = null;
+
                 CarboElement result = new CarboElement();
 
                 DA.GetData<int>(0, ref id);
                 DA.GetData<string>(1, ref name);
                 DA.GetData<string>(2, ref materialname);
-                DA.GetData<double>(3, ref volume);
+                DA.GetData(3, ref geometry);
                 DA.GetData<string>(4, ref category);
-                DA.GetData<string>(5, ref guid);
 
-                if (volume != 0 && materialname != "")
+                IGH_GeometricGoo ghGeo = geometry as IGH_GeometricGoo;
+                Brep brep = null;
+
+                if (ghGeo != null)
                 {
+                    GH_Brep gh_brep = geometry as GH_Brep;
+                    if (gh_brep != null)
+                    {
+                        brep = gh_brep.Value;
+                    }
+                }
+                if(brep != null)
+                { 
+                    VolumeMassProperties mp = null;
+
+                    //calc Geo
+                    mp = VolumeMassProperties.Compute(brep, true, false, false, false);
+
                     result.Id = id;
                     result.Name = name;
                     result.MaterialName = materialname;
-                    result.Volume = volume;
                     result.Category = category;
-                    result.GUID = guid;
+                    result.GUID = geometry.ReferenceID.ToString();
+
+                    if (mp != null)
+                    {
+                        result.Volume = mp.Volume;
+                    }
+                    else
+                    { 
+                        result.Volume = 0;
+                    }
 
                     DA.SetData(0, result);
+
                     error = "Ok";
                 }
             }
@@ -79,7 +106,7 @@ namespace CarboCroc
         {
             get
             {
-                return new Guid("{9C57513A-5160-4D09-835C-816E7E52077C}");
+                return new Guid("{9C57512A-5161-4D09-835E-811E7E52077C}");
             }
         }
 

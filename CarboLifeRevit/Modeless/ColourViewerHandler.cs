@@ -18,6 +18,7 @@ namespace CarboLifeRevit
 
         private static Document doc;
         private static UIDocument uidoc;
+        public ExternalEvent _revitEvent;
 
         private CarboGraphResult resultList;
         private static bool colourMeSwitch;
@@ -31,7 +32,6 @@ namespace CarboLifeRevit
         private string viewname;
 
 
-        public ExternalEvent _revitEvent;
 
         public int commandSwitch = 0; //0 = colour 1 = import 
 
