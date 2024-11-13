@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.UI;
+using CarboCircle.Modeless;
 using CarboCircle.UI;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace CarboCircle
 {
@@ -19,7 +21,35 @@ namespace CarboCircle
 
         public Result OnStartup(UIControlledApplication application)
         {
-            throw new NotImplementedException();
+            //Placeholders we will call later
+            m_CarboCircleWindow = null;
+            thisApp = this;
+
+            //Create  A button
+            RibbonPanel CarboCalcPanel = application.CreateRibbonPanel("CarboLifeCircle");
+
+            //Info
+            string HelpURL = "https://github.com/DavidVeld/CarboLifeCalc/wiki";
+            ContextualHelp contextualHelp = new ContextualHelp(ContextualHelpType.Url, HelpURL);
+
+            /// Visual Menu
+            PushButton pB_ShowCarboCalc = CarboCalcPanel.AddItem(new PushButtonData("CarboLifeCircle", "CarboLifeCircle", MyAssemblyPath, "CarboCircle.CarboCircleCommand")) as PushButton;
+            //LImage
+            Uri pB_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_CarboLife32.png");
+            BitmapImage limg_pB_ShowCarboCalc2 = new BitmapImage(pB_ShowCarboCalc2);
+            //SImahe
+            Uri imgsmll_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_CarboLife16.png");
+            BitmapImage smllimg_ShowCarboCalc2 = new BitmapImage(imgsmll_ShowCarboCalc2);
+
+            pB_ShowCarboCalc.LargeImage = limg_pB_ShowCarboCalc2;
+            pB_ShowCarboCalc.Image = smllimg_ShowCarboCalc2;
+            pB_ShowCarboCalc.SetContextualHelp(contextualHelp);
+            pB_ShowCarboCalc.ToolTip = "Reuse beams and columns";
+
+            FormStatusChecker.isWindowOpen = false;
+
+            return Result.Succeeded;
+
         }
 
 
@@ -49,23 +79,23 @@ namespace CarboCircle
 
                 // We give the objects to the new dialog;
                 // The dialog becomes the owner responsible fore disposing them, eventually.
-                m_CarboCircleWindow = new CarboCircleMain(exEvent, handler, project, VisibleElements);
+                m_CarboCircleWindow = new CarboCircleMain();
                 FormStatusChecker.isWindowOpen = true;
                 m_CarboCircleWindow.Show();
             }
             else
             {
                 // A new handler to handle request posting by the dialog
-                ColourViewerHandler handler = new ColourViewerHandler(uiapp);
+                CarboCircleHandler handler = new CarboCircleHandler(uiapp);
 
                 // External Event for the dialog to use (to post requests)
                 ExternalEvent exEvent = ExternalEvent.Create(handler);
 
                 // We give the objects to the new dialog;
                 // The dialog becomes the owner responsible fore disposing them, eventually.
-                m_HeatMapCreator = new HeatMapCreator(exEvent, handler, project, VisibleElements);
+                m_CarboCircleWindow = new CarboCircleMain();
                 FormStatusChecker.isWindowOpen = true;
-                m_HeatMapCreator.Show();
+                m_CarboCircleWindow.Show();
             }
 
         }

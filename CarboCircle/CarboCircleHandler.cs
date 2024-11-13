@@ -3,18 +3,20 @@ using System.Windows.Controls;
 using System;
 using Autodesk.Revit.DB;
 using System.Windows;
+using System.Collections.Generic;
 
 namespace CarboCircle
 {
-    internal class CarboCircleHandler : IExternalEventHandler
+    public class CarboCircleHandler : IExternalEventHandler
 
     {
         private static Document doc;
         private static UIDocument uidoc;
         public ExternalEvent _revitEvent;
 
-        public int commandSwitch = 0; //0 = colour 1 = import 
+        public int commandSwitch = 0; //0 = existing 1 = proposed 2 = colourmatch 
 
+        private List<carboCircleElement> collectedElements;
         public CarboCircleHandler(UIApplication uiapp)
         {
             UIApplication app = uiapp;
@@ -52,20 +54,44 @@ namespace CarboCircle
                 TaskDialog.Show("Error", ex.Message);
             }
         }
+        private void ImportAvailableElements(UIApplication uiapp)
+        {
+            MessageBox.Show("Import Available Elements");
+        }
 
         private void ImportProposedElements(UIApplication uiapp)
         {
             MessageBox.Show("Import Proposed Elements");
         }
 
-        private void ImportAvailableElements(UIApplication uiapp)
+        private void ColourElements(UIApplication uiapp)
         {
-            MessageBox.Show("Import Available Elements");
+            MessageBox.Show("Colour Matching Elements");
+        }
+
+
+        public void GrabData(int v)
+        {
+            commandSwitch = v;
+        }
+
+        public List<carboCircleElement> getCollectedElements()
+        {
+            List<carboCircleElement> result = new List<carboCircleElement>();
+
+            if (collectedElements.Count > 0)
+            {
+                foreach (carboCircleElement element in collectedElements)
+                {
+                    result.Add(element.Copy());
+                }
+            }
+             return result;
         }
 
         public string GetName()
         {
-            throw new System.NotImplementedException();
+            return "CarboCircle : Reuse";
         }
     }
 }

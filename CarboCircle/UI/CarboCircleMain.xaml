@@ -40,7 +40,7 @@
         <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource baseStyleBold}">Available Materials</Label>
         <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource baseStyleBold}">Required Materials</Label>
 
-        <Button x:Name="btn_ImportmaterialsRevit" Grid.Row="3" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit"/>
+        <Button x:Name="btn_ImportmaterialsRevit" Grid.Row="3" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit" Click="btn_ImportmaterialsRevit_Click"/>
         <Button x:Name="btn_ImportmaterialsCSV" Grid.Row="3" Grid.Column="1" Margin="85,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV"/>
         <Button x:Name="btn_ImportmaterialsWeb" Grid.Row="3" Grid.Column="1" Margin="170,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Web"/>
         <Button x:Name="btn_Exportmaterials" Grid.Row="3" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
