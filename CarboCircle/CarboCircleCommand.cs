@@ -9,7 +9,7 @@ using Autodesk.Revit.Attributes;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows;
-using CarboCircle.Modeless;
+using CarboCircle;
 
 namespace CarboCircle
 {
@@ -36,6 +36,8 @@ namespace CarboCircle
                 }
 
                 FormStatusChecker.isWindowOpen = true;
+                //CarboLifeApp.thisApp.ShowHeatmap(commandData.Application, projectToOpen, VisibleElements);
+
                 CarboCircleApp.thisApp.ShowCarboCircle(commandData.Application);
 
                 

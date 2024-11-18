@@ -9,8 +9,8 @@ namespace CarboCircle.data
     [Serializable]
     public class carboCircleProject
     {
-        public List<carboCircleElement> availableElements { get; set; }
-        public List<carboCircleElement> proposedElements { get; set; }
+        public static List<carboCircleElement> availableElements { get; set; }
+        public static List<carboCircleElement> proposedElements { get; set; }
         public carboCircleSettings settings { get; set; }
 
         public carboCircleProject() 

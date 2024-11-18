@@ -36,6 +36,12 @@ namespace CarboCircle.data
             Category = string.Empty;
             Description = string.Empty;
 
+            TypeParameterName = string.Empty;
+            cutoffbeamLength = 600;
+            cutoffColumnLength = 600;
+
+            depthRange = 50;
+            strengthRange = .10;
         }
     }
 }

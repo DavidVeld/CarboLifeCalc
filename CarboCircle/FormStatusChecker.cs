@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarboCircle.Modeless
+namespace CarboCircle
 {
     /// <summary>
     /// This stores the status of a modeless form, should be written as a singleton

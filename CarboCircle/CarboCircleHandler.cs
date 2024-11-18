@@ -4,6 +4,8 @@ using System;
 using Autodesk.Revit.DB;
 using System.Windows;
 using System.Collections.Generic;
+using CarboCircle.data;
+using System.Linq;
 
 namespace CarboCircle
 {
@@ -17,6 +19,8 @@ namespace CarboCircle
         public int commandSwitch = 0; //0 = existing 1 = proposed 2 = colourmatch 
 
         private List<carboCircleElement> collectedElements;
+        public UIApplication uiapp { get; }
+
         public CarboCircleHandler(UIApplication uiapp)
         {
             UIApplication app = uiapp;
@@ -26,21 +30,25 @@ namespace CarboCircle
             _revitEvent = ExternalEvent.Create(this);
         }
 
-        public UIApplication uiapp { get; }
+        public event EventHandler<List<carboCircleElement>> DataReady;
 
         public void Execute(UIApplication uiapp)
         {
             try
             {
+                uidoc = uiapp.ActiveUIDocument;
+                doc = uidoc.Document;
+
+
                 if (doc != null)
                 {
                     if (commandSwitch == 0)
                     {
-                        ImportAvailableElements(uiapp);
+                        //End
                     }
                     else if (commandSwitch == 1)
                     {
-                        ImportProposedElements(uiapp);
+                        ImportElementsActiveView(uiapp);
                     }
 
                     else
@@ -53,24 +61,123 @@ namespace CarboCircle
             {
                 TaskDialog.Show("Error", ex.Message);
             }
+
+            DataReady?.Invoke(this, collectedElements);
+
         }
-        private void ImportAvailableElements(UIApplication uiapp)
+
+        private void ImportElementsActiveView(UIApplication uiapp)
         {
-            MessageBox.Show("Import Available Elements");
+
+            carboCircleSettings appSettings = new carboCircleSettings();
+
+            List<carboCircleElement> collectedElementsBuffer = getElementsFromActiveView(uiapp, appSettings);
+
+            if (collectedElementsBuffer != null)
+            {
+                if (collectedElementsBuffer.Count > 0)
+                {
+                    collectedElements = new List<carboCircleElement>();
+                    collectedElements.Clear();
+
+                    foreach (carboCircleElement ccEl in collectedElementsBuffer)
+                    {
+                        collectedElements.Add(ccEl.Copy());
+                    }
+                }
+                else
+                {
+                    collectedElements = null;
+                }
+            }
+            else
+            {
+                collectedElements = null;
+            }
+            //success
+
+            Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+
         }
 
-        private void ImportProposedElements(UIApplication uiapp)
+        private List<carboCircleElement> getElementsFromActiveView(UIApplication uiapp, carboCircleSettings appSettings)
         {
-            MessageBox.Show("Import Proposed Elements");
+            List<carboCircleElement> resultCollection = new List<carboCircleElement>();
+
+            UIDocument uidoc = uiapp.ActiveUIDocument;
+            Document doc = uidoc.Document;
+
+            IEnumerable<Element> beamCollector = new FilteredElementCollector(doc,doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_StructuralFraming)
+                .WhereElementIsNotElementType().ToElements();
+
+            IEnumerable<Element> columnCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).
+                WhereElementIsNotElementType().ToElements();
+
+            if(beamCollector.Count() > 0)
+            {
+                foreach (Element el in beamCollector)
+                {
+                    try
+                    {
+                        FamilyInstance inst = el as FamilyInstance;
+                        if (inst != null)
+                        {
+                            FamilySymbol family = inst.Symbol;
+                            List<ElementId> materials = inst.GetMaterialIds(false).ToList();
+                            Material material = null;
+                            if(materials.Count > 0)
+                            {
+                                material = doc.GetElement(materials[0]) as Material;
+                            }
+
+
+                            Parameter lengthParam = inst.LookupParameter("Cut Length");
+                            double length = (lengthParam.AsDouble() * 304.8)/1000;
+
+                            carboCircleElement ccEl = new carboCircleElement();
+                            ccEl.id = inst.Id.IntegerValue;
+                            ccEl.GUID = inst.UniqueId;
+                            ccEl.name = el.Name;
+                            ccEl.catergory = inst.Category.Name;
+                            ccEl.length = length;
+
+                            if (material != null)
+                                ccEl.materialName = material.Name;
+
+                            resultCollection.Add(ccEl);
+                        }
+                    }
+                    catch
+                    { }
+                }
+            }
+
+            if (columnCollector.Count() > 0)
+            {
+                foreach (Element el in columnCollector)
+                {
+                    try
+                    {
+                        carboCircleElement ccEl = new carboCircleElement();
+                        ccEl.name = el.Name;
+                        resultCollection.Add(ccEl);
+                    }
+                    catch
+                    { }
+                }
+            }
+
+            return resultCollection;
+
         }
 
-        private void ColourElements(UIApplication uiapp)
-        {
-            MessageBox.Show("Colour Matching Elements");
-        }
-
-
-        public void GrabData(int v)
+        /// <summary>
+        /// 0 = No Action
+        /// 1 = ImportElementsfromActiveView.
+        /// 2 = ColourMatches
+        /// </summary>
+        /// <param name="v"></param>
+        public void SetSwitch(int v)
         {
             commandSwitch = v;
         }
@@ -79,11 +186,14 @@ namespace CarboCircle
         {
             List<carboCircleElement> result = new List<carboCircleElement>();
 
-            if (collectedElements.Count > 0)
+            if (collectedElements != null)
             {
-                foreach (carboCircleElement element in collectedElements)
+                if (collectedElements.Count > 0)
                 {
-                    result.Add(element.Copy());
+                    foreach (carboCircleElement element in collectedElements)
+                    {
+                        result.Add(element.Copy());
+                    }
                 }
             }
              return result;
@@ -93,5 +203,6 @@ namespace CarboCircle
         {
             return "CarboCircle : Reuse";
         }
+
     }
 }

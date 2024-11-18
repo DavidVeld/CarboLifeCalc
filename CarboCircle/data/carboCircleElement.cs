@@ -11,6 +11,7 @@ namespace CarboCircle
     {
 
         public int id { get; set; }
+        public string GUID { get; set; }
         public string name { get; set; }
         //Imported Material Name
         public string materialName { get; set; }
@@ -18,14 +19,15 @@ namespace CarboCircle
         public string grade { get; set; }
         public double length { get; set; }
         public int quality { get; set; }
+        public string catergory { get; set; }
 
+
+        //The Below are taken from standardized Database
         public string standardName { get; set; }
-        //Imported Material Name
-        public double depth { get; set; }
+        public double standardDepth { get; set; }
         public string standardCategory { get; set; }
         public double Iz { get; set; }
         public double Wz { get; set; }
-        public string GUID { get; set; }
         public string matchGUID { get; set; }
 
 
@@ -41,7 +43,7 @@ namespace CarboCircle
 
             standardName = "";
             standardCategory = "";
-            depth = 0;
+            standardDepth = 0;
             Iz = 0;
             Wz = 0;
             GUID = "";
@@ -57,7 +59,7 @@ namespace CarboCircle
             clone.name = this.name;
             clone.materialName = this.name;
             clone.grade = this.name;
-            clone.depth = this.depth;
+            clone.standardDepth = this.standardDepth;
             clone.length = this.length;
             clone.quality = this.quality;
             clone.Iz = this.Iz;

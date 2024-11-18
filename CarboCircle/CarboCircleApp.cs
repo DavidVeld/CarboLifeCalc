@@ -1,5 +1,5 @@
 ﻿using Autodesk.Revit.UI;
-using CarboCircle.Modeless;
+using CarboCircle;
 using CarboCircle.UI;
 using System;
 using System.Collections.Generic;
@@ -79,7 +79,9 @@ namespace CarboCircle
 
                 // We give the objects to the new dialog;
                 // The dialog becomes the owner responsible fore disposing them, eventually.
-                m_CarboCircleWindow = new CarboCircleMain();
+                // m_HeatMapCreator = new HeatMapCreator(exEvent, handler, project, VisibleElements);
+
+                m_CarboCircleWindow = new CarboCircleMain(exEvent,handler);
                 FormStatusChecker.isWindowOpen = true;
                 m_CarboCircleWindow.Show();
             }

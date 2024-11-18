@@ -1,8 +1,10 @@
 ﻿using Autodesk.Revit.UI;
+using CarboCircle.data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,31 +27,62 @@ namespace CarboCircle.UI
         private CarboCircleHandler m_Handler;
         private ExternalEvent m_ExEvent;
         private List<int> visibleElements;
+
+        private static carboCircleProject project;
         public CarboCircleMain()
         {
             InitializeComponent();
         }
 
-        private void btn_ImportmaterialsRevit_Click(object sender, RoutedEventArgs e)
-        {
-            m_Handler.GrabData(1);
-            m_ExEvent.Raise();
-        }
-
-
         public CarboCircleMain(ExternalEvent exEvent, CarboCircleHandler handler)
         {
-            //settings
-            //carboSettings = new CarboSettings();
-            //carboSettings.Load();
-            //settings
-
             InitializeComponent();
 
             this.m_ExEvent = exEvent;
             this.m_Handler = handler;
 
+            project = new carboCircleProject();
 
+            // Subscribe to the DataReady event
+            m_Handler.DataReady += OnDataReady;
         }
+
+        private void OnDataReady(object sender, List<carboCircleElement> e)
+        {
+            liv_availableMaterialList.ItemsSource = e;
+        }
+
+        private void btn_ImportmaterialsRevit_Click(object sender, RoutedEventArgs e)
+        {
+            if (m_ExEvent != null)
+            {
+                m_Handler.SetSwitch(1);
+                m_ExEvent.Raise();
+                
+            }
+        }
+
+        private void btn_ImportmaterialsHandler_Click(object sender, RoutedEventArgs e)
+        {
+           // List<carboCircleElement> collectedElements = m_Handler.getCollectedElements();
+           // liv_availableMaterialList.ItemsSource = collectedElements;
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            //Before the form is closed, everything must be disposed properly
+            m_ExEvent.Dispose();
+            m_ExEvent = null;
+
+            //clear the handler
+            m_Handler._revitEvent.Dispose();
+            m_Handler._revitEvent = null;
+            m_Handler = null;
+            FormStatusChecker.isWindowOpen = false;
+            //You have to call the base class
+            base.OnClosing(e);
+        }
+
+
     }
 }
