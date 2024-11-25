@@ -48,19 +48,32 @@
 
         <Button x:Name="btn_Exportmaterials" Grid.Row="3" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
 
-        <ListView Name="liv_availableMaterialList" Grid.Column="1" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
+        <ListView Name="liv_availableMaterialList" Grid.Column="1" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="8" Background="White">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
+                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
                     <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
-                    <GridViewColumn Header="Type" Width="150" DisplayMemberBinding="{Binding Path=name}"/>
-                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=length, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                    <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
+                    <GridViewColumn Header="Material" Width="75" DisplayMemberBinding="{Binding Path=materialName}"/>
+
+                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=netLength, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
                     <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=grade}" TextBlock.TextAlignment="Right"/>
-                    <GridViewColumn Header="Id" Width="75" DisplayMemberBinding="{Binding Path=id}"/>
+                    <GridViewColumn Header="Condition" Width="75" DisplayMemberBinding="{Binding Path=quality}" TextBlock.TextAlignment="Right"/>
+                    <GridViewColumn Header="GUID" Width="50" DisplayMemberBinding="{Binding Path=GUID}"/>
+
+                    <GridViewColumn Header="Profile" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
+                    <GridViewColumn Header="Type" Width="75" DisplayMemberBinding="{Binding Path=standardName}"/>
+                    <GridViewColumn Header="Depth" Width="75" DisplayMemberBinding="{Binding Path=standardDepth}"/>
+
+                    <GridViewColumn Header="Iy" Width="75" DisplayMemberBinding="{Binding Path=Iy}"/>
+                    <GridViewColumn Header="Wely" Width="75" DisplayMemberBinding="{Binding Path=Wy}"/>
+                    <GridViewColumn Header="MatchGUID" Width="75" DisplayMemberBinding="{Binding Path=matchGUID}"/>
+
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <Button x:Name="btn_ImportProjectRevit" Grid.Row="3" Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit"/>
+        <Button x:Name="btn_ImportProjectRevit" Grid.Row="3" Grid.Column="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit" Click="btn_ImportProjectRevit_Click"/>
         <Button x:Name="btn_ImportProjectCSV" Grid.Row="3" Grid.Column="3" Margin="85,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV"/>
         <Button x:Name="btn_ExportProject" Grid.Row="3" Grid.Column="3" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
 
@@ -68,13 +81,24 @@
         <ListView Name="liv_requiredMaterialList" Grid.Column="3" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
             <ListView.View>
                 <GridView AllowsColumnReorder="False">
-                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=Category}"/>
-                    <GridViewColumn Header="Type" Width="150" DisplayMemberBinding="{Binding Path=Type}"/>
-                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=Length, StringFormat=N3}"/>
-                    <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=Grade}"/>
-                    <GridViewColumn Header="Id" Width="60" DisplayMemberBinding="{Binding Path=Id}"/>
-                    <GridViewColumn Header="Match" Width="60" DisplayMemberBinding="{Binding Path=Match}"/>
-                    <GridViewColumn Header="MatchId" Width="60" DisplayMemberBinding="{Binding Path=MatchId}"/>
+                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
+                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
+                    <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
+                    <GridViewColumn Header="Material" Width="75" DisplayMemberBinding="{Binding Path=materialName}"/>
+
+                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=length, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                    <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=grade}" TextBlock.TextAlignment="Right"/>
+                    <GridViewColumn Header="Condition" Width="75" DisplayMemberBinding="{Binding Path=quality}" TextBlock.TextAlignment="Right"/>
+                    <GridViewColumn Header="GUID" Width="50" DisplayMemberBinding="{Binding Path=guid}"/>
+
+                    <GridViewColumn Header="Type" Width="75" DisplayMemberBinding="{Binding Path=standardName}"/>
+                    <GridViewColumn Header="Depth" Width="75" DisplayMemberBinding="{Binding Path=standardDepth}"/>
+                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
+
+                    <GridViewColumn Header="Iy" Width="75" DisplayMemberBinding="{Binding Path=Iy}"/>
+                    <GridViewColumn Header="Wely" Width="75" DisplayMemberBinding="{Binding Path=Wy}"/>
+                    <GridViewColumn Header="MatchGUID" Width="75" DisplayMemberBinding="{Binding Path=matchGUID}"/>
+
                 </GridView>
             </ListView.View>
         </ListView>

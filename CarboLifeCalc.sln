@@ -23,6 +23,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarboCroc", "CarboCroc\CarboCroc.csproj", "{E72AD7FC-8E68-4BE9-966B-B174A4E0B7DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarboCircle", "CarboCircle\CarboCircle.csproj", "{5061150C-607F-49C0-A837-9AAFB3817667}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C38F4ED-1D83-4FFE-AD65-B884410AF824} = {0C38F4ED-1D83-4FFE-AD65-B884410AF824}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

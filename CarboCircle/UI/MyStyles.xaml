@@ -8,7 +8,7 @@
     <SolidColorBrush x:Key="DVColour" Color="#ff6600" />
 
     <Style TargetType="{x:Type Control}" x:Key="formBoldTitleStyle">
-        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="Bold"/>
@@ -16,21 +16,21 @@
     </Style>
 
     <Style TargetType="{x:Type Control}" x:Key="formTitleStyle">
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
     <Style TargetType="{x:Type Control}" x:Key="formTextStyle">
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="11" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
     <Style TargetType="{x:Type Control}" x:Key="formGreyText">
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="10" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="DarkGray" />
         <Setter Property="FontWeight" Value="DemiBold"/>
@@ -39,7 +39,7 @@
 
 
     <Style TargetType="{x:Type Control}" x:Key="baseStyle">
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="11" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold"/>
@@ -48,7 +48,7 @@
 
 
     <Style TargetType="{x:Type Control}" x:Key="bigStyle">
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold"/>
@@ -58,7 +58,7 @@
 
 
     <Style TargetType="{x:Type Control}" x:Key="InfoLabel">
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="11" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="DemiBold"/>
@@ -580,7 +580,7 @@
 
     <!-- LISTBOX VIEWER -->
     <Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
-        <Setter Property="Width" Value="18"/>
+        <Setter Property="Width" Value="16"/>
         <Setter Property="Background" Value="#fff"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -671,7 +671,7 @@
         <Setter Property="Padding" Value="8,2,8,2"/>
         <Setter Property="Background" Value="#b23636"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="11"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="GridViewColumnHeader">
@@ -729,7 +729,7 @@
         <Setter Property="ItemContainerStyle" Value="{DynamicResource ListboxItemStyle}" />
         <Setter Property="Margin" Value="3,3,2,1" />
         <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="11"/>
     </Style>
 
     <Color x:Key="Color_002">#FF565656</Color>

@@ -97,7 +97,7 @@ namespace CarboLifeAPI
             return path;
 
         }
-        private static bool IsFileLocked(string file)
+        public static bool IsFileLocked(string file)
         {
             try
             {

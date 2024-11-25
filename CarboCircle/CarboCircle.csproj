@@ -36,6 +36,11 @@
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2023\AdWindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CarboLifeAPI, Version=1.7.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CarboLifeAPI\bin\Debug\CarboLifeAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
@@ -63,6 +68,7 @@
     <Compile Include="CarboCircleApp.cs" />
     <Compile Include="CarboCircleHandler.cs" />
     <Compile Include="CarboCircleCommand.cs" />
+    <Compile Include="carboCircleRevitCommands.cs" />
     <Compile Include="data\carboCircleBeam.cs" />
     <Compile Include="data\carboCircleElement.cs" />
     <Compile Include="data\carboCircleProject.cs" />
@@ -90,6 +96,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="db\CarboCircleMasterSections.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="db\CarboCircleMasterSections.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -26,9 +26,13 @@ namespace CarboCircle.UI
         //Used for Revit handlers
         private CarboCircleHandler m_Handler;
         private ExternalEvent m_ExEvent;
-        private List<int> visibleElements;
+
+        public List<carboCircleElement> availableData;
+        public List<carboCircleElement> requiredData;
 
         private static carboCircleProject project;
+
+        private int dataSwitch = 0;
         public CarboCircleMain()
         {
             InitializeComponent();
@@ -43,22 +47,46 @@ namespace CarboCircle.UI
 
             project = new carboCircleProject();
 
+            availableData = new List<carboCircleElement>();
+
             // Subscribe to the DataReady event
             m_Handler.DataReady += OnDataReady;
         }
 
         private void OnDataReady(object sender, List<carboCircleElement> e)
         {
-            liv_availableMaterialList.ItemsSource = e;
+            if (e != null)
+            {
+                if (dataSwitch == 0)
+                {
+                    availableData = e;
+                    liv_availableMaterialList.ItemsSource = availableData;
+                }
+                else
+                {
+                    requiredData = e;
+                    liv_requiredMaterialList.ItemsSource = requiredData;
+                }
+            }
         }
 
         private void btn_ImportmaterialsRevit_Click(object sender, RoutedEventArgs e)
         {
             if (m_ExEvent != null)
             {
+                dataSwitch = 0;
                 m_Handler.SetSwitch(1);
                 m_ExEvent.Raise();
-                
+            }
+        }
+
+        private void btn_ImportProjectRevit_Click(object sender, RoutedEventArgs e)
+        {
+            if (m_ExEvent != null)
+            {
+                dataSwitch = 1;
+                m_Handler.SetSwitch(1);
+                m_ExEvent.Raise();
             }
         }
 

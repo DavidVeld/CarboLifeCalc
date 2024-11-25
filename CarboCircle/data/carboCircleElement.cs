@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autodesk.Revit.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,23 +12,24 @@ namespace CarboCircle
     {
 
         public int id { get; set; }
-        public string GUID { get; set; }
+        public string category { get; set; }
         public string name { get; set; }
         //Imported Material Name
         public string materialName { get; set; }
         //Matched To Material Name
-        public string grade { get; set; }
         public double length { get; set; }
+        public double netLength { get; set; }
+        public string grade { get; set; }
         public int quality { get; set; }
-        public string catergory { get; set; }
+        public string GUID { get; set; }
 
 
         //The Below are taken from standardized Database
         public string standardName { get; set; }
         public double standardDepth { get; set; }
         public string standardCategory { get; set; }
-        public double Iz { get; set; }
-        public double Wz { get; set; }
+        public double Iy { get; set; }
+        public double Wy { get; set; }
         public string matchGUID { get; set; }
 
 
@@ -40,12 +42,13 @@ namespace CarboCircle
             grade = "";
             length = 0;
             quality = 1;
+            category = "";
 
             standardName = "";
             standardCategory = "";
             standardDepth = 0;
-            Iz = 0;
-            Wz = 0;
+            Iy = 0;
+            Wy = 0;
             GUID = "";
             matchGUID = "";
          }
@@ -59,11 +62,16 @@ namespace CarboCircle
             clone.name = this.name;
             clone.materialName = this.name;
             clone.grade = this.name;
-            clone.standardDepth = this.standardDepth;
             clone.length = this.length;
             clone.quality = this.quality;
-            clone.Iz = this.Iz;
-            clone.Wz = this.Wz;
+            clone.category = this.category;
+
+            clone.standardName = this.standardName;
+            clone.standardCategory = this.standardCategory;
+            clone.standardDepth = this.standardDepth;
+
+            clone.Iy = this.Iy;
+            clone.Wy = this.Wy;
             clone.GUID = this.GUID;
             clone.matchGUID = this.matchGUID;
 

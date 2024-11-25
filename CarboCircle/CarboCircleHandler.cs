@@ -44,25 +44,27 @@ namespace CarboCircle
                 {
                     if (commandSwitch == 0)
                     {
-                        //End
+                        //No Action
                     }
                     else if (commandSwitch == 1)
                     {
                         ImportElementsActiveView(uiapp);
                     }
-
                     else
                     {
                         TaskDialog.Show("Error", "Revit did not receive a valid command");
                     }
                 }
+
+                //window event
+                DataReady?.Invoke(this, collectedElements);
+
             }
             catch (Exception ex)
             {
                 TaskDialog.Show("Error", ex.Message);
             }
 
-            DataReady?.Invoke(this, collectedElements);
 
         }
 
@@ -71,7 +73,7 @@ namespace CarboCircle
 
             carboCircleSettings appSettings = new carboCircleSettings();
 
-            List<carboCircleElement> collectedElementsBuffer = getElementsFromActiveView(uiapp, appSettings);
+            List<carboCircleElement> collectedElementsBuffer = carboCircleRevitCommands.getElementsFromActiveView(uiapp, appSettings);
 
             if (collectedElementsBuffer != null)
             {
@@ -96,80 +98,12 @@ namespace CarboCircle
             }
             //success
 
-            Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            //Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
 
         }
 
-        private List<carboCircleElement> getElementsFromActiveView(UIApplication uiapp, carboCircleSettings appSettings)
-        {
-            List<carboCircleElement> resultCollection = new List<carboCircleElement>();
-
-            UIDocument uidoc = uiapp.ActiveUIDocument;
-            Document doc = uidoc.Document;
-
-            IEnumerable<Element> beamCollector = new FilteredElementCollector(doc,doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_StructuralFraming)
-                .WhereElementIsNotElementType().ToElements();
-
-            IEnumerable<Element> columnCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).
-                WhereElementIsNotElementType().ToElements();
-
-            if(beamCollector.Count() > 0)
-            {
-                foreach (Element el in beamCollector)
-                {
-                    try
-                    {
-                        FamilyInstance inst = el as FamilyInstance;
-                        if (inst != null)
-                        {
-                            FamilySymbol family = inst.Symbol;
-                            List<ElementId> materials = inst.GetMaterialIds(false).ToList();
-                            Material material = null;
-                            if(materials.Count > 0)
-                            {
-                                material = doc.GetElement(materials[0]) as Material;
-                            }
 
 
-                            Parameter lengthParam = inst.LookupParameter("Cut Length");
-                            double length = (lengthParam.AsDouble() * 304.8)/1000;
-
-                            carboCircleElement ccEl = new carboCircleElement();
-                            ccEl.id = inst.Id.IntegerValue;
-                            ccEl.GUID = inst.UniqueId;
-                            ccEl.name = el.Name;
-                            ccEl.catergory = inst.Category.Name;
-                            ccEl.length = length;
-
-                            if (material != null)
-                                ccEl.materialName = material.Name;
-
-                            resultCollection.Add(ccEl);
-                        }
-                    }
-                    catch
-                    { }
-                }
-            }
-
-            if (columnCollector.Count() > 0)
-            {
-                foreach (Element el in columnCollector)
-                {
-                    try
-                    {
-                        carboCircleElement ccEl = new carboCircleElement();
-                        ccEl.name = el.Name;
-                        resultCollection.Add(ccEl);
-                    }
-                    catch
-                    { }
-                }
-            }
-
-            return resultCollection;
-
-        }
 
         /// <summary>
         /// 0 = No Action
