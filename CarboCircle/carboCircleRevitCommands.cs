@@ -73,6 +73,12 @@ namespace CarboCircle
                     int i = 0;
                     carboCircleElement matchingBeam = ccE.Copy();
 
+                    if (matchingBeam.materialClass != "Steel")
+                    {
+                        result.Add(matchingBeam);
+                        continue;
+                    }
+
                     try
                     {
                         //This needs alot of work:
@@ -80,13 +86,11 @@ namespace CarboCircle
                         foreach (carboCircleElement dataBaseBeam in steelSectionDataBase)
                         {
                             int levDist = Utils.CalcLevenshteinDistance(matchingBeam.name, dataBaseBeam.standardName);
-
                             if(levDist < lowestLevDist)
                             {
                                 lowestLevDist = levDist;
                                 indexFound = i;
                             }
-
                             i++;
                         }
 
@@ -195,14 +199,24 @@ namespace CarboCircle
                         FamilyInstance inst = el as FamilyInstance;
                         if (inst != null)
                         {
-                            FamilySymbol family = inst.Symbol;
+                            string mostLikelyClass = "Not Defined in Famil";
+
                             List<ElementId> materials = inst.GetMaterialIds(false).ToList();
                             Material material = null;
                             if (materials.Count > 0)
                             {
                                 material = doc.GetElement(materials[0]) as Material;
+                                string materialclass = material.MaterialCategory;
                             }
 
+                            FamilySymbol familySymbol = inst.Symbol;
+                            Family family = familySymbol.Family;
+                            Parameter familyBehaviour = family.LookupParameter("Material for Model Behavior");
+                            if(familyBehaviour != null)
+                            {
+                                mostLikelyClass = familyBehaviour.AsValueString();
+                            }
+                            
 
                             Parameter lengthParam = inst.LookupParameter("Cut Length");
                             double length = (lengthParam.AsDouble() * 304.8) / 1000;
@@ -212,8 +226,10 @@ namespace CarboCircle
                             ccEl.GUID = inst.UniqueId;
                             ccEl.name = el.Name;
                             ccEl.category = inst.Category.Name;
+                            ccEl.materialClass = mostLikelyClass;
+
                             ccEl.length = length;
-                            ccEl.netLength = length - appSettings.cutoffbeamLength;
+                            ccEl.netLength = length - (appSettings.cutoffbeamLength / 1000);
                             if (ccEl.netLength < 0)
                                 ccEl.netLength = 0;
 

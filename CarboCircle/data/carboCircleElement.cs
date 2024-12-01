@@ -16,6 +16,8 @@ namespace CarboCircle
         public string name { get; set; }
         //Imported Material Name
         public string materialName { get; set; }
+        public string materialClass { get; set; }
+
         //Matched To Material Name
         public double length { get; set; }
         public double netLength { get; set; }
@@ -43,6 +45,7 @@ namespace CarboCircle
             length = 0;
             quality = 1;
             category = "";
+            materialClass = "";
 
             standardName = "";
             standardCategory = "";
@@ -65,6 +68,7 @@ namespace CarboCircle
             clone.length = this.length;
             clone.quality = this.quality;
             clone.category = this.category;
+            clone.materialClass = this.materialClass;
 
             clone.standardName = this.standardName;
             clone.standardCategory = this.standardCategory;

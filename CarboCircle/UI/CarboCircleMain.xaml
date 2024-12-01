@@ -55,6 +55,7 @@
                     <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
                     <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
                     <GridViewColumn Header="Material" Width="75" DisplayMemberBinding="{Binding Path=materialName}"/>
+                    <GridViewColumn Header="MaterialClass" Width="75" DisplayMemberBinding="{Binding Path=materialClass}"/>
 
                     <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=netLength, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
                     <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=grade}" TextBlock.TextAlignment="Right"/>
@@ -85,15 +86,16 @@
                     <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
                     <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
                     <GridViewColumn Header="Material" Width="75" DisplayMemberBinding="{Binding Path=materialName}"/>
+                    <GridViewColumn Header="MaterialClass" Width="75" DisplayMemberBinding="{Binding Path=materialClass}"/>
 
-                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=length, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=netLength, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
                     <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=grade}" TextBlock.TextAlignment="Right"/>
                     <GridViewColumn Header="Condition" Width="75" DisplayMemberBinding="{Binding Path=quality}" TextBlock.TextAlignment="Right"/>
-                    <GridViewColumn Header="GUID" Width="50" DisplayMemberBinding="{Binding Path=guid}"/>
+                    <GridViewColumn Header="GUID" Width="50" DisplayMemberBinding="{Binding Path=GUID}"/>
 
+                    <GridViewColumn Header="Profile" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
                     <GridViewColumn Header="Type" Width="75" DisplayMemberBinding="{Binding Path=standardName}"/>
                     <GridViewColumn Header="Depth" Width="75" DisplayMemberBinding="{Binding Path=standardDepth}"/>
-                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
 
                     <GridViewColumn Header="Iy" Width="75" DisplayMemberBinding="{Binding Path=Iy}"/>
                     <GridViewColumn Header="Wely" Width="75" DisplayMemberBinding="{Binding Path=Wy}"/>

@@ -21,34 +21,68 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="1.2*"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Carbo Circle : Reuse Materials</Label>
-        <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource baseStyleBold}">Available Materials Settings</Label>
-        <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource baseStyleBold}">Required Materials</Label>
-        <Button x:Name="btn_Close" Grid.Row="13" Grid.Column="3" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Close"/>
-        <Button x:Name="btn_Accept" Grid.Row="13" Grid.Column="3" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Accept"/>
+        <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formBoldTitleStyle}">Carbo Circle Settings</Label>
+        <Button x:Name="btn_Close" Grid.Row="3" Grid.Column="3" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Close"/>
+        <Button x:Name="btn_Accept" Grid.Row="3" Grid.Column="3" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Accept"/>
 
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="65"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="85"/>
+                <RowDefinition Height="52"/>
+                <RowDefinition Height="52"/>
+                <RowDefinition Height="30"/>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Import Settings:"/>
+            <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Required Materials</Label>
+
+            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Materials to be imported:</Label>
+            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,10,0,0" Style="{StaticResource formGreyText}">Value is taken from Family or Material Class Parameter Value</Label>
+
+            <CheckBox x:Name="chk_ImportSteelBeams" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Steel Beams + Columns"/>
+            <CheckBox x:Name="chk_ImportMasonry" Grid.Row="4" Grid.Column="1" Margin="10,21,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Masonry" IsEnabled="False"/>
+            <CheckBox x:Name="chk_ImportConcrete" Grid.Row="4" Grid.Column="1" Margin="10,42,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Concrete" IsEnabled="False"/>
+
+            <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Steel Beam / Columns"/>
+            
+            <Label Grid.Column="1" Margin="5,-5,5,0" Grid.Row="6" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Parameter Used for Element Name:</Label>
+            <TextBox Grid.Column="1" Margin="5,20,5,0" Grid.Row="6" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" Height="55">The Size (designation) of a steel section size. As a default the Revit Type Name is used but you can override this by providing a type parameter.</TextBox>
+            <TextBox Name="txt_SteelElementName" Grid.Column="1" Grid.Row="6" Margin="15,55,0,0" Width="250" HorizontalAlignment="Left" Height="28" Grid.RowSpan="2" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+
+            <Label Grid.Column="1" Margin="5,-5,5,0" Grid.Row="7" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Parameter Used for Grade (If Used):</Label>
+            <TextBox Name="txt_SteelGradeParameter" Grid.Column="1" Grid.Row="7" Margin="15,20,0,0" Width="250" HorizontalAlignment="Left" Height="28" Grid.RowSpan="2" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+
+            <Label Grid.Column="1" Margin="5,-5,5,0" Grid.Row="8" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">When a steel beam or column is removed, below lenth is removed both sides:</Label>
+            <TextBox Name="txt_CutoffValue" Grid.Column="1" Grid.Row="8" Margin="15,20,0,0" Width="250" HorizontalAlignment="Left" Height="28" Grid.RowSpan="2" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+            <Label Grid.Column="1" Margin="265,25,5,0" Grid.Row="8" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">mm</Label>
+
+
+
+
+
+        </Grid>
     </Grid>
-    </Window>
+</Window>
