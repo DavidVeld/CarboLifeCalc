@@ -90,11 +90,6 @@ namespace CarboCircle.UI
             }
         }
 
-        private void btn_ImportmaterialsHandler_Click(object sender, RoutedEventArgs e)
-        {
-           // List<carboCircleElement> collectedElements = m_Handler.getCollectedElements();
-           // liv_availableMaterialList.ItemsSource = collectedElements;
-        }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {

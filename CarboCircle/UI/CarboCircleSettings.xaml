@@ -49,6 +49,10 @@
                 <RowDefinition Height="52"/>
                 <RowDefinition Height="52"/>
                 <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+
+                <RowDefinition Height="*"/>
 
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -67,7 +71,7 @@
             <CheckBox x:Name="chk_ImportConcrete" Grid.Row="4" Grid.Column="1" Margin="10,42,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Concrete" IsEnabled="False"/>
 
             <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Steel Beam / Columns"/>
-            
+
             <Label Grid.Column="1" Margin="5,-5,5,0" Grid.Row="6" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Parameter Used for Element Name:</Label>
             <TextBox Grid.Column="1" Margin="5,20,5,0" Grid.Row="6" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" Height="55">The Size (designation) of a steel section size. As a default the Revit Type Name is used but you can override this by providing a type parameter.</TextBox>
             <TextBox Name="txt_SteelElementName" Grid.Column="1" Grid.Row="6" Margin="15,55,0,0" Width="250" HorizontalAlignment="Left" Height="28" Grid.RowSpan="2" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
@@ -76,13 +80,62 @@
             <TextBox Name="txt_SteelGradeParameter" Grid.Column="1" Grid.Row="7" Margin="15,20,0,0" Width="250" HorizontalAlignment="Left" Height="28" Grid.RowSpan="2" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
 
             <Label Grid.Column="1" Margin="5,-5,5,0" Grid.Row="8" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">When a steel beam or column is removed, below lenth is removed both sides:</Label>
-            <TextBox Name="txt_CutoffValue" Grid.Column="1" Grid.Row="8" Margin="15,20,0,0" Width="250" HorizontalAlignment="Left" Height="28" Grid.RowSpan="2" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
-            <Label Grid.Column="1" Margin="265,25,5,0" Grid.Row="8" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">mm</Label>
+            <TextBox Name="txt_CutoffValue" Grid.Row="8" Margin="15,20,0,0" Width="275" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+            <Label Grid.Column="1" Margin="300,25,5,0" Grid.Row="8" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">mm</Label>
+
+            <Label Grid.Column="1" Grid.Row="9" Margin="0,3,0,0" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Masonry / Concrete"/>
+
+            <Label Margin="5,0,5,0" Grid.Row="10" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Masonry Loss (25% reccomended):</Label>
+            <TextBox Name="txt_MasonryLoss" Grid.Row="10" Margin="190,0,0,0" Width="100" HorizontalAlignment="Left" Height="28" Grid.RowSpan="2" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+            <Label Grid.Column="1" Margin="300,1,5,0" Grid.Row="10" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">%</Label>
+
+            <Label Margin="5,0,5,0" Grid.Row="11" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Concrete Loss (25% reccomended):</Label>
+            <TextBox Name="txt_ConcreteLoss" Grid.Row="11" Margin="190,0,0,0" Width="100" HorizontalAlignment="Left" Height="28" Grid.RowSpan="2" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+            <Label Grid.Column="1" Margin="300,1,5,0" Grid.Row="11" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">%</Label>
+
+
+
+        </Grid>
+
+        <Grid Grid.Column="3" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="160"/>
+                <RowDefinition Height="52"/>
+                <RowDefinition Height="52"/>
+                <RowDefinition Height="30"/>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Reuse Mapping Settings:"/>
+            <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Steel Beam / Column Settings</Label>
+
+            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}"></Label>
+
+            <Label Grid.Column="1" Margin="5,0,0,0" Grid.Row="4" Width="190" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Steel Member Mapping Table Path:</Label>
+            <TextBox Name="txt_SteelDataBasePath" Grid.Row="4"  Margin="190,1,50,0" TextWrapping="Wrap"   VerticalAlignment="Top"  Height="27" Background="Transparent"  Style="{StaticResource flatTextBox}" Text="[Path]" IsEnabled="False"/>
+            <Button Name="btn_Browse" Grid.Row="4" Margin="0,2,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="17" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_Browse_Click">...</Button>
+
+
+            <Label Grid.Column="1" Margin="5,-5,5,0" Grid.Row="5" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Beam Depth Tolerance (+):</Label>
+            <TextBox Name="txt_SteelBeamDepthTolerance" Grid.Row="5" Margin="190,0,0,0" Width="100" HorizontalAlignment="Left" Height="28" Grid.RowSpan="2" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+            <Label Grid.Column="1" Margin="300,1,5,0" Grid.Row="5" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">mm</Label>
 
 
 
 
 
         </Grid>
+
+
     </Grid>
 </Window>
