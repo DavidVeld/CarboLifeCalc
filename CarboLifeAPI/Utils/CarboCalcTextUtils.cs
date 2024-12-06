@@ -64,6 +64,8 @@ namespace CarboLifeAPI
             result.Columns.Add("D");
             result.Columns.Add("Sequestration");
             result.Columns.Add("Mix");
+            result.Columns.Add("IsSubstructure");
+
 
             foreach (CarboGroup cg in project.getGroupList)
             {
@@ -83,6 +85,11 @@ namespace CarboLifeAPI
                 dr["ECIm3"] = cg.getVolumeECI;
                 dr["EC"] = cg.EC;
                 dr["Percent"] = cg.PerCent;
+
+                if(cg.isSubstructure == true)
+                    dr["IsSubstructure"] = "1";
+                else
+                    dr["IsSubstructure"] = "0";
 
                 if (project.calculateA13 == true || fullResult == true)
                     dr["A1-A3"] = cg.getTotalA1A3;
@@ -108,6 +115,7 @@ namespace CarboLifeAPI
                 if (project.calculateAdd == true || fullResult == true)
                     dr["Mix"] = cg.getTotalMix;
 
+
                 result.Rows.Add(dr);
             }
 
@@ -115,7 +123,7 @@ namespace CarboLifeAPI
             return result;
         }
 
-        public static DataTable getByLevelTable(CarboProject project, bool fullResult = false)
+        public static DataTable getByElementTable(CarboProject project, bool fullResult = false)
         {
             if (fullResult == true)
                 project.CalculateProjectByPhase();
@@ -157,7 +165,11 @@ namespace CarboLifeAPI
                 dr["Category"] = ce.Category;
                 dr["SubCategory"] = ce.SubCategory;
                 dr["Material"] = ce.CarboMaterialName;
-                dr["IsSubstructure"] = ce.isSubstructure;
+                dr["IsSubstructure"] = "No";
+                if (ce.isSubstructure == true)
+                {
+                    dr["IsSubstructure"] = "Yes";
+                }
 
                 double totalEC = 0;
 
@@ -221,6 +233,7 @@ namespace CarboLifeAPI
             return result;
         }
 
+
         /// <summary>
         /// Converts a ResultTable to a DataPoint List for use in graphs
         /// </summary>
@@ -230,6 +243,14 @@ namespace CarboLifeAPI
         public static List<CarboDataPoint> ConvertResultTableToDataPoints(DataTable table, string Type = "Material")
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
+
+            if(Type == "Super - SubStructure")
+            {
+                valueList = ConvertResultTableToDataPointsSubSuperStruct(table);
+                return valueList;
+            }
+
+            //below for normal pie charts
             try
             {
                 foreach (DataRow dr in table.Rows)
@@ -237,7 +258,7 @@ namespace CarboLifeAPI
                     CarboDataPoint newelement = new CarboDataPoint();
                     if (Type == "Material")
                         newelement.Name = dr["Material"].ToString();
-                    else
+                    else //category
                         newelement.Name = dr["Category"].ToString();
 
                     newelement.Value = Utils.ConvertMeToDouble(dr["EC"].ToString());
@@ -259,6 +280,62 @@ namespace CarboLifeAPI
                     }
                     if (merged == false)
                         valueList.Add(newelement);
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+            //Values should return now;
+            return valueList;
+        }
+
+        /// <summary>
+        /// Converts a ResultTable to a DataPoint List split between substructure and superstructure
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="Type"></param>
+        /// <returns></returns>
+        public static List<CarboDataPoint> ConvertResultTableToDataPointsSubSuperStruct(DataTable table)
+        {
+            List<CarboDataPoint> valueList = new List<CarboDataPoint>();
+            try
+            {
+                //loop through each element
+                foreach (DataRow dr in table.Rows)
+                {
+                    CarboDataPoint newelement = new CarboDataPoint();
+                    
+                    //check if element is substructure:
+                    string isSubStruct = dr["IsSubstructure"].ToString();
+                    if (isSubStruct == "Yes")
+                        newelement.Name = "Substructure";
+                    else
+                        newelement.Name = "Superstructure";
+
+                    newelement.Value = Utils.ConvertMeToDouble(dr["TotalEC"].ToString());
+
+                    bool merged = false;
+                    //valueList.Add(newelement);
+
+                    //Add a new databoint, orr add value if exists
+                    //Add a new databoint, orr add value if exists
+                    if (valueList.Count > 0)
+                    {
+                        foreach (CarboDataPoint pp in valueList)
+                        {
+                            if (pp.Name == newelement.Name)
+                            {
+                                pp.Value += newelement.Value;
+                                merged = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (merged == false)
+                        valueList.Add(newelement);
+
                 }
             }
             catch

@@ -86,6 +86,8 @@ namespace CarboLifeUI.UI
                 {
                     cbb_GraphType.Items.Add("Material");
                     cbb_GraphType.Items.Add("Category");
+                    cbb_GraphType.Items.Add("Category Merged");
+                    cbb_GraphType.Items.Add("Super - SubStructure");
                     cbb_GraphType.Items.Add("By Level, Material");
                     cbb_GraphType.Items.Add("By Level, Category");
                     cbb_GraphType.Items.Add("By Level, Totals");
@@ -140,6 +142,20 @@ namespace CarboLifeUI.UI
                             pieSeries = GraphBuilder.GetPieChart(currentProjectResult, "Category");
 
                     }
+                    else if (cbb_GraphType.SelectedValue.ToString() == "Category Merged")
+                    {
+                        DataTable currentProjectResult = CarboCalcTextUtils.getResultTable(CarboLifeProject);
+                        if (currentProjectResult != null)
+                            pieSeries = GraphBuilder.GetPieChart(currentProjectResult, "Category Merged");
+
+                    }
+                    else if (cbb_GraphType.SelectedValue.ToString() == "Super - SubStructure")
+                    {
+                        DataTable currentProjectResult = CarboCalcTextUtils.getByElementTable(CarboLifeProject);
+                        if (currentProjectResult != null)
+                            pieSeries = GraphBuilder.GetPieChart(currentProjectResult, "Super - SubStructure");
+
+                    }
                     else if (cbb_GraphType.SelectedValue.ToString() == "By Level, Material" ||
                         cbb_GraphType.SelectedValue.ToString() == "By Level, Category" ||
                         cbb_GraphType.SelectedValue.ToString() == "By Level, Totals")
@@ -161,7 +177,7 @@ namespace CarboLifeUI.UI
 
                         List<string> levelList = CarboLifeProject.getSortedLevelList();
 
-                        DataTable currentProjectResult = CarboCalcTextUtils.getByLevelTable(CarboLifeProject);
+                        DataTable currentProjectResult = CarboCalcTextUtils.getByElementTable(CarboLifeProject);
 
                         if (currentProjectResult != null)
                             levelSeries = GraphBuilder.getLevelChartMaterial(currentProjectResult, graphType, out labels);

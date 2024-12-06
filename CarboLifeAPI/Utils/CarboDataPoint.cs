@@ -19,13 +19,14 @@ namespace CarboLifeAPI
                 set;
             }
 
+
         public CarboDataPoint()
         {
             this.Name = "";
             this.Value = 0;
         }
 
-        public CarboDataPoint(string Name, double Value)
+        public CarboDataPoint(string Name, double Value )
         {
             this.Name = Name;
             this.Value = Value;

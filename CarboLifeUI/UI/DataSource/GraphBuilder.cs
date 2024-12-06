@@ -571,7 +571,6 @@ namespace CarboLifeUI.UI
         }
 
 
-
         /// <summary>
         /// Returns a datapoint list based on per category
         /// </summary>
