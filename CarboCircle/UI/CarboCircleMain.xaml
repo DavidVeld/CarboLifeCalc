@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboCircle.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="900">
+             d:DesignHeight="600" d:DesignWidth="900" Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,13 +18,13 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="5"/>
+            <RowDefinition Height="2"/>
             <RowDefinition Height="35"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="2"/>
             <RowDefinition Height="*"/>
 
             <RowDefinition Height="30"/>
-            <RowDefinition Height="5"/>
+            <RowDefinition Height="2"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
@@ -72,7 +72,7 @@
                         <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">2. Load your project</Label>
                         <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">3. Find Opportunities</Label>
 
-                        <Button Name="btn_GotoMine" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" ></Button>
+                        <Button Name="btn_GotoMine" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="btn_GotoMine_Click" >Go-></Button>
                         <Button Name="btn_GotoProject" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" >Go-></Button>
                         <Button Name="btn_Go" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True">Go-></Button>
 
@@ -144,7 +144,7 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        
+
                         <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Reusable Mass Materials:</Label>
 
                         <ListView Name="liv_Massobjects" Grid.Column="1" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
@@ -164,9 +164,9 @@
             <TabItem Header="Mine Materials">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="2"/>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="2"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5"/>
@@ -178,18 +178,41 @@
                     <Grid Background="White" Grid.Row="1" Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="5"/>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="135"/>
+                            <RowDefinition Height="0"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="5"/>
                         </Grid.RowDefinitions>
 
-                        <Button x:Name="btn_ImportmaterialsRevit" Grid.Row="2" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Revit" Click="btn_ImportmaterialsRevit_Click"/>
+                        <Grid Background="White"  Grid.Column="1" Grid.Row="1" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="5"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Mine Data Methods:</Label>
 
-                        <Button x:Name="btn_ImportmaterialsCSV" Grid.Row="2" Grid.Column="1" Margin="85,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine CSV"/>
-                        <Button x:Name="btn_ImportmaterialsWeb" Grid.Row="2" Grid.Column="1" Margin="170,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Web"/>
+                            <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,0,0,0" Style="{StaticResource formTitleStyle}">Active Revit view:</Label>
+                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">A text document (CSV)</Label>
+                            <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">From an online url:</Label>
 
-                        <Button x:Name="btn_Exportmaterials" Grid.Row="2" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
+                            <Button x:Name="btn_ImportmaterialsRevit" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Revit" Click="btn_ImportmaterialsRevit_Click"/>
+                            <Button x:Name="btn_ImportmaterialsCSV" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine CSV"/>
+                            <Button x:Name="btn_ImportmaterialsWeb" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Web"/>
+
+
+
+                        </Grid>
+
 
                         <Grid Grid.Column="1" Grid.Row="3">
                             <Grid.RowDefinitions>
@@ -199,7 +222,7 @@
                                 <RowDefinition Height="35"/>
                                 <RowDefinition Height="65"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="85"/>
+                                <RowDefinition Height="65"/>
                                 <RowDefinition Height="52"/>
                                 <RowDefinition Height="52"/>
                                 <RowDefinition Height="30"/>
@@ -215,14 +238,23 @@
 
 
                             <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Import Settings:"/>
-                            <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Required Materials</Label>
+                            <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Mined Materials</Label>
 
                             <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Materials to be imported:</Label>
-                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,10,0,0" Style="{StaticResource formGreyText}">Value is taken from Family or Material Class Parameter Value</Label>
+                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,8,0,0" Style="{StaticResource formGreyText}">Value is taken from Family or Material Class Parameter Value</Label>
 
                             <CheckBox x:Name="chk_ImportSteelBeams" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Steel Beams + Columns"/>
                             <CheckBox x:Name="chk_ImportMasonry" Grid.Row="4" Grid.Column="1" Margin="10,21,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Masonry" IsEnabled="False"/>
                             <CheckBox x:Name="chk_ImportConcrete" Grid.Row="4" Grid.Column="1" Margin="10,42,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Concrete" IsEnabled="False"/>
+
+                            <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Elements to consider:</Label>
+                            <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,8,0,0" Style="{StaticResource formGreyText}">When importing elements look only here</Label>
+
+                            <ComboBox Name="cbb_MineSetting" Grid.Column="1" Grid.Row="6" Margin="10,0,0,0" Height="25" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}">
+                            </ComboBox>
+
+                            <Button x:Name="btn_MineSettings" Grid.Row="7" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}"  Content="Advanced Settings"/>
+
 
                         </Grid>
 
@@ -231,82 +263,214 @@
 
                     </Grid>
 
-                    <ListView Name="liv_availableMaterialList" Grid.Column="2" Grid.Row="1" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="8" Background="White">
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="False">
-                                <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
-                                <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
-                                <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
-                                <GridViewColumn Header="Material" Width="75" DisplayMemberBinding="{Binding Path=materialName}"/>
-                                <GridViewColumn Header="MaterialClass" Width="75" DisplayMemberBinding="{Binding Path=materialClass}"/>
+                    <Grid Background="White" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="4*"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Mined Beams and Columns:</Label>
 
-                                <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=netLength, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
-                                <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=grade}" TextBlock.TextAlignment="Right"/>
-                                <GridViewColumn Header="Condition" Width="75" DisplayMemberBinding="{Binding Path=quality}" TextBlock.TextAlignment="Right"/>
-                                <GridViewColumn Header="GUID" Width="50" DisplayMemberBinding="{Binding Path=GUID}"/>
+                        <ListView Name="liv_availableMaterialList" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="8" Background="White">
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="False">
+                                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
+                                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
+                                    <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
+                                    <GridViewColumn Header="Material" Width="75" DisplayMemberBinding="{Binding Path=materialName}"/>
+                                    <GridViewColumn Header="MaterialClass" Width="75" DisplayMemberBinding="{Binding Path=materialClass}"/>
 
-                                <GridViewColumn Header="Profile" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
-                                <GridViewColumn Header="Type" Width="75" DisplayMemberBinding="{Binding Path=standardName}"/>
-                                <GridViewColumn Header="Depth" Width="75" DisplayMemberBinding="{Binding Path=standardDepth}"/>
+                                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=netLength, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=grade}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="Condition" Width="75" DisplayMemberBinding="{Binding Path=quality}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="GUID" Width="50" DisplayMemberBinding="{Binding Path=GUID}"/>
 
-                                <GridViewColumn Header="Iy" Width="75" DisplayMemberBinding="{Binding Path=Iy}"/>
-                                <GridViewColumn Header="Wely" Width="75" DisplayMemberBinding="{Binding Path=Wy}"/>
-                                <GridViewColumn Header="MatchGUID" Width="75" DisplayMemberBinding="{Binding Path=matchGUID}"/>
+                                    <GridViewColumn Header="Profile" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
+                                    <GridViewColumn Header="Type" Width="75" DisplayMemberBinding="{Binding Path=standardName}"/>
+                                    <GridViewColumn Header="Depth" Width="75" DisplayMemberBinding="{Binding Path=standardDepth}"/>
 
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                                    <GridViewColumn Header="Iy" Width="75" DisplayMemberBinding="{Binding Path=Iy}"/>
+                                    <GridViewColumn Header="Wely" Width="75" DisplayMemberBinding="{Binding Path=Wy}"/>
+                                    <GridViewColumn Header="MatchGUID" Width="75" DisplayMemberBinding="{Binding Path=matchGUID}"/>
 
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Mined Mass Materials:</Label>
+
+                        <ListView Name="liv_MinedMassObjects" Grid.Column="1" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="False">
+                                    <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
+                                    <GridViewColumn Header="Quantity Reused" DisplayMemberBinding="{Binding Path=name}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                        <Button x:Name="btn_Exportmaterials" Grid.Row="5" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
+
+                    </Grid>
                 </Grid>
             </TabItem>
+
             <TabItem Header="Your Project">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="2"/>
                         <RowDefinition Height="1*"/>
-                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="2"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="btn_ImportProjectRevit" Grid.Row="1" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit" Click="btn_ImportProjectRevit_Click"/>
-                    <Button x:Name="btn_ImportProjectCSV" Grid.Row="1" Grid.Column="1" Margin="85,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV"/>
-                    <Button x:Name="btn_ExportProject" Grid.Row="1" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
+                    <Grid Background="White" Grid.Row="1" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="135"/>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+                        <Grid Background="White"  Grid.Column="1" Grid.Row="1" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="5"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Extract Data Methods:</Label>
 
-                    <ListView Name="liv_requiredMaterialList" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="False">
-                                <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
-                                <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
-                                <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
-                                <GridViewColumn Header="Material" Width="75" DisplayMemberBinding="{Binding Path=materialName}"/>
-                                <GridViewColumn Header="MaterialClass" Width="75" DisplayMemberBinding="{Binding Path=materialClass}"/>
+                            <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,0,0,0" Style="{StaticResource formTitleStyle}">Active Revit view:</Label>
+                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">A text document (CSV)</Label>
+                            <Label IsEnabled="False" Visibility="Visible" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">From an online url:</Label>
 
-                                <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=netLength, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
-                                <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=grade}" TextBlock.TextAlignment="Right"/>
-                                <GridViewColumn Header="Condition" Width="75" DisplayMemberBinding="{Binding Path=quality}" TextBlock.TextAlignment="Right"/>
-                                <GridViewColumn Header="GUID" Width="50" DisplayMemberBinding="{Binding Path=GUID}"/>
+                            <Button x:Name="btn_ImportProjectRevit" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit" Click="btn_ImportProjectRevit_Click"/>
+                            <Button x:Name="btn_ImportProjectCSV" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV"/>
+                            <Button IsEnabled="False" x:Name="btn_ExportProject" Visibility="Visible" Grid.Row="4" Grid.Column="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
 
-                                <GridViewColumn Header="Profile" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
-                                <GridViewColumn Header="Type" Width="75" DisplayMemberBinding="{Binding Path=standardName}"/>
-                                <GridViewColumn Header="Depth" Width="75" DisplayMemberBinding="{Binding Path=standardDepth}"/>
+                        </Grid>
+                        <Grid Grid.Column="1" Grid.Row="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="35"/>
+                                <RowDefinition Height="65"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="65"/>
+                                <RowDefinition Height="52"/>
+                                <RowDefinition Height="52"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
 
-                                <GridViewColumn Header="Iy" Width="75" DisplayMemberBinding="{Binding Path=Iy}"/>
-                                <GridViewColumn Header="Wely" Width="75" DisplayMemberBinding="{Binding Path=Wy}"/>
-                                <GridViewColumn Header="MatchGUID" Width="75" DisplayMemberBinding="{Binding Path=matchGUID}"/>
+                                <RowDefinition Height="*"/>
 
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
+
+                            <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Import Settings:"/>
+                            <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Mined Materials</Label>
+
+                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Materials to be reviews:</Label>
+                            <Label Grid.Row="3" Grid.ColumnSpan="1" Margin="0,9,0,64" Style="{StaticResource formGreyText}" Grid.RowSpan="2">Value is taken from Family or Material Class Parameter Value</Label>
+
+                            <CheckBox x:Name="chk_ImportProjectSteelBeams" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Steel Beams + Columns"/>
+                            <CheckBox x:Name="chk_ImportProjectMasonry" Grid.Row="4" Grid.Column="1" Margin="10,21,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Masonry" IsEnabled="False"/>
+                            <CheckBox x:Name="chk_ImportProjectConcrete" Grid.Row="4" Grid.Column="1" Margin="10,42,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Concrete" IsEnabled="False"/>
+
+                            <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Elements to consider:</Label>
+                            <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,8,0,0" Style="{StaticResource formGreyText}">When importing elements look only here</Label>
+
+                            <ComboBox Name="cbb_ImportProjectSetting" Grid.Column="1" Grid.Row="6" Margin="10,0,0,0" Height="25" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" >
+                            </ComboBox>
+
+                            <Button x:Name="btn_ImportProjectSettings" Grid.Row="7" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}"  Content="Advanced Settings" Click="btn_ImportProjectSettings_Click"/>
+
+                        </Grid>
+                    </Grid>
+
+                    <Grid Background="White" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="4*"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="2*"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="5"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Required Beams and Columns:</Label>
+
+                        <ListView Name="liv_requiredMaterialList" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="False">
+                                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
+                                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
+                                    <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
+                                    <GridViewColumn Header="Material" Width="75" DisplayMemberBinding="{Binding Path=materialName}"/>
+                                    <GridViewColumn Header="MaterialClass" Width="75" DisplayMemberBinding="{Binding Path=materialClass}"/>
+
+                                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=netLength, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=grade}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="Condition" Width="75" DisplayMemberBinding="{Binding Path=quality}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="GUID" Width="50" DisplayMemberBinding="{Binding Path=GUID}"/>
+
+                                    <GridViewColumn Header="Profile" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
+                                    <GridViewColumn Header="Type" Width="75" DisplayMemberBinding="{Binding Path=standardName}"/>
+                                    <GridViewColumn Header="Depth" Width="75" DisplayMemberBinding="{Binding Path=standardDepth}"/>
+
+                                    <GridViewColumn Header="Iy" Width="75" DisplayMemberBinding="{Binding Path=Iy}"/>
+                                    <GridViewColumn Header="Wely" Width="75" DisplayMemberBinding="{Binding Path=Wy}"/>
+                                    <GridViewColumn Header="MatchGUID" Width="75" DisplayMemberBinding="{Binding Path=matchGUID}"/>
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Required Mass Materials:</Label>
+
+                        <ListView Name="liv_RequiredMassObjects" Grid.Column="1" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="False">
+                                    <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
+                                    <GridViewColumn Header="Quantity Reused" DisplayMemberBinding="{Binding Path=name}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
                 </Grid>
-                
             </TabItem>
-            <TabItem Header="Settings" Visibility="Visible">
+
+
+            <TabItem Header="Settings" Visibility="Hidden">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="5"/>
@@ -329,5 +493,5 @@
 
     </Grid>
 
- 
+
 </Window>

@@ -240,13 +240,19 @@ namespace CarboLifeAPI
         /// <param name="table"></param>
         /// <param name="Type"></param>
         /// <returns></returns>
-        public static List<CarboDataPoint> ConvertResultTableToDataPoints(DataTable table, string Type = "Material")
+        public static List<CarboDataPoint> ConvertResultTableToDataPoints(DataTable table, string Type = "Material", List<CarboElement> projectElements = null)
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
 
-            if(Type == "Super - SubStructure")
+            if(Type == "Super - SubStructure" && table == null)
             {
-                valueList = ConvertResultTableToDataPointsSubSuperStruct(table);
+                valueList = ConvertResultTableToDataPointsSubSuperStruct(projectElements);
+                return valueList;
+            }
+
+            if (Type == "Category Merged" && table == null)
+            {
+                valueList = ConvertResultTableToDataPointsMerged(projectElements);
                 return valueList;
             }
 
@@ -292,29 +298,88 @@ namespace CarboLifeAPI
         }
 
         /// <summary>
-        /// Converts a ResultTable to a DataPoint List split between substructure and superstructure
+        /// By category dataset, however reinforcement values are added to the category
         /// </summary>
-        /// <param name="table"></param>
-        /// <param name="Type"></param>
+        /// <param name="projectElements"></param>
         /// <returns></returns>
-        public static List<CarboDataPoint> ConvertResultTableToDataPointsSubSuperStruct(DataTable table)
+        private static List<CarboDataPoint> ConvertResultTableToDataPointsMerged(List<CarboElement> projectElements)
         {
             List<CarboDataPoint> valueList = new List<CarboDataPoint>();
             try
             {
                 //loop through each element
-                foreach (DataRow dr in table.Rows)
+                foreach (CarboElement cEl in projectElements)
+                {
+                    CarboDataPoint newelement = new CarboDataPoint();
+
+                    //check if element is substructure:
+                    // string isSubStruct = dr["IsSubstructure"].ToString();
+
+                    if(cEl.Category == "Reinforcement")
+                        newelement.Name = cEl.SubCategory;
+                    else
+                        newelement.Name = cEl.Category;
+
+                    newelement.Value = cEl.EC;
+
+                    bool merged = false;
+                    //valueList.Add(newelement);
+
+                    //Add a new databoint, orr add value if exists
+                    //Add a new databoint, orr add value if exists
+                    if (valueList.Count > 0)
+                    {
+                        foreach (CarboDataPoint pp in valueList)
+                        {
+                            if (pp.Name == newelement.Name)
+                            {
+                                pp.Value += newelement.Value;
+                                merged = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (merged == false)
+                        valueList.Add(newelement);
+
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+
+
+            //Values should return now;
+            return valueList;
+        }
+
+        /// <summary>
+        /// Converts a ResultTable to a DataPoint List split between substructure and superstructure
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="Type"></param>
+        /// <returns></returns>
+        public static List<CarboDataPoint> ConvertResultTableToDataPointsSubSuperStruct(List<CarboElement> projectElements)
+        {
+            List<CarboDataPoint> valueList = new List<CarboDataPoint>();
+            try
+            {
+                //loop through each element
+                foreach (CarboElement cEl in projectElements)
                 {
                     CarboDataPoint newelement = new CarboDataPoint();
                     
                     //check if element is substructure:
-                    string isSubStruct = dr["IsSubstructure"].ToString();
-                    if (isSubStruct == "Yes")
+                   // string isSubStruct = dr["IsSubstructure"].ToString();
+
+                    if (cEl.isSubstructure == true)
                         newelement.Name = "Substructure";
                     else
                         newelement.Name = "Superstructure";
 
-                    newelement.Value = Utils.ConvertMeToDouble(dr["TotalEC"].ToString());
+                    newelement.Value = cEl.EC;
 
                     bool merged = false;
                     //valueList.Add(newelement);

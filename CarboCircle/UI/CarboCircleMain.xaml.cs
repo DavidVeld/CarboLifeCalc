@@ -106,6 +106,26 @@ namespace CarboCircle.UI
             base.OnClosing(e);
         }
 
+        private void btn_GotoMine_Click(object sender, RoutedEventArgs e)
+        {
+            tab_Main.TabIndex = 1;
+        }
 
+        private void btn_ImportProjectSettings_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            cbb_ImportProjectSetting.Items.Add("All Visible In View");
+            cbb_ImportProjectSetting.Items.Add("All Demolished In View");
+            cbb_ImportProjectSetting.Items.Add("Selected");
+
+            cbb_MineSetting.Items.Add("All Visible In View");
+            cbb_MineSetting.Items.Add("All Demolished In View");
+            cbb_MineSetting.Items.Add("Selected");
+            
+        }
     }
 }

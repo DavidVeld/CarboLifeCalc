@@ -478,7 +478,7 @@ namespace CarboLifeUI.UI
         /// <param name="resultsTable">DataTable as per CarboCalcTextUtils.getResultTable(CarboLifeProject)</param>
         /// <param name="Type">Material or Category</param>
         /// <returns></returns>
-        internal static SeriesCollection GetPieChart(DataTable resultsTable, string Type = "Material")
+        internal static SeriesCollection GetPieChart(DataTable resultsTable, string Type = "Material", List<CarboElement> projectElements = null)
         {
             SeriesCollection result = new SeriesCollection();
             SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
@@ -489,7 +489,7 @@ namespace CarboLifeUI.UI
                 Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂", chartPoint.Y, chartPoint.Participation);
 
                 //Get the DataPint
-                PieceListMaterial = CarboCalcTextUtils.ConvertResultTableToDataPoints(resultsTable, Type);
+                PieceListMaterial = CarboCalcTextUtils.ConvertResultTableToDataPoints(resultsTable, Type, projectElements);
 
                 PieceListMaterial = PieceListMaterial.OrderByDescending(o => o.Value).ToList();
 

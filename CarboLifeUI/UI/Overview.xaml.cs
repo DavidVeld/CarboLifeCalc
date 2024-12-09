@@ -20,6 +20,7 @@ using CarboLifeAPI;
 using System.Data;
 using System.IO;
 using Autodesk.Revit.DB.Visual;
+using Autodesk.Revit.DB;
 
 namespace CarboLifeUI.UI
 {
@@ -117,8 +118,8 @@ namespace CarboLifeUI.UI
 
                     //SeriesCollection pieLifeSeries = GraphBuilder.GetPieChartTotals(CarboLifeProject);
 
-                    chart_Level.Visibility = Visibility.Hidden;
-                    pie_Chart1.Visibility = Visibility.Visible;
+                    chart_Level.Visibility = System.Windows.Visibility.Hidden;
+                    pie_Chart1.Visibility = System.Windows.Visibility.Visible;
 
                     if (cbb_GraphType.SelectedValue == null)
                     {
@@ -144,16 +145,18 @@ namespace CarboLifeUI.UI
                     }
                     else if (cbb_GraphType.SelectedValue.ToString() == "Category Merged")
                     {
-                        DataTable currentProjectResult = CarboCalcTextUtils.getResultTable(CarboLifeProject);
-                        if (currentProjectResult != null)
-                            pieSeries = GraphBuilder.GetPieChart(currentProjectResult, "Category Merged");
+                        DataTable currentProjectResult = null;
+                        List<CarboElement> projectElements = CarboLifeProject.getElementsFromGroups().ToList();
+                        if (projectElements != null)
+                            pieSeries = GraphBuilder.GetPieChart(currentProjectResult, "Category Merged", projectElements);
 
                     }
                     else if (cbb_GraphType.SelectedValue.ToString() == "Super - SubStructure")
                     {
-                        DataTable currentProjectResult = CarboCalcTextUtils.getByElementTable(CarboLifeProject);
-                        if (currentProjectResult != null)
-                            pieSeries = GraphBuilder.GetPieChart(currentProjectResult, "Super - SubStructure");
+                        DataTable currentProjectResult = null;
+                        List<CarboElement> projectElements = CarboLifeProject.getElementsFromGroups().ToList();
+                        if (projectElements != null)
+                            pieSeries = GraphBuilder.GetPieChart(currentProjectResult, "Super - SubStructure", projectElements);
 
                     }
                     else if (cbb_GraphType.SelectedValue.ToString() == "By Level, Material" ||
@@ -162,8 +165,8 @@ namespace CarboLifeUI.UI
                     {
                         string graphType = "";
 
-                        chart_Level.Visibility = Visibility.Visible;
-                        pie_Chart1.Visibility = Visibility.Hidden;
+                        chart_Level.Visibility = System.Windows.Visibility.Visible;
+                        pie_Chart1.Visibility = System.Windows.Visibility.Hidden;
 
                         if (cbb_GraphType.SelectedValue.ToString() == "By Level, Material")
                             graphType = "Material";
@@ -385,8 +388,8 @@ namespace CarboLifeUI.UI
 
         private void Cnv_Summary_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Visibility = Visibility.Hidden;
-            this.Visibility = Visibility.Visible;
+            this.Visibility = System.Windows.Visibility.Hidden;
+            this.Visibility = System.Windows.Visibility.Visible;
 
         }
       

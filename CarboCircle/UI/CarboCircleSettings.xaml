@@ -63,13 +63,6 @@
             <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Import Settings:"/>
             <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Required Materials</Label>
 
-            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Materials to be imported:</Label>
-            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,10,0,0" Style="{StaticResource formGreyText}">Value is taken from Family or Material Class Parameter Value</Label>
-
-            <CheckBox x:Name="chk_ImportSteelBeams" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Steel Beams + Columns"/>
-            <CheckBox x:Name="chk_ImportMasonry" Grid.Row="4" Grid.Column="1" Margin="10,21,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Masonry" IsEnabled="False"/>
-            <CheckBox x:Name="chk_ImportConcrete" Grid.Row="4" Grid.Column="1" Margin="10,42,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Concrete" IsEnabled="False"/>
-
             <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Steel Beam / Columns"/>
 
             <Label Grid.Column="1" Margin="5,-5,5,0" Grid.Row="6" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Parameter Used for Element Name:</Label>
