@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.DB;
+using CarboLifeAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace CarboCircle
     {
 
         public int id { get; set; }
+        public string humanId { get; set; }
         public string category { get; set; }
         public string name { get; set; }
         //Imported Material Name
@@ -20,11 +22,15 @@ namespace CarboCircle
 
         //Matched To Material Name
         public double length { get; set; }
+        public double volume { get; set; }
         public double netLength { get; set; }
+        public double netVolume { get; set; }
+
         public string grade { get; set; }
         public int quality { get; set; }
         public string GUID { get; set; }
 
+        public bool isVolumeElement { get; set; }
 
         //The Below are taken from standardized Database
         public string standardName { get; set; }
@@ -32,13 +38,16 @@ namespace CarboCircle
         public string standardCategory { get; set; }
         public double Iy { get; set; }
         public double Wy { get; set; }
+        public double Iz { get; set; }
+        public double Wz { get; set; }
         public string matchGUID { get; set; }
-
+       
 
 
         public carboCircleElement()
         {
             id = -999;
+            humanId = "";
             name = "";
             materialName = "Other";
             grade = "";
@@ -47,11 +56,16 @@ namespace CarboCircle
             category = "";
             materialClass = "";
 
+            isVolumeElement = false;
+            volume = 0;
+
             standardName = "";
             standardCategory = "";
             standardDepth = 0;
             Iy = 0;
             Wy = 0;
+            Iz = 0;
+            Wz = 0;
             GUID = "";
             matchGUID = "";
          }
@@ -59,25 +73,35 @@ namespace CarboCircle
 
     public carboCircleElement Copy()
         {
-            carboCircleElement clone = new carboCircleElement();
+            carboCircleElement clone = new carboCircleElement
+            {
+                id = this.id,
+                humanId = this.humanId,
+                name = this.name,
+                materialName = this.name,
+                grade = this.name,
+                length = this.length,
+                netLength = this.netLength,
+                netVolume = this.netVolume,
 
-            clone.id = this.id;
-            clone.name = this.name;
-            clone.materialName = this.name;
-            clone.grade = this.name;
-            clone.length = this.length;
-            clone.quality = this.quality;
-            clone.category = this.category;
-            clone.materialClass = this.materialClass;
+                quality = this.quality,
+                category = this.category,
+                materialClass = this.materialClass,
 
-            clone.standardName = this.standardName;
-            clone.standardCategory = this.standardCategory;
-            clone.standardDepth = this.standardDepth;
+                isVolumeElement = this.isVolumeElement,
+                volume = this.volume,
+                
+                standardName = this.standardName,
+                standardCategory = this.standardCategory,
+                standardDepth = this.standardDepth,
 
-            clone.Iy = this.Iy;
-            clone.Wy = this.Wy;
-            clone.GUID = this.GUID;
-            clone.matchGUID = this.matchGUID;
+                Iy = this.Iy,
+                Wy = this.Wy,
+                Iz = this.Iz,
+                Wz = this.Wz,
+                GUID = this.GUID,
+                matchGUID = this.matchGUID
+            };
 
             return clone;
         }

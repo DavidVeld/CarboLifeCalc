@@ -69,7 +69,6 @@
     <Compile Include="CarboCircleHandler.cs" />
     <Compile Include="CarboCircleCommand.cs" />
     <Compile Include="carboCircleRevitCommands.cs" />
-    <Compile Include="data\carboCircleBeam.cs" />
     <Compile Include="data\carboCircleElement.cs" />
     <Compile Include="data\carboCircleProject.cs" />
     <Compile Include="data\carboCircleSettings.cs" />

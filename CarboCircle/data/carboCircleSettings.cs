@@ -9,10 +9,7 @@ namespace CarboCircle.data
     public class carboCircleSettings
     {
         //Project Parameters
-        public string ProjectName { get; set; }
-        public string Number { get; set; }
-        public string Category { get; set; }
-        public string Description { get; set; }
+
 
         //generalImportSettings
         public string TypeParameterName { get; set; } //Always By Type, or type name if empty
@@ -27,14 +24,10 @@ namespace CarboCircle.data
         //matchSettings
         public double depthRange { get; set; }
         public double strengthRange { get; set; }
-
+        public int VolumeLoss { get; internal set; }
 
         public carboCircleSettings()
         {
-            ProjectName = string.Empty;
-            Number = string.Empty;
-            Category = string.Empty;
-            Description = string.Empty;
 
             TypeParameterName = string.Empty;
             cutoffbeamLength = 600;
@@ -42,6 +35,7 @@ namespace CarboCircle.data
 
             depthRange = 50;
             strengthRange = .10;
+            VolumeLoss = 25;
         }
     }
 }

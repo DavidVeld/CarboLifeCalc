@@ -27,15 +27,14 @@ namespace CarboCircle.UI
         private CarboCircleHandler m_Handler;
         private ExternalEvent m_ExEvent;
 
-        public List<carboCircleElement> availableData;
-        public List<carboCircleElement> requiredData;
-
-        private static carboCircleProject project;
+        private static carboCircleProject activeProject;
 
         private int dataSwitch = 0;
         public CarboCircleMain()
         {
             InitializeComponent();
+            activeProject = new carboCircleProject();
+
         }
 
         public CarboCircleMain(ExternalEvent exEvent, CarboCircleHandler handler)
@@ -45,12 +44,12 @@ namespace CarboCircle.UI
             this.m_ExEvent = exEvent;
             this.m_Handler = handler;
 
-            project = new carboCircleProject();
-
-            availableData = new List<carboCircleElement>();
+            activeProject = new carboCircleProject();
 
             // Subscribe to the DataReady event
             m_Handler.DataReady += OnDataReady;
+
+            
         }
 
         private void OnDataReady(object sender, List<carboCircleElement> e)
@@ -59,13 +58,13 @@ namespace CarboCircle.UI
             {
                 if (dataSwitch == 0)
                 {
-                    availableData = e;
-                    liv_availableMaterialList.ItemsSource = availableData;
+                    activeProject.minedData = e;
+                    liv_availableMaterialList.ItemsSource = activeProject.minedData;
                 }
                 else
                 {
-                    requiredData = e;
-                    liv_requiredMaterialList.ItemsSource = requiredData;
+                    activeProject.requiredData = e;
+                    liv_requiredMaterialList.ItemsSource = activeProject.requiredData;
                 }
             }
         }
@@ -118,14 +117,28 @@ namespace CarboCircle.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
+            LoadInterFaceFromSettings();
+
+        }
+
+        private void LoadInterFaceFromSettings()
+        {
+            cbb_ImportProjectSetting.Items.Clear();
+            cbb_MineSetting.Items.Clear();
+
             cbb_ImportProjectSetting.Items.Add("All Visible In View");
             cbb_ImportProjectSetting.Items.Add("All Demolished In View");
             cbb_ImportProjectSetting.Items.Add("Selected");
+            cbb_ImportProjectSetting.SelectedIndex = 0;
 
             cbb_MineSetting.Items.Add("All Visible In View");
             cbb_MineSetting.Items.Add("All Demolished In View");
             cbb_MineSetting.Items.Add("Selected");
-            
+            cbb_MineSetting.SelectedIndex = 1;
+
+//            txt_ProjectName.Text = project.projectName;
+
         }
     }
 }

@@ -21,6 +21,7 @@ using CarboLifeUI;
 using CarboLifeUI.UI;
 using Microsoft.Win32;
 using Path = System.IO.Path;
+using CarboCircle;
 
 namespace CarboLifeCalc
 {
@@ -152,7 +153,7 @@ namespace CarboLifeCalc
 
         private void btn_Test_Click(object sender, RoutedEventArgs e)
         {
-            CarboLifeUI.UI.HeatMapCreator creator = new HeatMapCreator();
+            CarboCircle.UI.CarboCircleMain creator = new CarboCircle.UI.CarboCircleMain();
             creator.Show();
         }
 

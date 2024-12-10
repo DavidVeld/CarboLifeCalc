@@ -9,14 +9,31 @@ namespace CarboCircle.data
     [Serializable]
     public class carboCircleProject
     {
-        public static List<carboCircleElement> availableElements { get; set; }
-        public static List<carboCircleElement> proposedElements { get; set; }
+        public string ProjectName { get; set; }
+        public string ProjectNumber { get; set; }
+        public string ProjectCategory { get; set; }
+        public string ProjectDescription { get; set; }
+
+        public List<carboCircleElement> minedVolumes { get; set; }
+        public List<carboCircleElement> requiredVolumes { get; set; }
+        public List<carboCircleElement> minedData { get; set; }
+        public List<carboCircleElement> requiredData { get; set; }
         public carboCircleSettings settings { get; set; }
 
         public carboCircleProject() 
         {
-            availableElements = new List<carboCircleElement>();
-            proposedElements = new List<carboCircleElement>();
+            ProjectName = "New Project";
+            ProjectNumber = "000";
+            ProjectCategory = "";
+            ProjectDescription = "";
+
+
+
+            minedData = new List<carboCircleElement>();
+            minedVolumes = new List<carboCircleElement>();
+            minedData = new List<carboCircleElement>();
+            requiredData = new List<carboCircleElement>();
+
             settings = new carboCircleSettings();
         }
 

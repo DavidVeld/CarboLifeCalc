@@ -199,27 +199,54 @@ namespace CarboCircle
                         FamilyInstance inst = el as FamilyInstance;
                         if (inst != null)
                         {
-                            string mostLikelyClass = "Not Defined in Famil";
+                            string mostLikelyClass = "";
+                            bool isVolumne = false;
+                            //First Look in the material:
 
                             List<ElementId> materials = inst.GetMaterialIds(false).ToList();
+
                             Material material = null;
                             if (materials.Count > 0)
                             {
                                 material = doc.GetElement(materials[0]) as Material;
-                                string materialclass = material.MaterialCategory;
+                                if (material != null)
+                                {
+                                    string materialclass = material.MaterialCategory;
+                                    if (materialclass != null && materialclass != "")
+                                        mostLikelyClass = materialclass;
+                                }
                             }
 
-                            FamilySymbol familySymbol = inst.Symbol;
-                            Family family = familySymbol.Family;
-                            Parameter familyBehaviour = family.LookupParameter("Material for Model Behavior");
-                            if(familyBehaviour != null)
+                            //Only if material fails check the family class:
+                            if (mostLikelyClass != "")
                             {
-                                mostLikelyClass = familyBehaviour.AsValueString();
+                                FamilySymbol familySymbol = inst.Symbol;
+                                Family family = familySymbol.Family;
+                                Parameter familyBehaviour = family.LookupParameter("Material for Model Behavior");
+                                if (familyBehaviour != null)
+                                {
+                                    mostLikelyClass = familyBehaviour.AsValueString();
+                                }
+                            }
+
+                            if(mostLikelyClass == "Steel" || mostLikelyClass == "Wood")
+                            {
+                                //In this case the element is a steel beam or column
+                                isVolumne = true;
                             }
                             
+                            double volume = el.GetMaterialVolume(material.Id);
+                            if (volume != 0)
+                                volume = volume * 0.0283168466; //to m3
 
+                            double length = 0;
                             Parameter lengthParam = inst.LookupParameter("Cut Length");
-                            double length = (lengthParam.AsDouble() * 304.8) / 1000;
+                            if(lengthParam != null)
+                            {
+                                length = (lengthParam.AsDouble() * 304.8) / 1000; //to m1
+                            }
+
+
 
                             carboCircleElement ccEl = new carboCircleElement();
                             ccEl.id = inst.Id.IntegerValue;
@@ -229,17 +256,22 @@ namespace CarboCircle
                             ccEl.materialClass = mostLikelyClass;
 
                             ccEl.length = length;
+                            ccEl.volume = volume;
+
+
                             ccEl.netLength = length - (appSettings.cutoffbeamLength / 1000);
                             if (ccEl.netLength < 0)
                                 ccEl.netLength = 0;
 
-
+                            ccEl.netVolume = volume * (appSettings.VolumeLoss / 100);
 
                             if (material != null)
                             {
                                 ccEl.materialName = material.Name;
-                                ccEl.grade = material.MaterialClass.ToString();
+                                ccEl.grade = "Not Implemented";
                             }
+
+                            ccEl.isVolumeElement = isVolumne;
 
                             resultCollection.Add(ccEl);
                         }
