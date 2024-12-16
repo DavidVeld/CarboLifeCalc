@@ -25,6 +25,7 @@ namespace CarboCircle.data
         public double depthRange { get; set; }
         public double strengthRange { get; set; }
         public int VolumeLoss { get; internal set; }
+        public bool MineWalls { get; internal set; }
 
         public carboCircleSettings()
         {

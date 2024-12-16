@@ -13,7 +13,9 @@ namespace CarboCircle
     {
 
         public int id { get; set; }
+        public string GUID { get; set; }
         public string humanId { get; set; }
+
         public string category { get; set; }
         public string name { get; set; }
         //Imported Material Name
@@ -28,7 +30,6 @@ namespace CarboCircle
 
         public string grade { get; set; }
         public int quality { get; set; }
-        public string GUID { get; set; }
 
         public bool isVolumeElement { get; set; }
 
@@ -55,10 +56,11 @@ namespace CarboCircle
             quality = 1;
             category = "";
             materialClass = "";
-
             isVolumeElement = false;
-            volume = 0;
 
+            volume = 0;
+            netVolume = 0;
+            netLength = 0;
             standardName = "";
             standardCategory = "";
             standardDepth = 0;
@@ -66,6 +68,7 @@ namespace CarboCircle
             Wy = 0;
             Iz = 0;
             Wz = 0;
+
             GUID = "";
             matchGUID = "";
          }
@@ -78,27 +81,26 @@ namespace CarboCircle
                 id = this.id,
                 humanId = this.humanId,
                 name = this.name,
-                materialName = this.name,
-                grade = this.name,
+                materialName = this.materialName,
+                grade = this.grade,
+
                 length = this.length,
                 netLength = this.netLength,
                 netVolume = this.netVolume,
-
                 quality = this.quality,
                 category = this.category,
-                materialClass = this.materialClass,
 
+                materialClass = this.materialClass,
                 isVolumeElement = this.isVolumeElement,
                 volume = this.volume,
-                
                 standardName = this.standardName,
                 standardCategory = this.standardCategory,
                 standardDepth = this.standardDepth,
-
                 Iy = this.Iy,
                 Wy = this.Wy,
                 Iz = this.Iz,
                 Wz = this.Wz,
+
                 GUID = this.GUID,
                 matchGUID = this.matchGUID
             };

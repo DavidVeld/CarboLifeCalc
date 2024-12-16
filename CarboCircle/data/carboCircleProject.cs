@@ -31,12 +31,147 @@ namespace CarboCircle.data
 
             minedData = new List<carboCircleElement>();
             minedVolumes = new List<carboCircleElement>();
-            minedData = new List<carboCircleElement>();
+            requiredData = new List<carboCircleElement>();
             requiredData = new List<carboCircleElement>();
 
             settings = new carboCircleSettings();
         }
 
+        /// <summary>
+        /// Pursed a raw datalist to a sorted list, massobjcts separated from data
+        /// </summary>
+        /// <param name="collectedElements"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        internal void ParseMinedData(List<carboCircleElement> collectedElements)
+        {
+            minedData.Clear();
+            minedVolumes.Clear();
+            List<carboCircleElement> minedVolumeBuffer = new List<carboCircleElement>();
 
+
+            foreach (carboCircleElement element in collectedElements)
+            {
+                try
+                {
+                    if(element.isVolumeElement)
+                    {
+                        minedVolumeBuffer.Add(element.Copy());
+                    }
+                    else
+                    {
+                        minedData.Add(element.Copy());
+                    }
+                }
+                catch
+                { }
+            }
+
+            //combine all volumdata to single;
+            minedVolumes = combineByMaterialName(minedVolumeBuffer);
+
+            correctMinedValues();
+        }
+
+        private void correctMinedValues()
+        {
+            if (settings.cutoffbeamLength < 0)
+                settings.cutoffbeamLength = 500;
+
+            if (settings.VolumeLoss <= 0)
+                settings.VolumeLoss = 25;
+
+
+            foreach (carboCircleElement cCE in minedData)
+            {
+                double percentageCut = 0;
+                double length  = cCE.length;
+                double lengthNet = cCE.length - (settings.cutoffbeamLength / 1000); ;
+
+                if (lengthNet < 0)
+                    lengthNet = 0;
+
+                percentageCut = lengthNet / length;
+                if (percentageCut < 0)
+                    percentageCut = 0;
+
+                cCE.netLength = lengthNet;
+                cCE.netVolume = cCE.volume * percentageCut;
+
+            }
+
+            double factor = 1 - (Convert.ToDouble(settings.VolumeLoss) / 100);
+
+            foreach (carboCircleElement cCE in minedVolumes)
+            {
+                cCE.netVolume = cCE.volume * factor;
+            }
+        }
+
+        private List<carboCircleElement> combineByMaterialName(List<carboCircleElement> minedVolumeBuffer)
+        {
+            List<carboCircleElement> result = new List<carboCircleElement>();
+
+            foreach(carboCircleElement vE in minedVolumeBuffer)
+            {
+                if(vE.isVolumeElement)
+                {
+                    try
+                    {
+                        bool existingElement = false;
+                        foreach (carboCircleElement vRE in result)
+                        {
+                            if (vE.materialName == vRE.materialName)
+                            {
+                                vRE.id = 0;
+                                vRE.GUID += ";" + vE.GUID;
+                                vRE.humanId += ";" + vE.humanId;
+
+                                vRE.category += ";" + vE.category;
+                                vRE.volume += vE.volume;
+                                vRE.netVolume += vE.netVolume;
+                                existingElement = true;
+                                continue;
+                            }
+                        }
+                        if (existingElement == false)
+                        {
+                            vE.name = vE.materialName;
+                            result.Add(vE.Copy());
+                        }
+                    }
+                    catch 
+                    { 
+                    }
+                }
+            }
+
+            return result;
+
+
+        }
+
+        internal void ParseRequiredData(List<carboCircleElement> collectedElements)
+        {
+            requiredData.Clear();
+            requiredVolumes.Clear();
+
+            foreach (carboCircleElement element in collectedElements)
+            {
+                try
+                {
+                    if (element.isVolumeElement)
+                    {
+                        requiredVolumes.Add(element.Copy());
+                    }
+                    else
+                    {
+                        requiredData.Add(element.Copy());
+                    }
+                }
+                catch
+                { }
+            }
+
+        }
     }
 }

@@ -9,14 +9,17 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows.Controls;
+using static Autodesk.Revit.DB.SpecTypeId;
+using System.Windows.Media.Media3D;
 
 namespace CarboCircle
 {
     internal class carboCircleRevitCommands
     {
-        internal static List<carboCircleElement> getElementsFromActiveView(UIApplication uiapp, carboCircleSettings appSettings)
+     /*
+        internal static carboCircleProject getElementsFromActiveView(UIApplication uiapp, carboCircleSettings appSettings)
         {
-            List<carboCircleElement> resultCollection = new List<carboCircleElement>();
+            carboCircleProject resultProject = new carboCircleProject();
 
             UIDocument uidoc = uiapp.ActiveUIDocument;
             Document doc = uidoc.Document;
@@ -34,6 +37,98 @@ namespace CarboCircle
             if (beamCollection.Count() > 0)
             {
                 foreach (carboCircleElement ccEl in beamCollection)
+                {
+                    if (ccEl.isVolumeElement == false)
+                    {
+                        resultProject.minedData.Add(ccEl.Copy());
+                    }
+                    else
+                    {
+                        resultProject.minedVolumes.Add(ccEl.Copy());
+                    }
+                }
+            }
+
+                if (columnCollection.Count() > 0)
+            {
+                foreach (carboCircleElement ccEl in columnCollection)
+                        if (ccEl.isVolumeElement == false)
+                        {
+                            resultProject.minedData.Add(ccEl.Copy());
+                        }
+                        else
+                        {
+                            resultProject.minedVolumes.Add(ccEl.Copy());
+                        }
+                }
+
+            resultProject.minedData = MapElementsTodataBase(resultProject.minedData, appSettings);
+            resultProject.minedVolumes = CombineVolumesData(resultProject.minedVolumes, appSettings);
+
+            return resultProject;
+
+        }
+     */
+        private static List<carboCircleElement> CombineVolumesData(List<carboCircleElement> minedVolumes, carboCircleSettings appSettings)
+        {
+            List<carboCircleElement> CombinedList = new List<carboCircleElement>();
+
+            foreach (carboCircleElement ccE in minedVolumes)
+            {
+                bool found = false;
+                if (CombinedList.Count > 0)
+                {
+                    foreach (carboCircleElement ccEl in CombinedList)
+                    {
+                        if(ccEl.materialName == ccE.materialName && ccEl.materialClass == ccE.materialClass)
+                        {
+                            ccEl.volume += ccE.volume;
+                            ccEl.netVolume += ccE.netVolume;
+                        }
+                    }
+                }
+
+                //Add a new Value
+                if (found == false)
+                {
+                    carboCircleElement newCombinedValue = new carboCircleElement();
+                    newCombinedValue = ccE.Copy();
+                }
+            }
+
+            return CombinedList;
+        }
+
+        
+        internal static List<carboCircleElement> getElementsFromActiveView(UIApplication uiapp, carboCircleSettings appSettings)
+        {
+            List<carboCircleElement> resultCollection = new List<carboCircleElement>();
+
+            UIDocument uidoc = uiapp.ActiveUIDocument;
+            Document doc = uidoc.Document;
+
+
+            IEnumerable<Element> wallCollector = null;
+            IEnumerable<Element> beamCollector = null;
+            IEnumerable<Element> columnCollector = null;
+
+
+            beamCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_StructuralFraming).WhereElementIsNotElementType().ToElements();
+
+            columnCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsNotElementType().ToElements();
+
+            if (appSettings.MineWalls == true)
+            {
+                wallCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_Walls).WhereElementIsNotElementType().ToElements();
+            }
+
+            List<carboCircleElement> beamCollection = getcarboCircleElements(beamCollector, doc, appSettings);
+            List<carboCircleElement> columnCollection = getcarboCircleElements(columnCollector, doc, appSettings);
+
+
+            if (beamCollection.Count() > 0)
+            {
+                foreach (carboCircleElement ccEl in beamCollection)
                     resultCollection.Add(ccEl.Copy());
             }
 
@@ -43,11 +138,12 @@ namespace CarboCircle
                     resultCollection.Add(ccEl.Copy());
             }
 
-            List<carboCircleElement> mappedResultCollection = MapElementsTodataBase(beamCollection, appSettings);
+            List<carboCircleElement> mappedResultCollection = MapElementsTodataBase(resultCollection, appSettings);
 
             return mappedResultCollection;
 
         }
+        
 
         private static List<carboCircleElement> MapElementsTodataBase(List<carboCircleElement> beamColumnCollection, carboCircleSettings appSettings)
         {
@@ -199,81 +295,18 @@ namespace CarboCircle
                         FamilyInstance inst = el as FamilyInstance;
                         if (inst != null)
                         {
-                            string mostLikelyClass = "";
-                            bool isVolumne = false;
-                            //First Look in the material:
 
                             List<ElementId> materials = inst.GetMaterialIds(false).ToList();
 
-                            Material material = null;
-                            if (materials.Count > 0)
+                            foreach(ElementId materialid  in materials)
                             {
-                                material = doc.GetElement(materials[0]) as Material;
-                                if (material != null)
-                                {
-                                    string materialclass = material.MaterialCategory;
-                                    if (materialclass != null && materialclass != "")
-                                        mostLikelyClass = materialclass;
-                                }
-                            }
-
-                            //Only if material fails check the family class:
-                            if (mostLikelyClass != "")
-                            {
-                                FamilySymbol familySymbol = inst.Symbol;
-                                Family family = familySymbol.Family;
-                                Parameter familyBehaviour = family.LookupParameter("Material for Model Behavior");
-                                if (familyBehaviour != null)
-                                {
-                                    mostLikelyClass = familyBehaviour.AsValueString();
-                                }
-                            }
-
-                            if(mostLikelyClass == "Steel" || mostLikelyClass == "Wood")
-                            {
-                                //In this case the element is a steel beam or column
-                                isVolumne = true;
-                            }
-                            
-                            double volume = el.GetMaterialVolume(material.Id);
-                            if (volume != 0)
-                                volume = volume * 0.0283168466; //to m3
-
-                            double length = 0;
-                            Parameter lengthParam = inst.LookupParameter("Cut Length");
-                            if(lengthParam != null)
-                            {
-                                length = (lengthParam.AsDouble() * 304.8) / 1000; //to m1
+                                carboCircleElement newElement = getElementFromMaterialId(materialid, doc, el,appSettings);
+                                if(newElement != null)
+                                    resultCollection.Add(newElement);
                             }
 
 
-
-                            carboCircleElement ccEl = new carboCircleElement();
-                            ccEl.id = inst.Id.IntegerValue;
-                            ccEl.GUID = inst.UniqueId;
-                            ccEl.name = el.Name;
-                            ccEl.category = inst.Category.Name;
-                            ccEl.materialClass = mostLikelyClass;
-
-                            ccEl.length = length;
-                            ccEl.volume = volume;
-
-
-                            ccEl.netLength = length - (appSettings.cutoffbeamLength / 1000);
-                            if (ccEl.netLength < 0)
-                                ccEl.netLength = 0;
-
-                            ccEl.netVolume = volume * (appSettings.VolumeLoss / 100);
-
-                            if (material != null)
-                            {
-                                ccEl.materialName = material.Name;
-                                ccEl.grade = "Not Implemented";
-                            }
-
-                            ccEl.isVolumeElement = isVolumne;
-
-                            resultCollection.Add(ccEl);
+ 
                         }
                     }
                     catch
@@ -281,6 +314,106 @@ namespace CarboCircle
                 }
             }
             return resultCollection;
+        }
+
+        private static carboCircleElement getElementFromMaterialId(ElementId materialid, Document doc, Element el, carboCircleSettings appSettings)
+        {
+            carboCircleElement resultElement = new carboCircleElement();
+
+            try
+            {
+                FamilyInstance inst = el as FamilyInstance;
+                if (inst == null)
+                {
+                    return null;
+                }
+
+                int Revitid = inst.Id.IntegerValue;
+                string materialClass = "";
+                string materialName = "";
+                string materialGrade = "";
+                string elementName = inst.Name.ToString();
+                string elementCategoty = inst.Category.Name.ToString();
+
+
+                bool isVolumne = true;
+                //First Look in the material:
+
+                materialClass = inst.StructuralMaterialType.ToString();
+
+                Autodesk.Revit.DB.Material material = doc.GetElement(materialid) as Autodesk.Revit.DB.Material;
+                if (material != null) 
+                    {
+                        materialName = material.Name;
+                        materialGrade = material.MaterialClass.ToString();
+                    }
+                
+
+                //Only if material fails check the family class:
+                if (materialClass == "")
+                {
+                    FamilySymbol familySymbol = inst.Symbol;
+                    Family family = familySymbol.Family;
+                    Parameter familyBehaviour = family.LookupParameter("Material for Model Behavior");
+                    if (familyBehaviour != null)
+                    {
+                        materialClass = familyBehaviour.AsValueString();
+                    }
+                }
+
+                if (materialClass == "Steel" || materialClass == "Wood")
+                {
+                    //In this case the element is a steel beam or column
+                    isVolumne = false;
+                }
+
+                double volume = inst.GetMaterialVolume(material.Id);
+                if (volume != 0)
+                    volume = convertToCubicMtrs(volume); //to m3
+
+                double length = 0;
+                Parameter lengthParam = inst.LookupParameter("Cut Length");
+                if (lengthParam != null)
+                {
+                    length = (lengthParam.AsDouble() * 304.8) / 1000; //to m1
+                }
+                else
+                {
+                    BuiltInParameter paraIndex = BuiltInParameter.INSTANCE_LENGTH_PARAM;
+                    Parameter coLength = inst.get_Parameter(paraIndex);
+                    if(coLength != null)
+                    {
+                        length = (coLength.AsDouble() * 304.8) / 1000; //to m1
+                    }
+                }
+
+                //set properties:
+
+                resultElement.id = Revitid;
+                resultElement.GUID = inst.UniqueId;
+                resultElement.humanId = Revitid.ToString("X");
+                resultElement.name = elementName;
+                resultElement.category = elementCategoty;
+
+
+                //material Props
+                resultElement.materialName = materialName;
+                resultElement.materialClass = materialClass;
+                resultElement.grade = materialGrade;
+
+                resultElement.length = length;
+                resultElement.volume = volume;
+
+
+                resultElement.isVolumeElement = isVolumne;
+
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return resultElement;
+
         }
 
         /// <summary>
@@ -329,5 +462,13 @@ namespace CarboCircle
             return result;
         }
 
+        public static double convertToCubicMtrs(double volumeCubicFt)
+        {
+            double result = 0;
+            double factor = Math.Pow((0.3048), 3);
+            result = volumeCubicFt * factor;
+            return result;
+
+        }
     }
 }

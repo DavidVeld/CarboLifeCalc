@@ -28,6 +28,7 @@ namespace CarboCircle.UI
         private ExternalEvent m_ExEvent;
 
         private static carboCircleProject activeProject;
+        private static List<carboCircleElement> collectedElements;
 
         private int dataSwitch = 0;
         public CarboCircleMain()
@@ -58,13 +59,19 @@ namespace CarboCircle.UI
             {
                 if (dataSwitch == 0)
                 {
-                    activeProject.minedData = e;
-                    liv_availableMaterialList.ItemsSource = activeProject.minedData;
+                    collectedElements = e;
+                    activeProject.ParseMinedData(collectedElements);
+
+                    liv_MinedData.ItemsSource = activeProject.minedData;
+                    liv_MinedMassObjects.ItemsSource = activeProject.minedVolumes;
                 }
                 else
                 {
-                    activeProject.requiredData = e;
+                    collectedElements = e;
+                    activeProject.ParseRequiredData(collectedElements);
+
                     liv_requiredMaterialList.ItemsSource = activeProject.requiredData;
+                    liv_RequiredMassObjects.ItemsSource = activeProject.requiredVolumes;
                 }
             }
         }
@@ -107,7 +114,7 @@ namespace CarboCircle.UI
 
         private void btn_GotoMine_Click(object sender, RoutedEventArgs e)
         {
-            tab_Main.TabIndex = 1;
+            tab_Main.TabIndex = 2;
         }
 
         private void btn_ImportProjectSettings_Click(object sender, RoutedEventArgs e)

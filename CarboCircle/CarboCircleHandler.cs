@@ -18,7 +18,10 @@ namespace CarboCircle
 
         public int commandSwitch = 0; //0 = existing 1 = proposed 2 = colourmatch 
 
+        //private carboCircleProject collectedProject;
         private List<carboCircleElement> collectedElements;
+        //private List<carboCircleElement> collectedVolumes;
+
         public UIApplication uiapp { get; }
 
         public CarboCircleHandler(UIApplication uiapp)
@@ -74,6 +77,7 @@ namespace CarboCircle
             carboCircleSettings appSettings = new carboCircleSettings();
 
             List<carboCircleElement> collectedElementsBuffer = carboCircleRevitCommands.getElementsFromActiveView(uiapp, appSettings);
+            collectedElements = new List<carboCircleElement>();
 
             if (collectedElementsBuffer != null)
             {
@@ -89,8 +93,9 @@ namespace CarboCircle
                 }
                 else
                 {
-                    collectedElements = null;
+                    collectedElements = new List<carboCircleElement>();
                 }
+
             }
             else
             {
@@ -116,7 +121,7 @@ namespace CarboCircle
             commandSwitch = v;
         }
 
-        public List<carboCircleElement> getCollectedElements()
+        public List<carboCircleElement> getCollectedDataElements()
         {
             List<carboCircleElement> result = new List<carboCircleElement>();
 
@@ -131,6 +136,23 @@ namespace CarboCircle
                 }
             }
              return result;
+        }
+
+        public List<carboCircleElement> getCollectedVolumeElements()
+        {
+            List<carboCircleElement> result = new List<carboCircleElement>();
+
+            if (collectedElements != null)
+            {
+                if (collectedElements.Count > 0)
+                {
+                    foreach (carboCircleElement element in collectedElements)
+                    {
+                        result.Add(element.Copy());
+                    }
+                }
+            }
+            return result;
         }
 
         public string GetName()
