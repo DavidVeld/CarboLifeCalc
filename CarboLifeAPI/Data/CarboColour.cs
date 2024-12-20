@@ -31,5 +31,18 @@ namespace CarboLifeAPI.Data
             this.g = g;
             this.b = b;
         }
+
+        public CarboColour Copy()
+        {
+            CarboColour clone = new CarboColour
+            {
+                a = this.a,
+                r = this.r,
+                g = this.g,
+                b = this.b
+            };
+
+            return clone;
+        }
     }
 }

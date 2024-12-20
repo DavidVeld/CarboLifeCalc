@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CarboLifeAPI.Data;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +20,7 @@ namespace CarboCircle.data
         public List<carboCircleElement> requiredVolumes { get; set; }
         public List<carboCircleElement> minedData { get; set; }
         public List<carboCircleElement> requiredData { get; set; }
+        public List<carboCirclePair> carboCircleMatchedPairs { get; set; }
         public carboCircleSettings settings { get; set; }
 
         public carboCircleProject() 
@@ -32,7 +35,8 @@ namespace CarboCircle.data
             minedData = new List<carboCircleElement>();
             minedVolumes = new List<carboCircleElement>();
             requiredData = new List<carboCircleElement>();
-            requiredData = new List<carboCircleElement>();
+            requiredVolumes = new List<carboCircleElement>();
+            carboCircleMatchedPairs = new List<carboCirclePair>();
 
             settings = new carboCircleSettings();
         }
@@ -154,6 +158,8 @@ namespace CarboCircle.data
         {
             requiredData.Clear();
             requiredVolumes.Clear();
+            List<carboCircleElement> requiredVolumeBuffer = new List<carboCircleElement>();
+
 
             foreach (carboCircleElement element in collectedElements)
             {
@@ -161,7 +167,7 @@ namespace CarboCircle.data
                 {
                     if (element.isVolumeElement)
                     {
-                        requiredVolumes.Add(element.Copy());
+                        requiredVolumeBuffer.Add(element.Copy());
                     }
                     else
                     {
@@ -172,6 +178,35 @@ namespace CarboCircle.data
                 { }
             }
 
+            //combine all volumdata to single;
+            requiredVolumes = combineByMaterialName(requiredVolumeBuffer);
+
+            correctMinedValues();
+
         }
+
+        internal void FindOpportunities()
+        {
+            carboCircleProject result = new carboCircleProject();
+
+            result = carboCircleUtils.findOpportunities(this);
+
+            if (result != null)
+                this.carboCircleMatchedPairs = result.carboCircleMatchedPairs;
+
+
+
+        }
+
+        public List<carboCircleMatchElement> getCarboMatchesListSimplified()
+        {
+            List<carboCircleMatchElement> result = new List<carboCircleMatchElement>();
+
+            result = carboCircleUtils.getCarboMatchListSimplified(this.carboCircleMatchedPairs);
+
+            return result;
+        }
+
+
     }
 }

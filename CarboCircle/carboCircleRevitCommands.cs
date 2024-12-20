@@ -16,59 +16,6 @@ namespace CarboCircle
 {
     internal class carboCircleRevitCommands
     {
-     /*
-        internal static carboCircleProject getElementsFromActiveView(UIApplication uiapp, carboCircleSettings appSettings)
-        {
-            carboCircleProject resultProject = new carboCircleProject();
-
-            UIDocument uidoc = uiapp.ActiveUIDocument;
-            Document doc = uidoc.Document;
-
-            IEnumerable<Element> beamCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_StructuralFraming)
-                .WhereElementIsNotElementType().ToElements();
-
-            IEnumerable<Element> columnCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).
-                WhereElementIsNotElementType().ToElements();
-
-            List<carboCircleElement> beamCollection = getcarboCircleElements(beamCollector, doc, appSettings);
-            List<carboCircleElement> columnCollection = getcarboCircleElements(columnCollector, doc, appSettings);
-
-
-            if (beamCollection.Count() > 0)
-            {
-                foreach (carboCircleElement ccEl in beamCollection)
-                {
-                    if (ccEl.isVolumeElement == false)
-                    {
-                        resultProject.minedData.Add(ccEl.Copy());
-                    }
-                    else
-                    {
-                        resultProject.minedVolumes.Add(ccEl.Copy());
-                    }
-                }
-            }
-
-                if (columnCollection.Count() > 0)
-            {
-                foreach (carboCircleElement ccEl in columnCollection)
-                        if (ccEl.isVolumeElement == false)
-                        {
-                            resultProject.minedData.Add(ccEl.Copy());
-                        }
-                        else
-                        {
-                            resultProject.minedVolumes.Add(ccEl.Copy());
-                        }
-                }
-
-            resultProject.minedData = MapElementsTodataBase(resultProject.minedData, appSettings);
-            resultProject.minedVolumes = CombineVolumesData(resultProject.minedVolumes, appSettings);
-
-            return resultProject;
-
-        }
-     */
         private static List<carboCircleElement> CombineVolumesData(List<carboCircleElement> minedVolumes, carboCircleSettings appSettings)
         {
             List<carboCircleElement> CombinedList = new List<carboCircleElement>();

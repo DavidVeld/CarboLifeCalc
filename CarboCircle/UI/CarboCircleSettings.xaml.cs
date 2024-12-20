@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarboCircle.data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,23 @@ namespace CarboCircle.UI
     /// </summary>
     public partial class CarboCircleSettings : Window
     {
+        public carboCircleSettings settings;
+        public bool isAccepted { get; internal set; }
+
         public CarboCircleSettings()
         {
             InitializeComponent();
+        }
+
+        public CarboCircleSettings(carboCircleProject activeProject)
+        {
+            this.settings = activeProject.settings.Copy();
+        }
+
+        private void btn_Accept_Click(object sender, RoutedEventArgs e)
+        {
+            isAccepted = true;
+            this.Close();
         }
     }
 }

@@ -35,7 +35,7 @@
 
         <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formBoldTitleStyle}">Carbo Circle Settings</Label>
         <Button x:Name="btn_Close" Grid.Row="3" Grid.Column="3" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Close"/>
-        <Button x:Name="btn_Accept" Grid.Row="3" Grid.Column="3" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Accept"/>
+        <Button x:Name="btn_Accept" Grid.Row="3" Grid.Column="3" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Accept" Click="btn_Accept_Click"/>
 
         <Grid Grid.Column="1" Grid.Row="2">
             <Grid.RowDefinitions>

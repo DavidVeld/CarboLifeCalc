@@ -107,6 +107,7 @@ namespace CarboCircle.UI
             m_Handler._revitEvent.Dispose();
             m_Handler._revitEvent = null;
             m_Handler = null;
+
             FormStatusChecker.isWindowOpen = false;
             //You have to call the base class
             base.OnClosing(e);
@@ -118,6 +119,17 @@ namespace CarboCircle.UI
         }
 
         private void btn_ImportProjectSettings_Click(object sender, RoutedEventArgs e)
+        {
+            CarboCircleSettings settings = new CarboCircleSettings(activeProject);
+            settings.Show();
+            if (settings.isAccepted)
+            {
+                activeProject.settings = settings.settings.Copy();
+                ShowSettings();
+            }
+        }
+
+        private void ShowSettings()
         {
 
         }
@@ -145,6 +157,18 @@ namespace CarboCircle.UI
             cbb_MineSetting.SelectedIndex = 1;
 
 //            txt_ProjectName.Text = project.projectName;
+
+        }
+
+        private void btn_Go_Click(object sender, RoutedEventArgs e)
+        {
+            if(activeProject.minedData.Count > 0 && activeProject.requiredData.Count > 0)
+            {
+                activeProject.FindOpportunities();
+                liv_MatchedFraming.ItemsSource = activeProject.getCarboMatchesListSimplified();
+            }
+
+            //liv_MatchedVolumes.ItemsSource = activeProject.requiredVolumes;
 
         }
     }

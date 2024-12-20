@@ -78,13 +78,7 @@
 
                         <Button Name="btn_GotoMine" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="btn_GotoMine_Click" >Go-></Button>
                         <Button Name="btn_GotoProject" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" >Go-></Button>
-                        <Button Name="btn_Go" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True">Go-></Button>
-
-                        <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Settings:</Label>
-                        <TextBox Name="txt_ProjectName" Grid.Row="6"  Grid.Column="1" Margin="0,0,0,0"  VerticalAlignment="Top" Style="{StaticResource flatTextBox}"
-                                 Text="{Binding Path=project.projectname}"/>
-                        <TextBox Name="txt_ProjectName2" Grid.Row="7"  Grid.Column="1" Margin="0,0,0,0" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"
-                                 Text="{Binding ElementName=_this, Path=projectName}"/>
+                        <Button Name="btn_Go" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="btn_Go_Click">Go-></Button>
 
                     </Grid>
 
@@ -145,19 +139,28 @@
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Reusable Beams and Columns:</Label>
 
-                        <ListView Name="liv_Framing" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
+                        <ListView Name="liv_MatchedFraming" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="False">
-                                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
-                                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
-                                    <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
+                                    <GridViewColumn Header="Element" Width="50" DisplayMemberBinding="{Binding Path=required_Name}"/>
+                                    <GridViewColumn Header="Id" Width="75" DisplayMemberBinding="{Binding Path=required_id}"/>
+                                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=required_length}"/>
+                                    <GridViewColumn Header="StandardName" Width="100" DisplayMemberBinding="{Binding Path=required_standardName}"/>
+
+                                    <GridViewColumn Header="MinedElement" Width="50" DisplayMemberBinding="{Binding Path=mined_Name}"/>
+                                    <GridViewColumn Header="Mined Id" Width="75" DisplayMemberBinding="{Binding Path=mined_id}"/>
+                                    <GridViewColumn Header="Minded Length" Width="75" DisplayMemberBinding="{Binding Path=mined_netLength}"/>
+                                    <GridViewColumn Header="StandardName" Width="100" DisplayMemberBinding="{Binding Path=mined_standardName}"/>
+                                    
+                                    <GridViewColumn Header="MatchScore" Width="100" DisplayMemberBinding="{Binding Path=match_Score}"/>
+
                                 </GridView>
                             </ListView.View>
                         </ListView>
 
                         <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Reusable Mass Materials:</Label>
 
-                        <ListView Name="liv_Massobjects" Grid.Column="1" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
+                        <ListView Name="liv_MatchedVolumes" Grid.Column="1" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="False">
                                     <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
@@ -421,9 +424,9 @@
                             <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Materials to be reviews:</Label>
                             <Label Grid.Row="3" Grid.ColumnSpan="1" Margin="0,9,0,64" Style="{StaticResource formGreyText}" Grid.RowSpan="2">Value is taken from Family or Material Class Parameter Value</Label>
 
-                            <CheckBox x:Name="chk_ImportProjectSteelBeams" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Steel Beams + Columns"/>
-                            <CheckBox x:Name="chk_ImportProjectMasonry" Grid.Row="4" Grid.Column="1" Margin="10,21,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Masonry" IsEnabled="False"/>
-                            <CheckBox x:Name="chk_ImportProjectConcrete" Grid.Row="4" Grid.Column="1" Margin="10,42,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Concrete" IsEnabled="False"/>
+                            <CheckBox x:Name="chk_ImportProjectColumnBeams" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Steel Beams + Columns"/>
+                            <CheckBox x:Name="chk_ImportProjectWalls" Grid.Row="4" Grid.Column="1" Margin="10,21,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Walls" IsEnabled="False"/>
+                            <CheckBox x:Name="chk_ImportProjectFloors" Grid.Row="4" Grid.Column="1" Margin="10,42,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Floors" IsEnabled="False"/>
 
                             <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Elements to consider:</Label>
                             <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,8,0,0" Style="{StaticResource formGreyText}">When importing elements look only here</Label>
@@ -461,10 +464,10 @@
                                     <GridViewColumn Header="Material" Width="75" DisplayMemberBinding="{Binding Path=materialName}"/>
                                     <GridViewColumn Header="MaterialClass" Width="75" DisplayMemberBinding="{Binding Path=materialClass}"/>
 
-                                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=netLength, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=length, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
                                     <GridViewColumn Header="Grade" Width="75" DisplayMemberBinding="{Binding Path=grade}" TextBlock.TextAlignment="Right"/>
-                                    <GridViewColumn Header="Condition" Width="75" DisplayMemberBinding="{Binding Path=quality}" TextBlock.TextAlignment="Right"/>
-                                    <GridViewColumn Header="GUID" Width="50" DisplayMemberBinding="{Binding Path=GUID}"/>
+                                    <GridViewColumn Header="Condition" Width="0" DisplayMemberBinding="{Binding Path=quality}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="GUID" Width="0" DisplayMemberBinding="{Binding Path=GUID}"/>
 
                                     <GridViewColumn Header="Profile" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
                                     <GridViewColumn Header="Type" Width="75" DisplayMemberBinding="{Binding Path=standardName}"/>
@@ -472,7 +475,7 @@
 
                                     <GridViewColumn Header="Iy" Width="75" DisplayMemberBinding="{Binding Path=Iy}"/>
                                     <GridViewColumn Header="Wely" Width="75" DisplayMemberBinding="{Binding Path=Wy}"/>
-                                    <GridViewColumn Header="MatchGUID" Width="75" DisplayMemberBinding="{Binding Path=matchGUID}"/>
+                                    <GridViewColumn Header="MatchGUID" Width="0" DisplayMemberBinding="{Binding Path=matchGUID}"/>
 
                                 </GridView>
                             </ListView.View>
@@ -482,8 +485,12 @@
                         <ListView Name="liv_RequiredMassObjects" Grid.Column="1" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="False">
+                                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
+                                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
                                     <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
-                                    <GridViewColumn Header="Quantity Reused" DisplayMemberBinding="{Binding Path=name}"/>
+                                    <GridViewColumn Header="Material" Width="75"  DisplayMemberBinding="{Binding Path=materialName}" />
+                                    <GridViewColumn Header="Volume" Width="75"  DisplayMemberBinding="{Binding Path=volume}" />
+
                                 </GridView>
                             </ListView.View>
                         </ListView>
