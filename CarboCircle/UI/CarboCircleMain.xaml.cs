@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -115,10 +116,19 @@ namespace CarboCircle.UI
 
         private void btn_GotoMine_Click(object sender, RoutedEventArgs e)
         {
-            tab_Main.TabIndex = 2;
+            Dispatcher.BeginInvoke((Action)(() => tab_Main.SelectedIndex = 1));
+        }
+        private void btn_GotoProject_Click(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.BeginInvoke((Action)(() => tab_Main.SelectedIndex = 3));
+
+        }
+        private void btn_ImportProjectSettings_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
-        private void btn_ImportProjectSettings_Click(object sender, RoutedEventArgs e)
+        private void ShowSettings()
         {
             CarboCircleSettings settings = new CarboCircleSettings(activeProject);
             settings.Show();
@@ -127,11 +137,6 @@ namespace CarboCircle.UI
                 activeProject.settings = settings.settings.Copy();
                 ShowSettings();
             }
-        }
-
-        private void ShowSettings()
-        {
-
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -171,5 +176,18 @@ namespace CarboCircle.UI
             //liv_MatchedVolumes.ItemsSource = activeProject.requiredVolumes;
 
         }
+
+        private void btn_MineSettings_Click(object sender, RoutedEventArgs e)
+        {
+            CarboCircleSettings settings = new CarboCircleSettings(activeProject);
+            settings.Show();
+            if (settings.isAccepted)
+            {
+                activeProject.settings = settings.settings.Copy();
+                ShowSettings();
+            }
+        }
+
+
     }
 }

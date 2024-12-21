@@ -315,8 +315,18 @@
     <Content Include="samples\Unit Test CLC R2023.rvt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="samples\CarboLifeCalc_sample_project_R22.clcx" />
-    <Content Include="samples\CarboLifeCalc_sample_project_R22.rvt" />
+    <Content Include="samples\CarboLifeCalc_sample_project_R22.clcx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="samples\CarboLifeCalc_sample_project_R22.rvt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="samples\CarboCircleTest R2023.rvt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="samples\existing_struct.gh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
