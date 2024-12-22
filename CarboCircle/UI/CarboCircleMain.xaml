@@ -234,9 +234,9 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="35"/>
-                                <RowDefinition Height="65"/>
+                                <RowDefinition Height="0"/>
+                                <RowDefinition Height="0"/>
+                                <RowDefinition Height="0"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="65"/>
                                 <RowDefinition Height="52"/>
@@ -256,12 +256,6 @@
                             <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Import Settings:"/>
                             <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Mined Materials</Label>
 
-                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Materials to be imported:</Label>
-                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,8,0,0" Style="{StaticResource formGreyText}">Value is taken from Family or Material Class Parameter Value</Label>
-
-                            <CheckBox x:Name="chk_MineSteelBeams" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Framing + Columns"/>
-                            <CheckBox x:Name="chk_MineWalls" Grid.Row="4" Grid.Column="1" Margin="10,21,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Walls" IsEnabled="False"/>
-                            <CheckBox x:Name="chk_MineFloors" Grid.Row="4" Grid.Column="1" Margin="10,42,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Floors" IsEnabled="False"/>
 
                             <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Elements to consider:</Label>
                             <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,8,0,0" Style="{StaticResource formGreyText}">When importing elements look only here</Label>
@@ -402,9 +396,9 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="35"/>
-                                <RowDefinition Height="65"/>
+                                <RowDefinition Height="0"/>
+                                <RowDefinition Height="0"/>
+                                <RowDefinition Height="0"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="65"/>
                                 <RowDefinition Height="52"/>
@@ -422,13 +416,6 @@
 
 
                             <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Revit Import Settings:"/>
-
-                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Materials to be reviewed:</Label>
-                            <Label Grid.Row="3" Grid.ColumnSpan="1" Margin="0,9,0,64" Style="{StaticResource formGreyText}" Grid.RowSpan="2">Value is taken from Family or Material Class Parameter Value</Label>
-
-                            <CheckBox x:Name="chk_ImportProjectColumnBeams" Grid.Row="4" Grid.Column="1" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Framing + Columns"/>
-                            <CheckBox x:Name="chk_ImportProjectWalls" Grid.Row="4" Grid.Column="1" Margin="10,21,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Walls" IsEnabled="False"/>
-                            <CheckBox x:Name="chk_ImportProjectFloors" Grid.Row="4" Grid.Column="1" Margin="10,42,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Floors" IsEnabled="False"/>
 
                             <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Elements to consider:</Label>
                             <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,8,0,0" Style="{StaticResource formGreyText}">When importing elements look only here</Label>

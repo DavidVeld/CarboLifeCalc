@@ -39,5 +39,7 @@ namespace CarboCircle.UI
             isAccepted = true;
             this.Close();
         }
+
+
     }
 }
