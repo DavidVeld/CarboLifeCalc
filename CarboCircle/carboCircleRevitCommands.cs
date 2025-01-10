@@ -64,7 +64,7 @@ namespace CarboCircle
 
             columnCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsNotElementType().ToElements();
 
-            if (appSettings.MineWalls == true)
+            if (appSettings.ConsiderWalls == true)
             {
                 wallCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_Walls).WhereElementIsNotElementType().ToElements();
             }

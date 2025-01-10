@@ -5,6 +5,7 @@ namespace CarboCircle.data
 {
     internal class carboCircleUtils
     {
+        [Obsolete]
         internal static carboCircleProject findOpportunities(carboCircleProject carboCircleProject)
         {
             //needs to include offcuts, basically each element is mapped to mtch 
@@ -42,6 +43,9 @@ namespace CarboCircle.data
 
             return carboCircleProject;
         }
+
+
+
 
         internal static List<carboCircleMatchElement> getCarboMatchListSimplified(List<carboCirclePair> carboCircleMatchedPairs)
         {

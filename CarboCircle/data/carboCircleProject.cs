@@ -30,8 +30,6 @@ namespace CarboCircle.data
             ProjectCategory = "";
             ProjectDescription = "";
 
-
-
             minedData = new List<carboCircleElement>();
             minedVolumes = new List<carboCircleElement>();
             requiredData = new List<carboCircleElement>();
@@ -189,13 +187,10 @@ namespace CarboCircle.data
         {
             carboCircleProject result = new carboCircleProject();
 
-            result = carboCircleUtils.findOpportunities(this);
+            List<carboCirclePair> pairs = carboCircleMatchCore.findOpportunitiesV2(this);
 
-            if (result != null)
-                this.carboCircleMatchedPairs = result.carboCircleMatchedPairs;
-
-
-
+            if(pairs != null)
+                carboCircleMatchedPairs = pairs;
         }
 
         public List<carboCircleMatchElement> getCarboMatchesListSimplified()

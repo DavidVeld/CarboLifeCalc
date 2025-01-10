@@ -25,6 +25,31 @@ namespace CarboCircle.data
             this.match_Score = matchScore;
         }
 
+        /// <summary>
+        /// Returns the remaining part as an offcut
+        /// </summary>
+        /// <returns></returns>
+        internal carboCircleElement getOffcut()
+        {
+            double delta = mined_Element.netLength - required_element.length;
+            if (delta <= 0)
+                return null;
+
+            carboCircleElement offcut = mined_Element.Copy();
+            offcut.isOffcut = true;
+
+            offcut.name += "_Offcut";
+            offcut.GUID += "_OC";
+            //offcut.id = "_OC";
+            offcut.humanId += "_OC";
+            offcut.netLength = mined_Element.netLength - required_element.length;
+            offcut.length = mined_Element.length - required_element.length;
+
+            //linear correction
+            offcut.volume = offcut.volume * (required_element.length / mined_Element.netLength);
+
+            return offcut;
+        }
         public carboCirclePair Copy()
         {
             carboCirclePair clone = new carboCirclePair();
@@ -37,5 +62,7 @@ namespace CarboCircle.data
             };
             return clone;
         }
+
+
     }
 }

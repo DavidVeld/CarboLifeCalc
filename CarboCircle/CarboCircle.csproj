@@ -69,13 +69,13 @@
     <Compile Include="CarboCircleHandler.cs" />
     <Compile Include="CarboCircleCommand.cs" />
     <Compile Include="carboCircleRevitCommands.cs" />
-    <Compile Include="data\carboCircleMatchElement.cs" />
+    <Compile Include="data\beamMatchCore\carboCircleMatchElement.cs" />
+    <Compile Include="data\beamMatchCore\carboCircleMatchCore.cs" />
     <Compile Include="data\carboCircleElement.cs" />
-    <Compile Include="data\carboCirclePair.cs" />
+    <Compile Include="data\beamMatchCore\carboCirclePair.cs" />
     <Compile Include="data\carboCircleProject.cs" />
     <Compile Include="data\carboCircleSettings.cs" />
     <Compile Include="data\carboCircleUtils.cs" />
-    <Compile Include="data\caroCircleCollections.cs" />
     <Compile Include="FormStatusChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\CarboCircleMain.xaml.cs">

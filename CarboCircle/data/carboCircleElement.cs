@@ -42,8 +42,7 @@ namespace CarboCircle
         public double Iz { get; set; }
         public double Wz { get; set; }
         public string matchGUID { get; set; }
-       
-
+        public bool isOffcut { get; set; }
 
         public carboCircleElement()
         {
@@ -71,6 +70,8 @@ namespace CarboCircle
 
             GUID = "";
             matchGUID = "";
+            isOffcut = false;
+
          }
 
 
@@ -102,7 +103,9 @@ namespace CarboCircle
                 Wz = this.Wz,
 
                 GUID = this.GUID,
-                matchGUID = this.matchGUID
+                matchGUID = this.matchGUID,
+                isOffcut = this.isOffcut
+
             };
 
             return clone;
