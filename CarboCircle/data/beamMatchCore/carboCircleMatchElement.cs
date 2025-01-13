@@ -27,11 +27,15 @@ namespace CarboCircle
         public double mined_netVolume { get; set; }
 
         public bool isVolumeElement { get; set; }
+        public bool isOffcut { get; set; }
 
         //The Below are taken from standardized Database
         public string required_standardName { get; set; }
         public string mined_standardName { get; set; }
         public double match_Score { get; set; }
+
+        public string description { get; set; }
+
 
         public carboCircleMatchElement(
         int requiredId = 0,
@@ -45,28 +49,31 @@ namespace CarboCircle
         double minedNetLength = 0.0,
         double minedNetVolume = 0.0,
         double match_Score = 0.0,
-
+        bool isOffcut = false,
         bool isVolumeElement = false,
         string requiredStandardName = null,
-        string minedStandardName = null)
-    {
-        required_id = requiredId;
-        required_humanId = requiredHumanId;
-        mined_id = minedId;
-        mined_humanId = minedHumanId;
-        required_Name = requiredName;
-        mined_Name = minedName;
-        required_length = requiredLength;
-        required_volume = requiredVolume;
-        mined_netLength = minedNetLength;
-        mined_netVolume = minedNetVolume;
-        this.isVolumeElement = isVolumeElement;
-        required_standardName = requiredStandardName;
-        mined_standardName = minedStandardName;
-    }
+        string minedStandardName = null,         
+        string description = null)
+        {
+            required_id = requiredId;
+            required_humanId = requiredHumanId;
+            mined_id = minedId;
+            mined_humanId = minedHumanId;
+            required_Name = requiredName;
+            mined_Name = minedName;
+            required_length = requiredLength;
+            required_volume = requiredVolume;
+            mined_netLength = minedNetLength;
+            mined_netVolume = minedNetVolume;
+            this.isOffcut = isOffcut;
+            this.isVolumeElement = isVolumeElement;
+            required_standardName = requiredStandardName;
+            mined_standardName = minedStandardName;
+            this.description = description;
+        }
 
 
-    public carboCircleMatchElement Copy()
+        public carboCircleMatchElement Copy()
         {
             carboCircleMatchElement clone = new carboCircleMatchElement
             {
@@ -81,9 +88,11 @@ namespace CarboCircle
                 mined_netLength = this.mined_netLength,
                 mined_netVolume = this.mined_netVolume,
                 isVolumeElement = this.isVolumeElement,
+                isOffcut = this.isOffcut,
                 required_standardName = this.required_standardName,
                 mined_standardName = this.mined_standardName,
-                match_Score = this.match_Score
+                match_Score = this.match_Score,
+                description = this.description
             };
 
             return clone;

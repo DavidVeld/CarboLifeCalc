@@ -10,19 +10,22 @@ namespace CarboCircle.data
         public carboCircleElement required_element { get; set; }
         public carboCircleElement mined_Element { get; set; }
         public double match_Score { get; set; }
+        public string description { get; set; }
 
         public carboCirclePair()
         {
             required_element = new carboCircleElement();
             mined_Element = new carboCircleElement();
             match_Score = 0;
+            description = string.Empty;
         }
 
-        public carboCirclePair(carboCircleElement requiredElement, carboCircleElement minedElement, double matchScore = 0)
+        public carboCirclePair(carboCircleElement requiredElement, carboCircleElement minedElement, double matchScore = 0, string description = "")
         {
-            this.required_element = requiredElement;
-            this.mined_Element = minedElement;
+            this.required_element = requiredElement.Copy();
+            this.mined_Element = minedElement.Copy();
             this.match_Score = matchScore;
+            this.description = description;
         }
 
         /// <summary>
@@ -57,7 +60,8 @@ namespace CarboCircle.data
             {
                 required_element = required_element.Copy(),
                 mined_Element = this.mined_Element.Copy(),
-                match_Score = this.match_Score
+                match_Score = this.match_Score,
+                description = this.description 
                 
             };
             return clone;

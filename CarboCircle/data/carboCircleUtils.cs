@@ -45,8 +45,6 @@ namespace CarboCircle.data
         }
 
 
-
-
         internal static List<carboCircleMatchElement> getCarboMatchListSimplified(List<carboCirclePair> carboCircleMatchedPairs)
         {
             List<carboCircleMatchElement> result = new List<carboCircleMatchElement>();
@@ -74,6 +72,8 @@ namespace CarboCircle.data
                         ccme.mined_netLength = pair.mined_Element.netLength;
 
                         ccme.match_Score = pair.match_Score;
+
+                        ccme.description = pair.description;
 
                         result.Add(ccme);
                     }

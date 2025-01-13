@@ -21,23 +21,67 @@ namespace CarboCircle.data
         public string RequiredParameterName { get; set; } //Always By Type, or type name if empty
         public string gradeParameter { get; set; } //Always By Type, or type name if empty
 
-        public string MineStyle { get; set; } //Always By Type, or type name if empty
-        public string RequiredStyle { get; set; } //Always By Type, or type name if empty
+        /// <summary>
+        /// "All Visible in View",
+        /// "All New in View",
+        /// "All Demolished in View",
+        /// "Selected"
+        /// </summary>
+        public string extractionMethod { get; set; } //Always By Type, or type name if empty
 
+        [Obsolete]
+
+        /// <summary>
+        /// "All Visible in View",
+        /// "All New in View",
+        /// "All Demolished in View",
+        /// "Selected"
+        /// </summary>
+        public string MineExtractionMethod { get; set; } //Always By Type, or type name if empty
+
+        [Obsolete]
+
+        /// <summary>
+        /// "All Visible in View",
+        /// "All New in View",
+        /// "All Demolished in View",
+        /// "Selected"
+        /// </summary>
+        public string RequiredExtractionMethod { get; set; } //Always By Type, or type name if empty
 
         //existingImportSettings
         public double cutoffbeamLength { get; set; } //600 defaiult
+
+        [Obsolete]
         public double cutoffColumnLength { get; set; } //600 defaiult
+
+        /// <summary>
+        /// in %
+        /// </summary>
         public int VolumeLoss { get; set; }
+
+        /// <summary>
+        /// in %
+        /// </summary>
         public int MasonryLoss { get; set; }
 
         public bool ConsiderWalls { get; set; }
         public bool ConsiderSlabs { get; set; }
         public bool ConsiderColumnBeams { get; set; }
 
+        /// <summary>
+        /// "Path to database",
+        /// </summary>
+        public string dataBasePath { get; set; } //Always By Type, or type name if empty
 
         //matchSettings
+        /// <summary>
+        /// in mm
+        /// </summary>
         public double depthRange { get; set; }
+        /// <summary>
+        /// in %
+        /// </summary>
         public double strengthRange { get; set; }
 
         //colours
@@ -48,14 +92,16 @@ namespace CarboCircle.data
         public CarboColour colour_FromReusedVolumes { get; set; }
         public CarboColour colour_NotFromReused { get; set; }
 
+
         public carboCircleSettings()
         {
 
             MineParameterName = string.Empty;
             RequiredParameterName = string.Empty;
 
-            MineStyle = string.Empty;
-            RequiredStyle = string.Empty;
+            extractionMethod = string.Empty;
+            MineExtractionMethod = string.Empty;
+            RequiredExtractionMethod = string.Empty;
 
             cutoffbeamLength = 600;
             cutoffColumnLength = 600;
@@ -63,7 +109,7 @@ namespace CarboCircle.data
             MasonryLoss = 25;
 
             depthRange = 50;
-            strengthRange = .10;
+            strengthRange = 10;
 
             ConsiderWalls = false;
             ConsiderSlabs = false;
@@ -75,6 +121,8 @@ namespace CarboCircle.data
             colour_FromReusedData = new CarboColour();
             colour_FromReusedVolumes = new CarboColour();
             colour_NotFromReused = new CarboColour();
+
+            dataBasePath = "";
         }
 
         public CarboSettings Load()
@@ -178,8 +226,10 @@ namespace CarboCircle.data
                 MineParameterName = this.MineParameterName,
                 RequiredParameterName = this.RequiredParameterName,
 
-                MineStyle = this.MineStyle,
-                RequiredStyle= this.RequiredStyle,
+                extractionMethod = this.extractionMethod,
+                //MineExtractionMethod = this.MineExtractionMethod,
+                //RequiredExtractionMethod= this.RequiredExtractionMethod,
+
                 cutoffbeamLength = this.cutoffbeamLength,
                 cutoffColumnLength = this.cutoffColumnLength,
                 VolumeLoss = this.VolumeLoss,
@@ -191,6 +241,8 @@ namespace CarboCircle.data
                 ConsiderWalls = this.ConsiderWalls,
                 ConsiderSlabs = this.ConsiderSlabs,
                 ConsiderColumnBeams = this.ConsiderColumnBeams,
+
+                dataBasePath = this.dataBasePath,
 
                 //Colours
                 colour_ReusedMinedData = this.colour_ReusedMinedData.Copy(),

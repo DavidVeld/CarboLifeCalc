@@ -11,6 +11,9 @@ using System.Linq;
 using System.Windows.Controls;
 using static Autodesk.Revit.DB.SpecTypeId;
 using System.Windows.Media.Media3D;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Configuration.Assemblies;
 
 namespace CarboCircle
 {
@@ -56,12 +59,18 @@ namespace CarboCircle
 
 
             IEnumerable<Element> wallCollector = null;
-            IEnumerable<Element> beamCollector = null;
-            IEnumerable<Element> columnCollector = null;
+            List<Element> filteredWallCollector = null;
 
+            IEnumerable<Element> floorCollector = null;
+            List<Element> filteredFloorCollector = null;
+
+            IEnumerable<Element> beamCollector = null;
+            List<Element> filteredBeamCollector = null;
+
+            IEnumerable<Element> columnCollector = null;
+            List<Element> filteredColumnCollector = null;
 
             beamCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_StructuralFraming).WhereElementIsNotElementType().ToElements();
-
             columnCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_StructuralColumns).WhereElementIsNotElementType().ToElements();
 
             if (appSettings.ConsiderWalls == true)
@@ -69,8 +78,89 @@ namespace CarboCircle
                 wallCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_Walls).WhereElementIsNotElementType().ToElements();
             }
 
-            List<carboCircleElement> beamCollection = getcarboCircleElements(beamCollector, doc, appSettings);
-            List<carboCircleElement> columnCollection = getcarboCircleElements(columnCollector, doc, appSettings);
+            if (appSettings.ConsiderSlabs == true)
+            {
+                floorCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).OfCategory(BuiltInCategory.OST_Floors).WhereElementIsNotElementType().ToElements();
+            }
+
+            //Filter down based on settings:
+
+            if (appSettings.extractionMethod == "Selected")
+            {
+                List<ElementId> selectedElements = uidoc.Selection.GetElementIds().ToList();
+                if (beamCollector != null)
+                    filteredBeamCollector = getOnlySelected(beamCollector, selectedElements);
+
+                if (columnCollector != null)
+                    filteredColumnCollector = getOnlySelected(columnCollector, selectedElements);
+
+                if (wallCollector != null)
+                    filteredWallCollector = getOnlySelected(wallCollector, selectedElements);
+
+                if (floorCollector != null)
+                    filteredFloorCollector = getOnlySelected(floorCollector, selectedElements);
+
+            }
+            else if(appSettings.extractionMethod == "All New in View")
+            {
+                //Get current Phase:
+                View activeView = uidoc.ActiveGraphicalView;
+                Parameter phaseParam = activeView.LookupParameter("Phase");
+                if (phaseParam != null)
+                {
+                    string phasename = phaseParam.AsValueString();
+                    if(beamCollector != null)
+                        filteredBeamCollector = getOnPhase(beamCollector, phasename);
+
+                    if(columnCollector != null)
+                        filteredColumnCollector = getOnPhase(columnCollector, phasename);
+
+                    if (wallCollector != null)
+                        filteredWallCollector = getOnPhase(wallCollector, phasename);
+
+                    if (floorCollector != null)
+                        filteredFloorCollector = getOnPhase(floorCollector, phasename);
+                }
+            }
+            else if (appSettings.extractionMethod == "All Demolished in View")
+            {
+                //Get current Phase:
+                View activeView = uidoc.ActiveGraphicalView;
+                Parameter phaseParam = activeView.LookupParameter("Phase");
+                if (phaseParam != null)
+                {
+                    string phasename = phaseParam.AsValueString();
+                    if (beamCollector != null)
+                        filteredBeamCollector = getOnDemolishedPhase(beamCollector, phasename);
+
+                    if (columnCollector != null)
+                        filteredColumnCollector = getOnDemolishedPhase(columnCollector, phasename);
+
+                    if (wallCollector != null)
+                        filteredWallCollector = getOnDemolishedPhase(wallCollector, phasename);
+
+                    if (floorCollector != null)
+                        filteredFloorCollector = getOnDemolishedPhase(floorCollector, phasename);
+                }
+            }
+            else
+            {
+                //All visible in view (Default)
+                filteredBeamCollector = beamCollector.ToList();
+                filteredColumnCollector = columnCollector.ToList();
+
+                filteredWallCollector = wallCollector.ToList();
+                filteredFloorCollector = floorCollector.ToList();
+
+            }
+
+            //Convert to proper Elements
+
+            List<carboCircleElement> beamCollection = getcarboCircleElements(filteredBeamCollector, doc, appSettings);
+            List<carboCircleElement> columnCollection = getcarboCircleElements(filteredColumnCollector, doc, appSettings);
+
+            List<carboCircleElement> wallCollection = getcarboCircleElements(filteredWallCollector, doc, appSettings);
+            List<carboCircleElement> floorCollection = getcarboCircleElements(filteredFloorCollector, doc, appSettings);
 
 
             if (beamCollection.Count() > 0)
@@ -85,17 +175,122 @@ namespace CarboCircle
                     resultCollection.Add(ccEl.Copy());
             }
 
+            //Map the elements to a database element
             List<carboCircleElement> mappedResultCollection = MapElementsTodataBase(resultCollection, appSettings);
 
             return mappedResultCollection;
 
         }
+
+        private static List<Element> getOnPhase(IEnumerable<Element> collection, string phasename)
+        {
+            //get a list of selected elemetnts
+            List<Element> result = new List<Element>();
+
+            if (collection == null || phasename == "")
+                return result;
+
+            //add only elements that are selected in the pool:
+            foreach (Element el in collection)
+            {
+                try
+                {
+                    Parameter phaseCreatedParam = el.LookupParameter("Phase Created");
+
+                    if (phaseCreatedParam != null)
+                    {
+                        string phaseCreatedName = phaseCreatedParam.AsValueString();
+
+                        if (phaseCreatedName == phasename)
+                        {
+                            result.Add(el);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+
+            return result;
+        }
+
+        private static List<Element> getOnDemolishedPhase(IEnumerable<Element> collection, string phasename)
+        {
+            //get a list of selected elemetnts
+            List<Element> result = new List<Element>();
+
+            if (collection == null || phasename == "")
+                return result;
+
+            //add only elements that are selected in the pool:
+            foreach (Element el in collection)
+            {
+                try
+                {
+                    Parameter phaseDemolishedParam = el.LookupParameter("Phase Demolished");
+
+                    if (phaseDemolishedParam != null)
+                    {
+                        string phaseDemolishedName = phaseDemolishedParam.AsValueString();
+                        if (phaseDemolishedName != null)
+                        {
+                            if (phaseDemolishedName == phasename)
+                            {
+                                result.Add(el);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
+
+            return result;
+        }
+
+        private static List<Element> getOnlySelected(IEnumerable<Element> collection, List<ElementId> selectedElementIds)
+        {
+            //get a list of selected elemetnts
+            List<Element> result = new List<Element>();
+            List<int> ids = new List<int>();
+
+            if(collection == null || selectedElementIds == null)    
+                return result;
+
+            foreach (ElementId id in selectedElementIds)
+            {
+                ids.Add(id.IntegerValue);
+            }
+
+            //add only elements that are selected in the pool:
+            foreach (Element el in collection)
+            {
+                try
+                {
+                    int id = el.Id.IntegerValue;
+
+                    if (ids.Contains(id))
+                    {
+                        result.Add(el);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    string message = ex.Message;
+                }
+            }
         
+            return result;
+        }
 
         private static List<carboCircleElement> MapElementsTodataBase(List<carboCircleElement> beamColumnCollection, carboCircleSettings appSettings)
         {
             List<carboCircleElement> SteelSectionDataBase = new List<carboCircleElement>();
-            SteelSectionDataBase = getSteelDataBase();
+            SteelSectionDataBase = getSteelDataBase(appSettings);
 
             beamColumnCollection = GetClosestBeamMatch(beamColumnCollection, SteelSectionDataBase, appSettings);
 
@@ -159,11 +354,20 @@ namespace CarboCircle
             return result;
         }
 
-        private static List<carboCircleElement> getSteelDataBase()
+        private static List<carboCircleElement> getSteelDataBase(carboCircleSettings appSettings)
         {
             List<carboCircleElement> result = new List<carboCircleElement>();
-            string assemblyath = Utils.getAssemblyPath();
-            string dbpath = assemblyath + "\\db\\" + "CarboCircleMasterSections.csv";
+            string dbpath = "";
+
+            if (File.Exists(appSettings.dataBasePath))
+            {
+                dbpath = appSettings.dataBasePath;
+            }
+            else
+            {
+                string assemblyath = Utils.getAssemblyPath();
+                dbpath = assemblyath + "\\db\\" + "CarboCircleMasterSections.csv";
+            }
 
             if (File.Exists(dbpath))
                 if (IsFileLocked(dbpath) == false)
@@ -227,6 +431,11 @@ namespace CarboCircle
         {
             List<carboCircleElement> resultCollection = new List<carboCircleElement>();
 
+            if (Collection == null || doc == null || appSettings == null)
+            {
+                return resultCollection;
+            }
+
             if (Collection.Count() > 0)
             {
                 foreach (Element el in Collection)
@@ -237,6 +446,9 @@ namespace CarboCircle
                         {
                             continue;
                         }
+
+
+
 
                         //a valid element is further checked:
                         FamilyInstance inst = el as FamilyInstance;

@@ -142,17 +142,18 @@
                         <ListView Name="liv_MatchedFraming" Grid.Column="1" Grid.Row="2" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="False">
-                                    <GridViewColumn Header="Element" Width="50" DisplayMemberBinding="{Binding Path=required_Name}"/>
+                                    <GridViewColumn Header="Element" Width="100" DisplayMemberBinding="{Binding Path=required_Name}"/>
                                     <GridViewColumn Header="Id" Width="75" DisplayMemberBinding="{Binding Path=required_id}"/>
                                     <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=required_length}"/>
-                                    <GridViewColumn Header="StandardName" Width="100" DisplayMemberBinding="{Binding Path=required_standardName}"/>
+                                    <GridViewColumn Header="StandardName" Width="0" DisplayMemberBinding="{Binding Path=required_standardName}"/>
 
-                                    <GridViewColumn Header="MinedElement" Width="50" DisplayMemberBinding="{Binding Path=mined_Name}"/>
+                                    <GridViewColumn Header="MinedElement" Width="100" DisplayMemberBinding="{Binding Path=mined_Name}"/>
                                     <GridViewColumn Header="Mined Id" Width="75" DisplayMemberBinding="{Binding Path=mined_id}"/>
-                                    <GridViewColumn Header="Minded Length" Width="75" DisplayMemberBinding="{Binding Path=mined_netLength}"/>
-                                    <GridViewColumn Header="StandardName" Width="100" DisplayMemberBinding="{Binding Path=mined_standardName}"/>
-                                    
-                                    <GridViewColumn Header="MatchScore" Width="100" DisplayMemberBinding="{Binding Path=match_Score}"/>
+                                    <GridViewColumn Header="Mined Length" Width="75" DisplayMemberBinding="{Binding Path=mined_netLength}"/>
+                                    <GridViewColumn Header="StandardName" Width="0" DisplayMemberBinding="{Binding Path=mined_standardName}"/>
+
+                                    <GridViewColumn Header="MatchScore" Width="75" DisplayMemberBinding="{Binding Path=match_Score}"/>
+                                    <GridViewColumn Header="Description" Width="120" DisplayMemberBinding="{Binding Path=description}"/>
 
                                 </GridView>
                             </ListView.View>
@@ -194,7 +195,7 @@
                     <Grid Background="White" Grid.Row="1" Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="5"/>
-                            <RowDefinition Height="135"/>
+                            <RowDefinition Height="250"/>
                             <RowDefinition Height="0"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="5"/>
@@ -203,6 +204,8 @@
                         <Grid Background="White"  Grid.Column="1" Grid.Row="1" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="5"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
@@ -218,12 +221,19 @@
                             <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Mine Data Methods:</Label>
 
                             <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,0,0,0" Style="{StaticResource formTitleStyle}">Active Revit view:</Label>
-                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">A text document (CSV)</Label>
-                            <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">From an online url:</Label>
 
-                            <Button x:Name="btn_ImportmaterialsRevit" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Revit" Click="btn_ImportmaterialsRevit_Click"/>
-                            <Button x:Name="btn_ImportmaterialsCSV" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine CSV"/>
-                            <Button x:Name="btn_ImportmaterialsWeb" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Web"/>
+                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,-5,0,0" Style="{StaticResource formTextStyle}">Elements to consider:</Label>
+                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,8,0,0" Style="{StaticResource formGreyText}">When importing elements look only here</Label>
+
+                            <ComboBox Name="cbb_MineSetting" Grid.Column="1" Grid.Row="4" Margin="10,0,10,0" Height="25"  VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}">
+                            </ComboBox>
+
+                            <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">A text document (CSV)</Label>
+                            <Label IsEnabled="False" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">From an online URL:</Label>
+
+                            <Button x:Name="btn_ImportmaterialsRevit" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Revit" Click="btn_ImportmaterialsRevit_Click"/>
+                            <Button x:Name="btn_ImportmaterialsCSV" Grid.Row="5" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine CSV"/>
+                            <Button x:Name="btn_ImportmaterialsWeb" IsEnabled="False" Grid.Row="6" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Web"/>
 
 
 
@@ -251,19 +261,14 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-
-
-                            <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Import Settings:"/>
                             <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Mined Materials</Label>
 
 
-                            <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Elements to consider:</Label>
-                            <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,8,0,0" Style="{StaticResource formGreyText}">When importing elements look only here</Label>
 
-                            <ComboBox Name="cbb_MineSetting" Grid.Column="1" Grid.Row="6" Margin="10,0,0,0" Height="25" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}">
-                            </ComboBox>
 
-                            <Button x:Name="btn_MineSettings" Grid.Row="7" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_MineSettings_Click"  Content="Advanced Settings"/>
+
+
+                            <Button x:Name="btn_MineSettings" Grid.Row="5" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_MineSettings_Click"  Content="Advanced Settings"/>
 
 
                         </Grid>
@@ -361,7 +366,7 @@
                     <Grid Background="White" Grid.Row="1" Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="5"/>
-                            <RowDefinition Height="135"/>
+                            <RowDefinition Height="250"/>
                             <RowDefinition Height="0"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="5"/>
@@ -369,6 +374,9 @@
                         <Grid Background="White"  Grid.Column="1" Grid.Row="1" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="5"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
@@ -384,12 +392,19 @@
                             <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Get Project Data:</Label>
 
                             <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,0,0,0" Style="{StaticResource formTitleStyle}">Active Revit view:</Label>
-                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">A text document (CSV)</Label>
-                            <Label IsEnabled="False" Visibility="Visible" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">From an online url:</Label>
 
-                            <Button x:Name="btn_ImportProjectRevit" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit" Click="btn_ImportProjectRevit_Click"/>
-                            <Button x:Name="btn_ImportProjectCSV" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV"/>
-                            <Button IsEnabled="False" x:Name="btn_ExportProject" Visibility="Visible" Grid.Row="4" Grid.Column="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
+                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,-5,0,0" Style="{StaticResource formTextStyle}">Elements to consider:</Label>
+                            <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,8,0,0" Style="{StaticResource formGreyText}">When importing elements look only here</Label>
+
+                            <ComboBox Name="cbb_ImportProjectSetting" Grid.Column="1" Grid.Row="4" Margin="10,0,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" >
+                            </ComboBox>
+
+                            <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">A text document (CSV)</Label>
+                            <Label IsEnabled="False" Visibility="Visible" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">From an online URL:</Label>
+
+                            <Button x:Name="btn_ImportProjectRevit" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit" Click="btn_ImportProjectRevit_Click"/>
+                            <Button x:Name="btn_ImportProjectCSV" Grid.Row="5" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV"/>
+                            <Button IsEnabled="False" x:Name="btn_ExportProject" Visibility="Visible" Grid.Row="6" Grid.Column="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
 
                         </Grid>
                         <Grid Grid.Column="1" Grid.Row="3">
@@ -417,13 +432,9 @@
 
                             <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Revit Import Settings:"/>
 
-                            <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}">Elements to consider:</Label>
-                            <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1" Margin="0,8,0,0" Style="{StaticResource formGreyText}">When importing elements look only here</Label>
 
-                            <ComboBox Name="cbb_ImportProjectSetting" Grid.Column="1" Grid.Row="6" Margin="10,0,0,0" Height="25" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" >
-                            </ComboBox>
 
-                            <Button x:Name="btn_ImportProjectSettings" Grid.Row="7" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}"  Content="Advanced Settings" Click="btn_ImportProjectSettings_Click"/>
+                            <Button x:Name="btn_ImportProjectSettings" Grid.Row="5" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}"  Content="Advanced Settings" Click="btn_ImportProjectSettings_Click"/>
 
                         </Grid>
                     </Grid>

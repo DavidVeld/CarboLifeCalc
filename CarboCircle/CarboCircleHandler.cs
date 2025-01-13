@@ -17,6 +17,7 @@ namespace CarboCircle
         public ExternalEvent _revitEvent;
 
         public int commandSwitch = 0; //0 = existing 1 = proposed 2 = colourmatch 
+        carboCircleSettings importSettings = null;
 
         //private carboCircleProject collectedProject;
         private List<carboCircleElement> collectedElements;
@@ -29,6 +30,7 @@ namespace CarboCircle
             UIApplication app = uiapp;
             uidoc = app.ActiveUIDocument;
             doc = uidoc.Document;
+            importSettings = new carboCircleSettings();
 
             _revitEvent = ExternalEvent.Create(this);
         }
@@ -73,38 +75,35 @@ namespace CarboCircle
 
         private void ImportElementsActiveView(UIApplication uiapp)
         {
-
-            carboCircleSettings appSettings = new carboCircleSettings();
-
-            List<carboCircleElement> collectedElementsBuffer = carboCircleRevitCommands.getElementsFromActiveView(uiapp, appSettings);
-            collectedElements = new List<carboCircleElement>();
-
-            if (collectedElementsBuffer != null)
+            if (importSettings != null)
             {
-                if (collectedElementsBuffer.Count > 0)
-                {
-                    collectedElements = new List<carboCircleElement>();
-                    collectedElements.Clear();
+                List<carboCircleElement> collectedElementsBuffer = carboCircleRevitCommands.getElementsFromActiveView(uiapp, importSettings);
+                collectedElements = new List<carboCircleElement>();
 
-                    foreach (carboCircleElement ccEl in collectedElementsBuffer)
+                if (collectedElementsBuffer != null)
+                {
+                    if (collectedElementsBuffer.Count > 0)
                     {
-                        collectedElements.Add(ccEl.Copy());
+                        collectedElements = new List<carboCircleElement>();
+                        collectedElements.Clear();
+
+                        foreach (carboCircleElement ccEl in collectedElementsBuffer)
+                        {
+                            collectedElements.Add(ccEl.Copy());
+                        }
                     }
+                    else
+                    {
+                        collectedElements = new List<carboCircleElement>();
+                    }
+
                 }
                 else
                 {
-                    collectedElements = new List<carboCircleElement>();
+                    collectedElements = null;
                 }
 
             }
-            else
-            {
-                collectedElements = null;
-            }
-            //success
-
-            //Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
-
         }
 
 
@@ -160,5 +159,9 @@ namespace CarboCircle
             return "CarboCircle : Reuse";
         }
 
+        internal void SetSettings(carboCircleSettings settings)
+        {
+            importSettings = settings.Copy();
+        }
     }
 }

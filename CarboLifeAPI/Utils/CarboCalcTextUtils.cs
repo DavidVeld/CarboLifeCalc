@@ -313,27 +313,25 @@ namespace CarboLifeAPI
                     CarboDataPoint newelement = new CarboDataPoint();
 
                     //check if element is substructure:
-                    // string isSubStruct = dr["IsSubstructure"].ToString();
 
                     if(cEl.Category == "Reinforcement")
                         newelement.Name = cEl.SubCategory;
                     else
                         newelement.Name = cEl.Category;
 
-                    newelement.Value = cEl.EC;
+                    newelement.Value = (cEl.EC/1000);
 
                     bool merged = false;
                     //valueList.Add(newelement);
 
-                    //Add a new databoint, orr add value if exists
-                    //Add a new databoint, orr add value if exists
+                    //Add a new datapoint, or add value if exists
                     if (valueList.Count > 0)
                     {
                         foreach (CarboDataPoint pp in valueList)
                         {
                             if (pp.Name == newelement.Name)
                             {
-                                pp.Value += newelement.Value;
+                                pp.Value += (newelement.Value/1000);
                                 merged = true;
                                 break;
                             }
@@ -379,7 +377,7 @@ namespace CarboLifeAPI
                     else
                         newelement.Name = "Superstructure";
 
-                    newelement.Value = cEl.EC;
+                    newelement.Value = (cEl.EC/1000);
 
                     bool merged = false;
                     //valueList.Add(newelement);
@@ -392,7 +390,7 @@ namespace CarboLifeAPI
                         {
                             if (pp.Name == newelement.Name)
                             {
-                                pp.Value += newelement.Value;
+                                pp.Value += (newelement.Value / 1000);
                                 merged = true;
                                 break;
                             }
