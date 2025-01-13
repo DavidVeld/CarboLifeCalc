@@ -72,7 +72,6 @@ namespace CarboCircle
             this.description = description;
         }
 
-
         public carboCircleMatchElement Copy()
         {
             carboCircleMatchElement clone = new carboCircleMatchElement
