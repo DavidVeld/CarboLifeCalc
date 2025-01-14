@@ -58,9 +58,10 @@
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="60"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="30"/>
-
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="5"/>
                         </Grid.RowDefinitions>
@@ -79,6 +80,19 @@
                         <Button Name="btn_GotoMine" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="btn_GotoMine_Click" >Go-></Button>
                         <Button Name="btn_GotoProject" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="btn_GotoProject_Click" >Go-></Button>
                         <Button Name="btn_Go" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="btn_Go_Click">Go-></Button>
+
+
+                        <Label Grid.Column="1" Margin="30,-8,5,0" Grid.Row="5" Height="30" VerticalAlignment="Top" Style="{StaticResource formTitleStyle}">Imperfect Matches</Label>
+
+                        <Label Grid.Column="1" Margin="35,8,5,0" Grid.Row="5" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Beam Depth Tolerance (+):</Label>
+                        <TextBox Name="txt_SteelBeamDepthTolerance" Grid.Row="5" Margin="40,30,0,0" Width="120" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" Grid.Column="1" TextChanged="txt_ParseTextSettings_TextChanged"/>
+                        <Label Grid.Column="1" Margin="160,35,0,0" Grid.Row="5" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">mm</Label>
+
+                        <Label Grid.Column="1" Margin="35,58,5,0" Grid.Row="5" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">Strength Tolerance (+):</Label>
+                        <TextBox Name="txt_BeamStrengthTolerance" Grid.Row="6" Margin="40,22,0,0" Width="120" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" Grid.Column="1" TextChanged="txt_ParseTextSettings_TextChanged"/>
+                        <Label Grid.Column="1" Margin="160,30,0,0" Grid.Row="6" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">%</Label>
+
+
 
                     </Grid>
 
@@ -300,7 +314,7 @@
                                 <GridView AllowsColumnReorder="False">
                                     <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
                                     <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
-                                    
+
                                     <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
                                     <GridViewColumn Header="Material" Width="75"  DisplayMemberBinding="{Binding Path=materialName}" />
                                     <GridViewColumn Header="MaterialClass" Width="75" DisplayMemberBinding="{Binding Path=materialClass}"/>

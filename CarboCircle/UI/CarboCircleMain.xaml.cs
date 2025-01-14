@@ -180,7 +180,9 @@ namespace CarboCircle.UI
             cbb_MineSetting.Items.Add("Selected"); //Index: 2
             cbb_MineSetting.SelectedIndex = 1;
 
-//            txt_ProjectName.Text = project.projectName;
+            txt_BeamStrengthTolerance.Text = activeProject.settings.strengthRange.ToString();
+            txt_SteelBeamDepthTolerance.Text = activeProject.settings.depthRange.ToString();
+
 
         }
 
@@ -204,6 +206,12 @@ namespace CarboCircle.UI
             }
         }
 
+        private void txt_ParseTextSettings_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            activeProject.settings.strengthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
+            activeProject.settings.depthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
 
+
+        }
     }
 }
