@@ -1,10 +1,74 @@
-﻿using System;
+﻿using CarboLifeAPI;
+using CarboLifeAPI.Data;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace CarboCircle.data
 {
     internal class carboCircleUtils
     {
+        internal static void ExportDataToCSV(List<carboCircleElement> dataCombined, string path)
+        {
+            if (File.Exists(path) && DataExportUtils.IsFileLocked(path) == true)
+                return;
+
+            string fileString = "";
+
+            //Create Headers;
+            fileString =
+                "id, GUID, humanId, category, name, materialName, materialClass, length, " +
+                "volume, netLength, netVolume, grade, quality, isVolumeElement, " +
+                "standardName, standardDepth, standardCategory, Iy, Wy, " +
+                "Iz, Wz, matchGUID, isOffcut" + Environment.NewLine;
+            //Advanced
+            foreach (carboCircleElement ccE in dataCombined)
+            {
+                try
+                {
+                    string resultString = "";
+
+                    resultString += DataExportUtils.CVSFormat(ccE.id.ToString()) + ","; //1
+                    resultString += DataExportUtils.CVSFormat(ccE.GUID) + ","; //2
+                    resultString += DataExportUtils.CVSFormat(ccE.humanId) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.category) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.name) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.materialName) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.materialClass) + ","; //3
+                    resultString += ccE.length + ","; //7
+                    resultString += ccE.volume + ","; //7
+                    resultString += ccE.netLength + ","; //7
+                    resultString += ccE.netVolume + ","; //7
+
+                    resultString += DataExportUtils.CVSFormat(ccE.grade) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.quality.ToString()) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.isVolumeElement.ToString()) + ","; //3
+
+                    resultString += DataExportUtils.CVSFormat(ccE.standardName.ToString()) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.standardDepth.ToString()) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.standardCategory.ToString()) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.Iy.ToString()) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.Wy.ToString()) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.Iz.ToString()) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.Wy.ToString()) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.matchGUID.ToString()) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.isOffcut.ToString()) + ","; //3
+
+                    resultString += Environment.NewLine;
+
+                    fileString += resultString;
+                }
+                catch (IOException ex)
+                {
+                   // Console.WriteLine("An error occurred while writing the file: " + ex.Message);
+                }
+            }
+
+            DataExportUtils.WriteCVSFile(fileString, path);
+
+
+        }
+
         [Obsolete]
         internal static carboCircleProject findOpportunities(carboCircleProject carboCircleProject)
         {

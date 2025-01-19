@@ -14,6 +14,8 @@ using System.Windows.Media.Media3D;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Configuration.Assemblies;
+using System.Net.Configuration;
+using System.Runtime;
 
 namespace CarboCircle
 {
@@ -182,6 +184,12 @@ namespace CarboCircle
 
         }
 
+        /// <summary>
+        /// Get a list of elements created on the phase shown;
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="phasename"></param>
+        /// <returns></returns>
         private static List<Element> getOnPhase(IEnumerable<Element> collection, string phasename)
         {
             //get a list of selected elemetnts
@@ -628,6 +636,129 @@ namespace CarboCircle
             result = volumeCubicFt * factor;
             return result;
 
+        }
+
+        internal static bool visualiseElements(UIApplication uiapp, carboCircleProject project)
+        {
+            bool result = false;
+
+            UIDocument uidoc = uiapp.ActiveUIDocument;
+            Document doc = uidoc.Document;
+
+            carboCircleSettings settings = project.settings;
+            ///structure reused
+            ///structure not reused
+            ///structure from reused
+            ///structure new
+            List<ElementId> reusedMinedElementIds = new List<ElementId>();//mined
+            List<ElementId> reusedRequiredElementIds = new List<ElementId>();//
+            List<ElementId> NOTreusedMinedElementIds = new List<ElementId>();
+            List<ElementId> NOTreusedRequireddElementIds = new List<ElementId>();
+
+            //Colour all elemen
+            List<carboCircleMatchElement> matchedData = project.getCarboMatchesListSimplified();
+            ///List<carboCircleElement> leftOverElements = project.getLeftOverData();
+
+            foreach (carboCircleMatchElement element in matchedData)
+            {
+                ElementId matchedMinedElement = new ElementId(element.mined_id);
+                ElementId matchedRequiredElement = new ElementId(element.required_id);
+
+                reusedRequiredElementIds.Add(matchedRequiredElement);
+                reusedMinedElementIds.Add(matchedMinedElement);
+            }
+
+            //collect leftovers
+            /*
+            foreach (carboCircleElement element in leftOverElements)
+            {
+                ElementId leftOver = new ElementId(element.id);
+                if(element.isOffcut == false)
+                    NOTreuseddElementIds.Add(leftOver);
+            }
+            */
+
+            //get all elements in view;
+            IEnumerable<Element> allCollector = null;
+            allCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).WhereElementIsNotElementType().ToElements();
+            List<Element> newElementsInView = new List<Element>();
+
+            View activeView = uidoc.ActiveGraphicalView;
+            Parameter phaseParam = activeView.LookupParameter("Phase");
+
+            //Get elements on current Phase:
+            if (phaseParam != null)
+            {
+                string phasename = phaseParam.AsValueString();
+                if (allCollector != null)
+                    newElementsInView = getOnPhase(allCollector, phasename);
+            }
+
+            foreach (Element element in allCollector)
+            {
+                if(element != null && isElementReal(element))
+                {
+                    if (newElementsInView.Contains(element))
+                    {
+                        NOTreusedRequireddElementIds.Add(element.Id);
+                    }
+                    else
+                    {
+                        NOTreusedMinedElementIds.Add(element.Id);
+                    }
+
+                }
+            }
+
+            //colour the elements:
+            using (Transaction t = new Transaction(doc, "Colour The Model"))
+            {
+                t.Start();
+
+                FilteredElementCollector elements = new FilteredElementCollector(doc);
+                FillPatternElement solidFillPattern = elements.OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>().First(a => a.GetFillPattern().IsSolidFill);
+
+                //colour all elements in view first:
+                colourElements(NOTreusedRequireddElementIds, solidFillPattern, settings.colour_NotFromReused, doc);
+                colourElements(NOTreusedMinedElementIds, solidFillPattern, settings.colour_NotReused, doc);
+
+                //now colour the ones that are reused
+                colourElements(reusedMinedElementIds, solidFillPattern, settings.colour_ReusedMinedData, doc);
+                colourElements(reusedRequiredElementIds, solidFillPattern, settings.colour_FromReusedData, doc);
+
+                t.Commit();
+            }
+
+            return true;
+        }
+
+        private static void colourElements(List<ElementId> reusedFromdElementIds, FillPatternElement solidFillPattern, CarboColour colour_ReusedMinedData, Document doc)
+        {
+            OverrideGraphicSettings ogs = new OverrideGraphicSettings();
+
+            foreach (ElementId id in reusedFromdElementIds)
+            {
+                Element el = doc.GetElement(id);
+                if (el != null)
+                {
+                    //if switch is false reset overrides.
+                    ogs = getOverrideObject(solidFillPattern.Id, colour_ReusedMinedData);
+                    doc.ActiveView.SetElementOverrides(el.Id, ogs);
+                }
+            }
+        }
+
+        private static OverrideGraphicSettings getOverrideObject(ElementId id, CarboColour colour)
+        {
+            OverrideGraphicSettings ogs = new OverrideGraphicSettings();
+
+            ogs.SetSurfaceForegroundPatternId(id);
+            ogs.SetSurfaceForegroundPatternColor(new Color(colour.r, colour.g, colour.b));
+
+            ogs.SetCutForegroundPatternId(id);
+            ogs.SetCutForegroundPatternColor(new Color(colour.r, colour.g, colour.b));
+
+            return ogs;
         }
     }
 }

@@ -20,7 +20,13 @@ namespace CarboCircle.data
         public List<carboCircleElement> requiredVolumes { get; set; }
         public List<carboCircleElement> minedData { get; set; }
         public List<carboCircleElement> requiredData { get; set; }
+
+        //Result Data
         public List<carboCirclePair> carboCircleMatchedPairs { get; set; }
+        public List<carboCircleElement> volumeOpportunities { get; set; }
+
+        public List<carboCircleElement> leftOverData { get; set; }
+
         public carboCircleSettings settings { get; set; }
 
         public carboCircleProject() 
@@ -35,6 +41,7 @@ namespace CarboCircle.data
             requiredData = new List<carboCircleElement>();
             requiredVolumes = new List<carboCircleElement>();
             carboCircleMatchedPairs = new List<carboCirclePair>();
+            volumeOpportunities = new List<carboCircleElement>();
 
             settings = new carboCircleSettings();
         }
@@ -185,14 +192,29 @@ namespace CarboCircle.data
 
         internal void FindOpportunities()
         {
-            carboCircleProject result = new carboCircleProject();
+            //carboCircleProject result = new carboCircleProject();
+            List<carboCircleElement> leftOvers = new List<carboCircleElement>();
 
-            List<carboCirclePair> pairs = carboCircleMatchCore.findOpportunitiesV2(this);
+            List<carboCirclePair> pairs = carboCircleMatchCore.findOpportunitiesV2(this, out leftOvers);
 
-            if(pairs != null)
+            if (pairs != null)
+            {
                 carboCircleMatchedPairs = pairs;
+                if(leftOvers != null)
+                {
+                    leftOverData = leftOvers;
+                }
+            }
+
+            //Asses Volumes
+
+            List<carboCircleElement> volumeData = carboCircleMatchCore.findVolumeOpportunities(this);
+            if(volumeData != null)
+                volumeOpportunities = volumeData;
         }
 
+
+        //collectors
         public List<carboCircleMatchElement> getCarboMatchesListSimplified()
         {
             List<carboCircleMatchElement> result = new List<carboCircleMatchElement>();
@@ -202,6 +224,25 @@ namespace CarboCircle.data
             return result;
         }
 
+        public List<carboCircleElement> getCarboVolumeOpportunities()
+        {
+            if (volumeOpportunities != null)
+            {
+                return volumeOpportunities;
+            }
+            else
+            {
+                return new List<carboCircleElement>();
 
+            }
+        }
+
+        public List<carboCircleElement> getLeftOverData()
+        {
+            if(leftOverData != null)
+                return leftOverData;
+            else
+                return new List<carboCircleElement>();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Autodesk.Revit.UI;
 using CarboCircle.data;
+using CarboLifeAPI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,6 +110,42 @@ namespace CarboCircle.UI
             }
         }
 
+        private void btn_Visualise_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if (m_ExEvent != null)
+            {
+                dataSwitch = 2;
+                m_Handler.SetSwitch(2);
+                m_Handler.SetSettings(activeProject);
+
+                m_ExEvent.Raise();
+            }
+        }
+
+        private void btn_Select_Click(object sender, RoutedEventArgs e)
+        {
+            if (liv_MatchedFraming.SelectedItem != null)
+            {
+                try
+                {
+                    carboCircleMatchElement selectedMatch = liv_MatchedFraming.SelectedItem as carboCircleMatchElement;
+
+                    if (selectedMatch != null)
+                    {
+                        if (m_ExEvent != null)
+                        {
+                            dataSwitch = 3;
+                            m_Handler.SetSwitch(3);
+                            m_Handler.SetSettings(selectedMatch);
+
+                            m_ExEvent.Raise();
+                        }
+                    }
+                }
+                catch { }
+        }
+        }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
@@ -192,6 +229,8 @@ namespace CarboCircle.UI
             {
                 activeProject.FindOpportunities();
                 liv_MatchedFraming.ItemsSource = activeProject.getCarboMatchesListSimplified();
+                liv_MatchedVolumes.ItemsSource = activeProject.getCarboVolumeOpportunities();
+                liv_LeftOverData.ItemsSource = activeProject.getLeftOverData();
             }
         }
 
@@ -208,9 +247,39 @@ namespace CarboCircle.UI
 
         private void txt_ParseTextSettings_TextChanged(object sender, TextChangedEventArgs e)
         {
-            activeProject.settings.strengthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
-            activeProject.settings.depthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
+            //activeProject.settings.strengthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
+            //activeProject.settings.depthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
 
+
+        }
+
+        private void btn_ExportMinedToCSV(object sender, RoutedEventArgs e)
+        {
+            List<carboCircleElement> dataCombined = new List<carboCircleElement>();
+
+            string path = DataExportUtils.GetSaveAsLocation();
+
+
+            List<carboCircleElement> dataToExport = activeProject.minedData;
+            List<carboCircleElement> volumesToExport = activeProject.minedVolumes;
+
+            foreach(carboCircleElement dat in dataToExport)
+            {
+                dataCombined.Add(dat.Copy());
+            }
+
+            foreach (carboCircleElement vol in volumesToExport)
+            {
+                dataCombined.Add(vol.Copy());
+            }
+
+            if(path != null)
+            {
+                carboCircleUtils.ExportDataToCSV(dataCombined, path);
+
+
+
+            }
 
         }
     }

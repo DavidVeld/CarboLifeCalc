@@ -105,9 +105,10 @@
                                 <RowDefinition Height="25"/>
                                 <RowDefinition Height="25"/>
                                 <RowDefinition Height="25"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="30"/>
                                 <RowDefinition Height="5"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="5"/>
@@ -127,7 +128,8 @@
                             <Button Name="btn_NewReusedSteel" Grid.Column="2"  Grid.Row="4" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="16" Background="DarkSeaGreen" BorderBrush="Black" BorderThickness="1" IsEnabled="True" ></Button>
                             <Button Name="btn_NewSteel" Grid.Column="2"  Grid.Row="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="red" BorderBrush="Black" BorderThickness="1" IsEnabled="True" ></Button>
 
-                            <Button x:Name="btn_Visualise" Grid.Row="7" Grid.Column="2" Margin="5,5,5,5" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}"  Content="Visualise"/>
+                            <Button x:Name="btn_Visualise" Grid.Row="7" Width="55" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="btn_Visualise_Click"  Content="Visualise"/>
+                            <Button x:Name="btn_Select" Grid.Row="8" Width="55"  Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}"  Click="btn_Select_Click" Content="Select"/>
 
 
                         </Grid>
@@ -142,6 +144,8 @@
                             <RowDefinition Height="5"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="4*"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="2*"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="2*"/>
                             <RowDefinition Height="5"/>
@@ -187,6 +191,39 @@
                             </ListView.View>
                         </ListView>
 
+                        <Label Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Leftovers:</Label>
+                        
+                        <ListView Name="liv_LeftOverData" Grid.Column="1" Grid.Row="6" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="9" Background="White">
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="False">
+                                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
+                                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
+
+                                    <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
+                                    <GridViewColumn Header="Material" Width="75"  DisplayMemberBinding="{Binding Path=materialName}" />
+                                    <GridViewColumn Header="MaterialClass" Width="75" DisplayMemberBinding="{Binding Path=materialClass}"/>
+
+                                    <GridViewColumn Header="Length" Width="75" DisplayMemberBinding="{Binding Path=length, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="Net Length" Width="75" DisplayMemberBinding="{Binding Path=netLength, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+
+                                    <GridViewColumn Header="Grade" Width="0" DisplayMemberBinding="{Binding Path=grade}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="Condition" Width="0" DisplayMemberBinding="{Binding Path=quality}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="GUID" Width="0" DisplayMemberBinding="{Binding Path=GUID}"/>
+
+                                    <GridViewColumn Header="Profile" Width="75" DisplayMemberBinding="{Binding Path=standardName}"/>
+                                    <GridViewColumn Header="Type" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
+                                    <GridViewColumn Header="Depth" Width="0" DisplayMemberBinding="{Binding Path=standardDepth}"/>
+
+                                    <GridViewColumn Header="Iy" Width="0" DisplayMemberBinding="{Binding Path=Iy}"/>
+                                    <GridViewColumn Header="Wely" Width="0" DisplayMemberBinding="{Binding Path=Wy}"/>
+                                    <GridViewColumn Header="MatchGUID" Width="0" DisplayMemberBinding="{Binding Path=matchGUID}"/>
+                                    <GridViewColumn Header="humanId" Width="75" DisplayMemberBinding="{Binding Path=humanId}"/>
+
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
                     </Grid>
 
 
@@ -225,6 +262,7 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="5"/>
@@ -248,6 +286,8 @@
                             <Button x:Name="btn_ImportmaterialsRevit" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Revit" Click="btn_ImportmaterialsRevit_Click"/>
                             <Button x:Name="btn_ImportmaterialsCSV" Grid.Row="5" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine CSV"/>
                             <Button x:Name="btn_ImportmaterialsWeb" IsEnabled="False" Grid.Row="6" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Web"/>
+                            
+                            <Button x:Name="btn_MineSettings" Grid.Row="8" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_MineSettings_Click"  Content="Advanced Settings"/>
 
 
 
@@ -258,11 +298,11 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="0"/>
-                                <RowDefinition Height="0"/>
-                                <RowDefinition Height="0"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="65"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="30"/>
                                 <RowDefinition Height="52"/>
                                 <RowDefinition Height="52"/>
                                 <RowDefinition Height="30"/>
@@ -275,14 +315,9 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Mined Materials</Label>
 
-
-
-
-
-
-                            <Button x:Name="btn_MineSettings" Grid.Row="5" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_MineSettings_Click"  Content="Advanced Settings"/>
+                            <Label Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Tools:</Label>
+                            <Button x:Name="btn_ExportData" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="125" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export Data" Click="btn_ExportMinedToCSV"/>
 
 
                         </Grid>
@@ -357,7 +392,6 @@
                             </ListView.View>
                         </ListView>
 
-                        <Button x:Name="btn_Exportmaterials" Grid.Row="5" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
 
                     </Grid>
                 </Grid>
@@ -394,8 +428,8 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="5"/>
@@ -419,23 +453,15 @@
                             <Button x:Name="btn_ImportProjectRevit" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit" Click="btn_ImportProjectRevit_Click"/>
                             <Button x:Name="btn_ImportProjectCSV" Grid.Row="5" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV"/>
                             <Button IsEnabled="False" x:Name="btn_ExportProject" Visibility="Visible" Grid.Row="6" Grid.Column="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
+                           
+                            <Button x:Name="btn_ImportProjectSettings" Grid.Row="9" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}"  Content="Advanced Settings" Click="btn_ImportProjectSettings_Click"/>
 
                         </Grid>
                         <Grid Grid.Column="1" Grid.Row="3">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="0"/>
-                                <RowDefinition Height="0"/>
-                                <RowDefinition Height="0"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="65"/>
-                                <RowDefinition Height="52"/>
-                                <RowDefinition Height="52"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
-
                                 <RowDefinition Height="*"/>
 
                             </Grid.RowDefinitions>
@@ -445,10 +471,11 @@
 
 
                             <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Revit Import Settings:"/>
+                           
+                            <Button x:Name="btn_ExportProjectData" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="125" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export Data"/>
 
 
 
-                            <Button x:Name="btn_ImportProjectSettings" Grid.Row="5" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}"  Content="Advanced Settings" Click="btn_ImportProjectSettings_Click"/>
 
                         </Grid>
                     </Grid>

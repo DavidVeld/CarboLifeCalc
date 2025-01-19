@@ -6,6 +6,7 @@ using System.Windows;
 using System.Collections.Generic;
 using CarboCircle.data;
 using System.Linq;
+using System.Runtime;
 
 namespace CarboCircle
 {
@@ -18,6 +19,8 @@ namespace CarboCircle
 
         public int commandSwitch = 0; //0 = existing 1 = proposed 2 = colourmatch 
         carboCircleSettings importSettings = null;
+        carboCircleProject activeProject = null;
+        carboCircleMatchElement matchedPair = null;
 
         //private carboCircleProject collectedProject;
         private List<carboCircleElement> collectedElements;
@@ -30,12 +33,16 @@ namespace CarboCircle
             UIApplication app = uiapp;
             uidoc = app.ActiveUIDocument;
             doc = uidoc.Document;
+
             importSettings = new carboCircleSettings();
+            activeProject = new carboCircleProject();
+            matchedPair = new carboCircleMatchElement();
 
             _revitEvent = ExternalEvent.Create(this);
         }
 
         public event EventHandler<List<carboCircleElement>> DataReady;
+
 
         public void Execute(UIApplication uiapp)
         {
@@ -54,6 +61,16 @@ namespace CarboCircle
                     else if (commandSwitch == 1)
                     {
                         ImportElementsActiveView(uiapp);
+                        //Push event in the dialogwindow to update the listbox:
+                        DataReady?.Invoke(this, collectedElements);
+                    }
+                    else if (commandSwitch == 2)
+                    {
+                        VisualiseElementsInView(uiapp);
+                    }
+                    else if (commandSwitch == 3)
+                    {
+                        SelectPair(uiapp);
                     }
                     else
                     {
@@ -61,8 +78,6 @@ namespace CarboCircle
                     }
                 }
 
-                //window event
-                DataReady?.Invoke(this, collectedElements);
 
             }
             catch (Exception ex)
@@ -71,6 +86,39 @@ namespace CarboCircle
             }
 
 
+        }
+
+        private void SelectPair(UIApplication uiapp)
+        {
+            UIApplication app = uiapp;
+            uidoc = app.ActiveUIDocument;
+            doc = uidoc.Document;
+
+            if(matchedPair != null)
+            {
+                ElementId element1 = new ElementId(matchedPair.mined_id);
+                ElementId element2 = new ElementId(matchedPair.required_id);
+                List<ElementId> elements = new List<ElementId>();
+                elements.Add(element1);
+                elements.Add(element2);
+
+                uidoc.Selection.SetElementIds(elements);
+                uidoc.RefreshActiveView();
+
+            }
+
+        }
+
+        private void VisualiseElementsInView(UIApplication uiapp)
+        {
+            try
+            {
+                bool ok = carboCircleRevitCommands.visualiseElements(uiapp, activeProject);
+            }
+            catch   (Exception ex)
+            {
+
+            }
         }
 
         private void ImportElementsActiveView(UIApplication uiapp)
@@ -112,7 +160,8 @@ namespace CarboCircle
         /// <summary>
         /// 0 = No Action
         /// 1 = ImportElementsfromActiveView.
-        /// 2 = ColourMatches
+        /// 2 = ColourView
+        /// 3 = SelectPair
         /// </summary>
         /// <param name="v"></param>
         public void SetSwitch(int v)
@@ -162,6 +211,17 @@ namespace CarboCircle
         internal void SetSettings(carboCircleSettings settings)
         {
             importSettings = settings.Copy();
+        }
+
+        internal void SetSettings(carboCircleProject project)
+        {
+            activeProject = project;
+        }
+
+        internal void SetSettings(carboCircleMatchElement pair)
+        {
+            matchedPair = pair.Copy();
+
         }
     }
 }

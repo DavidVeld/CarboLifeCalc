@@ -1,4 +1,5 @@
-﻿using Autodesk.Revit.DB.Visual;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Visual;
 using Autodesk.Revit.UI;
 using CarboLifeAPI.Data;
 using System;
@@ -16,14 +17,84 @@ namespace CarboCircle.data
     internal class carboCircleMatchCore
     {
         /// <summary>
+        /// Evaluation of reusable volume elements such as concrete & masonry
+        /// </summary>
+        /// <param name="carboCircleProject"></param>
+        /// <returns>lisyt of reuse opportunities</returns>
+        internal static List<carboCircleElement> findVolumeOpportunities(carboCircleProject carboCircleProject)
+        {
+
+
+            List<carboCircleElement> result = new List<carboCircleElement>();
+
+            //Reset the matched
+            foreach (carboCircleElement ccE in carboCircleProject.minedVolumes)
+            {
+                ccE.matchGUID = "";
+            }
+
+            foreach (carboCircleElement ccE in carboCircleProject.requiredVolumes)
+            {
+                ccE.matchGUID = "";
+            }
+
+            foreach (carboCircleElement mined_cce in carboCircleProject.minedVolumes)
+            {
+                try
+                {
+                    carboCircleElement reuseElement = mined_cce.Copy();
+
+                    if (mined_cce.materialClass == "Concrete")
+                    {
+                        reuseElement.name = "Aggregate from: " + mined_cce.name;
+                        reuseElement.volume = mined_cce.volume * 2;
+                        reuseElement.materialName = "Aggregate from concrete ";
+                        reuseElement.materialClass = "Aggregate";
+                    }
+                    else if (mined_cce.materialClass == "Masonry" || mined_cce.materialClass == "Brick")
+                    {
+                        carboCircleElement aggregarte = mined_cce.Copy();
+                        //aggregarte.name = "mined_cce.name;
+                        aggregarte.volume = mined_cce.volume * Convert.ToDouble(carboCircleProject.settings.VolumeLoss / 100);
+                        aggregarte.materialName = "Reused masonry";
+                        aggregarte.materialClass = "Masonry";
+                    }
+                    else
+                    {
+                        reuseElement.name = "Aggregate from: " + mined_cce.name;
+                        reuseElement.volume = mined_cce.volume * 2;
+                        reuseElement.materialName = "Aggregate from other ";
+                        reuseElement.materialClass = "Aggregate";
+                    }
+
+                    result.Add(reuseElement);
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+            }
+
+
+            return result;        
+                
+             }
+
+
+        /// <summary>
         /// Main entry point, this gets a list of matches based on scoring system and returns a pairing list.
         /// </summary>
         /// <param name="carboCircleProject"></param>
         /// <returns></returns>
-        internal static List<carboCirclePair> findOpportunitiesV2(carboCircleProject carboCircleProject)
+        internal static List<carboCirclePair> findOpportunitiesV2(carboCircleProject carboCircleProject, out List<carboCircleElement> leftOvers)
         {
-            //Rest the matched
-            foreach(carboCircleElement ccE in carboCircleProject.minedData)
+            //
+            leftOvers = null;
+            List<carboCircleElement> leftOverList = new List<carboCircleElement> ();
+
+            //Reset the matched
+            foreach (carboCircleElement ccE in carboCircleProject.minedData)
             {
                 ccE.matchGUID = "";
             }
@@ -142,30 +213,44 @@ namespace CarboCircle.data
                 { }
             }
 
+            //Collect not matched elements
             foreach (carboCircleElement offcut in finalOffcuts)
             {
                 //a matched existing element needs to be skipped
                 if (offcut.matchGUID != "")
                     continue;
 
-                carboCirclePair matchedPairSeries = new carboCirclePair();
+                carboCircleElement offCutCopy = new carboCircleElement();
 
                 try
                 {
-                    matchedPairSeries.mined_Element = offcut.Copy();
-                    matchedPairSeries.required_element = new carboCircleElement();
-                    matchedPairSeries.required_element.length = 0;
-                    matchedPairSeries.description = "Offcut Unused";
-                    matchedPairSeries.match_Score = 0;
-
-                    matchedpairs.Add(matchedPairSeries);
-
+                    offCutCopy = offcut.Copy();
+                    leftOverList.Add(offCutCopy);
                 }
                 catch
-                { }
+                { 
+                }
             }
 
+            foreach (carboCircleElement leftOverBeam in existingBeamList)
+            {
+                //a matched existing element needs to be skipped
+                if (leftOverBeam.matchGUID != "")
+                    continue;
 
+                carboCircleElement leftOverCopy = new carboCircleElement();
+
+                try
+                {
+                    leftOverCopy = leftOverBeam.Copy();
+                    leftOverList.Add(leftOverCopy);
+                }
+                catch
+                {
+                }
+            }
+
+            leftOvers = leftOverList;
 
             return matchedpairs;
         }
@@ -326,5 +411,7 @@ namespace CarboCircle.data
 
             return result;
         }
+
+
     }
 }

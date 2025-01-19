@@ -85,7 +85,13 @@ namespace CarboCircle.data
         public double strengthRange { get; set; }
 
         //colours
+        /// <summary>
+        /// Existing reused beams
+        /// </summary>
         public CarboColour colour_ReusedMinedData { get; set; }
+        /// <summary>
+        /// Reused Volumes
+        /// </summary>
         public CarboColour colour_ReusedMinedVolumes { get; set; }
         public CarboColour colour_NotReused { get; set; }
         public CarboColour colour_FromReusedData { get; set; }
@@ -115,12 +121,12 @@ namespace CarboCircle.data
             ConsiderSlabs = false;
             ConsiderColumnBeams = true;
 
-            colour_ReusedMinedData = new CarboColour();
-            colour_ReusedMinedVolumes = new CarboColour();
-            colour_NotReused = new CarboColour();
-            colour_FromReusedData = new CarboColour();
-            colour_FromReusedVolumes = new CarboColour();
-            colour_NotFromReused = new CarboColour();
+            colour_ReusedMinedData = new CarboColour(255,50,50,255);
+            colour_ReusedMinedVolumes = new CarboColour(255, 50, 50, 255);
+            colour_NotReused = new CarboColour(255, 235, 235, 235);
+            colour_FromReusedData = new CarboColour(255, 255, 50, 255);
+            colour_FromReusedVolumes = new CarboColour(255, 255, 50, 255);
+            colour_NotFromReused = new CarboColour(255, 235, 235, 235);
 
             dataBasePath = "";
         }
