@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using System.Configuration.Assemblies;
 using System.Net.Configuration;
 using System.Runtime;
+using System.Windows.Media;
 
 namespace CarboCircle
 {
@@ -327,7 +328,7 @@ namespace CarboCircle
 
                     try
                     {
-                        //This needs alot of work:
+                        //find the closest steel beam section
 
                         foreach (carboCircleElement dataBaseBeam in steelSectionDataBase)
                         {
@@ -343,9 +344,13 @@ namespace CarboCircle
                         carboCircleElement closestMatchingBeam = steelSectionDataBase[indexFound];
                         matchingBeam.standardName = closestMatchingBeam.name;
                         matchingBeam.standardDepth = closestMatchingBeam.standardDepth;
+                        matchingBeam.standardWidth = closestMatchingBeam.standardWidth;
+
                         matchingBeam.standardCategory = closestMatchingBeam.standardCategory;
                         matchingBeam.Iy = closestMatchingBeam.Iy;
                         matchingBeam.Wy = closestMatchingBeam.Wy;
+                        matchingBeam.Iz = closestMatchingBeam.Iz;
+                        matchingBeam.Wz = closestMatchingBeam.Wz;
 
                         result.Add(matchingBeam);
                     }
@@ -353,10 +358,6 @@ namespace CarboCircle
                     {
                     }
                 }
-
-                //get closest index nr;
-
-
             }
 
             return result;
@@ -391,16 +392,19 @@ namespace CarboCircle
                         {
                             carboCircleElement ccE = new carboCircleElement();
 
-
                             ccE.id = 0;
                             ccE.name = dr[1].ToString();
                             ccE.category = dr[3].ToString(); //check
 
                             ccE.standardName = dr[1].ToString();
                             ccE.standardDepth = Utils.ConvertMeToDouble(dr[8].ToString()); //check
-                            ccE.standardCategory = dr[2].ToString();
+                            ccE.standardWidth = Utils.ConvertMeToDouble(dr[9].ToString()); //check
+
+                            ccE.standardCategory = dr[3].ToString();
                             ccE.Wy = Utils.ConvertMeToDouble(dr[25].ToString());
                             ccE.Iy = Utils.ConvertMeToDouble(dr[21].ToString());
+                            ccE.Wz = Utils.ConvertMeToDouble(dr[26].ToString());
+                            ccE.Iz = Utils.ConvertMeToDouble(dr[22].ToString());
 
                             ccE.materialName = dr[5].ToString();
 
@@ -435,6 +439,13 @@ namespace CarboCircle
             return false;
         }
 
+        /// <summary>
+        /// converts a Revit Element to a CarboCircleElement
+        /// </summary>
+        /// <param name="Collection"></param>
+        /// <param name="doc"></param>
+        /// <param name="appSettings"></param>
+        /// <returns></returns>
         private static List<carboCircleElement> getcarboCircleElements(IEnumerable<Element> Collection, Document doc, carboCircleSettings appSettings)
         {
             List<carboCircleElement> resultCollection = new List<carboCircleElement>();
@@ -454,9 +465,6 @@ namespace CarboCircle
                         {
                             continue;
                         }
-
-
-
 
                         //a valid element is further checked:
                         FamilyInstance inst = el as FamilyInstance;
@@ -554,6 +562,46 @@ namespace CarboCircle
                     }
                 }
 
+                //if the element is a wooden beam, give width and depth as typename:
+                string typeName = "";
+                double typeDepth = 0;
+                double typeWidth = 0;
+
+                double typeIy = 0; 
+                double typeIz = 0; 
+                double typeWy = 0;
+                double typeWz = 0;
+
+                //Try to find a width and depth
+                //FamilySymbol type = inst.Symbol;
+                //if this is a steel beam this will be overwritten later anyways
+                ElementId typeId = el.GetTypeId();
+                ElementType type = doc.GetElement(typeId) as ElementType;
+
+                if (type != null)
+                {
+
+                    Parameter bparam = type.LookupParameter("b");
+                    Parameter hparam = type.LookupParameter("d");
+
+                    if (bparam != null && hparam != null)
+                    {
+                        double width = (bparam.AsDouble() * 304.8); //to mm1
+                        double depth = (hparam.AsDouble() * 304.8); //to mm1
+                        typeDepth = depth;
+                        typeWidth = width;
+
+                        typeIy = (width * (Math.Pow(depth, 3))) / 12;
+                        typeIz = (depth * (Math.Pow(width,3))) / 12;
+                        typeWy = (width * (Math.Pow(depth, 2))) / 6;
+                        typeWz = (depth * (Math.Pow(width, 2))) / 6; 
+
+                        typeName = width.ToString() + "x" + depth.ToString();
+
+                    }
+                }
+
+
                 //set properties:
 
                 resultElement.id = Revitid;
@@ -570,6 +618,14 @@ namespace CarboCircle
 
                 resultElement.length = length;
                 resultElement.volume = volume;
+
+                resultElement.standardName = typeName;
+                resultElement.standardDepth = typeDepth;
+                resultElement.standardWidth = typeWidth;
+                resultElement.Iy = typeIy;
+                resultElement.Iz = typeIz;
+                resultElement.Wy = typeWy;
+                resultElement.Wz = typeWz;
 
 
                 resultElement.isVolumeElement = isVolumne;
@@ -753,10 +809,10 @@ namespace CarboCircle
             OverrideGraphicSettings ogs = new OverrideGraphicSettings();
 
             ogs.SetSurfaceForegroundPatternId(id);
-            ogs.SetSurfaceForegroundPatternColor(new Color(colour.r, colour.g, colour.b));
+            ogs.SetSurfaceForegroundPatternColor(new Autodesk.Revit.DB.Color(colour.r, colour.g, colour.b));
 
             ogs.SetCutForegroundPatternId(id);
-            ogs.SetCutForegroundPatternColor(new Color(colour.r, colour.g, colour.b));
+            ogs.SetCutForegroundPatternColor(new Autodesk.Revit.DB.Color(colour.r, colour.g, colour.b));
 
             return ogs;
         }

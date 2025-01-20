@@ -36,6 +36,7 @@ namespace CarboCircle
         //The Below are taken from standardized Database
         public string standardName { get; set; }
         public double standardDepth { get; set; }
+        public double standardWidth{ get; set; }
         public string standardCategory { get; set; }
         public double Iy { get; set; }
         public double Wy { get; set; }
@@ -63,6 +64,7 @@ namespace CarboCircle
             standardName = "";
             standardCategory = "";
             standardDepth = 0;
+            standardWidth = 0;
             Iy = 0;
             Wy = 0;
             Iz = 0;
@@ -97,6 +99,7 @@ namespace CarboCircle
                 standardName = this.standardName,
                 standardCategory = this.standardCategory,
                 standardDepth = this.standardDepth,
+                standardWidth = this.standardWidth,
                 Iy = this.Iy,
                 Wy = this.Wy,
                 Iz = this.Iz,

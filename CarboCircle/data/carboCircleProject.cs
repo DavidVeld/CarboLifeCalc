@@ -94,7 +94,16 @@ namespace CarboCircle.data
             {
                 double percentageCut = 0;
                 double length  = cCE.length;
-                double lengthNet = cCE.length - (settings.cutoffbeamLength / 1000); ;
+                double lengthNet = length;
+
+                if (cCE.materialClass == "Steel")
+                {
+                    lengthNet = cCE.length - 2 * (settings.cutoffbeamLength / 1000); //value cut off each side
+                }
+                else if(cCE.materialClass == "Wood")
+                {
+                    lengthNet = cCE.length - Convert.ToDouble((2 * 0.3)) ; //300mm cut off each side
+                }
 
                 if (lengthNet < 0)
                     lengthNet = 0;
@@ -195,7 +204,7 @@ namespace CarboCircle.data
             //carboCircleProject result = new carboCircleProject();
             List<carboCircleElement> leftOvers = new List<carboCircleElement>();
 
-            List<carboCirclePair> pairs = carboCircleMatchCore.findOpportunitiesV2(this, out leftOvers);
+            List<carboCirclePair> pairs = carboCircleMatchCore.findOpportunities(this, out leftOvers);
 
             if (pairs != null)
             {

@@ -87,7 +87,7 @@ namespace CarboCircle.data
         /// </summary>
         /// <param name="carboCircleProject"></param>
         /// <returns></returns>
-        internal static List<carboCirclePair> findOpportunitiesV2(carboCircleProject carboCircleProject, out List<carboCircleElement> leftOvers)
+        internal static List<carboCirclePair> findOpportunities(carboCircleProject carboCircleProject, out List<carboCircleElement> leftOvers)
         {
             //
             leftOvers = null;
@@ -107,26 +107,39 @@ namespace CarboCircle.data
             //Get All Data From Project
             List<carboCircleElement> existingBeamList = new List<carboCircleElement>();
             List<carboCircleElement> requiredBeamList = new List<carboCircleElement>();
+
+            //List<carboCircleElement> existingWoodBeamList = new List<carboCircleElement>();
+            //List<carboCircleElement> requiredWoodBeamList = new List<carboCircleElement>();
+
+
             List<carboCircleElement> offcuts = new List<carboCircleElement>();
             List<carboCircleElement> finalOffcuts = new List<carboCircleElement>();
 
             List<carboCirclePair> matchedpairs = new List<carboCirclePair>();
 
-            //get valid steel beams:
+            //get valid steel or timber beams:
             foreach(carboCircleElement ccE in carboCircleProject.minedData)
             {
-                if(ccE.materialClass == "Steel")
+                if(ccE.materialClass == "Steel" || ccE.materialClass == "Wood")
                 {
                     existingBeamList.Add(ccE); 
-                }
+                }/*
+                else if(ccE.materialClass =="Wood")
+                {
+                    existingWoodBeamList.Add(ccE);
+                }*/
             }
 
             foreach (carboCircleElement ccE in carboCircleProject.requiredData)
             {
-                if (ccE.materialClass == "Steel")
+                if (ccE.materialClass == "Steel" || ccE.materialClass == "Wood")
                 {
                     requiredBeamList.Add(ccE);
-                }
+                }/*
+                else if (ccE.materialClass == "Wood")
+                {
+                    requiredWoodBeamList.Add(ccE);
+                }*/
             }
 
             //valid Data Wasnt collected
@@ -151,8 +164,10 @@ namespace CarboCircle.data
                         {
                             carboCircleElement mined_el = existingBeamList[i];
                             if (mined_el.GUID == matchedPairSeries.mined_Element.GUID)
+                            {
                                 existingBeamList.RemoveAt(i);
-                            break;
+                                break;
+                            }
                         }
                         /*
                         foreach (carboCircleElement mined_el in existingBeamList)
@@ -269,7 +284,7 @@ namespace CarboCircle.data
 
             foreach (carboCircleElement ccE_mined in existingBeamList)
             {
-                //if an existing beam was matched, continue.
+                //if an proposed beam was matched, continue.
                 if (ccE_mined.matchGUID != "")
                     continue;
                 //find a match
@@ -300,6 +315,8 @@ namespace CarboCircle.data
 
         private static double getScore(carboCircleElement req_el, carboCircleElement mined_el, carboCircleSettings settings, out string description)
         {
+            //material classes are: "Wood" or "Steel"
+
             double score = 0;
             double d_value = settings.depthRange; //mm
             double str_factor = settings.strengthRange / 100; //mm
@@ -312,6 +329,14 @@ namespace CarboCircle.data
             double lengthFactor = 1;
             description = "";
 
+            //Check if class is equal, otherwise no match
+            if(mined_el.materialClass != req_el.materialClass)
+            {
+                description = "No Match.";
+                return 0;
+            }
+
+            //the material class ie the same, check if beam is long enough.
             if (offcutlength < 0)
             {
                 description = "No Match.";

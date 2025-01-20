@@ -19,7 +19,7 @@ namespace CarboCircle.data
             fileString =
                 "id, GUID, humanId, category, name, materialName, materialClass, length, " +
                 "volume, netLength, netVolume, grade, quality, isVolumeElement, " +
-                "standardName, standardDepth, standardCategory, Iy, Wy, " +
+                "standardName, standardDepth, standardWidth, standardCategory, Iy, Wy, " +
                 "Iz, Wz, matchGUID, isOffcut" + Environment.NewLine;
             //Advanced
             foreach (carboCircleElement ccE in dataCombined)
@@ -46,6 +46,7 @@ namespace CarboCircle.data
 
                     resultString += DataExportUtils.CVSFormat(ccE.standardName.ToString()) + ","; //3
                     resultString += DataExportUtils.CVSFormat(ccE.standardDepth.ToString()) + ","; //3
+                    resultString += DataExportUtils.CVSFormat(ccE.standardWidth.ToString()) + ","; //3
                     resultString += DataExportUtils.CVSFormat(ccE.standardCategory.ToString()) + ","; //3
                     resultString += DataExportUtils.CVSFormat(ccE.Iy.ToString()) + ","; //3
                     resultString += DataExportUtils.CVSFormat(ccE.Wy.ToString()) + ","; //3
@@ -69,44 +70,6 @@ namespace CarboCircle.data
 
         }
 
-        [Obsolete]
-        internal static carboCircleProject findOpportunities(carboCircleProject carboCircleProject)
-        {
-            //needs to include offcuts, basically each element is mapped to mtch 
-            foreach (carboCircleElement req_el in carboCircleProject.requiredData)
-            {
-                try
-                {
-                    foreach (carboCircleElement min_el in carboCircleProject.minedData)
-                    {
-                        if (req_el.standardName == min_el.standardName)
-                        {
-                            //the profile matches
-                            if (req_el.length <= min_el.netLength && min_el.matchGUID == "")
-                            {
-                                //match
-                                req_el.matchGUID = min_el.GUID;
-                                min_el.matchGUID = req_el.GUID;
-
-                                carboCirclePair pair = new carboCirclePair();
-                                pair.required_element = req_el.Copy();
-                                pair.mined_Element = min_el.Copy();
-                                pair.match_Score = 100;
-
-                                carboCircleProject.carboCircleMatchedPairs.Add(pair);
-
-                                break;//next required element;
-
-                            }
-                        }
-                    }
-                }
-                catch
-                { }
-            }
-
-            return carboCircleProject;
-        }
 
 
         internal static List<carboCircleMatchElement> getCarboMatchListSimplified(List<carboCirclePair> carboCircleMatchedPairs)

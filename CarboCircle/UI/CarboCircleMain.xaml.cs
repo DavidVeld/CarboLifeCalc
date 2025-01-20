@@ -3,6 +3,7 @@ using CarboCircle.data;
 using CarboLifeAPI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -90,7 +91,7 @@ namespace CarboCircle.UI
             {
                 dataSwitch = 0;
                 m_Handler.SetSwitch(1);
-                m_Handler.SetSettings(activeProject.settings);
+                m_Handler.SetSettings(activeProject);
 
                 m_ExEvent.Raise();
             }
@@ -224,8 +225,13 @@ namespace CarboCircle.UI
         }
 
         private void btn_Go_Click(object sender, RoutedEventArgs e)
-        {
-            if(activeProject.minedData.Count > 0 && activeProject.requiredData.Count > 0)
+        {            
+            //get activesettings:
+            activeProject.settings.strengthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
+            activeProject.settings.depthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
+
+            //Mainscript:
+            if (activeProject.minedData.Count > 0 && activeProject.requiredData.Count > 0)
             {
                 activeProject.FindOpportunities();
                 liv_MatchedFraming.ItemsSource = activeProject.getCarboMatchesListSimplified();
@@ -247,8 +253,7 @@ namespace CarboCircle.UI
 
         private void txt_ParseTextSettings_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //activeProject.settings.strengthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
-            //activeProject.settings.depthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
+
 
 
         }
@@ -277,10 +282,49 @@ namespace CarboCircle.UI
             {
                 carboCircleUtils.ExportDataToCSV(dataCombined, path);
 
+            }
 
+
+            if (File.Exists(path))
+            {
+                System.Windows.MessageBox.Show("CSV export successful. Click OK to open export directory.", "Success!", MessageBoxButton.OK);
+                System.Diagnostics.Process.Start("explorer.exe", path);
+            }
+
+        }
+
+        private void btn_ExportProjectData_Click(object sender, RoutedEventArgs e)
+        {
+            List<carboCircleElement> dataCombined = new List<carboCircleElement>();
+
+            string path = DataExportUtils.GetSaveAsLocation();
+
+
+            List<carboCircleElement> dataToExport = activeProject.requiredData;
+            List<carboCircleElement> volumesToExport = activeProject.requiredVolumes;
+
+            foreach (carboCircleElement dat in dataToExport)
+            {
+                dataCombined.Add(dat.Copy());
+            }
+
+            foreach (carboCircleElement vol in volumesToExport)
+            {
+                dataCombined.Add(vol.Copy());
+            }
+
+            if (path != null)
+            {
+                carboCircleUtils.ExportDataToCSV(dataCombined, path);
 
             }
 
+
+            if (File.Exists(path))
+            {
+                System.Windows.MessageBox.Show("CSV export successful. Click OK to open export directory.", "Success!", MessageBoxButton.OK);
+                System.Diagnostics.Process.Start("explorer.exe", path);
+            }
         }
     }
 }

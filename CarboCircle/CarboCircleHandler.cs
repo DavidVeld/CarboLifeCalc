@@ -42,8 +42,17 @@ namespace CarboCircle
         }
 
         public event EventHandler<List<carboCircleElement>> DataReady;
-
-
+        /// <summary>
+        /// 0 = No Action
+        /// 1 = ImportElementsfromActiveView.
+        /// 2 = ColourView
+        /// 3 = SelectPair
+        /// </summary>
+        /// <param name="v"></param>
+        public void SetSwitch(int v)
+        {
+            commandSwitch = v;
+        }
         public void Execute(UIApplication uiapp)
         {
             try
@@ -125,48 +134,48 @@ namespace CarboCircle
         {
             if (importSettings != null)
             {
-                List<carboCircleElement> collectedElementsBuffer = carboCircleRevitCommands.getElementsFromActiveView(uiapp, importSettings);
-                collectedElements = new List<carboCircleElement>();
-
-                if (collectedElementsBuffer != null)
+                try
                 {
-                    if (collectedElementsBuffer.Count > 0)
-                    {
-                        collectedElements = new List<carboCircleElement>();
-                        collectedElements.Clear();
+                    List<ElementId> ids = new List<ElementId>();
 
-                        foreach (carboCircleElement ccEl in collectedElementsBuffer)
+
+                    List<carboCircleElement> collectedElementsBuffer = carboCircleRevitCommands.getElementsFromActiveView(uiapp, importSettings);
+                    collectedElements = new List<carboCircleElement>();
+
+                    if (collectedElementsBuffer != null)
+                    {
+                        if (collectedElementsBuffer.Count > 0)
                         {
-                            collectedElements.Add(ccEl.Copy());
+                            collectedElements = new List<carboCircleElement>();
+                            collectedElements.Clear();
+
+                            foreach (carboCircleElement ccEl in collectedElementsBuffer)
+                            {
+                                collectedElements.Add(ccEl.Copy());
+                                ids.Add(new ElementId(ccEl.id));
+                            }
                         }
+                        else
+                        {
+                            collectedElements = new List<carboCircleElement>();
+                        }
+
                     }
                     else
                     {
-                        collectedElements = new List<carboCircleElement>();
+                        collectedElements = null;
                     }
 
+                    if (collectedElements != null && ids.Count > 1)
+                    {
+                        uidoc.Selection.SetElementIds(ids);
+                        uidoc.RefreshActiveView();
+                    }
                 }
-                else
-                {
-                    collectedElements = null;
+                catch 
+                { 
                 }
-
             }
-        }
-
-
-
-
-        /// <summary>
-        /// 0 = No Action
-        /// 1 = ImportElementsfromActiveView.
-        /// 2 = ColourView
-        /// 3 = SelectPair
-        /// </summary>
-        /// <param name="v"></param>
-        public void SetSwitch(int v)
-        {
-            commandSwitch = v;
         }
 
         public List<carboCircleElement> getCollectedDataElements()
@@ -208,6 +217,7 @@ namespace CarboCircle
             return "CarboCircle : Reuse";
         }
 
+        [Obsolete]
         internal void SetSettings(carboCircleSettings settings)
         {
             importSettings = settings.Copy();
@@ -216,12 +226,13 @@ namespace CarboCircle
         internal void SetSettings(carboCircleProject project)
         {
             activeProject = project;
+            importSettings = project.settings;
+
         }
 
         internal void SetSettings(carboCircleMatchElement pair)
         {
             matchedPair = pair.Copy();
-
         }
     }
 }

@@ -182,10 +182,14 @@
                         <ListView Name="liv_MatchedVolumes" Grid.Column="1" Grid.Row="4" Margin="0,0,0,0" FontFamily="Segoe UI" FontSize="10" Background="White">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="False">
-                                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Path=mined_Name}"/>
-                                    <GridViewColumn Header="Quantity Mined" Width="125" DisplayMemberBinding="{Binding Path=mined_netVolume}"/>
-                                    <GridViewColumn Header="Reuesed As" Width="100" DisplayMemberBinding="{Binding Path=required_Name}"/>
-                                    <GridViewColumn Header="Quantity Reusable" Width="125" DisplayMemberBinding="{Binding Path=required_volume}"/>
+                                    <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
+                                    <GridViewColumn Header="Category" Width="75" DisplayMemberBinding="{Binding Path=category}"/>
+                                    <GridViewColumn Header="Name" Width="75" DisplayMemberBinding="{Binding Path=name}"/>
+                                    <GridViewColumn Header="Material" Width="75"  DisplayMemberBinding="{Binding Path=materialName}" />
+                                    <GridViewColumn Header="MaterialClass" Width="75" DisplayMemberBinding="{Binding Path=materialClass}"/>
+
+                                    <GridViewColumn Header="Volume" Width="75" DisplayMemberBinding="{Binding Path=volume, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
+                                    <GridViewColumn Header="Net Volume" Width="0" DisplayMemberBinding="{Binding Path=netVolume, StringFormat=N3}" TextBlock.TextAlignment="Right"/>
 
                                 </GridView>
                             </ListView.View>
@@ -363,7 +367,8 @@
 
                                     <GridViewColumn Header="Profile" Width="75" DisplayMemberBinding="{Binding Path=standardName}"/>
                                     <GridViewColumn Header="Type" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
-                                    <GridViewColumn Header="Depth" Width="0" DisplayMemberBinding="{Binding Path=standardDepth}"/>
+                                    <GridViewColumn Header="Depth" Width="50" DisplayMemberBinding="{Binding Path=standardDepth}"/>
+                                    <GridViewColumn Header="Width" Width="50" DisplayMemberBinding="{Binding Path=standardWidth}"/>
 
                                     <GridViewColumn Header="Iy" Width="0" DisplayMemberBinding="{Binding Path=Iy}"/>
                                     <GridViewColumn Header="Wely" Width="0" DisplayMemberBinding="{Binding Path=Wy}"/>
@@ -472,7 +477,7 @@
 
                             <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Revit Import Settings:"/>
                            
-                            <Button x:Name="btn_ExportProjectData" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="125" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export Data"/>
+                            <Button x:Name="btn_ExportProjectData" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="125" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_ExportProjectData_Click"  Content="Export Data"/>
 
 
 
@@ -512,7 +517,8 @@
 
                                     <GridViewColumn Header="Profile" Width="75" DisplayMemberBinding="{Binding Path=standardCategory}"/>
                                     <GridViewColumn Header="Type" Width="75" DisplayMemberBinding="{Binding Path=standardName}"/>
-                                    <GridViewColumn Header="Depth" Width="75" DisplayMemberBinding="{Binding Path=standardDepth}"/>
+                                    <GridViewColumn Header="Depth" Width="50" DisplayMemberBinding="{Binding Path=standardDepth}"/>
+                                    <GridViewColumn Header="Width" Width="50" DisplayMemberBinding="{Binding Path=standardWidth}"/>
 
                                     <GridViewColumn Header="Iy" Width="75" DisplayMemberBinding="{Binding Path=Iy}"/>
                                     <GridViewColumn Header="Wely" Width="75" DisplayMemberBinding="{Binding Path=Wy}"/>

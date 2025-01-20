@@ -121,12 +121,12 @@ namespace CarboCircle.data
             ConsiderSlabs = false;
             ConsiderColumnBeams = true;
 
-            colour_ReusedMinedData = new CarboColour(255,50,50,255);
+            colour_ReusedMinedData = new CarboColour(255,25,160,235);
             colour_ReusedMinedVolumes = new CarboColour(255, 50, 50, 255);
             colour_NotReused = new CarboColour(255, 235, 235, 235);
-            colour_FromReusedData = new CarboColour(255, 255, 50, 255);
+            colour_FromReusedData = new CarboColour(255, 80, 220, 80);
             colour_FromReusedVolumes = new CarboColour(255, 255, 50, 255);
-            colour_NotFromReused = new CarboColour(255, 235, 235, 235);
+            colour_NotFromReused = new CarboColour(255, 250, 220, 220);
 
             dataBasePath = "";
         }
