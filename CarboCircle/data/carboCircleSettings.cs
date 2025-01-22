@@ -89,15 +89,20 @@ namespace CarboCircle.data
         /// Existing reused beams
         /// </summary>
         public CarboColour colour_ReusedMinedData { get; set; }
-        /// <summary>
-        /// Reused Volumes
-        /// </summary>
-        public CarboColour colour_ReusedMinedVolumes { get; set; }
+
         public CarboColour colour_NotReused { get; set; }
         public CarboColour colour_FromReusedData { get; set; }
-        public CarboColour colour_FromReusedVolumes { get; set; }
         public CarboColour colour_NotFromReused { get; set; }
 
+        /// <summary>
+        /// Reused Volumes Not Uses
+        /// </summary>
+        public CarboColour colour_ReusedMinedVolumes { get; set; }
+
+        /// <summary>
+        /// Reused Volumes Not Uses
+        /// </summary>
+        public CarboColour colour_FromReusedVolumes { get; set; }
 
         public carboCircleSettings()
         {

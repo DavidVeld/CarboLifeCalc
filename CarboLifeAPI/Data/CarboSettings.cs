@@ -21,6 +21,7 @@ namespace CarboLifeAPI.Data
         public int defaultDesignLife { get; set; }
         public string Currency { get; set; }
         public string ecRevitParameter { get; set; }
+        public string secretMessage { get; set; }
 
         public string carboLegendName { get; set; }
         public string carboDashboardName { get; set; }
@@ -40,6 +41,7 @@ namespace CarboLifeAPI.Data
             ecRevitParameter = "CLC_EmbodiedCarbon";
             carboLegendName = "CLC_ColourLegend";
             carboLegendName = "CLC_ResultsView";
+            secretMessage = "";
 
             defaultCarboGroupSettings = new CarboGroupSettings();
 

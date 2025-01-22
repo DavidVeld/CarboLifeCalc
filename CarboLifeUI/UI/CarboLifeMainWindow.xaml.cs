@@ -54,6 +54,7 @@ namespace CarboLifeUI.UI
 
 
         //public CarboDatabase carboDataBase { get; set; }
+        [Obsolete]
         public CarboLifeMainWindow()
         {
             //UserPaths
@@ -83,10 +84,39 @@ namespace CarboLifeUI.UI
             IsRevit = false;
             //carboDataBase = carboDataBase.DeSerializeXML("");
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
-
+            
             //carboLifeProject.CreateGroups();
             InitializeComponent();
+
+            CheckLic();
         }
+
+        private void CheckLic()
+        {
+            CarboSettings setting = new CarboSettings();
+            setting = setting.Load();
+
+            if(setting.secretMessage == "CarboLife") 
+            { 
+
+            }
+            else
+            {
+                Random random = new Random();
+                int randomNumber = random.Next(1, 11);
+                if(randomNumber == 0)
+                {
+                    MessageBoxResult result = System.Windows.MessageBox.Show("Hello", "This is a friendly message to remind you that ", MessageBoxButton.YesNo);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start("https://buymeacoffee.com/davidveld");
+                    }
+                }
+            }
+
+        }
+
         private void Menu_Loaded(object sender, RoutedEventArgs e)
         {
 

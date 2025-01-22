@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.UI;
 using CarboCircle.data;
 using CarboLifeAPI;
+using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -153,6 +154,8 @@ namespace CarboCircle.UI
             //Before the form is closed, everything must be disposed properly
             try
             {
+                activeProject.settings.Save();
+
                 m_ExEvent.Dispose();
                 m_ExEvent = null;
 
@@ -221,6 +224,17 @@ namespace CarboCircle.UI
             txt_BeamStrengthTolerance.Text = activeProject.settings.strengthRange.ToString();
             txt_SteelBeamDepthTolerance.Text = activeProject.settings.depthRange.ToString();
 
+            //load colours
+            btn_ColourMinedNotReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 
+                activeProject.settings.colour_NotReused.r, activeProject.settings.colour_NotReused.g, activeProject.settings.colour_NotReused.b));
+            btn_ColourMinedReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 
+                activeProject.settings.colour_ReusedMinedData.r, activeProject.settings.colour_ReusedMinedData.g, activeProject.settings.colour_ReusedMinedData.b));
+
+            btn_ColourRequiredNotReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 
+                activeProject.settings.colour_NotFromReused.r, activeProject.settings.colour_NotFromReused.g, activeProject.settings.colour_NotFromReused.b));
+            btn_ColourRequiredReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 
+                activeProject.settings.colour_FromReusedData.r, activeProject.settings.colour_FromReusedData.g, activeProject.settings.colour_FromReusedData.b));
+
 
         }
 
@@ -238,6 +252,10 @@ namespace CarboCircle.UI
                 liv_MatchedVolumes.ItemsSource = activeProject.getCarboVolumeOpportunities();
                 liv_LeftOverData.ItemsSource = activeProject.getLeftOverData();
             }
+
+            //colours
+            
+
         }
 
         private void btn_MineSettings_Click(object sender, RoutedEventArgs e)
@@ -253,9 +271,6 @@ namespace CarboCircle.UI
 
         private void txt_ParseTextSettings_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-
-
         }
 
         private void btn_ExportMinedToCSV(object sender, RoutedEventArgs e)
@@ -326,5 +341,139 @@ namespace CarboCircle.UI
                 System.Diagnostics.Process.Start("explorer.exe", path);
             }
         }
+
+        private void btn_ColourMinedReused_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //get a new colour
+                System.Windows.Media.Brush startColour = btn_ColourMinedReused.Background;
+                System.Drawing.Color pickedColour = GetColor(startColour);
+
+                //apply in the colour settings
+                activeProject.settings.colour_ReusedMinedData = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+
+                //Refresh the graph
+                btn_ColourMinedReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btn_ColourMinedNotReused_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //get a new colour
+                System.Windows.Media.Brush startColour = btn_ColourMinedNotReused.Background;
+                System.Drawing.Color pickedColour = GetColor(startColour);
+
+                //apply in the colour settings
+                activeProject.settings.colour_NotReused = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+
+                //Refresh the graph
+                btn_ColourMinedNotReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+        }
+        private void btn_ColourRequiredReused_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //get a new colour
+                System.Windows.Media.Brush startColour = btn_ColourRequiredReused.Background;
+                System.Drawing.Color pickedColour = GetColor(startColour);
+
+                //apply in the colour settings
+                activeProject.settings.colour_FromReusedData = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+
+                //Refresh the graph
+                btn_ColourRequiredReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btn_ColourRequiredNotReused_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //get a new colour
+                System.Windows.Media.Brush startColour = btn_ColourRequiredNotReused.Background;
+                System.Drawing.Color pickedColour = GetColor(startColour);
+
+                //apply in the colour settings
+                activeProject.settings.colour_NotFromReused = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+
+                //Refresh the graph
+                btn_ColourRequiredNotReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+        }
+        private System.Drawing.Color GetColor(System.Windows.Media.Brush startColour)
+        {
+            //System.Windows.Media.Color color = ((SolidColorBrush)startColour).Color;
+            //System.Drawing.Color oldC = System.Drawing.Color.FromArgb(color.R, color.G, color.B);
+            try
+            {
+                System.Drawing.Color oldC = ConvertToColor(startColour);
+
+                System.Windows.Forms.ColorDialog MyDialog = new System.Windows.Forms.ColorDialog();
+                // Keeps the user from selecting a custom color.
+                MyDialog.AllowFullOpen = true;
+                MyDialog.FullOpen = true;
+                // Allows the user to get help. (The default is false.)
+                MyDialog.ShowHelp = true;
+                // Sets the initial color select to the current text color.
+                MyDialog.Color = oldC;
+
+                // Update the text box color if the user clicks OK 
+                if (MyDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    return MyDialog.Color;
+                else
+                    return oldC;
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.Forms.MessageBox.Show(ex.Message);
+                return System.Drawing.Color.FromArgb(255, 0, 0, 0);
+            }
+        }
+
+        private System.Drawing.Color ConvertToColor(System.Windows.Media.Brush brush)
+        {
+            try
+            {
+                System.Windows.Media.Color color = ((SolidColorBrush)brush).Color;
+                System.Drawing.Color oldC = System.Drawing.Color.FromArgb(color.R, color.G, color.B);
+
+                return oldC;
+            }
+            catch (Exception ex)
+            {
+                return System.Drawing.Color.FromArgb(255, 0, 0, 0);
+            }
+        }
+
+        private void btn_Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+
     }
 }

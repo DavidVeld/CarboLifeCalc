@@ -1348,7 +1348,7 @@ fileString =
                         cm.Description = dr[3].ToString();
 
                         cm.Density = Convert.ToInt32(Utils.ConvertMeToDouble(dr[4].ToString()));
-                        cm.WasteFactor = Convert.ToInt32(Utils.ConvertMeToDouble(dr[5].ToString()));
+                        cm.WasteFactor = Utils.ConvertMeToDouble(dr[5].ToString());
                         cm.Grade = dr[6].ToString();
                         cm.EPDurl = dr[7].ToString();
 

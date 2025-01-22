@@ -123,10 +123,10 @@
                             <Label Grid.Column="1" Margin="5,0,5,0" Grid.Row="4" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">New Structure From Reused:</Label>
                             <Label Grid.Column="1" Margin="5,0,5,0" Grid.Row="5" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">New Structure NOT From Reused::</Label>
 
-                            <Button Name="btn_ReusedSteel" Grid.Column="2" Grid.Row="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="DarkSlateBlue" BorderBrush="Black" BorderThickness="1" IsEnabled="True" ></Button>
-                            <Button Name="btn_NotReusedSteel" Grid.Column="2"  Grid.Row="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="White" BorderBrush="Black" BorderThickness="1" IsEnabled="True" ></Button>
-                            <Button Name="btn_NewReusedSteel" Grid.Column="2"  Grid.Row="4" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="16" Background="DarkSeaGreen" BorderBrush="Black" BorderThickness="1" IsEnabled="True" ></Button>
-                            <Button Name="btn_NewSteel" Grid.Column="2"  Grid.Row="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="red" BorderBrush="Black" BorderThickness="1" IsEnabled="True" ></Button>
+                            <Button Name="btn_ColourMinedReused" Grid.Column="2" Grid.Row="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="DarkSlateBlue" BorderBrush="Black" BorderThickness="1" IsEnabled="True" Click="btn_ColourMinedReused_Click" ></Button>
+                            <Button Name="btn_ColourMinedNotReused" Grid.Column="2"  Grid.Row="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="White" BorderBrush="Black" BorderThickness="1" IsEnabled="True" Click="btn_ColourMinedNotReused_Click" ></Button>
+                            <Button Name="btn_ColourRequiredReused" Grid.Column="2"  Grid.Row="4" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="16" Background="DarkSeaGreen" BorderBrush="Black" BorderThickness="1" IsEnabled="True" Click="btn_ColourRequiredReused_Click"></Button>
+                            <Button Name="btn_ColourRequiredNotReused" Grid.Column="2"  Grid.Row="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="red" BorderBrush="Black" BorderThickness="1" IsEnabled="True" Click="btn_ColourRequiredNotReused_Click" ></Button>
 
                             <Button x:Name="btn_Visualise" Grid.Row="7" Width="55" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="btn_Visualise_Click"  Content="Visualise"/>
                             <Button x:Name="btn_Select" Grid.Row="8" Width="55"  Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}"  Click="btn_Select_Click" Content="Select"/>
@@ -565,7 +565,7 @@
 
         </TabControl>
 
-        <Button x:Name="btn_Close" Grid.Row="4" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Close"/>
+        <Button x:Name="btn_Close" Grid.Row="4" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Close" Click="btn_Close_Click"/>
 
     </Grid>
 
