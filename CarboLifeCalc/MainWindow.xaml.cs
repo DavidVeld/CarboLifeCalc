@@ -22,6 +22,7 @@ using CarboLifeUI.UI;
 using Microsoft.Win32;
 using Path = System.IO.Path;
 using CarboCircle;
+using System.Security.Cryptography;
 
 namespace CarboLifeCalc
 {
@@ -44,10 +45,10 @@ namespace CarboLifeCalc
         private void OpenProject(CarboProject project)
         {
             CarboLifeUI.UI.CarboLifeMainWindow CarboApp = new CarboLifeMainWindow(project);
-            this.Visibility = Visibility.Hidden;
+            //this.Visibility = Visibility.Hidden;
             CarboApp.ShowDialog();
-            Environment.Exit(0);
-            this.Close();
+            //Environment.Exit(0);
+            //this.Close();
         }
 
         private void btn_Materials_Click(object sender, RoutedEventArgs e)
@@ -153,14 +154,13 @@ namespace CarboLifeCalc
 
         private void btn_Test_Click(object sender, RoutedEventArgs e)
         {
-            CarboCircle.UI.CarboCircleMain creator = new CarboCircle.UI.CarboCircleMain();
-            creator.Show();
+            string showme = CarboLifeAPI.Utils.Crypt("CarboLife");
+            Clipboard.SetText(showme);
+            MessageBox.Show(showme);
         }
 
-        private void btn_Test_Click2(object sender, RoutedEventArgs e)
-        {
-            ChartTest win = new ChartTest();
-            win.Show();
-        }
+
     }
+
+  
 }

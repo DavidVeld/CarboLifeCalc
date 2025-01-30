@@ -1,4 +1,5 @@
-﻿using CarboCircle.data;
+﻿using Autodesk.Revit.DB;
+using CarboCircle.data;
 using CarboLifeAPI;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ namespace CarboCircle.UI
         public CarboCircleSettings(carboCircleProject activeProject)
         {
             this.settings = activeProject.settings.Copy();
+            InitializeComponent();
+
         }
 
         private void btn_Accept_Click(object sender, RoutedEventArgs e)
@@ -55,6 +58,7 @@ namespace CarboCircle.UI
             settings.depthRange = double.Parse(txt_SteelBeamDepthTolerance.Text); //in mm
             settings.strengthRange = double.Parse(txt_BeamStrengthTolerance.Text); //in percent
 
+            settings.Save();
 
             isAccepted = true;
             this.Close();
@@ -76,11 +80,13 @@ namespace CarboCircle.UI
                 txt_MasonryLoss.Text = settings.MasonryLoss.ToString();
                 txt_ConcreteLoss.Text = settings.VolumeLoss.ToString();
 
-                txt_SteelDataBasePath.Text = "Local";
+                if (settings.dataBasePath == "")
+                    txt_SteelDataBasePath.Text = "Local";
+                else
+                    txt_SteelDataBasePath.Text += settings.dataBasePath;
 
                 txt_SteelBeamDepthTolerance.Text = settings.depthRange.ToString(); //in mm
                 txt_BeamStrengthTolerance.Text = settings.strengthRange.ToString(); //in percent
-
 
             }
         }
@@ -93,28 +99,26 @@ namespace CarboCircle.UI
 
         private void btn_Browse_Click(object sender, RoutedEventArgs e)
         {
-            string currentDir = System.IO.Path.GetDirectoryName(settings.dataBasePath);
+            string currentDir = Utils.getAssemblyPath() + "\\db\\";
 
-            if(!Directory.Exists(currentDir))
+            if (!Directory.Exists(currentDir))
             {
-                currentDir = Utils.getAssemblyPath() + "\\db\\";
-            }
+                OpenFileDialog openFileDialog = new OpenFileDialog();
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Carbo Circle Section Database (*.csv)|*.csv";
+                if (Directory.Exists(currentDir))
+                    openFileDialog.InitialDirectory = currentDir;
 
-            openFileDialog.Filter = "Carbo Circle Section Database (*.csv)|*.csv";
-            if (Directory.Exists(currentDir))
-                openFileDialog.InitialDirectory = currentDir;
-
-            var path = openFileDialog.ShowDialog();
-            if (openFileDialog.FileName != "")
-            {
-                FileInfo finfo = new FileInfo(openFileDialog.FileName);
-
+                var path = openFileDialog.ShowDialog();
                 if (openFileDialog.FileName != "")
                 {
-                    settings.dataBasePath = openFileDialog.FileName;
-                    txt_SteelDataBasePath.Text = settings.dataBasePath;
+                    FileInfo finfo = new FileInfo(openFileDialog.FileName);
+
+                    if (openFileDialog.FileName != "")
+                    {
+                        settings.dataBasePath = openFileDialog.FileName;
+                        txt_SteelDataBasePath.Text = settings.dataBasePath;
+                    }
                 }
             }
         }

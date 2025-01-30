@@ -42,6 +42,8 @@ namespace CarboLifeUI.UI
         {
             txt_Path.Text = settings.templatePath;
             txt_DesignLife.Text = settings.defaultDesignLife.ToString();
+            txt_SecretMessage.Text = settings.secretMessage;
+
             CheckTemplateFile();
         }
 
@@ -49,6 +51,8 @@ namespace CarboLifeUI.UI
         {
             isAccepted = true;
             settings.defaultDesignLife = Convert.ToInt16(Convert.ToDouble(txt_DesignLife.Text));
+            settings.secretMessage = txt_SecretMessage.Text;
+
             settings.Save();
             this.Close();
         }
@@ -83,6 +87,11 @@ namespace CarboLifeUI.UI
                 lbl_CheckTemplatePath.Content = "Template Found";
             else
                 lbl_CheckTemplatePath.Content = "Template NOT Found";
+        }
+
+        private void btn_Coffee_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://buymeacoffee.com/davidveld");
         }
     }
 }

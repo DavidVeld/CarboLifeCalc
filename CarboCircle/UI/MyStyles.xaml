@@ -612,7 +612,7 @@
         <Setter Property="ItemContainerStyle" Value="{DynamicResource ListboxItemStyle}" />
         <Setter Property="Margin" Value="3,3,2,1" />
         <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontSize" Value="10"/>
     </Style>
 
     <Color x:Key="Color_002">#FF565656</Color>

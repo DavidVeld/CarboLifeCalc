@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using CarboCircle.data;
 using System.Linq;
 using System.Runtime;
+using System.IO;
 
 namespace CarboCircle
 {
@@ -42,11 +43,15 @@ namespace CarboCircle
         }
 
         public event EventHandler<List<carboCircleElement>> DataReady;
+
+        public event EventHandler<string> ImageReady;
+        public string imagePath;
         /// <summary>
         /// 0 = No Action
         /// 1 = ImportElementsfromActiveView.
         /// 2 = ColourView
         /// 3 = SelectPair
+        /// 4 = GetactiveViewImage
         /// </summary>
         /// <param name="v"></param>
         public void SetSwitch(int v)
@@ -81,6 +86,12 @@ namespace CarboCircle
                     {
                         SelectPair(uiapp);
                     }
+                    else if (commandSwitch == 4)
+                    {
+                        ExportImage(uiapp);
+                        ImageReady?.Invoke(this, imagePath);
+
+                    }
                     else
                     {
                         TaskDialog.Show("Error", "Revit did not receive a valid command");
@@ -95,6 +106,33 @@ namespace CarboCircle
             }
 
 
+        }
+
+        private void ExportImage(UIApplication uiapp)
+        {
+            //get temp Filepath
+            string MyAssemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string MyAssemblyDir = Path.GetDirectoryName(MyAssemblyPath);
+            string tempImgpath = MyAssemblyDir + "\\tempCircleImg.jpg";
+            try
+            {
+                if (File.Exists(tempImgpath))
+                { File.Delete(tempImgpath); }
+
+                ImageExportOptions options = new ImageExportOptions();
+                options.FilePath = tempImgpath;
+                options.HLRandWFViewsFileType = ImageFileType.PNG;
+                options.PixelSize = 1024;
+                options.FitDirection = FitDirectionType.Horizontal;
+                options.ExportRange = ExportRange.CurrentView;
+
+                doc.ExportImage(options);
+                imagePath = tempImgpath;
+            }
+            catch 
+            {
+                imagePath = null;
+            }
         }
 
         private void SelectPair(UIApplication uiapp)
@@ -217,17 +255,10 @@ namespace CarboCircle
             return "CarboCircle : Reuse";
         }
 
-        [Obsolete]
-        internal void SetSettings(carboCircleSettings settings)
-        {
-            importSettings = settings.Copy();
-        }
-
         internal void SetSettings(carboCircleProject project)
         {
             activeProject = project;
             importSettings = project.settings;
-
         }
 
         internal void SetSettings(carboCircleMatchElement pair)

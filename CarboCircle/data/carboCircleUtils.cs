@@ -69,9 +69,6 @@ namespace CarboCircle.data
 
 
         }
-
-
-
         internal static List<carboCircleMatchElement> getCarboMatchListSimplified(List<carboCirclePair> carboCircleMatchedPairs)
         {
             List<carboCircleMatchElement> result = new List<carboCircleMatchElement>();

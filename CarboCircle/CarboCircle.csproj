@@ -75,6 +75,7 @@
     <Compile Include="data\beamMatchCore\carboCirclePair.cs" />
     <Compile Include="data\carboCircleProject.cs" />
     <Compile Include="data\carboCircleSettings.cs" />
+    <Compile Include="data\carboCircleReportUtils.cs" />
     <Compile Include="data\carboCircleUtils.cs" />
     <Compile Include="FormStatusChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

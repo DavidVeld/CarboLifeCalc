@@ -136,7 +136,7 @@ namespace CarboCircle.data
             dataBasePath = "";
         }
 
-        public CarboSettings Load()
+        public carboCircleSettings Load()
         {
             return DeSerializeXML();
         }
@@ -144,20 +144,20 @@ namespace CarboCircle.data
         {
             return SerializeXML();
         }
-        private CarboSettings DeSerializeXML()
+        private carboCircleSettings DeSerializeXML()
         {
             string mySettingsPath = getCircleSettingsFilePath();
+            carboCircleSettings bufferproject = new carboCircleSettings();
 
             if (File.Exists(mySettingsPath))
             {
                 try
                 {
-                    XmlSerializer ser = new XmlSerializer(typeof(CarboSettings));
-                    CarboSettings bufferproject;
+                    XmlSerializer ser = new XmlSerializer(typeof(carboCircleSettings));
 
                     using (FileStream fs = new FileStream(mySettingsPath, FileMode.Open))
                     {
-                        bufferproject = ser.Deserialize(fs) as CarboSettings;
+                        bufferproject = ser.Deserialize(fs) as carboCircleSettings;
                     }
 
                     //If the settings exists and all is well use this:
@@ -166,12 +166,14 @@ namespace CarboCircle.data
                 catch (Exception ex)
                 {
                     System.Windows.MessageBox.Show(ex.Message);
+                    //override the current file with a new setting file as repair;
+                    bufferproject.Save();
                     return null;
                 }
             }
             else
             {
-                CarboSettings newsettings = new CarboSettings();
+                carboCircleSettings newsettings = new carboCircleSettings();
                 newsettings.Save();
                 return newsettings;
             }
@@ -186,7 +188,7 @@ namespace CarboCircle.data
 
             try
             {
-                XmlSerializer ser = new XmlSerializer(typeof(CarboSettings));
+                XmlSerializer ser = new XmlSerializer(typeof(carboCircleSettings));
 
                 using (FileStream fs = new FileStream(mySettingsPath, FileMode.Create))
                 {

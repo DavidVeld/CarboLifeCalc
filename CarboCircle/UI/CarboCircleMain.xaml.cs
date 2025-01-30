@@ -1,4 +1,5 @@
-﻿using Autodesk.Revit.UI;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using CarboCircle.data;
 using CarboLifeAPI;
 using CarboLifeAPI.Data;
@@ -6,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +37,8 @@ namespace CarboCircle.UI
         private static List<carboCircleElement> collectedElements;
 
         private int dataSwitch = 0;
+        string reportPath = "";
+
         public CarboCircleMain()
         {
             InitializeComponent();
@@ -49,12 +53,42 @@ namespace CarboCircle.UI
             this.m_ExEvent = exEvent;
             this.m_Handler = handler;
 
-            activeProject = new carboCircleProject();
+            try
+            {
+                //initiate new projece
+                activeProject = new carboCircleProject();
+                carboCircleSettings settings = new carboCircleSettings();
+                settings = settings.Load().Copy();
+                activeProject.settings = settings;
 
-            // Subscribe to the DataReady event
-            m_Handler.DataReady += OnDataReady;
-
+                // Subscribe to the DataReady event
+                m_Handler.DataReady += OnDataReady;
+                m_Handler.ImageReady += OnImageReady;
+            }
+            catch (Exception ex)
+            {
+                this.Close();
+            }
             
+        }
+
+        private void OnImageReady(object sender, string tempImgpath)
+        {
+            //Create a report after ImageCreation:
+            //check if image was created:
+            //get temp Filepath
+            //string MyAssemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            //string MyAssemblyDir = System.IO.Path.GetDirectoryName(MyAssemblyPath);
+            //string tempImgpath = MyAssemblyDir + "\\tempCircleImg.jpg";
+            if (File.Exists(tempImgpath))
+            {
+                string imgstring = carboCircleReportUtils.getImageAsString(tempImgpath);
+                carboCircleReportUtils.ExportReport(activeProject, imgstring, reportPath);
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Error");
+            }
         }
 
         private void OnDataReady(object sender, List<carboCircleElement> e)
@@ -71,7 +105,7 @@ namespace CarboCircle.UI
                     liv_MinedData.ItemsSource = activeProject.minedData;
                     liv_MinedMassObjects.ItemsSource = activeProject.minedVolumes;
                 }
-                else
+                else if (dataSwitch == 1)
                 {
                     collectedElements = e;
                     activeProject.ParseRequiredData(collectedElements);
@@ -106,7 +140,7 @@ namespace CarboCircle.UI
             {
                 dataSwitch = 1;
                 m_Handler.SetSwitch(1);
-                m_Handler.SetSettings(activeProject.settings);
+                m_Handler.SetSettings(activeProject);
 
                 m_ExEvent.Raise();
             }
@@ -181,7 +215,6 @@ namespace CarboCircle.UI
         private void btn_GotoProject_Click(object sender, RoutedEventArgs e)
         {
             Dispatcher.BeginInvoke((Action)(() => tab_Main.SelectedIndex = 2));
-
         }
         private void btn_ImportProjectSettings_Click(object sender, RoutedEventArgs e)
         {
@@ -195,7 +228,7 @@ namespace CarboCircle.UI
             if (settings.isAccepted)
             {
                 activeProject.settings = settings.settings.Copy();
-                ShowSettings();
+                //ShowSettings();
             }
         }
 
@@ -208,6 +241,8 @@ namespace CarboCircle.UI
 
         private void LoadInterFaceFromSettings()
         {
+
+
             cbb_ImportProjectSetting.Items.Clear();
             cbb_MineSetting.Items.Clear();
 
@@ -260,13 +295,25 @@ namespace CarboCircle.UI
 
         private void btn_MineSettings_Click(object sender, RoutedEventArgs e)
         {
-            CarboCircleSettings settings = new CarboCircleSettings(activeProject);
-            settings.Show();
-            if (settings.isAccepted)
+            storeSettings();
+
+            CarboCircleSettings settingsWindow = new CarboCircleSettings(activeProject);
+            settingsWindow.Show();
+            if (settingsWindow.isAccepted)
             {
-                activeProject.settings = settings.settings.Copy();
+                activeProject.settings = settingsWindow.settings.Copy();
                 ShowSettings();
             }
+        }
+
+        private void storeSettings()
+        {
+            activeProject.settings.strengthRange = Utils.ConvertMeToDouble(txt_BeamStrengthTolerance.Text);
+            activeProject.settings.depthRange = Utils.ConvertMeToDouble(txt_SteelBeamDepthTolerance.Text);
+
+            //colours
+
+
         }
 
         private void txt_ParseTextSettings_TextChanged(object sender, TextChangedEventArgs e)
@@ -471,7 +518,70 @@ namespace CarboCircle.UI
 
         private void btn_Close_Click(object sender, RoutedEventArgs e)
         {
+            activeProject.settings.Save();
             this.Close();
+        }
+
+        private void btn_Report_Click(object sender, RoutedEventArgs e)
+        {
+            //
+            bool createReport = true;
+            //Create a File and save it as a HTML File
+            SaveFileDialog saveDialog = new SaveFileDialog();
+            saveDialog.Title = "Specify report directory";
+            saveDialog.Filter = "HTML Files|*.html";
+            saveDialog.FilterIndex = 2;
+            saveDialog.RestoreDirectory = true;
+
+            saveDialog.ShowDialog();
+
+            string Path = saveDialog.FileName;
+
+            if (File.Exists(Path))
+            {
+                MessageBoxResult msgResult = System.Windows.MessageBox.Show("This file already exists, do you want to overwrite this file ?", "", MessageBoxButton.YesNo);
+
+                if (msgResult == MessageBoxResult.Yes)
+                {
+                    using (var fs = File.Open(Path, FileMode.Open))
+                    {
+                        var canRead = fs.CanRead;
+                        var canWrite = fs.CanWrite;
+
+                        if (canWrite == false)
+                        {
+                            System.Windows.MessageBox.Show("This file cannot be opened, please close the file and try again", "Warning", MessageBoxButton.OK);
+                            createReport = false;
+                        }
+                    }
+                    createReport = true;
+                }
+                else
+                {
+                    createReport = false;
+                }
+            }
+            else if (Path == "")
+            {
+                //The dialog box was canceled;
+                createReport = false;
+            }
+
+
+            if (createReport == true && Path != "")
+            {
+                if (m_ExEvent != null)
+                {
+                    dataSwitch = -1;
+                    reportPath = Path;
+
+                    m_Handler.SetSwitch(4);
+                    m_Handler.SetSettings(activeProject);
+
+                    m_ExEvent.Raise();
+                }
+            }
+
         }
 
 

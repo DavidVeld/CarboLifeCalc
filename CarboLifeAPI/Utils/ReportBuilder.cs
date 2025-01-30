@@ -242,7 +242,7 @@ namespace CarboLifeAPI
             return result;
         }
 
-        private static string getImageTag(string imageAsString, int width, int height, string toolText)
+        public static string getImageTag(string imageAsString, int width, int height, string toolText)
         {
             string imgTag = string.Empty;
 
@@ -707,7 +707,7 @@ namespace CarboLifeAPI
             return html;
         }
 
-        private static string getCSS()
+        public static string getCSS()
         {
             string html = "";
 

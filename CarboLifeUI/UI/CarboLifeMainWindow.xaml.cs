@@ -96,17 +96,24 @@ namespace CarboLifeUI.UI
             CarboSettings setting = new CarboSettings();
             setting = setting.Load();
 
-            if(setting.secretMessage == "CarboLife") 
-            { 
+            //Hi, yes you ae welcome to take the secret message from the sourcecode
+            //The software is free and the contribution is volontary
+            //If you want to find out the secret message pass the string "LOmaRc4Q9HO7UU18crErdwvOQNXv8Hf+" through Utils.Decrypt
+            //The return in the secret message.
+            string secretmessage = setting.secretMessage;
+            string secretEnCrypted = Utils.Crypt(secretmessage);
 
+            if (secretEnCrypted == "LOmaRc4Q9HO7UU18crErdwvOQNXv8Hf+") 
+            { 
+                //No warnings
             }
             else
             {
                 Random random = new Random();
-                int randomNumber = random.Next(1, 11);
-                if(randomNumber == 0)
+                int randomNumber = random.Next(1, 5);
+                if(randomNumber == 2)
                 {
-                    MessageBoxResult result = System.Windows.MessageBox.Show("Hello", "This is a friendly message to remind you that ", MessageBoxButton.YesNo);
+                    MessageBoxResult result = System.Windows.MessageBox.Show("This is a friendly message to remind you that this software is free, buy me a coffee and you get a key to remove this message which you have a 1/5 chance to see each time you run this app.", "Hello", MessageBoxButton.YesNo);
 
                     if (result == MessageBoxResult.Yes)
                     {
