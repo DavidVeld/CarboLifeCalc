@@ -3,6 +3,7 @@ using Autodesk.Revit.UI;
 using CarboCircle.data;
 using CarboLifeAPI;
 using CarboLifeAPI.Data;
+using CarboLifeUI.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -84,6 +85,9 @@ namespace CarboCircle.UI
             {
                 string imgstring = carboCircleReportUtils.getImageAsString(tempImgpath);
                 carboCircleReportUtils.ExportReport(activeProject, imgstring, reportPath);
+                //if all ok delete the temp image:
+                if(File.Exists(tempImgpath))
+                    File.Delete(tempImgpath);
             }
             else
             {
@@ -104,6 +108,7 @@ namespace CarboCircle.UI
                     //liv_MinedData.ItemsSource = "";
                     liv_MinedData.ItemsSource = activeProject.minedData;
                     liv_MinedMassObjects.ItemsSource = activeProject.minedVolumes;
+                    setMineOk();
                 }
                 else if (dataSwitch == 1)
                 {
@@ -114,8 +119,20 @@ namespace CarboCircle.UI
                     //liv_requiredMaterialList.ItemsSource = "";
                     liv_requiredMaterialList.ItemsSource = activeProject.requiredData;
                     liv_RequiredMassObjects.ItemsSource = activeProject.requiredVolumes;
+                    setRequiredOk();
+
                 }
             }
+        }
+
+        private void setRequiredOk()
+        {
+            btn_GotoProject.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 125, 218,88));
+        }
+
+        private void setMineOk()
+        {
+            btn_GotoMine.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 125, 218, 88));
         }
 
         private void btn_ImportmaterialsRevit_Click(object sender, RoutedEventArgs e)
@@ -584,6 +601,75 @@ namespace CarboCircle.UI
 
         }
 
+        private void btn_ImportProjectCSV_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.MessageBox.Show("Select a csv containing elements for import, ","Message for You!");
+            string openPath = DataExportUtils.GetOpenCSVLocation();
 
+            if (openPath != null && openPath != "")
+            {
+                List<carboCircleElement> importedElements = carboCircleUtils.GetElementsFromCVSFile(openPath);
+                if(importedElements != null && importedElements.Count > 0)
+                {
+                    activeProject.ParseRequiredData(importedElements);
+
+                    liv_requiredMaterialList.Items.Clear();
+                    liv_RequiredMassObjects.Items.Clear();
+
+                    liv_requiredMaterialList.ItemsSource = activeProject.requiredData;
+                    liv_RequiredMassObjects.ItemsSource = activeProject.requiredVolumes;
+                }
+                setRequiredOk();
+
+            }
+        }
+
+        private void btn_ImportmaterialsCSV_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.MessageBox.Show("Select a csv file containing elements that can be-reused, ", "Message for You!!");
+            string openPath = DataExportUtils.GetOpenCSVLocation();
+
+            if (openPath != null && openPath != "")
+            {
+                List<carboCircleElement> importedElements = carboCircleUtils.GetElementsFromCVSFile(openPath);
+                if (importedElements != null && importedElements.Count > 0)
+                {
+                    activeProject.ParseMinedData(importedElements);
+
+                    liv_MinedData.Items.Clear();
+                    liv_MinedMassObjects.Items.Clear();
+
+                    liv_MinedData.ItemsSource = activeProject.minedData;
+                    liv_MinedMassObjects.ItemsSource = activeProject.minedVolumes;
+                }
+                setMineOk();
+
+            }
+        }
+
+        private void btn_GenerateReport_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                CarboProject myProject = carboCircleUtils.convertToCarboLifeProject(activeProject);
+
+
+                if (myProject != null)
+                {
+                    try
+                    {
+                        CarboLifeUI.UI.CarboLifeMainWindow CarboApp = new CarboLifeMainWindow(myProject);
+                        CarboApp.ShowDialog();
+                    }
+                    catch { }
+                }
+            }
+            catch
+            { }
+
+
+
+        }
     }
 }

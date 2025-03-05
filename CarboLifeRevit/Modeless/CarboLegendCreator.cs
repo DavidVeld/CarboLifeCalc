@@ -762,8 +762,6 @@ namespace CarboLifeRevit
             return result;
         }
 
-
-
         private static View getOrCreateView(Document doc, string viewname)
         {                
             View clcLegendView = null;

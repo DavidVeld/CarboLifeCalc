@@ -230,10 +230,6 @@ namespace CarboLifeAPI.Data
 
             try
             {
-
-
-
-
                 //delete all resultdata
                 foreach (CarboMaterial cm in CarboMaterialList)
                 {

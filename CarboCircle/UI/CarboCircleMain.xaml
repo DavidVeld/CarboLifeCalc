@@ -79,7 +79,7 @@
 
                         <Button Name="btn_GotoMine" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="btn_GotoMine_Click" >Go-></Button>
                         <Button Name="btn_GotoProject" Grid.Row="3" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="btn_GotoProject_Click" >Go-></Button>
-                        <Button Name="btn_Go" Grid.Row="6" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="btn_Go_Click">Go-></Button>
+                        <Button Name="btn_Go" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="50" Height="25" Background="White" Style="{StaticResource ButtonStyle}" IsEnabled="True" Click="btn_Go_Click">Go-></Button>
 
 
                         <Label Grid.Column="1" Margin="30,-8,5,0" Grid.Row="5" Height="30" VerticalAlignment="Top" Style="{StaticResource formTitleStyle}">Imperfect Matches</Label>
@@ -129,7 +129,6 @@
                             <Button Name="btn_ColourRequiredNotReused" Grid.Column="2"  Grid.Row="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="red" BorderBrush="Black" BorderThickness="1" IsEnabled="True" Click="btn_ColourRequiredNotReused_Click" ></Button>
 
                             <Button x:Name="btn_Visualise" Grid.Row="7" Width="120" Height="25" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="btn_Visualise_Click"  Content="Colour in Revit"/>
-                            <Button x:Name="btn_Report" Grid.Row="8" Width="120" Height="25" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="btn_Report_Click"  Content="Create Fancy Report"/>
 
 
                         </Grid>
@@ -182,7 +181,7 @@
 
                         <Label Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Margin="0,0,0,0" Grid.RowSpan="3">Reusable Mass Materials:</Label>
 
-                        <ListView Name="liv_MatchedVolumes" Grid.Column="1" Grid.Row="5" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="10" Background="White" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                        <ListView Name="liv_MatchedVolumes" Grid.Column="1" Grid.Row="5" Margin="0,0,5,0" FontFamily="Segoe UI" FontSize="10" Background="White" Grid.ColumnSpan="2" Grid.RowSpan="1">
                             <ListView.View>
                                 <GridView AllowsColumnReorder="False">
                                     <GridViewColumn Header="Id" Width="50" DisplayMemberBinding="{Binding Path=id}"/>
@@ -263,7 +262,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
@@ -277,9 +276,9 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="5"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Mine Data Methods:</Label>
+                            <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Mine Data From:</Label>
 
-                            <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,0,0,0" Style="{StaticResource formTitleStyle}">Active Revit view:</Label>
+                            <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,0,0,0" Style="{StaticResource formTitleStyle}" Visibility="Hidden">Active Revit view:</Label>
 
                             <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,-5,0,0" Style="{StaticResource formTextStyle}">Elements to consider:</Label>
                             <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,8,0,0" Style="{StaticResource formGreyText}">When importing elements look only here</Label>
@@ -291,7 +290,7 @@
                             <Label IsEnabled="False" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">From an online URL:</Label>
 
                             <Button x:Name="btn_ImportmaterialsRevit" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Revit" Click="btn_ImportmaterialsRevit_Click"/>
-                            <Button x:Name="btn_ImportmaterialsCSV" Grid.Row="5" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine CSV"/>
+                            <Button x:Name="btn_ImportmaterialsCSV" Grid.Row="5" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV" Click="btn_ImportmaterialsCSV_Click"/>
                             <Button x:Name="btn_ImportmaterialsWeb" IsEnabled="False" Grid.Row="6" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Mine Web"/>
 
                             <Button x:Name="btn_MineSettings" Grid.Row="8" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_MineSettings_Click"  Content="Advanced Settings"/>
@@ -323,8 +322,7 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Tools:</Label>
-                            <Button x:Name="btn_ExportData" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="125" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export Data" Click="btn_ExportMinedToCSV"/>
+                            <Label Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Visibility="Hidden">Tools:</Label>
 
 
                         </Grid>
@@ -400,6 +398,8 @@
                             </ListView.View>
                         </ListView>
 
+                        <Button x:Name="btn_ExportData" Grid.Row="5" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Height="28" Style="{StaticResource ButtonStyle}"  Content="Export to CSV" Click="btn_ExportMinedToCSV"/>
+
 
                     </Grid>
                 </Grid>
@@ -431,7 +431,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
-                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="5"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="30"/>
@@ -445,9 +445,9 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="5"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Get Project Data:</Label>
+                            <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" >Get Project Data From:</Label>
 
-                            <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,0,0,0" Style="{StaticResource formTitleStyle}">Active Revit view:</Label>
+                            <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="10,0,0,0" Style="{StaticResource formTitleStyle}" Visibility="Hidden" >Active Revit view:</Label>
 
                             <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,-5,0,0" Style="{StaticResource formTextStyle}">Elements to consider:</Label>
                             <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,8,0,0" Style="{StaticResource formGreyText}">When importing elements look only here</Label>
@@ -459,7 +459,7 @@
                             <Label IsEnabled="False" Visibility="Visible" Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="1" Margin="10,0,0,0"  Style="{StaticResource formTitleStyle}">From an online URL:</Label>
 
                             <Button x:Name="btn_ImportProjectRevit" Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import Revit" Click="btn_ImportProjectRevit_Click"/>
-                            <Button x:Name="btn_ImportProjectCSV" Grid.Row="5" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV"/>
+                            <Button x:Name="btn_ImportProjectCSV" Grid.Row="5" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Import CSV" Click="btn_ImportProjectCSV_Click"/>
                             <Button IsEnabled="False" x:Name="btn_ExportProject" Visibility="Visible" Grid.Row="6" Grid.Column="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Export CSV"/>
 
                             <Button x:Name="btn_ImportProjectSettings" Grid.Row="9" Grid.Column="1" Margin="0,2,5,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="125" Height="25" Style="{StaticResource ButtonStyle}"  Content="Advanced Settings" Click="btn_MineSettings_Click"/>
@@ -480,7 +480,6 @@
 
                             <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}" Content="Revit Import Settings:"/>
 
-                            <Button x:Name="btn_ExportProjectData" Grid.Row="2" Grid.Column="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="125" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_ExportProjectData_Click"  Content="Export Data"/>
 
 
 
@@ -495,6 +494,7 @@
                             <RowDefinition Height="4*"/>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="2*"/>
+                            <RowDefinition Height="30"/>
                             <RowDefinition Height="5"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
@@ -544,28 +544,37 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
+
+                        <Button x:Name="btn_ExportProjectData" Grid.Row="5" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="90" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_ExportProjectData_Click"  Content="Export to CSV"/>
+
                     </Grid>
                 </Grid>
             </TabItem>
 
 
-            <TabItem Header="Settings" Visibility="Hidden">
+            <TabItem Header="Report" Visibility="Visible">
                 <Grid Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="5"/>
+                        <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="5"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="5"/>
                         <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
+                    <Button x:Name="btn_ExportReport" Grid.Row="1" Width="150" Height="25" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="btn_Report_Click"  Content="Export Fancy Report" IsEnabled="True"/>
+                    <Button x:Name="btn_GenerateReport" Grid.Row="1" Width="150" Height="25" Grid.Column="1" Margin="0,35,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="btn_GenerateReport_Click"  Content="Open in Carbo Life Calc" />
+
+                    <TextBox Name="txt_summary" Margin="5,5,4,0" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" Height="212">The Size (name) of a section size. As a default the Revit Type Name is used but you can override this by providing a type parameter.</TextBox>
 
                 </Grid>
-            </TabItem>
-            <TabItem Header="All Data" Visibility="Hidden"></TabItem>
 
+
+            </TabItem>
         </TabControl>
 
         <Button x:Name="btn_Close" Grid.Row="4" Grid.Column="1" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Close" Click="btn_Close_Click"/>

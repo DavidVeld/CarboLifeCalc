@@ -41,6 +41,10 @@
       <HintPath>..\CarboLifeAPI\bin\Debug\CarboLifeAPI.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="CarboLifeUI, Version=1.7.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\CarboLifeCalc\bin\Debug\CarboLifeUI.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
@@ -68,6 +72,7 @@
     <Compile Include="CarboCircleApp.cs" />
     <Compile Include="CarboCircleHandler.cs" />
     <Compile Include="CarboCircleCommand.cs" />
+    <Compile Include="carboCircleLegendBuilder.cs" />
     <Compile Include="carboCircleRevitCommands.cs" />
     <Compile Include="data\beamMatchCore\carboCircleMatchElement.cs" />
     <Compile Include="data\beamMatchCore\carboCircleMatchCore.cs" />

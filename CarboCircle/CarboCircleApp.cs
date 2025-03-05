@@ -35,10 +35,10 @@ namespace CarboCircle
             /// Visual Menu
             PushButton pB_ShowCarboCalc = CarboCalcPanel.AddItem(new PushButtonData("CarboLifeCircle", "CarboLifeCircle", MyAssemblyPath, "CarboCircle.CarboCircleCommand")) as PushButton;
             //LImage
-            Uri pB_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_CarboLife32.png");
+            Uri pB_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_CarboCircle2D32.png");
             BitmapImage limg_pB_ShowCarboCalc2 = new BitmapImage(pB_ShowCarboCalc2);
             //SImahe
-            Uri imgsmll_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_CarboLife16.png");
+            Uri imgsmll_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_CarboCircle16.png");
             BitmapImage smllimg_ShowCarboCalc2 = new BitmapImage(imgsmll_ShowCarboCalc2);
 
             pB_ShowCarboCalc.LargeImage = limg_pB_ShowCarboCalc2;
@@ -51,8 +51,6 @@ namespace CarboCircle
             return Result.Succeeded;
 
         }
-
-
 
         public Result OnShutdown(UIControlledApplication application)
         {

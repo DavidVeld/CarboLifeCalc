@@ -250,7 +250,7 @@ namespace CarboLifeAPI
              imgTag += imageAsString + "\" ";
             //imgTag += " width=\"" + width.ToString() + (char)34;
             //imgTag += " height=\"" + height.ToString() + (char)34 + "/>" + System.Environment.NewLine;
-            imgTag += " height=\"" + 250 + (char)34 + "/>" + System.Environment.NewLine;
+            imgTag += " height=\"" + height + (char)34 + "/>" + System.Environment.NewLine;
 
             return imgTag;
         }
@@ -741,9 +741,8 @@ namespace CarboLifeAPI
 
             html += "h2 {font-family:Segoe UI;" + System.Environment.NewLine +
                         "color:#000;" + System.Environment.NewLine +
-                        "font-size:16px;" + System.Environment.NewLine +
-                        "text-shadow: 1px 1px 0px #fff;" + System.Environment.NewLine +
-                        "margin-left:20px;" + System.Environment.NewLine +
+                        "font-size:14px;" + System.Environment.NewLine +
+                        "margin-left:16px;" + System.Environment.NewLine +
                         "border:#000 0px solid; }" + System.Environment.NewLine +
                         System.Environment.NewLine;
 
@@ -763,10 +762,10 @@ namespace CarboLifeAPI
 
         }
 
-        internal static string closeHTML()
+        public static string closeHTML()
         {
             string html = "";
-            string title = "<H3>Carbo Calculation: " + DateTime.Today.ToShortDateString() + "</H3><BR>" + System.Environment.NewLine;
+            string title = "<H3>Date: " + DateTime.Today.ToShortDateString() + "</H3><BR>" + System.Environment.NewLine;
 
             try
             {

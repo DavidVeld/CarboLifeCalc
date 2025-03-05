@@ -221,6 +221,7 @@ namespace CarboLifeUI.UI
             return result;
         }
 
+        [Obsolete]
         internal static SeriesCollection getLevelChartMaterial(DataTable currentProjectResult, string graphType, out List<string> labels)
         {
             SeriesCollection result = new SeriesCollection();
@@ -350,6 +351,139 @@ namespace CarboLifeUI.UI
                 }
             }
            
+            return result;
+
+        }
+
+        internal static SeriesCollection getLevelChartMaterial(List<CarboElement> projectElements, string graphType, out List<string> labels)
+        {
+            SeriesCollection result = new SeriesCollection();
+            SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
+            string groupType = graphType;
+            labels = new List<string>();
+
+            CarboByLevelDataGroup carboByLevelDataGroup = new CarboByLevelDataGroup();
+
+            carboByLevelDataGroup.AddLevel("Substructure", -9999);
+
+            //add all the levels in the table:
+            foreach (CarboElement ce in projectElements)
+            {
+                string levelName = ce.LevelName.ToString(); //levelname
+                double elevation = Utils.ConvertMeToDouble(ce.Level.ToString()); //elevation
+                bool isSubStructure = ce.isSubstructure;
+                bool existingLevel = false;
+
+                if (isSubStructure == true)
+                    levelName = "Substructure";
+
+                foreach (CarboByLevelData cld in carboByLevelDataGroup.levelList)
+                {
+                    if (cld.LevelName == levelName)
+                    {
+                        existingLevel = true;
+                        break;
+                    }
+                }
+                if (existingLevel == false)
+                {
+                    carboByLevelDataGroup.AddLevel(levelName, elevation);
+                }
+            }
+
+            //loop through each row and see if the data needs to be added to an item or a new row needs adding.
+            foreach (CarboElement ce in projectElements)
+            {
+                string levelName = ce.LevelName.ToString(); //levelname
+                double elevation = ce.Level; //elevation
+                string groupName = "";
+                double value = ce.EC;
+
+                bool isSubStructure = ce.isSubstructure;
+                if (isSubStructure == true)
+                    levelName = "Substructure";
+
+
+                if (groupType == "Category")
+                {
+                    groupName = ce.Category; //Category
+                }
+                else if (groupType == "Material")
+                {
+                    groupName = ce.MaterialName; //material
+                }
+                else
+                {
+                    groupName = "Total EC"; //Totals
+                }
+
+                if (levelName != null && value != 0)
+                {
+                    carboByLevelDataGroup.AddItem(levelName, elevation, groupName, value);
+                }
+            }
+
+            //List<string> categoryList = new List<string>();
+            List<string> levelList = new List<string>();
+            carboByLevelDataGroup.SortedList();
+
+            //remove empty levels
+            /*
+            for(int i = carboByLevelDataGroup.levelList.Count -1; i>= 0;i--)
+            {
+               CarboByLevelData cbld = carboByLevelDataGroup.levelList[i] as CarboByLevelData;
+                if(cbld != null)
+                {
+                    double total = cbld.DataPoints.Sum(item => item.Value);
+
+                    if (cbld.DataPoints.Count == 0 || total == 0)
+                        carboByLevelDataGroup.levelList.RemoveAt(i);
+                }
+            }
+            */
+
+            foreach (CarboByLevelData level in carboByLevelDataGroup.levelList)
+            {
+                levelList.Add(level.LevelName);
+                labels.Add(level.LevelName);
+            }
+
+            //build the grapicsTable
+            if (carboByLevelDataGroup.levelList.Count > 0 && carboByLevelDataGroup.levelList[0].DataPoints.Count > 0)
+            {
+                int levelCount = carboByLevelDataGroup.levelList.Count;
+                int categoryCount = carboByLevelDataGroup.levelList[0].DataPoints.Count;
+
+
+                //loop though
+                // i is nr type of information extracted
+                for (int i = 0; i < categoryCount; i++)
+                {
+                    StackedRowSeries newSeries = new StackedRowSeries();
+
+                    ChartValues<double> Values = new ChartValues<double>();
+
+                    //get all Values from all loaded projects
+                    foreach (CarboByLevelData level in carboByLevelDataGroup.levelList)
+                    {
+                        Values.Add(Math.Round((level.DataPoints[i].Value / 1000), 1));
+                    }
+
+                    newSeries.Title = carboByLevelDataGroup.levelList[0].DataPoints[i].Name;
+                    newSeries.Values = Values;
+                    newSeries.StackMode = StackMode.Values;
+                    newSeries.DataLabels = false;
+                    newSeries.Foreground = Brushes.Black;
+
+                    //newSeries.Width = 100;
+                    //newSeries.MaxColumnWidth = 50;
+                    //newSeries.LabelsPosition = BarLabelPosition.Merged;
+
+                    result.Add(newSeries);
+
+                }
+            }
+
             return result;
 
         }

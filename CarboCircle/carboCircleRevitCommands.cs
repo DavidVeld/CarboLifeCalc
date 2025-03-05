@@ -782,6 +782,8 @@ namespace CarboCircle
                 colourElements(reusedMinedElementIds, solidFillPattern, settings.colour_ReusedMinedData, doc);
                 colourElements(reusedRequiredElementIds, solidFillPattern, settings.colour_FromReusedData, doc);
 
+                carboCircleLegendBuilder.drawLegend(settings, doc);
+
                 t.Commit();
             }
 

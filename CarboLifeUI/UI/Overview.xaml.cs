@@ -180,10 +180,12 @@ namespace CarboLifeUI.UI
 
                         List<string> levelList = CarboLifeProject.getSortedLevelList();
 
-                        DataTable currentProjectResult = CarboCalcTextUtils.getByElementTable(CarboLifeProject);
+                        //DataTable currentProjectResult = CarboCalcTextUtils.getByElementTable(CarboLifeProject);
 
-                        if (currentProjectResult != null)
-                            levelSeries = GraphBuilder.getLevelChartMaterial(currentProjectResult, graphType, out labels);
+                        List<CarboElement> elementData = CarboLifeProject.getElementsFromGroups().ToList();
+
+                        if (elementData.Count > 0)
+                            levelSeries = GraphBuilder.getLevelChartMaterial(elementData, graphType, out labels);
 
                         //refresh:
                         chart_Level.Series = null;

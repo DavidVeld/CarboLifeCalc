@@ -2,8 +2,10 @@
 using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Forms;
@@ -17,50 +19,9 @@ namespace CarboCircle.data
             string report = "";
 
             //Create a File and save it as a HTML File
-            /*
-            SaveFileDialog saveDialog = new SaveFileDialog();
-            saveDialog.Title = "Specify report directory";
-            saveDialog.Filter = "HTML Files|*.html";
-            saveDialog.FilterIndex = 2;
-            saveDialog.RestoreDirectory = true;
-
-            saveDialog.ShowDialog();
-
-            string Path = saveDialog.FileName;
-
-            if (File.Exists(Path))
-            {
-                MessageBoxResult msgResult = System.Windows.MessageBox.Show("This file already exists, do you want to overwrite this file ?", "", MessageBoxButton.YesNo);
-
-                if (msgResult == MessageBoxResult.Yes)
-                {
-                    using (var fs = File.Open(Path, FileMode.Open))
-                    {
-                        var canRead = fs.CanRead;
-                        var canWrite = fs.CanWrite;
-
-                        if (canWrite == false)
-                        {
-                            System.Windows.MessageBox.Show("This file cannot be opened, please close the file and try again", "Warning", MessageBoxButton.OK);
-                            return;
-                        }
-                    }
-                }
-                else
-                {
-                    return;
-                }
-            }
-            else if (Path == "")
-            {
-                //The dialog box was canceled;
-                return;
-            }
-            */
-
 
             //EXPORT IMAGES HERE:
-            string ImgTag1 = ReportBuilder.getImageTag(reportImage,640,480,"Image");
+            string ImgTag1 = ReportBuilder.getImageTag(reportImage,0,640,"Image");
 
             //HTML WRITING;
             try
@@ -72,12 +33,21 @@ namespace CarboCircle.data
                 //report += writeCalculation(carboProject);
 
                 //Images
-                report += "<H2><B>" + "Graphs:" + "</B></H2><BR>" + System.Environment.NewLine;
-                report += "<TABLE border=1 cellpadding=0 cellspacing=0 width=800>";
+                report += "<H2><B>" + "Project Image:" + "</B></H2><BR>" + System.Environment.NewLine;
+                report += "<TABLE border=0 cellpadding=0 cellspacing=0 width=1600>";
                 report += "<TR><TD></TD></TR>";
                 report += "<TR><TD>" + ImgTag1 + "</TD></TR>";
                 report += "</TABLE>";
 
+
+                report += writeMatchTable(project);
+
+                report += writeVolumesTable(project);
+
+                report += writeLeftOverTable(project);
+
+
+                report += ReportBuilder.closeHTML();
 
 
                 if (report != "")
@@ -102,6 +72,164 @@ namespace CarboCircle.data
             }
 
 
+        }
+
+        private static string writeLeftOverTable(carboCircleProject project)
+        {
+            string html = "";
+
+            html = "<H1><B>" + "Left Over Elements Table:" + "</B></H1><BR>" + System.Environment.NewLine;
+
+            html += "<TABLE border=0 cellpadding=0 cellspacing=0 width=1600>";
+            html += "<TR><TD></TD></TR>";
+            html += "<TR><TD><H2>" + "The following elements were removed from the site, however they cannot be matched with a new element for this project." + "</H2></TD></TR>";
+            html += "</TABLE>";
+
+            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1600>";
+
+            html += "<TR></TR>";
+            //ResultTable in a table
+            try
+            {
+
+                //Write Headers:
+
+                html += "<TR>" + System.Environment.NewLine;
+
+                html += "<TD width=" + 75 + "><B>" + "Material " + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD width=" + 150 + "><B>" + "Name" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Category " + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Human Id" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Revit Id" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD width=" + 150 + "><B>" + "Standard Name " + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Model Length " + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Usable Length " + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD width=" + 75 + "><B>" + "Condition " + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 325 + "><B>" + "GUID  " + "</B></TD>" + System.Environment.NewLine;
+
+                //Advanced settings
+                html += "</TR>" + System.Environment.NewLine;
+
+                //UNITS
+                html += "<TR>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "m" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "m" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "</TR>" + System.Environment.NewLine;
+
+                //Write Data:
+                List<carboCircleElement> cceList = project.getLeftOverData();
+                List<carboCircleElement>  cceListSorted = new List<carboCircleElement>(cceList.OrderBy(i => i.category));
+
+
+                foreach (carboCircleElement ccme in cceListSorted)
+                {
+                    html += "<TR>" + System.Environment.NewLine;
+
+                    html += "<TD align='left' valign='middle'>" + ccme.grade + "</td>" + System.Environment.NewLine;
+
+                    html += "<TD align='left' valign='middle'>" + ccme.category + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + ccme.name + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + ccme.humanId.ToString() + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + ccme.id.ToString() + "</td>" + System.Environment.NewLine;
+
+                    html += "<TD align='left' valign='middle'>" + ccme.standardName + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + ccme.length + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + ccme.netLength + "</td>" + System.Environment.NewLine;
+
+                    html += "<TD align='left' valign='middle'>" + ccme.quality.ToString() + "</td>" + System.Environment.NewLine;
+
+                    html += "<TD align='left' valign='middle'>" + ccme.GUID + "</td>" + System.Environment.NewLine;
+
+                    html += "</TR>" + System.Environment.NewLine;
+
+                }
+                //html += getTotalsRow(carboProject.getTotalsGroup());
+
+                html += "</TABLE>";
+            }
+            catch
+            {
+            }
+
+            return html;
+        }
+
+        private static string writeVolumesTable(carboCircleProject project)
+        {
+            string html = "";
+
+            html = "<H1><B>" + "Volume material Reuse Table:" + "</B></H1><BR>" + System.Environment.NewLine;
+
+            html += "<TABLE border=0 cellpadding=0 cellspacing=0 width=1600>";
+            html += "<TR><TD></TD></TR>";
+            html += "<TR><TD><H2>" + "The following materials are identified as demolished, however, due to their nature they cannot be re-used directly in a new structure.<BR>" +
+                "They can be processed in a way to substitute a new material with a more sustainable alternative:" + "</H2></TD></TR>";
+            html += "</TABLE>";
+
+
+
+            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1600>";
+
+            html += "<TR></TR>";
+            //ResultTable in a table
+            try
+            {
+
+                //Write Headers:
+
+                html += "<TR>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Volume" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Re-Used Volume" + "</B></TD>" + System.Environment.NewLine;
+
+                //Advanced settings
+                html += "</TR>" + System.Environment.NewLine;
+                //UNITS
+                html += "<TR>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "m3" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "m3" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "</TR>" + System.Environment.NewLine;
+
+                //Write Data:
+                List<carboCircleElement> cceVList = project.getCarboVolumeOpportunities();
+
+                foreach (carboCircleElement cceV in cceVList)
+                {
+                    html += "<TR>" + System.Environment.NewLine;
+
+                    html += "<TD align='left' valign='middle'>" + cceV.materialName + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + cceV.volume + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + cceV.netVolume + "</td>" + System.Environment.NewLine;
+
+                    html += "</TR>" + System.Environment.NewLine;
+
+                }
+                //html += getTotalsRow(carboProject.getTotalsGroup());
+
+                html += "</TABLE>";
+            }
+            catch
+            {
+            }
+
+            return html;
         }
 
         private static string writeHeader(carboCircleProject project)
@@ -146,6 +274,91 @@ namespace CarboCircle.data
 
                 return html;
             
+        }
+
+        private static string writeMatchTable(carboCircleProject project)
+        {
+            string html = "";
+
+            html = "<H1><B>" + "Material Reuse Table:" + "</B></H1><BR>" + System.Environment.NewLine;
+
+            html += "<TABLE border=0 cellpadding=0 cellspacing=0 width=1600>";
+            html += "<TR><TD></TD></TR>";
+            html += "<TR><TD><H2>" + "The following elements in the databases could be matched. Available materials are shown in the table below with a matching element in the designed building" + "</H2></TD></TR>";
+            html += "</TABLE>";
+
+
+
+            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1600>";
+
+            html += "<TR></TR>";
+            //ResultTable in a table
+            try
+            {
+
+                //Write Headers:
+
+                html += "<TR>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Proposed Element" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 100 + "><B>" + "Proposed ElementId" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 75 + "><B>" + "Proposed Length" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD width=" + 750 + "><B>" + "Mined to Element  " + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 150 + "><B>" + "Mined ElementId  " + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 75 + "><B>" + "Mined Length " + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD width=" + 75 + "><B>" + "Offcut Length " + "</B></TD>" + System.Environment.NewLine;
+
+                //Advanced settings
+                html += "</TR>" + System.Environment.NewLine;
+
+                //UNITS
+                html += "<TR>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "m" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD align='left'><B>" + "m" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "<TD align='left'><B>" + "m" + "</B></TD>" + System.Environment.NewLine;
+
+                html += "</TR>" + System.Environment.NewLine;
+
+                //Write Data:
+                List<carboCircleMatchElement> ccmelist = project.getCarboMatchesListSimplified();
+                ccmelist = new List<carboCircleMatchElement>(ccmelist.OrderBy(i => i.required_Name));
+
+
+                foreach (carboCircleMatchElement ccme in ccmelist)
+                {
+                    html += "<TR>" + System.Environment.NewLine;
+
+                    html += "<TD align='left' valign='middle'>" + ccme.required_standardName + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + ccme.required_id + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + ccme.required_length.ToString() + "</td>" + System.Environment.NewLine;
+
+                    html += "<TD align='left' valign='middle'>" + ccme.mined_standardName + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + ccme.mined_id + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + ccme.mined_netLength + "</td>" + System.Environment.NewLine;
+
+                    html += "<TD align='left' valign='middle'>" + Math.Round((ccme.mined_netLength - ccme.required_length),2).ToString() + "</td>" + System.Environment.NewLine;
+
+                    html += "</TR>" + System.Environment.NewLine;
+
+                }
+                //html += getTotalsRow(carboProject.getTotalsGroup());
+
+                html += "</TABLE>";
+            }
+            catch
+            {
+            }
+
+            return html;
+
+
         }
 
         public static void WriteReportFile(string fileString, string exportPath)

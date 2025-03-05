@@ -1,0 +1,505 @@
+<?xml version="1.0"?>
+<CarboDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <CarboMaterials>
+    <CarboMaterial>
+      <Id>90189</Id>
+      <Name>Reused Aluminium</Name>
+      <Category>Other </Category>
+      <Description />
+      <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
+      <Density>2700</Density>
+      <ECI>4.1133000000000006</ECI>
+      <getVolumeECI>11105.910000000002</getVolumeECI>
+      <ECI_A1A3>6.83</ECI_A1A3>
+      <ECI_A4>0.262</ECI_A4>
+      <ECI_A5>0.221</ECI_A5>
+      <ECI_B1B5>0</ECI_B1B5>
+      <ECI_C1C4>0.0103</ECI_C1C4>
+      <ECI_D>-3.21</ECI_D>
+      <ECI_Seq>0</ECI_Seq>
+      <ECI_Mix>0</ECI_Mix>
+      <WasteFactor>1</WasteFactor>
+      <isLocked>false</isLocked>
+      <materialA1A3Properties>
+        <Id>0</Id>
+        <Category />
+        <Name />
+        <Description />
+        <Density>0</Density>
+        <ECI_A1A3>0</ECI_A1A3>
+      </materialA1A3Properties>
+      <materiaA4Properties>
+        <calcResult />
+        <name />
+        <description />
+        <distanceToSite>50</distanceToSite>
+        <materialDensity>500</materialDensity>
+        <emptyRun>80</emptyRun>
+        <emptyReturn>true</emptyReturn>
+        <vehicleSettings>
+          <name>Truck</name>
+          <maxVolume>96</maxVolume>
+          <maxLoad>22000</maxLoad>
+          <kmPer>3.85</kmPer>
+          <carboCostNew>280000</carboCostNew>
+          <totalDistance>250000</totalDistance>
+          <defaultFuel>Diesel</defaultFuel>
+          <description>An unspecified Vehicle</description>
+        </vehicleSettings>
+        <vehicleFuel>
+          <name>Diesel</name>
+          <emission>2.62</emission>
+          <production>0.4</production>
+          <unit>l</unit>
+        </vehicleFuel>
+        <value>0.010820543093270366</value>
+      </materiaA4Properties>
+      <materialA5Properties>
+        <calcResult />
+        <name />
+        <value>0</value>
+      </materialA5Properties>
+      <materialC1C4Properties>
+        <calcResult />
+        <propertyName />
+        <c1density>0</c1density>
+        <c1BaseValue>3.4</c1BaseValue>
+        <c1Value>0</c1Value>
+        <c2Properties>
+          <calcResult />
+          <name />
+          <description />
+          <distanceToSite>50</distanceToSite>
+          <materialDensity>500</materialDensity>
+          <emptyRun>80</emptyRun>
+          <emptyReturn>true</emptyReturn>
+          <vehicleSettings>
+            <name>Truck</name>
+            <maxVolume>96</maxVolume>
+            <maxLoad>22000</maxLoad>
+            <kmPer>3.85</kmPer>
+            <carboCostNew>280000</carboCostNew>
+            <totalDistance>250000</totalDistance>
+            <defaultFuel>Diesel</defaultFuel>
+            <description>An unspecified Vehicle</description>
+          </vehicleSettings>
+          <vehicleFuel>
+            <name>Diesel</name>
+            <emission>2.62</emission>
+            <production>0.4</production>
+            <unit>l</unit>
+          </vehicleFuel>
+          <value>0.010820543093270366</value>
+        </c2Properties>
+        <c2Value>0</c2Value>
+        <c3Value>0</c3Value>
+        <c4DisposalName>Generic</c4DisposalName>
+        <c4landfP>50</c4landfP>
+        <c4landfV>0.013</c4landfV>
+        <c4lanfResult>0</c4lanfResult>
+        <c4incfP>0</c4incfP>
+        <c4incfV>0</c4incfV>
+        <c4incResult>0</c4incResult>
+        <c4reUseP>50</c4reUseP>
+        <c4reUseV>0.005</c4reUseV>
+        <c4reUseResult>0</c4reUseResult>
+        <other>0</other>
+        <value>0</value>
+      </materialC1C4Properties>
+      <materialSeqProperties>
+        <propertyName>Sequestration</propertyName>
+        <value>0</value>
+        <sequestrationPeriod>40</sequestrationPeriod>
+        <comment />
+      </materialSeqProperties>
+      <materialDProperties>
+        <name />
+        <value>0</value>
+        <calcResult />
+      </materialDProperties>
+      <ECI_A1A3_Override>true</ECI_A1A3_Override>
+      <ECI_A4_Override>true</ECI_A4_Override>
+      <ECI_A5_Override>true</ECI_A5_Override>
+      <ECI_C1C4_Override>true</ECI_C1C4_Override>
+      <ECI_D_Override>true</ECI_D_Override>
+      <ECI_Seq_Override>true</ECI_Seq_Override>
+      <ECI_Mix_Info />
+    </CarboMaterial>
+    <CarboMaterial>
+      <Id>90075</Id>
+      <Name>Reused Timber</Name>
+      <Category>Timber </Category>
+      <Description />
+      <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade />
+      <Density>469</Density>
+      <ECI>0.26900000000000035</ECI>
+      <getVolumeECI>126.16100000000016</getVolumeECI>
+      <ECI_A1A3>0.217</ECI_A1A3>
+      <ECI_A4>0.262</ECI_A4>
+      <ECI_A5>0.021</ECI_A5>
+      <ECI_B1B5>0</ECI_B1B5>
+      <ECI_C1C4>1.679</ECI_C1C4>
+      <ECI_D>-0.27</ECI_D>
+      <ECI_Seq>-1.64</ECI_Seq>
+      <ECI_Mix>0</ECI_Mix>
+      <WasteFactor>2</WasteFactor>
+      <isLocked>false</isLocked>
+      <materialA1A3Properties>
+        <Id>0</Id>
+        <Category />
+        <Name />
+        <Description />
+        <Density>0</Density>
+        <ECI_A1A3>0</ECI_A1A3>
+      </materialA1A3Properties>
+      <materiaA4Properties>
+        <calcResult />
+        <name />
+        <description />
+        <distanceToSite>50</distanceToSite>
+        <materialDensity>500</materialDensity>
+        <emptyRun>80</emptyRun>
+        <emptyReturn>true</emptyReturn>
+        <vehicleSettings>
+          <name>Truck</name>
+          <maxVolume>96</maxVolume>
+          <maxLoad>22000</maxLoad>
+          <kmPer>3.85</kmPer>
+          <carboCostNew>280000</carboCostNew>
+          <totalDistance>250000</totalDistance>
+          <defaultFuel>Diesel</defaultFuel>
+          <description>An unspecified Vehicle</description>
+        </vehicleSettings>
+        <vehicleFuel>
+          <name>Diesel</name>
+          <emission>2.62</emission>
+          <production>0.4</production>
+          <unit>l</unit>
+        </vehicleFuel>
+        <value>0.010820543093270366</value>
+      </materiaA4Properties>
+      <materialA5Properties>
+        <calcResult />
+        <name />
+        <value>0</value>
+      </materialA5Properties>
+      <materialC1C4Properties>
+        <calcResult />
+        <propertyName />
+        <c1density>0</c1density>
+        <c1BaseValue>3.4</c1BaseValue>
+        <c1Value>0</c1Value>
+        <c2Properties>
+          <calcResult />
+          <name />
+          <description />
+          <distanceToSite>50</distanceToSite>
+          <materialDensity>500</materialDensity>
+          <emptyRun>80</emptyRun>
+          <emptyReturn>true</emptyReturn>
+          <vehicleSettings>
+            <name>Truck</name>
+            <maxVolume>96</maxVolume>
+            <maxLoad>22000</maxLoad>
+            <kmPer>3.85</kmPer>
+            <carboCostNew>280000</carboCostNew>
+            <totalDistance>250000</totalDistance>
+            <defaultFuel>Diesel</defaultFuel>
+            <description>An unspecified Vehicle</description>
+          </vehicleSettings>
+          <vehicleFuel>
+            <name>Diesel</name>
+            <emission>2.62</emission>
+            <production>0.4</production>
+            <unit>l</unit>
+          </vehicleFuel>
+          <value>0.010820543093270366</value>
+        </c2Properties>
+        <c2Value>0</c2Value>
+        <c3Value>0</c3Value>
+        <c4DisposalName>Generic</c4DisposalName>
+        <c4landfP>50</c4landfP>
+        <c4landfV>0.013</c4landfV>
+        <c4lanfResult>0</c4lanfResult>
+        <c4incfP>0</c4incfP>
+        <c4incfV>0</c4incfV>
+        <c4incResult>0</c4incResult>
+        <c4reUseP>50</c4reUseP>
+        <c4reUseV>0.005</c4reUseV>
+        <c4reUseResult>0</c4reUseResult>
+        <other>0</other>
+        <value>0</value>
+      </materialC1C4Properties>
+      <materialSeqProperties>
+        <propertyName>Sequestration</propertyName>
+        <value>0</value>
+        <sequestrationPeriod>40</sequestrationPeriod>
+        <comment />
+      </materialSeqProperties>
+      <materialDProperties>
+        <name />
+        <value>0</value>
+        <calcResult />
+      </materialDProperties>
+      <ECI_A1A3_Override>true</ECI_A1A3_Override>
+      <ECI_A4_Override>true</ECI_A4_Override>
+      <ECI_A5_Override>true</ECI_A5_Override>
+      <ECI_C1C4_Override>true</ECI_C1C4_Override>
+      <ECI_D_Override>true</ECI_D_Override>
+      <ECI_Seq_Override>true</ECI_Seq_Override>
+      <ECI_Mix_Info />
+    </CarboMaterial>
+    <CarboMaterial>
+      <Id>90057</Id>
+      <Name>Reused Steel</Name>
+      <Category>Steel </Category>
+      <Description />
+      <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>S355</Grade>
+      <Density>7850</Density>
+      <ECI>0.4615</ECI>
+      <getVolumeECI>3622.775</getVolumeECI>
+      <ECI_A1A3>0.0537</ECI_A1A3>
+      <ECI_A4>0.1415</ECI_A4>
+      <ECI_A5>0.016</ECI_A5>
+      <ECI_B1B5>0</ECI_B1B5>
+      <ECI_C1C4>0.0103</ECI_C1C4>
+      <ECI_D>0.24</ECI_D>
+      <ECI_Seq>0</ECI_Seq>
+      <ECI_Mix>0</ECI_Mix>
+      <WasteFactor>1</WasteFactor>
+      <isLocked>false</isLocked>
+      <materialA1A3Properties>
+        <Id>0</Id>
+        <Category />
+        <Name />
+        <Description />
+        <Density>0</Density>
+        <ECI_A1A3>0</ECI_A1A3>
+      </materialA1A3Properties>
+      <materiaA4Properties>
+        <calcResult />
+        <name />
+        <description />
+        <distanceToSite>50</distanceToSite>
+        <materialDensity>500</materialDensity>
+        <emptyRun>80</emptyRun>
+        <emptyReturn>true</emptyReturn>
+        <vehicleSettings>
+          <name>Truck</name>
+          <maxVolume>96</maxVolume>
+          <maxLoad>22000</maxLoad>
+          <kmPer>3.85</kmPer>
+          <carboCostNew>280000</carboCostNew>
+          <totalDistance>250000</totalDistance>
+          <defaultFuel>Diesel</defaultFuel>
+          <description>An unspecified Vehicle</description>
+        </vehicleSettings>
+        <vehicleFuel>
+          <name>Diesel</name>
+          <emission>2.62</emission>
+          <production>0.4</production>
+          <unit>l</unit>
+        </vehicleFuel>
+        <value>0.010820543093270366</value>
+      </materiaA4Properties>
+      <materialA5Properties>
+        <calcResult />
+        <name />
+        <value>0</value>
+      </materialA5Properties>
+      <materialC1C4Properties>
+        <calcResult />
+        <propertyName />
+        <c1density>0</c1density>
+        <c1BaseValue>3.4</c1BaseValue>
+        <c1Value>0</c1Value>
+        <c2Properties>
+          <calcResult />
+          <name />
+          <description />
+          <distanceToSite>50</distanceToSite>
+          <materialDensity>500</materialDensity>
+          <emptyRun>80</emptyRun>
+          <emptyReturn>true</emptyReturn>
+          <vehicleSettings>
+            <name>Truck</name>
+            <maxVolume>96</maxVolume>
+            <maxLoad>22000</maxLoad>
+            <kmPer>3.85</kmPer>
+            <carboCostNew>280000</carboCostNew>
+            <totalDistance>250000</totalDistance>
+            <defaultFuel>Diesel</defaultFuel>
+            <description>An unspecified Vehicle</description>
+          </vehicleSettings>
+          <vehicleFuel>
+            <name>Diesel</name>
+            <emission>2.62</emission>
+            <production>0.4</production>
+            <unit>l</unit>
+          </vehicleFuel>
+          <value>0.010820543093270366</value>
+        </c2Properties>
+        <c2Value>0</c2Value>
+        <c3Value>0</c3Value>
+        <c4DisposalName>Generic</c4DisposalName>
+        <c4landfP>50</c4landfP>
+        <c4landfV>0.013</c4landfV>
+        <c4lanfResult>0</c4lanfResult>
+        <c4incfP>0</c4incfP>
+        <c4incfV>0</c4incfV>
+        <c4incResult>0</c4incResult>
+        <c4reUseP>50</c4reUseP>
+        <c4reUseV>0.005</c4reUseV>
+        <c4reUseResult>0</c4reUseResult>
+        <other>0</other>
+        <value>0</value>
+      </materialC1C4Properties>
+      <materialSeqProperties>
+        <propertyName>Sequestration</propertyName>
+        <value>0</value>
+        <sequestrationPeriod>40</sequestrationPeriod>
+        <comment />
+      </materialSeqProperties>
+      <materialDProperties>
+        <name />
+        <value>0</value>
+        <calcResult />
+      </materialDProperties>
+      <ECI_A1A3_Override>true</ECI_A1A3_Override>
+      <ECI_A4_Override>true</ECI_A4_Override>
+      <ECI_A5_Override>true</ECI_A5_Override>
+      <ECI_C1C4_Override>true</ECI_C1C4_Override>
+      <ECI_D_Override>true</ECI_D_Override>
+      <ECI_Seq_Override>true</ECI_Seq_Override>
+      <ECI_Mix_Info />
+    </CarboMaterial>
+    <CarboMaterial>
+      <Id>90018</Id>
+      <Name>Aggregate</Name>
+      <Category>Concrete </Category>
+      <Description />
+      <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
+      <Grade>C32/40</Grade>
+      <Density>2400</Density>
+      <ECI>0.46019999999999994</ECI>
+      <getVolumeECI>1104.4799999999998</getVolumeECI>
+      <ECI_A1A3>0.163</ECI_A1A3>
+      <ECI_A4>0.284</ECI_A4>
+      <ECI_A5>0.01</ECI_A5>
+      <ECI_B1B5>0</ECI_B1B5>
+      <ECI_C1C4>0.0102</ECI_C1C4>
+      <ECI_D>-0.007</ECI_D>
+      <ECI_Seq>0</ECI_Seq>
+      <ECI_Mix>0</ECI_Mix>
+      <WasteFactor>5.3</WasteFactor>
+      <isLocked>false</isLocked>
+      <materialA1A3Properties>
+        <Id>0</Id>
+        <Category />
+        <Name />
+        <Description />
+        <Density>0</Density>
+        <ECI_A1A3>0</ECI_A1A3>
+      </materialA1A3Properties>
+      <materiaA4Properties>
+        <calcResult />
+        <name />
+        <description />
+        <distanceToSite>50</distanceToSite>
+        <materialDensity>500</materialDensity>
+        <emptyRun>80</emptyRun>
+        <emptyReturn>true</emptyReturn>
+        <vehicleSettings>
+          <name>Truck</name>
+          <maxVolume>96</maxVolume>
+          <maxLoad>22000</maxLoad>
+          <kmPer>3.85</kmPer>
+          <carboCostNew>280000</carboCostNew>
+          <totalDistance>250000</totalDistance>
+          <defaultFuel>Diesel</defaultFuel>
+          <description>An unspecified Vehicle</description>
+        </vehicleSettings>
+        <vehicleFuel>
+          <name>Diesel</name>
+          <emission>2.62</emission>
+          <production>0.4</production>
+          <unit>l</unit>
+        </vehicleFuel>
+        <value>0.010820543093270366</value>
+      </materiaA4Properties>
+      <materialA5Properties>
+        <calcResult />
+        <name />
+        <value>0</value>
+      </materialA5Properties>
+      <materialC1C4Properties>
+        <calcResult />
+        <propertyName />
+        <c1density>0</c1density>
+        <c1BaseValue>3.4</c1BaseValue>
+        <c1Value>0</c1Value>
+        <c2Properties>
+          <calcResult />
+          <name />
+          <description />
+          <distanceToSite>50</distanceToSite>
+          <materialDensity>500</materialDensity>
+          <emptyRun>80</emptyRun>
+          <emptyReturn>true</emptyReturn>
+          <vehicleSettings>
+            <name>Truck</name>
+            <maxVolume>96</maxVolume>
+            <maxLoad>22000</maxLoad>
+            <kmPer>3.85</kmPer>
+            <carboCostNew>280000</carboCostNew>
+            <totalDistance>250000</totalDistance>
+            <defaultFuel>Diesel</defaultFuel>
+            <description>An unspecified Vehicle</description>
+          </vehicleSettings>
+          <vehicleFuel>
+            <name>Diesel</name>
+            <emission>2.62</emission>
+            <production>0.4</production>
+            <unit>l</unit>
+          </vehicleFuel>
+          <value>0.010820543093270366</value>
+        </c2Properties>
+        <c2Value>0</c2Value>
+        <c3Value>0</c3Value>
+        <c4DisposalName>Generic</c4DisposalName>
+        <c4landfP>50</c4landfP>
+        <c4landfV>0.013</c4landfV>
+        <c4lanfResult>0</c4lanfResult>
+        <c4incfP>0</c4incfP>
+        <c4incfV>0</c4incfV>
+        <c4incResult>0</c4incResult>
+        <c4reUseP>50</c4reUseP>
+        <c4reUseV>0.005</c4reUseV>
+        <c4reUseResult>0</c4reUseResult>
+        <other>0</other>
+        <value>0</value>
+      </materialC1C4Properties>
+      <materialSeqProperties>
+        <propertyName>Sequestration</propertyName>
+        <value>0</value>
+        <sequestrationPeriod>40</sequestrationPeriod>
+        <comment />
+      </materialSeqProperties>
+      <materialDProperties>
+        <name />
+        <value>0</value>
+        <calcResult />
+      </materialDProperties>
+      <ECI_A1A3_Override>true</ECI_A1A3_Override>
+      <ECI_A4_Override>true</ECI_A4_Override>
+      <ECI_A5_Override>true</ECI_A5_Override>
+      <ECI_C1C4_Override>true</ECI_C1C4_Override>
+      <ECI_D_Override>true</ECI_D_Override>
+      <ECI_Seq_Override>true</ECI_Seq_Override>
+      <ECI_Mix_Info />
+    </CarboMaterial>
+  </CarboMaterials>
+</CarboDatabase>

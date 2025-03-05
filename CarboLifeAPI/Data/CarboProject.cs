@@ -1286,8 +1286,8 @@ namespace CarboLifeAPI.Data
             generalText += "The calculated value equals to: " + Math.Round(calculatedCo2 / 1.40, 2) + " average car emission per year (1.40 tCO₂/car). (UK)" + Environment.NewLine;
             generalText += "This requires " + Math.Round((calculatedCo2 * 40), 0) + " trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
             generalText += "The Social Carbon Cost (SCC) of this project is: " + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
-            generalText += "Between now and 2100 this will likely cause the death of: " + Math.Round(carbonDeathCost,0) + " " + peopleUnits +  Environment.NewLine;
-            generalText += "if no regenerative design plan is written for the project." + Environment.NewLine;
+            //generalText += "Between now and 2100 this will likely cause the death of: " + Math.Round(carbonDeathCost,0) + " " + peopleUnits +  Environment.NewLine;
+            //generalText += "if no regenerative design plan is written for the project." + Environment.NewLine;
             result = generalText;
 
             return result;
