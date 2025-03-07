@@ -45,6 +45,7 @@ namespace CarboCircle
         public string matchGUID { get; set; }
         public bool isOffcut { get; set; }
 
+        public List<int> idList { get; set; }
         public carboCircleElement()
         {
             id = -999;
@@ -74,6 +75,7 @@ namespace CarboCircle
             matchGUID = "";
             isOffcut = false;
 
+            idList = new List<int>();
          }
 
 
@@ -108,8 +110,13 @@ namespace CarboCircle
                 GUID = this.GUID,
                 matchGUID = this.matchGUID,
                 isOffcut = this.isOffcut
-
             };
+
+            clone.idList = new List<int>();
+            foreach (int id in this.idList)
+            {
+                clone.idList.Add(id);
+            }
 
             return clone;
         }

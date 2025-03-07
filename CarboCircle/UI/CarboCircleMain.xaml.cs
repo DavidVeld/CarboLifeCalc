@@ -115,8 +115,11 @@ namespace CarboCircle.UI
                     collectedElements = e;
                     activeProject.ParseRequiredData(collectedElements);
 
-                    //liv_requiredMaterialList.Items.Clear();
-                    //liv_requiredMaterialList.ItemsSource = "";
+                    liv_requiredMaterialList.Items.Clear();
+                    liv_requiredMaterialList.ItemsSource = "";
+                    liv_RequiredMassObjects.Items.Clear();
+                    liv_RequiredMassObjects.ItemsSource = "";
+
                     liv_requiredMaterialList.ItemsSource = activeProject.requiredData;
                     liv_RequiredMassObjects.ItemsSource = activeProject.requiredVolumes;
                     setRequiredOk();
@@ -286,7 +289,8 @@ namespace CarboCircle.UI
                 activeProject.settings.colour_NotFromReused.r, activeProject.settings.colour_NotFromReused.g, activeProject.settings.colour_NotFromReused.b));
             btn_ColourRequiredReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 
                 activeProject.settings.colour_FromReusedData.r, activeProject.settings.colour_FromReusedData.g, activeProject.settings.colour_FromReusedData.b));
-
+            btn_ColourMassReusable.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255,
+                activeProject.settings.colour_ReusedMinedVolumes.r, activeProject.settings.colour_ReusedMinedVolumes.g, activeProject.settings.colour_ReusedMinedVolumes.b));
 
         }
 
@@ -488,6 +492,27 @@ namespace CarboCircle.UI
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
         }
+
+        private void btn_ColourMassReusable_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //get a new colour
+                System.Windows.Media.Brush startColour = btn_ColourMassReusable.Background;
+                System.Drawing.Color pickedColour = GetColor(startColour);
+
+                //apply in the colour settings
+                activeProject.settings.colour_ReusedMinedVolumes = new CarboColour(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B);
+
+                //Refresh the graph
+                btn_ColourMassReusable.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(pickedColour.A, pickedColour.R, pickedColour.G, pickedColour.B));
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+        }
         private System.Drawing.Color GetColor(System.Windows.Media.Brush startColour)
         {
             //System.Windows.Media.Color color = ((SolidColorBrush)startColour).Color;
@@ -671,5 +696,7 @@ namespace CarboCircle.UI
 
 
         }
+
+
     }
 }

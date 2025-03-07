@@ -710,6 +710,7 @@ namespace CarboCircle
             List<ElementId> reusedRequiredElementIds = new List<ElementId>();//
             List<ElementId> NOTreusedMinedElementIds = new List<ElementId>();
             List<ElementId> NOTreusedRequireddElementIds = new List<ElementId>();
+            List<ElementId> reusedAbleVolumeElementIds = new List<ElementId>();//
 
             //Colour all elemen
             List<carboCircleMatchElement> matchedData = project.getCarboMatchesListSimplified();
@@ -725,15 +726,6 @@ namespace CarboCircle
             }
 
             //collect leftovers
-            /*
-            foreach (carboCircleElement element in leftOverElements)
-            {
-                ElementId leftOver = new ElementId(element.id);
-                if(element.isOffcut == false)
-                    NOTreuseddElementIds.Add(leftOver);
-            }
-            */
-
             //get all elements in view;
             IEnumerable<Element> allCollector = null;
             allCollector = new FilteredElementCollector(doc, doc.ActiveView.Id).WhereElementIsNotElementType().ToElements();
@@ -766,6 +758,50 @@ namespace CarboCircle
                 }
             }
 
+            //VolumeOpportunities
+            //These can be combined and then the Idlist needs to be used
+            //Messy but true.
+
+            List<carboCircleElement> volumeOpportunities = project.getCarboVolumeOpportunities();
+            foreach(carboCircleElement cce in volumeOpportunities)
+            {
+                try
+                {
+                    if (cce.isVolumeElement == true)
+                    {
+                        if (cce.id != 0)
+                        {
+                            //single object Volume Elements
+                            ElementId eid = null;
+
+                            eid = new ElementId(cce.id);
+
+                            Element el = doc.GetElement(eid);
+                            if (el != null)
+                                reusedAbleVolumeElementIds.Add(eid);
+                        }
+                        else
+                        {
+                            if (cce.idList.Count > 0)
+                            {
+                                //Combined object Volumes
+                                foreach (int id in cce.idList)
+                                {
+                                    ElementId eid = new ElementId(id);
+
+                                    Element el = doc.GetElement(eid);
+                                    if (el != null)
+                                        reusedAbleVolumeElementIds.Add(eid);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex) { }
+
+            }
+
+
             //colour the elements:
             using (Transaction t = new Transaction(doc, "Colour The Model"))
             {
@@ -781,6 +817,7 @@ namespace CarboCircle
                 //now colour the ones that are reused
                 colourElements(reusedMinedElementIds, solidFillPattern, settings.colour_ReusedMinedData, doc);
                 colourElements(reusedRequiredElementIds, solidFillPattern, settings.colour_FromReusedData, doc);
+                colourElements(reusedAbleVolumeElementIds, solidFillPattern, settings.colour_ReusedMinedVolumes, doc);
 
                 carboCircleLegendBuilder.drawLegend(settings, doc);
 

@@ -275,7 +275,10 @@ namespace CarboCircle
                 double minTextGap = 2.6 / 304.8; //(2.5mm)
                 double lastTexty = 0;
 
-                for (int i = 0; i < 4; i++)
+                //we will create 5 labels and 5 hatches:
+                int nrOfField = 5;
+
+                for (int i = 0; i < nrOfField; i++)
                 {
                     //Draw Rectangles = Text
                     List<CurveLoop> profileList = new List<CurveLoop>();
@@ -309,7 +312,36 @@ namespace CarboCircle
 
                     //now set colour overrides;
                     OverrideGraphicSettings ogs = new OverrideGraphicSettings();
-                    CarboColour colour = settings.colour_NotReused;
+                    CarboColour colour = null;
+                    string labelText = "";
+
+                    switch(i)
+                    {
+                        case 0:
+                                colour = settings.colour_NotFromReused;
+                                labelText = "Fully New Materials";
+                                break;
+                        case 1:
+                            colour = settings.colour_FromReusedData;
+                            labelText = "New Elements from Reused Existing";
+                            break;
+                        case 2:
+                            colour = settings.colour_ReusedMinedData;
+                            labelText = "Existing Materials Reused in New";
+                            break;
+                        case 3:
+                            colour = settings.colour_NotReused;
+                            labelText = "Existing Materials Not Reused";
+                            break;
+                        case 4:
+                            colour = settings.colour_ReusedMinedVolumes;
+                            labelText = "Existing Materials Reusable as Massmaterials";
+                            break;
+                        default:
+                            colour = settings.colour_NotReused;
+                            labelText = "Existing Materials Not Reused";
+                            break;
+                    }
 
                     ogs.SetProjectionLineColor(new Color(colour.r, colour.g, colour.b));
                     ogs.SetSurfaceTransparency(0);
@@ -325,7 +357,7 @@ namespace CarboCircle
                     if (deltaText >= minTextGap)
                     {
                         lastTexty = this_y_offset - (y_offset / 2) + (1.25 / 304.8);
-                        TextNote note = TextNote.Create(doc, clcLegendView.Id, textPoint, "Elements not reused", clc_TextOptions);
+                        TextNote note = TextNote.Create(doc, clcLegendView.Id, textPoint, labelText, clc_TextOptions);
                     }
 
                 }

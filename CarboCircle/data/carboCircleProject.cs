@@ -148,13 +148,19 @@ namespace CarboCircle.data
                                 vRE.category += ";" + vE.category;
                                 vRE.volume += vE.volume;
                                 vRE.netVolume += vE.netVolume;
+                                vRE.idList.Add(vE.id);
+
                                 existingElement = true;
+
                                 continue;
                             }
                         }
                         if (existingElement == false)
                         {
+                            //new item
                             vE.name = vE.materialName;
+                            vE.idList.Add(vE.id);
+
                             result.Add(vE.Copy());
                         }
                     }
@@ -234,6 +240,10 @@ namespace CarboCircle.data
             return result;
         }
 
+        /// <summary>
+        /// Returns the materials that could potentially be reused as a volume.
+        /// </summary>
+        /// <returns></returns>
         public List<carboCircleElement> getCarboVolumeOpportunities()
         {
             if (volumeOpportunities != null)
@@ -243,7 +253,6 @@ namespace CarboCircle.data
             else
             {
                 return new List<carboCircleElement>();
-
             }
         }
 
