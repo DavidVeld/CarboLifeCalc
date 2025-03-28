@@ -93,5 +93,21 @@ namespace CarboLifeUI.UI
         {
             System.Diagnostics.Process.Start("https://buymeacoffee.com/davidveld");
         }
+
+        private void btn_Check_Click(object sender, RoutedEventArgs e)
+        {
+            string secretmessage = txt_SecretMessage.Text;
+            string secretEnCrypted = Utils.Crypt(secretmessage);
+
+            if (secretEnCrypted == "LOmaRc4Q9HO7UU18crErdwvOQNXv8Hf+")
+            {
+                System.Windows.MessageBox.Show("This code is correct, enjoy no more pop-ups!");
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("You guessed wrong, or made a typo, please try again");
+                System.Windows.Clipboard.SetText(secretEnCrypted);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CarboLifeAPI.Data;
+using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using System;
 using System.Collections;
@@ -16,6 +17,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using Application = Microsoft.Office.Interop.Excel.Application;
 using Excel = Microsoft.Office.Interop.Excel;
 
 
@@ -484,7 +486,6 @@ namespace CarboLifeAPI
             Marshal.ReleaseComObject(xlApp);
 
         }
-
         public static void ExportComaringGraphs(CarboProject carboLifeProject, List<CarboProject> projectListToCompareTo, bool exportCurrentProject)
         {
 
@@ -515,7 +516,6 @@ namespace CarboLifeAPI
                 }
             }
         }
-
 
         [Obsolete]
         private static void CreateTotalsExcelFile(List<CarboProject> projectList, Excel.Application xlApp, string path)
@@ -637,7 +637,6 @@ namespace CarboLifeAPI
             Marshal.ReleaseComObject(xlApp);
 
         }
-
         public static void ExportToCSV(CarboProject carboLifeProject, string cvsExportPath, bool exportResult, bool exportElements, bool exportMaterials, bool exportProject)
         {
             string exportpath = Path.GetDirectoryName(cvsExportPath);
@@ -682,7 +681,6 @@ namespace CarboLifeAPI
                 CreateProjectDatabaseCVSFile(carboLifeProject, exportpathProject);
 
         }
-
         private static void CreateProjectDatabaseCVSFile(CarboProject carboLifeProject, string exportPath)
         {
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
@@ -749,7 +747,6 @@ namespace CarboLifeAPI
             WriteCVSFile(fileString, exportPath);
 
         }
-
         private static void CreateProjectTotalsCVSFile(List<CarboProject> projectListToCompareTo, string exportPath, CarboProject baseProject)
         {
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
@@ -966,7 +963,6 @@ namespace CarboLifeAPI
             WriteCVSFile(fileString, exportPath);
 
         }
-
         private static void CreateElementsCVSFile(CarboProject carboLifeProject, string exportPath)
         {
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
@@ -1144,7 +1140,6 @@ namespace CarboLifeAPI
             WriteCVSFile(fileString, exportPath);
 
 }
-
         public static string CVSFormat(string str)
         {
             if (str == null)
@@ -1335,15 +1330,12 @@ fileString =
 
             if (File.Exists(importPath) && IsFileLocked(importPath) == false)
             {
-                DataTable profileTable = Utils.LoadCSV(importPath);
+                System.Data.DataTable profileTable = Utils.LoadCSV(importPath);
 
                 foreach (DataRow dr in profileTable.Rows)
                 {
                     try
                     {
-
-
-
                         CarboMaterial cm = new CarboMaterial();
                         cm.Id = Convert.ToInt32(Utils.ConvertMeToDouble(dr[0].ToString()));
                         cm.Name = dr[1].ToString();
@@ -1432,7 +1424,7 @@ fileString =
 
             if (File.Exists(importPath) && IsFileLocked(importPath) == false)
             {
-                DataTable profileTable = Utils.LoadCSV(importPath);
+                System.Data.DataTable profileTable = Utils.LoadCSV(importPath);
 
                 foreach (DataRow dr in profileTable.Rows)
                 {
@@ -1458,6 +1450,70 @@ fileString =
             }
             return elementList;
 
+        }
+
+        /// <summary>
+        /// Basic export to oneclick
+        /// </summary>
+        /// <param name="carboLifeProject"></param>
+        /// <param name="savePath"></param>
+        public static void ExportToOneClick(CarboProject carboLifeProject, string savePath)
+        {
+            if (File.Exists(savePath) && IsFileLocked(savePath) == true)
+                return;
+
+            string fileString = "";
+
+            //CLASS	IFCMATERIAL	QUANTITY	QTY_TYPE	THICKNESS_MM	TRANSPORT_KM	TRANSPORTDISTANCE_KMLEG2	YM_TRANSPORTATION_KM	COMMENT	SERVICELIFE	WASTAGE	MATERIAL REUSED	COSTPERUNIT	TOTALCOST	BREEAM Int'l Mat 01 classification (use to choose)	MAT01CLASS	BREEAM UK / RICS Classification (use to choose)	LEVEL	BYGNINGSDEL (use to choose)	BYGNINGSDEL	Talo2000 Rakennusosa (use to choose)	TALO2000	KG DIN 276 (use to choose)	KGDIN276	SFB (use to choose)	SFB	NS 3454 (use to choose)	NS3454	Level(s) - Language	Level(s) (use to choose)	CLASSIFICATION_LEVELS
+            //Create Headers;
+            fileString =
+                "CLASS" + "," + //0
+                "IFCMATERIAL" + "," + //1
+                "QUANTITY" + "," + //2
+                "QTY_TYPE" + "," + //3
+                "COMMENT" + "," + //4
+                "SERVICELIFE" + "," + //5
+                "WASTAGE" + "," + //6
+                Environment.NewLine;
+            //Advanced
+            foreach (CarboGroup grp in carboLifeProject.getGroupList)
+            {
+                try
+                {
+                    string resultString = "";
+                    resultString += CVSFormat(grp.Category) + ","; //0
+                    resultString += CVSFormat(grp.MaterialName) + ","; //1
+                    resultString += grp.TotalVolume + ","; //2
+                    resultString += CVSFormat("M3") + ","; //3
+                    resultString += CVSFormat(grp.Description) + ","; //4
+                    resultString += carboLifeProject.designLife + ","; //5
+                    resultString += 0; //6
+                    resultString += Environment.NewLine;
+
+                    fileString += resultString;
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine("An error occurred while writing the file: " + ex.Message);
+                }
+            }
+
+            WriteCVSFile(fileString, savePath);
+            string targetPath = Path.GetDirectoryName(savePath);
+            string filename = Path.GetFileNameWithoutExtension(savePath);
+
+            try
+            {
+                Application app = new Application();
+                Workbook wb = app.Workbooks.Open(savePath, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                wb.SaveAs(targetPath + "\\" + filename + ".xlsx", XlFileFormat.xlOpenXMLWorkbook, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                wb.Close();
+                app.Quit();
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine("An error occurred while writing the file: " + ex.Message);
+            }
         }
 
         public class LookupItem

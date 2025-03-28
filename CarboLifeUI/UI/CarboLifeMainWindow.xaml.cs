@@ -770,5 +770,22 @@ namespace CarboLifeUI.UI
             }
         }
 
+        private void mnu_ExportToOneClick_Click(object sender, RoutedEventArgs e)
+        {
+            //get a location and save the data
+            if (carboLifeProject != null)
+            {
+                carboLifeProject.CalculateProject();
+
+                //get a CSV location:
+                string savePath = DataExportUtils.GetSaveAsLocation();
+
+                if (savePath != null && savePath != "")
+                {
+                    DataExportUtils.ExportToOneClick(carboLifeProject, savePath);
+                }
+            }
+        }
+
     }
 }
