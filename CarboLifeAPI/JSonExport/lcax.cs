@@ -432,7 +432,7 @@ namespace LCAx
             CalculationType = string.Empty;
             GoalAndScopeDefinition = string.Empty;
             LcaSoftware = string.Empty;
-        }    
+        }
     }
 
 

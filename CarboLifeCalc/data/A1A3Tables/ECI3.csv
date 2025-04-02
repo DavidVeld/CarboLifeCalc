@@ -487,8 +487,8 @@
 2485,Copper : EU Tube & Sheet,"EU production data, estimated from Kupfer Institut LCI data. 37% recycled content (the 3 year world average). World average data is expected to be higher than these values.",Metal - Other,8900,2.71
 2486,Copper : Virgin,"EU production data, estimated from Kupfer Institut LCI data. 37% recycled content (the 3 year world average). World average data is expected to be higher than these values.",Metal - Other,8900,3.81
 2487,Copper : Recycled,"EU production data, estimated from Kupfer Institut LCI data. 37% recycled content (the 3 year world average). World average data is expected to be higher than these values.",Metal - Other,8900,0.84
-2488,Copper : Recycled from high grade scrap ,"(CO₂ ONLY)  Uncertain, difficult to estimate with the data available.",Metal - Other,8900,1.1
-2489,Copper : Recycled from low grade scrap ,"(CO₂ ONLY) Uncertain, difficult to estimate with the data available.",Metal - Other,8900,3.1
+2488,Copper : Recycled from high grade scrap ,"(CO₂e ONLY)  Uncertain, difficult to estimate with the data available.",Metal - Other,8900,1.1
+2489,Copper : Recycled from low grade scrap ,"(CO₂e ONLY) Uncertain, difficult to estimate with the data available.",Metal - Other,8900,3.1
 2490,"Glass : General, per kg","2.5kg glass per mm thickness, per m2. Embodied carbon of the glass is the average of data collected, from 109 datapoints",Glass,2500,1.436967064
 2491,"Glass : Glazing, Double, per kg","2.5kg glass per mm thickness, per m2. Embodied carbon of the glass is the average of data collected, from 10 datapoints",Glass,2500,1.625600014
 2492,"Glass : Glazing triple, per kg","2.5kg glass per mm thickness, per m2. Embodied carbon of the glass is the average of data collected, from 6 datapoints",Glass,2500,1.746990969
@@ -539,73 +539,73 @@
 2537,"Glass - Toughened glass - no frame :  12 mm of glass, ex frame","Toughened. Embodied carbon of the glass is the average of data collected, from 43 datapoints",Glass,2500,1.667229702
 2538,"Glass - Toughened glass - no frame :  15 mm of glass, ex frame","Toughened. Embodied carbon of the glass is the average of data collected, from 43 datapoints",Glass,2500,1.634538924
 2539,"Glass - Skylight or roof light - with frame : Roof or skylight, inc frame","Includes frame and glazing unit.. Embodied carbon of the glass is the average of data collected, from 5 datapoints",Glass,2500,3.573333333
-2540,Insulation : General Insulation,(CO₂ ONLY) Estimated from typical market shares. Feedstock Energy 16.5 MJ/kg  (Included),Other,500,1.86
+2540,Insulation : General Insulation,(CO₂e ONLY) Estimated from typical market shares. Feedstock Energy 16.5 MJ/kg  (Included),Other,500,1.86
 2541,Insulation : Cellular Glass,Ref. 54. ,Other,0,0
 2542,Insulation : Cellulose ,0,Other,0,0
-2543,Insulation : Cork,(CO₂ ONLY) ,Other,500,0.19
-2544,Insulation : Fibreglass (Glasswool),(CO₂ ONLY)  Poor data difficult to select appropriate value,Other,500,1.35
-2545,Insulation : Flax (Insulation),(CO₂ ONLY)  MJ/kg Feedstock Energy  (Included),Other,500,1.7
+2543,Insulation : Cork,(CO₂e ONLY) ,Other,500,0.19
+2544,Insulation : Fibreglass (Glasswool),(CO₂e ONLY)  Poor data difficult to select appropriate value,Other,500,1.35
+2545,Insulation : Flax (Insulation),(CO₂e ONLY)  MJ/kg Feedstock Energy  (Included),Other,500,1.7
 2546,Insulation : Mineral wool,0,Other,500,1.28
-2547,Insulation : Paper wool,(CO₂ ONLY) ,Other,500,0.63
+2547,Insulation : Paper wool,(CO₂e ONLY) ,Other,500,0.63
 2548,Insulation : Polystyrene,see plastics,Other,32,3.43
 2549,Insulation : Polyurethane,see plastics,Other,0,4.26
 2550,Insulation : Rockwool,Cradle to Grave,Other,500,1.12
 2551,Insulation : Woodwool (loose),Ref. 205.,Other,0,0
-2552,Insulation : Woodwool (Board),(CO₂ ONLY) ,Other,500,0.98
+2552,Insulation : Woodwool (Board),(CO₂e ONLY) ,Other,500,0.98
 2553,Insulation : Wool (Recycled) ,"Refs. 63, 201, 202 & 281.",Other,0,0
 2554,Iron : General,It was difficult to estimate the embodied energy and carbon of iron with the data available.,Metal - Other,7870,2.03224
 2555,Lead : General,"Allocated (divided) on a mass basis, assumes recycling rate of 61%",Metal - Other,11340,1.6681
 2556,Lead : Virgin,0,Metal - Other,11340,3.37
 2557,Lead : Recycled,Scrap batteries are a main feedstock for recycled lead,Metal - Other,11340,0.58
 2558,Lime : General,Embodied carbon was difficult to estimate,Stone,1000,0.78
-2559,Linoleum : General,"(CO₂ ONLY) Data difficult to select, large data range.",Other,1200,1.21
+2559,Linoleum : General,"(CO₂e ONLY) Data difficult to select, large data range.",Other,1200,1.21
 2560,Miscellaneous : Asbestos,"No GWP data, embodied energy only",Other,360,0
-2561,Miscellaneous : Calcium Silicate Sheet,(CO₂ ONLY) ,Other,1800,0.13
-2562,Miscellaneous : Chromium,(CO₂ ONLY) ,Other,7140,5.39
-2563,"Miscellaneous : Cotton, Padding",(CO₂ ONLY) ,Other,1560,1.28
-2564,"Miscellaneous : Cotton, Fabric",(CO₂ ONLY) ,Other,1560,6.78
-2565,Miscellaneous : Damp Proof Course/Membrane,(CO₂ ONLY)  (ASSUMED DESNISTY FROM GENERIC PLASTIC),Other,1200,4.2
+2561,Miscellaneous : Calcium Silicate Sheet,(CO₂e ONLY) ,Other,1800,0.13
+2562,Miscellaneous : Chromium,(CO₂e ONLY) ,Other,7140,5.39
+2563,"Miscellaneous : Cotton, Padding",(CO₂e ONLY) ,Other,1560,1.28
+2564,"Miscellaneous : Cotton, Fabric",(CO₂e ONLY) ,Other,1560,6.78
+2565,Miscellaneous : Damp Proof Course/Membrane,(CO₂e ONLY)  (ASSUMED DESNISTY FROM GENERIC PLASTIC),Other,1200,4.2
 2566,Miscellaneous : Felt General,"No GWP data, embodied energy only",Other,0,0
-2567,Miscellaneous : Flax,(CO₂ ONLY) ,Other,1300,1.7
+2567,Miscellaneous : Flax,(CO₂e ONLY) ,Other,1300,1.7
 2568,Miscellaneous : Fly Ash,No allocation from fly ash producing system.,Other,1500,0.008
-2569,Miscellaneous : Grit,(CO₂ ONLY) ,Other,2650,0.007
-2570,Miscellaneous : Ground Limestone,(CO₂ ONLY) ,Other,2711,0.032
+2569,Miscellaneous : Grit,(CO₂e ONLY) ,Other,2650,0.007
+2570,Miscellaneous : Ground Limestone,(CO₂e ONLY) ,Other,2711,0.032
 2571,Miscellaneous : Carpet Grout,Ref. 169.,Other,0,0
-2572,Miscellaneous : Glass Reinforced Plastic - GRP - Fibreglass,(CO₂ ONLY) ,Other,2500,8.1
-2573,Miscellaneous : Lithium,(CO₂ ONLY) ,Other,534,5.3
-2574,Miscellaneous : Mandolite,(CO₂ ONLY) ,Other,390,1.4
-2575,Miscellaneous : Mineral Fibre Tile (Roofing),(CO₂ ONLY) ,Other,300,2.7
-2576,Miscellaneous : Manganese,(CO₂ ONLY) ,Other,7430,3.5
-2577,Miscellaneous : Mercury,(CO₂ ONLY) ,Other,13593,4.94
-2578,Miscellaneous : Molybedenum,(CO₂ ONLY) ,Other,10280,30.3
-2579,Miscellaneous : Nickel,(CO₂ ONLY) ,Other,8908,12.4
-2580,Miscellaneous : Perlite - Expanded,(CO₂ ONLY) ,Other,150,0.52
-2581,Miscellaneous : Perlite - Natural,(CO₂ ONLY) ,Other,1100,0.03
-2582,Miscellaneous : Quartz powder,(CO₂ ONLY) ,Other,2650,0.023
-2583,Miscellaneous : Shingle,(CO₂ ONLY) ,Other,1788,0.3
+2572,Miscellaneous : Glass Reinforced Plastic - GRP - Fibreglass,(CO₂e ONLY) ,Other,2500,8.1
+2573,Miscellaneous : Lithium,(CO₂e ONLY) ,Other,534,5.3
+2574,Miscellaneous : Mandolite,(CO₂e ONLY) ,Other,390,1.4
+2575,Miscellaneous : Mineral Fibre Tile (Roofing),(CO₂e ONLY) ,Other,300,2.7
+2576,Miscellaneous : Manganese,(CO₂e ONLY) ,Other,7430,3.5
+2577,Miscellaneous : Mercury,(CO₂e ONLY) ,Other,13593,4.94
+2578,Miscellaneous : Molybedenum,(CO₂e ONLY) ,Other,10280,30.3
+2579,Miscellaneous : Nickel,(CO₂e ONLY) ,Other,8908,12.4
+2580,Miscellaneous : Perlite - Expanded,(CO₂e ONLY) ,Other,150,0.52
+2581,Miscellaneous : Perlite - Natural,(CO₂e ONLY) ,Other,1100,0.03
+2582,Miscellaneous : Quartz powder,(CO₂e ONLY) ,Other,2650,0.023
+2583,Miscellaneous : Shingle,(CO₂e ONLY) ,Other,1788,0.3
 2584,Miscellaneous : Silicon,Ref. 167.,Other,2320,0
 2585,Miscellaneous : Slag (GGBS),"Ground Granulated Blast Furnace Slag (GGBS), economic allocation.",Other,1040,0.083
-2586,Miscellaneous : Silver,(CO₂ ONLY) ,Other,10500,6.31
-2587,Miscellaneous : Straw,(CO₂ ONLY) ,Other,100,0.01
-2588,Miscellaneous : Terrazzo Tiles,(CO₂ ONLY) ,Other,2100,0.118
-2589,Miscellaneous : Vanadium,(CO₂ ONLY) ,Other,6100,228
-2590,Miscellaneous : Vermiculite - Expanded,(CO₂ ONLY) ,Other,64,0.52
-2591,Miscellaneous : Vermiculite - Natural,(CO₂ ONLY) ,Other,160,0.032
+2586,Miscellaneous : Silver,(CO₂e ONLY) ,Other,10500,6.31
+2587,Miscellaneous : Straw,(CO₂e ONLY) ,Other,100,0.01
+2588,Miscellaneous : Terrazzo Tiles,(CO₂e ONLY) ,Other,2100,0.118
+2589,Miscellaneous : Vanadium,(CO₂e ONLY) ,Other,6100,228
+2590,Miscellaneous : Vermiculite - Expanded,(CO₂e ONLY) ,Other,64,0.52
+2591,Miscellaneous : Vermiculite - Natural,(CO₂e ONLY) ,Other,160,0.032
 2592,Miscellaneous : Vicuclad,Ref. 1.,Other,405,0
-2593,Miscellaneous : Water,(CO₂ ONLY) ,Other,997,0.0008
+2593,Miscellaneous : Water,(CO₂e ONLY) ,Other,997,0.0008
 2594,Miscellaneous : Wax,Ref. 169.,Other,900,0
-2595,Miscellaneous : Wood stain/Varnish,(CO₂ ONLY)  (ASSUMED DESNISTY ),Other,1500,5.35
-2596,Miscellaneous : Yttrium,(CO₂ ONLY) ,Other,4500,84
-2597,Miscellaneous : Zirconium,(CO₂ ONLY) ,Other,6490,97.2
+2595,Miscellaneous : Wood stain/Varnish,(CO₂e ONLY)  (ASSUMED DESNISTY ),Other,1500,5.35
+2596,Miscellaneous : Yttrium,(CO₂e ONLY) ,Other,4500,84
+2597,Miscellaneous : Zirconium,(CO₂e ONLY) ,Other,6490,97.2
 2598,Paint : General,"(ASSUMED DESNISTY ) Large variations in data, especially for embodied carbon. Includes feedstock energy. Water based paints have a 70% market share.  Water based paint has a lower embodied energy than solvent based paint.",Other,1500,2.91
 2599,Paint : EXAMPLE: Single Coat,(ASSUMED DESNISTY ) Assuming 6.66 Sqm Coverage per kg,Other,1500,0.436936937
 2600,Paint : EXAMPLE: Double Coat,(ASSUMED DESNISTY ) Assuming 3.33 Sqm Coverage per kg,Other,1500,0.873873874
 2601,Paint : EXAMPLE: Triple Coat,(ASSUMED DESNISTY ) Assuming 2.22 Sqm Coverage per kg,Other,1500,1.310810811
 2602,Paint : Waterborne Paint,(ASSUMED DESNISTY ) Waterborne paint has a 70% of market share. Includes feedstock energy. ,Other,1500,2.54
 2603,Paint : Solventborne Paint,(ASSUMED DESNISTY ) Solventborne paint has a 30% share of the market. Includes feedstock energy.  It was  difficult to estimate carbon emissions for Solventborne paint.,Other,1500,3.76
-2604,Paper :  Paperboard (General for construction use),"( CO₂ Only) Excluding calorific value (CV) of wood, excludes carbon sequestration/biogenic carbon storage.",Other,1201,1.29
-2605,Paper : Fine Paper,"( CO₂ Only) Excluding CV of wood, excludes carbon sequestration",Other,1201,1.49
-2606,Paper : Wallpaper,( CO₂ Only),Other,1201,1.93
+2604,Paper :  Paperboard (General for construction use),"( CO₂e Only) Excluding calorific value (CV) of wood, excludes carbon sequestration/biogenic carbon storage.",Other,1201,1.29
+2605,Paper : Fine Paper,"( CO₂e Only) Excluding CV of wood, excludes carbon sequestration",Other,1201,1.49
+2606,Paper : Wallpaper,( CO₂e Only),Other,1201,1.93
 2607,Plaster : General (Gypsum),"Problems selecting good value, inconsistent figures, West et al believe this is because of past aggregation of EE with cement",Other,2960,0.13
 2608,Plaster : Plasterboard,"See Ref [WRAP] for further info on GWP data, including disposal impacts which are significant for Plasterboard.",Other,640,0.39
 2609,Plastics : General,(ASSUMED DENSITY) 35.6 MJ/kg Feedstock Energy  (Included). Determined by the average use of each type of plastic used in the European construction industry.,Plastic,1200,3.31
@@ -619,7 +619,7 @@
 2617,"Plastics : Nylon (polyamide) 6,6 Polymer",50.7 MJ/kg Feedstock Energy  (Included). Doesn’t include final fabrication (i.e. injection moulding). See comments for Nylon 6 polymer.,Plastic,1150,7.92
 2618,Plastics : Polycarbonate,36.7 MJ/kg Feedstock Energy  (Included). Doesn’t include final fabrication.,Plastic,1220,7.62
 2619,"Plastics : Polypropylene, Orientated Film",55.7 MJ/kg Feedstock Energy  (Included).,Plastic,946,3.43
-2620,"Plastics : Polypropylene, Injection Moulding","54 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO₂ may reduce to 3.85 kgCO₂/kg, and GWP down to 4.41 kg CO₂e/kg.",Plastic,946,4.49
+2620,"Plastics : Polypropylene, Injection Moulding","54 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO₂e may reduce to 3.85 kgCO₂/kg, and GWP down to 4.41 kg CO₂e/kg.",Plastic,946,4.49
 2621,Plastics : Expanded Polystyrene,46.2 MJ/kg Feedstock Energy  (Included),Plastic,32,3.29
 2622,Plastics : General Purpose Polystyrene,46.3 MJ/kg Feedstock Energy  (Included),Plastic,32,3.43
 2623,Plastics : High Impact Polystyrene,46.4 MJ/kg Feedstock Energy  (Included),Plastic,32,3.42
@@ -627,16 +627,16 @@
 2625,Plastics : Polyurethane Flexible Foam,33.47 MJ/kg Feedstock Energy  (Included). Poor data availability for feedstock energy,Plastic,48,4.84
 2626,Plastics : Polyurethane Rigid Foam,37.07 MJ/kg Feedstock Energy  (Included). Poor data availability for feedstock energy,Plastic,100,4.26
 2627,Plastics : PVC General,28.1 MJ/kg Feedstock Energy  (Included). Based on market average consumption of types of PVC in the European construction industry,Plastic,1380,3.1
-2628,Plastics : PVC Pipe,"24.4 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO₂ may reduce to 2.51 kgCO₂/kg, and GWP down to 3.23 kg CO₂e/kg.",Plastic,1380,3.23
-2629,Plastics : Calendered Sheet PVC,"24.4 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO₂ may reduce to 2.56 kgCO₂/kg, and GWP down to 3.15 kg CO₂e/kg.",Plastic,1380,3.19
-2630,Plastics : PVC Injection Moulding,"35.1 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO₂ may reduce to 2.23 kgCO₂/kg, and GWP down to 2.84 kg CO₂e/kg.",Plastic,1380,3.3
+2628,Plastics : PVC Pipe,"24.4 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO₂e may reduce to 2.51 kgCO₂/kg, and GWP down to 3.23 kg CO₂e/kg.",Plastic,1380,3.23
+2629,Plastics : Calendered Sheet PVC,"24.4 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO₂e may reduce to 2.56 kgCO₂/kg, and GWP down to 3.15 kg CO₂e/kg.",Plastic,1380,3.19
+2630,Plastics : PVC Injection Moulding,"35.1 MJ/kg Feedstock Energy  (Included). If biomass benefits are included the CO₂e may reduce to 2.23 kgCO₂/kg, and GWP down to 2.84 kg CO₂e/kg.",Plastic,1380,3.3
 2631,Plastics : UPVC Film,25.3 MJ/kg Feedstock Energy  (Included),Plastic,1430,3.16
 2632,Rubber : General,40 MJ/kg Feedstock Energy  (Included),Other,1522,2.85
-2633,Sealants and Adhesives : Epoxide Resin,( CO₂ Only) 42.6 MJ/kg Feedstock Energy  (Included). Source: www.plasticseurope.org ,Other,1400,5.7
+2633,Sealants and Adhesives : Epoxide Resin,( CO₂e Only) 42.6 MJ/kg Feedstock Energy  (Included). Source: www.plasticseurope.org ,Other,1400,5.7
 2634,Sealants and Adhesives : Mastic Sealant,0,Other,1074,0
-2635,Sealants and Adhesives : Melamine Resin,( CO₂ Only) Feedstock energy 18 MJ/kg - estimated from Ref 34.,Other,1573,4.19
-2636,Sealants and Adhesives : Phenol Formaldehyde,( CO₂ Only) Feedstock energy 32 MJ/kg - estimated from Ref 34.,Other,1210,2.98
-2637,Sealants and Adhesives : Urea Formaldehyde,( CO₂ Only) Feedstock energy 18 MJ/kg - estimated from Ref 34.,Other,1200,2.76
+2635,Sealants and Adhesives : Melamine Resin,( CO₂e Only) Feedstock energy 18 MJ/kg - estimated from Ref 34.,Other,1573,4.19
+2636,Sealants and Adhesives : Phenol Formaldehyde,( CO₂e Only) Feedstock energy 32 MJ/kg - estimated from Ref 34.,Other,1210,2.98
+2637,Sealants and Adhesives : Urea Formaldehyde,( CO₂e Only) Feedstock energy 18 MJ/kg - estimated from Ref 34.,Other,1200,2.76
 2638,Soil : General (Rammed Soil),0,Aggregates and Sand,1800,0.024
 2639,Soil : Cement stabilised soil @ 5%,Assumed 5% cement content.,Aggregates and Sand,1980,0.061
 2640,Soil : Cement stabilised soil @ 8%,Assumed 8% stabiliser content (6% cement and 2% lime).,Aggregates and Sand,2000,0.084
@@ -707,7 +707,7 @@
 2705,Timber : Softwood - Including Carbon Storage,"Average of data collected, 43 datapoints.  Includes Carbon Storage.",Timber,480,-1.291860682
 2706,Timber : Wood I-Beam - Including Carbon Storage,"Average of data collected, 37 datapoints.  Includes Carbon Storage.",Timber,480,-1.049938317
 2707,Timber : Wood-plastic composite - Including Carbon Storage,"Average of data collected, 1 datapoints. This dataset is based upon a single datapoint. It may therefore be subject to larger uncertainty than normal. Includes Carbon Storage.",Timber,500,0.58
-2708,Tin : Tin Coated Plate (Steel),(CO₂ ONLY) (1.04 to 2.95),Metal - Other,7800,2.95
+2708,Tin : Tin Coated Plate (Steel),(CO₂e ONLY) (1.04 to 2.95),Metal - Other,7800,2.95
 2709,Tin : General,"lack of modern data, large data range",Metal - Other,7800,14.47
 2710,Titanium : Virgin,"lack of modern data, large data range, small sample size (RANGE 20.6 to 42.5 (??))",Metal - Other,4506,42.5
 2711,Titanium : Recycled,"lack of modern data, large data range, small sample size",Metal - Other,4506,14.7

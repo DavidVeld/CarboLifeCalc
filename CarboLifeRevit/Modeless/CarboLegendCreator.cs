@@ -363,17 +363,17 @@ namespace CarboLifeRevit
 
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x8, y, 0.0), "kgCO₂/kg", clc_TextOptions);
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x9, y, 0.0), "kgCO₂/m³", clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x10, y, 0.0), "tCO₂", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x10, y, 0.0), "tCO₂e", clc_TextOptions);
                 TextNote.Create(doc, clcLegendView.Id, new XYZ(x11, y, 0.0), "%", clc_TextOptions);
 
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), "tCO₂", clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), "tCO₂", clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), "tCO₂", clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), "tCO₂", clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), "tCO₂", clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), "tCO₂", clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), "tCO₂", clc_TextOptions);
-                TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), "tCO₂", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x12, y, 0.0), "tCO₂e", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x13, y, 0.0), "tCO₂e", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x14, y, 0.0), "tCO₂e", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x15, y, 0.0), "tCO₂e", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x16, y, 0.0), "tCO₂e", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x17, y, 0.0), "tCO₂e", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x18, y, 0.0), "tCO₂e", clc_TextOptions);
+                TextNote.Create(doc, clcLegendView.Id, new XYZ(x19, y, 0.0), "tCO₂e", clc_TextOptions);
 
 
                 Line L1 = Line.CreateBound(new XYZ(x1, y - (5.0 / 304.8), 0.0), new XYZ(x20, y - (5.0 / 304.8), 0.0));

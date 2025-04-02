@@ -130,7 +130,7 @@
                 <Label Grid.Column="1" Grid.Row="9" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Fuel Type:</Label>
                 <ComboBox Name="cbb_Fuel"  Grid.Column="2" Grid.Row="9" Height="26" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="150" DropDownClosed="cbb_Fuel_DropDownClosed"></ComboBox>
 
-                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="10" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="2">Fuel CO₂ Content:</Label>
+                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="10" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="2">Fuel CO₂e Content:</Label>
                 <TextBox Name="txt_FuelCO2" Grid.Column="2" Grid.Row="10" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" TextChanged="txt_FuelCO2_TextChanged"></TextBox>
                 <Label Name="lbl_perUnit1"  Grid.Column="2" Margin="160,1,10,0" Grid.Row="10" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">kgCO₂/l</Label>
 

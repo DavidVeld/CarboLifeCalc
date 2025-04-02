@@ -12,22 +12,22 @@ namespace CarboLifeAPI.Data
         public string propertyName { get; set; }
 
         /// <summary>
-        /// Total CO2 during design life in Co2e for tCO2e / 1000
+        /// Total CO2e during design life in Co2e for tCO2e / 1000
         /// </summary>
         public double value { get; set; }
 
         /// <summary>
-        /// Electricity CO2/year
+        /// Electricity CO2e/year
         /// </summary>
         public double B6 { get; set; }
 
         /// <summary>
-        /// WaterUsage CO2/year
+        /// WaterUsage CO2e/year
         /// </summary>
         public double B7 { get; set; }
 
         /// <summary>
-        /// Electricity Generation CO2/year
+        /// Electricity Generation CO2e/year
         /// </summary>
         public double D2 { get; set; }
 

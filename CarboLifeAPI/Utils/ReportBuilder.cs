@@ -83,19 +83,19 @@ namespace CarboLifeAPI
             if (chart1 != null)
             {
                 string piechart1_64 = ToBase64String(chart1);
-                ImgTag1 = getImageTag(piechart1_64, chart1.Width, chart1.Height, "PieChart1");
+                ImgTag1 = getImageTag(piechart1_64, 320 , 325, "PieChart1");
             }
 
             if (chart2 != null)
             {
                 string piechart2_64 = ToBase64String(chart2);
-                ImgTag2 = getImageTag(piechart2_64, chart2.Width, chart2.Height, "PieChart1");
+                ImgTag2 = getImageTag(piechart2_64, 320, 325, "PieChart2");
             }
 
             if (ratingChart != null)
             {
                 string ratingChart64 = ToBase64String(ratingChart);
-                ImgTag3 = getImageTag(ratingChart64, ratingChart.Width, ratingChart.Height, "PieChart1");
+                ImgTag3 = getImageTag(ratingChart64, 320, 300, "Rating");
             }
 
             //HTML WRITING;
@@ -109,7 +109,7 @@ namespace CarboLifeAPI
 
                 //Images
                 report += "<H2><B>" + "Graphs:" + "</B></H2><BR>" + System.Environment.NewLine;
-                report += "<TABLE border=1 cellpadding=0 cellspacing=0 width=800>";
+                report += "<TABLE border=0 cellpadding=0 cellspacing=0 width=800>";
                 report += "<TR><TD></TD></TR>";
                 report += "<TR><TD>" + ImgTag1 + "</TD></TR>";
                 report += "<TR><TD>" + ImgTag2 + "</TD></TR>";

@@ -113,11 +113,23 @@ namespace CarboLifeUI.UI
                 int randomNumber = random.Next(1, 5);
                 if(randomNumber == 2)
                 {
-                    MessageBoxResult result = System.Windows.MessageBox.Show("This is a friendly message to remind you that this software is free, buy me a coffee and you get a key to remove this message which you have a 1/5 chance to see each time you run this app.", "Hello", MessageBoxButton.YesNo);
+                    //only show message after certain publication date
+                    DateTime startDate = new DateTime(2025, 3, 1);
+                    DateTime currentDate = DateTime.Now;
 
-                    if (result == MessageBoxResult.Yes)
+                    if (currentDate > startDate)
                     {
-                        System.Diagnostics.Process.Start("https://buymeacoffee.com/davidveld");
+                        string message =
+    @"This is a friendly message to remind you that this software is free. 
+You have a 1/5 chance to see each time you run this app. 
+Do you want to buy me a coffee and you get a key to remove this message?";
+
+                        MessageBoxResult result = System.Windows.MessageBox.Show(message, "Hello", MessageBoxButton.YesNo);
+
+                        if (result == MessageBoxResult.Yes)
+                        {
+                            System.Diagnostics.Process.Start("https://buymeacoffee.com/davidveld");
+                        }
                     }
                 }
             }

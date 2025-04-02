@@ -193,10 +193,10 @@ namespace CarboLifeAPI.Data
             //C1 Global
             demoArea = 0;
             C1Global = 0;
-            C1Factor = 3.40; // kg CO₂ per m2
+            C1Factor = 3.40; // kg CO₂e per m2
             //A5 Global
             A5Global = 0;
-            A5Factor = 1400; //kg CO₂ per vaue
+            A5Factor = 1400; //kg CO₂e per vaue
             //Social
             SocialCost = 150;
             //Other
@@ -276,10 +276,10 @@ namespace CarboLifeAPI.Data
             //C1 Global
             demoArea = 0;
             C1Global = 0;
-            C1Factor = 3.40; // kg CO₂ per m2
+            C1Factor = 3.40; // kg CO₂e per m2
             //A5 Global
             A5Global = 0;
-            A5Factor = 1400; //kg CO₂ per vaue
+            A5Factor = 1400; //kg CO₂e per vaue
             //Social
             SocialCost = 150;
             //Other
@@ -1088,7 +1088,7 @@ namespace CarboLifeAPI.Data
             result += Environment.NewLine;
 
             if (materials == true)
-                result += "This equals to: " + Math.Round(totalTotal / 1.40, 2) + " average car emission per year (1.40 tCO₂/car). (UK)" + Environment.NewLine;
+                result += "This equals to: " + Math.Round(totalTotal / 1.40, 2) + " average car emission per year (1.40 tCO₂e/car). (UK)" + Environment.NewLine;
             
             if (trees == true)
                 result += "This requires " + Math.Round((totalTotal / 180) * 4440, 0) + " Trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
@@ -1280,10 +1280,10 @@ namespace CarboLifeAPI.Data
 
             string generalText = "";
 
-            generalText += "The Upfront Carbon Footprint (A0-A5) is: " + Math.Round((getUpfrontTotals() / 1000),2).ToString("N") + " tCO₂" + Environment.NewLine;
-            generalText += "The Embodied Carbon Footprint (A0-C & Seq) is: " + Math.Round((getEmbodiedTotals() / 1000), 2).ToString("N") + " tCO₂" + Environment.NewLine;
+            generalText += "The Upfront Carbon Footprint (A0-A5) is: " + Math.Round((getUpfrontTotals() / 1000),2).ToString("N") + " tCO₂e" + Environment.NewLine;
+            generalText += "The Embodied Carbon Footprint (A0-C & Seq) is: " + Math.Round((getEmbodiedTotals() / 1000), 2).ToString("N") + " tCO₂e" + Environment.NewLine;
             generalText += Environment.NewLine;
-            generalText += "The calculated value equals to: " + Math.Round(calculatedCo2 / 1.40, 2) + " average car emission per year (1.40 tCO₂/car). (UK)" + Environment.NewLine;
+            generalText += "The calculated value equals to: " + Math.Round(calculatedCo2 / 1.40, 2) + " average car emission per year (1.40 tCO₂e/car). (UK)" + Environment.NewLine;
             generalText += "This requires " + Math.Round((calculatedCo2 * 40), 0) + " trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
             generalText += "The Social Carbon Cost (SCC) of this project is: " + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
             //generalText += "Between now and 2100 this will likely cause the death of: " + Math.Round(carbonDeathCost,0) + " " + peopleUnits +  Environment.NewLine;

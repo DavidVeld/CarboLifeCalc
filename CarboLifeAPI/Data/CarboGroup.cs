@@ -35,7 +35,7 @@ namespace CarboLifeAPI.Data
         public double ECI { get; set; }
 
         /// <summary>
-        /// Total CO2 in Ton
+        /// Total CO2e in Ton
         /// </summary>
         public double EC { get; set; }
         public double PerCent { get; set; }

@@ -3,14 +3,14 @@
   <CarboMaterials>
     <CarboMaterial>
       <Id>28124</Id>
-      <Name>Timber - Studwork_framing_flooring - Softwood, 100% FSC/PEFC</Name>
+      <Name>Studwork framing flooring - Softwood, 100% FSC/PEFC</Name>
       <Category>Timber</Category>
       <Description>Global</Description>
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
       <Grade />
       <Density>480</Density>
-      <ECI>0.31600000000000028</ECI>
-      <getVolumeECI>151.68000000000012</getVolumeECI>
+      <ECI>0.316</ECI>
+      <getVolumeECI>151.68</getVolumeECI>
       <ECI_A1A3>0.263</ECI_A1A3>
       <ECI_A4>0.284</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -128,7 +128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28123</Id>
-      <Name>Timber - Studwork_framing_flooring - Softwood UK/import weighted average - Upper Bound</Name>
+      <Name>Studwork framing flooring - Softwood UK/import weighted average - Upper Bound</Name>
       <Category>Timber</Category>
       <Description>UK Softwood, import weighted average</Description>
       <EPDurl>https://www.greenbooklive.com/pdfdocs/en15804epd/BREGENEPD000492.pdf</EPDurl>
@@ -253,7 +253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28122</Id>
-      <Name>Timber - Studwork_framing_flooring - Softwood UK/import weighted average - Lower Bound</Name>
+      <Name>Studwork framing flooring Softwood UK/import weighted average Lower Bound</Name>
       <Category>Timber</Category>
       <Description>UK Softwood, import weighted average</Description>
       <EPDurl>https://api.environdec.com/api/v1/EPDLibrary/Files/4bf3de8f-0d42-4a7d-8030-08d8e2c71993/Data</EPDurl>
@@ -378,7 +378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28121</Id>
-      <Name>Timber - Studwork_framing_flooring  I-joists UK - Upper Bound</Name>
+      <Name>Studwork framing flooring I joists UK Upper Bound</Name>
       <Category>Timber</Category>
       <Description>I-joists UK/import weighted average</Description>
       <EPDurl>https://asbp.org.uk/wp-content/uploads/2021/10/STEICO-joistwall-I-joist-products.pdf</EPDurl>
@@ -503,7 +503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28120</Id>
-      <Name>Timber - Studwork_framing_flooring  I-joists UK - Lower Bound</Name>
+      <Name>Studwork framing flooring I joists UK Lower Bound</Name>
       <Category>Timber</Category>
       <Description>Import weighted average</Description>
       <EPDurl>https://masonitebeams.se/media/7448/masonite-beams-epd-osb-liv.pdf</EPDurl>
@@ -628,7 +628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28119</Id>
-      <Name>Timber - Studwork_framing_flooring - I-joists </Name>
+      <Name>Studwork framing flooring I joists</Name>
       <Category>Timber</Category>
       <Description>UK/import weighted average</Description>
       <EPDurl>https://timberdevelopment.uk/resources/embodied_carbon_data_for_timber_products/</EPDurl>
@@ -753,7 +753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28118</Id>
-      <Name>Timber - Studwork_framing_flooring - Generic</Name>
+      <Name>Studwork framing flooring Generic</Name>
       <Category>Timber</Category>
       <Description>UK Softwood, import weighted average</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -878,7 +878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28117</Id>
-      <Name>Timber - Sheet_materials - Softwood plywood UK/import weighted average</Name>
+      <Name>Sheet materials Softwood plywood UK/import weighted average</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://timberdevelopment.uk/resources/embodied_carbon_data_for_timber_products/</EPDurl>
@@ -1003,7 +1003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28116</Id>
-      <Name>Timber - Sheet_materials - Softwood plywood Global</Name>
+      <Name>Sheet materials Softwood plywood Global</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -1128,7 +1128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28115</Id>
-      <Name>Timber - Sheet_materials - OSB UK/import weighted average</Name>
+      <Name>Sheet materials OSB UK/import weighted average</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://timberdevelopment.uk/resources/embodied_carbon_data_for_timber_products/</EPDurl>
@@ -1253,7 +1253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28114</Id>
-      <Name>Timber - Sheet_materials - MDF UK/import weighted average</Name>
+      <Name>Sheet materials MDF UK/import weighted average</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://timberdevelopment.uk/resources/embodied_carbon_data_for_timber_products/</EPDurl>
@@ -1378,7 +1378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28113</Id>
-      <Name>Timber - Sheet_materials - MDF Global</Name>
+      <Name>Sheet materials MDF Global</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -1503,7 +1503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28112</Id>
-      <Name>Timber - Sheet_materials - Hardwood plywood UK/import weighted average</Name>
+      <Name>Sheet materials Hardwood plywood UK/import weighted average</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://timberdevelopment.uk/resources/embodied_carbon_data_for_timber_products/</EPDurl>
@@ -1628,7 +1628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28111</Id>
-      <Name>Timber - Sheet_materials - Global OSB 100% FSC/PEFC</Name>
+      <Name>Sheet materials Global OSB 100% FSC/PEFC</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -1753,7 +1753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28110</Id>
-      <Name>Timber - Sheet_materials - Chipboard UK/import weighted average</Name>
+      <Name>Sheet materials Chipboard UK/import weighted average</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://timberdevelopment.uk/resources/embodied_carbon_data_for_timber_products/</EPDurl>
@@ -1878,7 +1878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28109</Id>
-      <Name>Timber - Sheet_materials - Chipboard Global</Name>
+      <Name>Sheet materials Chipboard Global</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -2003,7 +2003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28108</Id>
-      <Name>Timber - Manufactured_structural_timber - UK LVL - Lower Bound</Name>
+      <Name>Manufactured structural timber UK LVL Lower Bound</Name>
       <Category>Timber</Category>
       <Description>UK/import weighted average</Description>
       <EPDurl>https://api.environdec.com/api/v1/EPDLibrary/Files/bcc91c71-676a-4de1-13d5-08dbca69748b/Data</EPDurl>
@@ -2128,7 +2128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28107</Id>
-      <Name>Timber - Manufactured_structural_timber - UK LVL  - Upper Bound</Name>
+      <Name>Manufactured structural timber UK LVL Upper Bound</Name>
       <Category>Timber</Category>
       <Description>UK/import weighted average</Description>
       <EPDurl>https://api.environdec.com/api/v1/EPDLibrary/Files/a53edc97-874a-46e3-cddc-08d9df0ea78f/Data</EPDurl>
@@ -2253,7 +2253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28106</Id>
-      <Name>Timber - Manufactured_structural_timber - UK LVL</Name>
+      <Name>Manufactured structural timber UK LVL</Name>
       <Category>Timber</Category>
       <Description>UK/import weighted average</Description>
       <EPDurl>https://timberdevelopment.uk/resources/embodied_carbon_data_for_timber_products/</EPDurl>
@@ -2378,7 +2378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28105</Id>
-      <Name>Timber - Manufactured_structural_timber - Glulam UK/import weighted average</Name>
+      <Name>Manufactured structural timber Glulam UK/import weighted average</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://timberdevelopment.uk/resources/embodied_carbon_data_for_timber_products/</EPDurl>
@@ -2503,7 +2503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28104</Id>
-      <Name>Timber - Manufactured_structural_timber - Global LVL </Name>
+      <Name>Manufactured structural timber Global LVL</Name>
       <Category>Timber</Category>
       <Description>100% FSC/PEFC</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -2628,7 +2628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28103</Id>
-      <Name>Timber - Manufactured_structural_timber - Global Glulam 100% FSC/PEFC</Name>
+      <Name>Manufactured structural timber Global Glulam 100% FSC/PEFC</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -2753,7 +2753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28102</Id>
-      <Name>Timber - Manufactured_structural_timber - Global CLT 100% FSC/PEFC</Name>
+      <Name>Manufactured structural timber Global CLT 100% FSC/PEFC</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
@@ -2878,7 +2878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28101</Id>
-      <Name>Timber - Manufactured_structural_timber - CLT UK/import weighted average</Name>
+      <Name>Manufactured structural timber CLT UK/import weighted average</Name>
       <Category>Timber</Category>
       <Description />
       <EPDurl>https://timberdevelopment.uk/resources/embodied_carbon_data_for_timber_products/</EPDurl>
@@ -3003,7 +3003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28100</Id>
-      <Name>Other - Stone - Sandstone</Name>
+      <Name>Stone Sandstone</Name>
       <Category>Stone</Category>
       <Description>Generic</Description>
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
@@ -3128,7 +3128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28099</Id>
-      <Name>Other - Stone - Limestone</Name>
+      <Name>Stone Limestone</Name>
       <Category>Stone</Category>
       <Description>Generic</Description>
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
@@ -3253,7 +3253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28098</Id>
-      <Name>Other - Stone - Granite</Name>
+      <Name>Stone Granite</Name>
       <Category>Stone</Category>
       <Description>Generic</Description>
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
@@ -3378,7 +3378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28097</Id>
-      <Name>Steel - Structural_sections - UK open rolled sections - Upper Bound</Name>
+      <Name>Structural sections UK open rolled sections Upper Bound</Name>
       <Category>Steel</Category>
       <Description>BOF Production</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -3503,7 +3503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28096</Id>
-      <Name>Steel - Structural_sections - UK open rolled sections - Lower Bound</Name>
+      <Name>Structural sections UK open rolled sections Lower Bound</Name>
       <Category>Steel</Category>
       <Description>EAF Production</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -3628,7 +3628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28095</Id>
-      <Name>Steel - Structural_sections - UK open rolled sections</Name>
+      <Name>Structural sections UK open rolled sections</Name>
       <Category>Steel</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -3753,7 +3753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28094</Id>
-      <Name>Steel - Structural_sections - UK and Global closed sections</Name>
+      <Name>Structural sections UK and Global closed sections</Name>
       <Category>Steel</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -3878,7 +3878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28093</Id>
-      <Name>Steel - Structural_sections - Global open rolled sections</Name>
+      <Name>Structural sections Global open rolled sections</Name>
       <Category>Steel</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -4003,14 +4003,14 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28092</Id>
-      <Name>Steel - Stainless_Steel - Structural sections and plate - Upper Bound</Name>
+      <Name>Stainless Steel Structural sections and plate Upper Bound</Name>
       <Category>Steel</Category>
       <Description>Cold rolled duplex steel, EU production</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
       <Grade />
       <Density>7800</Density>
-      <ECI>3.9822999999999995</ECI>
-      <getVolumeECI>31061.939999999995</getVolumeECI>
+      <ECI>3.9823</ECI>
+      <getVolumeECI>31061.94</getVolumeECI>
       <ECI_A1A3>4.72</ECI_A1A3>
       <ECI_A4>0.262</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -4128,7 +4128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28091</Id>
-      <Name>Steel - Stainless_Steel - Structural sections and plate - Lower Bound</Name>
+      <Name>Stainless Steel Structural sections and plate Lower Bound</Name>
       <Category>Steel</Category>
       <Description>Grade 1.4003 tube section, product EPD, EU production</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -4253,7 +4253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28090</Id>
-      <Name>Steel - Stainless_Steel - Structural sections and plate</Name>
+      <Name>Stainless Steel Structural sections and plate</Name>
       <Category>Steel</Category>
       <Description>Average of 15 EPDs</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -4378,7 +4378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28089</Id>
-      <Name>Steel - Stainless_Steel - Rebar - Upper Bound</Name>
+      <Name>Stainless Steel Rebar Upper Bound</Name>
       <Category>Steel</Category>
       <Description>Duplex grade rebar</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -4503,7 +4503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28088</Id>
-      <Name>Steel - Stainless_Steel - Rebar - Lower Bound</Name>
+      <Name>Stainless Steel Rebar Lower Bound</Name>
       <Category>Steel</Category>
       <Description>Cold rolled rebar</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -4628,7 +4628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28087</Id>
-      <Name>Steel - Stainless_Steel - Rebar</Name>
+      <Name>Stainless Steel Rebar</Name>
       <Category>Steel</Category>
       <Description>Average of 4 EPDs</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -4753,7 +4753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28086</Id>
-      <Name>Steel - Reused_steel_sections - UK Upper Bound </Name>
+      <Name>Reused steel sections UK Upper Bound</Name>
       <Category>Steel</Category>
       <Description>Highest EPD</Description>
       <EPDurl>https://api.environdec.com/api/v1/EPDLibrary/Files/5a467d9e-6fef-49f0-62b8-08dc83e1a1fa/Data</EPDurl>
@@ -4878,7 +4878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28085</Id>
-      <Name>Steel - Reused_steel_sections - UK Lower Bound </Name>
+      <Name>Reused steel sections UK Lower Bound</Name>
       <Category>Steel</Category>
       <Description>Lowest EPD</Description>
       <EPDurl>https://www.environdec.com/library/epd13668</EPDurl>
@@ -5003,7 +5003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28084</Id>
-      <Name>Steel - Reused_steel_sections - UK avg </Name>
+      <Name>Reused steel sections UK avg</Name>
       <Category>Steel</Category>
       <Description>Average of 3 EPDs</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -5128,7 +5128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28083</Id>
-      <Name>Steel - Rebar - UK - EAF Production - Lower Bound</Name>
+      <Name>Rebar UK EAF Production Lower Bound</Name>
       <Category>Steel</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -5253,7 +5253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28082</Id>
-      <Name>Steel - Rebar - UK - BOF Production - Upper Bound</Name>
+      <Name>Rebar UK BOF Production Upper Bound</Name>
       <Category>Steel</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -5378,7 +5378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28081</Id>
-      <Name>Steel - Rebar - UK</Name>
+      <Name>Rebar UK</Name>
       <Category>Steel</Category>
       <Description>Recommended Value</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -5503,7 +5503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28080</Id>
-      <Name>Steel - Rebar - Global avg</Name>
+      <Name>Rebar Global avg</Name>
       <Category>Steel</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -5628,7 +5628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28079</Id>
-      <Name>Steel - PT_strands - Europe avg</Name>
+      <Name>PT strands Europe avg</Name>
       <Category>Steel</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -5753,7 +5753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28078</Id>
-      <Name>Steel - PT_strands - Europe - Upper Bound</Name>
+      <Name>PT strands Europe Upper Bound</Name>
       <Category>Steel</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -5878,7 +5878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28077</Id>
-      <Name>Steel - PT_strands - Europe - Lower Bound</Name>
+      <Name>PT strands Europe Lower Bound</Name>
       <Category>Steel</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -6003,7 +6003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28076</Id>
-      <Name>Steel - Plate - UK and Global plate</Name>
+      <Name>Plate UK and Global plate</Name>
       <Category>Steel</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -6128,7 +6128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28075</Id>
-      <Name>Steel - Galvanised_profiled_sheet - UK - Upper Bound</Name>
+      <Name>Galvanised profiled sheet UK Upper Bound</Name>
       <Category>Steel</Category>
       <Description>Comflor 60 1mm</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -6253,7 +6253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28074</Id>
-      <Name>Steel - Galvanised_profiled_sheet - UK - Lower Bound</Name>
+      <Name>Galvanised profiled sheet UK Lower Bound</Name>
       <Category>Steel</Category>
       <Description>Comflor 51+ 0.9mm</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -6378,7 +6378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28073</Id>
-      <Name>Steel - Galvanised_profiled_sheet - UK</Name>
+      <Name>Galvanised profiled sheet UK</Name>
       <Category>Steel</Category>
       <Description>Average of 3 EPDs</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -6503,7 +6503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28072</Id>
-      <Name>Steel - Galvanised_profiled_sheet - Global hot dip galvanised</Name>
+      <Name>Galvanised profiled sheet Global hot dip galvanised</Name>
       <Category>Steel</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -6628,7 +6628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28071</Id>
-      <Name>Other - Rammed_earth - Unstabilsed - Germany</Name>
+      <Name>Rammed earth Unstabilsed Germany</Name>
       <Category>Other</Category>
       <Description>Germany clay, sand, straw, no additives</Description>
       <EPDurl>https://www.oekobaudat.de/</EPDurl>
@@ -6753,7 +6753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28070</Id>
-      <Name>Other - Rammed_earth - Lime stabilised - 2% stabilised</Name>
+      <Name>Rammed earth Lime stabilised 2% stabilised</Name>
       <Category>Other</Category>
       <Description>2% stabilised</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -6878,7 +6878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28069</Id>
-      <Name>Other - Rammed_earth - Cement stabilised - 5% cement</Name>
+      <Name>Rammed earth Cement stabilised 5% cement</Name>
       <Category>Other</Category>
       <Description>5% cement</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -7003,14 +7003,14 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28068</Id>
-      <Name>Other - Plastic - PTFE fabric - Upper Bound</Name>
+      <Name>Plastic PTFE fabric Upper Bound</Name>
       <Category>Other</Category>
       <Description>1mm thick</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
       <Grade />
       <Density>1200</Density>
-      <ECI>14.322000000000001</ECI>
-      <getVolumeECI>17186.4</getVolumeECI>
+      <ECI>14.322</ECI>
+      <getVolumeECI>17186.399999999998</getVolumeECI>
       <ECI_A1A3>14.083</ECI_A1A3>
       <ECI_A4>0.262</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -7128,7 +7128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28067</Id>
-      <Name>Other - Plastic - PTFE fabric - Lower Bound</Name>
+      <Name>Plastic PTFE fabric Lower Bound</Name>
       <Category>Other</Category>
       <Description>7mm thick</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -7253,14 +7253,14 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28066</Id>
-      <Name>Other - Plastic - PTFE fabric</Name>
+      <Name>Plastic PTFE fabric</Name>
       <Category>Other</Category>
       <Description>Coated glass fabric Average of 2 EPDs</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
       <Grade />
       <Density>675</Density>
-      <ECI>15.085500000000002</ECI>
-      <getVolumeECI>10182.712500000002</getVolumeECI>
+      <ECI>15.0855</ECI>
+      <getVolumeECI>10182.7125</getVolumeECI>
       <ECI_A1A3>14.8465</ECI_A1A3>
       <ECI_A4>0.262</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -7378,7 +7378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28065</Id>
-      <Name>Other - Plasterboard - Generic</Name>
+      <Name>Plasterboard Generic</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -7503,7 +7503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28064</Id>
-      <Name>Other - Intumescent coatings for steel (internal) - Water-based - Upper Bound</Name>
+      <Name>Intumescent coatings for steel (internal) Waterbased Upper Bound</Name>
       <Category>Other</Category>
       <Description>Steel Fire Protection</Description>
       <EPDurl>http://soda.dapcons.com:8080/datasetdetail/process.xhtml?uuid=ab7b6c3c-ad59-427a-ba94-c69f099636d3&amp;version=00.02.000</EPDurl>
@@ -7628,7 +7628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28063</Id>
-      <Name>Other - Intumescent coatings for steel (internal) - Water-based - Lower Bound</Name>
+      <Name>Intumescent coatings for steel (internal) Waterbased Lower Bound</Name>
       <Category>Other</Category>
       <Description>Steel Fire Protection</Description>
       <EPDurl>https://api.environdec.com/api/v1/EPDLibrary/Files/23ee706c-e370-449a-9a97-08db7e35bd3c/Data</EPDurl>
@@ -7753,7 +7753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28062</Id>
-      <Name>Other - Intumescent coatings for steel (internal) - Water-based</Name>
+      <Name>Intumescent coatings for steel (internal) Waterbased</Name>
       <Category>Other</Category>
       <Description>Steel Fire Protection</Description>
       <EPDurl>https://www.epd-norge.no/getfile.php/1313105-1664468746/EPDer/Byggevarer/Maling/NEPD-2130-963_SteelMaster-1200WF--Jotun-Paints--Europe--Ltd--UK-.pdf</EPDurl>
@@ -7878,7 +7878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28061</Id>
-      <Name>Other - Intumescent coatings for steel (external) - Epoxy</Name>
+      <Name>Intumescent coatings for steel (external) Epoxy</Name>
       <Category>Other</Category>
       <Description>Steel Fire Protection</Description>
       <EPDurl>https://www.epd-norge.no/getfile.php/1314042-1593165963/EPDer/Byggevarer/Maling/NEPD-2282-1040_SteelMaster-1200HPE--Jotun-Paints-Europe-Ltd--UK-.pdf</EPDurl>
@@ -8003,7 +8003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28060</Id>
-      <Name>Other - Granular_fill - UK</Name>
+      <Name>Granular fill UK</Name>
       <Category>Other</Category>
       <Description>UK Aggregates and sand from a mixture of land-won, marine, secondary and recycled, bulk, loose</Description>
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
@@ -8128,7 +8128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28059</Id>
-      <Name>Other - Granular_fill - Global</Name>
+      <Name>Granular fill Global</Name>
       <Category>Other</Category>
       <Description>Global Aggregates and sand from virgin land-won and marine resources, bulk, loose</Description>
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
@@ -8253,7 +8253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28058</Id>
-      <Name>Other - Glass - Toughened</Name>
+      <Name>Glass Toughened</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -8378,7 +8378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28057</Id>
-      <Name>Other - Glass - General</Name>
+      <Name>Glass General</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -8503,7 +8503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28056</Id>
-      <Name>Other - Fibre_coating - Glass fibre - Generic</Name>
+      <Name>Fibre coating Glass fibre Generic</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://ecocalculator.eucia.eu/</EPDurl>
@@ -8628,7 +8628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28055</Id>
-      <Name>Other - Fibre_coating - Epoxy resin - Generic</Name>
+      <Name>Fibre coating Epoxy resin Generic</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://ecocalculator.eucia.eu/</EPDurl>
@@ -8753,7 +8753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28054</Id>
-      <Name>Other - Fibre_coating - Carbon fibre - Generic</Name>
+      <Name>Fibre coating Carbon fibre Generic</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://ecocalculator.eucia.eu/</EPDurl>
@@ -8878,7 +8878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28053</Id>
-      <Name>Other - Compressed_stabilised_earth_block - Block - 5% cement</Name>
+      <Name>Compressed stabilised earth block Block 5% cement</Name>
       <Category>Other</Category>
       <Description>5% cement</Description>
       <EPDurl>https://doi.org/10.56330/XPPS2504%0D</EPDurl>
@@ -9003,7 +9003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28052</Id>
-      <Name>Other - Cementitious spray - Monokote Z-146 (high density)</Name>
+      <Name>Cementitious spray Monokote Z146 (high density)</Name>
       <Category>Other</Category>
       <Description>Steel Fire Protection</Description>
       <EPDurl>https://gcpat.com/sites/default/files/2024-06/MONOKOTE_Z-146_LEED_Package.pdf</EPDurl>
@@ -9128,7 +9128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28051</Id>
-      <Name>Other - Bitumen</Name>
+      <Name>Bitumen</Name>
       <Category>Other</Category>
       <Description>Road construction, roofing, waterproofing, other - Paving grade</Description>
       <EPDurl>https://eurobitume.eu/bitumen-life-cycle-inventory/%20%0D</EPDurl>
@@ -9253,7 +9253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28050</Id>
-      <Name>Other - Bamboo - Engineered bamboo products - Upper Bound</Name>
+      <Name>Bamboo Engineered bamboo products Upper Bound</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -9378,7 +9378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28049</Id>
-      <Name>Other - Bamboo - Engineered bamboo products - Lower Bound</Name>
+      <Name>Bamboo Engineered bamboo products Lower Bound</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -9503,7 +9503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28048</Id>
-      <Name>Other - Bamboo - Engineered bamboo products - Generic</Name>
+      <Name>Bamboo Engineered bamboo products Generic</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -9628,14 +9628,14 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28047</Id>
-      <Name>Other - Bamboo - Culms - Upper Bound</Name>
+      <Name>Bamboo Culms Upper Bound</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
       <Grade />
       <Density>700</Density>
-      <ECI>0.24899999999999989</ECI>
-      <getVolumeECI>174.29999999999993</getVolumeECI>
+      <ECI>0.249</ECI>
+      <getVolumeECI>174.3</getVolumeECI>
       <ECI_A1A3>0.067</ECI_A1A3>
       <ECI_A4>0.284</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -9753,14 +9753,14 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28046</Id>
-      <Name>Other - Bamboo - Culms - Lower Bound</Name>
+      <Name>Bamboo Culms Lower Bound</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
       <Grade />
       <Density>700</Density>
-      <ECI>0.20599999999999996</ECI>
-      <getVolumeECI>144.19999999999996</getVolumeECI>
+      <ECI>0.206</ECI>
+      <getVolumeECI>144.2</getVolumeECI>
       <ECI_A1A3>0.024</ECI_A1A3>
       <ECI_A4>0.284</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -9878,13 +9878,13 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28045</Id>
-      <Name>Other - Bamboo - Culms - Generic</Name>
+      <Name>Bamboo Culms Generic</Name>
       <Category>Other</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
       <Grade />
       <Density>700</Density>
-      <ECI>0.22799999999999998</ECI>
+      <ECI>0.228</ECI>
       <getVolumeECI>159.6</getVolumeECI>
       <ECI_A1A3>0.046</ECI_A1A3>
       <ECI_A4>0.284</ECI_A4>
@@ -10003,7 +10003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28044</Id>
-      <Name>Other - Asphalt - Highway and pavement</Name>
+      <Name>Asphalt Highway and pavement</Name>
       <Category>Other</Category>
       <Description>5% binder</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -10128,7 +10128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28043</Id>
-      <Name>Concrete - Precast_concrete - Reinforced - 150mm hollow core slab - Upper Bound</Name>
+      <Name>Precast concrete Reinforced 150mm hollow core slab Upper Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.greenbooklive.com/filelibrary/EN_15804/EPD/BREGENEPD000546.pdf</EPDurl>
@@ -10253,7 +10253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28042</Id>
-      <Name>Concrete - Precast_concrete - Reinforced - 150mm hollow core slab  - Lower Bound</Name>
+      <Name>Precast concrete Reinforced 150mm hollow core slab Lower Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.greenbooklive.com/filelibrary/EN_15804/EPD/BREGENEPD000547.pdf</EPDurl>
@@ -10378,7 +10378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28041</Id>
-      <Name>Concrete - Precast_concrete - Reinforced - 150mm hollow core slab</Name>
+      <Name>Precast concrete Reinforced 150mm hollow core slab</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.greenbooklive.com/filelibrary/EN_15804/EPD/BREGENEPD000546.pdf</EPDurl>
@@ -10503,7 +10503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28040</Id>
-      <Name>Concrete - Precast_concrete - C40/50 avg UK cement mix</Name>
+      <Name>Precast concrete C40/50 avg UK cement mix</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -10628,7 +10628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28039</Id>
-      <Name>Concrete - Precast_concrete - C40/50 (70% GGBS) - Lower Bound</Name>
+      <Name>Precast concrete C40/50 (70% GGBS) Lower Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -10753,7 +10753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28038</Id>
-      <Name>Concrete - Precast_concrete - C40/50 (0% SCM) - Upper Bound</Name>
+      <Name>Precast concrete C40/50 (0% SCM) Upper Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -10878,7 +10878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28037</Id>
-      <Name>Concrete - Mortar_screed - 1:4 cement:sand mix avg UK cement mix</Name>
+      <Name>Mortar screed 1:4 cement:sand mix avg UK cement mix</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -11003,7 +11003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28036</Id>
-      <Name>Concrete - Insitu - UK C8/10 (70% GGBS) - Lower Bound</Name>
+      <Name>Insitu UK C8/10 (70% GGBS) Lower Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -11128,7 +11128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28035</Id>
-      <Name>Concrete - Insitu - UK C8/10 (25% GGBS) </Name>
+      <Name>Insitu UK C8/10 (25% GGBS)</Name>
       <Category>Concrete</Category>
       <Description>Recommended Value</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -11253,7 +11253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28034</Id>
-      <Name>Concrete - Insitu - UK C8/10 (0% SCM) - Upper Bound</Name>
+      <Name>Insitu UK C8/10 (0% SCM) Upper Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -11378,7 +11378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28033</Id>
-      <Name>Concrete - Insitu - UK C40/50 (70% GGBS) - Lower Bound</Name>
+      <Name>Insitu UK C40/50 (70% GGBS) Lower Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -11503,7 +11503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28032</Id>
-      <Name>Concrete - Insitu - UK C40/50 (25% GGBS)</Name>
+      <Name>Insitu UK C40/50 (25% GGBS)</Name>
       <Category>Concrete</Category>
       <Description>Recommended Value</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -11628,7 +11628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28031</Id>
-      <Name>Concrete - Insitu - UK C40/50 (0% SCM) - Upper Bound</Name>
+      <Name>Insitu UK C40/50 (0% SCM) Upper Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -11753,7 +11753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28030</Id>
-      <Name>Concrete - Insitu - UK C32/40 (70% GGBS) - Lower Bound</Name>
+      <Name>Insitu UK C32/40 (70% GGBS) Lower Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -11878,7 +11878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28029</Id>
-      <Name>Concrete - Insitu - UK C32/40 (25% GGBS)</Name>
+      <Name>Insitu UK C32/40 (25% GGBS)</Name>
       <Category>Concrete</Category>
       <Description>Recommended Value</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -12003,7 +12003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28028</Id>
-      <Name>Concrete - Insitu - UK C32/40 (0% SCM) - Upper Bound</Name>
+      <Name>Insitu UK C32/40 (0% SCM) Upper Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -12128,14 +12128,14 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28027</Id>
-      <Name>Concrete - Insitu - UK C25/30 (70% GGBS) - Lower Bound</Name>
+      <Name>Insitu UK C25/30 (70% GGBS) Lower Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
       <Grade>C25/30</Grade>
       <Density>2400</Density>
-      <ECI>0.062200000000000012</ECI>
-      <getVolumeECI>149.28000000000003</getVolumeECI>
+      <ECI>0.0622</ECI>
+      <getVolumeECI>149.28</getVolumeECI>
       <ECI_A1A3>0.056</ECI_A1A3>
       <ECI_A4>0.003</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -12253,7 +12253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28026</Id>
-      <Name>Concrete - Insitu - UK C25/30 (25% GGBS)</Name>
+      <Name>Insitu UK C25/30 (25% GGBS)</Name>
       <Category>Concrete</Category>
       <Description>Recommended Value</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -12378,7 +12378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28025</Id>
-      <Name>Concrete - Insitu - UK C25/30 (0% SCM) - Upper Bound</Name>
+      <Name>Insitu UK C25/30 (0% SCM) Upper Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -12503,7 +12503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28024</Id>
-      <Name>Concrete - Insitu - UK C20/25 (70% GGBS) - Lower Bound</Name>
+      <Name>Insitu UK C20/25 (70% GGBS) Lower Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -12628,7 +12628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28023</Id>
-      <Name>Concrete - Insitu - UK C20/25 (25% GGBS)</Name>
+      <Name>Insitu UK C20/25 (25% GGBS)</Name>
       <Category>Concrete</Category>
       <Description>Recommended Value</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -12753,7 +12753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28022</Id>
-      <Name>Concrete - Insitu - UK C20/25 (0% SCM) - Upper Bound</Name>
+      <Name>Insitu UK C20/25 (0% SCM) Upper Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -12878,7 +12878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28021</Id>
-      <Name>Concrete - Insitu - UK C16/20 (70% GGBS) - Lower Bound</Name>
+      <Name>Insitu UK C16/20 (70% GGBS) Lower Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -13003,7 +13003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28020</Id>
-      <Name>Concrete - Insitu - UK C16/20 (25% GGBS)</Name>
+      <Name>Insitu UK C16/20 (25% GGBS)</Name>
       <Category>Concrete</Category>
       <Description>Recommended Value</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -13128,7 +13128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28019</Id>
-      <Name>Concrete - Insitu - UK C16/20 (0% SCM) - Upper Bound</Name>
+      <Name>Insitu UK C16/20 (0% SCM) Upper Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -13253,7 +13253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28018</Id>
-      <Name>Concrete - Insitu - Global Avg C32/40 (Excludes China) - 80th percentile - Upper Bound</Name>
+      <Name>Insitu Global Avg C32/40 (Excludes China) 80th percentile Upper Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.buildingtransparency.org/</EPDurl>
@@ -13378,7 +13378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28017</Id>
-      <Name>Concrete - Insitu - Global Avg C32/40 (Excludes China) - 20th percentile - Lower Bound</Name>
+      <Name>Insitu Global Avg C32/40 (Excludes China) 20th percentile Lower Bound</Name>
       <Category>Concrete</Category>
       <Description />
       <EPDurl>https://www.buildingtransparency.org/</EPDurl>
@@ -13503,7 +13503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28016</Id>
-      <Name>Concrete - Insitu - Global Avg C32/40 (Excludes China)</Name>
+      <Name>Insitu Global Avg C32/40 (Excludes China)</Name>
       <Category>Concrete</Category>
       <Description>Recommended Value</Description>
       <EPDurl>https://www.buildingtransparency.org/</EPDurl>
@@ -13628,7 +13628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28015</Id>
-      <Name>Other - Hempcrete - Blocks - Upper Bound</Name>
+      <Name>Hempcrete Blocks Upper Bound</Name>
       <Category>Blocks and Bricks</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -13753,7 +13753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28014</Id>
-      <Name>Other - Hempcrete - Blocks - Lower Bound</Name>
+      <Name>Hempcrete Blocks Lower Bound</Name>
       <Category>Blocks and Bricks</Category>
       <Description />
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -13878,7 +13878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28013</Id>
-      <Name>Other - Hempcrete - Blocks - Generic</Name>
+      <Name>Hempcrete Blocks Generic</Name>
       <Category>Blocks and Bricks</Category>
       <Description>Average of 4 EPDs</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -14003,7 +14003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28012</Id>
-      <Name>Other - Brickwork - Unfired clay brick (generic)</Name>
+      <Name>Brickwork Unfired clay brick (generic)</Name>
       <Category>Blocks and Bricks</Category>
       <Description />
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
@@ -14128,7 +14128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28011</Id>
-      <Name>Other - Brickwork - UK: BDA generic brick</Name>
+      <Name>Brickwork UK: BDA generic brick</Name>
       <Category>Blocks and Bricks</Category>
       <Description>Single engineering brick</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -14253,7 +14253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28010</Id>
-      <Name>Other - Brickwork - Single skin wall with mortar 1:4 CEM I cement:sand mix</Name>
+      <Name>Brickwork Single skin wall with mortar 1:4 CEM I cement:sand mix</Name>
       <Category>Blocks and Bricks</Category>
       <Description />
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
@@ -14378,7 +14378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28009</Id>
-      <Name>Other - Brickwork - Reused clay brick (Europe avg)</Name>
+      <Name>Brickwork Reused clay brick (Europe avg)</Name>
       <Category>Blocks and Bricks</Category>
       <Description>Average of 2 EPDs</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -14503,7 +14503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28008</Id>
-      <Name>Other - Brickwork - Reused clay brick - Upper Bound</Name>
+      <Name>Brickwork Reused clay brick Upper Bound</Name>
       <Category>Blocks and Bricks</Category>
       <Description />
       <EPDurl>https://www.environdec.com/library/epd7558</EPDurl>
@@ -14628,7 +14628,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28007</Id>
-      <Name>Other - Brickwork - Reused clay brick - Lower Bound</Name>
+      <Name>Brickwork Reused clay brick Lower Bound</Name>
       <Category>Blocks and Bricks</Category>
       <Description />
       <EPDurl>https://www.epddanmark.dk/media/ttoanopl/md-23003-en_rev_1.pdf</EPDurl>
@@ -14753,7 +14753,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28006</Id>
-      <Name>Other - Brickwork - Double skin wall with mortar 1:4 CEM I cement:sand mix</Name>
+      <Name>Brickwork Double skin wall with mortar 1:4 CEM I cement:sand mix</Name>
       <Category>Blocks and Bricks</Category>
       <Description />
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
@@ -14878,7 +14878,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28005</Id>
-      <Name>Other - Blockwork - PCC Lightweight (AAC) blocks</Name>
+      <Name>Blockwork PCC Lightweight (AAC) blocks</Name>
       <Category>Blocks and Bricks</Category>
       <Description>UK Lightweight AAC blocks for building envelope</Description>
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
@@ -15003,7 +15003,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28004</Id>
-      <Name>Other - Blockwork - PCC Dense blocks</Name>
+      <Name>Blockwork PCC Dense blocks</Name>
       <Category>Blocks and Bricks</Category>
       <Description>UK Dense blocks for other uses</Description>
       <EPDurl>https://circularecology.com/embodied-carbon-footprint-database.html</EPDurl>
@@ -15128,7 +15128,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28003</Id>
-      <Name>Other - Aluminium - Sheet - Global</Name>
+      <Name>Aluminium Sheet Global</Name>
       <Category>Aluminium</Category>
       <Description>31% recycled content</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -15253,7 +15253,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28002</Id>
-      <Name>Other - Aluminium - Sheet - EU</Name>
+      <Name>Aluminium Sheet EU</Name>
       <Category>Aluminium</Category>
       <Description>31% recycled content</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -15378,7 +15378,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28001</Id>
-      <Name>Other - Aluminium - Extruded profile - Global</Name>
+      <Name>Aluminium Extruded profile Global</Name>
       <Category>Aluminium</Category>
       <Description>31% recycled content</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
@@ -15503,7 +15503,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>28000</Id>
-      <Name>Other - Aluminium - Extruded profile - EU</Name>
+      <Name>Aluminium Extruded profile EU</Name>
       <Category>Aluminium</Category>
       <Description>31% recycled content</Description>
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>

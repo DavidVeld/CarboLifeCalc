@@ -90,7 +90,7 @@ namespace CarboLifeAPI.Data
 
             try
             {
-                calcResult += "This calculation create a CO₂ per kg value based on the given parameters." + System.Environment.NewLine + System.Environment.NewLine;
+                calcResult += "This calculation create a CO₂e per kg value based on the given parameters." + System.Environment.NewLine + System.Environment.NewLine;
                 calcResult += System.Environment.NewLine;
 
                 if (c1Value != 0)

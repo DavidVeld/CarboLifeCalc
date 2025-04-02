@@ -534,7 +534,7 @@ namespace CarboLifeUI.UI
                     {
                         //The item is too small for the graph:
                         combinedPoint.Value += cp.Value;
-                        combinedPoint.Name += cp.Name + " (" + (Math.Round(cp.Value / 1000, 2)) + " tCO₂ )" + Environment.NewLine;
+                        combinedPoint.Name += cp.Name + " (" + (Math.Round(cp.Value / 1000, 2)) + " tCO₂e )" + Environment.NewLine;
 
                         counter.Add(i);
                     }
@@ -568,7 +568,7 @@ namespace CarboLifeUI.UI
 
 
                 //Location of Label;
-                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂", chartPoint.Y, chartPoint.Participation);
+                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
 
                 //Convert the CarboDataPoints to Pieseries
                 foreach (CarboDataPoint ppin in PieceListLifePoint)
@@ -620,7 +620,7 @@ namespace CarboLifeUI.UI
             try
             {
                 List<CarboDataPoint> PieceListMaterial = new List<CarboDataPoint>();
-                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂", chartPoint.Y, chartPoint.Participation);
+                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
 
                 //Get the DataPint
                 PieceListMaterial = CarboCalcTextUtils.ConvertResultTableToDataPoints(resultsTable, Type, projectElements);
@@ -644,7 +644,7 @@ namespace CarboLifeUI.UI
                     {
                         //The item is too small for the graph:
                         otherPoint.Value += cp.Value;
-                        otherPoint.Name += cp.Name + " (" + (Math.Round(cp.Value, 1)) + " tCO₂ )" + Environment.NewLine;
+                        otherPoint.Name += cp.Name + " (" + (Math.Round(cp.Value, 1)) + " tCO₂e )" + Environment.NewLine;
 
                         counter.Add(i);
                     }
@@ -719,7 +719,7 @@ namespace CarboLifeUI.UI
             try
             {
                 List<CarboDataPoint> PieceListCategory = new List<CarboDataPoint>();
-                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂", chartPoint.Y, chartPoint.Participation);
+                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
 
                 PieceListCategory = carboLifeProject.getCategoryTotals();
 

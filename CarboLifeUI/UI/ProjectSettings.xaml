@@ -93,8 +93,8 @@
 
                 <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="8"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Social Carbon Cost:</Label>
                 <TextBox Name="txt_SocialCost" Grid.Column="2" Grid.Row="8" Margin="5,0,0,4" Width="110" HorizontalAlignment="Left" Height="28"  Style="{StaticResource flatTextBox}" TextChanged="txt_SocialCost_TextChanged"></TextBox>
-                <Label Grid.Column="3" Margin="118,0,223,0" Grid.Row="8"   Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">$/£/€ per tCO₂</Label>
-                <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="8" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">Social Carbon Cost is estimated between 100-200 pounds / dollar per tCO₂</Label>
+                <Label Grid.Column="3" Margin="118,0,223,0" Grid.Row="8"   Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">$/£/€ per tCO₂e</Label>
+                <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="8" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">Social Carbon Cost is estimated between 100-200 pounds / dollar per tCO₂e</Label>
 
 
             </Grid>

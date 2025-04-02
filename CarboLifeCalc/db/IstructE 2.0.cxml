@@ -46,7 +46,7 @@
           <carboCostNew>90000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2 per km, Using 4.00 l/km. </description>
+          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2e per km, Using 4.00 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -303,7 +303,7 @@ Set Value by user as: 0kgCo2/kg
           <carboCostNew>90000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2 per km, Using 4.00 l/km. </description>
+          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2e per km, Using 4.00 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -471,7 +471,7 @@ Set Value by user as: 0kgCo2/kg
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -600,7 +600,7 @@ Set Value by user as: 0kgCo2/kg
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -690,7 +690,7 @@ Set Value by user as: 0kgCo2/kg
           <carboCostNew>90000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2 per km, Using 4.00 l/km. </description>
+          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2e per km, Using 4.00 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -5152,7 +5152,7 @@ Set Value by user as: 0.007208kgCO₂/kg
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -6289,7 +6289,7 @@ Set Value by user as: 0kgCO₂/kg
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -6417,7 +6417,7 @@ Set Value by user as: 0kgCO₂/kg
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -6546,7 +6546,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -6674,7 +6674,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -6802,7 +6802,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -6931,7 +6931,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -7060,7 +7060,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -7151,7 +7151,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
           <carboCostNew>90000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2 per km, Using 4.00 l/km. </description>
+          <description>A generic concrete truck, a truck with a capacity of 6m�. It produces about 800g of CO2e per km, Using 4.00 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -7317,7 +7317,7 @@ use of PFA resulting from the phasing out of coal fired power.</Description>
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>
@@ -8965,7 +8965,7 @@ Glulam, 100% FSC/PEFC
             <carboCostNew>280000</carboCostNew>
             <totalDistance>250000</totalDistance>
             <defaultFuel>Diesel</defaultFuel>
-            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2 per km, Using 3.80 l/km. </description>
+            <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m�. It produces about 680g of CO2e per km, Using 3.80 l/km. </description>
           </vehicleSettings>
           <vehicleFuel>
             <name>Diesel</name>

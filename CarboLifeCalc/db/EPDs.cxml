@@ -8,6 +8,7 @@
       <Description>This is a material based on the generic brick EPD from brick.org.uk
 The material is with mortar allowance (Approx 13%)</Description>
       <EPDurl>https://www.brick.org.uk/admin/resources/breg-en-epd-000002-v4.pdf</EPDurl>
+      <Grade />
       <Density>2000</Density>
       <ECI>0.23697300000000002</ECI>
       <getVolumeECI>473.946</getVolumeECI>
@@ -135,6 +136,7 @@ Set Value by user as: 0kgCo2/kg
       <Description>Values based on Wood for Good EPD
 </Description>
       <EPDurl>https://woodforgood.com/assets/Downloads/EPD/BREGENEPD000124.pdf</EPDurl>
+      <Grade />
       <Density>480</Density>
       <ECI>0.26895615899999981</ECI>
       <getVolumeECI>129.0989563199999</getVolumeECI>
@@ -266,6 +268,7 @@ Set Value by user as: 0kgCo2/kg
 WISA Spruce plywood, uncoated
 </Description>
       <EPDurl>https://www.wisaplywood.com/siteassets/documents/certificates/rts-epd-21-19_upm_plywood_wisa_spruce__uncoated_signed.pdf</EPDurl>
+      <Grade />
       <Density>480</Density>
       <ECI>0.368416667</ECI>
       <getVolumeECI>176.84000016</getVolumeECI>
@@ -393,6 +396,7 @@ Set Value by user as: 0kgCo2/kg
       <Description>CLT Values based on Stora Enso's EPD
 https://www.storaenso.com/-/media/documents/download-center/certificates/wood-products-approvals-and-certificates/epd/stora-enso-epd-clt.pdf</Description>
       <EPDurl />
+      <Grade />
       <Density>1</Density>
       <ECI>0.23079583299999995</ECI>
       <getVolumeECI>0.23079583299999995</getVolumeECI>
@@ -519,6 +523,7 @@ Set Value by user as: 0kgCo2/kg
       <Category>Bricks &amp; Block</Category>
       <Description>T4+ Class FOAMGLAS based on EPD</Description>
       <EPDurl>https://www.foamglas.com/-/media/project/foamglas/public/shared/files/certifications/b---common-certificates/epd-environmental-product-decl/bepd-200010002enfoamglas-t4signed.pdf?la=fr-be</EPDurl>
+      <Grade />
       <Density>115</Density>
       <ECI>1.35704</ECI>
       <getVolumeECI>156.0596</getVolumeECI>
@@ -645,6 +650,7 @@ Set Value by user as: 0kgCo2/kg
       <Category>Concrete</Category>
       <Description>This is a Ready mix concrete based on Tarmac's EPD</Description>
       <EPDurl>https://tarmac.com/wp-content/plugins/tarmac.com/components/downloads/file-download.php?download_id=6885</EPDurl>
+      <Grade />
       <Density>2400</Density>
       <ECI>0.14442250000000032</ECI>
       <getVolumeECI>346.61400000000077</getVolumeECI>
@@ -771,6 +777,7 @@ Set Value by user as: 0kgCo2/kg
       <Category>Other</Category>
       <Description>This plasterboard material is based on a EPD</Description>
       <EPDurl>https://www.british-gypsum.com/~/media/Files/British-Gypsum/LCA/EPD-12-5mm-Gyproc-WallBoard.pdf</EPDurl>
+      <Grade />
       <Density>500</Density>
       <ECI>0.27862755555555557</ECI>
       <getVolumeECI>139.31377777777777</getVolumeECI>
@@ -897,6 +904,7 @@ Set Value by user as: 0kgCO₂/kg
       <Category>Other</Category>
       <Description />
       <EPDurl>https://www.rockwool.com/siteassets/o2-rockwool/documentation/epd/rockwool-stone-wool-environmental-product-declaration-epd.pdf</EPDurl>
+      <Grade />
       <Density>500</Density>
       <ECI>1.3026959459459455</ECI>
       <getVolumeECI>651.3479729729728</getVolumeECI>
@@ -1023,6 +1031,7 @@ Set Value by user as: 0kgCO₂/kg
       <Category>Other</Category>
       <Description />
       <EPDurl>https://www.isover.se/sites/isover.se/files/assets/documents/epd_xps.pdf</EPDurl>
+      <Grade />
       <Density>33.7</Density>
       <ECI>4.7145400593471765</ECI>
       <getVolumeECI>158.87999999999985</getVolumeECI>
@@ -1061,7 +1070,7 @@ Set Value by user as: 0kgCO₂/kg
           <carboCostNew>280000</carboCostNew>
           <totalDistance>250000</totalDistance>
           <defaultFuel>Diesel</defaultFuel>
-          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m³. It produces about 680g of CO₂ per km, Using 3.80 l/km. </description>
+          <description>A generic truck, a truck with a capacity of around 22t and a capacity of between 80-100 m³. It produces about 680g of CO₂e per km, Using 3.80 l/km. </description>
         </vehicleSettings>
         <vehicleFuel>
           <name>Diesel</name>
@@ -1150,6 +1159,7 @@ Set Value by user as: 0.01kgCO₂/kg
       <Category>Steel</Category>
       <Description>Structural Hollow Sections</Description>
       <EPDurl>https://www.tatasteeleurope.com/construction/download-centre/environmental-product-declarations</EPDurl>
+      <Grade />
       <Density>7850</Density>
       <ECI>1.0035949999999996</ECI>
       <getVolumeECI>7878.2207499999968</getVolumeECI>
@@ -1276,6 +1286,7 @@ Set Value by user as: 0kgCO₂/kg
       <Category>Other</Category>
       <Description>Based on A1-C Biogenic Values</Description>
       <EPDurl>https://api.environdec.com/api/v1/EPDLibrary/Files/23febb87-97c0-49df-0f65-08d9f09b841d/Data</EPDurl>
+      <Grade />
       <Density>100</Density>
       <ECI>0.14555</ECI>
       <getVolumeECI>14.555000000000002</getVolumeECI>
@@ -1402,6 +1413,7 @@ Set Value by user as: 0kgCO₂/kg
       <Category>Other</Category>
       <Description>Based on A1-A3 Biogenic Values</Description>
       <EPDurl>https://api.environdec.com/api/v1/EPDLibrary/Files/23febb87-97c0-49df-0f65-08d9f09b841d/Data</EPDurl>
+      <Grade />
       <Density>100</Density>
       <ECI>0.14529999999999999</ECI>
       <getVolumeECI>14.529999999999998</getVolumeECI>
@@ -1450,6 +1462,135 @@ Set Value by user as: 0kgCO₂/kg
         <value>0.010820543093270366</value>
       </materiaA4Properties>
       <materialA5Properties>
+        <calcResult />
+        <name />
+        <value>0</value>
+      </materialA5Properties>
+      <materialC1C4Properties>
+        <calcResult />
+        <propertyName />
+        <c1density>0</c1density>
+        <c1BaseValue>3.4</c1BaseValue>
+        <c1Value>0</c1Value>
+        <c2Properties>
+          <calcResult />
+          <name />
+          <description />
+          <distanceToSite>50</distanceToSite>
+          <materialDensity>500</materialDensity>
+          <emptyRun>80</emptyRun>
+          <emptyReturn>true</emptyReturn>
+          <vehicleSettings>
+            <name>Truck</name>
+            <maxVolume>96</maxVolume>
+            <maxLoad>22000</maxLoad>
+            <kmPer>3.85</kmPer>
+            <carboCostNew>280000</carboCostNew>
+            <totalDistance>250000</totalDistance>
+            <defaultFuel>Diesel</defaultFuel>
+            <description>An unspecified Vehicle</description>
+          </vehicleSettings>
+          <vehicleFuel>
+            <name>Diesel</name>
+            <emission>2.62</emission>
+            <production>0.4</production>
+            <unit>l</unit>
+          </vehicleFuel>
+          <value>0.010820543093270366</value>
+        </c2Properties>
+        <c2Value>0</c2Value>
+        <c3Value>0</c3Value>
+        <c4DisposalName>Generic</c4DisposalName>
+        <c4landfP>50</c4landfP>
+        <c4landfV>0.013</c4landfV>
+        <c4lanfResult>0</c4lanfResult>
+        <c4incfP>0</c4incfP>
+        <c4incfV>0</c4incfV>
+        <c4incResult>0</c4incResult>
+        <c4reUseP>50</c4reUseP>
+        <c4reUseV>0.005</c4reUseV>
+        <c4reUseResult>0</c4reUseResult>
+        <other>0</other>
+        <value>0.009</value>
+      </materialC1C4Properties>
+      <materialSeqProperties>
+        <propertyName>Sequestration</propertyName>
+        <value>0</value>
+        <sequestrationPeriod>40</sequestrationPeriod>
+        <comment />
+      </materialSeqProperties>
+      <materialDProperties>
+        <name />
+        <value>0</value>
+        <calcResult />
+      </materialDProperties>
+      <ECI_A1A3_Override>true</ECI_A1A3_Override>
+      <ECI_A4_Override>true</ECI_A4_Override>
+      <ECI_A5_Override>true</ECI_A5_Override>
+      <ECI_C1C4_Override>true</ECI_C1C4_Override>
+      <ECI_D_Override>true</ECI_D_Override>
+      <ECI_Seq_Override>true</ECI_Seq_Override>
+      <ECI_Mix_Info />
+    </CarboMaterial>
+    <CarboMaterial>
+      <Id>295828</Id>
+      <Name>Watertight Ready-mixed Concrete</Name>
+      <Category>Concrete</Category>
+      <Description>Aggregate Industries UK Limited
+</Description>
+      <EPDurl>https://www.holcim.co.uk/sites/aiuk/files/documents/watertight_ready-mixed_concrete.pdf</EPDurl>
+      <Grade />
+      <Density>2386</Density>
+      <ECI>0.11645431684828199</ECI>
+      <getVolumeECI>277.86000000000081</getVolumeECI>
+      <ECI_A1A3>0.106454316848282</ECI_A1A3>
+      <ECI_A4>0.01</ECI_A4>
+      <ECI_A5>0</ECI_A5>
+      <ECI_B1B5>0</ECI_B1B5>
+      <ECI_C1C4>0</ECI_C1C4>
+      <ECI_D>0</ECI_D>
+      <ECI_Seq>0</ECI_Seq>
+      <ECI_Mix>0</ECI_Mix>
+      <WasteFactor>5</WasteFactor>
+      <isLocked>false</isLocked>
+      <materialA1A3Properties>
+        <Id>0</Id>
+        <Category />
+        <Name />
+        <Description />
+        <Density>0</Density>
+        <ECI_A1A3>0</ECI_A1A3>
+      </materialA1A3Properties>
+      <materiaA4Properties>
+        <calcResult />
+        <name />
+        <description />
+        <distanceToSite>50</distanceToSite>
+        <materialDensity>2386</materialDensity>
+        <emptyRun>80</emptyRun>
+        <emptyReturn>true</emptyReturn>
+        <vehicleSettings>
+          <name>Concrete Truck 8m³</name>
+          <maxVolume>8</maxVolume>
+          <maxLoad>19200</maxLoad>
+          <kmPer>3</kmPer>
+          <carboCostNew>150000</carboCostNew>
+          <totalDistance>250000</totalDistance>
+          <defaultFuel>Diesel</defaultFuel>
+          <description>A generic concrete truck, a truck with a capacity of 8m³. It produces about 900g of CO₂e per km, Using 4.50 l/km. </description>
+        </vehicleSettings>
+        <vehicleFuel>
+          <name>Diesel</name>
+          <emission>2.62</emission>
+          <production>0.4</production>
+          <unit>l</unit>
+        </vehicleFuel>
+        <value>0.010521444537580329</value>
+      </materiaA4Properties>
+      <materialA5Properties>
+        <calcResult>A5 calculation to be implemented 
+Set Value by user as: 0kgCO₂/kg
+</calcResult>
         <name />
         <value>0</value>
       </materialA5Properties>

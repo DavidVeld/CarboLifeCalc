@@ -172,11 +172,8 @@
     <Content Include="CarboLifeCalcRaw.addin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="data\A1A3Tables\ECI.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="data\A1A3Tables\IstructE.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="data\A1A3Tables\User.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -216,6 +213,12 @@
     </Content>
     <Content Include="db\carboCircleMaterials.cxml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\A1A3Tables\ECI3.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data\A1A3Tables\ECI4.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

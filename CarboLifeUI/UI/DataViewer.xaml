@@ -211,8 +211,8 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!--CO₂ Intensity-->
-                <DataGridTemplateColumn Header="CO₂ Intensity &#x0a;[kgCO₂e/kg]" Width="100" MinWidth="100"  IsReadOnly="True">
+                <!--CO₂e Intensity-->
+                <DataGridTemplateColumn Header="CO₂e Intensity &#x0a;[kgCO₂e/kg]" Width="100" MinWidth="100"  IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Path=ECI, Mode=OneWay, UpdateSourceTrigger=LostFocus}"  Loaded="RoundValue" Background="LightGray"/>
@@ -220,7 +220,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!--CO₂ Total-->
+                <!--CO₂e Total-->
                 <DataGridTemplateColumn Header="Total &#x0a;[tCO₂e]" Width="100" MinWidth="100"  IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

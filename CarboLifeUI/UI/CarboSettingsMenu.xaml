@@ -59,11 +59,11 @@
                 <Label Grid.Column="1" Margin="0,0,528,0" Grid.Row="2" Width="150"  Height="28" Grid.ColumnSpan="1" VerticalAlignment="Center" Style="{StaticResource formTextStyle}">Default Design Life:</Label>
                 <TextBox Name="txt_DesignLife" Grid.Column="1" Grid.Row="2" Margin="155,0,0,5" Width="110" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="25"  Style="{StaticResource flatTextBox}"></TextBox>
 
-                <Label Grid.Column="1" Margin="0,0,528,0" Grid.Row="3" Width="150"  Height="28" Grid.ColumnSpan="1" VerticalAlignment="Center" Style="{StaticResource formTextStyle}">Unlock Key:</Label>
+                <Label Grid.Column="1" Margin="0,0,528,0" Grid.Row="3" Width="150"  Height="28" Grid.ColumnSpan="1" VerticalAlignment="Center" Style="{StaticResource formTextStyle}">Pop-up Removal Key:</Label>
                 <TextBox Name="txt_SecretMessage" Grid.Column="1" Grid.Row="3" Margin="155,0,0,5" Width="141" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="25"  Style="{StaticResource flatTextBox}"></TextBox>
 
-                <Button Name="btn_Check" Grid.Row="3" Grid.Column="1" Margin="325,0,0,0" Width="95" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Style="{StaticResource ButtonStyle}" Click="btn_Check_Click">Check Code</Button>
-                <Button Name="btn_Coffee" Grid.Row="3" Grid.Column="1" Margin="425,0,0,0" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Style="{StaticResource ButtonStyle}" Click="btn_Coffee_Click">Buy me a coffee!</Button>
+                <Button Name="btn_Check" Grid.Row="3" Grid.Column="1" Margin="315,0,0,0" Width="95" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_Check_Click">Check Code</Button>
+                <Button Name="btn_Coffee" Grid.Row="3" Grid.Column="1" Margin="425,0,0,0" Width="120" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_Coffee_Click">Get Code</Button>
 
 
                 <Label Name="lbl_CheckTemplatePath" Visibility="Hidden" Grid.Column="1" Margin="0,25,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Grid.RowSpan="1">[]</Label>
