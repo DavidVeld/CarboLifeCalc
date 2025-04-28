@@ -1,130 +1,25 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0C38F4ED-1D83-4FFE-AD65-B884410AF824}</ProjectGuid>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CarboLifeAPI</RootNamespace>
-    <AssemblyName>CarboLifeAPI</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Revit|AnyCPU'">
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Revit|x64'">
     <OutputPath>bin\x64\Debug Revit\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LiveCharts">
-      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
-    </Reference>
-    <Reference Include="LiveCharts.Wpf">
-      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Data\CarboColour.cs" />
-    <Compile Include="Data\CarboColourPreset.cs" />
-    <Compile Include="Data\CarboEnergyProperties.cs" />
-    <Compile Include="Data\CarboGroupSettings.cs" />
-    <Compile Include="Data\CarboNumProperty.cs" />
-    <Compile Include="JSonExport\JsCarboElement.cs" />
-    <Compile Include="JSonExport\JsCarboMaterial.cs" />
-    <Compile Include="JSonExport\JsCarboProject.cs" />
-    <Compile Include="JSonExport\Lcax.cs" />
-    <Compile Include="UtilClasses\CarboGraphResult.cs" />
-    <Compile Include="UtilClasses\CarboValues.cs" />
-    <Compile Include="Data\CarboC1C4Properties.cs" />
-    <Compile Include="Data\CarboDProperties.cs" />
-    <Compile Include="Data\CarboB1B7Properties.cs" />
-    <Compile Include="Data\CarboElement.cs" />
-    <Compile Include="Data\CarboElementImporter.cs" />
-    <Compile Include="Data\CarboMaterial.cs" />
-    <Compile Include="Data\CarboGroup.cs" />
-    <Compile Include="Data\CarboDatabase.cs" />
-    <Compile Include="Data\CarboProject.cs" />
-    <Compile Include="Data\CarboA5Properties.cs" />
-    <Compile Include="Data\CarboA4Properties.cs" />
-    <Compile Include="Data\CarboSeqProperties.cs" />
-    <Compile Include="Data\CarboProperty.cs" />
-    <Compile Include="Data\CarboMapElement.cs" />
-    <Compile Include="Data\CarboSettings.cs" />
-    <Compile Include="UtilClasses\A1A3Collection.cs" />
-    <Compile Include="UtilClasses\CarboLevel.cs" />
-    <Compile Include="UtilClasses\EoLElement.cs" />
-    <Compile Include="UtilClasses\VehicleAndFuel.cs" />
-    <Compile Include="Utils\CarboByLevelData.cs" />
-    <Compile Include="Utils\CarboDataPoint.cs" />
-    <Compile Include="Utils\CarboCalcTextUtils.cs" />
-    <Compile Include="Utils\CarboTimeLine.cs" />
-    <Compile Include="Utils\HeatMapCollector.cs" />
-    <Compile Include="Utils\HeatMapBarBuilder.cs" />
     <None Include="Superseded\HeatMapBuilderClasses.cs" />
-    <Compile Include="JSonExport\JsonExportUtils.cs" />
-    <Compile Include="Utils\ReadWriteCsv.cs" />
     <None Include="Superseded\HeatMapBuilderUtils.cs" />
-    <Compile Include="Utils\DataExportUtils.cs" />
-    <Compile Include="Utils\ReportBuilder.cs" />
-    <Compile Include="Utils\StringToFormula.cs" />
-    <Compile Include="Utils\PathUtils.cs" />
-    <Compile Include="Utils\Utils.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
@@ -155,5 +50,14 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.3" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Superseded\HeatMapBuilderClasses.cs" />
+    <Compile Remove="Superseded\HeatMapBuilderUtils.cs" />
+  </ItemGroup>
 </Project>

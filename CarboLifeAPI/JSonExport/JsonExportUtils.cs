@@ -7,7 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web.Script.Serialization;
+//using System.Web.Script.Serialization;
+using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using System.Windows;
 using System.Windows.Media.Media3D;
 
@@ -31,11 +33,17 @@ namespace CarboLifeAPI
 
             try
             {
+                /* 4.8:
                 var JsonSerializer = new JavaScriptSerializer();
+
                 JsonSerializer.MaxJsonLength = Int32.MaxValue;
 
                 var json = JsonSerializer.Serialize(jsProject);
-                File.WriteAllText(path, json);
+                */
+
+                string jsonString = JsonSerializer.Serialize(jsProject);
+
+                File.WriteAllText(path, jsonString);
 
                 result = true;
             }
@@ -600,11 +608,15 @@ namespace CarboLifeAPI
 
             try
             {
+                /*
                 var JsonSerializer = new JavaScriptSerializer();
                 JsonSerializer.MaxJsonLength = Int32.MaxValue;
 
                 var json = JsonSerializer.Serialize(lcaProject);
-                File.WriteAllText(path, json);
+                */
+                string jsonString = JsonSerializer.Serialize(jsProject);
+
+                File.WriteAllText(path, jsonString);
 
                 result = true;
             }
@@ -625,11 +637,14 @@ namespace CarboLifeAPI
 
             try
             {
-                var JsonSerializer = new JavaScriptSerializer();
-                JsonSerializer.MaxJsonLength = Int32.MaxValue;
+                //var JsonSerializer = new JavaScriptSerializer();
+                //JsonSerializer.MaxJsonLength = Int32.MaxValue;
                 Lcax lcaxFile = null;
 
-                var lcaxFile2 = JsonSerializer.DeserializeObject(path);
+                //var lcaxFile2 = JsonSerializer.DeserializeObject(path);
+
+
+                var lcaxFile2 =  JsonSerializer.Deserialize<Lcax>(path);
 
                 lcaxFile = lcaxFile2 as Lcax;
 

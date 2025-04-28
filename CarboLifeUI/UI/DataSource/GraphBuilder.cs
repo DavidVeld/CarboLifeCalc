@@ -1,8 +1,11 @@
 ﻿using Autodesk.Revit.DB;
 using CarboLifeAPI;
 using CarboLifeAPI.Data;
-using LiveCharts;
-using LiveCharts.Wpf;
+using LiveChartsCore;
+using LiveChartsCore.Kernel.Sketches;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,8 +14,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Color = System.Windows.Media.Color;
 
 namespace CarboLifeUI.UI
@@ -23,35 +28,39 @@ namespace CarboLifeUI.UI
         public static double min;
         public static double max;
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
+
         /// <summary>
         /// Builds an overview A1-Mix graph for the user to add to a graph
         /// </summary>
         /// <param name="project"></param>
         /// <returns></returns>
-        public static SeriesCollection BuildBarGraph(CarboProject project)
+        public static List<ISeries> BuildBarGraph(CarboProject project)
         {
             List<CarboDataPoint> pointCollection = new List<CarboDataPoint>();
             // get the current Project
             pointCollection = project.getPhaseTotals();
 
-            SeriesCollection result = new SeriesCollection();
+            List<ISeries> result = new List<ISeries>();
 
             //Build series
 
             foreach (CarboDataPoint pont in pointCollection)
             {
+                /*
                 StackedColumnSeries series = new StackedColumnSeries
                 {
                     Values = new ChartValues<double>
                     {
                         Math.Round((pont.Value / 1000), 2),
                     },
-                    StackMode = StackMode.Values,
+                    //StackMode = StackMode.Values,
                     DataLabels = true,
                     Title = pont.Name
                 };
 
                 result.Add(series);
+                */  
 
             }
 
@@ -64,9 +73,9 @@ namespace CarboLifeUI.UI
         /// <param name="carboLifeProject"></param>
         /// <param name="projectListToCompareTo"></param>
         /// <returns></returns>
-        internal static SeriesCollection BuildComparingTotalsBarGraph(CarboProject project, List<CarboProject> projectListToCompareTo)
+        internal static List<ISeries> BuildComparingTotalsBarGraph(CarboProject project, List<CarboProject> projectListToCompareTo)
         {
-            SeriesCollection result = new SeriesCollection();
+            List<ISeries> result = new List<ISeries>();
 
             //Full list to compare to:
             List<CarboProject> fullProjectListToCompareTo = new List<CarboProject>();
@@ -100,6 +109,7 @@ namespace CarboLifeUI.UI
                 // i is nr type of information extracted
                 for (int i = 0; i < pointList[0].Count; i++)
                 {
+                    /*
                     StackedColumnSeries newSeries = new StackedColumnSeries();
 
                     ChartValues<double> Values = new ChartValues<double>();
@@ -119,7 +129,7 @@ namespace CarboLifeUI.UI
                     newSeries.MaxColumnWidth = 50;
                     newSeries.LabelsPosition = BarLabelPosition.Perpendicular;
                     result.Add(newSeries);
-
+                    */
                 }
 
             }
@@ -132,7 +142,7 @@ namespace CarboLifeUI.UI
         }
 
         //
-        internal static SeriesCollection BuildLifeLine(CarboProject project, List<CarboProject> projectListToCompareTo, bool sequestration, bool energy, bool demolition)
+        internal static List<ISeries> BuildLifeLine(CarboProject project, List<CarboProject> projectListToCompareTo, bool sequestration, bool energy, bool demolition)
         {
             min = double.PositiveInfinity;
             max = double.NegativeInfinity;
@@ -147,7 +157,7 @@ namespace CarboLifeUI.UI
                 projectList.AddRange(projectListToCompareTo);
             }
 
-            SeriesCollection result = new SeriesCollection();
+            List<ISeries> result = new List<ISeries>();
 
             if (projectList.Count > 0)
             {
@@ -155,6 +165,7 @@ namespace CarboLifeUI.UI
                 {
                     IList<CarboDataPoint> data = CarboTimeLine.GetTimeLineDataPoints(prct, sequestration, energy, demolition);
 
+                    /*
                     LineSeries lineSeries = new LineSeries();
                     ChartValues<double> Values = new ChartValues<double>();
 
@@ -177,6 +188,7 @@ namespace CarboLifeUI.UI
                         min = Values.Min();
 
                     result.Add(lineSeries);
+                    */
                 }
             }
 
@@ -184,180 +196,10 @@ namespace CarboLifeUI.UI
             
         }
 
-        internal static ColorsCollection getColours()
+
+        internal static List<ISeries> getLevelChartMaterial(List<CarboElement> projectElements, string graphType, out List<string> labels)
         {
-
-            ColorsCollection result = new ColorsCollection();
-
-            Color c1 = new Color { A = 255, R = 147, G = 123, B = 131 }; 
-            Color c2 = new Color { A = 255, R = 87, G = 164, B = 177 }; 
-            Color c3 = new Color { A = 255, R = 90, G = 119, B = 135 }; 
-            Color c4 = new Color { A = 255, R = 210, G = 210, B = 60 };
-            Color c5 = new Color { A = 255, R = 185, G = 220, B = 160 }; 
-            Color c6 = new Color { A = 255, R = 156, G = 206, B = 212 }; 
-            Color c7 = new Color { A = 255, R = 251, G = 226, B = 150 }; 
-            Color c8 = new Color { A = 210, R = 253, G = 240, B = 203 }; 
-            Color c9 = new Color { A = 255, R = 247, G = 203, B = 145 };  
-            Color c10 = new Color { A = 255, R = 252, G = 179, B = 179 }; 
-            Color c11 = new Color { A = 255, R = 118, G = 73, B = 197 };
-
-
-            result.Add(c1);
-            result.Add(c2);
-            result.Add(c3);
-            result.Add(c4);
-            result.Add(c5);
-            result.Add(c6);
-            result.Add(c7);
-            result.Add(c8);
-            result.Add(c9);
-            result.Add(c10);
-            result.Add(c11);
-
-
-
-
-
-            return result;
-        }
-
-        [Obsolete]
-        internal static SeriesCollection getLevelChartMaterial(DataTable currentProjectResult, string graphType, out List<string> labels)
-        {
-            SeriesCollection result = new SeriesCollection();
-            SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
-            string groupType = graphType;
-            labels = new List<string>();
-
-            CarboByLevelDataGroup carboByLevelDataGroup = new CarboByLevelDataGroup();
-
-            carboByLevelDataGroup.AddLevel("Substructure", -9999);
-
-            //add all the levels in the table:
-            foreach (DataRow dr in currentProjectResult.Rows)
-            {
-                string levelName = dr[0].ToString(); //levelname
-                double elevation = Utils.ConvertMeToDouble(dr[1].ToString()); //elevation
-                bool isSubStructure = Convert.ToBoolean(dr[5]);
-                bool existingLevel = false;
-                 
-                if(isSubStructure == true)
-                    levelName = "Substructure";
-
-                foreach (CarboByLevelData cld in carboByLevelDataGroup.levelList)
-                {
-                    if(cld.LevelName == levelName)
-                    {
-                        existingLevel = true;
-                        break;
-                    }
-                }
-                if(existingLevel == false)
-                {
-                    carboByLevelDataGroup.AddLevel(levelName, elevation);
-                }
-            }
-
-            //loop through each row and see if the data needs to be added to an item or a new row needs adding.
-            foreach (DataRow dr in currentProjectResult.Rows)
-            {
-                string levelName = dr[0].ToString(); //levelname
-                double elevation = Utils.ConvertMeToDouble(dr[1].ToString()); //elevation
-                string groupName = "";
-                double value = Utils.ConvertMeToDouble(dr[6].ToString());
-
-                bool isSubStructure = Convert.ToBoolean(dr[5]);
-                if (isSubStructure == true)
-                    levelName = "Substructure";
-
-
-                if (groupType == "Category")
-                {
-                    groupName = dr[2].ToString(); //Category
-                }
-                else if (groupType == "Material")
-                {
-                    groupName = dr[4].ToString(); //material
-                }
-                else
-                {
-                    groupName = "Total EC"; //Totals
-                }
-
-                if (levelName != null && value != 0)
-                {
-                    carboByLevelDataGroup.AddItem(levelName, elevation, groupName, value);
-                }
-            }
-
-            //List<string> categoryList = new List<string>();
-            List<string> levelList = new List<string>();
-            carboByLevelDataGroup.SortedList();
-
-            //remove empty levels
-            /*
-            for(int i = carboByLevelDataGroup.levelList.Count -1; i>= 0;i--)
-            {
-               CarboByLevelData cbld = carboByLevelDataGroup.levelList[i] as CarboByLevelData;
-                if(cbld != null)
-                {
-                    double total = cbld.DataPoints.Sum(item => item.Value);
-
-                    if (cbld.DataPoints.Count == 0 || total == 0)
-                        carboByLevelDataGroup.levelList.RemoveAt(i);
-                }
-            }
-            */
-
-            foreach (CarboByLevelData level in carboByLevelDataGroup.levelList)
-            {
-                levelList.Add(level.LevelName);
-                labels.Add(level.LevelName);
-            }
-
-                //build the grapicsTable
-                if (carboByLevelDataGroup.levelList.Count > 0 && carboByLevelDataGroup.levelList[0].DataPoints.Count > 0)
-            {
-                int levelCount = carboByLevelDataGroup.levelList.Count;
-                int categoryCount = carboByLevelDataGroup.levelList[0].DataPoints.Count;
-
-
-                //loop though
-                // i is nr type of information extracted
-                for (int i = 0; i < categoryCount; i++)
-                {
-                    StackedRowSeries newSeries = new StackedRowSeries();
-                    
-                    ChartValues<double> Values = new ChartValues<double>();
-
-                    //get all Values from all loaded projects
-                    foreach (CarboByLevelData level in carboByLevelDataGroup.levelList)
-                    {
-                        Values.Add(Math.Round((level.DataPoints[i].Value / 1000), 1));
-                    }
-
-                    newSeries.Title = carboByLevelDataGroup.levelList[0].DataPoints[i].Name;
-                    newSeries.Values = Values;
-                    newSeries.StackMode = StackMode.Values;
-                    newSeries.DataLabels = false;
-                    newSeries.Foreground = Brushes.Black;
-                    
-                    //newSeries.Width = 100;
-                    //newSeries.MaxColumnWidth = 50;
-                    //newSeries.LabelsPosition = BarLabelPosition.Merged;
-
-                    result.Add(newSeries);
-
-                }
-            }
-           
-            return result;
-
-        }
-
-        internal static SeriesCollection getLevelChartMaterial(List<CarboElement> projectElements, string graphType, out List<string> labels)
-        {
-            SeriesCollection result = new SeriesCollection();
+            List<ISeries> result = new List<ISeries>();
             SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
             string groupType = graphType;
             labels = new List<string>();
@@ -457,46 +299,75 @@ namespace CarboLifeUI.UI
 
                 //loop though
                 // i is nr type of information extracted
+                int j = 0;
                 for (int i = 0; i < categoryCount; i++)
                 {
-                    StackedRowSeries newSeries = new StackedRowSeries();
+                    //points.Add(Math.Round(ppin.Value / 1000, 2));
 
-                    ChartValues<double> Values = new ChartValues<double>();
 
-                    //get all Values from all loaded projects
+
+                    double ThisCategoryValue = 0;
+                    List<double> values = new List<double>();
+                    List<string> names = new List<string>();
+                    string name = "value";
+
                     foreach (CarboByLevelData level in carboByLevelDataGroup.levelList)
                     {
-                        Values.Add(Math.Round((level.DataPoints[i].Value / 1000), 1));
+                        double value = Math.Round((level.DataPoints[i].Value / 1000), 1);
+
+                        values.Add(value);
+                        name = level.DataPoints[i].Name;
+
+
                     }
+                    //Values = new ChartValues<double> { Math.Round(ppin.Value / 1000, 2) },
+                    j++;
 
-                    newSeries.Title = carboByLevelDataGroup.levelList[0].DataPoints[i].Name;
-                    newSeries.Values = Values;
-                    newSeries.StackMode = StackMode.Values;
-                    newSeries.DataLabels = false;
-                    newSeries.Foreground = Brushes.Black;
+#pragma warning disable CA1416 // Validate platform compatibility
+                    result.Add(new StackedRowSeries<double>
+                    {
+                        Values = values.ToArray(),
+                        Name = name,
+                        Fill = new SolidColorPaint(getSKColour(j)),
+                        YToolTipLabelFormatter = point => $"{point.Model:0.00} tCO₂e",
+                        DataLabelsSize = 11
+                        //string.Format("{0} tCO₂e", chartPoint.Y
 
-                    //newSeries.Width = 100;
-                    //newSeries.MaxColumnWidth = 50;
-                    //newSeries.LabelsPosition = BarLabelPosition.Merged;
-
-                    result.Add(newSeries);
-
-                }
+                    });
+#pragma warning restore CA1416 // Validate platform compatibility
+              }
             }
 
+
+            
             return result;
 
         }
 
+        public static ICartesianAxis[] XAxis(List<string> levelList)
+{
+            List<ICartesianAxis> resultList = new List<ICartesianAxis>();
+
+            resultList.Add(            
+                new Axis
+                {
+                    LabelsRotation = 0,
+                    Labels = levelList,
+                    TextSize = 11
+                });
+
+            return resultList.ToArray();
+
+        }
 
         /// <summary>
         /// This returns the pie chart of the projects phases total A1-D and Mixed
         /// </summary>
         /// <param name="carboLifeProject"></param>
         /// <returns></returns>
-        internal static SeriesCollection GetPhasePieChartTotals(CarboProject carboLifeProject)
+        internal static List<ISeries> GetPhasePieChartTotals(CarboProject carboLifeProject)
         {
-            SeriesCollection result = new SeriesCollection();
+            List<ISeries> result = null;
             SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
 
             try
@@ -568,33 +439,37 @@ namespace CarboLifeUI.UI
 
 
                 //Location of Label;
-                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
+                //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
 
                 //Convert the CarboDataPoints to Pieseries
+                List<ISeries> seriesList = new List<ISeries>();
+
+                int j = 0;
                 foreach (CarboDataPoint ppin in PieceListLifePoint)
                 {
-                    PieSeries newSeries = new PieSeries
+                    //points.Add(Math.Round(ppin.Value / 1000, 2));
+
+                    double value = Math.Round(ppin.Value / 1000, 2);
+                    string name = ppin.Name;
+
+#pragma warning disable CA1416 // Validate platform compatibility
+                    seriesList.Add(new PieSeries<double>
                     {
-                        Title = ppin.Name,
-                        Values = new ChartValues<double> { Math.Round(ppin.Value / 1000, 2) },
-                        PushOut = 1,
-                        DataLabels = true,
-                        LabelPoint = labelPoint
-                    };
+                        Values = new double[] { value },
+                        Name = name,
+                        DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
+                        Fill = new SolidColorPaint(getSKColour(j)),
+                        DataLabelsPaint = new SolidColorPaint(SKColors.Black),
+                        DataLabelsFormatter = point => $"{point.Model:0} tCO₂e",
+                        ToolTipLabelFormatter = point => $"{point.Model:0} tCO₂e",
+                        DataLabelsSize = 12,
+                    });
+#pragma warning restore CA1416 // Validate platform compatibility
 
-                    newSeries.Foreground = almostBlack;
-                    newSeries.FontWeight = FontWeights.Normal;
-                    newSeries.FontStyle = FontStyles.Normal;
-                    newSeries.FontSize = 12;
-
-                    result.Add(newSeries);
-
+                    //Values = new ChartValues<double> { Math.Round(ppin.Value / 1000, 2) },
+                    j++;
                 }
-
-
-
-
-                
+                result = seriesList;
 
             }
             catch
@@ -612,15 +487,15 @@ namespace CarboLifeUI.UI
         /// <param name="resultsTable">DataTable as per CarboCalcTextUtils.getResultTable(CarboLifeProject)</param>
         /// <param name="Type">Material or Category</param>
         /// <returns></returns>
-        internal static SeriesCollection GetPieChart(DataTable resultsTable, string Type = "Material", List<CarboElement> projectElements = null)
+        internal static List<ISeries> GetPieChart(DataTable resultsTable, string Type = "Material", List<CarboElement> projectElements = null)
         {
-            SeriesCollection result = new SeriesCollection();
+            List<ISeries> result = new List<ISeries>();
             SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
 
             try
             {
                 List<CarboDataPoint> PieceListMaterial = new List<CarboDataPoint>();
-                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
+                //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
 
                 //Get the DataPint
                 PieceListMaterial = CarboCalcTextUtils.ConvertResultTableToDataPoints(resultsTable, Type, projectElements);
@@ -673,9 +548,29 @@ namespace CarboLifeUI.UI
                     }
                 }
 
-
+                int j = 0;
                 foreach (CarboDataPoint ppin in PieceListMaterial)
                 {
+                    double value = Math.Round(ppin.Value / 1, 2);
+                    string name = ppin.Name;
+
+#pragma warning disable CA1416 // Validate platform compatibility
+                    result.Add(new PieSeries<double>
+                    {
+                        Values = new double[] { value },
+                        Name = name,
+                        DataLabelsPaint = new SolidColorPaint(SKColors.Black),
+                        DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
+                        DataLabelsFormatter = point => $"{point.Model:0} tCO₂e",
+                        ToolTipLabelFormatter = point => $"{point.Model:0} tCO₂e",
+                        InnerRadius = 25,
+                        DataLabelsSize = 12,
+                        Fill = new SolidColorPaint(getSKColour(j)),
+
+                    });
+#pragma warning restore CA1416 // Validate platform compatibility
+                    j++;
+                    /* Framework 4.8 Code:
                     PieSeries newSeries = new PieSeries
                     {
                         Title = ppin.Name,
@@ -691,7 +586,9 @@ namespace CarboLifeUI.UI
                     newSeries.FontSize = 12;
 
                     result.Add(newSeries);
-
+                                            YToolTipLabelFormatter = point => $"{point.Model:0.00} tCO₂e",
+                        DataLabelsSize = 11
+                    */
                 }
 
 
@@ -704,6 +601,50 @@ namespace CarboLifeUI.UI
 
         }
 
+        
+        /// <summary>
+        /// Returns a colour value based on i value;
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        internal static SKColor getSKColour(int i)
+        {
+            SKColor result = new SKColor();
+               
+            SKColor[] Colors = new SKColor[]
+                {
+        new SKColor(147, 123, 131, 255),
+        new SKColor(87, 164, 177, 255),
+        new SKColor(90, 119, 135, 255),
+        new SKColor(210, 210, 60, 255),
+        new SKColor(185, 220, 160, 255),
+        new SKColor(156, 206, 212, 255),
+        new SKColor(251, 226, 150, 255),
+        new SKColor(253, 240, 203, 210),
+        new SKColor(247, 203, 145, 255),
+        new SKColor(252, 179, 179, 255),
+        new SKColor(118, 73, 197, 255)
+                };
+
+            if (i < Colors.Length)
+            {
+                result = Colors[i];
+                return result;
+            }
+            else
+            {
+                SKColor randomColor = new SKColor(
+    (byte)Random.Shared.Next(256),
+    (byte)Random.Shared.Next(256),
+    (byte)Random.Shared.Next(256),
+    255); // optional alpha
+
+                result = randomColor;
+                return result;
+
+            }
+        }
+
 
         /// <summary>
         /// Returns a datapoint list based on per category
@@ -711,15 +652,15 @@ namespace CarboLifeUI.UI
         /// <param name="carboLifeProject"></param>
         /// <returns></returns>
         [Obsolete]
-        internal static SeriesCollection GetPieChartCategoryTotals(CarboProject carboLifeProject)
+        internal static List<ISeries> GetPieChartCategoryTotals(CarboProject carboLifeProject)
         {
-            SeriesCollection result = new SeriesCollection();
+            List<ISeries> result = new List<ISeries>();
             SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
 
             try
             {
                 List<CarboDataPoint> PieceListCategory = new List<CarboDataPoint>();
-                Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
+                //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
 
                 PieceListCategory = carboLifeProject.getCategoryTotals();
 
@@ -773,6 +714,7 @@ namespace CarboLifeUI.UI
 
                 foreach (CarboDataPoint ppin in PieceListCategory)
                 {
+                    /*
                     PieSeries newSeries = new PieSeries
                     {
                         Title = ppin.Name,
@@ -788,6 +730,7 @@ namespace CarboLifeUI.UI
                     newSeries.FontSize = 12;
 
                     result.Add(newSeries);
+                    */
                 }
             }
             catch

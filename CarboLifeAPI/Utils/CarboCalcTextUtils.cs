@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -312,7 +311,7 @@ namespace CarboLifeAPI
                 {
                     CarboDataPoint newelement = new CarboDataPoint();
 
-                    //check if element is substructure:
+                    //check if element is reinforcement:
 
                     if(cEl.Category == "Reinforcement")
                         newelement.Name = cEl.SubCategory;
@@ -331,7 +330,7 @@ namespace CarboLifeAPI
                         {
                             if (pp.Name == newelement.Name)
                             {
-                                pp.Value += (newelement.Value/1000);
+                                pp.Value += (newelement.Value);
                                 merged = true;
                                 break;
                             }

@@ -14,13 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LiveCharts;
-using LiveCharts.Wpf;
 using CarboLifeAPI;
 using Microsoft.Win32;
-using LiveCharts.Helpers;
-using LiveCharts.Definitions.Charts;
 using System.Windows.Forms;
+using LiveChartsCore;
 
 namespace CarboLifeUI.UI
 {
@@ -191,7 +188,7 @@ namespace CarboLifeUI.UI
                     chx_Energy.Visibility = Visibility.Visible;
                     chx_Sequestration.Visibility = Visibility.Visible;
 
-                    SeriesCollection currentProjectSeriesCollection = new SeriesCollection();
+                    List<ISeries> currentProjectSeriesCollection = new List<ISeries>();
 
                     bool calcSequesteration = chx_Sequestration.IsChecked.Value;
                     bool calcEnergy = chx_Energy.IsChecked.Value;
@@ -212,6 +209,7 @@ namespace CarboLifeUI.UI
                     }
 
                     //set the axis:
+                    /*
                     AxesCollection XaxisCollection = new AxesCollection();
                     Axis XAxis = new Axis { Title = "Years from Construction Completion", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
                     XaxisCollection.Add(XAxis);
@@ -223,6 +221,7 @@ namespace CarboLifeUI.UI
 
                     barchart.AxisX = XaxisCollection;
                     barchart.AxisY = YaxisCollection;
+                    */
 
                     barchart.Series = currentProjectSeriesCollection;
 
@@ -254,7 +253,7 @@ namespace CarboLifeUI.UI
                         liv_Projects.ItemsSource = null;
                         liv_Projects.ItemsSource = projectListToCompareTo;
                     }
-                    SeriesCollection currentProjectSeriesCollection = new SeriesCollection();
+                    List<ISeries> currentProjectSeriesCollection = new List<ISeries>();
                     if (chx_Project0.IsChecked == true)
                     {
                         currentProjectSeriesCollection = GraphBuilder.BuildComparingTotalsBarGraph(CarboLifeProject, projectListToCompareTo);
@@ -278,6 +277,7 @@ namespace CarboLifeUI.UI
                     }
                     //Labels = null;
                     //set the axis:
+                    /*
                     AxesCollection XaxisCollection = new AxesCollection();
                     Axis XAxis = new Axis { Title = "Projects", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black, Labels = null };
                     XaxisCollection.Add(XAxis);
@@ -292,6 +292,7 @@ namespace CarboLifeUI.UI
                     Labels = projectlist.ToArray();
 
                     barchart.SeriesColors = GraphBuilder.getColours();
+                    */
                     barchart.Series = currentProjectSeriesCollection;
 
                     DataContext = this;

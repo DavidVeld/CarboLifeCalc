@@ -672,7 +672,10 @@ namespace CarboLifeUI.UI
 
                 if (vdb.isAccepted == true)
                 {
-                    CarboMaterial newMaterial = DeepCopy<CarboMaterial>(selectedMaterial);
+                    //CarboMaterial newMaterial = DeepCopy<CarboMaterial>(selectedMaterial); //4.8 Framework
+
+                    CarboMaterial newMaterial = selectedMaterial.Clone() as CarboMaterial; //4.8 Framework
+
                     newMaterial.Name = vdb.Value;
                     returnedDatabase.AddMaterial(newMaterial);
                                                          
@@ -682,6 +685,7 @@ namespace CarboLifeUI.UI
             }
         }
 
+        /*
         public static T DeepCopy<T>(T other)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -692,6 +696,7 @@ namespace CarboLifeUI.UI
                 return (T)formatter.Deserialize(ms);
             }
         }
+        */
 
         private void chx_A1_A3_Manual_Click(object sender, RoutedEventArgs e)
         {

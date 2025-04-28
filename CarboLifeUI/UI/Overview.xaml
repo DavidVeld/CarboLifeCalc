@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
-             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="750" d:DesignWidth="1300" IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
@@ -56,47 +56,12 @@
             <ComboBox Name="cbb_GraphType" Grid.Row="1" Grid.Column="1"  Margin="0,0,0,0" Height="25" Width="219" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_GraphType_DropDownClosed"/>
 
 
-            <lvc:PieChart Name="pie_Chart1" Visibility="Hidden" Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="#050505" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Segoe UI" FontWeight="Light" LegendLocation="Right">
-                <lvc:PieChart.Resources>
-                    <Style TargetType="lvc:PieSeries">
-                        <Setter Property="DataLabels" Value="True"></Setter>
-                        <Setter Property="LabelPosition" Value="OutsideSlice"></Setter>
-                    </Style>
-                </lvc:PieChart.Resources>
-                <lvc:PieChart.ChartLegend>
-                    <lvc:DefaultLegend BulletSize="20" Background="Red" Foreground="#050505" Margin="10,0,0,0" HorizontalAlignment="Left" />
-                </lvc:PieChart.ChartLegend>
-                <lvc:PieChart.DataTooltip>
-                    <lvc:DefaultTooltip BulletSize="20" Background="Gray" Foreground="#050505" SelectionMode="OnlySender"/>
-                </lvc:PieChart.DataTooltip>
+            <lvc:PieChart Name="pie_Chart1" Visibility="Hidden" Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="#050505" BorderThickness="0" Foreground="Black" Background="White" FontFamily="Segoe UI" FontWeight="Light" LegendPosition="Right"  LegendTextSize="12"
+            AnimationsSpeed="00:00:00.500"
+            EasingFunction="{Binding Easing}">
             </lvc:PieChart>
 
-            <lvc:CartesianChart Visibility="Visible" Name="chart_Level" Grid.Column="1" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
-
-                <lvc:CartesianChart.Resources>
-                    <Style TargetType="lvc:StackedRowSeries">
-                        <Setter Property="DataLabels" Value="True"></Setter>
-                        <Setter Property="LabelsPosition" Value="Merged"></Setter>
-                        <Setter Property="ToolTip" Value="False"></Setter>
-
-                    </Style>
-                </lvc:CartesianChart.Resources>
-                <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="Carbon Totals" 
-                         LabelFormatter="{Binding Formatter}" >
-                        <lvc:Axis.Separator>
-                            <lvc:Separator Stroke="Gray" Width="20"/>
-                        </lvc:Axis.Separator>
-                    </lvc:Axis>
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Level" Labels="{Binding levelLabels}" >
-
-                    </lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-                <lvc:CartesianChart.DataTooltip>
-                    <lvc:DefaultTooltip SelectionMode="SharedYValues"></lvc:DefaultTooltip>
-                </lvc:CartesianChart.DataTooltip>
+            <lvc:CartesianChart Visibility="Visible" Name="chart_Level" Grid.Column="1" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendPosition="Right" LegendTextSize="12" >
             </lvc:CartesianChart>
         </Grid>
 
@@ -105,29 +70,15 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="5"/>
-                <RowDefinition Height="30"/>
                 <RowDefinition Height="1.5*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="0.75*"/>
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
-            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="#050505" Background="White" FontFamily="Segoe UI" LegendLocation="Right" FontWeight="Light"  InnerRadius="20" Visibility="Visible">
-                <lvc:PieChart.Resources>
-                    <Style TargetType="lvc:PieSeries">
-                        <Setter Property="DataLabels" Value="True"></Setter>
-                        <Setter Property="LabelPosition" Value="OutsideSlice"></Setter>
-                    </Style>
-                </lvc:PieChart.Resources>
-                <lvc:PieChart.ChartLegend>
-                    <lvc:DefaultLegend BulletSize="20" Background="Red" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#050505" />
-                </lvc:PieChart.ChartLegend>
-                <lvc:PieChart.DataTooltip>
-                    <lvc:DefaultTooltip BulletSize="20" Background="Gray" SelectionMode="OnlySender" FontStyle="Normal" Foreground="#050505"/>
-                </lvc:PieChart.DataTooltip>
+            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="#050505" Background="White" FontFamily="Segoe UI" FontWeight="Light"  Visibility="Visible" LegendPosition="Right" LegendTextSize="12">
             </lvc:PieChart>
 
 
@@ -229,7 +180,7 @@
             <Label Margin="480,0,0,0" Grid.Row="1" Height="28" Width="30" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
             <Label Margin="480,30,0,0" Grid.Row="1" Height="28" Width="30" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
 
-            <Canvas Name="cnv_Leti" Grid.Column="0" Margin="5,5,5,5" Grid.Row="2" Background="White"></Canvas>
+            <Canvas Name="cnv_Leti" Grid.Column="0" Margin="5,5,5,5" Grid.Row="2" Background="White" ></Canvas>
 
         </Grid>
 

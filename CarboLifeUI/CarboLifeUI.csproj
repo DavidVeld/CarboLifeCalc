@@ -1,410 +1,43 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0C0DD1E5-1E52-48F4-9877-6615B2133931}</ProjectGuid>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CarboLifeUI</RootNamespace>
-    <AssemblyName>CarboLifeUI</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Revit|AnyCPU'">
     <OutputPath>..\..\..\..\..\CarboLifeCalc\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Revit|x64'">
     <OutputPath>bin\x64\Debug Revit\</OutputPath>
-    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\ico_CarboLife.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LiveCharts">
-      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
-    </Reference>
-    <Reference Include="LiveCharts.Wpf">
-      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="RevitAPI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2022\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2022\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Controls.Ribbon" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <ProjectReference Include="..\CarboLifeAPI\CarboLifeAPI.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI\DataSource\GroupQueryUtils.cs" />
-    <Compile Include="UI\DataImportDialog.xaml.cs">
-      <DependentUpon>DataImportDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialImportDialog.xaml.cs">
-      <DependentUpon>MaterialImportDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialConcreteMapper.xaml.cs">
-      <DependentUpon>MaterialConcreteMapper.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\TemplateSelector.xaml.cs">
-      <DependentUpon>TemplateSelector.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\LetiScore.cs" />
-    <Compile Include="UI\ScorsIndicator.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="UI\CaboDatabaseManager.xaml.cs">
-      <DependentUpon>CaboDatabaseManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\CarboSettingsMenu.xaml.cs">
-      <DependentUpon>CarboSettingsMenu.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\CarboLifeMainWindow.xaml.cs">
-      <DependentUpon>CarboLifeMainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\CarboInfoBox.xaml.cs">
-      <DependentUpon>CarboInfoBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\DataSource\ChartUtils.cs" />
-    <Compile Include="UI\DataSource\SumValues.cs" />
-    <Compile Include="UI\CarboAbout.xaml.cs">
-      <DependentUpon>CarboAbout.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ExportPicker.xaml.cs">
-      <DependentUpon>ExportPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\DataSource\GraphBuilder.cs" />
-    <Compile Include="UI\GroupAdvancedEditor.xaml.cs">
-      <DependentUpon>GroupAdvancedEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\B4EmissionPicker.xaml.cs">
-      <DependentUpon>B4EmissionPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\HeatMapCreator.xaml.cs">
-      <DependentUpon>HeatMapCreator.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\CarboGroupingSettingsDialog.xaml.cs">
-      <DependentUpon>CarboGroupingSettingsDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ProjectEnergyUsage.xaml.cs">
-      <DependentUpon>ProjectEnergyUsage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialSequestrationPicker.xaml.cs">
-      <DependentUpon>MaterialSequestrationPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialSelector.xaml.cs">
-      <DependentUpon>MaterialSelector.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\OnlineMaterialPicker.xaml.cs">
-      <DependentUpon>OnlineMaterialPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialAddMix.xaml.cs">
-      <DependentUpon>MaterialAddMix.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\CarboCompare.xaml.cs">
-      <DependentUpon>CarboCompare.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ProjectSettings.xaml.cs">
-      <DependentUpon>ProjectSettings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\RevitActivator.xaml.cs">
-      <DependentUpon>RevitActivator.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialMapper.xaml.cs">
-      <DependentUpon>MaterialMapper.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\SyncMaterialsWindow.xaml.cs">
-      <DependentUpon>SyncMaterialsWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\GroupWindow.xaml.cs">
-      <DependentUpon>GroupWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialA1A3Picker.xaml.cs">
-      <DependentUpon>MaterialA1A3Picker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\DescriptionEditor.xaml.cs">
-      <DependentUpon>DescriptionEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialMyEPD.xaml.cs">
-      <DependentUpon>MaterialMyEPD.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ValueDialogBox.xaml.cs">
-      <DependentUpon>ValueDialogBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialAdditionalPicker.xaml.cs">
-      <DependentUpon>MaterialAdditionalPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialConstructionPicker.xaml.cs">
-      <DependentUpon>MaterialConstructionPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialEndofLifePicker.xaml.cs">
-      <DependentUpon>MaterialEndofLifePicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialLifePicker.xaml.cs">
-      <DependentUpon>MaterialLifePicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialTransportPicker.xaml.cs">
-      <DependentUpon>MaterialTransportPicker.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ProfileWindow.xaml.cs">
-      <DependentUpon>ProfileWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\ReinforcementWindow.xaml.cs">
-      <DependentUpon>ReinforcementWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Overview.xaml.cs">
-      <DependentUpon>Overview.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\MaterialEditor.xaml.cs">
-      <DependentUpon>MaterialEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\DataSource\MaterialList.cs" />
-    <Compile Include="UI\DataViewer.xaml.cs">
-      <DependentUpon>DataViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UI\DataSource\PieChartGenerator.cs" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc5.4" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="9.0.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CarboLifeAPI\CarboLifeAPI.csproj">
-      <Project>{0C38F4ED-1D83-4FFE-AD65-B884410AF824}</Project>
-      <Name>CarboLifeAPI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="UI\CaboDatabaseManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\CarboSettingsMenu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\CarboLifeMainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\CarboInfoBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\CarboAbout.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\DataImportDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MaterialImportDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\MaterialConcreteMapper.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\TemplateSelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\ExportPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\GroupAdvancedEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\B4EmissionPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\HeatMapCreator.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\CarboGroupingSettingsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\ProjectEnergyUsage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MaterialSequestrationPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MaterialSelector.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\OnlineMaterialPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MaterialAddMix.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\CarboCompare.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\ProjectSettings.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\RevitActivator.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MaterialMapper.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\SyncMaterialsWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\GroupWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MaterialA1A3Picker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\DescriptionEditor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MaterialMyEPD.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\ValueDialogBox.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MaterialAdditionalPicker.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MaterialConstructionPicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\MaterialEndofLifePicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\MaterialLifePicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\MaterialTransportPicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\ProfileWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\ReinforcementWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\Overview.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MaterialEditor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\DataViewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UI\MyDataGrid.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UI\MyStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\DVLogo256.jpg" />
     <Content Include="Resources\ico_CarboLife.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\Logo128.jpg">
+    <None Update="Resources\Logo128.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Resource Include="Resources\rbn_groupnew32.png">
@@ -463,12 +96,13 @@
     <Content Include="UI\editicon.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <Reference Include="RevitAPI">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2025\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2025\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

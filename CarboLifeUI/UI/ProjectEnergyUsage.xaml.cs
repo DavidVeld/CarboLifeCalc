@@ -1,7 +1,6 @@
 ﻿using CarboLifeAPI;
 using CarboLifeAPI.Data;
-using LiveCharts.Wpf;
-using LiveCharts;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -223,6 +222,7 @@ namespace CarboLifeUI.UI
 
         private void refreshData()
         {
+            /*
             projectEnergyProperties.calculate(designPeriod);
 
             SeriesCollection energyLines = new SeriesCollection();
@@ -243,34 +243,12 @@ namespace CarboLifeUI.UI
             lineSeries.PointGeometrySize = 5;
             lineSeries.Width = 1;
 
-            //check min max
-            /*
-            if (Values.Max() > max)
-                max = Values.Max();
-            if (Values.Min() < min)
-                min = Values.Min();
-            */
 
             energyLines.Add(lineSeries);
 
 
-            //set the axis:
-            /*
-            AxesCollection XaxisCollection = new AxesCollection();
-            Axis XAxis = new Axis { Title = "Years From Construction Completion", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
-            XaxisCollection.Add(XAxis);
-
-            AxesCollection YaxisCollection = new AxesCollection();
-            Axis YAxis = new Axis { Title = "Total embodied Carbon (tCO2)", MinValue = min, Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
-            YaxisCollection.Add(YAxis);
-            
-
-            barchart.AxisX = XaxisCollection;
-            barchart.AxisY = YaxisCollection;
-            */
-
             chrt_Preview.Series = energyLines;
-
+            */
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System.Drawing;
+﻿using SkiaSharp;
+using System;
+using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using LiveCharts;
-using LiveCharts.Wpf;
 
 namespace CarboLifeUI.UI
 {
@@ -39,6 +39,49 @@ namespace CarboLifeUI.UI
             encoder.Save(stream);
 
             return new Bitmap(stream);
+        }
+
+        internal static Bitmap CanvasToImage(Canvas target, int v1, int v2)
+        {
+            if (target == null)
+            {
+                return null;
+            }
+            Bitmap myBitmap = null;
+
+            // Measure and arrange the canvas
+            System.Windows.Size size = new System.Windows.Size(target.ActualWidth, target.ActualHeight);
+            target.Measure(size);
+            target.Arrange(new Rect(size));
+            target.UpdateLayout();
+            target.ClipToBounds = true;
+            target.Background = System.Windows.Media.Brushes.White;
+
+            // Create the bitmap
+            RenderTargetBitmap renderBitmap = new RenderTargetBitmap(
+                (int)size.Width, (int)size.Height, 96d, 96d, PixelFormats.Pbgra32);
+
+            renderBitmap.Render(target);
+            
+            // Encode to PNG
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+
+            using (Stream s = new MemoryStream())
+            {
+                encoder.Save(s);
+                myBitmap = new Bitmap(s);
+            }
+
+            if (myBitmap != null)
+            {
+                return myBitmap;
+            }
+            else
+            {
+                return null;
+            }
+
         }
     }
 }

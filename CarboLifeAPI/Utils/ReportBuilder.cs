@@ -1,12 +1,11 @@
 ﻿using CarboLifeAPI.Data;
-using LiveCharts.Wpf;
-using LiveCharts.Wpf.Charts.Base;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.IO;
@@ -28,7 +27,7 @@ namespace CarboLifeAPI
         static string reportpath;
         //static string imgPath;
 
-        public static void CreateReport(CarboProject carboProject, Bitmap chart1, Bitmap chart2, Bitmap ratingChart)
+        public static void CreateReport(CarboProject carboProject, string chart1, string chart2, Bitmap ratingChart)
         {
             //Create a File and save it as a HTML File
             SaveFileDialog saveDialog = new SaveFileDialog();
@@ -76,26 +75,29 @@ namespace CarboLifeAPI
             string ImgTag2 = "";
             string ImgTag3 = "";
 
-            chart1 = CleanBlack(chart1);
-            chart2 = CleanBlack(chart2);
+            //chart1 = CleanBlack(chart1);
+            //chart2 = CleanBlack(chart2);
             ratingChart = CleanBlack(ratingChart);
 
             if (chart1 != null)
             {
-                string piechart1_64 = ToBase64String(chart1);
-                ImgTag1 = getImageTag(piechart1_64, 320 , 325, "PieChart1");
+                //string piechart1_64 = ToBase64String(chart1);
+                string piechart1_64 = chart1;
+                ImgTag1 = getImageTag(piechart1_64, 0 , 300, "PieChart1");
             }
 
             if (chart2 != null)
             {
-                string piechart2_64 = ToBase64String(chart2);
-                ImgTag2 = getImageTag(piechart2_64, 320, 325, "PieChart2");
+                //string piechart2_64 = ToBase64String(chart2);
+                string piechart2_64 = chart2;
+
+                ImgTag2 = getImageTag(piechart2_64, 0, 300, "PieChart2");
             }
 
             if (ratingChart != null)
             {
                 string ratingChart64 = ToBase64String(ratingChart);
-                ImgTag3 = getImageTag(ratingChart64, 320, 300, "Rating");
+                ImgTag3 = getImageTag(ratingChart64, 0, 300, "Rating");
             }
 
             //HTML WRITING;
@@ -140,7 +142,17 @@ namespace CarboLifeAPI
                 if (File.Exists(reportpath))
                 {
                     System.Windows.MessageBox.Show("Report successfully created!", "Success!", MessageBoxButton.OK);
-                    System.Diagnostics.Process.Start(reportpath);
+
+                    var startInfo = new ProcessStartInfo
+                    {
+                        FileName = reportpath, // Path to your HTML file
+                        UseShellExecute = true // This is the key part that allows it to open with the default application
+                    };
+
+                    Process.Start(startInfo);
+
+
+                    //System.Diagnostics.Process.Start(reportpath); 4.8
                 }
             }
             catch(Exception ex)
@@ -219,7 +231,7 @@ namespace CarboLifeAPI
         {
             Bitmap result = BtmImg.Clone() as Bitmap;
             System.Drawing.Color white = System.Drawing.Color.FromArgb(255,255,255);
-            System.Drawing.Color black = System.Drawing.Color.FromArgb(255, 255, 255);
+            //System.Drawing.Color black = System.Drawing.Color.FromArgb(255, 255, 255);
 
             for (int x=1;x<BtmImg.Width; x++)
             {

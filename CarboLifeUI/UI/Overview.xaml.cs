@@ -14,13 +14,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LiveCharts;
-using LiveCharts.Wpf;
 using CarboLifeAPI;
 using System.Data;
 using System.IO;
 using Autodesk.Revit.DB.Visual;
 using Autodesk.Revit.DB;
+using LiveChartsCore;
+using LiveChartsCore.Kernel.Sketches;
 
 namespace CarboLifeUI.UI
 {
@@ -31,7 +31,7 @@ namespace CarboLifeUI.UI
     {
         public CarboProject CarboLifeProject;
         string summaryTextMemory = "";
-        public SeriesCollection SeriesCollection { get; set; }
+        public List<ISeries> SeriesCollection { get; set; }
         public string[] levelLabels { get; set; }
         public Func<double, string> Formatter { get; set; }
 
@@ -113,8 +113,8 @@ namespace CarboLifeUI.UI
                 if (CarboLifeProject != null)
                 {
 
-                    SeriesCollection pieSeries = null;
-                    SeriesCollection levelSeries = null;
+                    List<ISeries> pieSeries = null;
+                    List<ISeries> levelSeries = null;
 
                     //SeriesCollection pieLifeSeries = GraphBuilder.GetPieChartTotals(CarboLifeProject);
 
@@ -198,7 +198,8 @@ namespace CarboLifeUI.UI
                         if (levelSeries != null)
                         {
                             chart_Level.Series = levelSeries;
-                            chart_Level.SeriesColors = GraphBuilder.getColours();
+                            chart_Level.YAxes = GraphBuilder.XAxis(labels).ToArray();
+                            //chart_Level.SeriesColors = GraphBuilder.getColours();
 
                             levelLabels = labels.ToArray();
                             Formatter = x => x + "tCO2";
@@ -217,7 +218,7 @@ namespace CarboLifeUI.UI
                     if (pieSeries != null)
                     {
                         pie_Chart1.Series = pieSeries;
-                        pie_Chart1.SeriesColors = GraphBuilder.getColours();
+                        //pie_Chart1.Legend = IChartLegend
 
                     }
 
@@ -424,10 +425,6 @@ namespace CarboLifeUI.UI
             return ayResult;
         }
 
-        private void Pie_Chart_DataClick(object sender, LiveCharts.ChartPoint chartPoint)
-        {
-
-        }
 
         private void btn_EditDescription_Copy_Click(object sender, RoutedEventArgs e)
         {
@@ -526,15 +523,15 @@ namespace CarboLifeUI.UI
             {                
                 if (CarboLifeProject != null && cbb_GraphType != null )
                 {
-                    SeriesCollection pieLifeSeries = null;
+                    List<ISeries> pieLifeSeries = null;
 
                     pieLifeSeries = GraphBuilder.GetPhasePieChartTotals(CarboLifeProject);
 
 
                     if (pieLifeSeries != null)
                     {
-                        pie_Chart2.Series = pieLifeSeries;
-                        pie_Chart2.SeriesColors = GraphBuilder.getColours();
+                        pie_Chart2.Series = pieLifeSeries.ToArray();
+                       // pie_Chart2.SeriesColors = GraphBuilder.getColours();
 
                     }
                     //Totals

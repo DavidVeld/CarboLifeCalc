@@ -1,11 +1,13 @@
 ﻿using CarboLifeAPI;
 using CarboLifeAPI.Data;
-using LiveCharts.Wpf.Charts.Base;
+using LiveChartsCore.SkiaSharpView.SKCharts;
+using LiveChartsCore.SkiaSharpView.WPF;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -128,7 +130,16 @@ Do you want to buy me a coffee and you get a key to remove this message?";
 
                         if (result == MessageBoxResult.Yes)
                         {
-                            System.Diagnostics.Process.Start("https://buymeacoffee.com/davidveld");
+
+                            var startInfo = new ProcessStartInfo
+                            {
+                                FileName = "https://buymeacoffee.com/davidveld", // Path to file
+                                UseShellExecute = true // This is the key part that allows it to open with the default application
+                            };
+
+                            Process.Start(startInfo);
+
+                            //System.Diagnostics.Process.Start("https://buymeacoffee.com/davidveld");
                         }
                     }
                 }
@@ -138,7 +149,6 @@ Do you want to buy me a coffee and you get a key to remove this message?";
 
         private void Menu_Loaded(object sender, RoutedEventArgs e)
         {
-
         }
 
         internal CarboProject getCarbonLifeProject()
@@ -402,25 +412,41 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                 this.WindowState = WindowState.Maximized;
                 //this.WindowStyle = WindowStyle.None;
 
-                Bitmap Chart1 = null;
+                //Bitmap Chart1 = null;
                 Bitmap Chart2 = null;
                 Bitmap LetiChart = null;
 
 
-                LiveCharts.Wpf.PieChart foundchart1 = Panel_Overview.pie_Chart1;
-                LiveCharts.Wpf.PieChart foundchart2 = Panel_Overview.pie_Chart2;
+                PieChart foundchart1 = Panel_Overview.pie_Chart1;
+                PieChart foundchart2 = Panel_Overview.pie_Chart2;
                 Canvas foundletiChart = Panel_Overview.cnv_Leti;
 
+                string base64CartesianChart1 = "";
+                string base64CartesianChart2 = "";
 
                 if (foundchart1 != null)
                 {
-                    Chart1 = ChartUtils.ControlToImage(foundchart1, 300, 300);
+                    PieChart chartControl = Panel_Overview.pie_Chart1;
+                    SKPieChart skChart = new SKPieChart(chartControl) { Width = 450, Height = 300 };
+                    skChart.SaveImage("PieImageFromControl.png");
+                    using var image = skChart.GetImage();
+                    using var data = image.Encode();
+                    base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
+
+                    //Chart1 = ChartUtils.ControlToImage(foundchart1, 300, 300);
                     //Chart1.Save(@"C:\Users\David\Documents\img1.jpg");
                 }
 
                 if (foundchart2 != null)
                 {
-                    Chart2 = ChartUtils.ControlToImage(foundchart2, 300, 300);
+                    PieChart chartControl = Panel_Overview.pie_Chart2;
+                    SKPieChart skChart = new SKPieChart(chartControl) { Width = 450, Height = 300 };
+                    skChart.SaveImage("PieImageFromControl.png");
+                    using var image = skChart.GetImage();
+                    using var data = image.Encode();
+                    base64CartesianChart2 = Convert.ToBase64String(data.AsSpan());
+
+                    //Chart2 = ChartUtils.ControlToImage(foundchart2, 300, 300);
                 }
 
                 if (foundletiChart != null)
@@ -429,7 +455,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                 }
 
 
-                ReportBuilder.CreateReport(carboLifeProject, Chart1, Chart2, LetiChart);
+                ReportBuilder.CreateReport(carboLifeProject, base64CartesianChart1, base64CartesianChart2, LetiChart);
             }
         }
 
@@ -685,6 +711,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             System.Drawing.Rectangle resolution = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
             int height = resolution.Height;
 

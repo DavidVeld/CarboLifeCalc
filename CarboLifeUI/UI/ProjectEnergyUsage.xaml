@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
-             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
 
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600" MinWidth="500" MinHeight="650" Width="600" Height="600"  Loaded="Window_Loaded" Background="WhiteSmoke">
@@ -127,15 +127,8 @@
                 <Label Grid.Column="1" Grid.Row="10" Height="28" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTitleStyle}" Grid.RowSpan="2">Predicted Energy Cost:</Label>
 
 
-                <lvc:CartesianChart Name="chrt_Preview" Grid.Column="1" Margin="0,3,0,5" Grid.Row="11" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right" Grid.RowSpan="2">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Years" 
-                          Labels="{Binding Labels}" 
-                          Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" />
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="CO₂e/year"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart Name="chrt_Preview" Grid.Column="1" Margin="0,3,0,5" Grid.Row="11" Grid.ColumnSpan="6" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendPosition="Right"  Grid.RowSpan="2">
+
                 </lvc:CartesianChart>
 
             </Grid>

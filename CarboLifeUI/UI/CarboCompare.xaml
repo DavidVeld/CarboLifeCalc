@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
-             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="667
              " d:DesignWidth="1160" IsVisibleChanged="UserControl_IsVisibleChanged">
@@ -14,18 +14,6 @@
                 <ResourceDictionary Source="MyStyles.xaml"/>
                 <ResourceDictionary Source="MyDataGrid.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            <Style TargetType="lvc:Separator">
-                <Setter Property="Stroke" Value="#1A303030"></Setter>
-                <Style.Triggers>
-                    <Trigger Property="AxisOrientation" Value="X">
-                        <Setter Property="IsEnabled" Value="False"></Setter>
-                    </Trigger>
-                    <Trigger Property="AxisOrientation" Value="X">
-                        <Setter Property="IsEnabled" Value="True"></Setter>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
 
         </ResourceDictionary>
     </UserControl.Resources>
@@ -89,20 +77,7 @@
 
         </GroupBox>
 
-        <lvc:CartesianChart Name="barchart" Grid.Column="2" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
-            <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="Compare Projects" 
-                          Labels="{Binding Labels}" >
-                    <lvc:Axis.Separator>
-                        <lvc:Separator Stroke="Red" Width="20"/>
-                    </lvc:Axis.Separator>
-                </lvc:Axis>
-            </lvc:CartesianChart.AxisX>
-            <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Carbon Totals" LabelFormatter="{Binding Formatter}">
-
-                </lvc:Axis>
-            </lvc:CartesianChart.AxisY>
+        <lvc:CartesianChart Name="barchart" Grid.Column="2" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light">
         </lvc:CartesianChart>
 
 

@@ -14,7 +14,7 @@ using System.Windows.Media.Media3D;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Configuration.Assemblies;
-using System.Net.Configuration;
+//using System.Net.Configuration;
 using System.Runtime;
 using System.Windows.Media;
 

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
-             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d" Title="Carbo Life Calculator: Material Selector"
              d:DesignHeight="500"  Height="500" MaxHeight="500"  MinHeight="500"  d:DesignWidth="700" MinWidth="700" Width="700" MaxWidth="700" Loaded="Window_Loaded" Background="WhiteSmoke">
     <Window.Resources>
@@ -103,15 +103,7 @@
                 <TextBox Name="txt_SelectedValue" Grid.Column="1" Grid.Row="4" Margin="170,3,0,0" Height="28" Width="60" VerticalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True" Foreground="Brown" Background="White" Grid.RowSpan="2"/>
                 <Label Grid.Column="1" Margin="230,3,0,0" Grid.Row="4" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}" Grid.RowSpan="2">kgCO₂/kg</Label>
 
-                <lvc:CartesianChart Name="barchart" Grid.Column="1" Margin="0,3,0,0" Grid.Row="5" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendLocation="Right">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="Compare Materials" 
-                          Labels="{Binding Labels}" 
-                          Separator="{x:Static lvc:DefaultAxes.CleanSeparator}" />
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Carbon Intensity" LabelFormatter="{Binding Formatter}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
+                <lvc:CartesianChart Name="barchart" Grid.Column="1" Margin="0,3,0,0" Grid.Row="5" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendPosition="Right">
                 </lvc:CartesianChart>
                 <!--<Canvas Name="cnv_Totals" Grid.Column="1" Margin="0,3,0,0" Grid.Row="3" Background="White"></Canvas>-->
 

@@ -1,4 +1,6 @@
 ﻿using CarboLifeAPI.Data;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LiveCharts;
-using LiveCharts.Wpf;
 
 namespace CarboLifeUI.UI
 {
@@ -155,12 +155,13 @@ namespace CarboLifeUI.UI
 
         private void Buildgraph()
         {
-            SeriesCollection compareBar = new SeriesCollection();
+            List<ISeries> compareBar = new List<ISeries>();
 
             //Build series
-            compareBar = new SeriesCollection
+            compareBar = new List<ISeries>
             {
-                new StackedColumnSeries
+                /*
+                new StackedColumnSeries<>
                 {
                     Values = new ChartValues<double>
                     {
@@ -227,6 +228,7 @@ namespace CarboLifeUI.UI
                     DataLabels = true,
                      Title = "Added"
                 }
+                */
             };
 
             //adding series updates and animates the chart

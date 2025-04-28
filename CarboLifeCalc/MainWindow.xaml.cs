@@ -21,7 +21,7 @@ using CarboLifeUI;
 using CarboLifeUI.UI;
 using Microsoft.Win32;
 using Path = System.IO.Path;
-using CarboCircle;
+//using CarboCircle;
 using System.Security.Cryptography;
 
 namespace CarboLifeCalc
@@ -144,7 +144,9 @@ namespace CarboLifeCalc
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             CarboLifeAPI.PathUtils.CheckFileLocationsNew();
+            //Assembly.GetExecutingAssembly().GetName().Version.ToString();
             lbl_Version.Content = "Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            string a = lbl_Version.Content.ToString();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
