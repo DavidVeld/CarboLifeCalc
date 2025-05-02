@@ -51,27 +51,12 @@
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Name="lbl_2019" Grid.Column="1" Margin="45,2,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}" Grid.RowSpan="1">2019</Label>
-                <CheckBox Name="chx_2019" Grid.Column="1" Grid.Row="1" Margin="25,8,5,4" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
-
-                <Label Name="lbl_2020" Grid.Column="1" Margin="45,32,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}" Grid.RowSpan="1">2020</Label>
-                <CheckBox Name="chx_2020" Grid.Column="1" Grid.Row="1" Margin="25,38,5,4" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
-
-                <Label Name="lbl_2021" Grid.Column="1" Margin="45,62,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}" Grid.RowSpan="1">2021</Label>
-                <CheckBox Name="chx_2021" Grid.Column="1" Grid.Row="1" Margin="25,68,5,4" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
-
-
-                <Label Name="lbl_2022" Grid.Column="1" Margin="45,92,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}" Grid.RowSpan="1">2022</Label>
-                <CheckBox Name="chx_2022" Grid.Column="1" Grid.Row="1" Margin="25,98,5,4" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
-
-                <Label Name="lbl_2023" Grid.Column="1" Margin="45,122,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}" Grid.RowSpan="1">2023</Label>
-                <CheckBox Name="chx_2023" Grid.Column="1" Grid.Row="1" Margin="25,128,5,4" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
-
-                <Label Name="lbl_2024" Grid.Column="1" Margin="45,152,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}" Grid.RowSpan="1">2024</Label>
-                <CheckBox Name="chx_2024" Grid.Column="1" Grid.Row="1" Margin="25,158,5,4" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
                 
-                <Label Name="lbl_2025" Grid.Column="1" Margin="45,182,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}" Grid.RowSpan="1">2025</Label>
-                <CheckBox Name="chx_2025" Grid.Column="1" Grid.Row="1" Margin="25,188,5,4" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
+                <Label Name="lbl_2025" Grid.Column="1" Margin="45,5,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}" Grid.RowSpan="1">2025</Label>
+                <CheckBox Name="chx_2025" Grid.Column="1" Grid.Row="1" Margin="25,10,5,4" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
+
+                <Label Name="lbl_2026" Grid.Column="1" Margin="45,35,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyleLabel}" Grid.RowSpan="1">2026</Label>
+                <CheckBox Name="chx_2026" Grid.Column="1" Grid.Row="1" Margin="25,40,5,4" VerticalAlignment="Top" HorizontalAlignment="Left"></CheckBox>
 
             </Grid>
         </GroupBox>
