@@ -224,7 +224,8 @@ namespace CarboLifeUI.UI
                     */
 
                     barchart.Series = currentProjectSeriesCollection;
-
+                    barchart.XAxes = GraphBuilder.getYearAxis();
+                    barchart.YAxes = GraphBuilder.getCarbonAxis();
 
                     DataContext = this;
                 }
@@ -245,7 +246,7 @@ namespace CarboLifeUI.UI
 
                 if (CarboLifeProject != null)
                 {
-                    chx_Project0.Content = CarboLifeProject.Name + " (Current) " + Environment.NewLine + Math.Round(CarboLifeProject.ECTotal, 2) + " kgCO₂";
+                    chx_Project0.Content = CarboLifeProject.Name + " (Current) " + Environment.NewLine + Math.Round(CarboLifeProject.ECTotal, 2) + " tCO₂e";
 
 
                     if (liv_Projects != null)
@@ -263,7 +264,7 @@ namespace CarboLifeUI.UI
                         currentProjectSeriesCollection = GraphBuilder.BuildComparingTotalsBarGraph(null, projectListToCompareTo);
                     }
 
-                    Func<double, string> Formatter = value => value + " kgCO₂";
+                    //Func<double, string> Formatter = value => value + " kgCO₂e";
 
                     //Build the labels
                     List<string> projectlist = new List<string>();

@@ -155,7 +155,7 @@ namespace CarboLifeAPI
             }
 
             result.Name = i.ToString();
-            result.Value = totalECAcumulated;
+            result.Value = totalECAcumulated / 1000;
 
             return result;
 

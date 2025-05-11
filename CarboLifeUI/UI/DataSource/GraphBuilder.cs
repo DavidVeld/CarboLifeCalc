@@ -161,9 +161,50 @@ namespace CarboLifeUI.UI
 
             if (projectList.Count > 0)
             {
+
+                //List<ISeries> SerieList = new List<ISeries>();
+                //List<double> values = new List<double>();
+                List<string> labels = new List<string>();
+                int j = 0;
                 foreach (CarboProject prct in projectList)
                 {
                     IList<CarboDataPoint> data = CarboTimeLine.GetTimeLineDataPoints(prct, sequestration, energy, demolition);
+
+
+                    // Create a new list of values and labels for this series
+                    List<double> values = new List<double>();
+                    foreach (CarboDataPoint dataPoint in data)
+                    {
+                        values.Add(dataPoint.Value);
+                    }
+
+                    var lc = getSKColour(j);
+                    var color = new SKColor(lc.Red, lc.Green, lc.Blue);
+
+                    var paint = new SolidColorPaint
+                    {
+                        Color = new SKColor(lc.Red, lc.Green, lc.Blue),
+                        StrokeThickness = 2,
+                        IsAntialias = true
+                    };
+
+                    // Add a LineSeries for this project
+                    result.Add(new LineSeries<double>
+                    {
+                     
+
+                        Values = values,
+                        Name = prct.Name,
+                        Fill = null,
+                        GeometrySize = 0,
+                        LineSmoothness = 0,
+                        Stroke = paint
+
+                    });
+
+
+
+                    //result.Add(seriesList);
 
                     /*
                     LineSeries lineSeries = new LineSeries();
@@ -189,6 +230,7 @@ namespace CarboLifeUI.UI
 
                     result.Add(lineSeries);
                     */
+                j++;
                 }
             }
 
@@ -348,6 +390,7 @@ namespace CarboLifeUI.UI
 {
             List<ICartesianAxis> resultList = new List<ICartesianAxis>();
 
+#pragma warning disable CA1416 // Validate platform compatibility
             resultList.Add(            
                 new Axis
                 {
@@ -355,6 +398,7 @@ namespace CarboLifeUI.UI
                     Labels = levelList,
                     TextSize = 11
                 });
+#pragma warning restore CA1416 // Validate platform compatibility
 
             return resultList.ToArray();
 
@@ -741,6 +785,32 @@ namespace CarboLifeUI.UI
 
         }
 
+        internal static IEnumerable<ICartesianAxis> getYearAxis()
+        {
+            Axis[] XAxes = new Axis[]
+            {
+    new Axis
+    {
+        Name = "Year",
+    }
+            };
 
+            return XAxes;
+        }
+
+        internal static IEnumerable<ICartesianAxis> getCarbonAxis()
+        {
+            Axis[] YAxes = new Axis[]
+            {
+    new Axis
+    {
+        Name = "Emissions",
+        Labeler = value => $"{value:N0} tCO₂e"
+    }
+            };
+
+            return YAxes;
+
+        }
     }
 }
