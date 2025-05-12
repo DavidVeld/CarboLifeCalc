@@ -34,6 +34,7 @@ namespace CarboLifeAPI.Data
 
 
         public List<CarboColourPreset> colourPresets {get; set;}
+        public bool launchCircle { get; set; }
 
         public CarboGroupSettings defaultCarboGroupSettings;
         public CarboSettings()
@@ -54,6 +55,8 @@ namespace CarboLifeAPI.Data
             showTrees = true;
             showSCC = true;
             showDeaths = false;
+
+            launchCircle = false;
 
             defaultCarboGroupSettings = new CarboGroupSettings();
 

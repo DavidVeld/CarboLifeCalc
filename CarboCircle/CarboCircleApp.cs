@@ -1,6 +1,8 @@
-﻿using Autodesk.Revit.UI;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using CarboCircle;
 using CarboCircle.UI;
+using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,6 +26,15 @@ namespace CarboCircle
             //Placeholders we will call later
             m_CarboCircleWindow = null;
             thisApp = this;
+
+            //Check if user wants the circle app
+            CarboSettings carboSettings = new CarboSettings();
+            carboSettings = new CarboSettings().Load();
+
+            if (carboSettings.launchCircle == false)
+            {
+                return Result.Succeeded;
+            }
 
             //Create  A button
             RibbonPanel CarboCalcPanel = application.CreateRibbonPanel("CarboLifeCircle");

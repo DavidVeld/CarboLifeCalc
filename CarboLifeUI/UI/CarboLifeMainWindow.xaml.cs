@@ -827,5 +827,21 @@ Do you want to buy me a coffee and you get a key to remove this message?";
             }
         }
 
+        private void mnu_ExportToIstructE_Click(object sender, RoutedEventArgs e)
+        {
+            //get a location and save the data
+            if (carboLifeProject != null)
+            {
+                carboLifeProject.CalculateProject();
+
+                //get a CSV location:
+                string savePath = DataExportUtils.GetSaveAsLocation();
+
+                if (savePath != null && savePath != "")
+                {
+                    DataExportUtils.ExportToIstructEClick(carboLifeProject, savePath);
+                }
+            }
+        }
     }
 }

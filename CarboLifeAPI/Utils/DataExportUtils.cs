@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -1504,15 +1505,124 @@ fileString =
 
             try
             {
+                string targetPathFull = targetPath + "\\" + filename + ".xlsx";
+
                 Application app = new Application();
                 Workbook wb = app.Workbooks.Open(savePath, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
                 wb.SaveAs(targetPath + "\\" + filename + ".xlsx", XlFileFormat.xlOpenXMLWorkbook, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
                 wb.Close();
                 app.Quit();
+                if(File.Exists(savePath) && DataExportUtils.IsFileLocked(savePath) == false)
+                    File.Delete(savePath);
+
+                if (File.Exists(targetPathFull))
+                {
+                    var result = MessageBox.Show("Exported Data Succesfully! Press ok to open the file.", "Success", MessageBoxButton.OKCancel);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        var startInfo = new ProcessStartInfo
+                        {
+                            FileName = targetPathFull, 
+                            UseShellExecute = true 
+                        };
+                        Process.Start(startInfo);
+                    }
+                }
+
+
             }
             catch (IOException ex)
             {
                 Console.WriteLine("An error occurred while writing the file: " + ex.Message);
+            }
+        }
+
+        public static void ExportToIstructEClick(CarboProject carboLifeProject, string savePath)
+        {
+            if (File.Exists(savePath) && IsFileLocked(savePath) == true)
+                return;
+
+            string fileString = "";
+
+            //Material	Material Type	Material Specification	Structural Element	Description	Component Lifespan [years]	Aspect of Structure	Significant Temporary Works?	Number of Times Temp Works Used before EOL	Volume [m3] or Mass [kg]?	"Material Quantity
+
+
+            //Create Headers;
+            fileString =
+                "Material" + "," + //0
+                "Material Type" + "," + //1
+                "Material Specification" + "," + //2
+                "Structural Element" + "," + //3
+                "Description" + "," + //4
+                "Component Lifespan" + "," + //5
+                "Aspect" + "," + //6
+                "Significant" + "," + //7
+                "Number of Times Temp Works" + "," + //8
+                "Volume or Mass" + "," + //9
+                "Quantity" + "," + //10
+                Environment.NewLine;
+            //Advanced
+            foreach (CarboGroup grp in carboLifeProject.getGroupList)
+            {
+                try
+                {
+                    string resultString = "";
+                    resultString += CVSFormat(grp.MaterialName) + ","; //0
+                    resultString += "" + ","; //1
+                    resultString += "" + ","; //2
+                    resultString += "" + ","; //3
+                    resultString += CVSFormat(grp.MaterialName + " " + grp.Description) + ","; //4
+                    resultString += "60" + ","; //6
+                    resultString += "New Build" + ","; //5
+                    resultString += "No" + ","; //8
+                    resultString += "" + ","; //9
+                    resultString += "Volume [m3]" + ","; //10
+                    resultString += grp.TotalVolume; //11
+
+                    resultString += Environment.NewLine;
+
+                    fileString += resultString;
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine("An error occurred while writing the file: " + ex.Message);
+                }
+            }
+
+            WriteCVSFile(fileString, savePath);
+            string targetPath = Path.GetDirectoryName(savePath);
+            string filename = Path.GetFileNameWithoutExtension(savePath);
+
+            try
+            {
+                string targetPathFull = targetPath + "\\" + filename + ".xlsx";
+                Application app = new Application();
+                Workbook wb = app.Workbooks.Open(savePath, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                wb.SaveAs(targetPathFull, XlFileFormat.xlOpenXMLWorkbook, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                wb.Close();
+                app.Quit();
+
+                if (File.Exists(savePath) && DataExportUtils.IsFileLocked(savePath) == false)
+                    File.Delete(savePath);
+
+                if (File.Exists(targetPathFull))
+                {
+                    var result = MessageBox.Show("Exported Succesfully! Press ok to open the file.","Success",MessageBoxButton.OKCancel);
+                    if(result == MessageBoxResult.OK)
+                    {
+                            var startInfo = new ProcessStartInfo
+                            {
+                                FileName = targetPathFull, // Path to your HTML file
+                                UseShellExecute = true // This is the key part that allows it to open with the default application
+                            };
+                        Process.Start(startInfo);
+                    }
+                }
+
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("An error occurred while writing the file: " + ex.Message);
             }
         }
 

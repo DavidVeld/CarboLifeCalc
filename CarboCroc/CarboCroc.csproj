@@ -71,11 +71,12 @@
     <Content Include="Resources\List.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="CarboCrocSampleProject.gh">
+    <Content Include="samples\CarboCrocSampleProject.gh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Include="samples\CarboCrocSampleProjectBaked.gh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
@@ -83,6 +84,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="UserControl1.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="samples\CarboCrocSampleProject.gh" />
+    <None Remove="samples\CarboCrocSampleProjectBaked.gh" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GH_IO">

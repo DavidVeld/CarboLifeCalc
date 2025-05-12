@@ -18,6 +18,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using static System.Net.WebRequestMethods;
 
 namespace CarboLifeAPI
 {
@@ -41,13 +42,13 @@ namespace CarboLifeAPI
             string Path = saveDialog.FileName;
             reportpath = Path;
 
-            if (File.Exists(Path))
+            if (System.IO.File.Exists(Path))
             {
                 MessageBoxResult msgResult = System.Windows.MessageBox.Show("This file already exists, do you want to overwrite this file ?", "", MessageBoxButton.YesNo);
 
                 if (msgResult == MessageBoxResult.Yes)
                 {
-                    using (var fs = File.Open(Path, FileMode.Open))
+                    using (var fs = System.IO.File.Open(Path, FileMode.Open))
                     {
                         var canRead = fs.CanRead;
                         var canWrite = fs.CanWrite;
@@ -139,28 +140,25 @@ namespace CarboLifeAPI
                     }
                 }
 
-                if (File.Exists(reportpath))
+                if (System.IO.File.Exists(reportpath))
                 {
-                    System.Windows.MessageBox.Show("Report successfully created!", "Success!", MessageBoxButton.OK);
-
-                    var startInfo = new ProcessStartInfo
+                    var result = System.Windows.MessageBox.Show("Report successfully created! Press OK to open the report", "Success!", MessageBoxButton.OKCancel);
+                    if (result == MessageBoxResult.OK)
                     {
-                        FileName = reportpath, // Path to your HTML file
-                        UseShellExecute = true // This is the key part that allows it to open with the default application
-                    };
+                        var startInfo = new ProcessStartInfo
+                        {
+                            FileName = reportpath, // Path to your HTML file
+                            UseShellExecute = true // This is the key part that allows it to open with the default application
+                        };
 
-                    Process.Start(startInfo);
-
-
-                    //System.Diagnostics.Process.Start(reportpath); 4.8
+                        Process.Start(startInfo);
+                    }
                 }
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            //VOID
-
         }
 
         private static string writeCalculation(CarboProject carboProject)
@@ -659,12 +657,15 @@ namespace CarboLifeAPI
 
             try
             {
-                html += "<HTML><HEAD><TITLE>Carbon Life Calculation for: " + carboProject.Name + " </TITLE>" + System.Environment.NewLine;
+                html += "<HTML><HEAD><TITLE>Carbo Life Calc : Embodied Carbon Calculation for: " + carboProject.Name + " </TITLE>" + System.Environment.NewLine;
                 //add header row
 
                 html += getCSS();
 
                 html += "</HEAD><BODY>";
+
+                html += "<H1><B>" + "Embodied Carbon Calculation for: " + carboProject.Name + "</B></H1><BR>" + System.Environment.NewLine;
+
 
                 html += "<H1><B>" + "Project Info" + "</B></H1><BR>" + System.Environment.NewLine;
 
@@ -720,6 +721,98 @@ namespace CarboLifeAPI
         }
 
         public static string getCSS()
+        {
+            string html = @"
+<style type=""text/css"">
+body {
+  font-family: ""Segoe UI"", sans-serif;
+  background-color: #f9f9f9;
+  color: #222;
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2, h3 {
+  color: #8B0000;
+  margin-left: 20px;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+a {
+  color: #B22222; /* firebrick red */
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+a:hover {
+  color: #FF4500; /* bright red-orange */
+  text-decoration: underline;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+
+table {
+  width: 90%;
+  margin: 0 auto 30px auto;
+  border-collapse: collapse;
+  font-size: 14px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+td {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  vertical-align: top;
+}
+
+tr:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+tr:hover {
+  background-color: #eee;
+}
+
+td b {
+  color: #333;
+}
+
+img {
+  display: block;
+  margin: 20px auto;
+  max-width: 100%;
+  height: auto;
+}
+</style>
+";
+
+
+            return html;
+
+
+        }
+
+        [Obsolete]
+        public static string getCSS_old()
         {
             string html = "";
 
@@ -777,7 +870,9 @@ namespace CarboLifeAPI
         public static string closeHTML()
         {
             string html = "";
-            string title = "<H3>Date: " + DateTime.Today.ToShortDateString() + "</H3><BR>" + System.Environment.NewLine;
+             html += "<H3>Report Generated on: " + DateTime.Today.ToShortDateString() + "<BR>" + System.Environment.NewLine;
+            html += "Report Generated by: " + "Carbo Life Calculator Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + "<BR>" + System.Environment.NewLine;
+            html += @"<A href=""https://github.com/DavidVeld/CarboLifeCalc"">https://github.com/DavidVeld/CarboLifeCalc</A></H3><BR>" + System.Environment.NewLine;
 
             try
             {

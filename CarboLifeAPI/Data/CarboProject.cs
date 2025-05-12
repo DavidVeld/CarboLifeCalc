@@ -1301,12 +1301,12 @@ namespace CarboLifeAPI.Data
             generalText += Environment.NewLine;
             if (showCars == true)
             {
-                generalText += "The calculated value equals to: " + carCarbon.ToString() + " average car emission per year (1.40 tCO₂e/car). (UK)" + Environment.NewLine;
+                generalText += "The calculated value equals to: " + carCarbon.ToString() + " average car emission per year (1.80 tCO₂e/car).(UK)" + Environment.NewLine;
             }
 
             if (showPlanes == true)
             {
-                generalText += "This is equivalent to " + planeCarbon.ToString() + " one-way flights from London to New York (1.0" + Environment.NewLine;
+                generalText += "This is equivalent to " + planeCarbon.ToString() + " one-way flights from London to New York (2.22 tCO₂e/flight)" + Environment.NewLine;
 
             }
 
@@ -1317,7 +1317,7 @@ namespace CarboLifeAPI.Data
 
             if (showSCC == true)
             {
-                generalText += "The Social Carbon Cost (SCC) of this project is: " + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
+                generalText += "The Social Carbon Cost of this project is: " + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
             }
 
             if (showDeaths == true)

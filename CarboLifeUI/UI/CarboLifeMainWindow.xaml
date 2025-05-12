@@ -51,6 +51,7 @@
                     <MenuItem Name="mnu_ExportToJson" Header="Export JSon..." Click="mnu_ExportToJSON_Click" Background="Transparent"></MenuItem>
                     <MenuItem Name="mnu_ExportToLCAx" Header="Export LCAx (v2.2.1) BETA..." Click="mnu_ExportToLCAx_Click" Visibility="Visible" Background="Transparent"></MenuItem>
                     <MenuItem Name="mnu_ExportToOneClick" Header="Export to OneClick" Click="mnu_ExportToOneClick_Click" Visibility="Visible" Background="Transparent"></MenuItem>
+                    <MenuItem Name="mnu_ExportToIstructE" Header="Export to IstructE 3.0" Click="mnu_ExportToIstructE_Click" Visibility="Visible" Background="Transparent"></MenuItem>
 
                 </MenuItem>
                 <Separator></Separator>

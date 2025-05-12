@@ -52,6 +52,8 @@ namespace CarboLifeUI.UI
             chx_SCC.IsChecked = settings.showSCC;
             chx_Deaths.IsChecked = settings.showDeaths;
 
+            chx_Experimental.IsChecked = settings.launchCircle;
+
             CheckTemplateFile();
         }
 
@@ -66,6 +68,8 @@ namespace CarboLifeUI.UI
             settings.showPlanes = chx_Plane.IsChecked.Value;
             settings.showSCC = chx_SCC.IsChecked.Value;
             settings.showDeaths = chx_Deaths.IsChecked.Value;
+
+            settings.launchCircle = chx_Experimental.IsChecked.Value;
 
             settings.Save();
             this.Close();
