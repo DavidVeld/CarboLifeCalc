@@ -1,7 +1,9 @@
-﻿using CarboLifeAPI;
+﻿using Autodesk.Revit.DB;
+using CarboLifeAPI;
 using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -44,6 +46,12 @@ namespace CarboLifeUI.UI
             txt_DesignLife.Text = settings.defaultDesignLife.ToString();
             txt_SecretMessage.Text = settings.secretMessage;
 
+            chx_Cars.IsChecked = settings.showCars;
+            chx_Trees.IsChecked = settings.showTrees;
+            chx_Plane.IsChecked = settings.showPlanes;
+            chx_SCC.IsChecked = settings.showSCC;
+            chx_Deaths.IsChecked = settings.showDeaths;
+
             CheckTemplateFile();
         }
 
@@ -52,6 +60,12 @@ namespace CarboLifeUI.UI
             isAccepted = true;
             settings.defaultDesignLife = Convert.ToInt16(Convert.ToDouble(txt_DesignLife.Text));
             settings.secretMessage = txt_SecretMessage.Text;
+
+            settings.showCars = chx_Cars.IsChecked.Value;
+            settings.showTrees = chx_Trees.IsChecked.Value;
+            settings.showPlanes = chx_Plane.IsChecked.Value;
+            settings.showSCC = chx_SCC.IsChecked.Value;
+            settings.showDeaths = chx_Deaths.IsChecked.Value;
 
             settings.Save();
             this.Close();
@@ -91,7 +105,13 @@ namespace CarboLifeUI.UI
 
         private void btn_Coffee_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://buymeacoffee.com/davidveld");
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "https://buymeacoffee.com/davidveld", // Path to file
+                UseShellExecute = true // This is the key part that allows it to open with the default application
+            };
+
+            Process.Start(startInfo);
         }
 
         private void btn_Check_Click(object sender, RoutedEventArgs e)

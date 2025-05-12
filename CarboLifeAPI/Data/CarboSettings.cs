@@ -26,6 +26,12 @@ namespace CarboLifeAPI.Data
         public string carboLegendName { get; set; }
         public string carboDashboardName { get; set; }
 
+        public bool showCars { get; set; }
+        public bool showPlanes { get; set; }
+        public bool showTrees { get; set; }
+        public bool showSCC { get; set; }
+        public bool showDeaths { get; set; }
+
 
         public List<CarboColourPreset> colourPresets {get; set;}
 
@@ -42,6 +48,12 @@ namespace CarboLifeAPI.Data
             carboLegendName = "CLC_ColourLegend";
             carboLegendName = "CLC_ResultsView";
             secretMessage = "";
+
+            showCars = true;
+            showPlanes = true;
+            showTrees = true;
+            showSCC = true;
+            showDeaths = false;
 
             defaultCarboGroupSettings = new CarboGroupSettings();
 

@@ -664,6 +664,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
         {
             CarboSettingsMenu settingsWindow = new CarboSettingsMenu();
             settingsWindow.ShowDialog();
+            
         }
 
         private void mnu_EditTemplate_Click(object sender, RoutedEventArgs e)

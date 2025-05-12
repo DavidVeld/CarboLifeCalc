@@ -1,6 +1,9 @@
 ﻿using CarboLifeAPI;
 using CarboLifeAPI.Data;
-
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -222,33 +225,48 @@ namespace CarboLifeUI.UI
 
         private void refreshData()
         {
-            /*
+            
             projectEnergyProperties.calculate(designPeriod);
 
-            SeriesCollection energyLines = new SeriesCollection();
-            LineSeries lineSeries = new LineSeries();
+            List<ISeries> energyLine = new List<ISeries>();
 
-            ChartValues<double> Values = new ChartValues<double>();
-
+            //get the values for the lines as a list
+            List<double> values = new List<double>();
             for(int i = 0; i < designPeriod; i++)
             {
                 double value = projectEnergyProperties.getTotalValue(i);
-                Values.Add(Math.Round(( value / 1000), 1));
+                values.Add(Math.Round(( value / 1000), 1));
             }
 
-            lineSeries.Values = Values;
-            lineSeries.Title = "Energy";
-            lineSeries.DataLabels = false;
-            lineSeries.Foreground = Brushes.Black;
-            lineSeries.PointGeometrySize = 5;
-            lineSeries.Width = 1;
+            var lc = GraphBuilder.getSKColour(1);
+            var color = new SKColor(lc.Red, lc.Green, lc.Blue);
+
+            var lineColour = new SolidColorPaint
+            {
+                Color = new SKColor(lc.Red, lc.Green, lc.Blue),
+                StrokeThickness = 2,
+                IsAntialias = true
+            };
+
+            //Create the line:
+            energyLine.Add(new LineSeries<double>
+            {
+                Values = values,
+                Name = "Energy",
+                Fill = null,
+                GeometrySize = 0,
+                LineSmoothness = 0,
+                Stroke = lineColour
+            });
 
 
-            energyLines.Add(lineSeries);
+
+            chrt_Preview.Series = energyLine;
+            chrt_Preview.XAxes = GraphBuilder.getYearAxis();
+            chrt_Preview.YAxes = GraphBuilder.getCarbonAxis();
 
 
-            chrt_Preview.Series = energyLines;
-            */
+
         }
     }
 }

@@ -276,25 +276,10 @@ namespace CarboLifeUI.UI
                     {
                         projectlist.Add(cp.Name);
                     }
-                    //Labels = null;
-                    //set the axis:
-                    /*
-                    AxesCollection XaxisCollection = new AxesCollection();
-                    Axis XAxis = new Axis { Title = "Projects", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black, Labels = null };
-                    XaxisCollection.Add(XAxis);
 
-                    AxesCollection YaxisCollection = new AxesCollection();
-                    Axis YAxis = new Axis { Title = "Total Carbon Footprint (tCO2)", Position = AxisPosition.LeftBottom, Foreground = Brushes.Black };
-                    YaxisCollection.Add(YAxis);
-
-                    barchart.AxisX = XaxisCollection;
-                    barchart.AxisY = YaxisCollection;
-
-                    Labels = projectlist.ToArray();
-
-                    barchart.SeriesColors = GraphBuilder.getColours();
-                    */
                     barchart.Series = currentProjectSeriesCollection;
+                    barchart.XAxes = GraphBuilder.getProjectAxis(projectlist);
+                    barchart.YAxes = GraphBuilder.getCarbonAxis();
 
                     DataContext = this;
 

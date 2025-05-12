@@ -1,6 +1,8 @@
 ﻿using CarboLifeAPI.Data;
 using LiveChartsCore;
+using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,12 +132,12 @@ namespace CarboLifeUI.UI
                 if (currentMaterial != null)
                 {
                     lbl_Current.Content = "Current: " + currentMaterial.Name;
-                    txt_CurrentValue.Text = Math.Round(currentMaterial.ECI,3).ToString();
+                    txt_CurrentValue.Text = Math.Round(currentMaterial.ECI - currentMaterial.ECI_D, 3).ToString();
                 }
                 if (selectedMaterial != null)
                 {
                     lbl_Selectedname.Content = "Selected: " + selectedMaterial.Name;
-                    txt_SelectedValue.Text = Math.Round(selectedMaterial.ECI,3).ToString();
+                    txt_SelectedValue.Text = Math.Round(selectedMaterial.ECI - currentMaterial.ECI_D, 3).ToString();
                 }
                 //Get and compares the existing and selected material
                 if (currentMaterial != null && selectedMaterial != null)
@@ -155,100 +157,135 @@ namespace CarboLifeUI.UI
 
         private void Buildgraph()
         {
+            List<ISeries> compareBarV2 = new List<ISeries>();
             List<ISeries> compareBar = new List<ISeries>();
 
-            //Build series
-            compareBar = new List<ISeries>
+            compareBarV2.Add(new StackedColumnSeries<double>
             {
-                /*
-                new StackedColumnSeries<>
-                {
-                    Values = new ChartValues<double>
+                Values = new List<double>
+                    {
+                        Math.Round(currentMaterial.ECI_Seq,2),
+                        Math.Round(selectedMaterial.ECI_Seq,2)
+                    },
+                Name = "Sequestration",
+                Fill = new SolidColorPaint(GraphBuilder.getSKColour(1)),
+                YToolTipLabelFormatter = point => $"{point.Model:0.000} kgCO₂e",
+                DataLabelsSize = 11
+                //string.Format("{0} tCO₂e", chartPoint.Y
+
+            });
+
+            //Build series
+            compareBarV2.Add(new StackedColumnSeries<double>
+            {
+                Values = new List<double>
                     {
                         Math.Round(currentMaterial.ECI_A1A3,2),
                         Math.Round(selectedMaterial.ECI_A1A3,2)
                     },
-                    StackMode = StackMode.Values,
-                    DataLabels = true,
-                    Title = "A1-A3"
+                Name = "A1-A3",
+                Fill = new SolidColorPaint(GraphBuilder.getSKColour(2)),
+                YToolTipLabelFormatter = point => $"{point.Model:0.000} kgCO₂e",
+                DataLabelsSize = 11
+                //string.Format("{0} tCO₂e", chartPoint.Y
 
-                },
-                new StackedColumnSeries
-                {
-                    Values = new ChartValues<double>
+            });
+
+            compareBarV2.Add(new StackedColumnSeries<double>
+            {
+                Values = new List<double>
                     {
                         Math.Round(currentMaterial.ECI_A4,2),
                         Math.Round(selectedMaterial.ECI_A4,2)
                     },
-                    StackMode = StackMode.Values,
-                    DataLabels = true,
-                    Title = "A4"
-                },
-                new StackedColumnSeries
-                {
-                    Values = new ChartValues<double>
+                Name = "A4",
+                Fill = new SolidColorPaint(GraphBuilder.getSKColour(3)),
+                YToolTipLabelFormatter = point => $"{point.Model:0.000} kgCO₂e",
+                DataLabelsSize = 11
+                //string.Format("{0} tCO₂e", chartPoint.Y
+
+            });
+
+            compareBarV2.Add(new StackedColumnSeries<double>
+            {
+                Values = new List<double>
                     {
                         Math.Round(currentMaterial.ECI_A5,2),
                         Math.Round(selectedMaterial.ECI_A5,2)
                     },
-                    StackMode = StackMode.Values,
-                    DataLabels = true,
-                    Title = "A5"
-                },
-                new StackedColumnSeries
-                {
-                    Values = new ChartValues<double>
+                Name = "A5",
+                Fill = new SolidColorPaint(GraphBuilder.getSKColour(4)),
+                YToolTipLabelFormatter = point => $"{point.Model:0.000} kgCO₂e",
+                DataLabelsSize = 11
+                //string.Format("{0} tCO₂e", chartPoint.Y
+
+            });
+
+            compareBarV2.Add(new StackedColumnSeries<double>
+            {
+                Values = new List<double>
                     {
                         Math.Round(currentMaterial.ECI_C1C4,2),
                         Math.Round(selectedMaterial.ECI_C1C4,2)
                     },
-                    StackMode = StackMode.Values,
-                    DataLabels = true,
-                    Title = "C1-C4"
-                },
-                new StackedColumnSeries
-                {
-                    Values = new ChartValues<double>
+                Name = "C1-C4",
+                Fill = new SolidColorPaint(GraphBuilder.getSKColour(5)),
+                YToolTipLabelFormatter = point => $"{point.Model:0.000} kgCO₂e",
+                DataLabelsSize = 11
+                //string.Format("{0} tCO₂e", chartPoint.Y
+
+            });
+
+            compareBarV2.Add(new StackedColumnSeries<double>
+            {
+                Values = new List<double>
                     {
                         Math.Round(currentMaterial.ECI_D,2),
                         Math.Round(selectedMaterial.ECI_D,2)
                     },
-                    StackMode = StackMode.Values,
-                    DataLabels = true,
-                    Title = "D"
-                },
-                new StackedColumnSeries
-                {
-                    Values = new ChartValues<double>
-                    {
-                        Math.Round(currentMaterial.ECI_Mix,2),
-                        Math.Round(selectedMaterial.ECI_Mix,2)
-                    },
-                    StackMode = StackMode.Values,
-                    DataLabels = true,
-                     Title = "Added"
-                }
-                */
-            };
+                Name = "D",
+                Fill = new SolidColorPaint(GraphBuilder.getSKColour(6)),
+                YToolTipLabelFormatter = point => $"{point.Model:0.000} kgCO₂e",
+                DataLabelsSize = 11
+                //string.Format("{0} tCO₂e", chartPoint.Y
 
-            //adding series updates and animates the chart
-            /*
-            compareBar.Add(new StackedColumnSeries
-            {
-                Values = new ChartValues<double> { 6, 2, 7 },
-                StackMode = StackMode.Values
             });
-            */
-            //adding values also updates and animates
-            //compareBar[1].Values.Add(4d);
+
 
 
             Labels = new[] { "Current", "Selected" };
 
-            Func<double, string> Formatter = value => value + " kgCO₂/kg";
             DataContext = this;
 
-            barchart.Series = compareBar;
+
+            List<ICartesianAxis> xaxis = new List<ICartesianAxis>();
+            List<ICartesianAxis> yaxis = new List<ICartesianAxis>();
+            List<string> elements = new List<string> { "Selected", "Current" };
+
+            xaxis.Add(
+                new Axis
+                {
+                    LabelsRotation = 0,
+                    Labels = elements,
+                    TextSize = 12
+                });
+
+            yaxis.Add(
+                new Axis
+                {
+                    Name = "Intensity (kgCO₂e)",
+                    NameTextSize = 11,
+                    Labeler = value => $"{value:0.000} ",
+                    TextSize = 12
+                
+                });
+
+            barchart.Series = compareBarV2;
+            barchart.XAxes = xaxis.ToArray();
+            barchart.YAxes= yaxis.ToArray();
+            barchart.LegendTextSize = 12;
+            barchart.TooltipTextSize = 12;
+
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)

@@ -28,8 +28,6 @@ namespace CarboLifeUI.UI
         public static double min;
         public static double max;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
-
         /// <summary>
         /// Builds an overview A1-Mix graph for the user to add to a graph
         /// </summary>
@@ -99,12 +97,18 @@ namespace CarboLifeUI.UI
             foreach (CarboProject dp in fullProjectListToCompareTo)
             {
                 List<CarboDataPoint> listofPoints = dp.getPhaseTotals();
+                //to tonnes
+                foreach (CarboDataPoint cdp in listofPoints)
+                    cdp.Value = cdp.Value / 1000;
+
+
                 pointList.Add(listofPoints);
             }
 
             try
             {
 
+                /*
                 //loop though
                 // i is nr type of information extracted
                 for (int i = 0; i < pointList[0].Count; i++)
@@ -129,8 +133,37 @@ namespace CarboLifeUI.UI
                     newSeries.MaxColumnWidth = 50;
                     newSeries.LabelsPosition = BarLabelPosition.Perpendicular;
                     result.Add(newSeries);
-                    */
+                    
                 }
+            */
+                var allPhases = pointList
+    .SelectMany(project => project.Select(p => p.Name))
+    .Distinct()
+    .ToList(); // All unique phase names
+
+            var series = new List<ISeries>();
+                int j = 0;
+                foreach (var phase in allPhases)
+                {
+                    var phaseValues = pointList.Select(project =>
+                        project.FirstOrDefault(p => p.Name == phase)?.Value ?? 0).ToList();
+
+                    series.Add(new StackedColumnSeries<double>
+                    {
+                        Name = phase,
+                        Values = phaseValues,
+                        Stroke = null, // optional: cleaner look
+                        Fill = new SolidColorPaint(getSKColour(j)),
+                        YToolTipLabelFormatter = point => $"{point.Model:0.00} tCO₂e",
+                        DataLabelsSize = 12,
+                        DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Middle,
+                        
+                    });
+                    j++;
+                }
+
+                result = series;
+
 
             }
             catch
@@ -346,8 +379,6 @@ namespace CarboLifeUI.UI
                 {
                     //points.Add(Math.Round(ppin.Value / 1000, 2));
 
-
-
                     double ThisCategoryValue = 0;
                     List<double> values = new List<double>();
                     List<string> names = new List<string>();
@@ -365,7 +396,6 @@ namespace CarboLifeUI.UI
                     //Values = new ChartValues<double> { Math.Round(ppin.Value / 1000, 2) },
                     j++;
 
-#pragma warning disable CA1416 // Validate platform compatibility
                     result.Add(new StackedRowSeries<double>
                     {
                         Values = values.ToArray(),
@@ -376,7 +406,6 @@ namespace CarboLifeUI.UI
                         //string.Format("{0} tCO₂e", chartPoint.Y
 
                     });
-#pragma warning restore CA1416 // Validate platform compatibility
               }
             }
 
@@ -390,7 +419,6 @@ namespace CarboLifeUI.UI
 {
             List<ICartesianAxis> resultList = new List<ICartesianAxis>();
 
-#pragma warning disable CA1416 // Validate platform compatibility
             resultList.Add(            
                 new Axis
                 {
@@ -398,7 +426,6 @@ namespace CarboLifeUI.UI
                     Labels = levelList,
                     TextSize = 11
                 });
-#pragma warning restore CA1416 // Validate platform compatibility
 
             return resultList.ToArray();
 
@@ -496,7 +523,6 @@ namespace CarboLifeUI.UI
                     double value = Math.Round(ppin.Value / 1000, 2);
                     string name = ppin.Name;
 
-#pragma warning disable CA1416 // Validate platform compatibility
                     seriesList.Add(new PieSeries<double>
                     {
                         Values = new double[] { value },
@@ -508,7 +534,6 @@ namespace CarboLifeUI.UI
                         ToolTipLabelFormatter = point => $"{point.Model:0} tCO₂e",
                         DataLabelsSize = 12,
                     });
-#pragma warning restore CA1416 // Validate platform compatibility
 
                     //Values = new ChartValues<double> { Math.Round(ppin.Value / 1000, 2) },
                     j++;
@@ -792,21 +817,43 @@ namespace CarboLifeUI.UI
     new Axis
     {
         Name = "Year",
+        TextSize = 12
+        
+
     }
             };
 
             return XAxes;
         }
 
+        internal static IEnumerable<ICartesianAxis> getProjectAxis(List<string> levelList)
+        {
+            List<ICartesianAxis> resultList = new List<ICartesianAxis>();
+
+            resultList.Add(
+                new Axis
+                {
+                    Name = "Projects",
+                    LabelsRotation = 0,
+                    Labels = levelList,
+                    TextSize = 12
+                });
+
+            return resultList.ToArray();
+        }
+
+
         internal static IEnumerable<ICartesianAxis> getCarbonAxis()
         {
             Axis[] YAxes = new Axis[]
             {
-    new Axis
-    {
-        Name = "Emissions",
-        Labeler = value => $"{value:N0} tCO₂e"
-    }
+                new Axis
+                {
+                    Name = "Emissions",
+                    Labeler = value => $"{value:N0} tCO₂e",
+                    TextSize = 12
+
+                }
             };
 
             return YAxes;

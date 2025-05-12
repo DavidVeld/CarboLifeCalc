@@ -1263,6 +1263,17 @@ namespace CarboLifeAPI.Data
 
         public string getGeneralText()
         {
+            CarboSettings carboSettings = new CarboSettings();
+            carboSettings = carboSettings.Load();
+
+            bool showCars = carboSettings.showCars;
+            bool showTrees = carboSettings.showTrees;
+            bool showPlanes = carboSettings.showPlanes;
+            bool showSCC = carboSettings.showSCC;
+            bool showDeaths = carboSettings.showDeaths;
+
+
+
             string result = "";
             double calculatedCo2 = this.getTotalEC();
 
@@ -1270,6 +1281,11 @@ namespace CarboLifeAPI.Data
             double socialCarbonCost = Math.Round(this.SocialCost * calculatedCo2, 0, MidpointRounding.AwayFromZero);
             //DOuble 4,434 tCo2/death
             double carbonDeathCost = Math.Round(calculatedCo2 / 4.434, 0, MidpointRounding.AwayFromZero);
+            
+            double carCarbon = Math.Round(calculatedCo2 / 1.80, 2);
+            double planeCarbon = Math.Round(calculatedCo2 / 2.22, 2);
+            double mealCarbon = Math.Round(calculatedCo2 / 1.40, 2);
+
             string peopleUnits = "people";
 
             if(Math.Round(carbonDeathCost, 0) <= 1)
@@ -1281,12 +1297,35 @@ namespace CarboLifeAPI.Data
 
             generalText += "The Upfront Carbon Footprint (A0-A5) is: " + Math.Round((getUpfrontTotals() / 1000),2).ToString("N") + " tCO₂e" + Environment.NewLine;
             generalText += "The Embodied Carbon Footprint (A0-C & Seq) is: " + Math.Round((getEmbodiedTotals() / 1000), 2).ToString("N") + " tCO₂e" + Environment.NewLine;
+            
             generalText += Environment.NewLine;
-            generalText += "The calculated value equals to: " + Math.Round(calculatedCo2 / 1.40, 2) + " average car emission per year (1.40 tCO₂e/car). (UK)" + Environment.NewLine;
-            generalText += "This requires " + Math.Round((calculatedCo2 * 40), 0) + " trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
-            generalText += "The Social Carbon Cost (SCC) of this project is: " + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
-            //generalText += "Between now and 2100 this will likely cause the death of: " + Math.Round(carbonDeathCost,0) + " " + peopleUnits +  Environment.NewLine;
-            //generalText += "if no regenerative design plan is written for the project." + Environment.NewLine;
+            if (showCars == true)
+            {
+                generalText += "The calculated value equals to: " + carCarbon.ToString() + " average car emission per year (1.40 tCO₂e/car). (UK)" + Environment.NewLine;
+            }
+
+            if (showPlanes == true)
+            {
+                generalText += "This is equivalent to " + planeCarbon.ToString() + " one-way flights from London to New York (1.0" + Environment.NewLine;
+
+            }
+
+            if (showTrees == true)
+            {
+                generalText += "This requires " + Math.Round((calculatedCo2 * 40), 0) + " trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
+            }
+
+            if (showSCC == true)
+            {
+                generalText += "The Social Carbon Cost (SCC) of this project is: " + this.valueUnit + " " + socialCarbonCost.ToString("N") + Environment.NewLine;
+            }
+
+            if (showDeaths == true)
+            {
+                generalText += "Between now and 2100 this will likely cause the death of: " + Math.Round(carbonDeathCost, 0) + " " + peopleUnits + Environment.NewLine;
+                generalText += "without a regenerative design plan." + Environment.NewLine;
+            }
+
             result = generalText;
 
             return result;

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="700" MinWidth="700" MinHeight="250" Width="700" Height="250" Background="WhiteSmoke" Title="Carbo life Calculator Settings"  Loaded="Window_Loaded">
+             d:DesignHeight="250" d:DesignWidth="700" MinWidth="700" MinHeight="500" Width="700" Height="250" Background="WhiteSmoke" Title="Carbo life Calculator Settings"  Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,7 +22,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="150"/>
             <RowDefinition Height="1*"/>
+
             <RowDefinition Height="40"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
@@ -71,7 +73,37 @@
             </Grid>
         </GroupBox>
 
-        <Button Name="btn_Ok" Grid.Row="3" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="btn_Ok_Click">Ok</Button>
+        <GroupBox Grid.Column="2" Margin="0,0,0,0" Grid.Row="3" Header="Summary Text" Style="{StaticResource bigStyle}" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="1"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="1" Margin="0,0,0,0" Grid.Row="1" Width="303" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Grid.RowSpan="1">Summary Text To include:</Label>
+                <CheckBox Name="chx_Cars" Grid.Column="0" Grid.Row="2" Margin="0,0,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top">Cars</CheckBox>
+                <CheckBox Name="chx_Trees" Grid.Column="0" Grid.Row="3" Margin="0,0,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top">Trees</CheckBox>
+                <CheckBox Name="chx_Plane" Grid.Column="0" Grid.Row="4" Margin="0,0,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top">Plane Trips</CheckBox>
+
+                <CheckBox Name="chx_SCC" Grid.Column="0" Grid.Row="5" Margin="0,0,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top">Social Carbon Cost</CheckBox>
+                <CheckBox Name="chx_Deaths" Grid.Column="0" Grid.Row="6" Margin="0,0,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top">Deaths Cost</CheckBox>
+
+            </Grid>
+        </GroupBox>
+
+        <Button Name="btn_Ok" Grid.Row="4" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="btn_Ok_Click">Accept</Button>
 
     </Grid>
 </Window>
