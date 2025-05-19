@@ -59,4 +59,4 @@ This project is licensed under the [MIT License](LICENSE).
 ![alt text](https://github.com/DavidVeld/CarboLifeCalc/blob/master/CarboLifeCalc/img/scr/screenshot2.png)
 ![alt text](https://github.com/DavidVeld/CarboLifeCalc/blob/master/CarboLifeCalc/img/scr/screenshot3.png)
 
-**Build with sustainability in mind — calculate carbon, design better.**
+**Design Better Initiative**
