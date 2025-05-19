@@ -49,7 +49,13 @@
 2. Follow the setup instructions in the [Wiki](https://github.com/DavidVeld/CarboLifeCalc/wiki).
 3. Start analyzing your models in Revit or Grasshopper.
 
+## Support the Project
 
+If you find CarboLife helpful, consider supporting its development by buying me a coffee:
+
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-donate-yellow)](https://buymeacoffee.com/davidveld)
+
+Your support helps keep the project alive and evolving!
 
 ## License
 
