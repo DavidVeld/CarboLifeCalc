@@ -21,11 +21,15 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\ico_CarboLife.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Revit|AnyCPU'">
+    <OutputPath>..\..\..\..\..\CarboLifeCalc\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Revit|x64'">
     <OutputPath>..\..\..\..\..\CarboLifeCalc\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
@@ -228,7 +232,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CarboCircle\CarboCircle.csproj" />
+    <ProjectReference Include="..\CarboCroc\CarboCroc.csproj" />
     <ProjectReference Include="..\CarboLifeAPI\CarboLifeAPI.csproj" />
+    <ProjectReference Include="..\CarboLifeRevit\CarboLifeRevit.csproj" />
     <ProjectReference Include="..\CarboLifeUI\CarboLifeUI.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -271,13 +278,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DotNetProjects.WpfToolkit.DataVisualization" Version="6.1.94" />
-    <PackageReference Include="LiveCharts.NetCore" Version="0.9.8" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="System.Drawing.Common" Version="9.0.3" />
-    <PackageReference Include="WPFToolkit" Version="3.5.50211.1" />
-    <PackageReference Include="WPFToolkit.DataVisualization" Version="3.5.50211.1" />
   </ItemGroup>
   <PropertyGroup>
     <FileVersion>1.9.0.0</FileVersion>

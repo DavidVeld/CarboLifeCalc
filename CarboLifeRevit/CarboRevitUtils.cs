@@ -37,6 +37,9 @@ namespace CarboLifeRevit
                 try
                 {
                     newCarboElement = getNewElementProps(el, doc, settings);
+                if (newCarboElement == null)
+                    return null;
+
 
                 Material ImportedMaterial = null;
                 string importedMaterialName = "";

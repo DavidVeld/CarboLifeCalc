@@ -53,6 +53,11 @@ namespace CarboLifeUI.UI
         {
             try
             {
+                var version = typeof(SkiaSharp.SKPicture).Assembly.ImageRuntimeVersion;
+                var loadedDllPath = typeof(SkiaSharp.SKPicture).Assembly.Location;
+
+                //MessageBox.Show(loadedDllPath.ToString());
+
                 DependencyObject parent = VisualTreeHelper.GetParent(this);
                 Window parentWindow = Window.GetWindow(parent);
                 CarboLifeMainWindow mainViewer = parentWindow as CarboLifeMainWindow;
@@ -98,11 +103,11 @@ namespace CarboLifeUI.UI
                 cbb_GraphType.SelectedItem = "Material";
                 cbb_BuildingType.SelectedItem = CarboLifeProject.Category;
                 txt_Area.Text = CarboLifeProject.Area.ToString();
-                txt_AreaNew.Text = CarboLifeProject.AreaNew.ToString();
+                //txt_AreaNew.Text = CarboLifeProject.AreaNew.ToString();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
         }
 
@@ -112,6 +117,7 @@ namespace CarboLifeUI.UI
             {
                 if (CarboLifeProject != null)
                 {
+
 
                     List<ISeries> pieSeries = null;
                     List<ISeries> levelSeries = null;

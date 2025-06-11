@@ -68,15 +68,21 @@ namespace CarboLifeRevit
                     projectToOpen = projectToUpdate;
                 }
 
+                try
+                {
 
+                    //Open the interface
+                    CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(projectToOpen);
+                    carboCalcProgram.IsRevit = true;
 
-                //Open the interface
-                CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(projectToOpen);
-                carboCalcProgram.IsRevit = true;
+                    AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
-                AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
-
-                carboCalcProgram.ShowDialog();
+                    carboCalcProgram.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    TaskDialog.Show("Error", ex.Message);
+                }
             }
             else
             {

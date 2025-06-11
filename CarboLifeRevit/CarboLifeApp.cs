@@ -114,6 +114,11 @@ namespace CarboLifeRevit
                 return Result.Failed;
             }
 
+            //var version = typeof(SkiaSharp.SKPicture).Assembly.ImageRuntimeVersion;
+            //var loadedDllPath = typeof(SkiaSharp.SKPicture).Assembly.Location;
+
+            //System.Windows.Forms.MessageBox.Show(loadedDllPath.ToString());
+
             return Result.Succeeded;
         }
         public Result OnShutdown(UIControlledApplication application)
