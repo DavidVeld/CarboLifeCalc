@@ -5,6 +5,7 @@ using LiveChartsCore;
 using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
+using ScottPlot;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -670,12 +671,109 @@ namespace CarboLifeUI.UI
 
         }
 
-        
+        /// <summary>
+        /// Returns the overview of Material Properties using the DataTable as per CarboCalcTextUtils.getResultTable(CarboLifeProject)
+        /// </summary>
+        /// <param name="resultsTable">DataTable as per CarboCalcTextUtils.getResultTable(CarboLifeProject)</param>
+        /// <param name="Type">Material or Category</param>
+        /// <returns></returns>
+        internal static List<PieSlice> GetScottPieChart(DataTable resultsTable, string Type = "Material", List<CarboElement> projectElements = null)
+        {
+            List<PieSlice> result = new List<PieSlice>();
+            SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
+
+            try
+            {
+                List<CarboDataPoint> PieceListMaterial = new List<CarboDataPoint>();
+                //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
+
+                //Get the DataPint
+                PieceListMaterial = CarboCalcTextUtils.ConvertResultTableToDataPoints(resultsTable, Type, projectElements);
+
+                PieceListMaterial = PieceListMaterial.OrderByDescending(o => o.Value).ToList();
+
+                double total = PieceListMaterial.Sum(x => x.Value);
+
+
+                //New Code: Trim all values below 5%, 
+                List<int> counter = new List<int>();
+
+                CarboDataPoint otherPoint = new CarboDataPoint();
+                otherPoint.Name = "Combined:" + Environment.NewLine;
+
+                for (int i = PieceListMaterial.Count - 1; i >= 0; i--)
+                {
+                    CarboDataPoint cp = PieceListMaterial[i] as CarboDataPoint;
+                    double pecent = cp.Value / total;
+                    if (pecent <= 0.05 && pecent >= -0.05)
+                    {
+                        //The item is too small for the graph:
+                        otherPoint.Value += cp.Value;
+                        otherPoint.Name += cp.Name + " (" + (Math.Round(cp.Value, 1)) + " tCO₂e )" + Environment.NewLine;
+
+                        counter.Add(i);
+                    }
+                }
+
+                //If used, add to the list, only if more than one materials / elements were merged.
+                if (otherPoint.Value > 0 && counter.Count > 1)
+                {
+                    PieceListMaterial.Add(otherPoint);
+                    //Remove the items from the list
+                    foreach (int i in counter)
+                    {
+                        PieceListMaterial.RemoveAt(i);
+                    }
+                }
+
+
+
+                //make positive if negative
+                foreach (CarboDataPoint cp in PieceListMaterial)
+                {
+                    if (cp.Value < 0)
+                    {
+                        cp.Name = "(Negative)" + cp.Name;
+                        cp.Value = cp.Value * -1;
+                    }
+                }
+
+                int j = 0;
+                foreach (CarboDataPoint ppin in PieceListMaterial)
+                {
+                    double value = Math.Round(ppin.Value / 1, 2);
+                    string name = ppin.Name;
+
+                    PieSlice newSlice = new PieSlice();
+                    newSlice.Value = value;
+                    newSlice.Label = name;
+                    newSlice.LegendText = name;
+
+                    FillStyle fill = new FillStyle();
+                    fill.Color = GetScottPlotColor(j);
+                    newSlice.Fill = fill;
+
+                    result.Add(newSlice);
+                    j++;
+                }
+
+
+            }
+            catch
+            {
+                return null;
+            }
+            return result;
+
+        }
+
+        [Obsolete]
         /// <summary>
         /// Returns a colour value based on i value;
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
+        /// 
         internal static SKColor getSKColour(int i)
         {
             SKColor result = new SKColor();
@@ -714,6 +812,43 @@ namespace CarboLifeUI.UI
             }
         }
 
+        /// <summary>
+        /// Returns a ScottPlot.Color based on the input index.
+        /// </summary>
+        /// <param name="i">The index to select or generate a color.</param>
+        /// <returns>A ScottPlot.Color</returns>
+        internal static ScottPlot.Color GetScottPlotColor(int i)
+        {
+            ScottPlot.Color[] colors = new ScottPlot.Color[]
+            {
+            new ScottPlot.Color(147, 123, 131),
+            new ScottPlot.Color(87, 164, 177),
+            new ScottPlot.Color(90, 119, 135),
+            new ScottPlot.Color(210, 210, 60),
+            new ScottPlot.Color(185, 220, 160),
+            new ScottPlot.Color(156, 206, 212),
+            new ScottPlot.Color(251, 226, 150),
+            new ScottPlot.Color(253, 240, 203, 210), // with alpha
+            new ScottPlot.Color(247, 203, 145),
+            new ScottPlot.Color(252, 179, 179),
+            new ScottPlot.Color(118, 73, 197)
+            };
+
+            if (i < colors.Length)
+            {
+                return colors[i];
+            }
+            else
+            {
+                // Generate a random color
+                return new ScottPlot.Color(
+                    (byte)Random.Shared.Next(256),
+                    (byte)Random.Shared.Next(256),
+                    (byte)Random.Shared.Next(256),
+                    255 // optional alpha
+                );
+            }
+        }
 
         /// <summary>
         /// Returns a datapoint list based on per category

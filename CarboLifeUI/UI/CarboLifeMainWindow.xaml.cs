@@ -417,13 +417,14 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                 Bitmap LetiChart = null;
 
 
-                PieChart foundchart1 = Panel_Overview.pie_Chart1;
-                PieChart foundchart2 = Panel_Overview.pie_Chart2;
+                //PieChart foundchart1 = Panel_Overview.pie_Chart1; !!
+                //PieChart foundchart2 = Panel_Overview.pie_Chart2; !!
                 Canvas foundletiChart = Panel_Overview.cnv_Leti;
 
                 string base64CartesianChart1 = "";
                 string base64CartesianChart2 = "";
 
+                /* !!
                 if (foundchart1 != null)
                 {
                     PieChart chartControl = Panel_Overview.pie_Chart1;
@@ -448,7 +449,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
 
                     //Chart2 = ChartUtils.ControlToImage(foundchart2, 300, 300);
                 }
-
+                */ //  !!
                 if (foundletiChart != null)
                 {
                     LetiChart = ChartUtils.ControlToImage(foundletiChart, 300, 300);

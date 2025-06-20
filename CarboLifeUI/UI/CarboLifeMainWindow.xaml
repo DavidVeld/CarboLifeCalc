@@ -84,7 +84,7 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="5"/>
                     </Grid.ColumnDefinitions>
-                    <local:Overview x:Name="Panel_Overview" Grid.Row="1" Grid.Column="1" Visibility="Visible" ></local:Overview>
+                    <local:OverviewII x:Name="Panel_Overview" Grid.Row="1" Grid.Column="1" Visibility="Visible" ></local:OverviewII>
                 </Grid>
             </TabItem>
             <TabItem Header="Project Settings">
