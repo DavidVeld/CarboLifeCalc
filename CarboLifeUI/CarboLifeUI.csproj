@@ -7,7 +7,15 @@
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <Platforms>AnyCPU;x64</Platforms>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
   </PropertyGroup>
+
+  <PropertyGroup>
+   <ShouldIncludeNativeSkiaSharp>True</ShouldIncludeNativeSkiaSharp>
+  <PreferredNativeSkiaSharp>x86</PreferredNativeSkiaSharp>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug Revit|AnyCPU'">
     <OutputPath>..\..\..\..\..\CarboLifeCalc\</OutputPath>
   </PropertyGroup>
@@ -33,6 +41,7 @@
     <ProjectReference Include="..\CarboLifeAPI\CarboLifeAPI.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LiveChartsCore.SkiaSharpView" Version="2.0.0-rc5.4" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc5.4" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
