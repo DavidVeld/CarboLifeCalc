@@ -58,10 +58,10 @@ namespace CarboLifeUI.UI
         {
             dialogOk = MessageBoxResult.Cancel;
 
-            var version = typeof(SkiaSharp.SKPicture).Assembly.ImageRuntimeVersion;
-            var loadedDllPath = typeof(SkiaSharp.SKPicture).Assembly.Location;
+            //var version = typeof(SkiaSharp.SKPicture).Assembly.ImageRuntimeVersion;
+            //var loadedDllPath = typeof(SkiaSharp.SKPicture).Assembly.Location;
 
-            System.Windows.Forms.MessageBox.Show(loadedDllPath.ToString());
+            //System.Windows.Forms.MessageBox.Show(loadedDllPath.ToString());
 
             //TemplateList
 

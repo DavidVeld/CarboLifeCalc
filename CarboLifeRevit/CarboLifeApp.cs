@@ -2,6 +2,7 @@
 using Autodesk.Revit.UI;
 using CarboLifeAPI.Data;
 using CarboLifeRevit.Modeless;
+//using Nice3point.Revit.Toolkit.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,7 +80,11 @@ namespace CarboLifeRevit
             pB_ShowCarboCalc.SetContextualHelp(contextualHelp);
             pB_ShowCarboCalc.ToolTip = "Vizualise your project in Revit";
 
+            
             FormStatusChecker.isWindowOpen = false;
+
+            //Helper
+            //ResolveHelper.BeginAssemblyResolve<Application>();
 
 
             /*

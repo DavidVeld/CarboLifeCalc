@@ -5,7 +5,7 @@ using LiveChartsCore;
 using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using ScottPlot;
+//using ScottPlot;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -677,6 +677,7 @@ namespace CarboLifeUI.UI
         /// <param name="resultsTable">DataTable as per CarboCalcTextUtils.getResultTable(CarboLifeProject)</param>
         /// <param name="Type">Material or Category</param>
         /// <returns></returns>
+        /*
         internal static List<PieSlice> GetScottPieChart(DataTable resultsTable, string Type = "Material", List<CarboElement> projectElements = null)
         {
             List<PieSlice> result = new List<PieSlice>();
@@ -766,8 +767,9 @@ namespace CarboLifeUI.UI
             return result;
 
         }
+        */
 
-        [Obsolete]
+        
         /// <summary>
         /// Returns a colour value based on i value;
         /// </summary>
@@ -817,6 +819,7 @@ namespace CarboLifeUI.UI
         /// </summary>
         /// <param name="i">The index to select or generate a color.</param>
         /// <returns>A ScottPlot.Color</returns>
+         /*
         internal static ScottPlot.Color GetScottPlotColor(int i)
         {
             ScottPlot.Color[] colors = new ScottPlot.Color[]
@@ -849,6 +852,7 @@ namespace CarboLifeUI.UI
                 );
             }
         }
+         */
 
         /// <summary>
         /// Returns a datapoint list based on per category

@@ -32,7 +32,6 @@ namespace CarboLifeRevit
 
             CarboProject projectToUpdate = new CarboProject();
 
-
             if (File.Exists(updatePath))
             {
                 //if a file needs to be updated get the settings first.
@@ -70,7 +69,6 @@ namespace CarboLifeRevit
 
                 try
                 {
-
                     //Open the interface
                     CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(projectToOpen);
                     carboCalcProgram.IsRevit = true;

@@ -17,6 +17,15 @@ namespace CarboLifeRevit
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            try
+            {
+                Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SkiaSharp.Views.WPF.dll"));
+            }
+            catch
+            {
+
+            }
+
             UIApplication app = commandData.Application;
             UIDocument uidoc = app.ActiveUIDocument;
             Document doc = uidoc.Document;

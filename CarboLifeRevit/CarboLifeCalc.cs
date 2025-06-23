@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,14 @@ namespace CarboLifeRevit
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            try
+            {
+                Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SkiaSharp.Views.WPF.dll"));
+            }
+            catch
+            {
+
+            }
             UIApplication app = commandData.Application;
 
             //Check if the document is a family & has a 3D View active
