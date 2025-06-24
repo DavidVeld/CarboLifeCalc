@@ -57,11 +57,11 @@
 
 
             <lvc:PieChart Name="pie_Chart1" Visibility="Hidden" Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="#050505" BorderThickness="0" Foreground="Black" Background="White" FontFamily="Segoe UI" FontWeight="Light" LegendPosition="Right"  LegendTextSize="12"
-            AnimationsSpeed="00:00:00.500"
-            EasingFunction="{Binding Easing}">
+            AnimationsSpeed="00:00:00.500" EasingFunction="{Binding Easing}" TooltipTextSize="11" TooltipPosition="Auto">
             </lvc:PieChart>
 
-            <lvc:CartesianChart Visibility="Visible" Name="chart_Level" Grid.Column="1" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendPosition="Right" LegendTextSize="12" >
+            <lvc:CartesianChart Visibility="Visible" Name="chart_Level" Grid.Column="1" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light" LegendPosition="Right" LegendTextSize="12" 
+                                TooltipTextSize="11" TooltipPosition="Auto">
             </lvc:CartesianChart>
         </Grid>
 
@@ -78,7 +78,8 @@
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
 
-            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="#050505" Background="White" FontFamily="Segoe UI" FontWeight="Light"  Visibility="Visible" LegendPosition="Right" LegendTextSize="12">
+            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="#050505" Background="White" FontFamily="Segoe UI" FontWeight="Light"  Visibility="Visible" LegendPosition="Right" LegendTextSize="12" 
+                          TooltipTextSize="11" TooltipPosition="Auto">
             </lvc:PieChart>
 
 

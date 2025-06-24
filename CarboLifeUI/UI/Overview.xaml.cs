@@ -102,8 +102,8 @@ namespace CarboLifeUI.UI
                 }
                 cbb_GraphType.SelectedItem = "Material";
                 cbb_BuildingType.SelectedItem = CarboLifeProject.Category;
-                //txt_Area.Text = CarboLifeProject.Area.ToString();
-                //txt_AreaNew.Text = CarboLifeProject.AreaNew.ToString();
+                txt_Area.Text = CarboLifeProject.Area.ToString();
+                txt_AreaNew.Text = CarboLifeProject.AreaNew.ToString();
             }
             catch (Exception ex)
             {

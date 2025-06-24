@@ -52,6 +52,7 @@ namespace CarboLifeAPI.Data
         public string RCMaterialName { get; set; }
         public List<CarboNumProperty> rcQuantityMap { get; set; }
         public string RCMaterialCategory { get; set; }
+        public bool UseImportedMap { get; set; }
 
         public CarboGroupSettings()
         {
@@ -84,6 +85,8 @@ namespace CarboLifeAPI.Data
             RCParameterName = "";
             RCParameterType = "";
             RCMaterialName = "Reinforcement";
+
+            UseImportedMap = true;
 
             rcQuantityMap = new List<CarboNumProperty>();
             

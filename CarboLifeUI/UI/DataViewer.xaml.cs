@@ -898,5 +898,25 @@ namespace CarboLifeUI.UI
                 catch (Exception ex) { }
             }
         }
+
+        private void mnu_noWaste(object sender, MouseButtonEventArgs e)
+        {
+            CarboLifeProject.RemoveWaste();
+            CarboLifeProject.CalculateProject();
+            refreshData();
+        }
+
+        private void mnu_MapElements_Click(object sender, MouseButtonEventArgs e)
+        {
+            MaterialMapper materialMapper = new MaterialMapper(this.CarboLifeProject);
+            materialMapper.ShowDialog();
+            if (materialMapper.isAccepted == true)
+            {
+                this.CarboLifeProject.carboMaterialMap = materialMapper.mappinglist;
+                this.CarboLifeProject.mapAllMaterials();
+            }
+        }
+
+
     }
 }

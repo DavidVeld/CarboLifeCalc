@@ -99,6 +99,8 @@
         <CheckBox IsEnabled="False" Name="chk_AddSteelConnecitons"  Grid.Column="2" Grid.Row="9" Margin="0,25,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Foreground="Gray" >Add Steel Connection Allowances on Import</CheckBox>
         <CheckBox IsEnabled="False" Name="chk_AddTimberConnections"  Grid.Column="2" Grid.Row="9" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" Foreground="Gray">Add Timber Connection Allowances on Import</CheckBox>
 
+        <CheckBox Name="chk_UseMappedMaterialData" IsEnabled="True" IsChecked="True" Grid.Column="4" Grid.Row="9" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}">Use Previously Mapped Materials</CheckBox>
+
 
         <Button Name="btn_ImportClose" Grid.Row="9" Grid.Column="4" Margin="0,0,100,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="95" Height="24" Style="{StaticResource ButtonStyle}" Click="Btn_ImportClose_Click">Ok &amp; Import</Button>
         <Button Name="btn_Cancel" Grid.Row="9" Grid.Column="4" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="95" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>

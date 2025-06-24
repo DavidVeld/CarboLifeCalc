@@ -55,6 +55,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <CheckBox Name="chk_SaveMappingFile" IsEnabled="True"  Grid.Row="6" Grid.Column="2" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" IsChecked="True">Save These Mapping Settings for Next Imports !</CheckBox>
 
         <Button Name="btn_Accept" Grid.Row="6" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
         <Button Name="btn_Cancel" Grid.Row="6" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>

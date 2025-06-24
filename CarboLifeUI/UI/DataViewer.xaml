@@ -74,6 +74,8 @@
 
                     <RibbonMenuButton Label="Split Group..." PreviewMouseDown="RibbonMenuButton_PreviewMouseDown" Visibility="Visible" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupsplit32.png"/>
                     <RibbonMenuButton Label="Multi-Map..." PreviewMouseDown="mnu_MapElements_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_materialmap32.png"/>
+                    <RibbonMenuButton Label="Remove Waste..." PreviewMouseDown="mnu_noWaste" SmallImageSource="/CarboLifeUI;component/Resources/rbn_del.png"/>
+
                     <!--- Needs a re-think -->
 
                 </RibbonGroup>
@@ -84,11 +86,13 @@
                 </RibbonGroup>
 
                 <RibbonGroup x:Name="Tools" Header="Tools">
-                    <RibbonButton Width="64" Height="64" Label="Manual RC" Click="Mnu_Reinforce_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_rebar32.png"/>
                     <RibbonButton Width="64" Height="64" Label="Auto RC" Click="Mnu_AutoRCGroups" LargeImageSource="/CarboLifeUI;component/Resources/rbn_rebar32.png"/>
 
                     <RibbonButton Width="64" Height="64" Label="Profile" Click="Mnu_Metaldeck_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_metaldeck32.png"/>
                     <RibbonButton Width="64" Height="64" Label="Refresh" Click="Btn_Calculate_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_refresh32.png" >
+                    
+                        <RibbonButton Width="64" Height="64" Label="Manual RC" Click="Mnu_Reinforce_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_rebar32.png" Visibility="Hidden"/>
+
                     </RibbonButton>
                 </RibbonGroup>
 

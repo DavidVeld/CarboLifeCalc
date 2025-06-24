@@ -77,7 +77,8 @@
 
         </GroupBox>
 
-        <lvc:CartesianChart Name="barchart" Grid.Column="2" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light">
+        <lvc:CartesianChart Name="barchart" Grid.Column="2" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="1" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="Black" Background="White" FontFamily="Calibri" FontWeight="Light"
+                            TooltipTextSize="11" TooltipPosition="Auto">
         </lvc:CartesianChart>
 
 

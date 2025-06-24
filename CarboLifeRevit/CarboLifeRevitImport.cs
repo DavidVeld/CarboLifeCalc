@@ -57,6 +57,17 @@ namespace CarboLifeRevit
                     if (myProject.RevitImportSettings.mapReinforcement == true)
                         myProject = mapReinforcement(app, myProject);
 
+                    //MapElements if required
+                    if (myProject.RevitImportSettings.UseImportedMap == true)
+                    {
+                        CarboMapFile defaultMappingFile = CarboMapFile.LoadFromXml();
+                        if (defaultMappingFile != null)
+                        {
+                            myProject.carboMaterialMap = defaultMappingFile.mappingTable;
+                            myProject.mapAllMaterials();
+                            myProject.CalculateProject();
+                        }
+                    }
                     projectToOpen = myProject;
                 }
                 else //upadte an existing file:

@@ -280,7 +280,7 @@ namespace CarboLifeUI.UI
                     barchart.Series = currentProjectSeriesCollection;
                     barchart.XAxes = GraphBuilder.getProjectAxis(projectlist);
                     barchart.YAxes = GraphBuilder.getCarbonAxis();
-
+                    //barchart.da
                     DataContext = this;
 
                 }

@@ -2277,5 +2277,13 @@ namespace CarboLifeAPI.Data
             }
             catch (Exception ex) { }
         }
+
+        public void RemoveWaste()
+        {
+            foreach(CarboGroup grp in groupList)
+            {
+                grp.Waste = 0;
+            }
+        }
     }
 }

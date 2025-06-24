@@ -104,26 +104,36 @@ namespace CarboLifeUI.UI
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
-            //List<CarboMapElement> list = dgData2.Items.OfType<CarboMapElement>().ToList();
-            /*
-            string text = "";
 
-            var rows = GetDataGridRows(dgData2);
-            foreach (DataGridRow row in rows)
+            if(chk_SaveMappingFile.IsChecked == true)
             {
-                CarboMapElement rowView = (CarboMapElement)row.Item;
-                foreach (DataGridColumn column in dgData2.Columns)
+                try
                 {
-                    if (column.GetCellContent(row) is TextBlock)
+                    CarboMapFile CurrentMappingFile = new CarboMapFile();
+                    CurrentMappingFile.mappingTable = mappinglist;
+                    //CurrentMappingFile.SaveToXml();
+
+                    CarboMapFile SavedMappingFile = new CarboMapFile();
+                    SavedMappingFile = CarboMapFile.LoadFromXml();
+
+                    if (SavedMappingFile != null)
                     {
-                        TextBlock cellContent = column.GetCellContent(row) as TextBlock;
-                        text += cellContent.Text;
+                        SavedMappingFile.Merge(CurrentMappingFile.mappingTable);
+                        SavedMappingFile.SaveToXml();
+                    }
+                    else
+                    {
+                        //The mapping file needs to be created
+                        CurrentMappingFile.SaveToXml();
                     }
                 }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show("Error saving mapping file: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
             }
 
-            System.Windows.MessageBox.Show(text);
-            */
             isAccepted = true;
             this.Close();
         }

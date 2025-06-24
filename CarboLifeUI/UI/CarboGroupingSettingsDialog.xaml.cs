@@ -144,6 +144,8 @@ namespace CarboLifeUI.UI
             chk_AdditionalImport.IsChecked = importSettings.IncludeAdditionalParameter;
             cbb_ExtraImportType.SelectedItem = importSettings.AdditionalParameterElementType;
             txt_ExtraImportValue.Text = importSettings.AdditionalParameter;
+
+            chk_UseMappedMaterialData.IsChecked = importSettings.UseImportedMap;
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -220,6 +222,8 @@ namespace CarboLifeUI.UI
             settings.defaultCarboGroupSettings.RCMaterialName = importSettings.RCMaterialName;
             settings.defaultCarboGroupSettings.rcQuantityMap = importSettings.rcQuantityMap;
             settings.defaultCarboGroupSettings.RCMaterialCategory = importSettings.RCMaterialCategory;
+
+            settings.defaultCarboGroupSettings.UseImportedMap = chk_UseMappedMaterialData.IsChecked.Value;
 
             //Seve as default for next time/project;
             settings.Save();

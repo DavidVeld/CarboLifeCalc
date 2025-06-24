@@ -158,7 +158,9 @@ namespace CarboLifeUI.UI
                         YToolTipLabelFormatter = point => $"{point.Model:0.00} tCO₂e",
                         DataLabelsSize = 12,
                         DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Middle,
-                        
+                        DataLabelsPaint = new SolidColorPaint(SKColors.Black),
+                        DataLabelsFormatter = (point) => $"{point.Model:0} tCO₂e",
+
                     });
                     j++;
                 }
@@ -533,7 +535,9 @@ namespace CarboLifeUI.UI
                         DataLabelsPaint = new SolidColorPaint(SKColors.Black),
                         DataLabelsFormatter = point => $"{point.Model:0} tCO₂e",
                         ToolTipLabelFormatter = point => $"{point.Model:0} tCO₂e",
+                        
                         DataLabelsSize = 12,
+                        InnerRadius = 15,
                     });
 
                     //Values = new ChartValues<double> { Math.Round(ppin.Value / 1000, 2) },
@@ -633,7 +637,7 @@ namespace CarboLifeUI.UI
                         DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
                         DataLabelsFormatter = point => $"{point.Model:0} tCO₂e",
                         ToolTipLabelFormatter = point => $"{point.Model:0} tCO₂e",
-                        InnerRadius = 25,
+                        InnerRadius = 0,
                         DataLabelsSize = 12,
                         Fill = new SolidColorPaint(getSKColour(j)),
 
@@ -784,8 +788,8 @@ namespace CarboLifeUI.UI
                 {
         new SKColor(147, 123, 131, 255),
         new SKColor(87, 164, 177, 255),
-        new SKColor(90, 119, 135, 255),
         new SKColor(210, 210, 60, 255),
+        new SKColor(90, 119, 135, 255),
         new SKColor(185, 220, 160, 255),
         new SKColor(156, 206, 212, 255),
         new SKColor(251, 226, 150, 255),

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CarboMapFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <mappingTable>
+    <CarboMapElement>
+      <revitName>WW_Steel</revitName>
+      <category>Structural Framing</category>
+      <carboNAME>Steel Generic Open Sections</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>WW_Concrete_Cast-in-Place Concrete</revitName>
+      <category>Floors</category>
+      <carboNAME>Concrete - Insitu</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>WW_Steel</revitName>
+      <category>Structural Columns</category>
+      <carboNAME>Steel Generic Open Sections</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>WW_Concrete_Cast-in-Place Concrete</revitName>
+      <category>Structural Foundations</category>
+      <carboNAME>Concrete - Insitu</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>WW_Concrete_Cast-in-Place Concrete</revitName>
+      <category>Walls</category>
+      <carboNAME>Concrete - Insitu</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>WW_Timber_Plywood</revitName>
+      <category>Floors</category>
+      <carboNAME>Plywood</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Wood - Dimensional Lumber</revitName>
+      <category>Structural Framing</category>
+      <carboNAME>Timber Wood Softwood</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>WW_Concrete_Mass Concrete</revitName>
+      <category>Structural Foundations</category>
+      <carboNAME>Concrete - Mass Concrete</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>WW_Masonry</revitName>
+      <category>Walls</category>
+      <carboNAME>Brickwork - Masonry</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>WW_Concrete_Cast-in-Place Concrete</revitName>
+      <category>Structural Framing</category>
+      <carboNAME>Concrete - Insitu</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>WW_Concrete_Cast-in-Place Concrete</revitName>
+      <category>Structural Columns</category>
+      <carboNAME>Concrete - Insitu</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Reinforcement</revitName>
+      <category>Reinforcement</category>
+      <carboNAME>Reinforcement</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Reinforcement</revitName>
+      <category>Reinforcement</category>
+      <carboNAME>Reinforcement</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Reinforcement</revitName>
+      <category>Reinforcement</category>
+      <carboNAME>Reinforcement</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Reinforcement</revitName>
+      <category>Reinforcement</category>
+      <carboNAME>Reinforcement</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Reinforcement</revitName>
+      <category>Reinforcement</category>
+      <carboNAME>Reinforcement</carboNAME>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Reinforcement</revitName>
+      <category>Reinforcement</category>
+      <carboNAME>Reinforcement</carboNAME>
+    </CarboMapElement>
+  </mappingTable>
+</CarboMapFile>
