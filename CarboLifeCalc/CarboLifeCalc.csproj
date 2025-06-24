@@ -59,6 +59,12 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="screens\**" />
+    <EmbeddedResource Remove="screens\**" />
+    <None Remove="screens\**" />
+    <Page Remove="screens\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Carbo Life Calc Help.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -270,7 +276,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="db\online\" />
-    <Folder Include="screens\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CarbonSharedParams.txt">
