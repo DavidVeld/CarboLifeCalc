@@ -148,21 +148,41 @@ namespace CarboLifeUI.UI
                 {
                     var phaseValues = pointList.Select(project =>
                         project.FirstOrDefault(p => p.Name == phase)?.Value ?? 0).ToList();
-
-                    series.Add(new StackedColumnSeries<double>
+                    if (phaseValues[0] > 0)
                     {
-                        Name = phase,
-                        Values = phaseValues,
-                        Stroke = null, // optional: cleaner look
-                        Fill = new SolidColorPaint(getSKColour(j)),
-                        YToolTipLabelFormatter = point => $"{point.Model:0.00} tCO₂e",
-                        DataLabelsSize = 12,
-                        DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Middle,
-                        DataLabelsPaint = new SolidColorPaint(SKColors.Black),
-                        DataLabelsFormatter = (point) => $"{point.Model:0} tCO₂e",
+                        series.Add(new StackedColumnSeries<double>
+                        {
+                            Name = phase,
+                            Values = phaseValues,
+                            Stroke = null, // optional: cleaner look
+                            Fill = new SolidColorPaint(getSKColour(j)),
+                            YToolTipLabelFormatter = point => $"{point.Model:0.00} tCO₂e",
+                            DataLabelsSize = 12,
+                            DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Middle,
+                            DataLabelsPaint = new SolidColorPaint(SKColors.Black),
+                            //DataLabelsFormatter = (point) => $"{point.Model:0} tCO₂e",
+                            DataLabelsFormatter = (point) => $"{point.Model:0.0}",
 
-                    });
-                    j++;
+                        });
+                    }
+                    else
+                    {
+                        series.Add(new StackedColumnSeries<double>
+                        {
+                            Name = phase,
+                            Values = phaseValues,
+                            Stroke = null, // optional: cleaner look
+                            Fill = new SolidColorPaint(getSKColour(j)),
+                            YToolTipLabelFormatter = point => $"{point.Model:0.00} tCO₂e",
+                            DataLabelsSize = 12,
+                            DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Middle,
+                            //DataLabelsPaint = new SolidColorPaint(SKColors.Black),
+                            //DataLabelsFormatter = (point) => $"{point.Model:0} tCO₂e",
+                            //DataLabelsFormatter = (point) => $"{point.Model:0}",
+
+                        });
+                    }
+                        j++;
                 }
 
                 result = series;
