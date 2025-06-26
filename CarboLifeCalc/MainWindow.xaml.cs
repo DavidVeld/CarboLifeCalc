@@ -38,12 +38,36 @@ namespace CarboLifeCalc
 
         private void btn_Launch_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SkiaSharp.Views.WPF.dll"));
+                //
+                Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "System.Drawing.Common.dll"));
+
+            }
+            catch
+            {
+
+            }
+
             CarboProject newProject = new CarboProject();
             Dispatcher.BeginInvoke(new Action(() => OpenProject(newProject)), DispatcherPriority.ContextIdle, null);
         }
 
         private void OpenProject(CarboProject project)
         {
+            try
+            {
+                Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SkiaSharp.Views.WPF.dll"));
+                //
+                Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "System.Drawing.Common.dll"));
+
+            }
+            catch
+            {
+
+            }
+
             CarboLifeUI.UI.CarboLifeMainWindow CarboApp = new CarboLifeMainWindow(project);
             //this.Visibility = Visibility.Hidden;
             CarboApp.ShowDialog();

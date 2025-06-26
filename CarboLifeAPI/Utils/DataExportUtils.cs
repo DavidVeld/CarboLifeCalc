@@ -118,6 +118,7 @@ namespace CarboLifeAPI
             //All is ok
             return false;
         }
+        /*
         [Obsolete("Not Used")]
         public static void ExportToExcel(CarboProject carboProject, string Path, bool exportResults, bool exportElements, bool exportMaterials)
         {
@@ -487,6 +488,8 @@ namespace CarboLifeAPI
             Marshal.ReleaseComObject(xlApp);
 
         }
+        */
+
         public static void ExportComaringGraphs(CarboProject carboLifeProject, List<CarboProject> projectListToCompareTo, bool exportCurrentProject)
         {
 
