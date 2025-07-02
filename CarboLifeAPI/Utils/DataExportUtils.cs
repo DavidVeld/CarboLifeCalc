@@ -521,6 +521,7 @@ namespace CarboLifeAPI
             }
         }
 
+        /*
         [Obsolete]
         private static void CreateTotalsExcelFile(List<CarboProject> projectList, Excel.Application xlApp, string path)
         {
@@ -641,6 +642,8 @@ namespace CarboLifeAPI
             Marshal.ReleaseComObject(xlApp);
 
         }
+        */
+
         public static void ExportToCSV(CarboProject carboLifeProject, string cvsExportPath, bool exportResult, bool exportElements, bool exportMaterials, bool exportProject)
         {
             string exportpath = Path.GetDirectoryName(cvsExportPath);

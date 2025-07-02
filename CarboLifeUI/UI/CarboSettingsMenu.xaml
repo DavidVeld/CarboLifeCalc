@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="700" MinWidth="700" MinHeight="500" Width="700" Height="250" Background="WhiteSmoke" Title="Carbo life Calculator Settings"  Loaded="Window_Loaded">
+             d:DesignHeight="550" d:DesignWidth="700" MinWidth="700" MinHeight="550" Width="700" Height="550" Background="WhiteSmoke" Title="Carbo life Calculator Settings"  Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -71,7 +71,7 @@
 
                 <Label Name="lbl_CheckTemplatePath" Visibility="Hidden" Grid.Column="1" Margin="0,25,0,0" Grid.Row="1" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}" Grid.RowSpan="1">[]</Label>
 
-                <CheckBox Name="chx_Experimental" Grid.Column="0" Grid.Row="4" Margin="0,0,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top">Load Carbo Circle At Startup (Restart Of Revit Required)</CheckBox>
+                <CheckBox Name="chx_Experimental" Grid.Column="0" Grid.Row="4" Margin="0,2,0,0" Grid.ColumnSpan="3" FontSize="14" FontFamily="Segoe UI" IsChecked="True" Height="25" VerticalAlignment="Top">Load Carbo Circle At Startup (Restart Of Revit Required)</CheckBox>
 
             </Grid>
         </GroupBox>

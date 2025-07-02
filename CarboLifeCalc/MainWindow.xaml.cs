@@ -161,8 +161,20 @@ namespace CarboLifeCalc
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
-            e.Handled = true;
+            try
+            {
+                var psi = new ProcessStartInfo
+                {
+                    FileName = e.Uri.AbsoluteUri,
+                    UseShellExecute = true // Required to open URLs or launch with default apps
+                };
+                Process.Start(psi);
+                e.Handled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening link: {ex.Message}");
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

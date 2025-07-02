@@ -51,8 +51,8 @@
         </Hyperlink>
         </TextBlock>
         <TextBlock Grid.Column="3" Grid.Row="2" Width="527" Height="18" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,110,0,0">Contact: 
-            <Hyperlink NavigateUri="https://davidveld.nl/carbocalc.php"  RequestNavigate="Hyperlink_RequestNavigate" FontFamily="Segoe UI" FontSize="12">
-        https://davidveld.nl/carbocalc
+            <Hyperlink NavigateUri="https://sites.google.com/view/david-veld"  RequestNavigate="Hyperlink_RequestNavigate" FontFamily="Segoe UI" FontSize="12">
+        https://sites.google.com/view/david-veld
         </Hyperlink>
         </TextBlock>
         <Label Grid.Column="3" Grid.Row="2" Width="325" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,87,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Author: David In't Veld</Label>

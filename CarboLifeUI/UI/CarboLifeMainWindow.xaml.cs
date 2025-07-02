@@ -116,7 +116,7 @@ namespace CarboLifeUI.UI
                 if(randomNumber == 2)
                 {
                     //only show message after certain publication date
-                    DateTime startDate = new DateTime(2025, 3, 1);
+                    DateTime startDate = new DateTime(2025, 8, 1);
                     DateTime currentDate = DateTime.Now;
 
                     if (currentDate > startDate)
@@ -579,7 +579,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                     }
                     else
                     {
-                        MessageBox.Show("The file is open by another process, or cannot be opened, please specify another location.");
+                        MessageBox.Show("Files not exported");
                     }
                 }
 

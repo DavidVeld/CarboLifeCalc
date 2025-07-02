@@ -65,6 +65,10 @@
     <Page Remove="screens\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="samples\CarboLifeCalc_sample_project_R25.clcx" />
+    <None Remove="samples\CarboLifeCalc_sample_project_R25.rvt" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Carbo Life Calc Help.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -221,13 +225,13 @@
     <Content Include="Resources\DVLogo256.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="samples\CarboLifeCalc_sample_project_R25.clcx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="samples\CarboLifeCalc_sample_project_R25.rvt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="samples\Unit Test CLC R2023.rvt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="samples\CarboLifeCalc_sample_project_R22.clcx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="samples\CarboLifeCalc_sample_project_R22.rvt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="samples\CarboCircleTest R2023.rvt">

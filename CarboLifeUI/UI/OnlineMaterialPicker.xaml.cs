@@ -44,7 +44,7 @@ namespace CarboLifeUI.UI
                 //ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-                string url = "https://www.davidveld.nl/ping.php";
+                string url = "https://buymeacoffee.com/davidveld";
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
 

@@ -52,9 +52,9 @@
 
         <Label Name="lbl_Version" Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light">Build: V X.X.X</Label>
         <Label Grid.Column="3" Grid.Row="2" Width="199" Height="35" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" Margin="0,270,10,0" FontFamily="Segoe UI" FontSize="14" Foreground="#000" FontWeight="Light" Grid.RowSpan="2">Author: David In't Veld</Label>
-        <TextBlock Grid.Column="3" Grid.Row="3" Width="160" Height="19" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,18,10,0" FontSize="14"  FontFamily="Segoe UI" TextAlignment="Right">
-            <Hyperlink NavigateUri="https://www.davidveld.nl" RequestNavigate="Hyperlink_RequestNavigate" FontSize="14"  FontFamily="Segoe UI">
-        https://www.davidveld.nl
+        <TextBlock Grid.Column="3" Grid.Row="3" Width="300" Height="19" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,18,10,0" FontSize="14"  FontFamily="Segoe UI" TextAlignment="Right">
+            <Hyperlink NavigateUri="https://sites.google.com/view/david-veld" RequestNavigate="Hyperlink_RequestNavigate" FontSize="14"  FontFamily="Segoe UI">
+        https://sites.google.com/view/david-veld
         </Hyperlink>
         </TextBlock>
         <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Width="682" Height="28" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" FontFamily="Segoe UI" FontSize="14" Visibility="Hidden" Foreground="#000" FontWeight="Light">[Files]</Label>

@@ -6,6 +6,16 @@
     <AddInId>211bd833-33a4-432b-9792-c5ecffa4e744</AddInId>
     <FullClassName>CarboLifeRevit.CarboLifeApp</FullClassName>
     <VendorId>DavidVeld</VendorId>
-    <VendorDescription>DavidVeld, www.davidveld.nl</VendorDescription>
+    <VendorDescription>DavidVeld</VendorDescription>
   </AddIn>
+
+  <AddIn Type="Application">
+    <Name>CarboCircleRevit</Name>
+    <Assembly>[PATH]\CarboCircle.dll</Assembly>
+    <AddInId>2A12C7EB-467C-4112-8380-4E1673CA544D</AddInId>
+    <FullClassName>CarboCircle.CarboCircleApp</FullClassName>
+    <VendorId>DavidVeld</VendorId>
+    <VendorDescription>DavidVeld</VendorDescription>
+  </AddIn>
+  
 </RevitAddIns>

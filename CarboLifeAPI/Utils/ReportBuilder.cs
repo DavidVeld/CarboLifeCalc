@@ -98,7 +98,7 @@ namespace CarboLifeAPI
             if (ratingChart != null)
             {
                 string ratingChart64 = ToBase64String(ratingChart);
-                ImgTag3 = getImageTag(ratingChart64, 0, 300, "Rating");
+                ImgTag3 = getImageTag(ratingChart64, 850, 0, "Rating");
             }
 
             //HTML WRITING;
@@ -112,10 +112,13 @@ namespace CarboLifeAPI
 
                 //Images
                 report += "<H2><B>" + "Graphs:" + "</B></H2><BR>" + System.Environment.NewLine;
-                report += "<TABLE border=0 cellpadding=0 cellspacing=0 width=800>";
+                report += "<TABLE border=0 cellpadding=0 cellspacing=0 width=800 class=\"static-table\">";
                 report += "<TR><TD></TD></TR>";
+                report += "<TR><TD><H2><B>" + "By Material:" + "</B></H2></TD></TR>";
                 report += "<TR><TD>" + ImgTag1 + "</TD></TR>";
+                report += "<TR><TD><H2><B>" + "By Phase:" + "</B></H2></TD></TR>";
                 report += "<TR><TD>" + ImgTag2 + "</TD></TR>";
+                report += "<TR><TD><H2><B>" + "Score:" + "</B></H2></TD></TR>";
                 report += "<TR><TD>" + ImgTag3 + "</TD></TR>";
                 report += "</TABLE>";
 
@@ -260,8 +263,16 @@ namespace CarboLifeAPI
              imgTag += imageAsString + "\" ";
             //imgTag += " width=\"" + width.ToString() + (char)34;
             //imgTag += " height=\"" + height.ToString() + (char)34 + "/>" + System.Environment.NewLine;
-            imgTag += " height=\"" + height + (char)34 + "/>" + System.Environment.NewLine;
 
+            if (height > 0)
+            {
+                imgTag += " height=\"" + height + (char)34 + "/>" + System.Environment.NewLine;
+            }
+            else
+            {
+                imgTag += " width=\"" + width + (char)34 + "/>" + System.Environment.NewLine;
+
+            }
             return imgTag;
         }
 
@@ -510,7 +521,7 @@ namespace CarboLifeAPI
                 html += "<TD width=" + 73 + "><B>" + "C1-C4" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 73 + "><B>" + "D" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 73 + "><B>" + "Mix" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 73 + "><B>" + "Sequestration" + "</B></TD>" + System.Environment.NewLine;
+                html += "<TD width=" + 73 + "><B>" + "Seqstr." + "</B></TD>" + System.Environment.NewLine;
 
 
                 html += "</TR>" + System.Environment.NewLine;
@@ -755,19 +766,14 @@ h3 {
 }
 
 a {
-  color: #B22222; /* firebrick red */
+  color: #B22222;
   text-decoration: none;
-  font-size: 16px;
-  margin-top: 15px;
 }
 
 a:hover {
-  color: #FF4500; /* bright red-orange */
+  color: #FF4500;
   text-decoration: underline;
-  font-size: 16px;
-  margin-top: 15px;
 }
-
 
 table {
   width: 90%;
@@ -779,7 +785,7 @@ table {
 }
 
 td {
-  padding: 10px 12px;
+  padding: 5px 6px;
   border: 1px solid #ddd;
   vertical-align: top;
 }
@@ -790,6 +796,11 @@ tr:nth-child(even) {
 
 tr:hover {
   background-color: #eee;
+}
+
+/* Static table with no hover effect */
+.static-table tr:hover {
+  background-color: inherit;
 }
 
 td b {

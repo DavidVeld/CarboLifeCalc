@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Xml.Serialization;
 
+
 namespace CarboLifeAPI.Data
 {
     [Serializable]
@@ -693,6 +694,7 @@ namespace CarboLifeAPI.Data
                                         {
                                             //Only update if the mapping file suggest a change.
                                             gr.Material = cm;
+                                            gr.Waste = cm.WasteFactor;
                                             gr.RefreshValuesFromElements();
                                             gr.CalculateTotals();
                                             
