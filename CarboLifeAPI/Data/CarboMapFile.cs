@@ -124,6 +124,17 @@ namespace CarboLifeAPI.Data
                     mappingTable.Add(newElement);
                 }
             }
+
+            CleanUp();
+        }
+
+        private void CleanUp()
+        {
+            // Use LINQ to filter out duplicates based on revitName and category
+            mappingTable = mappingTable
+                .GroupBy(e => new { e.revitName, e.category })
+                .Select(g => g.First())
+                .ToList();
         }
     }
 }
