@@ -624,5 +624,53 @@ namespace CarboLifeAPI
 
         }
 
+        public static List<CarboMapElement> GenerateMappinglist(CarboProject carboProject)
+        {
+            var mappingList = new List<CarboMapElement>();
+
+            // Defensive check
+            if (carboProject == null)
+            {
+                //Console.WriteLine("Error: carboProject is null.");
+                return mappingList;
+            }
+
+            try
+            {
+                // Use a HashSet to track unique combinations of revitName, carboNAME, and category
+                var uniqueKeys = new HashSet<(string, string, string)>();
+
+                foreach (CarboGroup cg in carboProject.getGroupList)
+                {
+                    if (cg.AllElements == null || cg.AllElements.Count == 0)
+                        continue;
+
+                    string revitName = cg.AllElements[0].MaterialName;
+                    string carboNAME = cg.MaterialName;
+                    string category = cg.Category;
+
+                    var key = (revitName, carboNAME, category);
+
+                    if (!uniqueKeys.Contains(key))
+                    {
+                        var mapElement = new CarboMapElement
+                        {
+                            revitName = revitName,
+                            carboNAME = carboNAME,
+                            category = category
+                        };
+
+                        mappingList.Add(mapElement);
+                        uniqueKeys.Add(key);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error while generating mapping list: {ex.Message}");
+            }
+
+            return mappingList;
+        }
     }
 }

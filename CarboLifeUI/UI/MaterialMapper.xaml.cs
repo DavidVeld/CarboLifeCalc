@@ -46,27 +46,20 @@ namespace CarboLifeUI.UI
 
             this.InitializeComponent();
 
-            mappinglist = new List<CarboMapElement>();
-
-            foreach(CarboGroup cg in carboProject.getGroupList)
+            try
             {
-                //Only add if they have revit elements
-                if (cg.AllElements.Count > 0)
+                mappinglist = new List<CarboMapElement>();
+                mappinglist = Utils.GenerateMappinglist(carboProject);
+
+                materialList = new List<CarboName>();
+                foreach (CarboMaterial cm in list)
                 {
-                    CarboMapElement mapElement = new CarboMapElement();
-
-                    mapElement.revitName = cg.AllElements[0].MaterialName;
-                    mapElement.carboNAME = cg.MaterialName;
-                    mapElement.category = cg.Category;
-
-                    mappinglist.Add(mapElement);
+                    materialList.Add(new CarboName { carboNAME = cm.Name });
                 }
             }
-
-            materialList = new List<CarboName>();
-            foreach (CarboMaterial cm in list)
+            catch (Exception ex)
             {
-                materialList.Add(new CarboName {carboNAME = cm.Name});
+                System.Windows.MessageBox.Show("Error generating mapping list: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             DataContext = this;

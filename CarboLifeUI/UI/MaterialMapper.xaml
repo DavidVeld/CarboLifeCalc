@@ -44,7 +44,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding revitName}" Header=" Revit Material Name" Width="1*"/>
                 <DataGridTextColumn Binding="{Binding category}" Header=" Category" Width="135"/>
-                <DataGridTextColumn Binding="{Binding additionalData}" Header=" Additional" Width="135"/>
+                <DataGridTextColumn Binding="{Binding additionalData}" Header=" Additional" Width="135" Visibility="Hidden"/>
 
                 <DataGridTemplateColumn Header="Carbo Life Calc Material Name" Width="1.2*" >
                     <DataGridTemplateColumn.CellTemplate>

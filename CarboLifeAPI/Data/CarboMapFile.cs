@@ -74,6 +74,32 @@ namespace CarboLifeAPI.Data
             }
             else
             {
+                return new CarboMapFile();
+            }
+        }
+
+        public static CarboMapFile ExportTo(string Filepath)
+        {
+            string myPath = Filepath;
+
+            if (!File.Exists(myPath))
+            {
+                try
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(CarboMapFile));
+                    using (StreamReader reader = new StreamReader(myPath))
+                    {
+                        return (CarboMapFile)serializer.Deserialize(reader);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Console.WriteLine("Error during deserialization: " + ex.Message);
+                    return null;
+                }
+            }
+            else
+            {
                 return null;
             }
         }

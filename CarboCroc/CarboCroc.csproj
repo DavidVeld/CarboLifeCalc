@@ -93,11 +93,15 @@
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="CarboCrocPainter.cs" />
     <Compile Remove="UserControl1.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="samples\CarboCrocSampleProject.gh" />
     <None Remove="samples\CarboCrocSampleProjectBaked.gh" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CarboCrocPainter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GH_IO">
