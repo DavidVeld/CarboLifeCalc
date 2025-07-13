@@ -26,6 +26,7 @@ namespace CarboCroc
         {
             pManager.AddGenericParameter("Carbo Groups", "CG", "Carbo Groups", GH_ParamAccess.list);
             pManager.AddBooleanParameter("Switches", "CS", "Carbo Switches", GH_ParamAccess.list);
+            pManager.AddNumberParameter("Uncertainty", "Uncert", "Uncertainty factor (between 0 and 1)", GH_ParamAccess.item, 0);
 
         }
 
@@ -58,6 +59,10 @@ namespace CarboCroc
 
             bool okSwitches = DA.GetDataList(1, switches);
 
+            double uncertaintyFactor = 0;
+            DA.GetData<double>(8, ref uncertaintyFactor);
+
+            runtimeProject.UncertFact = uncertaintyFactor;
 
             if (DA.GetDataList(0, provided_as_goo))
             {

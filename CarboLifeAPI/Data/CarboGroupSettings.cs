@@ -54,6 +54,8 @@ namespace CarboLifeAPI.Data
         public string RCMaterialCategory { get; set; }
         public bool UseImportedMap { get; set; }
 
+        public double UncertaintyFactor { get; set; }
+
         public CarboGroupSettings()
         {
             CategoryName = "(Revit) Category";
@@ -87,6 +89,8 @@ namespace CarboLifeAPI.Data
             RCMaterialName = "Reinforcement";
 
             UseImportedMap = true;
+
+            UncertaintyFactor = 0.10;
 
             rcQuantityMap = new List<CarboNumProperty>();
             

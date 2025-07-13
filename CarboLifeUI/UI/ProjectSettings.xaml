@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="580"  d:DesignWidth="1300" IsVisibleChanged="UserControl_IsVisibleChanged">
+             d:DesignHeight="650"  d:DesignWidth="1300" IsVisibleChanged="UserControl_IsVisibleChanged">
     <!--580 min-->
     <UserControl.Resources>
         <ResourceDictionary>
@@ -19,7 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="340"/>
+            <RowDefinition Height="440"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0"/>
             <RowDefinition Height="5"/>
@@ -41,6 +41,7 @@
                     <RowDefinition  Height="32" />
                     <RowDefinition  Height="70" />
                     <RowDefinition  Height="32" />
+                    <RowDefinition  Height="35" />
                     <RowDefinition  Height="35" />
                     <RowDefinition  Height="32" />
                     <RowDefinition  Height="32" />
@@ -94,6 +95,11 @@
                 <TextBox Name="txt_SocialCost" Grid.Column="2" Grid.Row="8" Margin="5,0,0,4" Width="110" HorizontalAlignment="Left" Height="28"  Style="{StaticResource flatTextBox}" TextChanged="txt_SocialCost_TextChanged"></TextBox>
                 <Label Grid.Column="3" Margin="118,0,223,0" Grid.Row="8"   Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">$/£/€ per tCO₂e</Label>
                 <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="8" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">Social Carbon Cost is estimated between 100-200 pounds / dollar per tCO₂e</Label>
+
+                <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="9"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Uncertainty Factor:</Label>
+                <TextBox Name="txt_Uncert" Grid.Column="2" Grid.Row="9" Margin="5,0,0,5" Width="110" HorizontalAlignment="Left" Height="28"  Style="{StaticResource flatTextBox}" TextChanged="txt_Uncert_TextChanged"></TextBox>
+                <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="9" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">RICS Guideline of uncertainty: 15% Early Stage, 10% Design Stage, 1% Construction</Label>
+                <Label Grid.Column="2" Margin="135,0,0,0" Grid.Row="9"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">%</Label>
 
 
             </Grid>

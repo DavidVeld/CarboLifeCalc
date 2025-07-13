@@ -127,7 +127,7 @@ namespace CarboLifeAPI
             jsProject.GIA = carboProject.Area;
             jsProject.GIANew = carboProject.AreaNew;
 
-            jsProject.A0Global = carboProject.A0Global;
+            jsProject.A0Global = carboProject.A0GlobalUncert;
             jsProject.A5Global = carboProject.A5Global;
             jsProject.b675Global = carboProject.b675Global;
             jsProject.C1Global = carboProject.C1Global;

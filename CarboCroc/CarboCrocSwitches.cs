@@ -18,14 +18,14 @@ namespace CarboCroc
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddBooleanParameter("A1-A3", "A1A3", "Fabrication", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("A4", "A4", "Transport", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("A5", "A5", "Construction", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("B1-B6", "B1B6", "InUse", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("C1-C4", "C1C4", "Deconstruction", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("D", "D", "Out Of Scope", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("Seq", "Seq", "Sequestration", GH_ParamAccess.item);
-            pManager.AddBooleanParameter("Extra", "E", "Additional", GH_ParamAccess.item);
+            pManager.AddBooleanParameter("A1-A3", "A1A3", "Fabrication", GH_ParamAccess.item, true);
+            pManager.AddBooleanParameter("A4", "A4", "Transport", GH_ParamAccess.item, true);
+            pManager.AddBooleanParameter("A5", "A5", "Construction", GH_ParamAccess.item, true);
+            pManager.AddBooleanParameter("B1-B6", "B1B6", "InUse", GH_ParamAccess.item, false);
+            pManager.AddBooleanParameter("C1-C4", "C1C4", "Deconstruction", GH_ParamAccess.item, true);
+            pManager.AddBooleanParameter("D", "D", "Out Of Scope", GH_ParamAccess.item, false);
+            pManager.AddBooleanParameter("Seq", "Seq", "Sequestration", GH_ParamAccess.item, true);
+            pManager.AddBooleanParameter("Extra", "E", "Additional", GH_ParamAccess.item,false);
 
 
         }
@@ -61,6 +61,7 @@ namespace CarboCroc
                 DA.GetData<bool>(6, ref s);
                 DA.GetData<bool>(7, ref extra);
 
+
                 result.Add(a13);
                 result.Add(a4);
                 result.Add(a5);
@@ -69,6 +70,7 @@ namespace CarboCroc
                 result.Add(d);
                 result.Add(s);
                 result.Add(extra);
+
 
 
             }

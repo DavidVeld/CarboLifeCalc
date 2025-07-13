@@ -24,6 +24,8 @@ namespace CarboCroc
             pManager.AddTextParameter("Material Name", "Material Name", "Material Name", GH_ParamAccess.item);
             pManager.AddTextParameter("Material Category", "Material Category", "Material Category", GH_ParamAccess.item,"");
             pManager.AddTextParameter("Material Grade", "Material Grade", "Material Grade", GH_ParamAccess.item, "");
+            pManager.AddTextParameter("Material Template", "Material Template", "Material Template (WIP)", GH_ParamAccess.item, "");
+
 
         }
 

@@ -155,14 +155,16 @@ namespace CarboLifeUI.UI
                     txt_EnergyPerYear.Text = CarboLifeProject.energyProperties.value.ToString();
 
                     //Totals
-                    txt_A0Total.Text = ((CarboLifeProject.A0Global) / 1000).ToString();
+                    txt_A0Total.Text = ((CarboLifeProject.A0GlobalUncert) / 1000).ToString();
                     txt_A5Total.Text = CarboLifeProject.A5Global.ToString();
                     txt_EnergyTotal.Text = (CarboLifeProject.energyProperties.value / 1000).ToString();
                     txt_C1Total.Text = CarboLifeProject.C1Global.ToString();
 
                     lbl_Currency.Content = CarboLifeProject.valueUnit.ToString();
                     lbl_Currencyunit.Content = "kgCO₂e/" + CarboLifeProject.valueUnit.ToString();
-                   
+
+                    double valueInPercent = (CarboLifeProject.UncertFact * 100);
+                    txt_Uncert.Text = valueInPercent.ToString();
 
                 }
             }
@@ -440,6 +442,14 @@ namespace CarboLifeUI.UI
             RefreshInterFace();
         }
 
+        private async void txt_Uncert_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
 
+            await Task.Delay(1000);
+            double fact = Utils.ConvertMeToDouble(tb.Text) / 100;
+            CarboLifeProject.UncertFact = fact;
+            RefreshInterFace();
+        }
     }
 }

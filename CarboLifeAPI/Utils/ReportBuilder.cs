@@ -200,7 +200,7 @@ namespace CarboLifeAPI
                 html += "<TR><TD width=175></TD><TD> tCO2</TD><TD></TD></TR>";
 
                 html += "<TR><TD width=" + 150 + "><B>" + "A0:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD>" + carboProject.A0Global + " </TD><TD></TD></TR>" + System.Environment.NewLine;
+                html += "<TD>" + carboProject.A0GlobalUncert + " </TD><TD></TD></TR>" + System.Environment.NewLine;
 
                 html += "<TR><TD width=" + 150 + "><B>" + "A5:" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD>" + carboProject.A5Global + " </TD><TD></TD></TR>" + System.Environment.NewLine;

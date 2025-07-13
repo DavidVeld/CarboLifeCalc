@@ -138,6 +138,7 @@ namespace CarboLifeRevit
 
             myProject.Name = doc.ProjectInformation.Name.Trim();
             myProject.Number = doc.ProjectInformation.Number;
+            myProject.UncertFact = settings.UncertaintyFactor;
 
             ICollection<ElementId> selectionList = uidoc.Selection.GetElementIds();
             IList<Element> elementCollection = new List<Element>();

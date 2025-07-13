@@ -730,7 +730,7 @@ namespace CarboLifeAPI
                     resultString += carboLifeProject.SocialCost + ","; //4
                     resultString += carboLifeProject.Area + ","; //5
                     resultString += carboLifeProject.AreaNew + ","; //6
-                    resultString += carboLifeProject.A0Global + ","; //7
+                    resultString += carboLifeProject.A0GlobalUncert + ","; //7
                     resultString += carboLifeProject.A5Global + ","; //8
                     resultString += carboLifeProject.b675Global + ","; //9
                     resultString += carboLifeProject.C1Global + ","; //10
@@ -854,7 +854,7 @@ namespace CarboLifeAPI
                     resultString += carboLifeProject.Area + ","; //5
                     resultString += carboLifeProject.AreaNew + ","; //6
 
-                    resultString += carboLifeProject.A0Global + ","; //7
+                    resultString += carboLifeProject.A0GlobalUncert + ","; //7
                     resultString += carboLifeProject.A5Global + ","; //8
                     resultString += carboLifeProject.b675Global + ","; //9
                     resultString += carboLifeProject.C1Global + ","; //10

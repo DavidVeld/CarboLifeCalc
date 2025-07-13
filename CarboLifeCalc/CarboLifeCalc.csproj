@@ -293,4 +293,15 @@
     <FileVersion>1.9.0.3</FileVersion>
     <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
+  <Target Name="RenameLibDllToGha" AfterTargets="Build">
+    <ItemGroup>
+      <LibDll Include="$(OutputPath)CarboCroc.dll" />
+    </ItemGroup>
+
+    <!-- Rename the DLL to GHA -->
+    <Copy
+      SourceFiles="@(LibDll)"
+      DestinationFiles="$(OutputPath)CarboCroc.gha"
+      SkipUnchangedFiles="true" />
+  </Target>
 </Project>
