@@ -1314,6 +1314,11 @@ namespace CarboLifeAPI.Data
 
             string generalText = "";
 
+            if (UncertFact > 0)
+            {
+                generalText += "The calulated values are based on a uncertainty factor of: " + Math.Round((UncertFact * 100), 0).ToString("N") + " %" + Environment.NewLine;
+            }
+
             generalText += "The Upfront Carbon Footprint (A0-A5) is: " + Math.Round((getUpfrontTotals() / 1000),2).ToString("N") + " tCO₂e" + Environment.NewLine;
             generalText += "The Embodied Carbon Footprint (A0-C & Seq) is: " + Math.Round((getEmbodiedTotals() / 1000), 2).ToString("N") + " tCO₂e" + Environment.NewLine;
             

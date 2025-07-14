@@ -312,7 +312,7 @@ namespace CarboLifeUI.UI
                 summaryTextMemory = "";
 
                 TextBlock TotalText = new TextBlock();
-                TotalText.Text = "Calculated Carbon Footprint: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e";
+                TotalText.Text = "Calculated Carbon Footprint: " + Math.Round(CarboLifeProject.getTotalEC(),2).ToString() + " tCO₂e";
                 summaryTextMemory += TotalText.Text + Environment.NewLine;
                 TotalText.FontStyle = FontStyles.Normal;
                 TotalText.FontWeight = FontWeights.Bold;

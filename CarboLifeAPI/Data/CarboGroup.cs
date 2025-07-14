@@ -518,8 +518,11 @@ namespace CarboLifeAPI.Data
 
             }
 
+            //Adjust Volume to uncertainty
+            TotalVolume = TotalVolume * uncertaintyFactor;
+
             //Use Correct ECi to write into Elements based on Chosen switches (A-D)
-            if(this.AllElements.Count > 0)
+            if (this.AllElements.Count > 0)
             {
                 foreach(CarboElement el in  this.AllElements)
                 {
@@ -541,7 +544,7 @@ namespace CarboLifeAPI.Data
             inUseProperties.totalValue = ECB1B7;
 
             //The final calc:
-            EC = ((Mass * (ECI + inuseECI) * inUseReplacementFactor) * uncertaintyFactor) / 1000;
+            EC = ((Mass * (ECI + inuseECI) * inUseReplacementFactor)) / 1000;
 
         }
         internal void TrucateElements()
