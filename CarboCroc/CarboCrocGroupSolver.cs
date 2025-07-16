@@ -26,8 +26,8 @@ namespace CarboCroc
         {
             pManager.AddGenericParameter("Carbo Groups", "CG", "Carbo Groups", GH_ParamAccess.list);
             pManager.AddBooleanParameter("Switches", "CS", "Carbo Switches", GH_ParamAccess.list);
-            pManager.AddNumberParameter("Uncertainty", "Uncert", "Uncertainty factor (between 0 and 1)", GH_ParamAccess.item, 0);
-
+            pManager.AddTextParameter("TemplatePath", "TP", "Template Path", GH_ParamAccess.item, "");
+            pManager.AddNumberParameter("Uncertainty", "U", "Uncertainty factor (Between 0 and 1)", GH_ParamAccess.item, 0);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -46,7 +46,13 @@ namespace CarboCroc
             var provided_as_goo = new List<GH_ObjectWrapper>();
             List<CarboGroup> listOfGroups = new List<CarboGroup>();
 
+            string templatePath = "";
+            bool oktemplatePath = DA.GetData<string>(2, ref templatePath);
+            double uncertainty = 0;
+            bool okUncertainty = DA.GetData<double>(3, ref uncertainty);
+
             CarboProject runtimeProject = new CarboProject();
+            //runtimeProject.UncertFact = uncertainty;
 
             List<bool> switches = new List<bool>(); ;
 
@@ -58,11 +64,6 @@ namespace CarboCroc
             //Type carboGType2 = listOfGroups[0].GetType();
 
             bool okSwitches = DA.GetDataList(1, switches);
-
-            double uncertaintyFactor = 0;
-            DA.GetData<double>(8, ref uncertaintyFactor);
-
-            runtimeProject.UncertFact = uncertaintyFactor;
 
             if (DA.GetDataList(0, provided_as_goo))
             {

@@ -9,6 +9,7 @@ using CarboLifeAPI.Data;
 using System.Drawing;
 using System.ComponentModel;
 using GH_IO.Serialization;
+using System.IO;
 
 namespace CarboCroc
 {
@@ -21,10 +22,10 @@ namespace CarboCroc
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("Material Name", "Material Name", "Material Name", GH_ParamAccess.item);
-            pManager.AddTextParameter("Material Category", "Material Category", "Material Category", GH_ParamAccess.item,"");
-            pManager.AddTextParameter("Material Grade", "Material Grade", "Material Grade", GH_ParamAccess.item, "");
-            pManager.AddTextParameter("Material Template", "Material Template", "Material Template (WIP)", GH_ParamAccess.item, "");
+            pManager.AddTextParameter("Material Name", "Material Name", "Material Name", GH_ParamAccess.item); //0
+            pManager.AddTextParameter("Material Category", "Material Category", "Material Category", GH_ParamAccess.item,"");//1
+            pManager.AddTextParameter("Material Grade", "Material Grade", "Material Grade", GH_ParamAccess.item, "");//2
+            pManager.AddTextParameter("Material Template", "Material Template", "Material Template (WIP)", GH_ParamAccess.item, ""); //3
 
 
         }
@@ -42,6 +43,16 @@ namespace CarboCroc
                 string searchName = "";
                 string searchCategory = "";
                 string searchGrade = "";
+
+                string templatePath = "";
+                string AccptedTemplatePath = "";
+
+                bool oktemplatePath = DA.GetData<string>(3, ref templatePath);
+
+                if(File.Exists(templatePath))
+                {
+                    AccptedTemplatePath = templatePath;
+                }
 
                 CarboProject CP = new CarboProject();
                 CarboDatabase DB = CP.CarboDatabase;

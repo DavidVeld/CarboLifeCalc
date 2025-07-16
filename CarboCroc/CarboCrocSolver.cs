@@ -25,7 +25,8 @@ namespace CarboCroc
         {
             pManager.AddGenericParameter("Carbo Elements", "CE", "Carbo Elements", GH_ParamAccess.list);
             pManager.AddBooleanParameter("Switches", "CS", "Carbo Switches", GH_ParamAccess.list);
-
+            pManager.AddTextParameter("TemplatePath", "TP", "Template Path", GH_ParamAccess.item, "");
+            pManager.AddNumberParameter("Uncertainty", "U", "Uncertainty factor (Between 0 and 1)", GH_ParamAccess.item, 0);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -33,6 +34,7 @@ namespace CarboCroc
             pManager.Register_DoubleParam("Total", "Total", "Total COe2"); //0
             pManager.Register_GenericParam("Carbo Project", "CP", "Returns the Carbo Project file");//9
             pManager.Register_StringParam("Message", "M", "Returns results in a string list", GH_ParamAccess.list);//10
+            pManager.Register_StringParam("Result Text", "Txt", "Returns results in a text Message", GH_ParamAccess.item);//10
 
         }
 
@@ -42,19 +44,27 @@ namespace CarboCroc
             List<string> resultList = new List<string>();
 
             //string path = "";
+            string templatePath = "";
+            bool oktemplatePath = DA.GetData(2, ref templatePath);
+            double uncertainty = 0;
+            bool okUncertainty = DA.GetData(3, ref uncertainty);
 
+            CarboProject runtimeProject = new CarboProject();
+            runtimeProject.UncertFact = uncertainty;
+
+            //Get the save as.. path :
+            //DA.GetData<string>(1, ref path);
+            //Get the switches
             var provided_as_goo = new List<GH_ObjectWrapper>();
             List<bool> switches = new List<bool>(); ;
 
             List<CarboElement> listOfElements = new List<CarboElement>();
 
-            CarboProject runtimeProject = new CarboProject();
-
-            //Get the save as.. path :
-            //DA.GetData<string>(1, ref path);
-            //Get the switches
             bool okSwitches = DA.GetDataList(1, switches);
-                        
+
+            string messageText = uncertainty.ToString() + Environment.NewLine
+                + templatePath + Environment.NewLine;
+                
 
             //Get the data
             if (DA.GetDataList(0, provided_as_goo))
@@ -114,10 +124,12 @@ namespace CarboCroc
             resultList.Add("Other," + Other.ToString());
             resultList.Add("Seq," + Seq.ToString());
             */
+            messageText += runtimeProject.getGeneralText();
 
             DA.SetData(0, totals); //Totals
             DA.SetData(1, runtimeProject);
             DA.SetDataList(2, resultList);
+            DA.SetData(3, messageText);
 
 
         }

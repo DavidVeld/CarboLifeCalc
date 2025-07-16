@@ -234,7 +234,7 @@ namespace CarboLifeAPI.Data
 
             calculateSubStructure = true;
 
-            UncertFact = 0;
+            UncertFact = RevitImportSettings.UncertaintyFactor;
         }
 
 
@@ -318,7 +318,7 @@ namespace CarboLifeAPI.Data
 
             calculateSubStructure = true;
 
-            UncertFact = 0;
+            UncertFact = RevitImportSettings.UncertaintyFactor;
 
         }
 
@@ -1314,10 +1314,9 @@ namespace CarboLifeAPI.Data
 
             string generalText = "";
 
-            if (UncertFact > 0)
-            {
-                generalText += "The calulated values are based on a uncertainty factor of: " + Math.Round((UncertFact * 100), 0).ToString("N") + " %" + Environment.NewLine;
-            }
+
+            generalText += "The calulated values are based on a uncertainty factor of: " + Math.Round((UncertFact * 100), 0).ToString("N") + " %" + Environment.NewLine;
+            
 
             generalText += "The Upfront Carbon Footprint (A0-A5) is: " + Math.Round((getUpfrontTotals() / 1000),2).ToString("N") + " tCO₂e" + Environment.NewLine;
             generalText += "The Embodied Carbon Footprint (A0-C & Seq) is: " + Math.Round((getEmbodiedTotals() / 1000), 2).ToString("N") + " tCO₂e" + Environment.NewLine;
@@ -1391,7 +1390,7 @@ namespace CarboLifeAPI.Data
             //Set Global Values if required
 
             if (calculateA0 == true)
-                globalTotals += (A0Global / 1000) * uncertaintyFactor;
+                globalTotals += A0GlobalUncert / 1000;
             else { }
             //Ignore
 

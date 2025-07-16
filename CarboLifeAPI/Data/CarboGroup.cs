@@ -528,7 +528,6 @@ namespace CarboLifeAPI.Data
                 {
                     el.ECI = this.ECI;
                 }
-
             }
 
 

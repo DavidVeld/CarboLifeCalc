@@ -8,6 +8,7 @@ using CarboLifeAPI;
 using CarboLifeAPI.Data;
 using System.Drawing;
 using System.ComponentModel;
+using System.IO;
 
 namespace CarboCroc
 {
@@ -21,7 +22,7 @@ namespace CarboCroc
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-
+            pManager.AddTextParameter("Material Template", "Material Template", "Material Template (WIP)", GH_ParamAccess.item, "");
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -35,6 +36,16 @@ namespace CarboCroc
         {
             try
             {
+                string templatePath = "";
+                string AccptedTemplatePath = "";
+
+                bool oktemplatePath = DA.GetData<string>(0, ref templatePath);
+
+                if (File.Exists(templatePath))
+                {
+                    AccptedTemplatePath = templatePath;
+                }
+
                 CarboProject CP = new CarboProject();
                 CarboDatabase DB = CP.CarboDatabase;
 

@@ -65,6 +65,7 @@
     <Page Remove="screens\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="libSkiaSharp.dll" />
     <None Remove="samples\CarboLifeCalc_sample_project_R25.clcx" />
     <None Remove="samples\CarboLifeCalc_sample_project_R25.rvt" />
   </ItemGroup>
@@ -222,6 +223,9 @@
     <Content Include="img\scr\screenshot7.png" />
     <Content Include="img\scr\screenshot8.png" />
     <Content Include="img\scr\screenshot9.png" />
+    <Content Include="libSkiaSharp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\DVLogo256.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -299,9 +303,6 @@
     </ItemGroup>
 
     <!-- Rename the DLL to GHA -->
-    <Copy
-      SourceFiles="@(LibDll)"
-      DestinationFiles="$(OutputPath)CarboCroc.gha"
-      SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(LibDll)" DestinationFiles="$(OutputPath)CarboCroc.gha" SkipUnchangedFiles="true" />
   </Target>
 </Project>
