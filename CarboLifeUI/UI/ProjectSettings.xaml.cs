@@ -117,27 +117,6 @@ namespace CarboLifeUI.UI
                     txt_Area.Text = CarboLifeProject.Area.ToString();
                     txt_AreaNew.Text = CarboLifeProject.AreaNew.ToString();
 
-                    /*
-                    if (CarboLifeProject.totalAreaIsNew == true)
-                    {
-                        //these two need to be equal if above is true;
-                        CarboLifeProject.AreaNew = CarboLifeProject.Area;
-                        txt_AreaNew.IsEnabled = false;
-                        txt_AreaNew.Foreground = new SolidColorBrush(Colors.DarkGray);
-                    }
-                    else
-                    {
-                        txt_AreaNew.IsEnabled = true;
-                        txt_AreaNew.Foreground = new SolidColorBrush(Colors.Black);
-
-                    }
-                    */
-
-
-
-
-
-
 
                     txt_DesignLife.Text = CarboLifeProject.designLife.ToString();
                     

@@ -192,7 +192,7 @@ namespace CarboLifeRevit
                 {
                     //This is an updated version where the getGeometry Method is used. 
                     //This is slower but needed for railings and ramps
-                    BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.IntegerValue;
+                    BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
                     List<CarboElement> carboElementList = new List<CarboElement>();
 
                     //if (el.Category.Name == "Railings"
@@ -410,7 +410,7 @@ namespace CarboLifeRevit
         {
             double result = 0;
 
-            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.IntegerValue;
+            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
 
             if (enumCategory == BuiltInCategory.OST_Floors)
             {

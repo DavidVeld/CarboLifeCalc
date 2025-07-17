@@ -71,7 +71,7 @@ namespace CarboCroc
 
                             CarboGraphResult resultlist = HeatMapCollector.GetPerElementData(project);
 
-                           List<int> ids = new List<int>();
+                           List<Int64> ids = new List<Int64>();
                             foreach(CarboValues cv in resultlist.entireProjectData)
                             {
                                 ids.Add(cv.Id);

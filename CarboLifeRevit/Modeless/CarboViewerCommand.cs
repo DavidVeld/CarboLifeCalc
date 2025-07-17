@@ -60,7 +60,7 @@ namespace CarboLifeRevit
 
                     CarboProject ElementsVisibleOrSelected = CarboLifeRevitImport.CollectVisibleorSelectedElements(app, projectToOpen.RevitImportSettings, "");
 
-                    List<int> VisibleElements = ElementsVisibleOrSelected.GetElementIdList();
+                    List<Int64> VisibleElements = ElementsVisibleOrSelected.GetElementIdList();
                     CarboLifeApp.thisApp.ShowHeatmap(commandData.Application, projectToOpen, VisibleElements);
 
                 }

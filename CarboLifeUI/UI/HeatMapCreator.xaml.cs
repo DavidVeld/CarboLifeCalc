@@ -33,7 +33,7 @@ namespace CarboLifeUI.UI
     {
         private CarboProject carboProject;
         private CarboGraphResult graphData;
-        private List<int> visibleElements;
+        private List<Int64> visibleElements;
         private CarboColourPreset currentColourSettings;
         private CarboSettings carboSettings;
         public bool colour;
@@ -364,7 +364,7 @@ namespace CarboLifeUI.UI
 
         private void btn_TestFunction(object sender, RoutedEventArgs e)
         {
-            List<int> listOfIds = new List<int>();
+            List<Int64> listOfIds = new List<Int64>();
             listOfIds = carboProject.GetElementIdList();
 
             Random random = new Random();

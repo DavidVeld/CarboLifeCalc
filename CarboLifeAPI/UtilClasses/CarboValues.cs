@@ -26,7 +26,7 @@ namespace CarboLifeAPI
         /// <summary>
         /// (Revit) Id
         /// </summary>
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
 
         /// <summary>
         /// (Revit) GUID

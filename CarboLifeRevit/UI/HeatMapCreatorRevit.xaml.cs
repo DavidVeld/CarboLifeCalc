@@ -41,9 +41,9 @@ namespace CarboLifeRevit
         //Used for Revit handlers
         private ColourViewerHandler m_Handler;
         private ExternalEvent m_ExEvent;
-        private List<int> visibleElements;
+        private List<Int64> visibleElements;
 
-        public HeatMapCreator(ExternalEvent exEvent, ColourViewerHandler handler, CarboProject project, List<int> _visibleElements)
+        public HeatMapCreator(ExternalEvent exEvent, ColourViewerHandler handler, CarboProject project, List<Int64> _visibleElements)
         {
             carboSettings = new CarboSettings();
             carboSettings.Load();
@@ -515,7 +515,7 @@ namespace CarboLifeRevit
 
         private void btn_TestFunction(object sender, RoutedEventArgs e)
         {
-            List<int> listOfIds = new List<int>();
+            List<Int64> listOfIds = new List<Int64>();
             listOfIds = carboProject.GetElementIdList();
 
             Random random = new Random();

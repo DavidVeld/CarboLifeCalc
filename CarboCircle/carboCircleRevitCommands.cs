@@ -265,14 +265,14 @@ namespace CarboCircle
         {
             //get a list of selected elemetnts
             List<Element> result = new List<Element>();
-            List<int> ids = new List<int>();
+            List<Int64> ids = new List<Int64>();
 
             if(collection == null || selectedElementIds == null)    
                 return result;
 
             foreach (ElementId id in selectedElementIds)
             {
-                ids.Add(id.IntegerValue);
+                ids.Add(id.Value);
             }
 
             //add only elements that are selected in the pool:
@@ -280,7 +280,7 @@ namespace CarboCircle
             {
                 try
                 {
-                    int id = el.Id.IntegerValue;
+                    Int64 id = el.Id.Value;
 
                     if (ids.Contains(id))
                     {
@@ -461,7 +461,7 @@ namespace CarboCircle
                 {
                     try
                     {
-                        if (isElementReal(el) == false || el.Id.IntegerValue < 0)
+                        if (isElementReal(el) == false || el.Id.Value < 0)
                         {
                             continue;
                         }
@@ -503,7 +503,7 @@ namespace CarboCircle
                     return null;
                 }
 
-                int Revitid = inst.Id.IntegerValue;
+                Int64 Revitid = inst.Id.Value;
                 string materialClass = "";
                 string materialName = "";
                 string materialGrade = "";
@@ -653,7 +653,7 @@ namespace CarboCircle
                 {
                     if (el.get_Geometry(new Options()) != null)
                     {
-                        if (el.Id.IntegerValue > 0)
+                        if (el.Id.Value > 0)
                         {
                             //Check if not of any forbidden categories such as runs:
                             bool isValidCategory = ValidCategory(el);
@@ -675,7 +675,7 @@ namespace CarboCircle
         {
             bool result = true;
 
-            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.IntegerValue;
+            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
 
             if (enumCategory == BuiltInCategory.OST_StairsRuns)
             {
@@ -785,7 +785,7 @@ namespace CarboCircle
                             if (cce.idList.Count > 0)
                             {
                                 //Combined object Volumes
-                                foreach (int id in cce.idList)
+                                foreach (Int64 id in cce.idList)
                                 {
                                     ElementId eid = new ElementId(id);
 

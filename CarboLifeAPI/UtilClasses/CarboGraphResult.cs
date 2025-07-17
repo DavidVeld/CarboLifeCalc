@@ -74,7 +74,7 @@ namespace CarboLifeAPI
         /// This is highest level filter and should always create a full filter sequence.
         /// </summary>
         /// <param name="applicablelements">This is a list of elements in the project that needs to be considered, if no elements are selected, the entire project is looked at</param>
-        public void FilterNonVisible(List<int> applicablelements)
+        public void FilterNonVisible(List<Int64> applicablelements)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace CarboLifeAPI
                 //If the list send is not present or empty then the entire range needs to be considered
                 if (applicablelements == null || applicablelements.Count == 0)
                 {
-                    List<int> listOfAllElementIds = entireProjectData.Select(i => i.Id).Distinct().ToList();
+                    List<Int64> listOfAllElementIds = entireProjectData.Select(i => i.Id).Distinct().ToList();
                     if (listOfAllElementIds.Count > 0)
                     {
                         applicablelements = listOfAllElementIds;

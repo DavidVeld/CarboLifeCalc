@@ -1,6 +1,7 @@
 ﻿using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +10,21 @@ namespace CarboCroc
 {
     internal static class CarboCrocProcess
     {
-        internal static CarboProject ProcessData(List<CarboElement> listOfElements, List<bool> switches)
+        internal static CarboProject ProcessData(List<CarboElement> listOfElements, List<bool> switches, double uncertaintyFacr, string templatePath)
         {
-            CarboProject newProject = new CarboProject();
+            CarboProject newProject = null;
+
+            if (templatePath != "" && File.Exists(templatePath))
+                newProject = new CarboProject(templatePath);
+            else
+                newProject = new CarboProject();
+
+            newProject.UncertFact = uncertaintyFacr;
 
             foreach (CarboElement ce in listOfElements)
-            {
-                newProject.AddElement(ce);
-            }
+                {
+                    newProject.AddElement(ce);
+                }
 
             if (switches.Count == 8)
             {
@@ -42,6 +50,26 @@ namespace CarboCroc
 
             //run once;
             newProject.CreateGroups();
+
+            //MapElements if required
+            try
+            {
+                if (newProject.RevitImportSettings.UseImportedMap == true)
+                {
+                    CarboMapFile defaultMappingFile = CarboMapFile.LoadFromXml();
+                    if (defaultMappingFile != null)
+                    {
+                        newProject.carboMaterialMap = defaultMappingFile.mappingTable;
+                        newProject.mapAllMaterials();
+                        newProject.CalculateProject();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
             //Calculate the values
             newProject.CalculateProject();
 

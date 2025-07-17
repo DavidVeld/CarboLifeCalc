@@ -46,7 +46,7 @@ namespace CarboCroc
                     AccptedTemplatePath = templatePath;
                 }
 
-                CarboProject CP = new CarboProject();
+                CarboProject CP = new CarboProject(AccptedTemplatePath);
                 CarboDatabase DB = CP.CarboDatabase;
 
                 List<string> listofCarboMaterials = new List<string>();
@@ -61,7 +61,7 @@ namespace CarboCroc
                     DA.SetDataList(0, listofCarboMaterials);
 
                 //Add a new component if there is no output linked.
-
+                /*
                 if (this.Params.Output[0].Recipients.Count == 0)
                 {
                     //trigger for debug
@@ -101,6 +101,7 @@ namespace CarboCroc
                     //vallist.ExpireSolution(true);
 
                 }
+                */
             }
             catch (Exception ex)
             {

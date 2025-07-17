@@ -1,8 +1,5 @@
 {
   "profiles": {
-    "CarboLifeRevit": {
-      "commandName": "Project"
-    },
     "RevitDebug": {
       "commandName": "Executable",
       "executablePath": "C:\\Program Files\\Autodesk\\Revit 2025\\Revit.exe"

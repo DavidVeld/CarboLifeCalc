@@ -12,10 +12,10 @@ namespace CarboCircle
     public class carboCircleMatchElement
     {
 
-        public int required_id { get; set; }
+        public Int64 required_id { get; set; }
         public string required_humanId { get; set; }
 
-        public int mined_id { get; set; }
+        public Int64 mined_id { get; set; }
         public string mined_humanId { get; set; }
         public string required_Name { get; set; }
         public string mined_Name { get; set; }

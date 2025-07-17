@@ -256,7 +256,7 @@ namespace CarboLifeRevit
         {
             bool result = true;
 
-            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.IntegerValue;
+            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
             
             if(enumCategory == BuiltInCategory.OST_StairsRuns)
             {
@@ -395,7 +395,7 @@ namespace CarboLifeRevit
             CarboElement newCarboElement = new CarboElement();
             try
             {
-                int setId;
+                long setId;
                 string setGUID = "";
                 string setName;
                 string setCategory;
@@ -453,7 +453,7 @@ namespace CarboLifeRevit
                 }
 
                 //Id:
-                setId = el.Id.IntegerValue;
+                setId = el.Id.Value;
                 setGUID = el.UniqueId;
 
                 //Name (Type)

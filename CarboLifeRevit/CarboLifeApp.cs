@@ -137,7 +137,7 @@ namespace CarboLifeRevit
             return Result.Succeeded;
         }
 
-        public void ShowHeatmap(UIApplication uiapp, CarboProject project, List<int> VisibleElements)
+        public void ShowHeatmap(UIApplication uiapp, CarboProject project, List<Int64> VisibleElements)
         {
 
 

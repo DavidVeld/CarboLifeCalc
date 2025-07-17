@@ -1064,7 +1064,6 @@ namespace CarboLifeAPI.Data
             return result;
         }
         [Obsolete("This is the old version and can be deleted")]
-
         public string getSummaryText(bool materials, bool globals, bool cars, bool trees)
         {
             string result = "";
@@ -1859,9 +1858,9 @@ namespace CarboLifeAPI.Data
             }
         }
 
-        public List<int> GetElementIdList()
+        public List<Int64> GetElementIdList()
         {
-            List<int> validElements = new List<int>();
+            List<Int64> validElements = new List<Int64>();
             try
 
             {

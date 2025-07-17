@@ -13,7 +13,7 @@ namespace CarboLifeAPI.Data
         /// <summary>
         /// revit id
         /// </summary>
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
         public string Name { get; set; }
         //Imported Material Name
         public string MaterialName { get; set; }
