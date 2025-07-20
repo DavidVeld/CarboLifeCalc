@@ -57,51 +57,10 @@ namespace CarboCroc
                     // DA.SetData(1, CM.Name);
                 }
 
+                listofCarboMaterials.Sort(StringComparer.InvariantCultureIgnoreCase);
+
                 if (listofCarboMaterials.Count > 0)
                     DA.SetDataList(0, listofCarboMaterials);
-
-                //Add a new component if there is no output linked.
-                /*
-                if (this.Params.Output[0].Recipients.Count == 0)
-                {
-                    //trigger for debug
-                    bool ok = true;
-
-                    //var listIndex = new Grasshopper.Kernel.GH_ListUtil();
-
-
-                    //build the valuelist;
-                    var vallist = new Grasshopper.Kernel.Special.GH_ValueList();
-                    vallist.CreateAttributes();
-                    vallist.Name = "Materials";
-                    vallist.NickName = "Material:";
-                    vallist.ListMode = Grasshopper.Kernel.Special.GH_ValueListMode.DropDown;
-
-                    vallist.ListItems.Clear();
-
-                    //Set Location
-                    //int inputcount = this.Params.Input[0].SourceCount;
-                    vallist.Attributes.Pivot = new PointF(
-                        (float)this.Attributes.Bounds.X,
-                        (float)this.Attributes.Bounds.Y);
-
-
-                    //Populate
-                    for (int i = 0; i < listofCarboMaterials.Count; i++)
-                    {
-                        vallist.ListItems.Add(new Grasshopper.Kernel.Special.GH_ValueListItem(listofCarboMaterials[i].ToString(), i.ToString()));
-                    }
-
-                    //place the component
-                    this.OnPingDocument().AddObject(vallist, false);
-
-                    //Attach to component
-
-                    //this.Params.Output[0].AddSource(vallist);
-                    //vallist.ExpireSolution(true);
-
-                }
-                */
             }
             catch (Exception ex)
             {

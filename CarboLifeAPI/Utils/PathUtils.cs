@@ -354,6 +354,8 @@ namespace CarboLifeAPI
                             bool exclude = false;
                             if (fileName.Contains("Buffer"))
                                 exclude = true;
+                            if (fileName.Contains("CarboCircle"))
+                                exclude = true;
                             if (defaultfimeName == fileName)
                                 exclude = true;
 

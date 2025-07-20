@@ -23,6 +23,12 @@
     <ProjectReference Include="..\CarboLifeUI\CarboLifeUI.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\ListMaterials.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ListTemplates.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\NewElement.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -86,6 +92,8 @@
     <Compile Remove="UserControl1.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Resources\ListMaterials.png" />
+    <None Remove="Resources\ListTemplates.png" />
     <None Remove="samples\CarboCrocSampleProject.gh" />
     <None Remove="samples\CarboCrocSampleProjectBaked.gh" />
   </ItemGroup>
@@ -102,6 +110,24 @@
       <HintPath>..\..\..\..\..\..\Program Files\Rhino 7\System\RhinoCommon.dll</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

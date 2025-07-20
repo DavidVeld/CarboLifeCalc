@@ -59,9 +59,13 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="db\online\**" />
     <Compile Remove="screens\**" />
+    <EmbeddedResource Remove="db\online\**" />
     <EmbeddedResource Remove="screens\**" />
+    <None Remove="db\online\**" />
     <None Remove="screens\**" />
+    <Page Remove="db\online\**" />
     <Page Remove="screens\**" />
   </ItemGroup>
   <ItemGroup>
@@ -281,9 +285,6 @@
     <Content Include="db\RevitImportSettings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="db\online\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CarbonSharedParams.txt">
