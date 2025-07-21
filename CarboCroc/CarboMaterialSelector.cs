@@ -23,6 +23,7 @@ namespace CarboCroc
         private List<string> _options = new List<string>();
         private int _selectedIndex = 0;
         private string _lastLoadedPath = "";
+        private bool hasbeenloaded = false;
 
         public override Guid ComponentGuid => new Guid("3F6C110B-8F0B-4683-95A6-1A0AC112DE5C");
 
@@ -53,11 +54,12 @@ namespace CarboCroc
             }
 
             // Only reload if file path changed or file has been modified
-            if (path != _lastLoadedPath)
+            if (path != _lastLoadedPath && hasbeenloaded == false)
             {
                 _lastLoadedPath = path;
                 _options = LoadTemplate(path);
                 _selectedIndex = 0; // Reset selection on new list
+                hasbeenloaded = true;
             }
 
             if (_options.Count == 0)

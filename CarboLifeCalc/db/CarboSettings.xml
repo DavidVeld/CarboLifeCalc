@@ -1,13 +1,13 @@
-<?xml version="1.0"?>
-<CarboSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<?xml version="1.0" encoding="utf-8"?>
+<CarboSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <defaultCarboGroupSettings>
-    <CategoryName>Instance Parameter</CategoryName>
-    <CategoryParamName>Comments</CategoryParamName>
+    <CategoryName>(Revit) Category</CategoryName>
+    <CategoryParamName />
     <ExistingPhaseName>Existing</ExistingPhaseName>
     <VolumeConversionFactor />
     <IncludeSubStructure>true</IncludeSubStructure>
-    <SubStructureParamType>Parameter (Instance Boolean)</SubStructureParamType>
-    <SubStructureParamName>CLC_IsSubstructure</SubStructureParamName>
+    <SubStructureParamType>Workset Name Contains</SubStructureParamType>
+    <SubStructureParamName>Substructure</SubStructureParamName>
     <IncludeDemo>false</IncludeDemo>
     <IncludeExisting>false</IncludeExisting>
     <CombineExistingAndDemo>false</CombineExistingAndDemo>
@@ -143,13 +143,22 @@
       </CarboNumProperty>
     </rcQuantityMap>
     <RCMaterialCategory>Concrete</RCMaterialCategory>
+    <UseImportedMap>true</UseImportedMap>
+    <UncertaintyFactor>0.1</UncertaintyFactor>
   </defaultCarboGroupSettings>
-  <templatePath></templatePath>
+  <templatePath>C:\Users\d.veld\source\repos\CarboLifeCalc - NET2\CarboLifeCalc\bin\x64\Debug\net8.0-windows\db\UserMaterials.cxml</templatePath>
   <useLocal>true</useLocal>
-  <firstLaunch>true</firstLaunch>
+  <firstLaunch>false</firstLaunch>
   <defaultDesignLife>60</defaultDesignLife>
   <Currency>£</Currency>
   <ecRevitParameter>CLC_EmbodiedCarbon</ecRevitParameter>
+  <secretMessage />
+  <carboLegendName>CLC_ResultsView</carboLegendName>
+  <showCars>true</showCars>
+  <showPlanes>true</showPlanes>
+  <showTrees>true</showTrees>
+  <showSCC>true</showSCC>
+  <showDeaths>false</showDeaths>
   <colourPresets>
     <CarboColourPreset>
       <name>Preset 1</name>
@@ -284,4 +293,5 @@
       </outmax>
     </CarboColourPreset>
   </colourPresets>
+  <launchCircle>false</launchCircle>
 </CarboSettings>

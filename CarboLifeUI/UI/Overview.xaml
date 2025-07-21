@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d" 
-             d:DesignHeight="750" d:DesignWidth="1300" IsVisibleChanged="UserControl_IsVisibleChanged">
+             d:DesignHeight="800" d:DesignWidth="1300" IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,7 +22,7 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="0.8*"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="370"/>
+            <RowDefinition Height="400"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -54,6 +54,7 @@
             </Grid.ColumnDefinitions>
 
             <ComboBox Name="cbb_GraphType" Grid.Row="1" Grid.Column="1"  Margin="0,0,0,0" Height="25" Width="219" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_GraphType_DropDownClosed"/>
+            <Button x:Name="btn_SaveImage"  Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="75" Margin="230,0,0,0" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_SaveImage_Click" Content="Copy Img" />
 
 
             <lvc:PieChart Name="pie_Chart1" Visibility="Hidden" Grid.Column="1" Grid.Row="2"  Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="#050505" BorderThickness="0" Foreground="Black" Background="White" FontFamily="Segoe UI" FontWeight="Light" LegendPosition="Right"  LegendTextSize="12"
@@ -77,8 +78,10 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="5"/>
             </Grid.ColumnDefinitions>
+            
+            <Button x:Name="btn_SavePImage"  Grid.Column="1" Grid.Row="1" Height="23" VerticalAlignment="Top" Width="75" Margin="5,0,0,0" HorizontalAlignment="Left" Style="{StaticResource ButtonStyle}" Click="btn_SavePImage_Click" Content="Copy Img" />
 
-            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="30,30,30,30" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="#050505" Background="White" FontFamily="Segoe UI" FontWeight="Light"  Visibility="Visible" LegendPosition="Right" LegendTextSize="12" 
+            <lvc:PieChart Name="pie_Chart2"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Margin="15,30,15,5" BorderBrush="Black" BorderThickness="0" AnimationsSpeed="0" Foreground="#050505" Background="White" FontFamily="Segoe UI" FontWeight="Light"  Visibility="Visible" LegendPosition="Right" LegendTextSize="12" 
                           TooltipTextSize="11" TooltipPosition="Auto">
             </lvc:PieChart>
 
@@ -170,10 +173,10 @@
             <Label Grid.Column="1" Margin="0,1,10,0" Grid.Row="1" Height="28" Grid.ColumnSpan="2" Width="180"  HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Building Type:</Label>
             <ComboBox Name="cbb_BuildingType" Grid.Row="1" Margin="100,2,250,0" Height="25" Width="170" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ComboBoxFlatStyle}" DropDownClosed="cbb_BuildingType_DropDownClosed"/>
 
-            <RadioButton Name="rad_AreaTotal" Margin="290,4,0,0" Grid.Row="1" Height="28" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="rad_AreaNew_Checked" Unchecked="rad_AreaNew_Checked" IsChecked="True">Total GAI:</RadioButton>
+            <RadioButton Name="rad_AreaTotal" Margin="290,4,0,0" Grid.Row="1" Height="28" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="rad_AreaNew_Checked" Unchecked="rad_AreaNew_Checked" IsChecked="True">Total GIA:</RadioButton>
             <TextBox Name="txt_Area" Grid.Row="1" Margin="380,00,0,0" Height="28" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top"   Style="{StaticResource flatTextBox}" TextChanged="txt_Area_TextChanged" />
 
-            <RadioButton Name="rad_AreaNew" Margin="290,34,0,0" Grid.Row="1" Height="28" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="rad_AreaNew_Checked" Unchecked="rad_AreaNew_Checked">New GAI:</RadioButton>
+            <RadioButton Name="rad_AreaNew" Margin="290,34,0,0" Grid.Row="1" Height="28" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" Checked="rad_AreaNew_Checked" Unchecked="rad_AreaNew_Checked">New GIA:</RadioButton>
             <TextBox Name="txt_AreaNew" Grid.Row="1" Margin="380,30,0,0" Height="28" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top"   Style="{StaticResource flatTextBox}" TextChanged="txt_AreaNew_TextChanged" />
 
             <Label Margin="480,0,0,0" Grid.Row="1" Height="28" Width="30" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">m²</Label>
@@ -182,6 +185,7 @@
             <Canvas Name="cnv_Leti" Grid.Column="0" Margin="5,5,5,5" Grid.Row="2" Background="White" ></Canvas>
 
         </Grid>
+        <Button x:Name="btn_CopyLeti"  Grid.Column="3" Grid.Row="4" Height="23" VerticalAlignment="Bottom" Width="75" Margin="5,3,0,0" HorizontalAlignment="left" Style="{StaticResource ButtonStyle}" Click="btn_CopyLeti_Click" Content="Copy Img" />
 
         <!-- text -->
         <Canvas Name="cnv_Totals" Grid.Column="1"  Grid.Row="4" Margin="5,5,5,5" Background="White"></Canvas>

@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -64,6 +65,22 @@ namespace CarboLifeUI.UI
 
             IsRevit = false;
             carboLifeProject = new CarboProject();
+
+            try
+            {
+                Assembly.LoadFrom(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SkiaSharp.Views.WPF.dll"));
+                //
+                Assembly.LoadFrom(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "System.Drawing.Common.dll"));
+
+                Assembly.LoadFrom(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SkiaSharp.dll"));
+                Assembly.LoadFrom(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "libSkiaSharp.dll"));
+
+            }
+            catch
+            {
+
+            }
+
 
             try
             {
@@ -429,7 +446,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                 {
                     PieChart chartControl = Panel_Overview.pie_Chart1;
                     SKPieChart skChart = new SKPieChart(chartControl) { Width = 450, Height = 300 };
-                    skChart.SaveImage("PieImageFromControl.png");
+                    //skChart.SaveImage("PieImageFromControl.png");
                     using var image = skChart.GetImage();
                     using var data = image.Encode();
                     base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
@@ -442,7 +459,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                 {
                     PieChart chartControl = Panel_Overview.pie_Chart2;
                     SKPieChart skChart = new SKPieChart(chartControl) { Width = 450, Height = 300 };
-                    skChart.SaveImage("PieImageFromControl.png");
+                    //skChart.SaveImage("PieImageFromControl.png");
                     using var image = skChart.GetImage();
                     using var data = image.Encode();
                     base64CartesianChart2 = Convert.ToBase64String(data.AsSpan());
@@ -454,7 +471,6 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                 {
                     LetiChart = ChartUtils.ControlToImage(foundletiChart, 300, 300);
                 }
-
 
                 ReportBuilder.CreateReport(carboLifeProject, base64CartesianChart1, base64CartesianChart2, LetiChart);
             }

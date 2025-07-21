@@ -23,12 +23,24 @@ namespace CarboLifeRevit
                 Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SkiaSharp.Views.WPF.dll"));
                 //
                 Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "System.Drawing.Common.dll"));
-               
+
+                Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SkiaSharp.dll"));
+                Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "libSkiaSharp.dll"));
+
             }
             catch
             {
 
             }
+            
+            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (asm.GetName().Name.Contains("SkiaSharp"))
+                {
+                    TaskDialog.Show("Loaded Assembly", $"{asm.GetName().Name}\nVersion: {asm.GetName().Version}\nLocation: {asm.Location}");
+                }
+            }
+            
             UIApplication app = commandData.Application;
 
             //Check if the document is a family & has a 3D View active

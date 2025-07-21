@@ -44,25 +44,6 @@ namespace CarboLifeUI.UI
 
             //Build series
 
-            foreach (CarboDataPoint pont in pointCollection)
-            {
-                /*
-                StackedColumnSeries series = new StackedColumnSeries
-                {
-                    Values = new ChartValues<double>
-                    {
-                        Math.Round((pont.Value / 1000), 2),
-                    },
-                    //StackMode = StackMode.Values,
-                    DataLabels = true,
-                    Title = pont.Name
-                };
-
-                result.Add(series);
-                */  
-
-            }
-
             return result;
 
         }
@@ -109,34 +90,6 @@ namespace CarboLifeUI.UI
             try
             {
 
-                /*
-                //loop though
-                // i is nr type of information extracted
-                for (int i = 0; i < pointList[0].Count; i++)
-                {
-                    /*
-                    StackedColumnSeries newSeries = new StackedColumnSeries();
-
-                    ChartValues<double> Values = new ChartValues<double>();
-
-                    //get all Values from all loaded projects
-                    foreach (List<CarboDataPoint> dataPointList in pointList)
-                    {
-                        Values.Add(Math.Round((dataPointList[i].Value / 1000),1));
-                    }
-
-                    newSeries.Title = pointList[0][i].Name;
-                    newSeries.Values = Values;
-                    newSeries.StackMode = StackMode.Values;
-                    newSeries.DataLabels = true;
-                    newSeries.Foreground = Brushes.Black;
-                    //newSeries.Width = 100;
-                    newSeries.MaxColumnWidth = 50;
-                    newSeries.LabelsPosition = BarLabelPosition.Perpendicular;
-                    result.Add(newSeries);
-                    
-                }
-            */
                 var allPhases = pointList
     .SelectMany(project => project.Select(p => p.Name))
     .Distinct()
@@ -197,7 +150,15 @@ namespace CarboLifeUI.UI
 
         }
 
-        //
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="project"></param>
+        /// <param name="projectListToCompareTo"></param>
+        /// <param name="sequestration"></param>
+        /// <param name="energy"></param>
+        /// <param name="demolition"></param>
+        /// <returns></returns>
         internal static List<ISeries> BuildLifeLine(CarboProject project, List<CarboProject> projectListToCompareTo, bool sequestration, bool energy, bool demolition)
         {
             min = double.PositiveInfinity;
@@ -257,35 +218,6 @@ namespace CarboLifeUI.UI
                         Stroke = paint
 
                     });
-
-
-
-                    //result.Add(seriesList);
-
-                    /*
-                    LineSeries lineSeries = new LineSeries();
-                    ChartValues<double> Values = new ChartValues<double>();
-
-                    foreach (CarboDataPoint point in data)
-                    {
-                        Values.Add(Math.Round((point.Value / 1000), 1));
-                    }
-
-                    lineSeries.Values = Values;
-                    lineSeries.Title = prct.Name;
-                    lineSeries.DataLabels = false;
-                    lineSeries.Foreground = Brushes.Black;
-                    lineSeries.PointGeometrySize = 5;
-                    lineSeries.Width = 1;
-
-                    //check min max
-                    if (Values.Max() > max)
-                        max = Values.Max();
-                    if(Values.Min() < min) 
-                        min = Values.Min();
-
-                    result.Add(lineSeries);
-                    */
                 j++;
                 }
             }
@@ -368,7 +300,7 @@ namespace CarboLifeUI.UI
             carboByLevelDataGroup.SortedList();
 
             //remove empty levels
-            /*
+           /* 
             for(int i = carboByLevelDataGroup.levelList.Count -1; i>= 0;i--)
             {
                CarboByLevelData cbld = carboByLevelDataGroup.levelList[i] as CarboByLevelData;
@@ -438,16 +370,34 @@ namespace CarboLifeUI.UI
 
         }
 
-        public static ICartesianAxis[] XAxis(List<string> levelList)
+        public static ICartesianAxis[] XLevelAxis(List<string> levelList)
 {
             List<ICartesianAxis> resultList = new List<ICartesianAxis>();
 
             resultList.Add(            
                 new Axis
                 {
+                    Name="Levels",
                     LabelsRotation = 0,
                     Labels = levelList,
-                    TextSize = 11
+                    TextSize = 10
+                });
+
+            return resultList.ToArray();
+
+        }
+
+        public static ICartesianAxis[] YLevelAxis(List<string> levelList)
+        {
+            List<ICartesianAxis> resultList = new List<ICartesianAxis>();
+
+            resultList.Add(
+                new Axis
+                {
+                    Name = "Emissions",
+                    LabelsRotation = 0,
+                    //Labels = levelList,
+                    TextSize = 10
                 });
 
             return resultList.ToArray();
@@ -695,104 +645,6 @@ namespace CarboLifeUI.UI
 
         }
 
-        /// <summary>
-        /// Returns the overview of Material Properties using the DataTable as per CarboCalcTextUtils.getResultTable(CarboLifeProject)
-        /// </summary>
-        /// <param name="resultsTable">DataTable as per CarboCalcTextUtils.getResultTable(CarboLifeProject)</param>
-        /// <param name="Type">Material or Category</param>
-        /// <returns></returns>
-        /*
-        internal static List<PieSlice> GetScottPieChart(DataTable resultsTable, string Type = "Material", List<CarboElement> projectElements = null)
-        {
-            List<PieSlice> result = new List<PieSlice>();
-            SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
-
-            try
-            {
-                List<CarboDataPoint> PieceListMaterial = new List<CarboDataPoint>();
-                //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
-
-                //Get the DataPint
-                PieceListMaterial = CarboCalcTextUtils.ConvertResultTableToDataPoints(resultsTable, Type, projectElements);
-
-                PieceListMaterial = PieceListMaterial.OrderByDescending(o => o.Value).ToList();
-
-                double total = PieceListMaterial.Sum(x => x.Value);
-
-
-                //New Code: Trim all values below 5%, 
-                List<int> counter = new List<int>();
-
-                CarboDataPoint otherPoint = new CarboDataPoint();
-                otherPoint.Name = "Combined:" + Environment.NewLine;
-
-                for (int i = PieceListMaterial.Count - 1; i >= 0; i--)
-                {
-                    CarboDataPoint cp = PieceListMaterial[i] as CarboDataPoint;
-                    double pecent = cp.Value / total;
-                    if (pecent <= 0.05 && pecent >= -0.05)
-                    {
-                        //The item is too small for the graph:
-                        otherPoint.Value += cp.Value;
-                        otherPoint.Name += cp.Name + " (" + (Math.Round(cp.Value, 1)) + " tCO₂e )" + Environment.NewLine;
-
-                        counter.Add(i);
-                    }
-                }
-
-                //If used, add to the list, only if more than one materials / elements were merged.
-                if (otherPoint.Value > 0 && counter.Count > 1)
-                {
-                    PieceListMaterial.Add(otherPoint);
-                    //Remove the items from the list
-                    foreach (int i in counter)
-                    {
-                        PieceListMaterial.RemoveAt(i);
-                    }
-                }
-
-
-
-                //make positive if negative
-                foreach (CarboDataPoint cp in PieceListMaterial)
-                {
-                    if (cp.Value < 0)
-                    {
-                        cp.Name = "(Negative)" + cp.Name;
-                        cp.Value = cp.Value * -1;
-                    }
-                }
-
-                int j = 0;
-                foreach (CarboDataPoint ppin in PieceListMaterial)
-                {
-                    double value = Math.Round(ppin.Value / 1, 2);
-                    string name = ppin.Name;
-
-                    PieSlice newSlice = new PieSlice();
-                    newSlice.Value = value;
-                    newSlice.Label = name;
-                    newSlice.LegendText = name;
-
-                    FillStyle fill = new FillStyle();
-                    fill.Color = GetScottPlotColor(j);
-                    newSlice.Fill = fill;
-
-                    result.Add(newSlice);
-                    j++;
-                }
-
-
-            }
-            catch
-            {
-                return null;
-            }
-            return result;
-
-        }
-        */
-
         
         /// <summary>
         /// Returns a colour value based on i value;
@@ -838,141 +690,7 @@ namespace CarboLifeUI.UI
             }
         }
 
-        /// <summary>
-        /// Returns a ScottPlot.Color based on the input index.
-        /// </summary>
-        /// <param name="i">The index to select or generate a color.</param>
-        /// <returns>A ScottPlot.Color</returns>
-         /*
-        internal static ScottPlot.Color GetScottPlotColor(int i)
-        {
-            ScottPlot.Color[] colors = new ScottPlot.Color[]
-            {
-            new ScottPlot.Color(147, 123, 131),
-            new ScottPlot.Color(87, 164, 177),
-            new ScottPlot.Color(90, 119, 135),
-            new ScottPlot.Color(210, 210, 60),
-            new ScottPlot.Color(185, 220, 160),
-            new ScottPlot.Color(156, 206, 212),
-            new ScottPlot.Color(251, 226, 150),
-            new ScottPlot.Color(253, 240, 203, 210), // with alpha
-            new ScottPlot.Color(247, 203, 145),
-            new ScottPlot.Color(252, 179, 179),
-            new ScottPlot.Color(118, 73, 197)
-            };
-
-            if (i < colors.Length)
-            {
-                return colors[i];
-            }
-            else
-            {
-                // Generate a random color
-                return new ScottPlot.Color(
-                    (byte)Random.Shared.Next(256),
-                    (byte)Random.Shared.Next(256),
-                    (byte)Random.Shared.Next(256),
-                    255 // optional alpha
-                );
-            }
-        }
-         */
-
-        /// <summary>
-        /// Returns a datapoint list based on per category
-        /// </summary>
-        /// <param name="carboLifeProject"></param>
-        /// <returns></returns>
-        [Obsolete]
-        internal static List<ISeries> GetPieChartCategoryTotals(CarboProject carboLifeProject)
-        {
-            List<ISeries> result = new List<ISeries>();
-            SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
-
-            try
-            {
-                List<CarboDataPoint> PieceListCategory = new List<CarboDataPoint>();
-                //Func<ChartPoint, string> labelPoint = chartPoint => string.Format("{0} tCO₂e", chartPoint.Y, chartPoint.Participation);
-
-                PieceListCategory = carboLifeProject.getCategoryTotals();
-
-                PieceListCategory = PieceListCategory.OrderByDescending(o => o.Value).ToList();
-
-                //int total = monValues.Sum(x => Convert.ToInt32(x));
-
-                double total = PieceListCategory.Sum(x => x.Value);
-
-                //New Code: Trim all values below 5%, 
-                List<int> counter = new List<int>();
-
-                CarboDataPoint otherPoint = new CarboDataPoint();
-                otherPoint.Name = "Combined: " + Environment.NewLine;
-
-                for (int i = PieceListCategory.Count - 1; i >= 0; i--)
-                {
-                    CarboDataPoint cp = PieceListCategory[i] as CarboDataPoint;
-                    double pecent = cp.Value / total;
-                    if (pecent <= 0.05 && pecent > 0)
-                    {
-                        //The item is too small for the graph:
-                        otherPoint.Value += cp.Value;
-                        counter.Add(i);
-                    }
-                }
-
-                //If used, add to the Miscellaneous list, only if more than one materials / elements were merged.
-                if (otherPoint.Value > 0 && counter.Count > 1)
-                {
-                    PieceListCategory.Add(otherPoint);
-                    //Remove the items from the list
-                    foreach (int i in counter)
-                    {
-                        PieceListCategory.RemoveAt(i);
-                    }
-                }
-
-
-
-                //make positive if negative
-                foreach (CarboDataPoint cp in PieceListCategory)
-                {
-                    if (cp.Value < 0)
-                    {
-                        cp.Name = "(Negative)" + cp.Name;
-                        cp.Value = cp.Value * -1;
-                    }
-                }
-
-
-                foreach (CarboDataPoint ppin in PieceListCategory)
-                {
-                    /*
-                    PieSeries newSeries = new PieSeries
-                    {
-                        Title = ppin.Name,
-                        Values = new ChartValues<double> { Math.Round(ppin.Value, 2) },
-                        PushOut = 1,
-                        DataLabels = true,
-                        LabelPoint = labelPoint
-
-                    };
-                    newSeries.Foreground = almostBlack;
-                    newSeries.FontWeight = FontWeights.Normal;
-                    newSeries.FontStyle = FontStyles.Normal;
-                    newSeries.FontSize = 12;
-
-                    result.Add(newSeries);
-                    */
-                }
-            }
-            catch
-            {
-                return null;
-            }
-            return result;
-
-        }
-
+ 
         internal static IEnumerable<ICartesianAxis> getYearAxis()
         {
             Axis[] XAxes = new Axis[]
@@ -1022,5 +740,7 @@ namespace CarboLifeUI.UI
             return YAxes;
 
         }
+
+
     }
 }

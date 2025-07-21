@@ -228,7 +228,7 @@ namespace CarboLifeAPI
             return html;
         }
 
-        private static Bitmap CleanBlack(Bitmap BtmImg)
+        public static Bitmap CleanBlack(Bitmap BtmImg)
         {
             Bitmap result = BtmImg.Clone() as Bitmap;
             System.Drawing.Color white = System.Drawing.Color.FromArgb(255,255,255);
@@ -963,7 +963,22 @@ img {
             return result;
         }
 
+        public static System.Drawing.Image base64ToImage(string base64CartesianChart1)
+        {
 
+            //data:image/gif;base64,
+            //this image is a single pixel (black)
+            byte[] bytes = Convert.FromBase64String(base64CartesianChart1);
+
+            System.Drawing.Image image;
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                image = System.Drawing.Image.FromStream(ms);
+            }
+
+            return image;
+        
+    }
     }
 
 

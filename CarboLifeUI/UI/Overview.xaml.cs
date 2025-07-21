@@ -21,6 +21,9 @@ using Autodesk.Revit.DB.Visual;
 using Autodesk.Revit.DB;
 using LiveChartsCore;
 using LiveChartsCore.Kernel.Sketches;
+using LiveChartsCore.SkiaSharpView.WPF;
+using LiveChartsCore.SkiaSharpView.SKCharts;
+using System.Drawing;
 
 namespace CarboLifeUI.UI
 {
@@ -204,7 +207,8 @@ namespace CarboLifeUI.UI
                         if (levelSeries != null)
                         {
                             chart_Level.Series = levelSeries;
-                            chart_Level.YAxes = GraphBuilder.XAxis(labels).ToArray();
+                            chart_Level.YAxes = GraphBuilder.XLevelAxis(labels).ToArray();
+                            chart_Level.XAxes = GraphBuilder.YLevelAxis(labels).ToArray();
                             //chart_Level.SeriesColors = GraphBuilder.getColours();
 
                             levelLabels = labels.ToArray();
@@ -317,7 +321,7 @@ namespace CarboLifeUI.UI
                 TotalText.FontStyle = FontStyles.Normal;
                 TotalText.FontWeight = FontWeights.Bold;
 
-                TotalText.Foreground = Brushes.Black;
+                TotalText.Foreground = System.Windows.Media.Brushes.Black;
                 TotalText.TextWrapping = TextWrapping.WrapWithOverflow;
                 TotalText.VerticalAlignment = VerticalAlignment.Top;
                 TotalText.FontSize = 16;
@@ -341,7 +345,7 @@ namespace CarboLifeUI.UI
                     summaryText.FontStyle = FontStyles.Normal;
                     summaryText.FontWeight = FontWeights.Normal;
 
-                    summaryText.Foreground = Brushes.Black;
+                    summaryText.Foreground = System.Windows.Media.Brushes.Black;
                     summaryText.TextWrapping = TextWrapping.WrapWithOverflow;
                     summaryText.VerticalAlignment = VerticalAlignment.Top;
                     summaryText.FontSize = 13;
@@ -356,7 +360,7 @@ namespace CarboLifeUI.UI
                     summaryValues.FontStyle = FontStyles.Normal;
                     summaryValues.FontWeight = FontWeights.Normal;
 
-                    summaryValues.Foreground = Brushes.Black;
+                    summaryValues.Foreground = System.Windows.Media.Brushes.Black;
                     //summaryValues.TextWrapping = TextWrapping.WrapWithOverflow;
                     summaryValues.VerticalAlignment = VerticalAlignment.Top;
                     summaryValues.FontSize = 13;
@@ -376,7 +380,7 @@ namespace CarboLifeUI.UI
                     textGeneralValues.FontStyle = FontStyles.Normal;
                     textGeneralValues.FontWeight = FontWeights.Normal;
 
-                    textGeneralValues.Foreground = Brushes.Black;
+                    textGeneralValues.Foreground = System.Windows.Media.Brushes.Black;
                     //summaryValues.TextWrapping = TextWrapping.WrapWithOverflow;
                     textGeneralValues.VerticalAlignment = VerticalAlignment.Top;
                     textGeneralValues.FontSize = 13;
@@ -660,6 +664,148 @@ namespace CarboLifeUI.UI
             if (rad_AreaNew != null && rad_AreaTotal != null && CarboLifeProject != null)
             {
                 RefreshLetiGraph();
+            }
+        }
+
+        private void btn_SaveImage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (pie_Chart1.Visibility == System.Windows.Visibility.Visible)
+                {
+                    PieChart chartControl = pie_Chart1;
+
+                    if (chartControl != null)
+                    {
+                        SKPieChart skChart = new SKPieChart(chartControl) { Width = Convert.ToInt16(pie_Chart1.ActualWidth), Height = Convert.ToInt16(pie_Chart1.ActualHeight) };
+                        using var image = skChart.GetImage();
+                        using var data = image.Encode();
+                        string base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
+
+                        try
+                        {
+                            System.Drawing.Image image1 = ReportBuilder.base64ToImage(base64CartesianChart1);
+
+                            //DataObject iumg = image1;
+                            //data.SetImage(image);
+                            Clipboard.SetDataObject(image1, true);
+                            MessageBox.Show($"Image copied to clipboard");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle the exception appropriately, e.g., log it
+                            MessageBox.Show($"Error copying image to clipboard: {ex.Message}");
+                        }
+
+                    }
+
+                }
+                else if (chart_Level.Visibility == System.Windows.Visibility.Visible)
+                {
+                    CartesianChart chartControl = chart_Level;
+
+                    if (chartControl != null)
+                    {
+
+                        SKCartesianChart skChart = new SKCartesianChart(chartControl) { Width = Convert.ToInt16(chart_Level.ActualWidth), Height = Convert.ToInt16(chart_Level.ActualHeight) };
+                        using var image = skChart.GetImage();
+                        using var data = image.Encode();
+                        string base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
+
+                        try
+                        {
+                            System.Drawing.Image image1 = ReportBuilder.base64ToImage(base64CartesianChart1);
+
+                            //DataObject iumg = image1;
+                            //data.SetImage(image);
+                            Clipboard.SetDataObject(image1, true);
+                            MessageBox.Show($"Image copied to clipboard");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle the exception appropriately, e.g., log it
+                            MessageBox.Show($"Error copying image to clipboard: {ex.Message}");
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving image: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            }
+
+        private void btn_SavePImage_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (pie_Chart2.Visibility == System.Windows.Visibility.Visible)
+                {
+                    PieChart chartControl = pie_Chart2;
+
+                    if (chartControl != null)
+                    {
+                        SKPieChart skChart = new SKPieChart(chartControl) { Width = Convert.ToInt16(pie_Chart2.ActualWidth), Height = Convert.ToInt16(pie_Chart2.ActualHeight) };
+                        using var image = skChart.GetImage();
+                        using var data = image.Encode();
+                        string base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
+
+                        try
+                        {
+                            System.Drawing.Image image1 = ReportBuilder.base64ToImage(base64CartesianChart1);
+
+                            //DataObject iumg = image1;
+                            //data.SetImage(image);
+                            Clipboard.SetDataObject(image1, true);
+                            MessageBox.Show($"Image copied to clipboard");
+
+                        }
+                        catch (Exception ex)
+                        {
+                            // Handle the exception appropriately, e.g., log it
+                            MessageBox.Show($"Error copying image to clipboard: {ex.Message}");
+                        }
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving image: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void btn_CopyLeti_Click(object sender, RoutedEventArgs e)
+        {
+            Canvas foundletiChart = cnv_Leti;
+            Bitmap LetiChart = null;
+
+            if (foundletiChart != null)
+            {
+                LetiChart = ChartUtils.ControlToImage(foundletiChart, 300, 300);
+                LetiChart = ReportBuilder.CleanBlack(LetiChart);
+
+                if (LetiChart != null)
+                {
+                    try
+                    {
+                        //DataObject iumg = image1;
+                        //data.SetImage(image);
+                        Clipboard.SetDataObject(LetiChart, true);
+                        MessageBox.Show($"Image copied to clipboard");
+
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle the exception appropriately, e.g., log it
+                        MessageBox.Show($"Error copying image to clipboard: {ex.Message}");
+                    }
+                }
+
             }
         }
     }
