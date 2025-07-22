@@ -21,25 +21,24 @@ namespace CarboLifeRevit
             try
             {
                 Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SkiaSharp.Views.WPF.dll"));
-                //
                 Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "System.Drawing.Common.dll"));
-
                 Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "SkiaSharp.dll"));
                 Assembly.LoadFrom(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "libSkiaSharp.dll"));
 
+                foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    if (asm.GetName().Name.Contains("SkiaSharp"))
+                    {
+                        //TaskDialog.Show("Loaded Assembly", $"{asm.GetName().Name}\nVersion: {asm.GetName().Version}\nLocation: {asm.Location}");
+                    }
+                }
             }
             catch
             {
 
             }
             
-            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                if (asm.GetName().Name.Contains("SkiaSharp"))
-                {
-                    TaskDialog.Show("Loaded Assembly", $"{asm.GetName().Name}\nVersion: {asm.GetName().Version}\nLocation: {asm.Location}");
-                }
-            }
+
             
             UIApplication app = commandData.Application;
 
@@ -62,8 +61,6 @@ namespace CarboLifeRevit
             settings = settings.Load();
             CarboGroupSettings importSettings = settings.defaultCarboGroupSettings;
 
-
-
             CarboGroupingSettingsDialog settingsWindow = new CarboGroupingSettingsDialog(importSettings);
             settingsWindow.ShowDialog();
 
@@ -77,7 +74,6 @@ namespace CarboLifeRevit
                     approvedPath = path;
 
                 CarboLifeRevitImport.ImportElements(app, importSettings, approvedPath, settingsWindow.selectedTemplateFile);
-
                 
             }
             else

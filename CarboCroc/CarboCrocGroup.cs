@@ -10,6 +10,7 @@ using System.Drawing;
 using System.ComponentModel;
 using GH_IO.Serialization;
 using Grasshopper.Kernel.Types;
+using System.IO;
 
 namespace CarboCroc
 {
@@ -23,60 +24,41 @@ namespace CarboCroc
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Carbo Element", "CE", "Carbo Elements", GH_ParamAccess.list);
-            pManager.AddGenericParameter("Carbo Material", "CM", "Carbo Material", GH_ParamAccess.item);
+            pManager.AddGenericParameter("Carbo Elements", "Carbo Elements", "Carbo Elements", GH_ParamAccess.list);//0
+            pManager.AddTextParameter("Material Template", "Material Template", "Material Template (WIP)", GH_ParamAccess.item, ""); //1
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
         {
-            pManager.Register_GenericParam("CarboGroup", "CG", "Returns a Carbo Group");//9
-            pManager.Register_StringParam("Message", "M", "Returns a summary");//9
+            pManager.Register_GenericParam("CarboGroup", "CG", "Returns a Carbo Group");//0
+            pManager.Register_StringParam("Message", "M", "Returns a summary");//1
         }
         protected override void SolveInstance(IGH_DataAccess DA)
         {
             try
             {
                 string message = "";
-
-                CarboGroup carboGroup = new CarboGroup();
-
-                CarboMaterial carboMaterialToUse = null;
+                List<CarboGroup> carboGroupList = new List<CarboGroup>();
 
                 var provided_as_goo = new List<GH_ObjectWrapper>();
-                GH_ObjectWrapper carboMaterial_as_goo = null;
-
                 List<CarboElement> listOfElements = new List<CarboElement>();
 
-                //Get the Material
-                bool hasmaterial = DA.GetData<GH_ObjectWrapper>(1, ref carboMaterial_as_goo);
-
-                if (carboMaterial_as_goo != null)
+                string path = "";
+                if (!DA.GetData(1, ref path) || string.IsNullOrWhiteSpace(path))
                 {
-                    message += "A Carbo Material was provided" + Environment.NewLine;
-
-                    if (carboMaterial_as_goo.Value is CarboMaterial)
-                    {
-                        CarboMaterial material = carboMaterial_as_goo.Value as CarboMaterial;
-                        if (material != null)
-                        {
-                            carboMaterialToUse = material;
-                        }
-                    }
-                }
-                else
-                {
-                    //No valid input for a material was given. A empty group will be created.
-                    message += "No material input was given, your results might not be accurate" + Environment.NewLine;
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Please provide a valid cxml or csv file path.");
+                    return;
                 }
 
-                //material is set;
-                if (carboMaterialToUse != null)
+                if (!File.Exists(path))
                 {
-                    carboGroup.Material = carboMaterialToUse;
-                    carboGroup.MaterialName = carboMaterialToUse.Name;
-                    message += "Carbo Material " + carboGroup.MaterialName  + " was applied to this group" +  Environment.NewLine;
+                    AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "File not found.");
+                    return;
                 }
 
+                //Start a project in the new template
+                CarboProject CP = new CarboProject(path);
+                
                 //Get the Elements
                 if (DA.GetDataList(0, provided_as_goo))
                 {
@@ -94,32 +76,25 @@ namespace CarboCroc
                 //Now Add the elements to the group
                 foreach (CarboElement cel in listOfElements)
                 {
-                    carboGroup.AllElements.Add(cel);
+                    CP.AddElement(cel);
                 }
-
-                //Give a nice description and name to the group
-                if(listOfElements.Count > 0)
-                {
-                    carboGroup.Category = listOfElements[0].Category;
-                    carboGroup.Description = "Group of: " + listOfElements[0].Name;
-                    
-                    //set default waste.
-                    carboGroup.Waste = carboGroup.Material.WasteFactor;
-
-                }
+                CP.CreateGroups();
+                CP.CalculateProject();
 
                 message += listOfElements.Count + "Elements were added to this group" + Environment.NewLine;
 
+                carboGroupList = CP.getGroupList.ToList();
+
                 //All is good calculate the group and return;
 
-                carboGroup.CalculateTotals();
 
-                DA.SetData(0, carboGroup);
+                DA.SetDataList(0, carboGroupList);
                 DA.SetData(1, message);
 
             }
             catch (Exception ex)
             {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, ex.Message);
                 DA.SetData(1, ex.Message);
             }
 

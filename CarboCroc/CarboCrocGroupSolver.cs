@@ -33,8 +33,10 @@ namespace CarboCroc
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.Register_DoubleParam("Total", "Total", "Total COe2"); //0
-            pManager.Register_GenericParam("Carbo Project", "CP", "Returns the Carbo Project file");//9
-            pManager.Register_StringParam("Message", "M", "Returns results in a string list", GH_ParamAccess.list);//10
+            pManager.Register_GenericParam("Carbo Project", "CP", "Returns the Carbo Project file");//1
+            pManager.Register_StringParam("Message", "M", "Returns results in a string list", GH_ParamAccess.list);//2
+            pManager.Register_StringParam("Result Text", "Txt", "Returns results in a text Message", GH_ParamAccess.item);//3
+
         }
 
         protected override void SolveInstance(IGH_DataAccess DA)
@@ -51,7 +53,7 @@ namespace CarboCroc
             double uncertainty = 0;
             bool okUncertainty = DA.GetData<double>(3, ref uncertainty);
 
-            CarboProject runtimeProject = new CarboProject();
+            CarboProject runtimeProject = null;
             //runtimeProject.UncertFact = uncertainty;
 
             List<bool> switches = new List<bool>(); ;
@@ -84,7 +86,7 @@ namespace CarboCroc
 
             if (listOfGroups.Count != 0)
             {
-                runtimeProject = CarboCrocProcess.ProcessData(listOfGroups, switches);
+                runtimeProject = CarboCrocProcess.ProcessData(listOfGroups, switches, uncertainty, templatePath);
             }
 
             List<CarboDataPoint> list = runtimeProject.getPhaseTotals();
@@ -100,10 +102,12 @@ namespace CarboCroc
             foreach (CarboDataPoint cdp in list)
                 resultList.Add(cdp.Name + ";" + cdp.Value.ToString());
 
+            string messageText = runtimeProject.getGeneralText();
+
             DA.SetData(0, totals); //Totals
             DA.SetData(1, runtimeProject);
             DA.SetDataList(2, resultList);
-
+            DA.SetData(3, messageText);
         }
         // Properties
         public override Guid ComponentGuid

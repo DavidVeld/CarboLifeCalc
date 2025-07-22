@@ -76,9 +76,16 @@ namespace CarboCroc
             return newProject;
         }
 
-        internal static CarboProject ProcessData(List<CarboGroup> listOfGroups, List<bool> switches)
+        internal static CarboProject ProcessData(List<CarboGroup> listOfGroups, List<bool> switches, double uncertaintyFacr, string templatePath)
         {
             CarboProject newProject = new CarboProject();
+
+            if (templatePath != "" && File.Exists(templatePath))
+                newProject = new CarboProject(templatePath);
+            else
+                newProject = new CarboProject();
+
+            newProject.UncertFact = uncertaintyFacr;
 
             if (switches.Count == 8)
             {
