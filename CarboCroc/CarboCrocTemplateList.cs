@@ -13,10 +13,10 @@ using System.Windows.Forms;
 
 namespace CarboCroc
 {
-    public class CarboTemplateList : GH_Component
+    public class CarboCrocTemplateList : GH_Component
     {
-        public CarboTemplateList()
-: base("CarboTemplateSelector", "CarboTemplateSelector", "Lists the available Carbo Life Templates", "CarboCroc", "Data")
+        public CarboCrocTemplateList()
+: base("CarboCrocTemplateSelector", "CarboCrocTemplateSelector", "Lists the available Carbo Life Templates", "CarboCroc", "Data")
         {
 
         }
