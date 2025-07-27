@@ -12,7 +12,7 @@ namespace CarboCroc
     {
         // Methods
         public CarboCrocSwitches()
-        : base("Carbo Life Switches", "Carbo Life Switches", "Build a Carbo Life Switches", "CarboCroc", "Builder")
+        : base("Carbo Life Switches", "Carbo Life Switches", "Build a Carbo Life Switches", "CarboCroc", "Solvers")
         {
         }
 

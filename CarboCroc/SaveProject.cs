@@ -28,7 +28,7 @@ namespace CarboCroc
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
             pManager.AddGenericParameter("Project", "CP", "Carbo Life Project", GH_ParamAccess.item);
-            pManager.AddTextParameter("Path", "Path", "Save As.. Path?", GH_ParamAccess.item);
+            pManager.AddTextParameter("Path", "Path", "Save As.. Path?", GH_ParamAccess.item, "");
             pManager.AddBooleanParameter("Save", "Save", "A Switch", GH_ParamAccess.item);
             //pManager.AddBooleanParameter("Update", "Path", "Save As.. Path?", GH_ParamAccess.item);
         }
@@ -51,6 +51,26 @@ namespace CarboCroc
 
             DA.GetData<string>(1, ref path);
             DA.GetData<bool>(2, ref saveme);
+
+            //if no path is provided try to save next to grasshoper file
+            if(path=="")
+            {
+                try
+                {
+                    GH_Document doc = Grasshopper.Instances.ActiveCanvas?.Document;
+                    string ghFilePath = doc.FilePath;
+
+
+                    string directory = Path.GetDirectoryName(ghFilePath);
+                    string fileName = Path.GetFileNameWithoutExtension(ghFilePath);
+                    path = Path.Combine(directory, fileName + ".clcx");
+                }
+                catch
+                {
+                    path = "";
+                }
+            }
+
 
             try
             {

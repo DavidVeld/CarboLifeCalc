@@ -16,7 +16,7 @@ namespace CarboCroc
     {
         // Methods
         public CarboCrocTemplateSetter()
-        : base("Set a CarboLifeCalc Template", "Set a CarboLifeCalc Template", "Set a CarboLifeCalc Template as the global template to be used for all nodes", "CarboCroc", "Data")
+        : base("CarboCrocTemplateSetter", "CarboCrocTemplateSetter", "Set a CarboCroc Global Project Template as the global template to be used for all nodes", "CarboCroc", "Template")
         {
         }
         public override Guid ComponentGuid

@@ -22,7 +22,7 @@ namespace CarboCroc
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("Material Template", "Material Template", "Material Template (WIP)", GH_ParamAccess.item, "");
+          // pManager.AddTextParameter("Material Template", "Material Template", "Material Template (WIP)", GH_ParamAccess.item, "");
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -37,16 +37,10 @@ namespace CarboCroc
             try
             {
                 string templatePath = "";
-                string AccptedTemplatePath = "";
 
-                bool oktemplatePath = DA.GetData<string>(0, ref templatePath);
+                templatePath = CarboCrocUtils.getSetTemplatePath("");
 
-                if (File.Exists(templatePath))
-                {
-                    AccptedTemplatePath = templatePath;
-                }
-
-                CarboProject CP = new CarboProject(AccptedTemplatePath);
+                CarboProject CP = new CarboProject(templatePath);
                 CarboDatabase DB = CP.CarboDatabase;
 
                 List<string> listofCarboMaterials = new List<string>();

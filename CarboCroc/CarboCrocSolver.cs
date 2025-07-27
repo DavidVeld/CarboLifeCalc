@@ -24,10 +24,11 @@ namespace CarboCroc
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddGenericParameter("Carbo Elements", "CE", "Carbo Elements", GH_ParamAccess.list);
-            pManager.AddBooleanParameter("Switches", "CS", "Carbo Switches", GH_ParamAccess.list);
-            pManager.AddTextParameter("TemplatePath", "TP", "Template Path", GH_ParamAccess.item, "");
-            pManager.AddNumberParameter("Uncertainty", "U", "Uncertainty factor (Between 0 and 1)", GH_ParamAccess.item, 0);
+            pManager.AddGenericParameter("Carbo Elements", "CE", "Carbo Elements", GH_ParamAccess.list); //0
+            pManager.AddBooleanParameter("Switches", "CS", "Carbo Switches", GH_ParamAccess.list); //1
+            pManager.AddNumberParameter("Uncertainty", "U", "Uncertainty factor (Between 0 and 1)", GH_ParamAccess.item, 0);//2
+            pManager.AddNumberParameter("GIA", "GIA", "The GIA of the project", GH_ParamAccess.item, 0);//3
+
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -35,7 +36,7 @@ namespace CarboCroc
             pManager.Register_DoubleParam("Total", "Total", "Total COe2"); //0
             pManager.Register_GenericParam("Carbo Project", "CP", "Returns the Carbo Project file");//9
             pManager.Register_StringParam("Message", "M", "Returns results in a string list", GH_ParamAccess.list);//10
-            pManager.Register_StringParam("Result Text", "Txt", "Returns results in a text Message", GH_ParamAccess.item);//10
+            pManager.Register_StringParam("Result Text", "TXT", "Returns results in a text Message", GH_ParamAccess.item);//10
 
         }
 
@@ -45,10 +46,13 @@ namespace CarboCroc
             List<string> resultList = new List<string>();
 
             //string path = "";
-            string templatePath = "";
-            bool oktemplatePath = DA.GetData(2, ref templatePath);
+            string templatePath = CarboCrocUtils.getSetTemplatePath("");
+
             double uncertainty = 0;
-            bool okUncertainty = DA.GetData(3, ref uncertainty);
+            bool okUncertainty = DA.GetData(2, ref uncertainty);
+
+            double gia = 0;
+            bool giaOk = DA.GetData(3, ref gia);
 
             CarboProject runtimeProject = null;
 
@@ -85,7 +89,7 @@ namespace CarboCroc
 
             if (listOfElements.Count != 0)
             {
-                runtimeProject = CarboCrocProcess.ProcessData(listOfElements, switches, uncertainty, templatePath);
+                runtimeProject = CarboCrocProcess.ProcessData(listOfElements, switches, uncertainty, templatePath,gia);
             }
 
             List<CarboDataPoint> list = runtimeProject.getPhaseTotals();

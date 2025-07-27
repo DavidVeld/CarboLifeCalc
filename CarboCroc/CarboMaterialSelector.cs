@@ -30,7 +30,7 @@ namespace CarboCroc
 
         protected override void RegisterInputParams(GH_InputParamManager pManager)
         {
-            pManager.AddTextParameter("Template Path", "Path", "Path to a cxml or csv file", GH_ParamAccess.item);
+            //pManager.AddTextParameter("Template Path", "Path", "Path to a cxml or csv file, empty path will load the default or globally set template", GH_ParamAccess.item, "");
         }
 
         protected override void RegisterOutputParams(GH_OutputParamManager pManager)
@@ -40,7 +40,9 @@ namespace CarboCroc
 
         protected override void SolveInstance(IGH_DataAccess DA)
         {
+            /*
             string path = "";
+
             if (!DA.GetData(0, ref path) || string.IsNullOrWhiteSpace(path))
             {
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Please provide a valid cxml or csv file path.");
@@ -52,9 +54,11 @@ namespace CarboCroc
                 AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "File not found.");
                 return;
             }
+            */
+            string path = CarboCrocUtils.getSetTemplatePath("");
 
             // Only reload if file path changed or file has been modified
-            if (path != _lastLoadedPath && hasbeenloaded == false)
+            if (hasbeenloaded == false)
             {
                 _lastLoadedPath = path;
                 _options = LoadTemplate(path);
@@ -80,6 +84,7 @@ namespace CarboCroc
             var lines = new List<string>();
             try
             {
+
                 CarboProject CP = new CarboProject(path);
                 CarboDatabase DB = CP.CarboDatabase;
 

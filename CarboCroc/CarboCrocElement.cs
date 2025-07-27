@@ -11,18 +11,18 @@ namespace CarboCroc
     {
         // Methods
         public CarboCrocElement()
-        : base("Carbo Life Element", "Carbo Life Element", "Build a Carbo Life Element", "CarboCroc", "Builder")
+        : base("CarboCrocElement", "CarboCrocElement", "Build a Carbo Life Element", "CarboCroc", "Builder")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddIntegerParameter("Id/GUID", "Id", "Identifier", GH_ParamAccess.item);
-            pManager.AddTextParameter("Name", "Element Name", "Element Name", GH_ParamAccess.item);
-            pManager.AddTextParameter("MaterialName", "Material", "Material Name", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("Id", "Id", "Identifier", GH_ParamAccess.item, 0);
+            pManager.AddTextParameter("Name", "Element Name", "Element Name", GH_ParamAccess.item, "");
+            pManager.AddTextParameter("MaterialName", "Material", "Material Name", GH_ParamAccess.item, "");
             pManager.AddNumberParameter("Volume", "Volume", "Element Volume", GH_ParamAccess.item);
-            pManager.AddTextParameter("Category", "Category", "Category", GH_ParamAccess.item);
-            pManager.AddTextParameter("GUID", "GUID", "GUID (Rhino Element Id)", GH_ParamAccess.item);
+            pManager.AddTextParameter("Category", "Category", "Category", GH_ParamAccess.item, "");
+            pManager.AddTextParameter("GUID", "GUID", "GUID (Rhino Element Id)", GH_ParamAccess.item, "");
 
         }
 

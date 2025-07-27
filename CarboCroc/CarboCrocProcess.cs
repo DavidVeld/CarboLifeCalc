@@ -10,7 +10,7 @@ namespace CarboCroc
 {
     internal static class CarboCrocProcess
     {
-        internal static CarboProject ProcessData(List<CarboElement> listOfElements, List<bool> switches, double uncertaintyFacr, string templatePath)
+        internal static CarboProject ProcessData(List<CarboElement> listOfElements, List<bool> switches, double uncertaintyFacr, string templatePath, double gia)
         {
             CarboProject newProject = null;
 
@@ -50,6 +50,8 @@ namespace CarboCroc
 
             //run once;
             newProject.CreateGroups();
+            newProject.Area = gia;
+            newProject.AreaNew = gia;
 
             //MapElements if required
             try

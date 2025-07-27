@@ -10,21 +10,21 @@ using Grasshopper.Kernel.Types;
 
 namespace CarboCroc
 {
-    public class CarboCrocGeo : GH_Component
+    public class CarboCrocGeoElement : GH_Component
     {
         // Methods
-        public CarboCrocGeo()
-        : base("Carbo Life Geo Element", "Carbo Life Geo Element", "Build a Carbo Life Element from Brep", "CarboCroc", "Builder")
+        public CarboCrocGeoElement()
+        : base("CarboCrocGeoElement", "CarboCrocGeoElement", "Build a Carbo Life Element from closed Brep", "CarboCroc", "Builder")
         {
         }
 
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
-            pManager.AddIntegerParameter("Id/GUID", "Id", "Identifier", GH_ParamAccess.item);
-            pManager.AddTextParameter("Name", "Element Name", "Element Name", GH_ParamAccess.item);
-            pManager.AddTextParameter("MaterialName", "Material", "Material Name", GH_ParamAccess.item);
-            pManager.AddGeometryParameter("Geometry", "Geometry", "Geometry With Volume", GH_ParamAccess.item);
-            pManager.AddTextParameter("Category", "Category", "Category", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("Id", "Id", "Identifier", GH_ParamAccess.item,0);
+            pManager.AddTextParameter("Name", "Element Name", "Element Name", GH_ParamAccess.item, "");
+            pManager.AddTextParameter("MaterialName", "Material", "Material Name", GH_ParamAccess.item, "");
+            pManager.AddGeometryParameter("BREP", "BREP", "Geometry With Volume", GH_ParamAccess.item);
+            pManager.AddTextParameter("Category", "Category", "Category", GH_ParamAccess.item, "");
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)

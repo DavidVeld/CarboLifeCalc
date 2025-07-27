@@ -16,7 +16,7 @@ namespace CarboCroc
     public class CarboCrocTemplateList : GH_Component
     {
         public CarboCrocTemplateList()
-: base("CarboCrocTemplateSelector", "CarboCrocTemplateSelector", "Lists the available Carbo Life Templates", "CarboCroc", "Data")
+: base("CarboCrocTemplateSelector", "CarboCrocTemplateSelector", "Ricght click on node to select an available Carbo Life Templates for input into the CarboCrocTemplateSetter node", "CarboCroc", "Template")
         {
 
         }

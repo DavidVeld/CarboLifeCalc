@@ -80,22 +80,30 @@
     <Content Include="samples\CarboCrocSampleProject.gh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="samples\CarboCrocSampleProjectBaked.gh">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="CarboCrocGroup.cs" />
+    <Compile Remove="CarboCrocGroupSolver.cs" />
+    <Compile Remove="CarboCrocMaterialSelector.cs" />
+    <Compile Remove="CarboCrocPainter.cs" />
+    <Compile Remove="CarboMaterialSelector.cs" />
     <Compile Remove="UserControl1.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\ListMaterials.png" />
     <None Remove="Resources\ListTemplates.png" />
     <None Remove="samples\CarboCrocSampleProject.gh" />
-    <None Remove="samples\CarboCrocSampleProjectBaked.gh" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CarboCrocGroup.cs" />
+    <None Include="CarboCrocGroupSolver.cs" />
+    <None Include="CarboCrocMaterialSelector.cs" />
+    <None Include="CarboCrocPainter.cs" />
+    <None Include="CarboMaterialSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GH_IO">
