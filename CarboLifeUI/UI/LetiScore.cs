@@ -5,7 +5,11 @@ namespace CarboLifeUI
     internal class LetiScore
     {
         internal string BuildingType { get; set; }
+        internal string TargetType { get; set; }
+
         internal bool sequestration { get; set; }
+        internal bool isStructure { get; set; }
+
         internal int AAA { get; set; }
         internal int AA { get; set; }
         internal int A { get; set; }
@@ -15,15 +19,31 @@ namespace CarboLifeUI
         internal int E { get; set; }
         internal int F { get; set; }
         internal int G { get; set; }
+        internal int Target { get; set; }
 
 
         internal LetiScore()
         {
             BuildingType = "";
+            TargetType = "";
             sequestration = true;
+            isStructure = false;
+
             AAA = 0;
             AA = 0;
             A = 0;
+            B = 0;
+            C = 0;
+            D = 0;
+            E = 0;
+            F = 0;
+            G = 0;
+            Target = 0;
+
+
+
+
+
         }
 
         internal int getValue(string searchValue)

@@ -15,8 +15,7 @@ using System.Windows.Shapes;
 
 namespace CarboLifeUI
 {
-    [Obsolete("This class is superseded by the TargetIndicator class in CarboLifeUI namespace. Please use that class instead.", false)]
-    internal class ScorsIndicator
+    internal class TargetIndicator
     {
         static List<int> labelYvalues = new List<int>();
         static readonly SolidColorBrush almostBlack = (SolidColorBrush)(new BrushConverter().ConvertFrom("#050505"));
@@ -34,8 +33,6 @@ namespace CarboLifeUI
             double YCurrent = YOffset;
 
             //Check if the SCO2RES rating needs to be calculater for two values.
-
-
             double CarbonPerAreaA15 = CarbonA15 / GIA;
             double CarbonPerAreaA1C = CarbonA1C / GIA;
 
@@ -52,6 +49,7 @@ namespace CarboLifeUI
             if (buildingType == "")
                 buildingType = ScoresList[0].BuildingType;
 
+            //try to find matching score, if not found only one arrow is used.
             scoreTypeA15 = getLetiScore(ScoresList, buildingType, false);
             scoreTypeA1C = getLetiScore(ScoresList, buildingType, true);
 
@@ -64,6 +62,11 @@ namespace CarboLifeUI
             IEnumerable<UIElement> arrowListE = generateArrows("E");
             IEnumerable<UIElement> arrowListF = generateArrows("F");
             IEnumerable<UIElement> arrowListG = generateArrows("G");
+
+            //Get Target Line
+            IEnumerable<UIElement> targetLine = generateTarget(myCanvas, scoreTypeA15.Target, scoreTypeA1C.Target);
+
+
 
             //Title & Legend
             IEnumerable<UIElement> legend = generateLegend(scoreTypeA15, scoreTypeA1C);
@@ -132,6 +135,14 @@ namespace CarboLifeUI
 
         }
 
+        private static IEnumerable<UIElement> generateTarget(Canvas myCanvas, int target1, int target2)
+        {
+            IList<UIElement> result = new List<UIElement>();
+
+
+            return result;
+        }
+
         private static LetiScore getLetiScore(IList<LetiScore> ScoresList, string buildingType, bool allowForSequestration)
         {
             LetiScore result = null;
@@ -164,21 +175,23 @@ namespace CarboLifeUI
                     LetiScore scors = new LetiScore();
 
                     string BuildingType = dr[0].ToString();
+                    string Benchmark = dr[1].ToString();
 
-                    string sequestrationText = dr[1].ToString();
+                    string sequestrationText = dr[2].ToString();
+                    string isStructureText = dr[3].ToString();
 
-                    string isStructureText = dr[2].ToString();
 
+                    Int32 AAA = (int)Utils.ConvertMeToDouble(dr[4].ToString());
+                    Int32 AA = (int)Utils.ConvertMeToDouble(dr[5].ToString());
+                    Int32 A = (int)Utils.ConvertMeToDouble(dr[6].ToString());
+                    Int32 B = (int)Utils.ConvertMeToDouble(dr[7].ToString());
+                    Int32 C = (int)Utils.ConvertMeToDouble(dr[8].ToString());
+                    Int32 D = (int)Utils.ConvertMeToDouble(dr[9].ToString());
+                    Int32 E = (int)Utils.ConvertMeToDouble(dr[10].ToString());
+                    Int32 F = (int)Utils.ConvertMeToDouble(dr[11].ToString());
+                    Int32 G = (int)Utils.ConvertMeToDouble(dr[12].ToString());
 
-                    Int32 AAA = (int)Utils.ConvertMeToDouble(dr[3].ToString());
-                    Int32 AA = (int)Utils.ConvertMeToDouble(dr[4].ToString());
-                    Int32 A = (int)Utils.ConvertMeToDouble(dr[5].ToString());
-                    Int32 B = (int)Utils.ConvertMeToDouble(dr[6].ToString());
-                    Int32 C = (int)Utils.ConvertMeToDouble(dr[7].ToString());
-                    Int32 D = (int)Utils.ConvertMeToDouble(dr[8].ToString());
-                    Int32 E = (int)Utils.ConvertMeToDouble(dr[9].ToString());
-                    Int32 F = (int)Utils.ConvertMeToDouble(dr[10].ToString());
-                    Int32 G = (int)Utils.ConvertMeToDouble(dr[11].ToString());
+                    Int32 T = (int)Utils.ConvertMeToDouble(dr[13].ToString());
 
 
                     scors.BuildingType = BuildingType;
@@ -202,6 +215,7 @@ namespace CarboLifeUI
                     scors.E = E;
                     scors.F = F;
                     scors.G = G;
+                    scors.Target = T;
 
                     result.Add(scors);
                 }
@@ -225,7 +239,7 @@ namespace CarboLifeUI
 
             double yStart = 75;
             double xStart = 75;
-            string rating = "";
+            //string rating = "";
 
             switch (letter)
             {
@@ -255,7 +269,7 @@ namespace CarboLifeUI
                     yStart = (4 * (height + spacing));
                     labelYvalues.Add(Convert.ToInt16(yStart + (height / 2)));
 
-                    rating = "2030 Design Target";
+                    //rating = "2030 Design Target";
                     break;
                 case "C":
                     xScale = 1.4;
@@ -270,7 +284,7 @@ namespace CarboLifeUI
                     yStart = (6 * (height + spacing));
                     labelYvalues.Add(Convert.ToInt16(yStart + (height / 2)));
 
-                    rating = "Good";
+                    //rating = "Good";
                     break;
                 case "E":
                     xScale = 1.6;
@@ -285,7 +299,7 @@ namespace CarboLifeUI
                     yStart = (8 * (height + spacing));
                     labelYvalues.Add(Convert.ToInt16(yStart + (height / 2)));
 
-                    rating = "Average";
+                    //rating = "Average";
                     break;
                 case "G":
                     xScale = 1.8;
@@ -354,6 +368,7 @@ namespace CarboLifeUI
             Canvas.SetTop(label, yStart + (height / 4) - 5);
             result.Add(label);
 
+            /*
             if (letter == "F" || letter == "D" || letter == "B")
             {
                 //Add dashed Leti line
@@ -390,6 +405,7 @@ namespace CarboLifeUI
                 result.Add(ratingBlock);
 
             }
+            */
 
             return result;
 

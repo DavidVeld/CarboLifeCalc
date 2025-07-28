@@ -82,7 +82,7 @@ namespace CarboLifeUI.UI
 
                     IList<LetiScore> letiList = new List<LetiScore>();
 
-                    letiList = ScorsIndicator.getLetiList();
+                    letiList = TargetIndicator.getLetiList();
                     IList<string> typelist = letiList.Select(x => x.BuildingType).Distinct().ToList();
 
                     foreach (string name in typelist)
