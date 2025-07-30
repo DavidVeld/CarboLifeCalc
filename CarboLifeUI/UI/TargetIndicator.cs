@@ -64,7 +64,7 @@ namespace CarboLifeUI
             IEnumerable<UIElement> arrowListG = generateArrows("G");
 
             //Get Target Line
-            IEnumerable<UIElement> targetLine = generateTarget(myCanvas, scoreTypeA15.Target, scoreTypeA1C.Target);
+            IEnumerable<UIElement> targetLine = getTarget(scoreTypeA15.Target, scoreTypeA15);
 
 
 
@@ -73,6 +73,7 @@ namespace CarboLifeUI
             //kgCO₂e/m²
             IEnumerable<UIElement> indicatorArrow1 = new List<UIElement>();
             IEnumerable<UIElement> indicatorArrow2 = new List<UIElement>();
+
 
             if (scoreTypeA15 != null)
                 indicatorArrow1 = generateIndicatorArrow(scoreTypeA15, CarbonPerAreaA15, 350);
@@ -130,17 +131,13 @@ namespace CarboLifeUI
             {
                 result.Add(uielement);
             }
+            foreach (UIElement uielement in targetLine)
+            {
+                result.Add(uielement);
+            }
 
             return result;
 
-        }
-
-        private static IEnumerable<UIElement> generateTarget(Canvas myCanvas, int target1, int target2)
-        {
-            IList<UIElement> result = new List<UIElement>();
-
-
-            return result;
         }
 
         private static LetiScore getLetiScore(IList<LetiScore> ScoresList, string buildingType, bool allowForSequestration)
@@ -195,8 +192,9 @@ namespace CarboLifeUI
 
 
                     scors.BuildingType = BuildingType;
+                    scors.TargetType = Benchmark;
 
-                    if(sequestrationText == "TRUE")
+                    if (sequestrationText == "TRUE")
                         scors.sequestration = true;
                     else
                         scors.sequestration = false;
@@ -226,6 +224,59 @@ namespace CarboLifeUI
             }
 
             return result;
+        }
+
+        private static IEnumerable<UIElement> getTarget(int Target, LetiScore scoreRange)
+        {
+
+            double height = 25;
+            double spacing = 3;
+
+            double yStart = 75;
+            double xStart = 75;
+            //string rating = "";
+
+            double yValue = getYOnCanvas(scoreRange, Target);
+            yStart = yValue + (height / 2);
+
+            IList<UIElement> result = new List<UIElement>();
+
+            //Add dashed Leti line
+            Line line = new Line();
+            line.Stroke = Brushes.Gray;
+
+            line.X1 = xStart;
+            line.Y1 = yStart;
+
+            line.X2 = xStart + 200;
+            //line.Y2 = yStart - (spacing / 2);
+            line.Y2 = yStart;
+
+            line.StrokeThickness = 1;
+            line.StrokeDashArray.Add(10);
+            line.StrokeDashArray.Add(10);
+            line.StrokeDashArray.Add(10);
+            line.StrokeDashArray.Add(10);
+            result.Add(line);
+
+            //Add the rating text
+            TextBlock ratingBlock = new TextBlock();
+            ratingBlock.Text = "Target: " + Target + " kgCo2e/m2";
+            ratingBlock.FontStyle = FontStyles.Normal;
+            ratingBlock.FontWeight = FontWeights.Normal;
+            ratingBlock.Foreground = almostBlack;
+            ratingBlock.TextWrapping = TextWrapping.WrapWithOverflow;
+            ratingBlock.VerticalAlignment = VerticalAlignment.Top;
+            ratingBlock.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+
+            ratingBlock.FontSize = 10;
+
+            Canvas.SetLeft(ratingBlock, xStart + 25);
+            Canvas.SetTop(ratingBlock, yStart); // + (height / 4) - 5);//
+
+            result.Add(ratingBlock);
+            return result;
+
         }
 
         private static IEnumerable<UIElement> generateArrows(string letter)
@@ -410,6 +461,7 @@ namespace CarboLifeUI
             return result;
 
         }
+
         private static IEnumerable<UIElement> generateLegend(LetiScore scoreTypeA15, LetiScore scoreTypeA1C)
         {
             if (scoreTypeA15 == null)
@@ -439,12 +491,13 @@ namespace CarboLifeUI
             //this below corrects the legend in case a scores rating is drawn where scoreTypeA15 and A1C are equal
             if (scoreTypeA15 == scoreTypeA1C)
             {
-                label.Text = "A1-A5 " + "kgCO₂e/m²";
+                label.Text = scoreTypeA15.BuildingType + " " + scoreTypeA15.TargetType  + Environment.NewLine + "A1-A5 " + "kgCO₂e/m²" ;
             }
             else
             { 
-                label.Text = "A1-A5 / A1-C " + "kgCO₂e/m²";
+                label.Text = scoreTypeA15.BuildingType + " " + scoreTypeA15.TargetType + Environment.NewLine + "A1-A5 / A1-C " + "kgCO₂e/m²";
             }
+
             label.FontStyle = FontStyles.Normal;
             label.FontWeight = FontWeights.Normal;
             label.Foreground = almostBlack;
@@ -469,7 +522,7 @@ namespace CarboLifeUI
             labelAAA.FontSize = 12;
             Canvas.SetLeft(labelAAA, xStart);
             //Canvas.SetTop(labelAAA, (scoreTypeA15.AAA * valueper1) + (height / 2));
-            Canvas.SetTop(labelAAA, y);
+            Canvas.SetTop(labelAAA, 40);
 
             result.Add(labelAAA);
 
@@ -530,7 +583,7 @@ namespace CarboLifeUI
             y = getYOnCanvas(scoreTypeA15, scoreTypeA15.G);
 
             TextBlock labelG = new TextBlock();
-            labelG.Text = scoreTypeA15.G.ToString() + "/" + scoreTypeA1C.G.ToString();
+            labelG.Text = ">" + scoreTypeA15.G.ToString() + "/" + scoreTypeA1C.G.ToString();
             labelG.FontStyle = FontStyles.Normal;
             labelG.FontWeight = FontWeights.Normal;
             labelG.TextWrapping = TextWrapping.WrapWithOverflow;
@@ -546,11 +599,12 @@ namespace CarboLifeUI
             return result;
 
         }
+
         private static double getYOnCanvas(LetiScore scoreType, double value)
         {
             double result = 0;
             //Get the score value;
-            string labelText = getLabel(scoreType, value);
+            string labelText = getLabelV2(scoreType, value);
 
             //Get the y locations on the image:
             List<int> twoValues = getTopAndBottomYs(labelText);
@@ -576,7 +630,7 @@ namespace CarboLifeUI
                 }
                 catch
                 {
-                    yscale = 1;
+                    yscale = 0;
                 }
 
                 //now the 
@@ -609,10 +663,10 @@ namespace CarboLifeUI
 
             width = xScale * width;
 
-            double yStart = (value * valueper1) + (height / 2);
+            double yStart = (value * valueper1) - (height / 2);
 
             //Get the score value;
-            string labelText = getLabel(scoreType, value);
+            string labelText = getLabelV2(scoreType, value);
 
             //Get the y locations on the image:
             List<int> twoValues = getTopAndBottomYs(labelText);
@@ -645,41 +699,7 @@ namespace CarboLifeUI
                 double canvasValue = valueToGoUp * yscale;
                 yStart = twoValues[0] - canvasValue;
 
-                //Add dashed Leti line
-                /*
-                Line lineAt = new Line();
-                lineAt.Stroke = Brushes.Red;
-                lineAt.X1 = xStart - 200;
-                lineAt.Y1 = twoValues[0];
-                lineAt.X2 = xStart + 10;
-                lineAt.Y2 = twoValues[0];
-                lineAt.StrokeThickness = 1;
-
-                Line lineOver = new Line();
-                lineOver.Stroke = Brushes.Red;
-                lineOver.X1 = xStart - 200;
-                lineOver.Y1 = twoValues[1];
-                lineOver.X2 = xStart + 10;
-                lineOver.Y2 = twoValues[1];
-                lineOver.StrokeThickness = 1;
-
-                Line lineValue = new Line();
-                lineValue.Stroke = Brushes.Red;
-                lineValue.X1 = xStart - 200;
-                lineValue.Y1 = twoValues[1];
-                lineValue.X2 = xStart + 10;
-                lineValue.Y2 = twoValues[1];
-                lineValue.StrokeThickness = 1;
-                
-                result.Add(lineAt);
-                result.Add(lineOver);
-                result.Add(lineValue);
-                */
             }
-
-
-
-
 
             //Check results this sets the boundaries for the graph;
             if (Double.IsNaN(yStart))
@@ -688,9 +708,7 @@ namespace CarboLifeUI
             if (value < 0)
                 yStart = 0;
             if (value > scoreType.G)
-                yStart = getYOnCanvas(scoreType, scoreType.G) + (height / 2);
-
-
+                yStart = getYOnCanvas(scoreType, scoreType.G);
 
 
             Polyline arrow = new Polyline();
@@ -700,6 +718,8 @@ namespace CarboLifeUI
             arrow.Fill = almostBlack;
 
             PointCollection connecitonPoints = new PointCollection();
+
+            yStart = yStart + (height /2 );
 
             Point pnt1 = new Point(xStart, yStart + height / 2); //Top Right
             Point pnt2 = new Point(xStart - width, yStart + height / 2);
@@ -734,6 +754,11 @@ namespace CarboLifeUI
             Canvas.SetTop(valuelabel, yStart + height /2);
             result.Add(valuelabel);
 
+            if (labelText == "AAA")
+                labelText = "A++";
+            else if (labelText == "AA")
+                labelText = "A+";
+
             //Add the label
             TextBlock label = new TextBlock();
             label.Text = labelText;
@@ -759,12 +784,12 @@ namespace CarboLifeUI
 
             switch (labelText)
             {
-                case "A++": // index 0
+                case "AAA": // index 0
                     result.Add(labelYvalues[0]);
                     result.Add(labelYvalues[0]);
                     //The Values
                     break;
-                case "A+": // index 1
+                case "AA": // index 1
                     result.Add(labelYvalues[1]);
                     result.Add(labelYvalues[0]);
                     break;
@@ -806,63 +831,17 @@ namespace CarboLifeUI
             return result;
         }
 
-        private static string getLabel(LetiScore scoreType, double value)
+        private static string getLabelV2(LetiScore scoreType, double value)
         {
-            string result = "";
-            if (value >= 0)
-            {
-                if (value >= scoreType.AAA)
-                {
-                    if (value >= scoreType.AA)
-                    {
-                        if (value >= scoreType.A)
-                        {
-                            if (value >= scoreType.B)
-                            {
-                                if (value >= scoreType.C)
-                                {
-                                    if (value >= scoreType.D)
-                                    {
-                                        if (value >= scoreType.E)
-                                        {
-                                            if (value >= scoreType.F)
-                                            {
-                                                if (value >= scoreType.G)
-                                                {
-                                                    result = "G";
-                                                }
-                                                else
-                                                    result = "F";
-                                            }
-                                            else
-                                                result = "F";
-                                        }
-                                        else
-                                            result = "E";
-                                    }
-                                    else
-                                        result = "D";
-                                }
-                                else
-                                    result = "C";
-                            }
-                            else
-                                result = "B";
-                        }
-                        else
-                            result = "A";
-                    }
-                    else
-                        result = "A+";
-                }
-                else
-                    result = "A++";
-            }
-            else
-            result = "A++";
-
-
-            return result;
+            if (value <= scoreType.AAA) return "AAA";
+            if (value <= scoreType.AA) return "AA";
+            if (value <= scoreType.A) return "A";
+            if (value <= scoreType.B) return "B";
+            if (value <= scoreType.C) return "C";
+            if (value <= scoreType.D) return "D";
+            if (value <= scoreType.E) return "E";
+            if (value <= scoreType.F) return "F";
+            return "G";
         }
     }
 

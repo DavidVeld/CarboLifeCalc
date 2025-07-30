@@ -39,20 +39,15 @@ namespace CarboLifeUI
             F = 0;
             G = 0;
             Target = 0;
-
-
-
-
-
         }
 
         internal int getValue(string searchValue)
         {
             switch (searchValue)
             {
-                case "A++": 
+                case "AAA": 
                     return AAA;
-                case "A+": 
+                case "AA": 
                     return AA;
                 case "A": 
                     return A;
@@ -78,9 +73,9 @@ namespace CarboLifeUI
         {
             switch (searchValue)
             {
-                case "A++":
+                case "AAA":
                     return AAA;
-                case "A+":
+                case "AA":
                     return AAA;
                 case "A":
                     return AA;
