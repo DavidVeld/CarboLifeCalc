@@ -272,7 +272,7 @@ namespace CarboLifeUI
             ratingBlock.FontSize = 10;
 
             Canvas.SetLeft(ratingBlock, xStart + 25);
-            Canvas.SetTop(ratingBlock, yStart); // + (height / 4) - 5);//
+            Canvas.SetTop(ratingBlock, yStart - 15.5); 
 
             result.Add(ratingBlock);
             return result;
@@ -759,12 +759,24 @@ namespace CarboLifeUI
             else if (labelText == "AA")
                 labelText = "A+";
 
+            bool metTarget = false;
+            if(scoreType.Target > value)
+                metTarget = true;
+            else
+                metTarget = false;
+
+
             //Add the label
             TextBlock label = new TextBlock();
             label.Text = labelText;
             label.FontStyle = FontStyles.Normal;
             label.FontWeight = FontWeights.Bold;
-            label.Foreground = Brushes.White;
+
+            if (metTarget == true)
+                label.Foreground = Brushes.Green;
+            else
+                label.Foreground = Brushes.Red; 
+            
             label.TextWrapping = TextWrapping.WrapWithOverflow;
             label.VerticalAlignment = VerticalAlignment.Top;
             label.FontSize = 16;
