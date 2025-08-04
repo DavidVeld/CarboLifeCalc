@@ -195,11 +195,11 @@ namespace CarboLifeRevit
                     BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
                     List<CarboElement> carboElementList = new List<CarboElement>();
 
-                    //if (el.Category.Name == "Railings"
-                    //|| el.Category.Name == "Ramps") //English
+                    //Railings, ramps and curtain walls are not processed with the fast method, they require a geometry extraction.
 
-                    if (enumCategory == BuiltInCategory.OST_Railings ||
-                        enumCategory == BuiltInCategory.OST_Ramps)
+                    if (enumCategory == BuiltInCategory.OST_Railings || enumCategory == BuiltInCategory.OST_StairsRailing ||
+                        enumCategory == BuiltInCategory.OST_Ramps ||
+                        enumCategory == BuiltInCategory.OST_CurtainWallMullions || enumCategory == BuiltInCategory.OST_CurtainWallPanels)
                     {
                         carboElementList = CarboRevitUtils.getGeometryElement(doc, el, settings);
                     }

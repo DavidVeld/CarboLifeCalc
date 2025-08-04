@@ -689,20 +689,10 @@ namespace CarboLifeUI.UI
                         using var data = image.Encode();
                         string base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
 
-                        try
+                        System.Drawing.Image image1 = ReportBuilder.base64ToImage(base64CartesianChart1);
+                        if (image1 != null)
                         {
-                            System.Drawing.Image image1 = ReportBuilder.base64ToImage(base64CartesianChart1);
-
-                            //DataObject iumg = image1;
-                            //data.SetImage(image);
-                            Clipboard.SetDataObject(image1, true);
-                            MessageBox.Show($"Image copied to clipboard");
-
-                        }
-                        catch (Exception ex)
-                        {
-                            // Handle the exception appropriately, e.g., log it
-                            MessageBox.Show($"Error copying image to clipboard: {ex.Message}");
+                            copyToClipboard(image1 as Bitmap);
                         }
 
                     }
@@ -720,23 +710,13 @@ namespace CarboLifeUI.UI
                         using var data = image.Encode();
                         string base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
 
-                        try
+                        System.Drawing.Image image1 = ReportBuilder.base64ToImage(base64CartesianChart1);
+                        if (image1 != null)
                         {
-                            System.Drawing.Image image1 = ReportBuilder.base64ToImage(base64CartesianChart1);
-
-                            //DataObject iumg = image1;
-                            //data.SetImage(image);
-                            Clipboard.SetDataObject(image1, true);
-                            MessageBox.Show($"Image copied to clipboard");
-
-                        }
-                        catch (Exception ex)
-                        {
-                            // Handle the exception appropriately, e.g., log it
-                            MessageBox.Show($"Error copying image to clipboard: {ex.Message}");
+                            copyToClipboard(image1 as Bitmap);
                         }
 
-                    }
+                        }
                 }
             }
             catch (Exception ex)
@@ -760,22 +740,11 @@ namespace CarboLifeUI.UI
                         using var data = image.Encode();
                         string base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
 
-                        try
-                        {
                             System.Drawing.Image image1 = ReportBuilder.base64ToImage(base64CartesianChart1);
-
-                            //DataObject iumg = image1;
-                            //data.SetImage(image);
-                            Clipboard.SetDataObject(image1, true);
-                            MessageBox.Show($"Image copied to clipboard");
-
-                        }
-                        catch (Exception ex)
-                        {
-                            // Handle the exception appropriately, e.g., log it
-                            MessageBox.Show($"Error copying image to clipboard: {ex.Message}");
-                        }
-
+                            if (image1 != null)
+                            {
+                                copyToClipboard(image1 as Bitmap);
+                            }
                     }
 
                 }
@@ -798,21 +767,25 @@ namespace CarboLifeUI.UI
 
                 if (LetiChart != null)
                 {
-                    try
-                    {
-                        //DataObject iumg = image1;
-                        //data.SetImage(image);
-                        Clipboard.SetDataObject(LetiChart, true);
-                        MessageBox.Show($"Image copied to clipboard");
-
-                    }
-                    catch (Exception ex)
-                    {
-                        // Handle the exception appropriately, e.g., log it
-                        MessageBox.Show($"Error copying image to clipboard: {ex.Message}");
-                    }
+                    copyToClipboard(LetiChart);
                 }
+            }
+        }
 
+
+        private void copyToClipboard(Bitmap bmp)
+        {
+            try
+            {
+
+                Clipboard.SetDataObject(bmp, true);
+                MessageBox.Show($"Image copied to clipboard");
+
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception appropriately, e.g., log it
+                MessageBox.Show($"Error copying image to clipboard: {ex.Message}");
             }
         }
     }

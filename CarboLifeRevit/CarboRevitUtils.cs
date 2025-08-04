@@ -332,9 +332,16 @@ namespace CarboLifeRevit
                                 else if(faceMat.MaterialCategory != "")
                                     materialCategory = faceMat.MaterialCategory;
                             }
+                            else
+                            {
+                                //there is a volume, but material is unknown
+                                materialName = "Generic";
+                                materialCategory = "Generic";
+                                materialCategory = "Generic";
+                            }
                         }
 
-                        if (materialName != "" && volume > 0 && faceMat != null)
+                        if (materialName != "" && volume > 0)
                             result = CarboRevitUtils.addToCarboElement(result, materialName, materialCategory, volume, el, doc, settings);
 
                     }

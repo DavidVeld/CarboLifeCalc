@@ -129,18 +129,18 @@ namespace CarboLifeUI.UI
             else
             {
                 Random random = new Random();
-                int randomNumber = random.Next(1, 10);
+                int randomNumber = random.Next(1, 20);
                 if(randomNumber == 2)
                 {
                     //only show message after certain publication date
-                    DateTime startDate = new DateTime(2025, 8, 1);
+                    DateTime startDate = new DateTime(2025, 10, 1);
                     DateTime currentDate = DateTime.Now;
 
                     if (currentDate > startDate)
                     {
                         string message =
     @"This is a friendly message to remind you that this software is free. 
-You have a 1 in 10 chance to see each time you run this app. 
+You have a 1/20 chance to see this pop-up each time you run this app. 
 Do you want to buy me a coffee and you get a key to remove this message?";
 
                         MessageBoxResult result = System.Windows.MessageBox.Show(message, "Hello", MessageBoxButton.YesNo);
