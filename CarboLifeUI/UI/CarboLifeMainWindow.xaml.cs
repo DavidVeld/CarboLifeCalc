@@ -445,7 +445,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                 if (foundchart1 != null)
                 {
                     PieChart chartControl = Panel_Overview.pie_Chart1;
-                    SKPieChart skChart = new SKPieChart(chartControl) { Width = 450, Height = 300 };
+                    SKPieChart skChart = new SKPieChart(chartControl) { Width = 450*2, Height = 300*2 };
                     //skChart.SaveImage("PieImageFromControl.png");
                     using var image = skChart.GetImage();
                     using var data = image.Encode();
@@ -458,7 +458,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                 if (foundchart2 != null)
                 {
                     PieChart chartControl = Panel_Overview.pie_Chart2;
-                    SKPieChart skChart = new SKPieChart(chartControl) { Width = 450, Height = 300 };
+                    SKPieChart skChart = new SKPieChart(chartControl) { Width = 450 * 2, Height = 300 * 2 };
                     //skChart.SaveImage("PieImageFromControl.png");
                     using var image = skChart.GetImage();
                     using var data = image.Encode();
