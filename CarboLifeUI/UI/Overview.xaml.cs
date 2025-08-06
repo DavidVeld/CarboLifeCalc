@@ -447,6 +447,8 @@ namespace CarboLifeUI.UI
         {
             try
             {
+                refreshSumary();
+
                 string result = "";
 
                 result += "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e" + Environment.NewLine;
@@ -500,6 +502,7 @@ namespace CarboLifeUI.UI
                         CarboLifeProject.Area = convertedText;
                         txt_Area.Text = convertedText.ToString();
                         RefreshLetiGraph();
+                        refreshSumary();
                     }
                 }
             }
@@ -525,6 +528,7 @@ namespace CarboLifeUI.UI
                         CarboLifeProject.AreaNew = convertedText;
                         txt_AreaNew.Text = convertedText.ToString();
                         RefreshLetiGraph();
+                        refreshSumary();
                     }
                 }
             }

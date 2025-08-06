@@ -1063,60 +1063,6 @@ namespace CarboLifeAPI.Data
 
             return result;
         }
-        [Obsolete("This is the old version and can be deleted")]
-        public string getSummaryText(bool materials, bool globals, bool cars, bool trees)
-        {
-            string result = "";
-
-            double totalMaterials = getTotalsGroup().EC;
-            double globalA5 = A5Global;
-            double globalC1 = C1Global;
-            double totalTotal = totalMaterials + globalA5 + globalC1;
-
-            if (materials == true)
-                result += "Total material specific: " + Math.Round(totalMaterials, 2) + " tCO₂e " + Environment.NewLine;
-            if (globals == true)
-                result += "Total global project specific (A5): " + Math.Round(globalA5, 2) + " tCO₂e" + Environment.NewLine;
-            
-            if(globalA5 == 0)
-                result += "(No project values to calculate A5 emissions )" + Environment.NewLine;
-            //C1
-            if (globalC1 == 0)
-                result += "(No demolition estimation in project )" + Environment.NewLine;
-            else
-            {
-                //result += "Total, global demolition value (C1): " + Math.Round(demoArea, 2) + " m² x " +  Math.Round(C1Factor, 2) + " kgCO₂e/m² / 1000 = " + Math.Round(globalC1, 2) + " tCO₂e"  + Environment.NewLine;
-                result += "Total global demolition value (C1): " + Math.Round(globalC1, 2) + " tCO₂e" + Environment.NewLine;
-
-            }
-            result += Environment.NewLine;
-            //Totals:
-            result += "Total CO₂e = " + "Total materials" + " + A5 Global " + " + C1 Global " + Environment.NewLine;
-
-            result += "Total CO₂e = " + Math.Round(totalMaterials, 2) + " + " + Math.Round(globalA5, 2) + " + " + Math.Round(globalC1, 2) + Environment.NewLine;
-
-
-            result += "Total CO₂e = " + Math.Round(totalTotal, 2) + " tCO₂e (Metric tons of carbon dioxide equivalent)" + Environment.NewLine + Environment.NewLine;
-            if (Area > 0)
-            {
-                result += "OR " + Math.Round(totalTotal / Area, 3) + " tCO₂e/m² (Metric tons of carbon dioxide equivalent per square meter)" + Environment.NewLine;
-            }
-
-            result += Environment.NewLine;
-
-            if (materials == true)
-                result += "This equals to: " + Math.Round(totalTotal / 1.40, 2) + " average car emission per year (1.40 tCO₂e/car). (UK)" + Environment.NewLine;
-            
-            if (trees == true)
-                result += "This requires " + Math.Round((totalTotal / 180) * 4440, 0) + " Trees (Spruce or Fir) to grow for at least 30 years" + Environment.NewLine;
-
-            double socialcost = (totalTotal * SocialCost);
-
-            result += "The Social Carbon Costs are: " + Math.Round(socialcost, 2) + " $/£/€ total" + Environment.NewLine + Environment.NewLine;
-
-
-            return result;
-        }
 
         //This will attempt to create a calc for summary: 
         /// <summary>
@@ -1312,14 +1258,20 @@ namespace CarboLifeAPI.Data
             }
 
             string generalText = "";
+            double totalsUpf = getUpfrontTotals();
+            double perAreaUpf = totalsUpf / Area;
 
+            double totalsEmb = getEmbodiedTotals();
+            double perAreaEmb = totalsEmb / Area;
 
             generalText += "The calulated values are based on a uncertainty factor of: " + Math.Round((UncertFact * 100), 0).ToString("N") + " %" + Environment.NewLine;
-            
 
-            generalText += "The Upfront Carbon Footprint (A0-A5) is: " + Math.Round((getUpfrontTotals() / 1000),2).ToString("N") + " tCO₂e" + Environment.NewLine;
-            generalText += "The Embodied Carbon Footprint (A0-C & Seq) is: " + Math.Round((getEmbodiedTotals() / 1000), 2).ToString("N") + " tCO₂e" + Environment.NewLine;
-            
+
+            generalText += "The Upfront Carbon Footprint (A0-A5) is: " + Math.Round((totalsUpf / 1000), 0).ToString("N") + " tCO₂e" + Environment.NewLine;
+            generalText += "The Embodied Carbon Footprint (A0-C & Seq) is: " + Math.Round((totalsEmb / 1000), 0).ToString("N") + " tCO₂e" + Environment.NewLine;
+            generalText += "The Upfront Carbon Intensity (A0-A5): " + Math.Round(perAreaUpf, 0).ToString("N") + " kgCO₂e/m²" + Environment.NewLine;
+            generalText += "The Embodied Carbon Intensity (A0-C): " + Math.Round(perAreaEmb, 0).ToString("N") + " kgCO₂e/m²" + Environment.NewLine;
+
             generalText += Environment.NewLine;
             if (showCars == true)
             {

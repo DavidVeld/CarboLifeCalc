@@ -22,17 +22,13 @@ namespace CarboLifeAPI.Data
         public string Currency { get; set; }
         public string ecRevitParameter { get; set; }
         public string secretMessage { get; set; }
-
         public string carboLegendName { get; set; }
         public string carboDashboardName { get; set; }
-
         public bool showCars { get; set; }
         public bool showPlanes { get; set; }
         public bool showTrees { get; set; }
         public bool showSCC { get; set; }
         public bool showDeaths { get; set; }
-
-
         public List<CarboColourPreset> colourPresets {get; set;}
         public bool launchCircle { get; set; }
 
