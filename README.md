@@ -68,6 +68,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 For Revit Version 2024 and below please visit:
 
-[![[Buy Me a Coffee](https://github.com/DavidVeld/CarboLifeCalc---FrameWork)]([https://img.shields.io/badge/Buy%20Me%20a%20Coffee-donate-yellow)](https://buymeacoffee.com/davidveld](https://github.com/DavidVeld/CarboLifeCalc---FrameWork))
+https://github.com/DavidVeld/CarboLifeCalc---FrameWork
 
 **Design Better Initiative**
