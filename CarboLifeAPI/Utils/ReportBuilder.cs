@@ -697,10 +697,10 @@ namespace CarboLifeAPI
 
                 html += "<TR><TD width=" + 150 + "><B>" + "Area (GIA):" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 175 + ">" + carboProject.Area + "m<SUP>2</SUP></TD></TR>" + System.Environment.NewLine;
-
+                /*
                 html += "<TR><TD width=" + 150 + "><B>" + "Value:" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 175 + ">" + carboProject.valueUnit + " " + carboProject.Value + "</TD></TR>" + System.Environment.NewLine;
-
+                */
                 html += "<TR><TD width=" + 150 + "><B>" + "Design Life:" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 175 + ">" + carboProject.designLife + "</TD></TR>" + System.Environment.NewLine;
 

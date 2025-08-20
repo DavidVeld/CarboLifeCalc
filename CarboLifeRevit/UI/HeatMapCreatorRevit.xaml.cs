@@ -178,20 +178,20 @@ namespace CarboLifeRevit
             cbb_outofBounds.Items.Add("No Override");
             cbb_outofBounds.SelectedIndex = 0;
 
-            if (settings.ecRevitParameter != "")
-                txt_Parameter.Text = settings.ecRevitParameter;
-            else
-                txt_Parameter.Text = "CLC_EmbodiedCarbon";
-            
-            if(settings.carboLegendName != "")
+            if (settings.carboLegendName != "")
                 txt_LegendName.Text = settings.carboLegendName;
             else
                 txt_LegendName.Text = "CLC_ColourLegend";
 
-            if (settings.carboDashboardName != "")
-                txt_DashBoardName.Text = settings.carboDashboardName;
+            if (settings.ecRevitParameter != "")
+                txt_Parameter.Text = settings.ecRevitParameter;
             else
-                txt_DashBoardName.Text = "ResultsView";
+                txt_Parameter.Text = "CLC_EmbodiedCarbon";
+
+            if (settings.carboResultLegendName != "")
+                txt_DashBoardName.Text = settings.carboResultLegendName;
+            else
+                txt_DashBoardName.Text = "CLC_ResultsView";
             //cbb_Parameter.SelectedIndex = 0;
 
         }
@@ -465,7 +465,7 @@ namespace CarboLifeRevit
         private void Btn_Ok_Click(object sender, RoutedEventArgs e)
         {
             carboSettings.carboLegendName = txt_LegendName.Text;
-            carboSettings.carboDashboardName = txt_DashBoardName.Text;
+            carboSettings.carboResultLegendName = txt_DashBoardName.Text;
             carboSettings.ecRevitParameter = txt_Parameter.Text;
 
             carboSettings.Save();
@@ -848,7 +848,7 @@ namespace CarboLifeRevit
 
         private void txt_DashBoardName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            carboSettings.carboDashboardName = txt_DashBoardName.Text;
+            carboSettings.carboResultLegendName = txt_DashBoardName.Text;
         }
 
         private void txt_Parameter_TextChanged(object sender, TextChangedEventArgs e)

@@ -23,7 +23,8 @@ namespace CarboLifeAPI.Data
         public string ecRevitParameter { get; set; }
         public string secretMessage { get; set; }
         public string carboLegendName { get; set; }
-        public string carboDashboardName { get; set; }
+        public string carboResultLegendName { get; set; }
+        //public string carboDashboardName { get; set; }
         public bool showCars { get; set; }
         public bool showPlanes { get; set; }
         public bool showTrees { get; set; }
@@ -42,8 +43,9 @@ namespace CarboLifeAPI.Data
             Currency = "£";
             colourPresets = new List<CarboColourPreset>();
             ecRevitParameter = "CLC_EmbodiedCarbon";
+
             carboLegendName = "CLC_ColourLegend";
-            carboLegendName = "CLC_ResultsView";
+            carboResultLegendName = "CLC_ResultsView";
             secretMessage = "";
 
             showCars = true;

@@ -19,7 +19,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="440"/>
+            <RowDefinition Height="390"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0"/>
             <RowDefinition Height="5"/>
@@ -42,9 +42,10 @@
                     <RowDefinition  Height="70" />
                     <RowDefinition  Height="32" />
                     <RowDefinition  Height="35" />
-                    <RowDefinition  Height="35" />
                     <RowDefinition  Height="32" />
                     <RowDefinition  Height="32" />
+                    <RowDefinition  Height="32" />
+
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
@@ -94,13 +95,12 @@
                 <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="8"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Social Carbon Cost:</Label>
                 <TextBox Name="txt_SocialCost" Grid.Column="2" Grid.Row="8" Margin="5,0,0,4" Width="110" HorizontalAlignment="Left" Height="28"  Style="{StaticResource flatTextBox}" TextChanged="txt_SocialCost_TextChanged"></TextBox>
                 <Label Grid.Column="3" Margin="118,0,223,0" Grid.Row="8"   Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">$/£/€ per tCO₂e</Label>
-                <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="8" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">Social Carbon Cost is estimated between 100-200 pounds / dollar per tCO₂e</Label>
+                <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="8" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">Social Carbon Cost (SCC) is estimated between £140 or $180 / dollar per tCO₂e</Label>
 
                 <Label Grid.Column="1" Margin="0,0,5,0" Grid.Row="9"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Uncertainty Factor:</Label>
                 <TextBox Name="txt_Uncert" Grid.Column="2" Grid.Row="9" Margin="5,0,0,5" Width="110" HorizontalAlignment="Left" Height="28"  Style="{StaticResource flatTextBox}" TextChanged="txt_Uncert_TextChanged"></TextBox>
                 <Label Grid.Column="5" Margin="3,0,0,0" Grid.Row="9" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">RICS Guideline of uncertainty: 15% Early Stage, 10% Design Stage, 1% Construction</Label>
                 <Label Grid.Column="2" Margin="135,0,0,0" Grid.Row="9"   Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">%</Label>
-
 
             </Grid>
         </GroupBox>
@@ -141,8 +141,7 @@
                 <Label Grid.Column="3" Grid.Row="1" Height="28" Margin="120,0,0,2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Width="52">tCO₂e</Label>
 
                 <Label Grid.Column="7" Margin="5,0,0,2" Grid.Row="1" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">tCO₂e</Label>
-                <Label Grid.Column="8" Margin="5,0,0,2" Grid.Row="1" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">The Carbon Cost for any work done prior to the construction starting</Label>
-
+                <Label Grid.Column="8" Margin="5,0,0,2" Grid.Row="1" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">The carbon cost of any work undertaken prior to the start of construction</Label>
                 <TextBox Name="txt_A0Total" Grid.Column="6" Grid.Row="1" Margin="5,0,5,0" Width="110" Height="28" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource textboxReadOnlyStyle}" IsEnabled="False"/>
 
 
@@ -150,31 +149,29 @@
                 <Label Margin="-5,-5,0,0" Grid.Column="2" Grid.Row="2" Height="28" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTitleStyle}" Width="172">A5 - Global Construction</Label>
                 <Label Grid.Column="2" Margin="0,0,0,0" Grid.Row="2"   Height="28" Grid.ColumnSpan="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource formTextStyle}">Project Value:</Label>
 
-                <TextBox Name="txt_Value" Grid.Column="3" Grid.Row="2" Height="28" Margin="5,0,0,5" Width="110" HorizontalAlignment="Left" VerticalAlignment="Bottom"  Style="{StaticResource flatTextBox}" TextChanged="txt_Value_TextChanged" />
-                <Label Name="lbl_Currency" Grid.Column="3" Margin="120,0,0,2" Grid.Row="2"   Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Width="55" Content="$/£/€ x" Grid.ColumnSpan="2"/>
+                <TextBox Name="txt_Value" Grid.Column="3" Grid.Row="2" Height="28" Margin="5,0,0,5" Width="110" HorizontalAlignment="Left" VerticalAlignment="Bottom"  Style="{StaticResource flatTextBox}" Visibility="Hidden" />
+                <Label Name="lbl_Currency" Grid.Column="3" Margin="120,0,0,2" Grid.Row="2"   Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Width="55" Content="$/£/€ x" Grid.ColumnSpan="2" Visibility="Hidden"/>
 
-                <TextBox Name="txt_ValueA5Fact" Grid.Column="3" Grid.Row="2" Height="28" Width="110" Margin="200,0,0,5" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" TextChanged="txt_ValueA5Fact_TextChanged"/>
-                <Label Name="lbl_Currencyunit"  Grid.Column="3" Margin="325,0,0,2" Grid.Row="2" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Width="110">kgCO₂e/($/£/€)</Label>
+                <TextBox Name="txt_ValueA5Fact" Grid.Column="3" Grid.Row="2" Height="28" Width="110" Margin="5,0,0,5" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource flatTextBox}" TextChanged="txt_ValueA5Fact_TextChanged" />
+                <Label Name="lbl_Currencyunit"  Grid.Column="3" Margin="120,0,0,2" Grid.Row="2" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Width="110">kgCO₂e/m²</Label>
 
                 <TextBox Name="txt_A5Total" Grid.Column="6" Grid.Row="2" Margin="5,0,5,0" Width="110" Height="28" VerticalAlignment="Center" HorizontalAlignment="Left"  Style="{StaticResource textboxReadOnlyStyle}" IsEnabled="False"/>
 
                 <Label Grid.Column="7" Margin="5,0,0,2" Grid.Row="2"   Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}">tCO₂e</Label>
-                <Label Grid.Column="8" Margin="5,0,0,2" Grid.Row="2" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">The RICS guideline recomends adding 1tCO₂e per 1400 £</Label>
-
+                <Label Grid.Column="8" Margin="5,0,0,2" Grid.Row="2" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">The RICS guideline: 40kgCO₂e/m² (Total) or 20kgCO₂e/m² (Structure)</Label>
 
                 <!--B7/8-->
                 <Label Margin="-5,-5,0,2" Grid.Column="2" Grid.Row="3" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTitleStyle}">B6 / B7 &amp; D2 - Energy</Label>
                 <Label Grid.Column="2" Margin="0,0,0,0" Grid.Row="3"   Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{StaticResource formTextStyle}">Energy &amp; water total:</Label>
 
                 <TextBox Name="txt_EnergyPerYear" Grid.Column="3" Grid.Row="3" Margin="5,0,0,0" Height="28" Width="110" HorizontalAlignment="Left" IsReadOnly="True" Style="{StaticResource flatTextBox}" TextChanged="txt_EnergyPerYear_TextChanged"/>
-                
+
                 <Button Name="btn_CalcEnergy"  Grid.Row="3" Grid.Column="3" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="40" Margin="125,0,0,5" Style="{StaticResource ButtonStyle}" Click="btn_CalcEnergy_Click" >Calc...</Button>
 
                 <TextBox Name="txt_EnergyTotal" Grid.Column="6" Grid.Row="3" Margin="5,0,0,0" Height="28" Width="110" HorizontalAlignment="Left"  Style="{StaticResource textboxReadOnlyStyle}" IsEnabled="False"/>
                 <Label Margin="5,0,0,2" Grid.Column="7" Grid.Row="3" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" >tCO₂e</Label>
-                
-                <Label Grid.Column="8" Margin="5,0,0,2" Grid.Row="3" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">Energy consumption of the entire building per year</Label>
 
+                <Label Grid.Column="8" Margin="5,0,0,2" Grid.Row="3" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">Annual energy consumption of the entire building</Label>
 
                 <!--C4-->
 
@@ -186,12 +183,11 @@
 
                 <TextBox Name="txt_DemoC1Fact" Grid.Column="3" Grid.Row="4" Margin="200,0,0,0" Height="28" Width="110" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" TextChanged="txt_DemoC1Fact_TextChanged" />
                 <Label Grid.Column="3" Margin="325,0,0,2" Grid.Row="4" Height="28" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Width="75" >kgCO₂/m²</Label>
-               
+
 
                 <TextBox Name="txt_C1Total" Grid.Column="6" Grid.Row="4" Margin="5,0,0,0" Width="110" Height="28" VerticalAlignment="Center"  HorizontalAlignment="Left"  Style="{StaticResource textboxReadOnlyStyle}" IsEnabled="False"/>
                 <Label Grid.Column="7" Grid.Row="4"   Height="28"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource formTextStyle}" Margin="5,0,0,2">tCO₂e</Label>
-                <Label Grid.Column="8" Grid.Row="4" Height="28" Margin="5,0,0,2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">The RICS guideline recomends adding 3.4 kgCO₂ per m² demolished area.</Label>
-
+                <Label Grid.Column="8" Grid.Row="4" Height="28" Margin="5,0,0,2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Style="{StaticResource formHelpText}">The RICS guideline recommends using 35 kgCO₂ per m² of demolished area</Label>
 
             </Grid>
         </GroupBox>

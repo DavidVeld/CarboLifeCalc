@@ -36,7 +36,7 @@ namespace CarboLifeAPI.Data
         //Calculated Values
         public double EE { get; set; }
         public double EC { get; set; }
-        public double Value { get; set; }
+        //public double Value { get; set; }
         public double Area { get; set; }
         public double AreaNew { get; set; }
 
@@ -69,8 +69,8 @@ namespace CarboLifeAPI.Data
         /// </summary>
         public double A5Global { get; set; }
 
-        public double A5Factor { get; set; }
-
+        //public double A5Factor { get; set; }
+        public double A5AreaFactor { get; set; }
         /// <summary>
         /// tCo2
         /// </summary>
@@ -206,16 +206,19 @@ namespace CarboLifeAPI.Data
             //C1 Global
             demoArea = 0;
             C1Global = 0;
-            C1Factor = 3.40; // kg CO₂e per m2
-            //A5 Global
+            C1Factor = 35; // kg CO₂e per m2
+            
+            //A Global
+            A0Global = 1;
+
             A5Global = 0;
-            A5Factor = 1400; //kg CO₂e per vaue
+            A5AreaFactor = 20; //kg CO₂e per m2
             //Social
             SocialCost = 150;
             //Other
 
             //Totals
-            Value = 0;
+            //Value = 0;
             //New projects don't need to be saved
             justSaved = true;
 
@@ -292,15 +295,17 @@ namespace CarboLifeAPI.Data
             demoArea = 0;
             C1Global = 0;
             C1Factor = 3.40; // kg CO₂e per m2
-            //A5 Global
-            A5Global = 0;
-            A5Factor = 1400; //kg CO₂e per vaue
+            //A Global
+            A0Global = 1;
+
+            A5Global = 1;
+            A5AreaFactor = 20; //kg CO₂e per m2
             //Social
             SocialCost = 150;
             //Other
 
             //Totals
-            Value = 0;
+            //Value = 0;
             //New projects don't need to be saved
             justSaved = true;
 
@@ -1347,9 +1352,10 @@ namespace CarboLifeAPI.Data
 
             if (calculateA5 == true)
             {
-                this.A5Global = ((A5Factor * (Value / 100000)) / 1000) * uncertaintyFactor;
+                //this.A5Global = ((A5Factor * (Value / 100000)) / 1000) * uncertaintyFactor;
+                this.A5Global = ((AreaNew * A5AreaFactor) / 1000) * uncertaintyFactor;
                 globalTotals += this.A5Global;
-            
+
             }
             else { }
             //Ignore
@@ -1421,6 +1427,8 @@ namespace CarboLifeAPI.Data
             EC = 0;
             ECTotal = 0;
             double globalTotals = 0;
+            double uncertaintyFactor = 1 + UncertFact;
+
 
             //This Will calculate all totals and set all the individual element values;
             foreach (CarboGroup cg in groupList)
@@ -1445,21 +1453,24 @@ namespace CarboLifeAPI.Data
             //Ignore
 
             if (cA5 == true)
-                globalTotals += (A5Factor * (Value / 100000)) / 1000;
+                globalTotals += ((AreaNew * A5AreaFactor) / 1000) * uncertaintyFactor;
+
             else { }
             //Ignore
 
             if (cC == true)
-                globalTotals += (demoArea * C1Factor) / 1000;
+                globalTotals += ((demoArea * C1Factor) / 1000) * uncertaintyFactor;
+
             else { }
             //Ignore
 
             if (calculateB67 == true)
                 energyProperties.calculate(this.designLife);
             else { }
-                //Ignore
+            //Ignore
 
-            ECTotal = EC + globalTotals + (energyProperties.value / 1000);
+            ECTotal = EC + globalTotals + ((energyProperties.value * uncertaintyFactor) / 1000);
+
 
 
             justSaved = false;

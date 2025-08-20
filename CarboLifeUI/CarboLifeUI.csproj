@@ -38,7 +38,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\ico_CarboLife.ico</ApplicationIcon>
-    <FileVersion>1.9.0.9</FileVersion>
+    <FileVersion>1.9.1.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="UI\OverviewII.xaml.cs" />
