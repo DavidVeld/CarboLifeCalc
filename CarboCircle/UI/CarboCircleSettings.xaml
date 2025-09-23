@@ -76,15 +76,15 @@
             <Label Grid.Row="5" Style="{StaticResource formTitleStyle}" Content="Steel Beam / Columns"/>
 
             <Label Margin="5,0,5,0" Grid.Row="6" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Parameters Used for Element Name:</Label>
-            <TextBox Margin="15,20,5,0" Grid.Row="6" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" Grid.RowSpan="2">The Size (name) of a section size. As a default the Revit Type Name is used but you can override this by providing a type parameter.</TextBox>
+            <TextBox Margin="15,20,5,0" Grid.Row="6" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" Grid.RowSpan="2" IsEnabled="False">The Size (name) of a section size. As a default the Revit Type Name is used but you can override this by providing a type parameter.</TextBox>
 
-            <Label Margin="5,0,5,0" Grid.Row="7" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Mined:</Label>
+            <Label Margin="5,0,5,0" Grid.Row="7" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Parameter:</Label>
             <TextBox Name="txt_MinedParameter" Grid.Row="7" Margin="120,0,0,0" Width="250" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
-            <Label Margin="5,0,5,0" Grid.Row="8" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Project:</Label>
-            <TextBox Name="txt_RequiredParameter" Grid.Row="8" Margin="120,0,0,0" Width="250" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+            <Label Margin="5,0,5,0" Grid.Row="8" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Visibility="Hidden">Project:</Label>
+            <TextBox Name="txt_RequiredParameter" Grid.Row="8" Margin="120,0,0,0" Width="250" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" Visibility="Hidden"/>
 
 
-            <Label Margin="5,0,5,0" Grid.Row="9" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">Grade (If Used):</Label>
+            <Label Margin="5,0,5,0" Grid.Row="9" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">Grade Parameter:</Label>
             <TextBox Name="txt_SteelGradeParameter" Grid.Row="9" Margin="120,0,0,0" Width="250" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
 
             <Label Margin="5,0,5,0" Grid.Row="10" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">Length lost due to removal (both sides):</Label>
@@ -194,8 +194,8 @@
 
 
         </Grid>
-        
-        
-        
+
+
+
     </Grid>
 </Window>

@@ -17,8 +17,8 @@
     <IncludeGradeParameter>true</IncludeGradeParameter>
     <GradeParameterName>CLC_MaterialGrade</GradeParameterName>
     <GradeParameterType>Type Parameter</GradeParameterType>
-    <IncludeCorrectionParameter>false</IncludeCorrectionParameter>
-    <CorrectionParameterName>CLC_VolumeCorrection</CorrectionParameterName>
+    <IncludeCorrectionParameter>true</IncludeCorrectionParameter>
+    <CorrectionParameterName>Description</CorrectionParameterName>
     <CorrectionParameterType>Type Parameter</CorrectionParameterType>
     <mapReinforcement>true</mapReinforcement>
     <RCParameterName />
@@ -153,21 +153,27 @@
   <Currency>£</Currency>
   <ecRevitParameter>CLC_EmbodiedCarbon</ecRevitParameter>
   <secretMessage />
-  <carboLegendName>CLC_ColourLegend</carboLegendName>
+  <carboLegendName>CLC_ResultsView</carboLegendName>
+  <carboResultLegendName>CLC_Calculation</carboResultLegendName>
+  <showCars>true</showCars>
+  <showPlanes>true</showPlanes>
+  <showTrees>true</showTrees>
+  <showSCC>true</showSCC>
+  <showDeaths>false</showDeaths>
   <colourPresets>
     <CarboColourPreset>
       <name>Preset 1</name>
       <outmin>
         <a>255</a>
-        <r>0</r>
-        <g>128</g>
-        <b>255</b>
+        <r>128</r>
+        <g>255</g>
+        <b>0</b>
       </outmin>
       <min>
         <a>255</a>
-        <r>141</r>
-        <g>241</g>
-        <b>41</b>
+        <r>255</r>
+        <g>255</g>
+        <b>0</b>
       </min>
       <mid>
         <a>255</a>
@@ -288,4 +294,5 @@
       </outmax>
     </CarboColourPreset>
   </colourPresets>
+  <launchCircle>true</launchCircle>
 </CarboSettings>

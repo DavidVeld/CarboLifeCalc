@@ -50,22 +50,6 @@ namespace CarboLifeRevit
             pB_CarboCalc.SetContextualHelp(contextualHelp);
             pB_CarboCalc.ToolTip = "Create or update a new Carbo Calc Project using the BIM model";
 
-            /// Update / Open Project
-            /*
-            PushButton pB_ImportCarboCalc = CarboCalcPanel.AddItem(new PushButtonData("Import CarboLife Calc", "Update Project", MyAssemblyPath, "CarboLifeRevit.CarboLifeCalcUpdate")) as PushButton;
-            //LImage
-            Uri img_CarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_UpdateCarboLife32.png");
-            BitmapImage limg_CarboCalc2 = new BitmapImage(img_CarboCalc2);
-            //SImahe
-            Uri imgsmll_CarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_UpdateCarboLife16.png");
-            BitmapImage smllimg_CarboCalc2 = new BitmapImage(imgsmll_CarboCalc2);
-
-            pB_ImportCarboCalc.LargeImage = limg_CarboCalc2;
-            pB_ImportCarboCalc.Image = smllimg_CarboCalc2;
-            pB_ImportCarboCalc.SetContextualHelp(contextualHelp);
-            pB_ImportCarboCalc.ToolTip = "Update an existing Carbo Life Calc Project using the BIM model";
-            */
-
             /// Visual Menu
             PushButton pB_ShowCarboCalc = CarboCalcPanel.AddItem(new PushButtonData("Show CarboLife Calc", "Heatmap", MyAssemblyPath, "CarboLifeRevit.CarboViewerCommand")) as PushButton;
             //LImage
@@ -83,24 +67,6 @@ namespace CarboLifeRevit
             
             FormStatusChecker.isWindowOpen = false;
 
-            //Helper
-            //ResolveHelper.BeginAssemblyResolve<Application>();
-
-
-            /*
-            PushButton pB_CarboCalcPlus = CarboCalcPanel.AddItem(new PushButtonData("CarboLifeCalcSettings", "Settings", MyAssemblyPath, "CarboLifeRevit.CarboLifeCalcPlus")) as PushButton;
-            //LImage
-            Uri img_CarboImport = new Uri(MyAssemblyDir + @"\img\ico_CarboLifeSettings32.png");
-            BitmapImage limg_CarboImport = new BitmapImage(img_CarboImport);
-            //SImahe
-            Uri imgsmll_CarboImport = new Uri(MyAssemblyDir + @"\img\ico_CarboLifeSettings16.png");
-            BitmapImage smllimg_CarboImport = new BitmapImage(imgsmll_CarboImport);
-
-            pB_CarboCalcPlus.LargeImage = limg_CarboImport;
-            pB_CarboCalcPlus.Image = smllimg_CarboImport;
-            pB_CarboCalcPlus.SetContextualHelp(contextualHelp);
-            pB_CarboCalcPlus.ToolTip = "Advanced export settings";
-            */
 
             try
             {
@@ -139,8 +105,6 @@ namespace CarboLifeRevit
 
         public void ShowHeatmap(UIApplication uiapp, CarboProject project, List<Int64> VisibleElements)
         {
-
-
             // If we do not have a dialog yet, create and show it
             if (m_HeatMapCreator == null)
             {

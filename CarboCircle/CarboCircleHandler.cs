@@ -39,7 +39,7 @@ namespace CarboCircle
             activeProject = new carboCircleProject();
             matchedPair = new carboCircleMatchElement();
 
-            _revitEvent = ExternalEvent.Create(this);
+            //_revitEvent = ExternalEvent.Create(this);
         }
 
         public event EventHandler<List<carboCircleElement>> DataReady;
@@ -129,7 +129,7 @@ namespace CarboCircle
                 doc.ExportImage(options);
                 imagePath = tempImgpath;
             }
-            catch 
+            catch
             {
                 imagePath = null;
             }
@@ -141,7 +141,7 @@ namespace CarboCircle
             uidoc = app.ActiveUIDocument;
             doc = uidoc.Document;
 
-            if(matchedPair != null)
+            if (matchedPair != null)
             {
                 ElementId element1 = new ElementId(matchedPair.mined_id);
                 ElementId element2 = new ElementId(matchedPair.required_id);
@@ -162,7 +162,7 @@ namespace CarboCircle
             {
                 bool ok = carboCircleRevitCommands.visualiseElements(uiapp, activeProject);
             }
-            catch   (Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -210,8 +210,8 @@ namespace CarboCircle
                         uidoc.RefreshActiveView();
                     }
                 }
-                catch 
-                { 
+                catch
+                {
                 }
             }
         }
@@ -230,7 +230,7 @@ namespace CarboCircle
                     }
                 }
             }
-             return result;
+            return result;
         }
 
         public List<carboCircleElement> getCollectedVolumeElements()

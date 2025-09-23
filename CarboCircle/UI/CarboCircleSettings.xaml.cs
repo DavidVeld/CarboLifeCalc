@@ -66,7 +66,7 @@ namespace CarboCircle.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if(settings != null)
+            if (settings != null)
             {
                 chk_MineSteelBeams.IsChecked = settings.ConsiderColumnBeams;
                 chk_MineFloors.IsChecked = settings.ConsiderSlabs;

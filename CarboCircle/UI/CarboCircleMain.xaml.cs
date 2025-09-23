@@ -40,13 +40,6 @@ namespace CarboCircle.UI
         private int dataSwitch = 0;
         string reportPath = "";
 
-        public CarboCircleMain()
-        {
-            InitializeComponent();
-            activeProject = new carboCircleProject();
-
-        }
-
         public CarboCircleMain(ExternalEvent exEvent, CarboCircleHandler handler)
         {
             InitializeComponent();
@@ -70,8 +63,9 @@ namespace CarboCircle.UI
             {
                 this.Close();
             }
-            
+
         }
+
 
         private void OnImageReady(object sender, string tempImgpath)
         {
@@ -86,7 +80,7 @@ namespace CarboCircle.UI
                 string imgstring = carboCircleReportUtils.getImageAsString(tempImgpath);
                 carboCircleReportUtils.ExportReport(activeProject, imgstring, reportPath);
                 //if all ok delete the temp image:
-                if(File.Exists(tempImgpath))
+                if (File.Exists(tempImgpath))
                     File.Delete(tempImgpath);
             }
             else
@@ -97,40 +91,39 @@ namespace CarboCircle.UI
 
         private void OnDataReady(object sender, List<carboCircleElement> e)
         {
-            if (e != null)
+            if (e == null) return;
+
+            if (dataSwitch == 0)
             {
-                if (dataSwitch == 0)
-                {
-                    collectedElements = e;
-                    activeProject.ParseMinedData(collectedElements);
+                collectedElements = e;
+                activeProject.ParseMinedData(collectedElements);
 
-                    //liv_MinedData.Items.Clear();
-                    //liv_MinedData.ItemsSource = "";
-                    liv_MinedData.ItemsSource = activeProject.minedData;
-                    liv_MinedMassObjects.ItemsSource = activeProject.minedVolumes;
-                    setMineOk();
-                }
-                else if (dataSwitch == 1)
-                {
-                    collectedElements = e;
-                    activeProject.ParseRequiredData(collectedElements);
+                liv_MinedData.ItemsSource = null;
+                liv_MinedData.ItemsSource = activeProject.minedData;
 
-                    liv_requiredMaterialList.Items.Clear();
-                    liv_requiredMaterialList.ItemsSource = "";
-                    liv_RequiredMassObjects.Items.Clear();
-                    liv_RequiredMassObjects.ItemsSource = "";
+                liv_MinedMassObjects.ItemsSource = null;
+                liv_MinedMassObjects.ItemsSource = activeProject.minedVolumes;
 
-                    liv_requiredMaterialList.ItemsSource = activeProject.requiredData;
-                    liv_RequiredMassObjects.ItemsSource = activeProject.requiredVolumes;
-                    setRequiredOk();
+                setMineOk();
+            }
+            else if (dataSwitch == 1)
+            {
+                collectedElements = e;
+                activeProject.ParseRequiredData(collectedElements);
 
-                }
+                liv_requiredMaterialList.ItemsSource = null;
+                liv_requiredMaterialList.ItemsSource = activeProject.requiredData;
+
+                liv_RequiredMassObjects.ItemsSource = null;
+                liv_RequiredMassObjects.ItemsSource = activeProject.requiredVolumes;
+
+                setRequiredOk();
             }
         }
 
         private void setRequiredOk()
         {
-            btn_GotoProject.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 125, 218,88));
+            btn_GotoProject.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 125, 218, 88));
         }
 
         private void setMineOk()
@@ -141,6 +134,8 @@ namespace CarboCircle.UI
         private void btn_ImportmaterialsRevit_Click(object sender, RoutedEventArgs e)
         {
             activeProject.settings.extractionMethod = cbb_MineSetting.Text;
+            carboCircleSettings settings = activeProject.settings.Copy();
+            settings.Save();
 
             if (m_ExEvent != null)
             {
@@ -155,6 +150,8 @@ namespace CarboCircle.UI
         private void btn_ImportProjectRevit_Click(object sender, RoutedEventArgs e)
         {
             activeProject.settings.extractionMethod = cbb_ImportProjectSetting.Text;
+            carboCircleSettings settings = activeProject.settings.Copy();
+            settings.Save();
 
             if (m_ExEvent != null)
             {
@@ -168,7 +165,7 @@ namespace CarboCircle.UI
 
         private void btn_Visualise_Click(object sender, RoutedEventArgs e)
         {
-            
+
             if (m_ExEvent != null)
             {
                 dataSwitch = 2;
@@ -200,9 +197,10 @@ namespace CarboCircle.UI
                     }
                 }
                 catch { }
-        }
+            }
         }
 
+        /*
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             //Before the form is closed, everything must be disposed properly
@@ -227,7 +225,7 @@ namespace CarboCircle.UI
             }
 
         }
-
+        */
         private void btn_GotoMine_Click(object sender, RoutedEventArgs e)
         {
             Dispatcher.BeginInvoke((Action)(() => tab_Main.SelectedIndex = 1));
@@ -280,14 +278,14 @@ namespace CarboCircle.UI
             txt_SteelBeamDepthTolerance.Text = activeProject.settings.depthRange.ToString();
 
             //load colours
-            btn_ColourMinedNotReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 
+            btn_ColourMinedNotReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255,
                 activeProject.settings.colour_NotReused.r, activeProject.settings.colour_NotReused.g, activeProject.settings.colour_NotReused.b));
-            btn_ColourMinedReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 
+            btn_ColourMinedReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255,
                 activeProject.settings.colour_ReusedMinedData.r, activeProject.settings.colour_ReusedMinedData.g, activeProject.settings.colour_ReusedMinedData.b));
 
-            btn_ColourRequiredNotReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 
+            btn_ColourRequiredNotReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255,
                 activeProject.settings.colour_NotFromReused.r, activeProject.settings.colour_NotFromReused.g, activeProject.settings.colour_NotFromReused.b));
-            btn_ColourRequiredReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 
+            btn_ColourRequiredReused.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255,
                 activeProject.settings.colour_FromReusedData.r, activeProject.settings.colour_FromReusedData.g, activeProject.settings.colour_FromReusedData.b));
             btn_ColourMassReusable.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255,
                 activeProject.settings.colour_ReusedMinedVolumes.r, activeProject.settings.colour_ReusedMinedVolumes.g, activeProject.settings.colour_ReusedMinedVolumes.b));
@@ -295,23 +293,30 @@ namespace CarboCircle.UI
         }
 
         private void btn_Go_Click(object sender, RoutedEventArgs e)
-        {            
-            //get activesettings:
-            activeProject.settings.strengthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
-            activeProject.settings.depthRange = double.Parse(txt_SteelBeamDepthTolerance.Text);
+        {
+            // Get active settings:
+            if (double.TryParse(txt_SteelBeamDepthTolerance.Text, out double tolerance))
+            {
+                activeProject.settings.strengthRange = tolerance;
+                activeProject.settings.depthRange = tolerance;
+            }
 
-            //Mainscript:
+            // Main script:
             if (activeProject.minedData.Count > 0 && activeProject.requiredData.Count > 0)
             {
                 activeProject.FindOpportunities();
+
+                liv_MatchedFraming.ItemsSource = null;
                 liv_MatchedFraming.ItemsSource = activeProject.getCarboMatchesListSimplified();
+
+                liv_MatchedVolumes.ItemsSource = null;
                 liv_MatchedVolumes.ItemsSource = activeProject.getCarboVolumeOpportunities();
+
+                liv_LeftOverData.ItemsSource = null;
                 liv_LeftOverData.ItemsSource = activeProject.getLeftOverData();
             }
 
-            //colours
-            
-
+            // TODO: colours
         }
 
         private void btn_MineSettings_Click(object sender, RoutedEventArgs e)
@@ -319,7 +324,7 @@ namespace CarboCircle.UI
             storeSettings();
 
             CarboCircleSettings settingsWindow = new CarboCircleSettings(activeProject);
-            settingsWindow.Show();
+            settingsWindow.ShowDialog();
             if (settingsWindow.isAccepted)
             {
                 activeProject.settings = settingsWindow.settings.Copy();
@@ -351,7 +356,7 @@ namespace CarboCircle.UI
             List<carboCircleElement> dataToExport = activeProject.minedData;
             List<carboCircleElement> volumesToExport = activeProject.minedVolumes;
 
-            foreach(carboCircleElement dat in dataToExport)
+            foreach (carboCircleElement dat in dataToExport)
             {
                 dataCombined.Add(dat.Copy());
             }
@@ -361,7 +366,7 @@ namespace CarboCircle.UI
                 dataCombined.Add(vol.Copy());
             }
 
-            if(path != null)
+            if (path != null)
             {
                 carboCircleUtils.ExportDataToCSV(dataCombined, path);
 
@@ -561,7 +566,9 @@ namespace CarboCircle.UI
         private void btn_Close_Click(object sender, RoutedEventArgs e)
         {
             activeProject.settings.Save();
-            this.Close();
+            FormStatusChecker.isWindowOpen = false;
+
+            this.Hide(); // instead of Close()
         }
 
         private void btn_Report_Click(object sender, RoutedEventArgs e)
@@ -628,47 +635,47 @@ namespace CarboCircle.UI
 
         private void btn_ImportProjectCSV_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBox.Show("Select a csv containing elements for import, ","Message for You!");
+            System.Windows.MessageBox.Show("Select a csv containing elements for import,", "Message for You!");
             string openPath = DataExportUtils.GetOpenCSVLocation();
 
-            if (openPath != null && openPath != "")
+            if (!string.IsNullOrWhiteSpace(openPath))
             {
                 List<carboCircleElement> importedElements = carboCircleUtils.GetElementsFromCVSFile(openPath);
-                if(importedElements != null && importedElements.Count > 0)
+                if (importedElements != null && importedElements.Count > 0)
                 {
                     activeProject.ParseRequiredData(importedElements);
 
-                    liv_requiredMaterialList.Items.Clear();
-                    liv_RequiredMassObjects.Items.Clear();
-
+                    liv_requiredMaterialList.ItemsSource = null;
                     liv_requiredMaterialList.ItemsSource = activeProject.requiredData;
-                    liv_RequiredMassObjects.ItemsSource = activeProject.requiredVolumes;
-                }
-                setRequiredOk();
 
+                    liv_RequiredMassObjects.ItemsSource = null;
+                    liv_RequiredMassObjects.ItemsSource = activeProject.requiredVolumes;
+
+                    setRequiredOk();
+                }
             }
         }
 
         private void btn_ImportmaterialsCSV_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBox.Show("Select a csv file containing elements that can be-reused, ", "Message for You!!");
+            System.Windows.MessageBox.Show("Select a csv file containing elements that can be reused,", "Message for You!");
             string openPath = DataExportUtils.GetOpenCSVLocation();
 
-            if (openPath != null && openPath != "")
+            if (!string.IsNullOrWhiteSpace(openPath))
             {
                 List<carboCircleElement> importedElements = carboCircleUtils.GetElementsFromCVSFile(openPath);
                 if (importedElements != null && importedElements.Count > 0)
                 {
                     activeProject.ParseMinedData(importedElements);
 
-                    liv_MinedData.Items.Clear();
-                    liv_MinedMassObjects.Items.Clear();
-
+                    liv_MinedData.ItemsSource = null;
                     liv_MinedData.ItemsSource = activeProject.minedData;
-                    liv_MinedMassObjects.ItemsSource = activeProject.minedVolumes;
-                }
-                setMineOk();
 
+                    liv_MinedMassObjects.ItemsSource = null;
+                    liv_MinedMassObjects.ItemsSource = activeProject.minedVolumes;
+
+                    setMineOk();
+                }
             }
         }
 
@@ -697,6 +704,12 @@ namespace CarboCircle.UI
 
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            activeProject.settings.Save();
+            FormStatusChecker.isWindowOpen = false;
 
+            this.Hide(); // instead of Close()
+        }
     }
 }

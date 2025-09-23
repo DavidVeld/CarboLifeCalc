@@ -33,7 +33,7 @@ namespace CarboCircle
                 {
                     foreach (carboCircleElement ccEl in CombinedList)
                     {
-                        if(ccEl.materialName == ccE.materialName && ccEl.materialClass == ccE.materialClass)
+                        if (ccEl.materialName == ccE.materialName && ccEl.materialClass == ccE.materialClass)
                         {
                             ccEl.volume += ccE.volume;
                             ccEl.netVolume += ccE.netVolume;
@@ -52,9 +52,10 @@ namespace CarboCircle
             return CombinedList;
         }
 
-        
+
         internal static List<carboCircleElement> getElementsFromActiveView(UIApplication uiapp, carboCircleSettings appSettings)
         {
+            appSettings = appSettings.Load();
             List<carboCircleElement> resultCollection = new List<carboCircleElement>();
 
             UIDocument uidoc = uiapp.ActiveUIDocument;
@@ -104,7 +105,7 @@ namespace CarboCircle
                     filteredFloorCollector = getOnlySelected(floorCollector, selectedElements);
 
             }
-            else if(appSettings.extractionMethod == "All New in View")
+            else if (appSettings.extractionMethod == "All New in View")
             {
                 //Get current Phase:
                 View activeView = uidoc.ActiveGraphicalView;
@@ -112,10 +113,10 @@ namespace CarboCircle
                 if (phaseParam != null)
                 {
                     string phasename = phaseParam.AsValueString();
-                    if(beamCollector != null)
+                    if (beamCollector != null)
                         filteredBeamCollector = getOnPhase(beamCollector, phasename);
 
-                    if(columnCollector != null)
+                    if (columnCollector != null)
                         filteredColumnCollector = getOnPhase(columnCollector, phasename);
 
                     if (wallCollector != null)
@@ -265,14 +266,14 @@ namespace CarboCircle
         {
             //get a list of selected elemetnts
             List<Element> result = new List<Element>();
-            List<Int64> ids = new List<Int64>();
+            List<int> ids = new List<int>();
 
-            if(collection == null || selectedElementIds == null)    
+            if (collection == null || selectedElementIds == null)
                 return result;
 
             foreach (ElementId id in selectedElementIds)
             {
-                ids.Add(id.Value);
+                ids.Add(id.IntegerValue);
             }
 
             //add only elements that are selected in the pool:
@@ -280,7 +281,7 @@ namespace CarboCircle
             {
                 try
                 {
-                    Int64 id = el.Id.Value;
+                    int id = el.Id.IntegerValue;
 
                     if (ids.Contains(id))
                     {
@@ -292,7 +293,7 @@ namespace CarboCircle
                     string message = ex.Message;
                 }
             }
-        
+
             return result;
         }
 
@@ -333,7 +334,7 @@ namespace CarboCircle
                         foreach (carboCircleElement dataBaseBeam in steelSectionDataBase)
                         {
                             int levDist = Utils.CalcLevenshteinDistance(matchingBeam.name, dataBaseBeam.standardName);
-                            if(levDist < lowestLevDist)
+                            if (levDist < lowestLevDist)
                             {
                                 lowestLevDist = levDist;
                                 indexFound = i;
@@ -411,7 +412,7 @@ namespace CarboCircle
                             result.Add(ccE);
                         }
                         catch (Exception ex)
-                        { 
+                        {
                         }
                     }
                 }
@@ -461,7 +462,7 @@ namespace CarboCircle
                 {
                     try
                     {
-                        if (isElementReal(el) == false || el.Id.Value < 0)
+                        if (isElementReal(el) == false || el.Id.IntegerValue < 0)
                         {
                             continue;
                         }
@@ -473,15 +474,15 @@ namespace CarboCircle
 
                             List<ElementId> materials = inst.GetMaterialIds(false).ToList();
 
-                            foreach(ElementId materialid  in materials)
+                            foreach (ElementId materialid in materials)
                             {
-                                carboCircleElement newElement = getElementFromMaterialId(materialid, doc, el,appSettings);
-                                if(newElement != null)
+                                carboCircleElement newElement = getElementFromMaterialId(materialid, doc, el, appSettings);
+                                if (newElement != null)
                                     resultCollection.Add(newElement);
                             }
 
 
- 
+
                         }
                     }
                     catch
@@ -498,16 +499,34 @@ namespace CarboCircle
             try
             {
                 FamilyInstance inst = el as FamilyInstance;
+
+                //Name (Type)
+                ElementId elId = inst.GetTypeId();
+                ElementType type = doc.GetElement(elId) as ElementType;
+
                 if (inst == null)
                 {
                     return null;
                 }
 
-                Int64 Revitid = inst.Id.Value;
+                int Revitid = inst.Id.IntegerValue;
                 string materialClass = "";
                 string materialName = "";
                 string materialGrade = "";
                 string elementName = inst.Name.ToString();
+
+                //override default if there is a parameter set:
+                if (appSettings.MineParameterName != "")
+                {
+                    Parameter mineParam = type.LookupParameter(appSettings.MineParameterName);
+                    if (mineParam != null)
+                    {
+                        string paramNamed = mineParam.AsString();
+                        if (paramNamed != "")
+                            elementName = paramNamed;
+                    }
+                }
+
                 string elementCategoty = inst.Category.Name.ToString();
 
 
@@ -517,12 +536,12 @@ namespace CarboCircle
                 materialClass = inst.StructuralMaterialType.ToString();
 
                 Autodesk.Revit.DB.Material material = doc.GetElement(materialid) as Autodesk.Revit.DB.Material;
-                if (material != null) 
-                    {
-                        materialName = material.Name;
-                        materialGrade = material.MaterialClass.ToString();
-                    }
-                
+                if (material != null)
+                {
+                    materialName = material.Name;
+                    materialGrade = material.MaterialClass.ToString();
+                }
+
 
                 //Only if material fails check the family class:
                 if (materialClass == "")
@@ -556,7 +575,7 @@ namespace CarboCircle
                 {
                     BuiltInParameter paraIndex = BuiltInParameter.INSTANCE_LENGTH_PARAM;
                     Parameter coLength = inst.get_Parameter(paraIndex);
-                    if(coLength != null)
+                    if (coLength != null)
                     {
                         length = (coLength.AsDouble() * 304.8) / 1000; //to m1
                     }
@@ -567,16 +586,16 @@ namespace CarboCircle
                 double typeDepth = 0;
                 double typeWidth = 0;
 
-                double typeIy = 0; 
-                double typeIz = 0; 
+                double typeIy = 0;
+                double typeIz = 0;
                 double typeWy = 0;
                 double typeWz = 0;
 
                 //Try to find a width and depth
                 //FamilySymbol type = inst.Symbol;
                 //if this is a steel beam this will be overwritten later anyways
-                ElementId typeId = el.GetTypeId();
-                ElementType type = doc.GetElement(typeId) as ElementType;
+                //ElementId typeId = el.GetTypeId();
+                //ElementType type = doc.GetElement(typeId) as ElementType;
 
                 if (type != null)
                 {
@@ -592,9 +611,9 @@ namespace CarboCircle
                         typeWidth = width;
 
                         typeIy = (width * (Math.Pow(depth, 3))) / 12;
-                        typeIz = (depth * (Math.Pow(width,3))) / 12;
+                        typeIz = (depth * (Math.Pow(width, 3))) / 12;
                         typeWy = (width * (Math.Pow(depth, 2))) / 6;
-                        typeWz = (depth * (Math.Pow(width, 2))) / 6; 
+                        typeWz = (depth * (Math.Pow(width, 2))) / 6;
 
                         typeName = width.ToString() + "x" + depth.ToString();
 
@@ -653,7 +672,7 @@ namespace CarboCircle
                 {
                     if (el.get_Geometry(new Options()) != null)
                     {
-                        if (el.Id.Value > 0)
+                        if (el.Id.IntegerValue > 0)
                         {
                             //Check if not of any forbidden categories such as runs:
                             bool isValidCategory = ValidCategory(el);
@@ -675,7 +694,7 @@ namespace CarboCircle
         {
             bool result = true;
 
-            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
+            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.IntegerValue;
 
             if (enumCategory == BuiltInCategory.OST_StairsRuns)
             {
@@ -744,7 +763,7 @@ namespace CarboCircle
 
             foreach (Element element in allCollector)
             {
-                if(element != null && isElementReal(element))
+                if (element != null && isElementReal(element))
                 {
                     if (newElementsInView.Contains(element))
                     {
@@ -763,7 +782,7 @@ namespace CarboCircle
             //Messy but true.
 
             List<carboCircleElement> volumeOpportunities = project.getCarboVolumeOpportunities();
-            foreach(carboCircleElement cce in volumeOpportunities)
+            foreach (carboCircleElement cce in volumeOpportunities)
             {
                 try
                 {
@@ -785,7 +804,7 @@ namespace CarboCircle
                             if (cce.idList.Count > 0)
                             {
                                 //Combined object Volumes
-                                foreach (Int64 id in cce.idList)
+                                foreach (int id in cce.idList)
                                 {
                                     ElementId eid = new ElementId(id);
 

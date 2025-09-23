@@ -26,23 +26,17 @@ namespace CarboCircle
                 //importSettings = importSettings.DeSerializeXML();
 
                 //Show the form
-                if (FormStatusChecker.isWindowOpen == true)
+                if (FormStatusChecker.isWindowOpen)
                 {
-                    //Window is open.
-                    MessageBox.Show("Window is already open, make sure other instances are closed and restart the command.");
-                    FormStatusChecker.isWindowOpen = true;
-
+                    MessageBox.Show("Window is already open. Close it before opening a new one.");
                     return Result.Cancelled;
                 }
 
-                FormStatusChecker.isWindowOpen = true;
-                //CarboLifeApp.thisApp.ShowHeatmap(commandData.Application, projectToOpen, VisibleElements);
-
                 CarboCircleApp.thisApp.ShowCarboCircle(commandData.Application);
 
-                
-                //Return result
+                // The window is open now
                 return Result.Succeeded;
+
             }
             catch (Exception ex)
             {

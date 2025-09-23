@@ -18,6 +18,9 @@ namespace CarboCircle
         public static CarboCircleApp thisApp = null;
         private CarboCircleMain m_CarboCircleWindow;
 
+        private CarboCircleHandler handler;
+        private ExternalEvent exEvent;
+
         static string MyAssemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
         static string MyAssemblyDir = Path.GetDirectoryName(MyAssemblyPath);
 
@@ -65,9 +68,10 @@ namespace CarboCircle
 
         public Result OnShutdown(UIControlledApplication application)
         {
-            if (m_CarboCircleWindow != null)
+            if (m_CarboCircleWindow != null && m_CarboCircleWindow.Visibility == System.Windows.Visibility.Visible)
             {
                 m_CarboCircleWindow.Close();
+                FormStatusChecker.isWindowOpen = false;
             }
 
             return Result.Succeeded;
@@ -75,41 +79,23 @@ namespace CarboCircle
 
         public void ShowCarboCircle(UIApplication uiapp)
         {
-
-
-            // If we do not have a dialog yet, create and show it
-            if (m_CarboCircleWindow == null)
+            if (handler == null || exEvent == null)
             {
-                // A new handler to handle request posting by the dialog
-                CarboCircleHandler handler = new CarboCircleHandler(uiapp);
+                handler = new CarboCircleHandler(uiapp);
+                exEvent = ExternalEvent.Create(handler);
+            }
 
-                // External Event for the dialog to use (to post requests)
-                ExternalEvent exEvent = ExternalEvent.Create(handler);
-
-                // We give the objects to the new dialog;
-                // The dialog becomes the owner responsible fore disposing them, eventually.
-                // m_HeatMapCreator = new HeatMapCreator(exEvent, handler, project, VisibleElements);
-
-                m_CarboCircleWindow = new CarboCircleMain(exEvent,handler);
+            if (m_CarboCircleWindow == null || !FormStatusChecker.isWindowOpen)
+            {
+                m_CarboCircleWindow = new CarboCircleMain(exEvent, handler);
                 FormStatusChecker.isWindowOpen = true;
                 m_CarboCircleWindow.Show();
             }
             else
             {
-                // A new handler to handle request posting by the dialog
-                CarboCircleHandler handler = new CarboCircleHandler(uiapp);
-
-                // External Event for the dialog to use (to post requests)
-                ExternalEvent exEvent = ExternalEvent.Create(handler);
-
-                // We give the objects to the new dialog;
-                // The dialog becomes the owner responsible fore disposing them, eventually.
-                m_CarboCircleWindow = new CarboCircleMain();
-                FormStatusChecker.isWindowOpen = true;
-                m_CarboCircleWindow.Show();
+                m_CarboCircleWindow.Activate();
+                m_CarboCircleWindow.Show(); // ensure it's visible again
             }
-
         }
-
     }
 }

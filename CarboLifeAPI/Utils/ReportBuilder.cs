@@ -979,6 +979,35 @@ img {
             return image;
         
     }
+
+        public static Bitmap RemoveBlackLineLeftTop(Bitmap letiChart)
+        {
+            if (letiChart == null)
+                throw new ArgumentNullException(nameof(letiChart));
+
+            System.Drawing.Color white = System.Drawing.Color.White;
+
+            // Top 3 rows
+            for (int y = 0; y < 3 && y < letiChart.Height; y++)
+            {
+                for (int x = 0; x < letiChart.Width; x++)
+                {
+                    letiChart.SetPixel(x, y, white);
+                }
+            }
+
+            // Left 3 columns
+            for (int x = 0; x < 3 && x < letiChart.Width; x++)
+            {
+                for (int y = 0; y < letiChart.Height; y++)
+                {
+                    letiChart.SetPixel(x, y, white);
+                }
+            }
+
+            return letiChart;
+        }
+
     }
 
 

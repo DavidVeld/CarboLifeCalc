@@ -315,12 +315,12 @@ namespace CarboCircle
                     CarboColour colour = null;
                     string labelText = "";
 
-                    switch(i)
+                    switch (i)
                     {
                         case 0:
-                                colour = settings.colour_NotFromReused;
-                                labelText = "Fully New Materials";
-                                break;
+                            colour = settings.colour_NotFromReused;
+                            labelText = "Fully New Materials";
+                            break;
                         case 1:
                             colour = settings.colour_FromReusedData;
                             labelText = "New Elements from Reused Existing";
