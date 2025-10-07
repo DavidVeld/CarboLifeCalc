@@ -18,6 +18,7 @@ namespace CarboLifeAPI.Data
     {
         [XmlArray("CarboMaterials"), XmlArrayItem(typeof(CarboMaterial), ElementName = "CarboMaterial")]
         public List<CarboMaterial> CarboMaterialList { get;  set; }
+        public string templateName { get; set; }
         public List<CarboMaterial> getData()
         {
             return CarboMaterialList;
@@ -281,6 +282,7 @@ namespace CarboLifeAPI.Data
         {
             string myPath = fileName;
             PathUtils.CheckFileLocationsNew();
+            string fileNameNoExtension = "";
 
             //if its a relative path use:
             if (!(File.Exists(myPath)))
@@ -308,11 +310,15 @@ namespace CarboLifeAPI.Data
 
                 try
                 {
+                    fileNameNoExtension = Path.GetFileNameWithoutExtension(myPath);
+
                     using (FileStream fs = new FileStream(myPath, FileMode.Open))
                     {
                         bufferproject = ser.Deserialize(fs) as CarboDatabase;
                     }
-                        Utils.WriteToLog("Deserialised: " + myPath);
+                    //Utils.WriteToLog("Deserialised: " + myPath);
+                    bufferproject.templateName = fileNameNoExtension;
+
                     return bufferproject;
 
                 }

@@ -781,6 +781,7 @@ namespace CarboLifeUI.UI
                 LetiChart = ChartUtils.ControlToImage(foundletiChart, 300, 300);
                 LetiChart = ReportBuilder.CleanBlack(LetiChart);
                 LetiChart = ReportBuilder.RemoveBlackLineLeftTop(LetiChart);
+                LetiChart = ReportBuilder.RemoveBlackLineLeftTop(LetiChart);
 
                 if (LetiChart != null)
                 {

@@ -3,8 +3,9 @@
   <mappingTable>
     <CarboMapElement>
       <revitName>Default</revitName>
-      <category>Category</category>
+      <category>Default</category>
       <carboNAME>Air</carboNAME>
+      <templateName>UserMaterials</templateName>
     </CarboMapElement>
   </mappingTable>
 </CarboMapFile>

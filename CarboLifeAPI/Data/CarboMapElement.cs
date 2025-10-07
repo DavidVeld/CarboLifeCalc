@@ -12,12 +12,14 @@ namespace CarboLifeAPI.Data
         public string revitName { get; set; }
         public string category { get; set; }
         public string carboNAME { get; set; }
+        public string templateName { get; set; }
 
         public CarboMapElement()
         {
             revitName = "";
             category = "";
             carboNAME = "";
+            templateName = "";
         }
 
     }

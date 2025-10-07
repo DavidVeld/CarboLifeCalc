@@ -110,7 +110,8 @@ namespace CarboLifeAPI.Data
             {
                 var existingElement = mappingTable.Find(e =>
                     string.Equals(e.revitName, newElement.revitName, StringComparison.OrdinalIgnoreCase) &&
-                    string.Equals(e.category, newElement.category, StringComparison.OrdinalIgnoreCase)
+                    string.Equals(e.category, newElement.category, StringComparison.OrdinalIgnoreCase) &&
+                    string.Equals(e.templateName, newElement.templateName, StringComparison.OrdinalIgnoreCase)
                 );
 
                 if (existingElement != null)
@@ -130,9 +131,9 @@ namespace CarboLifeAPI.Data
 
         private void CleanUp()
         {
-            // Use LINQ to filter out duplicates based on revitName and category
+            // Remove duplicates based on revitName, category, and templateName
             mappingTable = mappingTable
-                .GroupBy(e => new { e.revitName, e.category })
+                .GroupBy(e => new { e.revitName, e.category, e.templateName })
                 .Select(g => g.First())
                 .ToList();
         }

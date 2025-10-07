@@ -703,7 +703,7 @@ namespace CarboLifeAPI.Data
                             {
                                 //First see if a change is required;
                                 //Find the map file of this group using a single element in the group;
-                                CarboMapElement mapElement = GetMapItem(gr.AllElements[0].MaterialName, gr.Category);
+                                CarboMapElement mapElement = GetMapItem(gr.AllElements[0].MaterialName, gr.Category, this.CarboDatabase.templateName);
                                 if (mapElement != null)
                                 {
                                     //Get the material from the mapping name;
@@ -717,6 +717,7 @@ namespace CarboLifeAPI.Data
                                             //Only update if the mapping file suggest a change.
                                             gr.Material = cm;
                                             gr.Waste = cm.WasteFactor;
+                                            gr.Density = cm.Density;
                                             gr.RefreshValuesFromElements();
                                             gr.CalculateTotals();
                                             
@@ -738,7 +739,7 @@ namespace CarboLifeAPI.Data
             }
         }
 
-        private CarboMapElement GetMapItem(string materialName, string category)
+        private CarboMapElement GetMapItem(string materialName, string category, string template)
         {
             CarboMapElement result = null;
 
@@ -750,7 +751,7 @@ namespace CarboLifeAPI.Data
                     {
                         try
                         {
-                            if(mapE.category == category && mapE.revitName == materialName)
+                            if (mapE.category == category && mapE.revitName == materialName && CarboDatabase.templateName == template)
                             {
                                 return mapE;
                             }

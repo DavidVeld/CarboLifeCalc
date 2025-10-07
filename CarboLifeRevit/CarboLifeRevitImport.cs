@@ -197,9 +197,12 @@ namespace CarboLifeRevit
 
                     //Railings, ramps and curtain walls are not processed with the fast method, they require a geometry extraction.
 
-                    if (enumCategory == BuiltInCategory.OST_Railings || enumCategory == BuiltInCategory.OST_StairsRailing ||
+                    if (enumCategory == BuiltInCategory.OST_Railings ||
+                        enumCategory == BuiltInCategory.OST_StairsRailing ||
                         enumCategory == BuiltInCategory.OST_Ramps ||
-                        enumCategory == BuiltInCategory.OST_CurtainWallMullions || enumCategory == BuiltInCategory.OST_CurtainWallPanels)
+                        enumCategory == BuiltInCategory.OST_CurtainWallMullions ||
+                        enumCategory == BuiltInCategory.OST_CurtainWallPanels ||
+                        enumCategory == BuiltInCategory.OST_StructConnectionPlates)
                     {
                         carboElementList = CarboRevitUtils.getGeometryElement(doc, el, settings);
                     }

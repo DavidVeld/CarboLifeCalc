@@ -233,12 +233,14 @@ namespace CarboLifeRevit
             {
                 if (!(el.Category == null))
                 {
-                    if (el.get_Geometry(new Options()) != null)
+                    Parameter volumePar = el.LookupParameter("Volume");
+
+                    if (el.get_Geometry(new Options()) != null || volumePar != null)
                     {
                         //Check if not of any forbidden categories such as runs:
                         bool isValidCategory = ValidCategory(el);
 
-                        if(isValidCategory == true)
+                        if (isValidCategory == true)
                             result = true;
                     }
                 }
@@ -256,9 +258,11 @@ namespace CarboLifeRevit
         {
             bool result = true;
 
-            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
-            
-            if(enumCategory == BuiltInCategory.OST_StairsRuns)
+            //Below is a list of categories that are "valid, as it contains geometry" but should not be included in the carbo calc.
+
+            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.IntegerValue;
+
+            if (enumCategory == BuiltInCategory.OST_StairsRuns)
             {
                 result = false;
             }
@@ -279,6 +283,43 @@ namespace CarboLifeRevit
 
             try
             {
+
+                //First Attempt is using a parameter based volume:
+                Parameter parameterVolume = el.LookupParameter("Volume");
+                if ((parameterVolume != null))
+                {
+                    double volumeValue = parameterVolume.AsDouble();
+                    if (volumeValue > 0)
+                    {
+                        //This element has a volume parameter, us this
+                        List<ElementId> Mateids = el.GetMaterialIds(false).ToList();
+                        foreach (ElementId eid in Mateids)
+                        {
+                            string materialName = "";
+                            string materialCategory = "";
+                            double volume = volumeValue;
+                            volume = Utils.convertToCubicMtrs(volume);
+                            Material material = doc.GetElement(eid) as Material;
+
+                            materialName = material.Name;
+
+                            if (material.MaterialClass != "")
+                                materialCategory = material.MaterialClass;
+                            else if (material.MaterialCategory != "")
+                                materialCategory = material.MaterialCategory;
+
+                            result = CarboRevitUtils.addToCarboElement(result, materialName, materialCategory, volume, el, doc, settings);
+
+                        }
+
+                    }
+
+                    if (result.Count > 0)
+                        return result;
+                }
+
+                //IF this doesnt return in volumes, use the geometry based volume:
+
 
                 Options opt = new Options();
                 opt.DetailLevel = ViewDetailLevel.Fine;
@@ -467,6 +508,10 @@ namespace CarboLifeRevit
                 ElementId elId = el.GetTypeId();
                 ElementType type = doc.GetElement(elId) as ElementType;
                 setName = type.Name;
+                if (type != null)
+                    setName = type.Name;
+                else
+                    setName = "Revit System Element";
 
                 //GetDensity
                 Parameter paramMaterial = el.get_Parameter(BuiltInParameter.STRUCTURAL_MATERIAL_PARAM);
@@ -585,7 +630,7 @@ namespace CarboLifeRevit
 
                 return newCarboElement;
             }
-            catch
+            catch (Exception ex)
             {
                 return null;
             }

@@ -32,6 +32,7 @@ namespace CarboLifeUI.UI
         public List<CarboMapElement> mappinglist { get; set; }
         //public CarboMaterialList materialList { get; set; }
         public List<CarboName> materialList { get; set; }
+        string MaterialTemplate { get; set; }
 
 
         //public List<Person> Persons { get; set; }

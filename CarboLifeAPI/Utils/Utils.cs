@@ -267,7 +267,8 @@ namespace CarboLifeAPI
             try 
             { 
                File.Delete(myPath); 
-            } catch 
+            } 
+            catch 
             { 
             }
         }
@@ -285,7 +286,7 @@ namespace CarboLifeAPI
             }
             
         }
-
+        [Obsolete]
         public static void WriteToLog(string text)
         {
             /*
@@ -618,7 +619,8 @@ namespace CarboLifeAPI
 
                 return Encoding.Unicode.GetString(outputBuffer);
             }
-            catch {
+            catch 
+            {
                 return "";
             }
 
@@ -637,8 +639,10 @@ namespace CarboLifeAPI
 
             try
             {
-                // Use a HashSet to track unique combinations of revitName, carboNAME, and category
-                var uniqueKeys = new HashSet<(string, string, string)>();
+                string templateName = carboProject?.CarboDatabase?.templateName ?? string.Empty;
+
+                // Track unique combinations of revitName, carboNAME, and category
+                var uniqueKeys = new HashSet<(string revitName, string carboNAME, string category, string templateName)>();
 
                 foreach (CarboGroup cg in carboProject.getGroupList)
                 {
@@ -649,7 +653,7 @@ namespace CarboLifeAPI
                     string carboNAME = cg.MaterialName;
                     string category = cg.Category;
 
-                    var key = (revitName, carboNAME, category);
+                    var key = (revitName, carboNAME, category, templateName);
 
                     if (!uniqueKeys.Contains(key))
                     {
@@ -657,7 +661,9 @@ namespace CarboLifeAPI
                         {
                             revitName = revitName,
                             carboNAME = carboNAME,
-                            category = category
+                            category = category,
+                            templateName = templateName
+
                         };
 
                         mappingList.Add(mapElement);
