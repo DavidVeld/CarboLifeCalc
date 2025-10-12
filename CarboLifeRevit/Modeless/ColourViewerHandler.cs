@@ -30,6 +30,7 @@ namespace CarboLifeRevit
         private CarboProject targetProject;
         private string parameterName;
         private string viewname;
+        private bool printdetailedTable;
 
 
 
@@ -86,9 +87,9 @@ namespace CarboLifeRevit
                 using (Transaction t = new Transaction(doc, "Create Results View"))
                 {
                     t.Start();
-                    
-                    bool ok = CarboLegendCreator.CreateResultsView(targetProject, doc, viewname);
-                    
+
+                    bool ok = CarboLegendCreator.CreateResultsView(targetProject, doc, viewname, printdetailedTable);
+
                     t.Commit();
                 }
             }
@@ -169,7 +170,7 @@ namespace CarboLifeRevit
 
                         if (drawLegendView == true)
                         {
-                            bool ok = CarboLegendCreator.CreateALegendForData(resultList, doc);
+                            bool ok = CarboLegendCreator.CreateALegendForData(resultList, doc, printdetailedTable);
                         }
 
                     }
@@ -269,7 +270,7 @@ namespace CarboLifeRevit
             }
         }
 
-        public void drawResultView(CarboProject carboProject, string viewName)
+        public void drawResultView(CarboProject carboProject, string viewName, bool PrintDetailedTable)
         {
             if (doc != null && carboProject != null)
             {
@@ -278,6 +279,8 @@ namespace CarboLifeRevit
                     targetProject = carboProject;
                     commandSwitch = 3;
                     viewname = viewName;
+                    printdetailedTable = PrintDetailedTable;
+
                 }
                 catch (Exception ex)
                 {

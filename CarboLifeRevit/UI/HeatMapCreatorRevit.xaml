@@ -197,6 +197,7 @@
                         <TextBlock Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" >Create a View with a results overview</TextBlock>
                         <Button x:Name="btn_createDashBoard"  Grid.Row="5" Grid.Column="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="94" Height="28" Style="{StaticResource ButtonStyle}" Click="btn_createDashBoard_Click" Content="Create View" Visibility="Visible"/>
                         <TextBox x:Name="txt_DashBoardName" Grid.Row="5" Grid.Column="3"  Style="{StaticResource flatTextBox}" TextChanged="txt_DashBoardName_TextChanged" />
+                        <CheckBox Name="chk_Detailed" Grid.Column="3" Margin="0,8,0,14" Grid.Row="6" FontSize="12" FontFamily="Segoe UI" IsChecked="False" Height="25" VerticalAlignment="Top">Export Detailed Calculation</CheckBox>
 
 
 

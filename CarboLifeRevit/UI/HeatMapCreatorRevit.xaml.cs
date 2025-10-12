@@ -839,9 +839,10 @@ namespace CarboLifeRevit
         private void btn_createDashBoard_Click(object sender, RoutedEventArgs e)
         {
             string viewName = txt_DashBoardName.Text;
+            bool advancedTable = chk_Detailed.IsChecked.Value;
             if (viewName != "")
             {
-                m_Handler.drawResultView(carboProject, viewName);
+                m_Handler.drawResultView(carboProject, viewName, advancedTable);
                 m_ExEvent.Raise();
             }
         }

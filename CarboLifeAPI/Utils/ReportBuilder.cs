@@ -928,7 +928,7 @@ img {
         {
             string result = "";
 
-            result += "Total Carbon Footprint: " + carboLifeProject.getTotalEC().ToString() + " tCO₂e" + Environment.NewLine;
+            result += "Total Carbon Footprint: " + Math.Round(carboLifeProject.getTotalEC(), 0).ToString() + " tCO₂e" + Environment.NewLine;
 
             List<string> textGroups = carboLifeProject.getCalcText();
 
@@ -945,13 +945,15 @@ img {
 
                     if (a == b)
                     {
+                        // Find the longest heading to determine padding width
+                        int maxLength = list1.Max(s => s.Length);
+
                         for (int i = 0; i < a; i++)
                         {
-                            result += list1[i] + "\t" + list2[i] + Environment.NewLine;
+                            // Pad each heading so all values start in the same column
+                            result += list1[i].PadRight(maxLength + 4) + list2[i] + Environment.NewLine;
                         }
                     }
-
-                    //result += textGroups[2] + Environment.NewLine;
 
                 }
             }

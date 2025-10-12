@@ -21,7 +21,7 @@ namespace CarboLifeRevit
 {
     internal static class CarboLegendCreator
     {
-        internal static bool CreateALegendForData(CarboGraphResult resultData, Document doc)
+        internal static bool CreateALegendForData(CarboGraphResult resultData, Document doc, bool printdetailedTable)
         {
             bool result = false;
 
@@ -35,8 +35,8 @@ namespace CarboLifeRevit
 
                 if (clcLegendView != null)
                 {
-                    createLegendData(resultData, doc, clcLegendView, null);
-                    
+                    createLegendData(resultData, doc, clcLegendView, null, printdetailedTable);
+
                     result = true;
 
                 }
@@ -49,20 +49,20 @@ namespace CarboLifeRevit
             return result;
         }
 
-        internal static bool CreateResultsView(CarboProject targetProject, Document doc, string viewname)
+        internal static bool CreateResultsView(CarboProject targetProject, Document doc, string viewname, bool printdetailedTable)
         {
             bool result = false;
 
             try
             {
                 if (viewname == "")
-                    viewname = "CLC_Results";
+                    viewname = "CLC_Calculation";
                 //Get or make the view
                 View resultView = getOrCreateView(doc, viewname);
 
                 if (resultView != null)
                 {
-                    createLegendData(null, doc, resultView, targetProject);
+                    createLegendData(null, doc, resultView, targetProject, printdetailedTable);
                     result = true;
                 }
             }
@@ -78,7 +78,7 @@ namespace CarboLifeRevit
 
         }
 
-        private static void createLegendData(CarboGraphResult resultData, Document doc, View clcLegendView, CarboProject project)
+        private static void createLegendData(CarboGraphResult resultData, Document doc, View clcLegendView, CarboProject project, bool printdetailedTable)
         {
 
             #region COLLECT CLC_Hatch
@@ -255,14 +255,15 @@ namespace CarboLifeRevit
             }
             #endregion
 
-            if(project == null)
+            if (project == null)
                 createColourLegend(resultData, doc, clcLegendView, clc_TextTitleType, clc_TextType, clc_HatchType, invisible);
             else
-                createResultLegend(project, doc, clcLegendView, clc_TextTitleType, clc_TextType, clc_HatchType, invisible);
+                createResultLegend(project, doc, clcLegendView, clc_TextTitleType, clc_TextType, clc_HatchType, invisible, printdetailedTable);
+
 
         }
 
-        private static void createResultLegend(CarboProject project, Document doc, View clcLegendView, TextNoteType clc_TextTitleType, TextNoteType clc_TextType, FilledRegionType clc_HatchType, GraphicsStyle invisibleline)
+        private static void createResultLegend(CarboProject project, Document doc, View clcLegendView, TextNoteType clc_TextTitleType, TextNoteType clc_TextType, FilledRegionType clc_HatchType, GraphicsStyle invisibleline, bool printdetailedTable)
         {
             double liney = 0.0;
 
@@ -277,24 +278,62 @@ namespace CarboLifeRevit
 
 
             TextNote.Create(doc, clcLegendView.Id, new XYZ(0.0, (5.0 / 304.8), 0.0), "RESULTS", clc_TitleTextOptions);
-            liney = liney - (5.0 / 304.8);
+            liney = liney - (5.5 / 304.8);
 
+
+            //NEW aligned:
+
+            List<string> textGroups = project.getCalcText();
+
+            string[] list1 = textGroups[0].Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            string[] list2 = textGroups[1].Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+            // Combine each array into a single newline-separated string
+            string headings = string.Join(Environment.NewLine, list1);
+            string values = string.Join(Environment.NewLine, list2);
+            string generalText = project.getGeneralText();
+
+            string total = "Total Carbon Footprint: " + Math.Round(project.getTotalEC(), 0).ToString() + " tCO₂e" + Environment.NewLine;
+            TextNote totalTExt = TextNote.Create(doc, clcLegendView.Id, new XYZ(0, liney, 0.0), total, clc_TextOptions);
+            liney = liney - (5.5 / 304.8);
+            doc.Regenerate();
+
+
+            TextNote resultTextL1 = TextNote.Create(doc, clcLegendView.Id, new XYZ(0, liney, 0.0), headings, clc_TextOptions);
+            TextNote resultTextL2 = TextNote.Create(doc, clcLegendView.Id, new XYZ((40 / 308.4), liney, 0.0), values, clc_TextOptions);
+
+            resultTextL1.Width = (50 / 304.8);
+            resultTextL2.Width = (50 / 304.8);
+            doc.Regenerate();
+
+            double heighttext = resultTextL1.Height;
+
+            liney = liney - heighttext - (2.5 / 304.8);
+            doc.Regenerate();
+
+            TextNote resultTextG = TextNote.Create(doc, clcLegendView.Id, new XYZ(0, liney, 0.0), generalText, clc_TextOptions);
+            resultTextG.Width = (200 / 304.8);
+            doc.Regenerate();
+
+            //OLD not aligned:
+            /*
             string text = getResultText(project);
 
             TextNote resultText = TextNote.Create(doc, clcLegendView.Id, new XYZ(0, liney - (1.25 / 308.4), 0.0), text,clc_TextOptions);
             resultText.Width = (200 / 304.8);
             doc.Regenerate();
+            */
 
-            if(resultText.Height == 0)
+            if (resultTextG.Height == 0)
                 liney = liney - (50 / 304.8);
             else
-                liney = liney - resultText.Height;
+                liney = liney - resultTextG.Height;
 
             liney = liney - (5.0 / 304.8);
 
-            writeResultTable(liney, project, doc, clcLegendView, clc_TitleTextOptions, clc_TextOptions, clc_HatchType, invisibleline);
-
-
+            //if selected also print the detailed calculation.
+            if (printdetailedTable == true)
+                writeResultTable(liney, project, doc, clcLegendView, clc_TitleTextOptions, clc_TextOptions, clc_HatchType, invisibleline);
 
         }
 
@@ -519,7 +558,7 @@ namespace CarboLifeRevit
             try
             {
 
-                result += "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e" + Environment.NewLine;
+                //result += "Total Embodied Carbon: " + CarboLifeProject.getTotalEC().ToString() + " tCO₂e" + Environment.NewLine;
 
                 //List<string> textGroups = CarboLifeProject.getCalcText();
                 result = ReportBuilder.getFlattenedCalText(CarboLifeProject);
