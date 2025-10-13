@@ -352,9 +352,9 @@ namespace CarboLifeAPI
                         {
                             //add if not default of the buffer
                             bool exclude = false;
-                            if (fileName.Contains("Buffer"))
+                            if (fileName.Contains("Buffer", StringComparison.OrdinalIgnoreCase))
                                 exclude = true;
-                            if (fileName.Contains("CarboCircle"))
+                            if (fileName.Contains("CarboCircle", StringComparison.OrdinalIgnoreCase))
                                 exclude = true;
                             if (defaultfimeName == fileName)
                                 exclude = true;
@@ -372,7 +372,15 @@ namespace CarboLifeAPI
 
                         if (System.IO.File.Exists(file))
                         {
-                            result.Add(fileName, file);
+                            bool exclude = false;
+
+                            if (fileName.Contains("CarboCircle", StringComparison.OrdinalIgnoreCase))
+                                exclude = true;
+
+                            if (exclude == false)
+                            {
+                                result.Add(fileName, file);
+                            }
                         }
                     }
 

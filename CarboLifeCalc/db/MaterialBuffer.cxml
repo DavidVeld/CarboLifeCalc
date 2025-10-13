@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <CarboDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <CarboMaterials>
     <CarboMaterial>
@@ -9,15 +9,15 @@
       <EPDurl>https://www.greenbooklive.com/pdfdocs/en15804epd/BREGENEPD000492.pdf</EPDurl>
       <Grade />
       <Density>476</Density>
-      <ECI>0.35000000000000009</ECI>
-      <getVolumeECI>166.60000000000005</getVolumeECI>
+      <ECI>1.955</ECI>
+      <getVolumeECI>930.58</getVolumeECI>
       <ECI_A1A3>0.225</ECI_A1A3>
       <ECI_A4>0.061</ECI_A4>
       <ECI_A5>0</ECI_A5>
       <ECI_B1B5>0</ECI_B1B5>
       <ECI_C1C4>1.669</ECI_C1C4>
       <ECI_D>0</ECI_D>
-      <ECI_Seq>-1.605</ECI_Seq>
+      <ECI_Seq>0</ECI_Seq>
       <ECI_Mix>0</ECI_Mix>
       <WasteFactor>11.1</WasteFactor>
       <isLocked>false</isLocked>
@@ -134,7 +134,7 @@
       <EPDurl>https://timberdevelopment.uk/resources/embodied_carbon_data_for_timber_products/</EPDurl>
       <Grade />
       <Density>510</Density>
-      <ECI>0.65000000000000013</ECI>
+      <ECI>0.6500000000000001</ECI>
       <getVolumeECI>331.50000000000006</getVolumeECI>
       <ECI_A1A3>0.469</ECI_A1A3>
       <ECI_A4>0.315</ECI_A4>
@@ -385,7 +385,7 @@
       <Grade />
       <Density>606</Density>
       <ECI>0.12099999999999977</ECI>
-      <getVolumeECI>73.325999999999866</getVolumeECI>
+      <getVolumeECI>73.32599999999987</getVolumeECI>
       <ECI_A1A3>0.185</ECI_A1A3>
       <ECI_A4>0.064</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -635,7 +635,7 @@
       <Grade />
       <Density>2499</Density>
       <ECI>0.35719999999999996</ECI>
-      <getVolumeECI>892.64279999999985</getVolumeECI>
+      <getVolumeECI>892.6427999999999</getVolumeECI>
       <ECI_A1A3>0.06</ECI_A1A3>
       <ECI_A4>0.284</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -1009,8 +1009,8 @@
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
       <Grade />
       <Density>7850</Density>
-      <ECI>0.88179999999999981</ECI>
-      <getVolumeECI>6922.1299999999983</getVolumeECI>
+      <ECI>0.8817999999999998</ECI>
+      <getVolumeECI>6922.129999999998</getVolumeECI>
       <ECI_A1A3>1.64</ECI_A1A3>
       <ECI_A4>0.1415</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -1135,7 +1135,7 @@
       <Grade />
       <Density>7850</Density>
       <ECI>1.1558999999999997</ECI>
-      <getVolumeECI>9073.8149999999969</getVolumeECI>
+      <getVolumeECI>9073.814999999997</getVolumeECI>
       <ECI_A1A3>2.59</ECI_A1A3>
       <ECI_A4>0.1656</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -1635,7 +1635,7 @@
       <Grade />
       <Density>7850</Density>
       <ECI>1.3097999999999999</ECI>
-      <getVolumeECI>10281.929999999999</getVolumeECI>
+      <getVolumeECI>10281.929999999998</getVolumeECI>
       <ECI_A1A3>0.72</ECI_A1A3>
       <ECI_A4>0.1415</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -1760,7 +1760,7 @@
       <Grade />
       <Density>7850</Density>
       <ECI>1.2618000000000003</ECI>
-      <getVolumeECI>9905.1300000000028</getVolumeECI>
+      <getVolumeECI>9905.130000000003</getVolumeECI>
       <ECI_A1A3>2.47</ECI_A1A3>
       <ECI_A4>0.1415</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -2759,7 +2759,7 @@
       <EPDurl>https://www.istructe.org/resources/guidance/how-to-calculate-embodied-carbon/</EPDurl>
       <Grade />
       <Density>2400</Density>
-      <ECI>0.066399999999999987</ECI>
+      <ECI>0.06639999999999999</ECI>
       <getVolumeECI>159.35999999999996</getVolumeECI>
       <ECI_A1A3>0.0542</ECI_A1A3>
       <ECI_A4>0.009</ECI_A4>
@@ -3379,7 +3379,7 @@
     </CarboMaterial>
     <CarboMaterial>
       <Id>230712</Id>
-      <Name>Concrete - Insitu</Name>
+      <Name>Concrete - Cast Insitu</Name>
       <Category>Concrete</Category>
       <Description>Based on: Insitu UK C32/40 (25% GGBS)
 Recommended Value</Description>
@@ -3637,7 +3637,7 @@ Recommended Value</Description>
       <Grade />
       <Density>7850</Density>
       <ECI>1.1558999999999997</ECI>
-      <getVolumeECI>9073.8149999999969</getVolumeECI>
+      <getVolumeECI>9073.814999999997</getVolumeECI>
       <ECI_A1A3>2.59</ECI_A1A3>
       <ECI_A4>0.1656</ECI_A4>
       <ECI_A5>0</ECI_A5>
@@ -3762,7 +3762,7 @@ Recommended Value</Description>
       <Grade />
       <Density>50</Density>
       <ECI>1.3139999999999998</ECI>
-      <getVolumeECI>65.699999999999989</getVolumeECI>
+      <getVolumeECI>65.69999999999999</getVolumeECI>
       <ECI_A1A3>1.25</ECI_A1A3>
       <ECI_A4>0.05</ECI_A4>
       <ECI_A5>0.005</ECI_A5>
@@ -3806,7 +3806,7 @@ Recommended Value</Description>
           <production>0.4</production>
           <unit>l</unit>
         </vehicleFuel>
-        <value>0.049594155844155843</value>
+        <value>0.04959415584415584</value>
       </materiaA4Properties>
       <materialA5Properties>
         <calcResult>A5 calculation to be implemented 
@@ -3890,7 +3890,7 @@ Set Value by user as: 0kgCO₂/kg
       <Grade />
       <Density>50</Density>
       <ECI>1.3139999999999998</ECI>
-      <getVolumeECI>65.699999999999989</getVolumeECI>
+      <getVolumeECI>65.69999999999999</getVolumeECI>
       <ECI_A1A3>1.25</ECI_A1A3>
       <ECI_A4>0.05</ECI_A4>
       <ECI_A5>0.005</ECI_A5>
@@ -3934,9 +3934,10 @@ Set Value by user as: 0kgCO₂/kg
           <production>0.4</production>
           <unit>l</unit>
         </vehicleFuel>
-        <value>0.049594155844155843</value>
+        <value>0.04959415584415584</value>
       </materiaA4Properties>
       <materialA5Properties>
+        <calcResult />
         <name />
         <value>0</value>
       </materialA5Properties>
@@ -4059,9 +4060,10 @@ Set Value by user as: 0kgCO₂/kg
           <production>0.4</production>
           <unit>l</unit>
         </vehicleFuel>
-        <value>0.049594155844155843</value>
+        <value>0.04959415584415584</value>
       </materiaA4Properties>
       <materialA5Properties>
+        <calcResult />
         <name />
         <value>0</value>
       </materialA5Properties>
@@ -4260,4 +4262,5 @@ Set Value by user as: 0kgCO₂/kg
       <ECI_Mix_Info />
     </CarboMaterial>
   </CarboMaterials>
+  <templateName>MaterialBuffer</templateName>
 </CarboDatabase>

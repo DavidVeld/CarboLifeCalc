@@ -2273,6 +2273,7 @@ namespace CarboLifeAPI.Data
             {
                 grp.Waste = 0;
             }
+            this.CalculateProject();
         }
 
     }

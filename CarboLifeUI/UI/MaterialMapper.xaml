@@ -40,7 +40,7 @@
 
         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Material Mapper</Label>
 
-         <DataGrid Name="dgData2" AutoGenerateColumns="False" ItemsSource="{Binding mappinglist}" CanUserAddRows="False" Grid.Column="2" Grid.Row="4" Margin="5,0,5,10">
+        <DataGrid Name="dgData2" AutoGenerateColumns="False" ItemsSource="{Binding mappinglist}" CanUserAddRows="False" Grid.Column="2" Grid.Row="4" Margin="5,0,5,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding revitName}" Header=" Revit Material Name" Width="1*"/>
                 <DataGridTextColumn Binding="{Binding category}" Header=" Category" Width="135"/>
@@ -49,7 +49,16 @@
                 <DataGridTemplateColumn Header="Carbo Life Calc Material Name" Width="1.2*" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding materialList, RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}" Style="{StaticResource ComboBoxFlatStyleLight}" DisplayMemberPath="carboNAME" SelectedValuePath="carboNAME" SelectedValue="{Binding carboNAME, UpdateSourceTrigger=PropertyChanged}"/>
+                            <ComboBox 
+    ItemsSource="{Binding materialList, RelativeSource={RelativeSource AncestorType=Window}}"
+    DisplayMemberPath="carboNAME"
+    SelectedValuePath="carboNAME"
+    SelectedValue="{Binding carboNAME, UpdateSourceTrigger=PropertyChanged}"
+    IsEditable="True"
+    StaysOpenOnEdit="True"
+    IsTextSearchEnabled="False"
+    KeyUp="ComboBox_KeyUp"
+    Style="{StaticResource ComboBoxFlatStyleLight}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

@@ -32,12 +32,6 @@ namespace CarboLifeUI.UI
         public List<CarboMapElement> mappinglist { get; set; }
         //public CarboMaterialList materialList { get; set; }
         public List<CarboName> materialList { get; set; }
-        string MaterialTemplate { get; set; }
-
-
-        //public List<Person> Persons { get; set; }
-        //public List<MyLocation> Locations { get; set; }
-
 
         public MaterialMapper(CarboProject carboProject)
         {
@@ -57,6 +51,10 @@ namespace CarboLifeUI.UI
                 {
                     materialList.Add(new CarboName { carboNAME = cm.Name });
                 }
+
+                //filteredMaterialList = new ObservableCollection<CarboName>(materialList);
+                //DataContext = this;
+
             }
             catch (Exception ex)
             {
@@ -150,6 +148,45 @@ namespace CarboLifeUI.UI
             isAccepted = false;
             this.Close();
         }
+
+        private void ComboBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            System.Windows.Controls.ComboBox comboBox = sender as System.Windows.Controls.ComboBox;
+            if (comboBox == null) return;
+
+            string text = comboBox.Text?.Trim().ToLower() ?? "";
+
+            // Get full list from window-level property
+            var fullList = this.materialList;
+
+            if (string.IsNullOrEmpty(text))
+            {
+                comboBox.ItemsSource = fullList;
+            }
+            else
+            {
+                comboBox.ItemsSource = fullList
+                    .Where(x => x.carboNAME != null && x.carboNAME.ToLower().Contains(text))
+                    .ToList();
+            }
+
+            comboBox.IsDropDownOpen = true; // Keep the dropdown open while typing
+            SetComboBoxCaretToEnd(comboBox);
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            System.Windows.Controls.ComboBox comboBox = sender as System.Windows.Controls.ComboBox;
+            comboBox.ItemsSource = materialList;
+        }
+        private void SetComboBoxCaretToEnd(System.Windows.Controls.ComboBox comboBox)
+        {
+            if (comboBox.Template.FindName("PART_EditableTextBox", comboBox) is System.Windows.Controls.TextBox textBox)
+            {
+                textBox.CaretIndex = textBox.Text.Length;
+            }
+        }
+
 
     }
 

@@ -73,7 +73,6 @@
                     <RibbonMenuButton Label="Purge Elements" MouseDown="Mnu_PurgeElements_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_grouppurge32.png"/>
 
                     <RibbonMenuButton Label="Split Group..." PreviewMouseDown="RibbonMenuButton_PreviewMouseDown" Visibility="Visible" SmallImageSource="/CarboLifeUI;component/Resources/rbn_groupsplit32.png"/>
-                    <RibbonMenuButton Label="Multi-Map..." PreviewMouseDown="mnu_MapElements_Click" SmallImageSource="/CarboLifeUI;component/Resources/rbn_materialmap32.png"/>
                     <RibbonMenuButton Label="Remove Waste..." PreviewMouseDown="mnu_noWaste" SmallImageSource="/CarboLifeUI;component/Resources/rbn_del.png"/>
 
                     <!--- Needs a re-think -->
@@ -81,6 +80,7 @@
                 </RibbonGroup>
                 <!-- materials-->
                 <RibbonGroup x:Name="Materials" Header="Materials">
+                    <RibbonMenuButton Label="Multi-Map..." PreviewMouseDown="mnu_MapElements_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_materialmap32.png"/>
                     <RibbonButton Label="Select" Click="Btn_Material_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_materialselect32.png" />
                     <RibbonButton Label="Editor" Click="btn_OpenMaterialEditor_Click" LargeImageSource="/CarboLifeUI;component/Resources/rbn_materialedit32.png" />
                 </RibbonGroup>

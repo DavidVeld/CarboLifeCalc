@@ -7,5 +7,131 @@
       <carboNAME>Air</carboNAME>
       <templateName>UserMaterials</templateName>
     </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Concrete, Cast-in-Place gray</revitName>
+      <category>Walls</category>
+      <carboNAME>Concrete - Insitu</carboNAME>
+      <templateName>UserMaterials</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Concrete, Cast-in-Place gray</revitName>
+      <category>Structural Columns</category>
+      <carboNAME>Concrete - Insitu</carboNAME>
+      <templateName>UserMaterials</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Concrete, Cast-in-Place gray</revitName>
+      <category>Structural Framing</category>
+      <carboNAME>Concrete - Insitu</carboNAME>
+      <templateName>UserMaterials</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Steel</revitName>
+      <category>Structural Columns</category>
+      <carboNAME>Steel Generic Open Sections</carboNAME>
+      <templateName>UserMaterials</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Steel</revitName>
+      <category>Structural Framing</category>
+      <carboNAME>Steel Generic Open Sections</carboNAME>
+      <templateName>UserMaterials</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Concrete, Cast-in-Place gray</revitName>
+      <category>Floors</category>
+      <carboNAME>Concrete - Insitu</carboNAME>
+      <templateName>UserMaterials</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Concrete, Cast-in-Place gray</revitName>
+      <category>Structural Foundations</category>
+      <carboNAME>Concrete - Insitu</carboNAME>
+      <templateName>UserMaterials</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Metal Deck</revitName>
+      <category>Floors</category>
+      <carboNAME>Steel Generic Plate</carboNAME>
+      <templateName>UserMaterials</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Wood - Dimensional Lumber</revitName>
+      <category>Structural Framing</category>
+      <carboNAME>Timber Wood Softwood</carboNAME>
+      <templateName>UserMaterials</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Plywood</revitName>
+      <category>Floors</category>
+      <carboNAME>Plywood</carboNAME>
+      <templateName>UserMaterials</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Reinforcement</revitName>
+      <category>Reinforcement</category>
+      <carboNAME>Reinforcement</carboNAME>
+      <templateName>UserMaterials</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Concrete, Cast-in-Place gray</revitName>
+      <category>Walls</category>
+      <carboNAME>Insitu UK C40/50 (25% GGBS)</carboNAME>
+      <templateName>IstructE 3.0</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Concrete, Cast-in-Place gray</revitName>
+      <category>Structural Columns</category>
+      <carboNAME>Insitu UK C25/30 (25% GGBS)</carboNAME>
+      <templateName>IstructE 3.0</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Concrete, Cast-in-Place gray</revitName>
+      <category>Structural Framing</category>
+      <carboNAME>Insitu UK C32/40 (25% GGBS)</carboNAME>
+      <templateName>IstructE 3.0</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Steel</revitName>
+      <category>Structural Columns</category>
+      <carboNAME>Structural sections Global open rolled sections</carboNAME>
+      <templateName>IstructE 3.0</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Steel</revitName>
+      <category>Structural Framing</category>
+      <carboNAME>Structural sections Global open rolled sections</carboNAME>
+      <templateName>IstructE 3.0</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Concrete, Cast-in-Place gray</revitName>
+      <category>Floors</category>
+      <carboNAME>Insitu UK C25/30 (25% GGBS)</carboNAME>
+      <templateName>IstructE 3.0</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Concrete, Cast-in-Place gray</revitName>
+      <category>Structural Foundations</category>
+      <carboNAME>Insitu UK C32/40 (25% GGBS)</carboNAME>
+      <templateName>IstructE 3.0</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Metal Deck</revitName>
+      <category>Floors</category>
+      <carboNAME>Stainless Steel Structural sections and plate Lower Bound</carboNAME>
+      <templateName>IstructE 3.0</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Wood - Dimensional Lumber</revitName>
+      <category>Structural Framing</category>
+      <carboNAME>Manufactured structural timber Glulam UK/import weighted average</carboNAME>
+      <templateName>IstructE 3.0</templateName>
+    </CarboMapElement>
+    <CarboMapElement>
+      <revitName>Plywood</revitName>
+      <category>Floors</category>
+      <carboNAME>Sheet materials Softwood plywood UK/import weighted average</carboNAME>
+      <templateName>IstructE 3.0</templateName>
+    </CarboMapElement>
   </mappingTable>
 </CarboMapFile>
