@@ -23,7 +23,7 @@
     <mapReinforcement>true</mapReinforcement>
     <RCParameterName />
     <RCParameterType>Instance Parameter</RCParameterType>
-    <RCMaterialName>Steel UK - Reinforcement</RCMaterialName>
+    <RCMaterialName>Reinforcement</RCMaterialName>
     <rcQuantityMap>
       <CarboNumProperty>
         <PropertyName>Mass Concrete</PropertyName>

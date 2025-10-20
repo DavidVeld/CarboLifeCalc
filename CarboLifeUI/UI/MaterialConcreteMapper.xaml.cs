@@ -40,10 +40,19 @@ namespace CarboLifeUI.UI
         public string carboMaterialCategory { get; set; }
 
 
-        public MaterialConcreteMapper(CarboGroupSettings carboSettings)
+        public MaterialConcreteMapper(CarboGroupSettings carboSettings, CarboProject project = null)
         {
-            CarboDatabase template = new CarboDatabase();
-            template = template.DeSerializeXML(""); 
+            CarboDatabase template = null;
+
+            if (project != null)
+            {
+                template = project.CarboDatabase;
+            }
+            else
+            {
+                template = new CarboDatabase();
+                template = template.DeSerializeXML("");
+            }
 
             //List<string> materialList = new List<string>();
 

@@ -775,13 +775,13 @@ namespace CarboLifeUI.UI
         {
             Canvas foundletiChart = cnv_Leti;
             Bitmap LetiChart = null;
-
+            
             if (foundletiChart != null)
             {
                 LetiChart = ChartUtils.ControlToImage(foundletiChart, 300, 300);
                 LetiChart = ReportBuilder.CleanBlack(LetiChart);
                 LetiChart = ReportBuilder.RemoveBlackLineLeftTop(LetiChart);
-                LetiChart = ReportBuilder.RemoveBlackLineLeftTop(LetiChart);
+                //LetiChart = ReportBuilder.RemoveBlackLineLeftTop(LetiChart);
 
                 if (LetiChart != null)
                 {

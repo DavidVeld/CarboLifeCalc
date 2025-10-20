@@ -608,6 +608,11 @@ namespace CarboLifeRevit
                     }
                 }
 
+                //Structural Foundations are always substructre:
+                BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
+
+                if (enumCategory == BuiltInCategory.OST_StructuralFoundation)
+                    setIsSubstructure = true;
 
                 //If it passed it matches all criteria:
                 newCarboElement.Id = setId;

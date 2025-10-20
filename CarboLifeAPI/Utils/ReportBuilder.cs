@@ -79,6 +79,7 @@ namespace CarboLifeAPI
             //chart1 = CleanBlack(chart1);
             //chart2 = CleanBlack(chart2);
             ratingChart = CleanBlack(ratingChart);
+            ratingChart = RemoveBlackLineLeftTop(ratingChart);
 
             if (chart1 != null)
             {
@@ -354,7 +355,7 @@ namespace CarboLifeAPI
 
                         html += "<TD align='left' valign='middle'>" + cbg.Material.Name + "</td>" + System.Environment.NewLine;
                         html += "<TD align='left' valign='middle'>" + cbg.Material.Category + "</td>" + System.Environment.NewLine;
-                        html += "<TD align='left' valign='middle'>" + cbg.Material.Description + "</td>" + System.Environment.NewLine;
+                        html += "<TD align='left' valign='middle'>" + cbg.Material.Description + Environment.NewLine + cbg.Material.EPDurl + "</td>" + System.Environment.NewLine;
 
                         html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Density, 2) + "</td>" + System.Environment.NewLine;
                         html += "<TD align='left' valign='middle'>" + Math.Round(cbg.ECI, 2) + "</td>" + System.Environment.NewLine;
@@ -703,6 +704,12 @@ namespace CarboLifeAPI
                 */
                 html += "<TR><TD width=" + 150 + "><B>" + "Design Life:" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 175 + ">" + carboProject.designLife + "</TD></TR>" + System.Environment.NewLine;
+
+                if (carboProject.CarboDatabase.templateName != "")
+                {
+                    html += "<TR><TD width=" + 150 + "><B>" + "Template Life:" + "</B></TD>" + System.Environment.NewLine;
+                    html += "<TD width=" + 175 + ">" + carboProject.CarboDatabase.templateName + "</TD></TR>" + System.Environment.NewLine;
+                }
 
                 html += "<TR><TD width=" + 150 + "><B>" + "Total Upfront Carbon (A0-A5):" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 175 + ">" + Math.Round(carboProject.getUpfrontTotals() / 1000, 2) + "</TD></TR>" + System.Environment.NewLine;
