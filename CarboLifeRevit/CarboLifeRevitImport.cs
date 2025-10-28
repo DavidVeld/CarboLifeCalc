@@ -34,52 +34,73 @@ namespace CarboLifeRevit
 
             if (File.Exists(updatePath))
             {
-                //if a file needs to be updated get the settings first.
-                updateFile = true;
+                if (updatePath.EndsWith(".clcx"))
+                {
+                    //if a file needs to be updated get the settings first.
+                    updateFile = true;
+                    try
+                    {
+                        CarboProject buffer = new CarboProject();
+                        projectToUpdate = buffer.DeSerializeXML(updatePath);
 
-                CarboProject buffer = new CarboProject();
-                projectToUpdate = buffer.DeSerializeXML(updatePath);
-                settings = projectToUpdate.RevitImportSettings;
+                        if (projectToUpdate != null)
+                            settings = projectToUpdate.RevitImportSettings;
+                    }
+                    catch (Exception ex)
+                    {
+                        updateFile = false;
+                        projectToUpdate = new CarboProject();
+                        settings = projectToUpdate.RevitImportSettings;
+                        MessageBox.Show("The selected Carbo Life Project file is invalid \n\nError details: " + ex.Message, "Error", MessageBoxButton.OK);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("The selected file is not a Carbo Life Project file, the addin will now progress with a new project.", "Warning", MessageBoxButton.OK);
+                }
             }
+
             //Create a new project
             CarboProject myProject = CollectVisibleorSelectedElements(app, settings, selectedTemplateFile);
 
             //All element have been mapped, here the code will be split between an update or a new one.
             if (myProject.getAllElements.Count > 0)
             {
-                CarboProject projectToOpen = new CarboProject();
-
-                if (updateFile == false)
-                {
-                    //Create groups from all the individual elements
-                    myProject.CreateGroups();
-
-                    if (myProject.RevitImportSettings.mapReinforcement == true)
-                        myProject = mapReinforcement(app, myProject);
-
-                    //MapElements if required
-                    if (myProject.RevitImportSettings.UseImportedMap == true)
-                    {
-                        CarboMapFile defaultMappingFile = CarboMapFile.LoadFromXml();
-                        if (defaultMappingFile != null)
-                        {
-                            myProject.carboMaterialMap = defaultMappingFile.mappingTable;
-                            myProject.mapAllMaterials();
-                            myProject.CalculateProject();
-                        }
-                    }
-                    projectToOpen = myProject;
-                }
-                else //upadte an existing file:
-                {
-                    projectToUpdate.Audit();
-                    projectToUpdate.UpdateProject(myProject);
-                    projectToUpdate.CalculateProject();
-                    projectToOpen = projectToUpdate;
-                }
-
                 try
                 {
+                    CarboProject projectToOpen = new CarboProject();
+
+                    if (updateFile == false)
+                    {
+                        //Create groups from all the individual elements
+                        myProject.CreateGroups();
+
+                        if (myProject.RevitImportSettings.mapReinforcement == true)
+                            myProject = mapReinforcement(app, myProject);
+
+                        //MapElements if required
+                        if (myProject.RevitImportSettings.UseImportedMap == true)
+                        {
+                            CarboMapFile defaultMappingFile = CarboMapFile.LoadFromXml();
+                            if (defaultMappingFile != null)
+                            {
+                                myProject.carboMaterialMap = defaultMappingFile.mappingTable;
+                                myProject.mapAllMaterials();
+                                myProject.CalculateProject();
+                            }
+                        }
+
+                        projectToOpen = myProject;
+                    }
+                    else //upadte an existing file:
+                    {
+                        projectToUpdate.Audit();
+                        projectToUpdate.UpdateProject(myProject);
+                        projectToUpdate.CalculateProject();
+                        projectToOpen = projectToUpdate;
+                    }
+
                     //Open the interface
                     CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(projectToOpen);
                     carboCalcProgram.IsRevit = true;
@@ -90,7 +111,7 @@ namespace CarboLifeRevit
                 }
                 catch (Exception ex)
                 {
-                    TaskDialog.Show("Error", ex.Message);
+                    MessageBox.Show("An error occured while trying to import the elements: " + ex.Message, "Error", MessageBoxButton.OK);
                 }
             }
             else

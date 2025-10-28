@@ -303,7 +303,9 @@ namespace CarboLifeAPI
                     //Fix the setting;
                     settings.templatePath = myLocalPath;
                     settings.Save();
-                    MessageBox.Show("The template file could not be found at: " + templatetarget + Environment.NewLine + "The local template file will be used at: " + myLocalPath, "Warning", MessageBoxButton.OK);
+                    MessageBox.Show("The template file could not be found at: " + templatetarget + Environment.NewLine +
+                        "This is most likely because this is the frst time you run the app, i'll try to calibrate the addin now for you." + Environment.NewLine + Environment.NewLine +
+                        "The local template file will be used at: " + myLocalPath, "Warning", MessageBoxButton.OK);
                     return myLocalPath;
                 }
                 else

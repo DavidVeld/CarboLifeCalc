@@ -71,8 +71,10 @@
   <ItemGroup>
     <None Remove="data\defaultmappingfile.xml" />
     <None Remove="libSkiaSharp.dll" />
+    <None Remove="samples\CarboCircleTest R25.rvt" />
     <None Remove="samples\CarboLifeCalc_sample_project_R25.clcx" />
     <None Remove="samples\CarboLifeCalc_sample_project_R25.rvt" />
+    <None Remove="samples\Unit Test CLC R2025.rvt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Carbo Life Calc Help.html">
@@ -237,6 +239,9 @@
     <Content Include="Resources\DVLogo256.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="samples\CarboCircleTest R25.rvt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="samples\CarboLifeCalc_sample_project_R25.clcx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -244,6 +249,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="samples\existing_struct.gh">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+    <Content Include="samples\Unit Test CLC R2025.rvt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -293,7 +301,7 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
   <PropertyGroup>
-    <FileVersion>1.9.1.0</FileVersion>
+    <FileVersion>1.9.2.0</FileVersion>
     <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
   <Target Name="RenameLibDllToGha" AfterTargets="Build">

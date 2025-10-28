@@ -739,6 +739,7 @@ namespace CarboLifeAPI.Data
             }
         }
 
+        /*
         private CarboMapElement GetMapItem(string materialName, string category, string template)
         {
             CarboMapElement result = null;
@@ -751,7 +752,7 @@ namespace CarboLifeAPI.Data
                     {
                         try
                         {
-                            if (mapE.category == category && mapE.revitName == materialName && CarboDatabase.templateName == template)
+                            if(mapE.category == category && mapE.revitName == materialName && mapE.templateName == template)
                             {
                                 return mapE;
                             }
@@ -764,6 +765,19 @@ namespace CarboLifeAPI.Data
                 }
             }
             return result;
+        }
+        */
+
+        private CarboMapElement GetMapItem(string materialName, string category, string template)
+        {
+            if (carboMaterialMap == null || carboMaterialMap.Count == 0)
+                return null;
+
+            // Use LINQ for cleaner, faster lookup
+            return carboMaterialMap.FirstOrDefault(e =>
+                string.Equals(e.revitName, materialName, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(e.category, category, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(e.templateName, template, StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>

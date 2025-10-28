@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<CarboSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0"?>
+<CarboSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <defaultCarboGroupSettings>
     <CategoryName>Type Parameter</CategoryName>
-    <CategoryParamName>Model</CategoryParamName>
+    <CategoryParamName>(Revit) Category</CategoryParamName>
     <ExistingPhaseName>Existing</ExistingPhaseName>
     <VolumeConversionFactor />
     <IncludeSubStructure>true</IncludeSubStructure>
@@ -146,9 +146,9 @@
     <UseImportedMap>true</UseImportedMap>
     <UncertaintyFactor>0.1</UncertaintyFactor>
   </defaultCarboGroupSettings>
-  <templatePath>C:\Users\d.veld\source\repos\CarboLifeCalc - 4.8\CarboLifeCalc\bin\Debug\db\UserMaterials.cxml</templatePath>
+  <templatePath></templatePath>
   <useLocal>true</useLocal>
-  <firstLaunch>false</firstLaunch>
+  <firstLaunch>true</firstLaunch>
   <defaultDesignLife>60</defaultDesignLife>
   <Currency>£</Currency>
   <ecRevitParameter>CLC_EmbodiedCarbon</ecRevitParameter>
@@ -159,7 +159,7 @@
   <showPlanes>true</showPlanes>
   <showTrees>true</showTrees>
   <showSCC>true</showSCC>
-  <showDeaths>false</showDeaths>
+  <showDeaths>true</showDeaths>
   <colourPresets>
     <CarboColourPreset>
       <name>Preset 1</name>
@@ -294,5 +294,5 @@
       </outmax>
     </CarboColourPreset>
   </colourPresets>
-  <launchCircle>true</launchCircle>
+  <launchCircle>false</launchCircle>
 </CarboSettings>
