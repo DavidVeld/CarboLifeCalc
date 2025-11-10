@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
-             mc:Ignorable="d" Title="Use Stage"  Height="800" MaxHeight="770"  MinHeight="770"  d:DesignWidth="700" MinWidth="700" Width="700" MaxWidth="700" Loaded="Window_Loaded" Background="WhiteSmoke" Icon="/CarboLifeUI;component/UI/ico_CarboLife16.png">
+             mc:Ignorable="d" Title="Use Stage"  Height="800" MaxHeight="770"  MinHeight="770"  d:DesignWidth="700" MinWidth="700" Width="700" MaxWidth="700" Loaded="Window_Loaded" Background="WhiteSmoke" Icon="pack://application:,,,/CarboLifeUI;component/Resources/ico_clcwindow.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

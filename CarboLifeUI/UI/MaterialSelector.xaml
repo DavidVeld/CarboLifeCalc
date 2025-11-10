@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d" Title="Carbo Life Calculator: Material Selector"
-             d:DesignHeight="500"  Height="500" MaxHeight="500"  MinHeight="500"  d:DesignWidth="700" MinWidth="700" Width="700" MaxWidth="700" Loaded="Window_Loaded" Background="WhiteSmoke" Icon="/CarboLifeUI;component/UI/ico_CarboLife16.png">
+             d:DesignHeight="500"  Height="500" MaxHeight="500"  MinHeight="500"  d:DesignWidth="700" MinWidth="700" Width="700" MaxWidth="700" Loaded="Window_Loaded" Background="WhiteSmoke" Icon="pack://application:,,,/CarboLifeUI;component/Resources/ico_clcwindow.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

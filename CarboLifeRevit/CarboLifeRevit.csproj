@@ -105,5 +105,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UI\ico_CarboLife16.png" />
+    <Resource Include="UI\ico_clcwindow.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 </Project>

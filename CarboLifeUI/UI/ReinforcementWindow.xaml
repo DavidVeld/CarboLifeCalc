@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Carbo Life: Reinforcement"
-             d:DesignHeight="485"  Height="485" MaxHeight="485"  MinHeight="485"  d:DesignWidth="500" MinWidth="500" Width="500" MaxWidth="500" Loaded="Window_Loaded" Background="WhiteSmoke" Icon="/CarboLifeUI;component/UI/ico_CarboLife16.png">
+             d:DesignHeight="485"  Height="485" MaxHeight="485"  MinHeight="485"  d:DesignWidth="500" MinWidth="500" Width="500" MaxWidth="500" Loaded="Window_Loaded" Background="WhiteSmoke" Icon="pack://application:,,,/CarboLifeUI;component/Resources/ico_clcwindow.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

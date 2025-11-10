@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
         Title="Export"
-             d:DesignHeight="320" d:DesignWidth="320" MinWidth="320" MinHeight="320" Width="320" Height="320"  Loaded="Window_Loaded" Icon="/CarboLifeUI;component/UI/ico_CarboLife16.png">
+             d:DesignHeight="320" d:DesignWidth="320" MinWidth="320" MinHeight="320" Width="320" Height="320"  Loaded="Window_Loaded" Icon="pack://application:,,,/CarboLifeUI;component/Resources/ico_clcwindow.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -44,8 +44,7 @@
     <Compile Remove="UI\OverviewII.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="UI\ico_CarboLife16.png" />
-    <None Remove="UI\ico_CarboLife2D16.png" />
+    <None Remove="Resources\ico_clcwindow.ico" />
   </ItemGroup>
   <ItemGroup>
     <Page Remove="UI\OverviewII.xaml" />
@@ -67,6 +66,9 @@
     <None Update="Resources\Logo128.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Resource Include="Resources\ico_clcwindow.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\rbn_groupnew32.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -118,9 +120,6 @@
     <Resource Include="Resources\ui_table16.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="UI\ico_CarboLife16.png" />
-    <Resource Include="UI\ico_CarboLife2D16.png" />
-    <Content Include="UI\ico_CarboLife.ico" />
     <Content Include="UI\refreshicon.png" />
     <Content Include="UI\editicon.png" />
   </ItemGroup>

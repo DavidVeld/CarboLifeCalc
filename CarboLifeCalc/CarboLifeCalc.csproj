@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="data\defaultmappingfile.xml" />
+    <None Remove="db\Boverkets.cxml" />
     <None Remove="libSkiaSharp.dll" />
     <None Remove="samples\CarboCircleTest R25.rvt" />
     <None Remove="samples\CarboLifeCalc_sample_project_R25.clcx" />
@@ -90,6 +91,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="data\defaultmappingfile.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="db\Boverkets.cxml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="db\matchlog.txt">

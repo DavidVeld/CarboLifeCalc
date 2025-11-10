@@ -151,28 +151,62 @@ namespace CarboLifeUI.UI
 
         private void ComboBox_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            System.Windows.Controls.ComboBox comboBox = sender as System.Windows.Controls.ComboBox;
-            if (comboBox == null) return;
-
-            string text = comboBox.Text?.Trim().ToLower() ?? "";
-
-            // Get full list from window-level property
-            var fullList = this.materialList;
-
-            if (string.IsNullOrEmpty(text))
+            try
             {
-                comboBox.ItemsSource = fullList;
-            }
-            else
-            {
-                comboBox.ItemsSource = fullList
-                    .Where(x => x.carboNAME != null && x.carboNAME.ToLower().Contains(text))
-                    .ToList();
-            }
+                // Ignore navigation keys (optional but recommended)
+                if (e.Key == Key.Up || e.Key == Key.Down || e.Key == Key.Enter || e.Key == Key.Escape)
+                    return;
 
-            comboBox.IsDropDownOpen = true; // Keep the dropdown open while typing
-            SetComboBoxCaretToEnd(comboBox);
+                var comboBox = sender as System.Windows.Controls.ComboBox;
+                if (comboBox == null)
+                    return;
+
+                // Safely get user text
+                string currentText = comboBox.Text?.Trim() ?? "";
+                string searchText = currentText.ToLower();
+
+                // Get the full material list from the window
+                var fullList = this.materialList;
+                if (fullList == null)
+                    return;
+
+                // Filter results
+                var filtered = string.IsNullOrEmpty(searchText)
+                    ? fullList
+                    : fullList
+                        .Where(x => x.carboNAME != null && x.carboNAME.ToLower().Contains(searchText))
+                        .ToList();
+
+                // Temporarily detach event to prevent recursive refresh
+                comboBox.SelectionChanged -= ComboBox_SelectionChanged;
+
+                // Assign filtered list
+                comboBox.ItemsSource = filtered;
+
+                // Reattach event
+                comboBox.SelectionChanged += ComboBox_SelectionChanged;
+
+                // Restore text (so typed letter doesn’t disappear)
+                comboBox.Text = currentText;
+
+                // Keep dropdown open for live filtering
+                comboBox.IsDropDownOpen = true;
+
+                // Move caret to end of text
+                SetComboBoxCaretToEnd(comboBox);
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(
+                    "Error while filtering ComboBox items:\n\n" + ex.Message,
+                    "Filtering Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
         }
+
+
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -181,9 +215,21 @@ namespace CarboLifeUI.UI
         }
         private void SetComboBoxCaretToEnd(System.Windows.Controls.ComboBox comboBox)
         {
-            if (comboBox.Template.FindName("PART_EditableTextBox", comboBox) is System.Windows.Controls.TextBox textBox)
+            try
             {
-                textBox.CaretIndex = textBox.Text.Length;
+                if (comboBox.Template.FindName("PART_EditableTextBox", comboBox) is System.Windows.Controls.TextBox textBox)
+                {
+                    textBox.CaretIndex = textBox.Text.Length;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(
+                    "Error setting caret position:\n\n" + ex.Message,
+                    "Caret Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
             }
         }
 
