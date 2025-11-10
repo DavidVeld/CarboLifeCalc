@@ -672,7 +672,7 @@ namespace CarboLifeAPI
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "LCAx File (*.json)|*.json|All files (*.*)|*.*";
+                openFileDialog.Filter = "LCAx File (*.json)|*.json|";
 
                 var path = openFileDialog.ShowDialog();
 

@@ -6,7 +6,7 @@
              xmlns:wpf="http://schemas.microsoft.com/wpf/2008/toolkit"
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Reinforcement Auto-Mapper"
-             d:DesignHeight="700" d:DesignWidth="800" Height="650" Width="800" MinHeight="650" MinWidth="800" Loaded="Window_Loaded" ShowInTaskbar="True" Background="WhiteSmoke">
+             d:DesignHeight="700" d:DesignWidth="800" Height="650" Width="800" MinHeight="650" MinWidth="800" Loaded="Window_Loaded" ShowInTaskbar="True" Background="WhiteSmoke" Icon="/CarboLifeUI;component/UI/ico_CarboLife16.png">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

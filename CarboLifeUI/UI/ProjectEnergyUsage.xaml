@@ -7,7 +7,7 @@
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
 
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="600" MinWidth="500" MinHeight="650" Width="600" Height="600"  Loaded="Window_Loaded" Background="WhiteSmoke">
+             d:DesignHeight="600" d:DesignWidth="600" MinWidth="500" MinHeight="650" Width="600" Height="600"  Loaded="Window_Loaded" Background="WhiteSmoke" Icon="/CarboLifeUI;component/UI/ico_CarboLife2D16.png">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

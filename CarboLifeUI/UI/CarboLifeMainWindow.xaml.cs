@@ -94,7 +94,7 @@ namespace CarboLifeUI.UI
             }
         }
 
-        public CarboLifeMainWindow(CarboProject myProject)
+        public CarboLifeMainWindow(CarboProject myProject, bool fromRevit = false)
         {
             //UserPaths
             PathUtils.CheckFileLocationsNew();
@@ -133,7 +133,7 @@ namespace CarboLifeUI.UI
                 if(randomNumber == 2)
                 {
                     //only show message after certain publication date
-                    DateTime startDate = new DateTime(2025, 11, 1);
+                    DateTime startDate = new DateTime(2025, 12, 1);
                     DateTime currentDate = DateTime.Now;
 
                     if (currentDate > startDate)
@@ -291,17 +291,14 @@ Do you want to buy me a coffee and you get a key to remove this message?";
             {
                 try
                 {
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
+                    string SelectedProjectPath = Utils.OpenCarboProject();
 
-                    var path = openFileDialog.ShowDialog();
-
-                    if (openFileDialog.FileName != "")
+                    if (SelectedProjectPath != "")
                     {
                         CarboProject newProject = new CarboProject();
 
                         CarboProject buffer = new CarboProject();
-                        carboLifeProject = buffer.DeSerializeXML(openFileDialog.FileName);
+                        carboLifeProject = buffer.DeSerializeXML(SelectedProjectPath);
 
                         carboLifeProject.Audit();
                         carboLifeProject.CalculateProject();
@@ -376,7 +373,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
             //Create a File and save it as a xml file
             SaveFileDialog saveDialog = new SaveFileDialog();
             saveDialog.Title = "Specify path";
-            saveDialog.Filter = "All files (*.*)|*.*| Carbo Life Project File(*.clcx) | *.clcx";
+            saveDialog.Filter = "Carbo Life Project File(*.clcx) | *.clcx";
             saveDialog.FilterIndex = 2;
             saveDialog.RestoreDirectory = true;
 
@@ -693,18 +690,13 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                 string Startpath = settings.templatePath;
                 string pathForViewing = System.IO.Path.GetDirectoryName(Startpath);
 
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Material File (*.cxml)|*.cxml|All files (*.*)|*.*";
-                openFileDialog.InitialDirectory = pathForViewing;
-
-                var path = openFileDialog.ShowDialog();
-
-                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
+                string materialOpenPath = Utils.OpenCarboMaterialLibrary();
+                if (materialOpenPath != "")
                 {
                     CarboProject newProject = new CarboProject();
                     CarboDatabase bufferDatabase = newProject.CarboDatabase;
 
-                    CarboDatabase cd = bufferDatabase.DeSerializeXML(openFileDialog.FileName);
+                    CarboDatabase cd = bufferDatabase.DeSerializeXML(materialOpenPath);
 
                     MaterialEditor mateditor = new MaterialEditor(cd.CarboMaterialList[0].Name, cd);
                     mateditor.ShowDialog();
@@ -712,7 +704,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                     if (mateditor.acceptNew == true)
                     {
                         CarboDatabase database = mateditor.returnedDatabase;
-                        database.SerializeXML(openFileDialog.FileName);
+                        database.SerializeXML(materialOpenPath);
                     }
                     else
                     {

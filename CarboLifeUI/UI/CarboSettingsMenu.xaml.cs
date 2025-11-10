@@ -79,23 +79,17 @@ namespace CarboLifeUI.UI
         {
             string currentDir = System.IO.Path.GetDirectoryName(settings.templatePath);
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Carbo Material Data Files (*.cxml)|*.cxml";
-            if(Directory.Exists(currentDir))
-                openFileDialog.InitialDirectory = currentDir;
+            string MaterialPathToOpen = Utils.OpenCarboMaterialLibrary(currentDir);
 
-            var path = openFileDialog.ShowDialog();
-            if (openFileDialog.FileName != "")
+            if (MaterialPathToOpen != "")
             {
-                FileInfo finfo = new FileInfo(openFileDialog.FileName);
+                FileInfo finfo = new FileInfo(MaterialPathToOpen);
 
-                if (openFileDialog.FileName != "")
-                {
-                    settings.templatePath = openFileDialog.FileName;
-                    txt_Path.Text = settings.templatePath;
-                    CheckTemplateFile();
-                    System.Windows.MessageBox.Show("You have changed your template path, this will be used next time you start a new calculation.");
-                }
+                settings.templatePath = MaterialPathToOpen;
+                txt_Path.Text = settings.templatePath;
+                CheckTemplateFile();
+                System.Windows.MessageBox.Show("You have changed your template path, this will be used next time you start a new calculation.");
+                
             }
         }
 

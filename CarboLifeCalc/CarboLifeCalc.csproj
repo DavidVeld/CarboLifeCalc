@@ -301,7 +301,7 @@
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
   <PropertyGroup>
-    <FileVersion>1.9.2.0</FileVersion>
+    <FileVersion>1.9.3.0</FileVersion>
     <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
   <Target Name="RenameLibDllToGha" AfterTargets="Build">

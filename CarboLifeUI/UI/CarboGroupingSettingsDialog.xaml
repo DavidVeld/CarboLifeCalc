@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"  Title="Carbo Life Calculator: Revit Import Settings"
-             MinWidth="850" MinHeight="650" Width="850" Height="650" Loaded="Window_Loaded" ResizeMode="NoResize">
+             MinWidth="850" MinHeight="650" Width="850" Height="650" Loaded="Window_Loaded" ResizeMode="NoResize" Icon="/CarboLifeUI;component/UI/ico_CarboLife2D16.png">
 
     <Window.Resources>
         <ResourceDictionary>

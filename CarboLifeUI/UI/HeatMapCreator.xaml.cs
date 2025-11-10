@@ -95,14 +95,11 @@ namespace CarboLifeUI.UI
         {
             try
             {
-                System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
+                string projectToOpenPath = Utils.OpenCarboProject();
 
-                var path = openFileDialog.ShowDialog();
-
-                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
+                if (projectToOpenPath != "")
                 {
-                    string projectPath = openFileDialog.FileName;
+                    string projectPath = projectToOpenPath;
 
                     //Open the project
                     CarboProject projectToOpen = new CarboProject();

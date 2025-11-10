@@ -260,7 +260,7 @@ namespace CarboLifeRevit
 
             //Below is a list of categories that are "valid, as it contains geometry" but should not be included in the carbo calc.
 
-            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.IntegerValue;
+            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
 
             if (enumCategory == BuiltInCategory.OST_StairsRuns)
             {

@@ -12,11 +12,9 @@
                 <ResourceDictionary Source="MyStyles.xaml"/>
                 <ResourceDictionary Source="MyDataGrid.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
-
     </UserControl.Resources>
-
+        
     <Grid Background="Transparent">
 
         <Grid.RowDefinitions>
@@ -170,8 +168,12 @@
                 <!---Description-->
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Description &#x0a;" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="False"/>
                 <!--Volume-->
-                <DataGridTextColumn MinWidth="100" Header="Volume &#x0a;[m³]" Binding="{Binding Path=Volume, Mode=TwoWay}" IsReadOnly="False" Visibility="Visible"/>
-
+                <DataGridTextColumn 
+    MinWidth="100"
+    Header="Volume &#x0a;[m³]"
+    Binding="{Binding Path=Volume, Mode=TwoWay}"
+    IsReadOnly="False"
+    Visibility="Visible"/>
                 <!--- Advanced Fields -->
                 <!--Volume Correction -->
                 <DataGridTextColumn x:Name="column_Correction" MinWidth="100" Header="Correction &#x0a;[+-*/ Function] " Binding="{Binding Path=Correction, Mode=TwoWay}" IsReadOnly="False" Visibility="Hidden"/>

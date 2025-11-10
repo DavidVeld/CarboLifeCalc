@@ -1,5 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using CarboLifeAPI;
 using CarboLifeAPI.Data;
 using CarboLifeUI.UI;
 using Microsoft.Win32;
@@ -17,21 +18,20 @@ namespace CarboLifeRevit
 
     class CarboLifeCalcUpdate : IExternalCommand
     {
+        [Obsolete]
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            ///This command is Obsolete
             UIApplication app = commandData.Application;
 
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
+                string projectOpenPath = Utils.OpenCarboProject();
 
-                var path = openFileDialog.ShowDialog();
-
-                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
+                if (projectOpenPath != "")
                 {
                     //Import the Files
-                    CarboLifeRevitImport.ImportElements(app, null, openFileDialog.FileName, "");
+                    CarboLifeRevitImport.ImportElements(app, null, projectOpenPath, "");
                 }
             }
             catch (Exception ex)

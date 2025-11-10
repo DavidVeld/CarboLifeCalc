@@ -12,6 +12,8 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.Win32;
+using System.Diagnostics.Eventing.Reader;
 
 namespace CarboLifeAPI
 {
@@ -677,6 +679,86 @@ namespace CarboLifeAPI
             }
 
             return mappingList;
+        }
+
+        /// <summary>
+        /// Opends a file dialog to select a Carbo Life Project file (.clcx)
+        /// </summary>
+        /// <returns>The filepath if valid or "" if not</returns>
+        public static string OpenCarboProject(string pathForViewing = "")
+        {
+            string path = "";
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx";
+
+                if(Directory.Exists(pathForViewing))
+                    openFileDialog.InitialDirectory = pathForViewing;
+
+                var ok = openFileDialog.ShowDialog();
+
+                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName) && openFileDialog.FileName.EndsWith("clcx"))
+                {
+                    if(DataExportUtils.IsFileLocked(openFileDialog.FileName) == false)
+                    {
+                        path = openFileDialog.FileName;
+                        return path;
+                    }
+                    else
+                    {
+                        MessageBox.Show("The selected Carbo Life Project file is currently in use by another process. Please close any other applications that might be using the file and try again.", "File In Use", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return "";
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There was an error in in opening the file, it could not be found, or is of the wrong format", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return "";
+            }
+
+            return "";
+        }
+
+        /// <summary>
+        /// Opends a file dialog to select a Carbo Life Material Library file (.clcx)
+        /// </summary>
+        /// <returns>The filepath if valid or "" if not</returns>
+        public static string OpenCarboMaterialLibrary(string pathForViewing = "")
+        {
+            string path = "";
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Carbo Life Material File (*.cxml)|*.cxml";
+
+                if (Directory.Exists(pathForViewing))
+                    openFileDialog.InitialDirectory = pathForViewing;
+
+                var ok = openFileDialog.ShowDialog();
+
+                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName) && openFileDialog.FileName.EndsWith("cxml"))
+                {
+                    if (DataExportUtils.IsFileLocked(openFileDialog.FileName) == false)
+                    {
+                        path = openFileDialog.FileName;
+                        return path;
+                    }
+                    else
+                    {
+                        MessageBox.Show("The selected Carbo Life Material file is currently in use by another process. Please close any other applications that might be using the file and try again.", "File In Use", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return "";
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("There was an error in in opening the file, it could not be found, or is of the wrong format", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return "";
+            }
+
+            return "";
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using CarboLifeAPI.Data;
+﻿using CarboLifeAPI;
+using CarboLifeAPI.Data;
 using Microsoft.SqlServer.Server;
 using Microsoft.Win32;
 using System;
@@ -34,14 +35,11 @@ namespace CarboLifeCalc
         {
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
+                string projectOpenPath = Utils.OpenCarboProject();
 
-                var path = openFileDialog.ShowDialog();
-
-                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
+                if (projectOpenPath != "")
                 {
-                    string projectPath = openFileDialog.FileName;
+                    string projectPath = projectOpenPath;
 
                     //Open the project
                     CarboProject projectToOpen = new CarboProject();
@@ -54,8 +52,6 @@ namespace CarboLifeCalc
                     projectToUpdate.CalculateProject();
 
                     carboProject = projectToUpdate;
-
-
                 }
                 //Get all the visible elements (all project)
 

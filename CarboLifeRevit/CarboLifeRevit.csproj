@@ -52,7 +52,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>ico_CarboLife.ico</ApplicationIcon>
-    <FileVersion>1.9.2.0</FileVersion>
+    <FileVersion>1.9.3.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Circle\**" />
@@ -87,6 +87,9 @@
     <Compile Remove="CarboLifeCalcPlus.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="UI\ico_CarboLife16.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="AdWindows">
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2025\AdWindows.dll</HintPath>
       <Private>False</Private>
@@ -99,5 +102,8 @@
       <HintPath>..\..\..\..\..\..\Program Files\Autodesk\Revit 2025\RevitAPIUI.dll</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UI\ico_CarboLife16.png" />
   </ItemGroup>
 </Project>

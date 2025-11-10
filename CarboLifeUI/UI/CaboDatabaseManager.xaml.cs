@@ -428,14 +428,11 @@ namespace CarboLifeUI.UI
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    OpenFileDialog openFileDialog = new OpenFileDialog();
-                    openFileDialog.Filter = "xml files (*.cxml)|*.cxml|All files (*.*)|*.*";
+                    string projectOpenPath = Utils.OpenCarboProject();
 
-                    var path = openFileDialog.ShowDialog();
-                    FileInfo finfo = new FileInfo(openFileDialog.FileName);
-                    if (openFileDialog.FileName != "")
+                    if (projectOpenPath != "")
                     {
-                        name = openFileDialog.FileName;
+                        name = projectOpenPath;
 
                         CarboDatabase buffer = UserMaterials.DeSerializeXML(name);
 
@@ -444,7 +441,7 @@ namespace CarboLifeUI.UI
                         if (syncResult == true)
                         {
                             buffer.SerializeXML(name);
-                            Utils.WriteToLog("Database saved to: " + name);
+                            //Utils.WriteToLog("Database saved to: " + name);
                             MessageBox.Show("Dataset saved");
                         }
                     }
@@ -501,14 +498,12 @@ namespace CarboLifeUI.UI
 
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "carboLife Materials (*.cml)|*.cml";
 
-                var path = openFileDialog.ShowDialog();
-                FileInfo finfo = new FileInfo(openFileDialog.FileName);
-                if (openFileDialog.FileName != "")
+                string libraryToOpenPath = Utils.OpenCarboMaterialLibrary();
+
+                if (libraryToOpenPath != "")
                 {
-                    string filePath = openFileDialog.FileName;
+                    string filePath = libraryToOpenPath;
                     CarboDatabase newMaterialDatabase = new CarboDatabase();
                     if (File.Exists(filePath))
                     {

@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using System.IO;
 using CarboLifeRevit.Modeless;
 using System.Windows;
+using CarboLifeAPI;
 
 namespace CarboLifeRevit
 {
@@ -36,15 +37,15 @@ namespace CarboLifeRevit
 
                     return Result.Cancelled;
                 }
-
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
-
-                var path = openFileDialog.ShowDialog();
-
-                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
+                string SelectedProjectPath = Utils.OpenCarboProject();
+                if (SelectedProjectPath == "")
                 {
-                    string projectPath = openFileDialog.FileName;
+                    return Result.Cancelled;
+                }
+
+                if (SelectedProjectPath != "" && File.Exists(SelectedProjectPath) && SelectedProjectPath.EndsWith("clcx"))
+                {
+                    string projectPath = SelectedProjectPath;
 
                     //Open the project
                     CarboProject projectToOpen = new CarboProject();
@@ -62,7 +63,11 @@ namespace CarboLifeRevit
 
                     List<Int64> VisibleElements = ElementsVisibleOrSelected.GetElementIdList();
                     CarboLifeApp.thisApp.ShowHeatmap(commandData.Application, projectToOpen, VisibleElements);
-
+                }
+                else
+                {
+                    MessageBox.Show("Invalid File Selected");
+                    return Result.Cancelled;
                 }
 
                 //Return result

@@ -201,14 +201,12 @@ namespace CarboLifeRevit
         {
             try
             {
-                System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
 
-                var path = openFileDialog.ShowDialog();
+                string projectPathToOpen = Utils.OpenCarboProject();
 
-                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
+                if (projectPathToOpen != "")
                 {
-                    string projectPath = openFileDialog.FileName;
+                    string projectPath = projectPathToOpen;
 
                     //Open the project
                     CarboProject projectToOpen = new CarboProject();

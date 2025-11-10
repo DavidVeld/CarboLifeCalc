@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="650" d:DesignWidth="1024" Width="1024" Height="650" MinWidth="1024" MinHeight="650" Loaded="Window_Loaded" Background="WhiteSmoke">
+             d:DesignHeight="650" d:DesignWidth="1024" Width="1024" Height="650" MinWidth="1024" MinHeight="650" Loaded="Window_Loaded" Background="WhiteSmoke" Icon="/CarboLifeUI;component/UI/ico_CarboLife2D16.png">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

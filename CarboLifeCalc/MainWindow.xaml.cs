@@ -23,6 +23,7 @@ using Microsoft.Win32;
 using Path = System.IO.Path;
 //using CarboCircle;
 using System.Security.Cryptography;
+using CarboLifeAPI;
 
 namespace CarboLifeCalc
 {
@@ -84,18 +85,14 @@ namespace CarboLifeCalc
                 string Startpath = settings.templatePath;
                 string pathForViewing = Path.GetDirectoryName(Startpath);
 
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Material File (*.cxml)|*.cxml|All files (*.*)|*.*";
-                openFileDialog.InitialDirectory = pathForViewing;
+                string pathToOpen = Utils.OpenCarboMaterialLibrary(pathForViewing);
 
-                var path = openFileDialog.ShowDialog();
-
-                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
+                if (pathToOpen != "")
                 {
                     CarboProject newProject = new CarboProject();
                     CarboDatabase bufferDatabase = newProject.CarboDatabase;
 
-                    CarboDatabase cd = bufferDatabase.DeSerializeXML(openFileDialog.FileName);
+                    CarboDatabase cd = bufferDatabase.DeSerializeXML(pathToOpen);
 
                     MaterialEditor mateditor = new MaterialEditor(cd.CarboMaterialList[0].Name, cd);
                     mateditor.ShowDialog();
@@ -103,7 +100,7 @@ namespace CarboLifeCalc
                     if (mateditor.acceptNew == true)
                     {
                         CarboDatabase database = mateditor.returnedDatabase;
-                        database.SerializeXML(openFileDialog.FileName);
+                        database.SerializeXML(pathToOpen);
                     }
                     else
                     {
@@ -123,19 +120,15 @@ namespace CarboLifeCalc
         {
             try
             {
+                string FilePath = Utils.OpenCarboProject();
 
 
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
-
-                var path = openFileDialog.ShowDialog();
-
-                if (openFileDialog.FileName != "")
+                if (FilePath != "" && File.Exists(FilePath))
                 {
                     CarboProject newProject = new CarboProject();
 
                     CarboProject buffer = new CarboProject();
-                    newProject = buffer.DeSerializeXML(openFileDialog.FileName);
+                    newProject = buffer.DeSerializeXML(FilePath);
                     newProject.justSaved = true;
 
                     Dispatcher.BeginInvoke(new Action(() => OpenProject(newProject)), DispatcherPriority.ContextIdle, null);

@@ -128,14 +128,41 @@ namespace CarboLifeUI.UI
 
         private void Mnu_DeleteGroup_Click(object sender, MouseButtonEventArgs e)
         {
-            CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
-            if (carboGroup != null)
+            var selectedGroups = dgv_Overview.SelectedItems.Cast<CarboGroup>().ToList();
+
+            if (!selectedGroups.Any())
+            {
+                MessageBox.Show("Please select one or more groups to delete.",
+                                "No Selection",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Information);
+                return;
+            }
+
+            // Confirm deletion
+            var confirm = MessageBox.Show(
+                $"Are you sure you want to delete {selectedGroups.Count} group(s)?",
+                "Confirm Deletion",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Warning);
+
+            if (confirm != MessageBoxResult.Yes)
+                return;
+
+            // Perform deletion
+            foreach (var carboGroup in selectedGroups)
             {
                 CarboLifeProject.DeleteGroup(carboGroup);
             }
-            CarboLifeProject.CalculateProject();
 
+            CarboLifeProject.CalculateProject();
             refreshData();
+
+            // Notify completion
+            MessageBox.Show($"{selectedGroups.Count} group(s) deleted successfully.",
+                            "Deletion Complete",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Information);
         }
 
         public void refreshData()
@@ -916,6 +943,7 @@ namespace CarboLifeUI.UI
                 this.CarboLifeProject.mapAllMaterials();
             }
         }
+
 
 
     }

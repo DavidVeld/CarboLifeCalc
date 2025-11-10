@@ -189,25 +189,21 @@ namespace CarboLifeUI.UI
             string name = "";
             try
             { 
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Carbo Material Data Files (*.cxml)|*.cxml";
 
-                var path = openFileDialog.ShowDialog();
-                if (openFileDialog.FileName != "")
+                string libraryToOpenPath = Utils.OpenCarboMaterialLibrary();
+
+                if (libraryToOpenPath != "")
                 {
-                    FileInfo finfo = new FileInfo(openFileDialog.FileName);
+                    FileInfo finfo = new FileInfo(libraryToOpenPath);
 
-                    if (openFileDialog.FileName != "")
+                    name = libraryToOpenPath;
+                    CarboDatabase userprojects = new CarboDatabase();
+
+                    CarboDatabase buffer = userprojects.DeSerializeXML(name);
+
+                    if (buffer != null)
                     {
-                        name = openFileDialog.FileName;
-                        CarboDatabase userprojects = new CarboDatabase();
-
-                        CarboDatabase buffer = userprojects.DeSerializeXML(name);
-
-                        if (buffer != null)
-                        {
-                            templateDatabase = buffer;
-                        }
+                        templateDatabase = buffer;
                     }
 
                     cbb_DataBases.Items.Add(name);

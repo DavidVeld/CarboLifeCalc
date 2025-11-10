@@ -38,10 +38,14 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\ico_CarboLife.ico</ApplicationIcon>
-    <FileVersion>1.9.2.0</FileVersion>
+    <FileVersion>1.9.3.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="UI\OverviewII.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="UI\ico_CarboLife16.png" />
+    <None Remove="UI\ico_CarboLife2D16.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Remove="UI\OverviewII.xaml" />
@@ -114,6 +118,8 @@
     <Resource Include="Resources\ui_table16.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="UI\ico_CarboLife16.png" />
+    <Resource Include="UI\ico_CarboLife2D16.png" />
     <Content Include="UI\ico_CarboLife.ico" />
     <Content Include="UI\refreshicon.png" />
     <Content Include="UI\editicon.png" />

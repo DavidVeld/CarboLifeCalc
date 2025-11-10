@@ -306,36 +306,6 @@ namespace CarboLifeUI.UI
             RefreshInterFace();
         }
 
-        private CarboProject openNewProject()
-        {
-            CarboProject result = null;
-
-            try
-            {
-                System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|Carbo Life Project File (*.xml)| *.xml|All files (*.*)|*.*";
-
-                var path = openFileDialog.ShowDialog();
-
-                if (openFileDialog.FileName != "")
-                {
-                    CarboProject buffer = new CarboProject();
-                    result = buffer.DeSerializeXML(openFileDialog.FileName);
-
-                    result.Audit();
-                    result.CalculateProject();
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-                return null;
-            }
-
-            return result;
-
-        }
-
          private List<CarboProject> openNewProjects()
         {
             List<CarboProject> result = new List<CarboProject>();
@@ -343,7 +313,7 @@ namespace CarboLifeUI.UI
             try
             {
                 System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|Carbo Life Project File (*.xml)| *.xml|All files (*.*)|*.*";
+                openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx";
                 openFileDialog.Multiselect = true;
                 openFileDialog.Title = "Select Project to Compare";
 

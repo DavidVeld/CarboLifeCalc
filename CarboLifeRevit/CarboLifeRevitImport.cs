@@ -102,7 +102,7 @@ namespace CarboLifeRevit
                     }
 
                     //Open the interface
-                    CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(projectToOpen);
+                    CarboLifeMainWindow carboCalcProgram = new CarboLifeMainWindow(projectToOpen, true);
                     carboCalcProgram.IsRevit = true;
 
                     AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);

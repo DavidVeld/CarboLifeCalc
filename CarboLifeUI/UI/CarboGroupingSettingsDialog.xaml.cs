@@ -253,15 +253,12 @@ namespace CarboLifeUI.UI
 
         private void btn_ProjectPath_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Carbo Life Project File (*.clcx)|*.clcx|All files (*.*)|*.*";
+            string fileToOpen = Utils.OpenCarboProject();
 
-            var path = openFileDialog.ShowDialog();
-
-            if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName))
+            if (fileToOpen != "")
             {
-                this.projectPath = openFileDialog.FileName;
-                txt_ProjectPath.Text = openFileDialog.FileName;
+                this.projectPath = fileToOpen;
+                txt_ProjectPath.Text = fileToOpen;
             }
         }
 
