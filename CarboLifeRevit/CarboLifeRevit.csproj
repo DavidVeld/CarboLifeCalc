@@ -52,7 +52,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>ico_CarboLife.ico</ApplicationIcon>
-    <FileVersion>1.9.3.0</FileVersion>
+    <FileVersion>1.9.5.0</FileVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Circle\**" />
