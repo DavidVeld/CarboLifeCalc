@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime;
@@ -158,7 +159,7 @@ namespace CarboLifeUI.UI
         private void Btn_ImportClose_Click(object sender, RoutedEventArgs e)
         {
             string result;
-            if (templateCollection.TryGetValue(cbb_Template.Text, out result))
+            templateCollection.TryGetValue(cbb_Template.Text, out result);
 
             if (File.Exists(result))
             {
@@ -226,13 +227,16 @@ namespace CarboLifeUI.UI
 
             settings.defaultCarboGroupSettings.UseImportedMap = chk_UseMappedMaterialData.IsChecked.Value;
 
-            settings.defaultCarboGroupSettings.UncertaintyFactor = Convert.ToDouble(txt_UncertFact.Text) / 100.0;
-
-            if (chk_UseAsDefault.IsChecked == true)
-            { 
-                string fullTemplatePath = PathUtils.getTemplateFilePath(cbb_Template.Text);
-                settings.templatePath = fullTemplatePath;
+            double uncertaintyPercent;
+            if (!double.TryParse(txt_UncertFact.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out uncertaintyPercent))
+            {
+                System.Windows.MessageBox.Show("The uncertainty factor must be a valid number. Keeping the previous value.");
+                uncertaintyPercent = importSettings.UncertaintyFactor * 100;
             }
+            settings.defaultCarboGroupSettings.UncertaintyFactor = uncertaintyPercent / 100.0;
+
+            string fullTemplatePath = PathUtils.getTemplateFilePath(cbb_Template.Text);
+            settings.templatePath = fullTemplatePath;
 
             //Save as default for next time/project;
             settings.Save();

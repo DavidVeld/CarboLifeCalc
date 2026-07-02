@@ -103,9 +103,6 @@
                     <TextBlock Style="{StaticResource HintText}">Select the material template to use for this project</TextBlock>
                     <ComboBox Name="cbb_Template" Height="26" Margin="0,0,0,12"
                               Style="{StaticResource ComboBoxFlatStyle}"/>
-                    <CheckBox Name="chk_UseAsDefault" Style="{StaticResource CheckSection}">
-                        Make this the default template
-                    </CheckBox>
                         <!-- Category -->
                     <TextBlock Style="{StaticResource FieldLabel}">Category</TextBlock>
                     <TextBlock Style="{StaticResource HintText}">The main grouping value. Defaults to the Revit Category Name; override with a custom parameter.</TextBlock>

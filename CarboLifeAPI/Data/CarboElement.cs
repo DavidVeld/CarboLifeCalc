@@ -24,6 +24,8 @@ namespace CarboLifeAPI.Data
 
         public string Category { get; set; }
         public string SubCategory { get; set; }
+        public string Set { get; set; }
+
         public string AdditionalData { get; set; }
         public double Area { get; set; }
 
@@ -67,6 +69,8 @@ namespace CarboLifeAPI.Data
 
             Category = "Other";
             SubCategory = "";
+            Set = "";
+
             AdditionalData = "";
             Area = 0;
 
@@ -135,6 +139,7 @@ namespace CarboLifeAPI.Data
 
             clone.Category = this.Category;
             clone.SubCategory = this.SubCategory;
+            clone.Set = this.Set;
             clone.AdditionalData = this.AdditionalData;
             clone.Volume = this.Volume;
             clone.Volume_Total = this.Volume_Total;
@@ -178,6 +183,8 @@ namespace CarboLifeAPI.Data
 
             clone.Category = this.Category;
             clone.SubCategory = this.SubCategory;
+            clone.Set = this.Set;
+
             clone.AdditionalData = this.AdditionalData;
             clone.Volume = this.Volume;
             clone.Volume_Total = this.Volume_Total;
@@ -201,7 +208,7 @@ namespace CarboLifeAPI.Data
             clone.EC = this.EC;
             clone.ECI_Cumulative = this.ECI_Cumulative;
             clone.EC_Cumulative = this.EC_Cumulative;
-            clone.Volume_Cumulative = this.EC_Cumulative;
+            clone.Volume_Cumulative = this.Volume_Cumulative;
 
             clone.includeInCalc = this.includeInCalc;
 

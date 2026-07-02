@@ -19,11 +19,6 @@ namespace CarboLifeAPI.Data
                 cg.RefreshValuesFromElements();
             }
 
-            foreach (CarboGroup cg in result)
-            {
-                cg.RefreshValuesFromElements();
-            }
-
             return result;
         }
 

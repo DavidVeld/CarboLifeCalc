@@ -613,7 +613,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
         }
         void ExportThread_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (ExcelExportPath != null || ExcelExportPath != "")
+            if (ExcelExportPath != null && ExcelExportPath != "")
             {
                 ExportExcel_Completed = false;
 
@@ -863,6 +863,43 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                 {
                     DataExportUtils.ExportToIstructEClick(carboLifeProject, savePath);
                 }
+            }
+        }
+
+        private void mnu_ImportIFC_Click(object sender, RoutedEventArgs e)
+        {
+            var ofd = new Microsoft.Win32.OpenFileDialog
+            {
+                Filter = "IFC files (*.ifc)|*.ifc|All files (*.*)|*.*",
+                Title = "Import IFC"
+            };
+            if (ofd.ShowDialog() != true) return;
+
+            try
+            {
+                var importer = new CarboLifeAPI.CarboIFCImporter();
+                List<CarboElement> elements = importer.Import(ofd.FileName);
+
+                if (elements.Count > 0)
+                {
+                    carboLifeProject.DeleteAllGroups();
+
+                    foreach (CarboElement ce in elements)
+                        carboLifeProject.AddorUpdateElement(ce);
+
+                    carboLifeProject.CreateGroups();
+                    carboLifeProject.CalculateProject();
+                }
+
+                if (importer.Warnings.Count > 0)
+                    System.Windows.MessageBox.Show(
+                        string.Join(Environment.NewLine, importer.Warnings),
+                        "IFC import notes", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("IFC import failed:\n" + ex.Message,
+                    "IFC import", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -29,7 +29,14 @@ namespace CarboLifeAPI
 
         // ── Settings file ───────────────────────────────────────────────
         public static string GetSettingsFilePath() =>
-            Path.Combine(GetDataDir(), "CarboSettings.xml");
+            Path.Combine(GetDbSettingsDir(), "CarboSettings.xml");
+
+        // ── Default file locations ──────────────────────────────────────
+        public static string GetDefaultTemplatePath() =>
+            Path.Combine(GetMaterialsDir(), "UserMaterials.cxml");
+
+        public static string GetDefaultMappingPath() =>
+            Path.Combine(GetDbSettingsDir(), "defaultmappingfile.xml");
 
 
         /// <summary>
@@ -60,25 +67,17 @@ namespace CarboLifeAPI
             try
             {
                 //Essential Locations:
-                string assemblyPath = PathUtils.GetAssemblyDir();
-                string dataPath = Path.Combine(assemblyPath, "data");
-                string dbPath = Path.Combine(assemblyPath, "db");
-
-                string bufferFilePath = Path.Combine(dataPath, "MaterialBuffer.cxml");
-                string mappingBufferFilePath = Path.Combine(dataPath, "defaultmappingfile.xml");
+                string bufferFilePath = Path.Combine(GetMaterialsDir(), "MaterialBuffer.cxml");
 
                 //all error handeling and new setting file creation is done in the Load function.
                 string expectedSettingsPath = getSettingsFilePath();
 
-                string defaultTemplatePath = Path.Combine(dbPath, "materials", "UserMaterials.cxml");
-                string defaultMappingPath = Path.Combine(dbPath, "settings", "defaultmappingfile.xml");
+                string defaultTemplatePath = GetDefaultTemplatePath();
+                string defaultMappingPath = GetDefaultMappingPath();
 
 
-                if (File.Exists(bufferFilePath)) 
+                if (File.Exists(bufferFilePath))
                     log += "Material Buffer file found at: " + bufferFilePath + Environment.NewLine;
-
-                if(File.Exists(mappingBufferFilePath))
-                    log += "Material Mapping Buffer file found at: " + mappingBufferFilePath + Environment.NewLine;
 
                 if(File.Exists(expectedSettingsPath))
                     log += "Settings file found at: " + expectedSettingsPath + Environment.NewLine;
@@ -105,7 +104,9 @@ namespace CarboLifeAPI
                         //If we dont have a template, create one:
                         if (File.Exists(bufferFilePath))
                         {
+                            Directory.CreateDirectory(GetMaterialsDir());
                             File.Copy(bufferFilePath, defaultTemplatePath);
+                            settings.templatePath = defaultTemplatePath;
                         }
                         else
                         {
@@ -126,12 +127,14 @@ namespace CarboLifeAPI
                         settings.mappingPath = defaultMappingPath;
                     else
                     {
-                        //If we dont have a template, create one:
-                        if (File.Exists(mappingBufferFilePath))
+                        //If we dont have a mapping file, create an empty one at the default location:
+                        try
                         {
-                            File.Copy(mappingBufferFilePath, defaultMappingPath);
+                            Directory.CreateDirectory(GetDbSettingsDir());
+                            new CarboMapFile().SaveToXml(defaultMappingPath);
+                            settings.mappingPath = defaultMappingPath;
                         }
-                        else
+                        catch
                         {
                             log += "Error: Could not find or create a mapping file, please re-install the software." + Environment.NewLine;
                             errorMapping = true;
@@ -168,44 +171,52 @@ namespace CarboLifeAPI
 
 
         /// <summary>
-        /// Finds the location of the Carbo Life Calculator Settings File this is always installdir/data/CarboSettings.xml
+        /// Finds the location of the Carbo Life Calculator Settings File this is always installdir/db/settings/CarboSettings.xml
+        /// If a settings file still exists in the legacy data folder it is migrated over once.
         /// </summary>
         /// <returns>Settings File path</returns>
         public static string getSettingsFilePath()
         {
-            return GetSettingsFilePath();
-            /* test Obsolete
-            //string fileName = "db\\CarboSettings.xml";
-            //string myPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\CarboLifeCalc\\CarboSettings.xml";
-            string myLocalPath = Path.Combine(GetAssemblyDir(),"data","CarboSettings.xml");
+            string settingsPath = GetSettingsFilePath();
 
-            //if (File.Exists(myPath))
-            //    return myPath;
-            if (File.Exists(myLocalPath))
-                return myLocalPath;
-            else
+            if (!File.Exists(settingsPath))
             {
-                try
+                string legacyPath = Path.Combine(GetDataDir(), "CarboSettings.xml");
+                if (File.Exists(legacyPath))
                 {
-                    MessageBox.Show("Could not find a path reference to the CarboLifeCalculator Setting File, I will try to  you create a new settings file, you possibly have to re-install the software if this error persists" + Environment.NewLine +
-                            // "Target: " + myPath + Environment.NewLine +
-                            "Target: " + myLocalPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-
-                    CarboSettings settings = new CarboSettings();
-                    bool ok = settings.SerializeXML(myLocalPath);
-
-                    if (ok == true)
-                        return myLocalPath;
-                    else
-                        return "";
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Could not create a new settings file: " + ex.Message);
-                    return "";
+                    try
+                    {
+                        Directory.CreateDirectory(GetDbSettingsDir());
+                        File.Copy(legacyPath, settingsPath);
+                    }
+                    catch
+                    {
+                        //If migration fails a fresh settings file will be created on the next save.
+                    }
                 }
             }
-            */
+
+            return settingsPath;
+        }
+
+        /// <summary>
+        /// Returns the mapping file path as stored in the settings.
+        /// Falls back to the default db/settings/defaultmappingfile.xml when the stored path is invalid.
+        /// </summary>
+        public static string GetMappingFilePath()
+        {
+            try
+            {
+                CarboSettings settings = new CarboSettings().Load();
+                string resolved = ResolveMappingPath(settings.mappingPath);
+                if (!string.IsNullOrEmpty(resolved))
+                    return resolved;
+            }
+            catch
+            {
+                //fall back to the default location below
+            }
+            return GetDefaultMappingPath();
         }
 
         /// <summary>
@@ -316,7 +327,7 @@ namespace CarboLifeAPI
             }
 
             // 3. Fall back to default
-            string defaultPath = Path.Combine(GetMaterialsDir(), "UserMaterials.cxml");
+            string defaultPath = GetDefaultTemplatePath();
             if (File.Exists(defaultPath))
                 return defaultPath;
 
@@ -337,7 +348,7 @@ namespace CarboLifeAPI
                     return localGuess;
             }
 
-            string defaultPath = Path.Combine(GetDbSettingsDir(), "defaultmappingfile.xml");
+            string defaultPath = GetDefaultMappingPath();
             if (File.Exists(defaultPath))
                 return defaultPath;
 

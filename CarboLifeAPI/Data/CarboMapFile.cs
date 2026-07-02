@@ -21,9 +21,9 @@ namespace CarboLifeAPI.Data
             mappingTable = new List<CarboMapElement>();
         }
 
-        public void SaveToXml()
+        public void SaveToXml(string path = "")
         {
-            string myPath = Utils.getAssemblyPath() + "\\data\\" + "defaultmappingfile.xml";
+            string myPath = string.IsNullOrEmpty(path) ? PathUtils.GetMappingFilePath() : path;
             bool okGo = true;
 
             if (File.Exists(myPath))
@@ -54,7 +54,7 @@ namespace CarboLifeAPI.Data
 
         public static CarboMapFile LoadFromXml()
         {
-            string myPath = Utils.getAssemblyPath() + "\\data\\" + "defaultmappingfile.xml";
+            string myPath = PathUtils.GetMappingFilePath();
 
             if (File.Exists(myPath))
             {

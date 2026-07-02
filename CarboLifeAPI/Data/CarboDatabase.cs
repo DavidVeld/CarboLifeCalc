@@ -215,7 +215,7 @@ namespace CarboLifeAPI.Data
             if (!(File.Exists(myPath)))
             {
                 if (fileName == "")
-                    fileName = "db\\UserMaterials.cxml";
+                    fileName = "db\\materials\\UserMaterials.cxml";
                 else
                     fileName = fileName + ".cxml";
 
@@ -288,7 +288,7 @@ namespace CarboLifeAPI.Data
             if (!(File.Exists(myPath)))
                 {
                 if (fileName == "")
-                    fileName = "db\\UserMaterials.cxml";
+                    fileName = "db\\materials\\UserMaterials.cxml";
                 else
                     fileName = fileName + ".cxml";
 

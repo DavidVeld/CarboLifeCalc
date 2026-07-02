@@ -40,8 +40,8 @@ namespace CarboLifeAPI.Data
         public CarboGroupSettings defaultCarboGroupSettings;
         public CarboSettings()
         {
-            templatePath = "Local";
-            mappingPath = "";
+            templatePath = PathUtils.GetDefaultTemplatePath();
+            mappingPath = PathUtils.GetDefaultMappingPath();
             useLocal = true;
             firstLaunch = true;
             defaultDesignLife = 60;
@@ -129,6 +129,10 @@ namespace CarboLifeAPI.Data
 
             try
             {
+                string settingsDir = Path.GetDirectoryName(mySettingsPath);
+                if (!string.IsNullOrEmpty(settingsDir) && !Directory.Exists(settingsDir))
+                    Directory.CreateDirectory(settingsDir);
+
                 XmlSerializer ser = new XmlSerializer(typeof(CarboSettings));
 
                 using (FileStream fs = new FileStream(mySettingsPath, FileMode.Create))
