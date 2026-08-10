@@ -3,6 +3,7 @@ using CarboLifeAPI.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -152,7 +153,8 @@ namespace CarboLifeUI.UI
             CarboMaterial material = materials.GetExcactMatch(cbb_ProfileMaterial.Text);
 
             //concreteGroup.Volume = Utils.ConvertMeToDouble(txt_ConcreteVolume.Text);
-            concreteGroup.Correction = "*" + Math.Round(convertionFact, 3).ToString();
+            //Parsed back by StringToFormula, so it must be written invariant.
+            concreteGroup.Correction = "*" + Math.Round(convertionFact, 3).ToString(CultureInfo.InvariantCulture);
             concreteGroup.Description += " - Corrected volume";
 
             profileGroup.Volume = Utils.ConvertMeToDouble(txt_SteelVolume.Text);

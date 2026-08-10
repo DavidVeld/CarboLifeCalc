@@ -85,7 +85,7 @@ namespace CarboLifeAPI
             {
                 //string piechart1_64 = ToBase64String(chart1);
                 string piechart1_64 = chart1;
-                ImgTag1 = getImageTag(piechart1_64, 0 , 300, "PieChart1");
+                ImgTag1 = getImageTag(piechart1_64, 0, 240, "PieChart1");
             }
 
             if (chart2 != null)
@@ -93,13 +93,13 @@ namespace CarboLifeAPI
                 //string piechart2_64 = ToBase64String(chart2);
                 string piechart2_64 = chart2;
 
-                ImgTag2 = getImageTag(piechart2_64, 0, 300, "PieChart2");
+                ImgTag2 = getImageTag(piechart2_64, 0, 240, "PieChart2");
             }
 
             if (ratingChart != null)
             {
                 string ratingChart64 = ToBase64String(ratingChart);
-                ImgTag3 = getImageTag(ratingChart64, 850, 0, "Rating");
+                ImgTag3 = getImageTag(ratingChart64, 620, 0, "Rating");
             }
 
             //HTML WRITING;
@@ -112,16 +112,14 @@ namespace CarboLifeAPI
                 report += writeCalculation(carboProject);
 
                 //Images
-                report += "<H2><B>" + "Graphs:" + "</B></H2><BR>" + System.Environment.NewLine;
-                report += "<TABLE border=0 cellpadding=0 cellspacing=0 width=800 class=\"static-table\">";
-                report += "<TR><TD></TD></TR>";
-                report += "<TR><TD><H2><B>" + "By Material:" + "</B></H2></TD></TR>";
-                report += "<TR><TD>" + ImgTag1 + "</TD></TR>";
-                report += "<TR><TD><H2><B>" + "By Phase:" + "</B></H2></TD></TR>";
-                report += "<TR><TD>" + ImgTag2 + "</TD></TR>";
-                report += "<TR><TD><H2><B>" + "Score:" + "</B></H2></TD></TR>";
-                report += "<TR><TD>" + ImgTag3 + "</TD></TR>";
-                report += "</TABLE>";
+                report += "<H2><B>" + "Graphs:" + "</B></H2>" + System.Environment.NewLine;
+                report += "<DIV class=\"charts\">";
+                report += "<DIV class=\"chart chart-score\"><H2><B>" + "Score:" + "</B></H2>" + ImgTag3 + "</DIV>";
+                report += "<DIV class=\"chart-row\">";
+                report += "<DIV class=\"chart\"><H2><B>" + "By Material:" + "</B></H2>" + ImgTag1 + "</DIV>";
+                report += "<DIV class=\"chart\"><H2><B>" + "By Phase:" + "</B></H2>" + ImgTag2 + "</DIV>";
+                report += "</DIV>";
+                report += "</DIV>";
 
                 //Material Quanaities
                 report += writeQuantitiesTable(carboProject);
@@ -159,7 +157,7 @@ namespace CarboLifeAPI
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -174,8 +172,8 @@ namespace CarboLifeAPI
 
                 List<CarboDataPoint> list = carboProject.getPhaseTotals();
 
-                html += "<H1><B>" + "Calculation:" + "</B></H1><BR>" + System.Environment.NewLine;
-                html += "<H2><B>" + "Material Based Values:" + "</B></H2><BR>" + System.Environment.NewLine;
+                html += "<H1><B>" + "Calculation:" + "</B></H1>" + System.Environment.NewLine;
+                html += "<H2><B>" + "Material Based Values:" + "</B></H2>" + System.Environment.NewLine;
 
                 html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=800>";
                 html += "<TR><TD width=175></TD><TD> tCO2</TD></TR>";
@@ -186,7 +184,7 @@ namespace CarboLifeAPI
                     if (!(cdp.Name.Contains("Global")))
                     {
                         html += "<TR><TD width=" + 150 + "><B>" + cdp.Name + "</B></TD>" + System.Environment.NewLine;
-                        html += "<TD>" + Math.Round(cdp.Value / 1000,2) + " </TD></TR>" + System.Environment.NewLine;
+                        html += "<TD>" + Math.Round(cdp.Value / 1000, 2) + " </TD></TR>" + System.Environment.NewLine;
                     }
                 }
 
@@ -194,7 +192,7 @@ namespace CarboLifeAPI
 
                 ///Globl Values
 
-                html += "<H2><B>" + "Global Values:" + "</B></H2><BR>" + System.Environment.NewLine;
+                html += "<H2><B>" + "Global Values:" + "</B></H2>" + System.Environment.NewLine;
 
                 html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=800>";
 
@@ -232,10 +230,10 @@ namespace CarboLifeAPI
         public static Bitmap CleanBlack(Bitmap BtmImg)
         {
             Bitmap result = BtmImg.Clone() as Bitmap;
-            System.Drawing.Color white = System.Drawing.Color.FromArgb(255,255,255);
+            System.Drawing.Color white = System.Drawing.Color.FromArgb(255, 255, 255);
             //System.Drawing.Color black = System.Drawing.Color.FromArgb(255, 255, 255);
 
-            for (int x=1;x<BtmImg.Width; x++)
+            for (int x = 1; x < BtmImg.Width; x++)
             {
                 for (int y = 1; y < BtmImg.Height; y++)
                 {
@@ -245,12 +243,12 @@ namespace CarboLifeAPI
                         if (clr.R == 0 && clr.G == 0 & clr.B == 0)
                             result.SetPixel(x, y, white);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message);
                         return null;
                     }
-                    }
+                }
             }
 
             return result;
@@ -261,7 +259,7 @@ namespace CarboLifeAPI
             string imgTag = string.Empty;
 
             imgTag = "<img src=\"data:image/png;base64,";
-             imgTag += imageAsString + "\" ";
+            imgTag += imageAsString + "\" ";
             //imgTag += " width=\"" + width.ToString() + (char)34;
             //imgTag += " height=\"" + height.ToString() + (char)34 + "/>" + System.Environment.NewLine;
 
@@ -279,7 +277,7 @@ namespace CarboLifeAPI
 
         private static string writeMaterialTable(CarboProject carboProject)
         {
-            string html = "<H1><B>" + "Material Properties" + "</B></H1><BR>" + System.Environment.NewLine;
+            string html = "<H1><B>" + "Material Properties" + "</B></H1>" + System.Environment.NewLine;
 
             html += "<TABLE border=1 cellpadding=0 cellspacing=0 >";
 
@@ -294,7 +292,7 @@ namespace CarboLifeAPI
                 html += "<TD width=" + 175 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 100 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 200 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
-                
+
                 html += "<TD width=" + 93.75 + "><B>" + "Density" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 93.75 + "><B>" + "ECI" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 93.75 + "><B>" + "ECI" + "</B></TD>" + System.Environment.NewLine;
@@ -387,7 +385,7 @@ namespace CarboLifeAPI
 
         private static string writeQuantitiesTable(CarboProject carboProject)
         {
-            string html = "<H1><B>" + "Material Quantities:" + "</B></H1><BR>" + System.Environment.NewLine;
+            string html = "<H1><B>" + "Material Quantities:" + "</B></H1>" + System.Environment.NewLine;
 
             html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1600>";
             html += "<TR></TR>";
@@ -480,10 +478,10 @@ namespace CarboLifeAPI
         private static string writeReportTable(CarboProject carboProject)
         {
 
-            string html = "<H1><B>" + "Embodied Carbon Calculation Groups:" + "</B></H1><BR>" + System.Environment.NewLine;
-            
+            string html = "<H1><B>" + "Embodied Carbon Calculation Groups:" + "</B></H1>" + System.Environment.NewLine;
+
             html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1600>";
-            
+
             html += "<TR></TR>";
             //ResultTable in a table
             try
@@ -561,7 +559,7 @@ namespace CarboLifeAPI
                 html += "</TR>" + System.Environment.NewLine;
 
                 //Write Data:
-                
+
                 ObservableCollection<CarboGroup> cglist = carboProject.getGroupList;
                 cglist = new ObservableCollection<CarboGroup>(cglist.OrderBy(i => i.MaterialName));
 
@@ -585,20 +583,20 @@ namespace CarboLifeAPI
                     html += "<TD align='left' valign='middle'>" + cbg.Correction + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + cbg.Waste + "%" + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Additional, 2) + "</td>" + System.Environment.NewLine;
-                    
+
                     html += "<TD align='left' valign='middle'>" + Math.Round(cbg.inUseProperties.B4, 2) + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + Math.Round(cbg.TotalVolume, 2) + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + cbg.Density + "</td>" + System.Environment.NewLine;
 
-                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Mass,2) + "</td>" + System.Environment.NewLine;
-                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.ECI,2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.Mass, 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.ECI, 2) + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + Math.Round((cbg.getVolumeECI), 2) + "</td>" + System.Environment.NewLine;
 
-                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.EC,2) + "</td>" + System.Environment.NewLine;
-                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.PerCent,2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.EC, 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(cbg.PerCent, 2) + "</td>" + System.Environment.NewLine;
 
                     //Per Group
-                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_A1A3 * cbg.Mass,3), 2) + "</td>" + System.Environment.NewLine;
+                    html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_A1A3 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_A4 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_A5 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
                     html += "<TD align='left' valign='middle'>" + Math.Round(Math.Round(cbg.Material.ECI_B1B5 * cbg.Mass, 3), 2) + "</td>" + System.Environment.NewLine;
@@ -619,7 +617,7 @@ namespace CarboLifeAPI
             }
 
             return html;
-            
+
 
         }
 
@@ -650,8 +648,8 @@ namespace CarboLifeAPI
             string html = "";
 
             html += "<TR>" + System.Environment.NewLine;
-                html += "<TD align='left' valign='middle'><B>" + material + "</B></td>" + System.Environment.NewLine;
-                html += "</TR>" + System.Environment.NewLine;
+            html += "<TD align='left' valign='middle'><B>" + material + "</B></td>" + System.Environment.NewLine;
+            html += "</TR>" + System.Environment.NewLine;
             return html;
 
         }
@@ -662,7 +660,7 @@ namespace CarboLifeAPI
             html = "error" + ex.Message;
             return html;
         }
-        
+
         internal static string writeHeader(CarboProject carboProject)
         {
             string html = "";
@@ -672,16 +670,17 @@ namespace CarboLifeAPI
                 html += "<HTML><HEAD><TITLE>Carbo Life Calc : Embodied Carbon Calculation for: " + carboProject.Name + " </TITLE>" + System.Environment.NewLine;
                 //add header row
 
+                html += "<META charset=\"windows-1252\">" + System.Environment.NewLine;
                 html += getCSS();
 
                 html += "</HEAD><BODY>";
 
-                html += "<H1><B>" + "Embodied Carbon Calculation for: " + carboProject.Name + "</B></H1><BR>" + System.Environment.NewLine;
+                html += "<H1><B>" + "Embodied Carbon Calculation for: " + carboProject.Name + "</B></H1>" + System.Environment.NewLine;
 
 
-                html += "<H1><B>" + "Project Info" + "</B></H1><BR>" + System.Environment.NewLine;
+                html += "<H1><B>" + "Project Info" + "</B></H1>" + System.Environment.NewLine;
 
-                html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=800>";
+                html += "<TABLE class=\"info-table\" cellpadding=0 cellspacing=0>";
                 html += "<TR></TR>";
 
                 html += "<TR><TD width=" + 150 + "><B>" + "Name:" + "</B></TD>" + System.Environment.NewLine;
@@ -691,7 +690,7 @@ namespace CarboLifeAPI
                 html += "<TD width=" + 175 + ">" + carboProject.Number + "</TD></TR>" + System.Environment.NewLine;
 
                 html += "<TR><TD width=" + 150 + "><B>" + "Description:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + "" + carboProject.Description + "</TD></TR>" + System.Environment.NewLine;
+                html += "<TD width=" + 175 + ">" + carboProject.Description + "</TD></TR>" + System.Environment.NewLine;
 
                 html += "<TR><TD width=" + 150 + "><B>" + "Category:" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 175 + ">" + carboProject.Category + "</TD></TR>" + System.Environment.NewLine;
@@ -742,84 +741,169 @@ namespace CarboLifeAPI
         {
             string html = @"
 <style type=""text/css"">
+
 body {
-  font-family: ""Segoe UI"", sans-serif;
-  background-color: #f9f9f9;
-  color: #222;
+  font-family: ""Segoe UI"", ""Segoe UI"", sans-serif;
+  background-color: #ffffff;
+  color: #1a1a1a;
   margin: 0;
-  padding: 20px;
+  padding: 48px 56px 72px 56px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 {
-  color: #8B0000;
-  margin-left: 20px;
-  font-weight: 600;
+h1, h2 {
+  color: #B21616;
+  font-weight: 300;
+  letter-spacing: 0.01em;
+}
+
+body > h1:first-of-type {
+  margin: 0 0 4px 0;
+  font-size: 30px;
+  font-weight: 300;
+  padding-bottom: 18px;
+  border-bottom: 2px solid #B21616;
 }
 
 h1 {
-  font-size: 32px;
-  margin-bottom: 10px;
+  font-size: 21px;
+  margin: 52px 0 16px 0;
 }
 
 h2 {
-  font-size: 20px;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  margin: 26px 0 8px 0;
 }
 
 h3 {
-  font-size: 16px;
-  margin-top: 15px;
+  color: #444444;
+  font-size: 12.5px;
+  font-weight: 400;
+  line-height: 1.75;
+  margin: 16px 0;
+  max-width: 760px;
 }
 
 a {
-  color: #B22222;
+  color: #B21616;
   text-decoration: none;
 }
 
 a:hover {
-  color: #FF4500;
   text-decoration: underline;
 }
 
 table {
-  width: 90%;
-  margin: 0 auto 30px auto;
+  width: auto;
+  max-width: 100%;
   border-collapse: collapse;
-  font-size: 14px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  font-size: 12.5px;
+  margin: 6px 0 40px 0;
+  background-color: transparent;
 }
 
 td {
-  padding: 5px 6px;
-  border: 1px solid #ddd;
-  vertical-align: top;
-}
-
-tr:nth-child(even) {
-  background-color: #f5f5f5;
-}
-
-tr:hover {
-  background-color: #eee;
-}
-
-/* Static table with no hover effect */
-.static-table tr:hover {
-  background-color: inherit;
+  padding: 8px 14px;
+  border: none;
+  border-bottom: 1px solid #eeeeee;
+  vertical-align: middle;
+  color: #1a1a1a;
+  white-space: nowrap;
 }
 
 td b {
-  color: #333;
+  font-weight: 600;
+  color: #000000;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.static-table td {
+  border-bottom: none;
+}
+
+.static-table tr:nth-child(even) {
+  background-color: transparent;
+}
+
+td h2 {
+  margin: 20px 0 4px 0;
 }
 
 img {
   display: block;
-  margin: 20px auto;
-  max-width: 100%;
+  margin: 6px 0 18px 0;
+  width: auto;
   height: auto;
+  max-width: 620px;
+  max-height: 260px;
 }
+
+.charts {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin: 6px 0 40px 0;
+}
+
+.chart-row {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  max-width: 62.5%;
+}
+
+.chart-row .chart {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.charts h2 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888888;
+  font-weight: 600;
+}
+
+.charts img {
+  margin: 0;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: none;
+}
+
+.chart-score {
+  max-width: 62.5%;
+}
+
+.info-table {
+  margin: 6px 0 40px 0;
+}
+
+.info-table td {
+  border-bottom: none;
+  padding: 5px 40px 5px 0;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.info-table tr:nth-child(even) {
+  background-color: transparent;
+}
+
+.info-table td b {
+  font-weight: 400;
+  color: #888888;
+  font-size: 13.5px;
+}
+
 </style>
 ";
 
@@ -888,7 +972,7 @@ img {
         public static string closeHTML()
         {
             string html = "";
-             html += "<H3>Report Generated on: " + DateTime.Today.ToShortDateString() + "<BR>" + System.Environment.NewLine;
+            html += "<H3>Report Generated on: " + DateTime.Today.ToShortDateString() + "<BR>" + System.Environment.NewLine;
             html += "Report Generated by: " + "Carbo Life Calculator Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + "<BR>" + System.Environment.NewLine;
             html += @"<A href=""https://github.com/DavidVeld/CarboLifeCalc"">https://github.com/DavidVeld/CarboLifeCalc</A></H3><BR>" + System.Environment.NewLine;
 
@@ -924,7 +1008,7 @@ img {
 
                 return base64String;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("There was an error while creating an embedded image: " + Environment.NewLine + ex.Message, "Error", MessageBoxButton.OK);
                 return "";
@@ -986,8 +1070,8 @@ img {
             }
 
             return image;
-        
-    }
+
+        }
 
         public static Bitmap RemoveBlackLineLeftTop(Bitmap letiChart)
         {

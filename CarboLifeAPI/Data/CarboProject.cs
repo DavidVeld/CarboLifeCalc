@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
@@ -1498,11 +1499,13 @@ namespace CarboLifeAPI.Data
 
         private void setElementotals()
         {
-            //Generate a new ALL elements list from the calculated values in the Groups
-            List<CarboElement> elementbuffer = getTemporaryElementListWithTotals();
+            //Generate a new ALL elements list from the calculated values in the Groups.
+            //The buffer is indexed by element Id so imprinting below is a O(1) lookup per element
+            //instead of a scan through the whole buffer.
+            List<CarboElement> orderedBuffer;
+            Dictionary<Int64, CarboElement> elementbuffer = buildElementTotalsBuffer(out orderedBuffer);
 
             //Now Imprint them into the elements totals
-            bool okSet = false;
             foreach (CarboGroup cg in groupList)
             {
                 if (cg.AllElements != null)
@@ -1514,11 +1517,13 @@ namespace CarboLifeAPI.Data
                             CarboElement ce = cg.AllElements[i];
                             ce.CarboMaterialName = cg.MaterialName;
 
-                            ce = addBufferToElements(elementbuffer, ce, out okSet);
+                            addBufferToElement(elementbuffer, ce);
                         }
                     }
                 }
             }
+
+            justSaved = false;
         }
 
         /// <summary>
@@ -1527,11 +1532,22 @@ namespace CarboLifeAPI.Data
         /// <returns></returns>
         public List<CarboElement> getTemporaryElementListWithTotals()
         {
-            //Cnstruct the buffer file
-            List<CarboElement> elementbuffer = new List<CarboElement>();
+            List<CarboElement> orderedBuffer;
+            buildElementTotalsBuffer(out orderedBuffer);
 
-            //First Count the totals
-            bool ok = false;
+            return orderedBuffer;
+        }
+
+        /// <summary>
+        /// Builds the cumulative totals per Revit element id. Elements that are split over more than one
+        /// group (layered or part based elements) are merged into a single buffer entry.
+        /// </summary>
+        /// <param name="orderedBuffer">The same buffer entries in the order they were first encountered.</param>
+        /// <returns>The buffer entries keyed on element Id.</returns>
+        private Dictionary<Int64, CarboElement> buildElementTotalsBuffer(out List<CarboElement> orderedBuffer)
+        {
+            Dictionary<Int64, CarboElement> elementbuffer = new Dictionary<Int64, CarboElement>();
+            orderedBuffer = new List<CarboElement>();
 
             foreach (CarboGroup cg in groupList)
             {
@@ -1541,14 +1557,15 @@ namespace CarboLifeAPI.Data
                     {
                         foreach (CarboElement ce in cg.AllElements)
                         {
-                            elementbuffer = addToBuffer(elementbuffer, ce, out ok);
+                            addToBuffer(elementbuffer, orderedBuffer, ce);
                         }
                     }
                 }
             }
-            
-            return elementbuffer;
 
+            justSaved = false;
+
+            return elementbuffer;
         }
         /// <summary>
         /// Get a list of all the elemetns from the Groups, these contain all the calculated and cumulitive data 
@@ -1580,118 +1597,74 @@ namespace CarboLifeAPI.Data
 
         }
 
-        private CarboElement addBufferToElements(List<CarboElement> elementbuffer, CarboElement cElement, out bool ok)
+        /// <summary>
+        /// Copies the cumulative totals held in the buffer back onto a grouped element.
+        /// </summary>
+        private static void addBufferToElement(Dictionary<Int64, CarboElement> elementbuffer, CarboElement cElement)
         {
-            ok = false;
+            CarboElement buffer_CE;
 
-            if (elementbuffer != null)
+            if (elementbuffer.TryGetValue(cElement.Id, out buffer_CE))
             {
-                if (elementbuffer.Count > 0)
-                {
-                    //searc the buffer for the right totals
-                    foreach (CarboElement buffer_CE in elementbuffer)
-                    {
-                        try
-                        {
-                            if (buffer_CE.Id == cElement.Id)
-                            {
-                                //Set the values;
-                                cElement.EC_Cumulative = buffer_CE.EC_Cumulative;
-                                cElement.ECI_Cumulative = buffer_CE.ECI_Cumulative;
-                                cElement.Volume_Cumulative = buffer_CE.Volume_Cumulative;
+                //Set the values;
+                cElement.EC_Cumulative = buffer_CE.EC_Cumulative;
+                cElement.ECI_Cumulative = buffer_CE.ECI_Cumulative;
+                cElement.Volume_Cumulative = buffer_CE.Volume_Cumulative;
 
-                                //Do not add mass!
-
-                                ok = true;
-                                break;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            ok = false;
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
-                }
+                //Do not add mass!
             }
-            justSaved = false;
-
-            return cElement;
         }
-        private List<CarboElement> addToBuffer(List<CarboElement> elementbuffer, CarboElement cElement, out bool ok)
+
+        /// <summary>
+        /// Adds an element to the totals buffer, merging it with an earlier entry that shares its Id.
+        /// </summary>
+        private static void addToBuffer(Dictionary<Int64, CarboElement> elementbuffer, List<CarboElement> orderedBuffer, CarboElement cElement)
         {
-            bool isUnique = true;
-            ok = false;
+            CarboElement buffer_CE;
 
-            if (elementbuffer != null)
+            if (elementbuffer.TryGetValue(cElement.Id, out buffer_CE))
             {
-                    foreach(CarboElement buffer_CE in elementbuffer)
-                    {
-                        try
-                        {
-                            if (buffer_CE.Id == cElement.Id)
-                            {
-                                //Merge Elements
-                                //double density = buffer_CE.EC_Total / (buffer_CE.Volume * buffer_CE.ECI_Total);
-                                double volume_Cumulative = buffer_CE.Volume_Cumulative + cElement.Volume_Total;
-                                double mass_Cumulative = buffer_CE.Mass + cElement.Mass;
-                                //double mass_TotalCheck = (buffer_CE.EC / buffer_CE.ECI) + (cElement.EC / cElement.ECI);
+                //Merge Elements
+                //double density = buffer_CE.EC_Total / (buffer_CE.Volume * buffer_CE.ECI_Total);
+                double volume_Cumulative = buffer_CE.Volume_Cumulative + cElement.Volume_Total;
+                double mass_Cumulative = buffer_CE.Mass + cElement.Mass;
 
-                                //double Density_Total = mass_Total / volume_Total;
+                double EC_Cumulative = buffer_CE.EC_Cumulative + cElement.EC;
+                //Calculate combined ECI.
+                double ECI_Cumulative = EC_Cumulative / mass_Cumulative;
 
-                                double EC_Cumulative = buffer_CE.EC_Cumulative + cElement.EC;
-                                //Calculate combined ECI.
-                                double ECI_Cumulative = EC_Cumulative / mass_Cumulative;
-
-                                //Total EC:
-                                buffer_CE.EC_Cumulative = EC_Cumulative;
-                                //Total Volume
-                                buffer_CE.Volume_Cumulative = volume_Cumulative;
-                                //Total ECI
-                                buffer_CE.ECI_Cumulative = ECI_Cumulative;
-                                //mass Total
-                                buffer_CE.Mass = mass_Cumulative;
-                                //Density Total
-                                // n/a
-
-                                isUnique = false;
-                                ok = true;
-                                break;
-                            }
-                        }
-                        catch(Exception ex)
-                        {
-                            ok = false;
-                            MessageBox.Show(ex.Message);
-
-                        }
-                    }
-                //The element doesnt exist yet in the list; add to the list as a new element.
-                if (isUnique == true)
-                {
-                    CarboElement newElement = new CarboElement();
-                    newElement.Id = cElement.Id;
-                    newElement.Volume = cElement.Volume;
-
-
-                    newElement.ECI_Cumulative = cElement.ECI;
-
-                    //Recalculate:
-                    newElement.EC = cElement.ECI * cElement.Mass;
-
-                    newElement.EC_Cumulative = cElement.EC;
-                    newElement.Volume_Cumulative = cElement.Volume;
-
-                    newElement.Mass = cElement.Mass;
-
-                    elementbuffer.Add(newElement);
-                    ok = true;
-                }
-
+                //Total EC:
+                buffer_CE.EC_Cumulative = EC_Cumulative;
+                //Total Volume
+                buffer_CE.Volume_Cumulative = volume_Cumulative;
+                //Total ECI
+                buffer_CE.ECI_Cumulative = ECI_Cumulative;
+                //mass Total
+                buffer_CE.Mass = mass_Cumulative;
+                //Density Total
+                // n/a
             }
-            justSaved = false;
+            else
+            {
+                //The element doesnt exist yet in the list; add to the list as a new element.
+                CarboElement newElement = new CarboElement();
+                newElement.Id = cElement.Id;
+                newElement.Volume = cElement.Volume;
 
-            return elementbuffer;
+
+                newElement.ECI_Cumulative = cElement.ECI;
+
+                //Recalculate:
+                newElement.EC = cElement.ECI * cElement.Mass;
+
+                newElement.EC_Cumulative = cElement.EC;
+                newElement.Volume_Cumulative = cElement.Volume;
+
+                newElement.Mass = cElement.Mass;
+
+                elementbuffer.Add(newElement.Id, newElement);
+                orderedBuffer.Add(newElement);
+            }
         }
        
         /*
@@ -2214,14 +2187,17 @@ namespace CarboLifeAPI.Data
 
 
             //correction, if a correction exists add it to the existing;
+            //This builds an expression that gets parsed back by StringToFormula, so it must be invariant.
+            string rcCorrection = "*(" + rcDensityProperty.Value.ToString(CultureInfo.InvariantCulture)
+                + "/" + reinforcementMaterial.Density.ToString(CultureInfo.InvariantCulture) + ")";
+
             if (result.Correction != "")
             {
-                result.Correction = result.Correction +
-                    "*(" + rcDensityProperty.Value.ToString() + "/" + reinforcementMaterial.Density.ToString() + ")";
+                result.Correction = result.Correction + rcCorrection;
             }
             else
             {
-                result.Correction = "*(" + rcDensityProperty.Value.ToString() + "/" + reinforcementMaterial.Density.ToString() + ")";
+                result.Correction = rcCorrection;
             }
 
             //Description;

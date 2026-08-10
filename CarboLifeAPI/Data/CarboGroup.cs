@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -468,7 +469,7 @@ namespace CarboLifeAPI.Data
 
                                 if (Utils.isValidExpression(Correction) == true)
                                 {
-                                    string ElVolumeStr = ce.Volume.ToString();
+                                    string ElVolumeStr = ce.Volume.ToString(CultureInfo.InvariantCulture);
                                     StringToFormula stf = new StringToFormula();
                                     double result = stf.Eval(ElVolumeStr + Correction);
 
@@ -503,7 +504,7 @@ namespace CarboLifeAPI.Data
             //Calculate the real volume based on a correction if required. 
             if (Utils.isValidExpression(Correction) == true)
             {
-                string volumeStr = Volume.ToString();
+                string volumeStr = Volume.ToString(CultureInfo.InvariantCulture);
                 StringToFormula stf = new StringToFormula();
                 double result = stf.Eval(volumeStr + Correction);
 

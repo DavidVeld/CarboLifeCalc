@@ -233,9 +233,22 @@ namespace CarboLifeRevit
             {
                 if (!(el.Category == null))
                 {
-                    Parameter volumePar = el.LookupParameter("Volume");
+                    //Cheap test first. get_Geometry regenerates the element's geometry and is by far the
+                    //most expensive call in this import, so only fall back to it when the element carries
+                    //no Volume parameter. The operands used to be the other way around, which meant the
+                    //geometry of every element in the view was extracted and then thrown away.
+                    bool hasQuantity = el.LookupParameter("Volume") != null;
 
-                    if (el.get_Geometry(new Options()) != null || volumePar != null)
+                    if (hasQuantity == false)
+                    {
+                        using (Options options = new Options())
+                        using (GeometryElement geometry = el.get_Geometry(options))
+                        {
+                            hasQuantity = (geometry != null);
+                        }
+                    }
+
+                    if (hasQuantity == true)
                     {
                         //Check if not of any forbidden categories such as runs:
                         bool isValidCategory = ValidCategory(el);

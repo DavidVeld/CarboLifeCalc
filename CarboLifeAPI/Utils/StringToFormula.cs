@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,7 +52,9 @@ namespace CarboLifeAPI
                 }
                 else
                 {
-                    operandStack.Push(double.Parse(token));
+                    //Always invariant: the tokeniser has already normalised any decimal comma to a point,
+                    //so an expression means the same thing on an en-GB and an it-IT machine.
+                    operandStack.Push(double.Parse(token, NumberStyles.Float, CultureInfo.InvariantCulture));
                 }
                 tokenIndex += 1;
             }
@@ -105,7 +108,9 @@ namespace CarboLifeAPI
             List<string> tokens = new List<string>();
             StringBuilder sb = new StringBuilder();
 
-            foreach (char c in expression.Replace(" ", string.Empty))
+            //The grammar has no comma operator, so a comma can only ever be a decimal separator typed by
+            //a user on a locale that uses one. Normalise it so the parse below can stay invariant.
+            foreach (char c in expression.Replace(" ", string.Empty).Replace(',', '.'))
             {
                 if (operators.IndexOf(c) >= 0)
                 {
