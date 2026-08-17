@@ -84,6 +84,12 @@
     <None Remove="db\settings\CarboSettings.xml" />
     <None Remove="db\settings\defaultmappingfile.xml" />
     <None Remove="libSkiaSharp.dll" />
+    <None Remove="samples\2024-\CarboCircleTest R23.rvt" />
+    <None Remove="samples\2024-\CarboLifeCalc_sample_project_R23.clcx" />
+    <None Remove="samples\2024-\CarboLifeCalc_sample_project_R23.rvt" />
+    <None Remove="samples\2024-\CLC_DetailItem_SCORSRating.rfa" />
+    <None Remove="samples\2024-\Unit Test CLC R2023.0010.rvt" />
+    <None Remove="samples\2024-\Unit Test CLC R2023.rvt" />
     <None Remove="samples\CarboCircleTest R25.rvt" />
     <None Remove="samples\CarboLifeCalc_sample_project_R25.clcx" />
     <None Remove="samples\CarboLifeCalc_sample_project_R25.rvt" />
@@ -258,19 +264,35 @@
     <Content Include="Resources\DVLogo256.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="samples\CarboCircleTest R25.rvt">
+    <Content Include="samples\2024-\CarboCircleTest R23.rvt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="samples\CarboLifeCalc_sample_project_R25.clcx">
+    <Content Include="samples\2024-\CarboLifeCalc_sample_project_R23.clcx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="samples\CarboLifeCalc_sample_project_R25.rvt">
+    <Content Include="samples\2024-\CarboLifeCalc_sample_project_R23.rvt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="samples\2024-\CLC_DetailItem_SCORSRating.rfa">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="samples\2024-\Unit Test CLC R2023.0010.rvt" />
+    <Content Include="samples\2024-\Unit Test CLC R2023.rvt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="samples\2025+\CarboCircleTest R25.rvt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="samples\2025+\CarboLifeCalc_sample_project_R25.clcx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="samples\2025+\CarboLifeCalc_sample_project_R25.rvt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="samples\existing_struct.gh">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="samples\Unit Test CLC R2025.rvt">
+    <Content Include="samples\2025+\Unit Test CLC R2025.rvt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -347,6 +369,9 @@
     </None>
     <None Update="db\UserMaterials.cxml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="samples\HTML_Report.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <PropertyGroup>

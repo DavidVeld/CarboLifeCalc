@@ -40,6 +40,7 @@ namespace CarboLifeUI.UI
             materials = materialDatabase;
             concreteGroup = myConcreteGroup;
             profileGroup = new CarboGroup();
+            profileGroup.Origin = CarboGroupOrigin.Manual;
             profileGroup.Category = "Floor";
             profileGroup.Description = "Metal deck / Profile";
             InitializeComponent();

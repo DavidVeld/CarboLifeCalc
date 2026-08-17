@@ -36,6 +36,9 @@ namespace CarboLifeUI.UI
             materials = materialDatabase;
             concreteGroup = myConcreteGroup;
             reinforcementGroup = new CarboGroup();
+            //Manual, not Reinforcement: this group is the user's own and must survive a
+            //regeneration of the generated reinforcement groups.
+            reinforcementGroup.Origin = CarboGroupOrigin.Manual;
             InitializeComponent();
         }
 

@@ -127,7 +127,7 @@
                     </StackPanel>
 
                     <!-- Template -->
-                    <TextBlock Style="{StaticResource FieldLabel}">Template</TextBlock>
+                    <TextBlock Style="{StaticResource FieldLabel}">Material Template</TextBlock>
                     <TextBlock Style="{StaticResource HintText}">Select the material template to use for this project</TextBlock>
                     <ComboBox Name="cbb_Template" Height="26" Margin="0,0,0,12"
                               Style="{StaticResource ComboBoxFlatStyle}"
@@ -266,16 +266,18 @@
                                 Adds reinforcement to every group in the category below, per the density mapping table.
                             </TextBlock>
 
-                            <TextBlock Style="{StaticResource FieldLabel}">Reinforcement material</TextBlock>
-                            <ComboBox Name="cbb_RCImportMaterial" Height="26" Margin="0,0,0,8"
-                                      Style="{StaticResource ComboBoxFlatStyle}"
-                                      ToolTip="The template material used for the generated reinforcement quantities"/>
+
 
                             <TextBlock Style="{StaticResource FieldLabel}">Reinforced material category</TextBlock>
                             <ComboBox Name="cbb_RCMaterialCategory" Height="26" Margin="0,0,0,6"
                                       Style="{StaticResource ComboBoxFlatStyle}"
                                       ToolTip="Groups whose material sits in this template category get reinforcement added"/>
-
+                            
+                            <TextBlock Style="{StaticResource FieldLabel}">Reinforcement material</TextBlock>
+                            <ComboBox Name="cbb_RCImportMaterial" Height="26" Margin="0,0,0,8"
+                                      Style="{StaticResource ComboBoxFlatStyle}"
+                                      ToolTip="The template material used for the generated reinforcement quantities"/>
+                            
                             <TextBlock x:Name="txt_RCWarning" Style="{StaticResource WarningText}"/>
 
                             <Button x:Name="btn_ReinforcementImport" HorizontalAlignment="Left"
@@ -296,16 +298,18 @@
                                 Adds a percentage of the steel volume of every group in the category below.
                             </TextBlock>
 
-                            <TextBlock Style="{StaticResource FieldLabel}">Connection material</TextBlock>
-                            <ComboBox Name="cbb_SteelConnectionMaterial" Height="26" Margin="0,0,0,8"
-                                      Style="{StaticResource ComboBoxFlatStyle}"
-                                      ToolTip="The template material used for the generated connection allowances"/>
+
 
                             <TextBlock Style="{StaticResource FieldLabel}">Steelwork material category</TextBlock>
                             <ComboBox Name="cbb_SteelMaterialCategory" Height="26" Margin="0,0,0,8"
                                       Style="{StaticResource ComboBoxFlatStyle}"
                                       ToolTip="Groups whose material sits in this template category get connections added"/>
-
+                            
+                            <TextBlock Style="{StaticResource FieldLabel}">Connection material</TextBlock>
+                            <ComboBox Name="cbb_SteelConnectionMaterial" Height="26" Margin="0,0,0,8"
+                                      Style="{StaticResource ComboBoxFlatStyle}"
+                                      ToolTip="The template material used for the generated connection allowances"/>
+                            
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                                 <TextBlock Style="{StaticResource FieldLabel}" Text="Allowance"
                                            VerticalAlignment="Center" Margin="0,0,10,0"/>
@@ -330,16 +334,18 @@
                                 Adds a percentage of the timber volume of every group in the category below.
                             </TextBlock>
 
-                            <TextBlock Style="{StaticResource FieldLabel}">Connection material</TextBlock>
-                            <ComboBox Name="cbb_TimberConnectionMaterial" Height="26" Margin="0,0,0,8"
-                                      Style="{StaticResource ComboBoxFlatStyle}"
-                                      ToolTip="The template material used for the generated connection allowances, usually steel"/>
+
 
                             <TextBlock Style="{StaticResource FieldLabel}">Timber material category</TextBlock>
                             <ComboBox Name="cbb_TimberMaterialCategory" Height="26" Margin="0,0,0,8"
                                       Style="{StaticResource ComboBoxFlatStyle}"
                                       ToolTip="Groups whose material sits in this template category get connections added"/>
-
+                            
+                            <TextBlock Style="{StaticResource FieldLabel}">Connection material</TextBlock>
+                            <ComboBox Name="cbb_TimberConnectionMaterial" Height="26" Margin="0,0,0,8"
+                                      Style="{StaticResource ComboBoxFlatStyle}"
+                                      ToolTip="The template material used for the generated connection allowances, usually steel"/>
+                            
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
                                 <TextBlock Style="{StaticResource FieldLabel}" Text="Allowance"
                                            VerticalAlignment="Center" Margin="0,0,10,0"/>

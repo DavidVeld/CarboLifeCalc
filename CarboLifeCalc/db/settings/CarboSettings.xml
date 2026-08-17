@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <CarboSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <defaultCarboGroupSettings>
-    <CategoryName>Type Parameter</CategoryName>
-    <CategoryParamName>(Revit) Category</CategoryParamName>
+    <CategoryName>(Revit) Category</CategoryName>
+    <CategoryParamName></CategoryParamName>
     <ExistingPhaseName>Existing</ExistingPhaseName>
     <VolumeConversionFactor />
     <IncludeSubStructure>true</IncludeSubStructure>
@@ -294,5 +294,5 @@
       </outmax>
     </CarboColourPreset>
   </colourPresets>
-  <launchCircle>false</launchCircle>
+  <launchCircle>true</launchCircle>
 </CarboSettings>

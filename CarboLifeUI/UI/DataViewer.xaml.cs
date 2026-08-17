@@ -904,8 +904,17 @@ namespace CarboLifeUI.UI
 
         }
 
+        /// <summary>
+        /// Rebuilds the reinforcement groups: the mapper collects the quantities, then the old
+        /// generated groups are replaced by a fresh set. Wired to both the Auto Groups button and
+        /// its Reinforcement menu item.
+        /// </summary>
         private void Mnu_AutoRCGroups(object sender, RoutedEventArgs e)
         {
+            //A RibbonSplitButton shares its Click event with the menu items in its drop down, and it
+            //bubbles, so a menu item click would run its own handler and then this one again.
+            e.Handled = true;
+
             if(CarboLifeProject.RevitImportSettings == null)
             {
                 CarboLifeProject.RevitImportSettings = CarboLifeProject.RevitImportSettings.DeSerializeXML();
@@ -923,9 +932,99 @@ namespace CarboLifeUI.UI
 
                     //RCMaterialName and RCMaterialCategory are template bound and set in the import settings dialog.
                     CarboLifeProject.CreateReinforcementGroup();
+
+                    CarboLifeProject.CalculateProject();
+                    refreshData();
                 }
                 catch (Exception ex) { }
             }
+        }
+
+        /// <summary>
+        /// Rebuilds the steel and timber connection allowance groups from the import settings.
+        /// The percentages and materials themselves live in the import settings dialog.
+        /// </summary>
+        private void Mnu_AutoConnectionGroups(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+
+            if (CarboLifeProject.RevitImportSettings == null)
+            {
+                CarboLifeProject.RevitImportSettings = CarboLifeProject.RevitImportSettings.DeSerializeXML();
+            }
+
+            if (CarboLifeProject.RevitImportSettings.mapSteelConnections == false &&
+                CarboLifeProject.RevitImportSettings.mapTimberConnections == false)
+            {
+                MessageBox.Show("Neither steel nor timber connection allowances are switched on." + Environment.NewLine +
+                                "Turn them on in the import settings first.",
+                                "Connections", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            try
+            {
+                CarboLifeProject.CreateConnectionGroups();
+
+                CarboLifeProject.CalculateProject();
+                refreshData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Mnu_RemoveAutoReinforcement(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            RemoveAutoGroups("reinforcement", CarboGroupOrigin.Reinforcement);
+        }
+
+        private void Mnu_RemoveSteelConnections(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            RemoveAutoGroups("steel connection", CarboGroupOrigin.SteelConnection);
+        }
+
+        private void Mnu_RemoveTimberConnections(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            RemoveAutoGroups("timber connection", CarboGroupOrigin.TimberConnection);
+        }
+
+        private void Mnu_RemoveAllAutoGroups(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            //No origins means every generated group.
+            RemoveAutoGroups("generated");
+        }
+
+        /// <summary>
+        /// Drops the generated groups of the given origins and reports what went. Only groups the
+        /// app made itself are ever touched, so nothing holding real elements can be lost here.
+        /// </summary>
+        /// <param name="name">What to call them in the message</param>
+        /// <param name="origins">Which generated groups to remove, all of them when left empty</param>
+        private void RemoveAutoGroups(string name, params CarboGroupOrigin[] origins)
+        {
+            if (CarboLifeProject == null)
+                return;
+
+            int removed = CarboLifeProject.RemoveAutoGroups(origins);
+
+            if (removed == 0)
+            {
+                MessageBox.Show("There are no " + name + " groups to remove.",
+                                "Remove groups", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            CarboLifeProject.CalculateProject();
+            refreshData();
+
+            MessageBox.Show(removed.ToString() + " " + name + " group(s) removed.",
+                            "Remove groups", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void mnu_noWaste(object sender, MouseButtonEventArgs e)

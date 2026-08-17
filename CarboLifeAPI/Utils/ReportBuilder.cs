@@ -85,7 +85,7 @@ namespace CarboLifeAPI
             {
                 //string piechart1_64 = ToBase64String(chart1);
                 string piechart1_64 = chart1;
-                ImgTag1 = getImageTag(piechart1_64, 0, 240, "PieChart1");
+                ImgTag1 = getImageTag(piechart1_64, 0, 300, "PieChart1");
             }
 
             if (chart2 != null)
@@ -93,13 +93,13 @@ namespace CarboLifeAPI
                 //string piechart2_64 = ToBase64String(chart2);
                 string piechart2_64 = chart2;
 
-                ImgTag2 = getImageTag(piechart2_64, 0, 240, "PieChart2");
+                ImgTag2 = getImageTag(piechart2_64, 0, 300, "PieChart2");
             }
 
             if (ratingChart != null)
             {
                 string ratingChart64 = ToBase64String(ratingChart);
-                ImgTag3 = getImageTag(ratingChart64, 620, 0, "Rating");
+                ImgTag3 = getImageTag(ratingChart64, 850, 0, "Rating");
             }
 
             //HTML WRITING;
@@ -108,18 +108,18 @@ namespace CarboLifeAPI
                 //Project Info
                 report = writeHeader(carboProject);
 
+                //Images
+                report += "<H1><B>" + "Graphs" + "</B></H1>" + System.Environment.NewLine;
+                report += "<DIV class=\"charts\">";
+                report += "<DIV class=\"chart chart-score\"><H2><B>" + "Score" + "</B></H2>" + ImgTag3 + "</DIV>";
+                report += "<DIV class=\"chart-row\">";
+                report += "<DIV class=\"chart\"><H2><B>" + "By Material" + "</B></H2>" + ImgTag1 + "</DIV>";
+                report += "<DIV class=\"chart\"><H2><B>" + "By Phase" + "</B></H2>" + ImgTag2 + "</DIV>";
+                report += "</DIV>";
+                report += "</DIV>";
+
                 //Calculation Results
                 report += writeCalculation(carboProject);
-
-                //Images
-                report += "<H2><B>" + "Graphs:" + "</B></H2>" + System.Environment.NewLine;
-                report += "<DIV class=\"charts\">";
-                report += "<DIV class=\"chart chart-score\"><H2><B>" + "Score:" + "</B></H2>" + ImgTag3 + "</DIV>";
-                report += "<DIV class=\"chart-row\">";
-                report += "<DIV class=\"chart\"><H2><B>" + "By Material:" + "</B></H2>" + ImgTag1 + "</DIV>";
-                report += "<DIV class=\"chart\"><H2><B>" + "By Phase:" + "</B></H2>" + ImgTag2 + "</DIV>";
-                report += "</DIV>";
-                report += "</DIV>";
 
                 //Material Quanaities
                 report += writeQuantitiesTable(carboProject);
@@ -135,7 +135,7 @@ namespace CarboLifeAPI
 
                 if (report != "")
                 {
-                    using (StreamWriter sw = new StreamWriter(reportpath, false, Encoding.GetEncoding("Windows-1252")))
+                    using (StreamWriter sw = new StreamWriter(reportpath, false, new UTF8Encoding(false)))
                     {
                         sw.WriteLine(report);
                         sw.Close();
@@ -172,11 +172,15 @@ namespace CarboLifeAPI
 
                 List<CarboDataPoint> list = carboProject.getPhaseTotals();
 
-                html += "<H1><B>" + "Calculation:" + "</B></H1>" + System.Environment.NewLine;
-                html += "<H2><B>" + "Material Based Values:" + "</B></H2>" + System.Environment.NewLine;
+                html += "<H1><B>" + "Calculation" + "</B></H1>" + System.Environment.NewLine;
 
-                html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=800>";
-                html += "<TR><TD width=175></TD><TD> tCO2</TD></TR>";
+                html += "<DIV class=\"values-row\">" + System.Environment.NewLine;
+
+                //Material based values
+                html += "<DIV class=\"values-col\"><H2><B>" + "Material Based Values" + "</B></H2>" + System.Environment.NewLine;
+
+                html += "<TABLE class=\"values-table\" cellpadding=0 cellspacing=0>";
+                html += "<TR class=\"hrow\"><TD>Phase</TD><TD>tCO<SUB>2</SUB>e</TD></TR>";
 
                 foreach (CarboDataPoint cdp in list)
                 {
@@ -188,36 +192,38 @@ namespace CarboLifeAPI
                     }
                 }
 
-                html += "</TABLE>";
+                html += "</TABLE></DIV>" + System.Environment.NewLine;
 
                 ///Globl Values
 
-                html += "<H2><B>" + "Global Values:" + "</B></H2>" + System.Environment.NewLine;
+                html += "<DIV class=\"values-col\"><H2><B>" + "Global Values" + "</B></H2>" + System.Environment.NewLine;
 
-                html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=800>";
+                html += "<TABLE class=\"values-table\" cellpadding=0 cellspacing=0>";
 
-                html += "<TR><TD width=175></TD><TD> tCO2</TD><TD></TD></TR>";
+                html += "<TR class=\"hrow\"><TD>Item</TD><TD>tCO<SUB>2</SUB>e</TD></TR>";
 
                 html += "<TR><TD width=" + 150 + "><B>" + "A0:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD>" + carboProject.A0GlobalUncert + " </TD><TD></TD></TR>" + System.Environment.NewLine;
+                html += "<TD>" + carboProject.A0GlobalUncert + " </TD></TR>" + System.Environment.NewLine;
 
                 html += "<TR><TD width=" + 150 + "><B>" + "A5:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD>" + carboProject.A5Global + " </TD><TD></TD></TR>" + System.Environment.NewLine;
+                html += "<TD>" + carboProject.A5Global + " </TD></TR>" + System.Environment.NewLine;
 
                 html += "<TR><TD width=" + 150 + "><B>" + "C1:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD>" + carboProject.C1Global + " </TD><TD></TD></TR>" + System.Environment.NewLine;
+                html += "<TD>" + carboProject.C1Global + " </TD></TR>" + System.Environment.NewLine;
 
                 html += "<TR><TD width=" + 150 + "><B>" + "B6-B7:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD>" + carboProject.b675Global + " </TD><TD></TD></TR>" + System.Environment.NewLine;
+                html += "<TD>" + carboProject.b675Global + " </TD></TR>" + System.Environment.NewLine;
 
-                html += "</TABLE>";
+                html += "</TABLE></DIV>" + System.Environment.NewLine;
+
+                html += "</DIV>" + System.Environment.NewLine;
 
 
                 string Summarytext = carboProject.getGeneralText();
                 Summarytext = Summarytext.Replace(System.Environment.NewLine, "<BR>"); //add a line terminating ;
 
 
-                html += "<H3>" + Summarytext + "</H3>" + System.Environment.NewLine;
+                html += "<H3 class=\"summary\">" + Summarytext + "</H3>" + System.Environment.NewLine;
 
             }
             catch
@@ -279,16 +285,15 @@ namespace CarboLifeAPI
         {
             string html = "<H1><B>" + "Material Properties" + "</B></H1>" + System.Environment.NewLine;
 
-            html += "<TABLE border=1 cellpadding=0 cellspacing=0 >";
+            html += "<DIV class=\"table-wrap\"><TABLE class=\"data-table\" cellpadding=0 cellspacing=0>";
 
-            html += "<TR></TR>";
             //ResultTable in a table
             try
             {
 
                 //Write Headers:
 
-                html += "<TR>" + System.Environment.NewLine;
+                html += "<TR class=\"hrow\">" + System.Environment.NewLine;
                 html += "<TD width=" + 175 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 100 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 200 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
@@ -313,7 +318,7 @@ namespace CarboLifeAPI
 
                 html += "</TR>" + System.Environment.NewLine;
                 //UNITS
-                html += "<TR>" + System.Environment.NewLine;
+                html += "<TR class=\"urow\">" + System.Environment.NewLine;
                 html += "<TD><B>" + "" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD><B>" + "" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD><B>" + "" + "</B></TD>" + System.Environment.NewLine;
@@ -374,7 +379,7 @@ namespace CarboLifeAPI
                         html += "</TR>" + System.Environment.NewLine;
                     }
                 }
-                html += "</TABLE>";
+                html += "</TABLE></DIV>";
             }
             catch
             {
@@ -385,16 +390,15 @@ namespace CarboLifeAPI
 
         private static string writeQuantitiesTable(CarboProject carboProject)
         {
-            string html = "<H1><B>" + "Material Quantities:" + "</B></H1>" + System.Environment.NewLine;
+            string html = "<H1><B>" + "Material Quantities" + "</B></H1>" + System.Environment.NewLine;
 
-            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1600>";
-            html += "<TR></TR>";
+            html += "<DIV class=\"table-wrap\"><TABLE class=\"data-table\" cellpadding=0 cellspacing=0>";
             //ResultTable in a table
             try
             {
 
                 //Write 10 Headers:
-                html += "<TR>" + System.Environment.NewLine;
+                html += "<TR class=\"hrow\">" + System.Environment.NewLine;
 
                 html += "<TD width=" + 150 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 175 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
@@ -412,7 +416,7 @@ namespace CarboLifeAPI
                 html += "</TR>" + System.Environment.NewLine;
 
                 //Write 10 units
-                html += "<TR>" + System.Environment.NewLine;
+                html += "<TR class=\"urow\">" + System.Environment.NewLine;
 
                 html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
@@ -463,7 +467,7 @@ namespace CarboLifeAPI
                 }
 
 
-                html += "</TABLE>";
+                html += "</TABLE></DIV>";
 
 
             }
@@ -478,18 +482,17 @@ namespace CarboLifeAPI
         private static string writeReportTable(CarboProject carboProject)
         {
 
-            string html = "<H1><B>" + "Embodied Carbon Calculation Groups:" + "</B></H1>" + System.Environment.NewLine;
+            string html = "<H1><B>" + "Embodied Carbon Calculation Groups" + "</B></H1>" + System.Environment.NewLine;
 
-            html += "<TABLE border=1 cellpadding=0 cellspacing=0 width=1600>";
+            html += "<DIV class=\"table-wrap\"><TABLE class=\"data-table\" cellpadding=0 cellspacing=0>";
 
-            html += "<TR></TR>";
             //ResultTable in a table
             try
             {
 
                 //Write Headers:
 
-                html += "<TR>" + System.Environment.NewLine;
+                html += "<TR class=\"hrow\">" + System.Environment.NewLine;
                 html += "<TD width=" + 150 + "><B>" + "Category" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 250 + "><B>" + "Material" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD width=" + 225 + "><B>" + "Description" + "</B></TD>" + System.Environment.NewLine;
@@ -525,7 +528,7 @@ namespace CarboLifeAPI
 
                 html += "</TR>" + System.Environment.NewLine;
                 //UNITS
-                html += "<TR>" + System.Environment.NewLine;
+                html += "<TR class=\"urow\">" + System.Environment.NewLine;
                 html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
                 html += "<TD align='left'><B>" + "" + "</B></TD>" + System.Environment.NewLine;
@@ -610,7 +613,7 @@ namespace CarboLifeAPI
                 }
                 html += getTotalsRow(carboProject.getTotalsGroup());
 
-                html += "</TABLE>";
+                html += "</TABLE></DIV>";
             }
             catch
             {
@@ -625,7 +628,7 @@ namespace CarboLifeAPI
         {
             string html = "";
 
-            html += "<TR>" + System.Environment.NewLine;
+            html += "<TR class=\"totals\">" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "TOTAL" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
             html += "<TD width=" + 50 + "><B>" + "" + "</B></TD>" + System.Environment.NewLine;
@@ -647,8 +650,8 @@ namespace CarboLifeAPI
         {
             string html = "";
 
-            html += "<TR>" + System.Environment.NewLine;
-            html += "<TD align='left' valign='middle'><B>" + material + "</B></td>" + System.Environment.NewLine;
+            html += "<TR class=\"group\">" + System.Environment.NewLine;
+            html += "<TD colspan=\"24\"><B>" + material + "</B></TD>" + System.Environment.NewLine;
             html += "</TR>" + System.Environment.NewLine;
             return html;
 
@@ -667,68 +670,61 @@ namespace CarboLifeAPI
 
             try
             {
-                html += "<HTML><HEAD><TITLE>Carbo Life Calc : Embodied Carbon Calculation for: " + carboProject.Name + " </TITLE>" + System.Environment.NewLine;
-                //add header row
+                string exportDate = DateTime.Today.ToShortDateString();
 
-                html += "<META charset=\"windows-1252\">" + System.Environment.NewLine;
+                html += "<HTML><HEAD><META charset=\"utf-8\">";
+                html += "<TITLE>Carbo Life Calc : Embodied Carbon Calculation for: " + carboProject.Name + " </TITLE>" + System.Environment.NewLine;
+
                 html += getCSS();
 
                 html += "</HEAD><BODY>";
 
-                html += "<H1><B>" + "Embodied Carbon Calculation for: " + carboProject.Name + "</B></H1>" + System.Environment.NewLine;
+                //Document header: eyebrow, title and one-line meta strip
+                html += "<DIV class=\"doc-header\">" + System.Environment.NewLine;
+                html += "<DIV class=\"eyebrow\">Embodied Carbon Calculation</DIV>" + System.Environment.NewLine;
+                html += "<H1 class=\"doc-title\"><B>" + carboProject.Name + "</B></H1>" + System.Environment.NewLine;
 
+                html += "<DIV class=\"doc-meta\">";
+                if (!string.IsNullOrWhiteSpace(carboProject.Number))
+                    html += "<span>" + carboProject.Number + "</span>";
+                if (!string.IsNullOrWhiteSpace(carboProject.Category))
+                    html += "<span>" + carboProject.Category + "</span>";
+                html += "<span>GIA " + Fmt(carboProject.Area, 2) + " m<SUP>2</SUP></span>";
+                html += "<span>" + exportDate + "</span>";
+                html += "</DIV>" + System.Environment.NewLine;
+                html += "</DIV>" + System.Environment.NewLine;
 
+                //Headline figures
+                double upfront = carboProject.getUpfrontTotals();
+                double embodied = carboProject.getEmbodiedTotals();
+                double area = carboProject.Area;
+
+                html += "<DIV class=\"kpi-band\">";
+                html += getKpi("Upfront Carbon&nbsp;A0-A5", Fmt(upfront / 1000, 2), "tCO<SUB>2</SUB>e");
+                html += getKpi("Embodied Carbon&nbsp;A0-C", Fmt(embodied / 1000, 2), "tCO<SUB>2</SUB>e");
+                html += getKpi("Upfront Intensity", area > 0 ? Fmt(upfront / area, 0) : "-", "kgCO<SUB>2</SUB>e/m<SUP>2</SUP>");
+                html += getKpi("Embodied Intensity", area > 0 ? Fmt(embodied / area, 0) : "-", "kgCO<SUB>2</SUB>e/m<SUP>2</SUP>");
+                html += "</DIV>" + System.Environment.NewLine;
+
+                //Project information
                 html += "<H1><B>" + "Project Info" + "</B></H1>" + System.Environment.NewLine;
 
-                html += "<TABLE class=\"info-table\" cellpadding=0 cellspacing=0>";
-                html += "<TR></TR>";
+                html += "<DIV class=\"info-grid\">" + System.Environment.NewLine;
 
-                html += "<TR><TD width=" + 150 + "><B>" + "Name:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + carboProject.Name + "</TD></TR>" + System.Environment.NewLine;
-
-                html += "<TR><TD width=" + 150 + "><B>" + "Project Number:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + carboProject.Number + "</TD></TR>" + System.Environment.NewLine;
-
-                html += "<TR><TD width=" + 150 + "><B>" + "Description:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + carboProject.Description + "</TD></TR>" + System.Environment.NewLine;
-
-                html += "<TR><TD width=" + 150 + "><B>" + "Category:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + carboProject.Category + "</TD></TR>" + System.Environment.NewLine;
-
-                html += "<TR><TD width=" + 150 + "><B>" + "Area (GIA):" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + carboProject.Area + "m<SUP>2</SUP></TD></TR>" + System.Environment.NewLine;
-                /*
-                html += "<TR><TD width=" + 150 + "><B>" + "Value:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + carboProject.valueUnit + " " + carboProject.Value + "</TD></TR>" + System.Environment.NewLine;
-                */
-                html += "<TR><TD width=" + 150 + "><B>" + "Design Life:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + carboProject.designLife + "</TD></TR>" + System.Environment.NewLine;
+                html += getInfoItem("Name", carboProject.Name);
+                html += getInfoItem("Project Number", carboProject.Number);
+                html += getInfoItem("Description", carboProject.Description);
+                html += getInfoItem("Category", carboProject.Category);
+                html += getInfoItem("Area (GIA)", Fmt(carboProject.Area, 2) + " m<SUP>2</SUP>");
+                html += getInfoItem("Design Life", carboProject.designLife.ToString());
 
                 if (carboProject.CarboDatabase.templateName != "")
-                {
-                    html += "<TR><TD width=" + 150 + "><B>" + "Template Life:" + "</B></TD>" + System.Environment.NewLine;
-                    html += "<TD width=" + 175 + ">" + carboProject.CarboDatabase.templateName + "</TD></TR>" + System.Environment.NewLine;
-                }
+                    html += getInfoItem("Template", carboProject.CarboDatabase.templateName);
 
-                html += "<TR><TD width=" + 150 + "><B>" + "Total Upfront Carbon (A0-A5):" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + Math.Round(carboProject.getUpfrontTotals() / 1000, 2) + "</TD></TR>" + System.Environment.NewLine;
+                html += getInfoItem("Total Footprint", Fmt(carboProject.getTotalEC(), 2) + " tCO<SUB>2</SUB>e");
+                html += getInfoItem("Export Date", exportDate);
 
-                html += "<TR><TD width=" + 150 + "><B>" + "Total Embodied Carbon (A0-C):" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + Math.Round(carboProject.getEmbodiedTotals() / 1000, 2) + "</TD></TR>" + System.Environment.NewLine;
-
-                html += "<TR><TD width=" + 150 + "><B>" + "Total Footprint:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + Math.Round(carboProject.getTotalEC(), 2) + "</TD></TR>" + System.Environment.NewLine;
-
-
-                html += "<TR><TD width=" + 150 + "><B>" + "Total Embodied Carbon / m<SUP>2</SUP>:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + Math.Round((carboProject.getEmbodiedTotals() / carboProject.Area)) + "</TD></TR>" + System.Environment.NewLine;
-
-                html += "<TR><TD width=" + 150 + "><B>" + "Export Date:" + "</B></TD>" + System.Environment.NewLine;
-                html += "<TD width=" + 175 + ">" + DateTime.Today.ToShortDateString() + "</TD></TR>" + System.Environment.NewLine;
-
-                html += "</TABLE>";
-
-
+                html += "</DIV>" + System.Environment.NewLine;
             }
             catch
             {
@@ -737,171 +733,355 @@ namespace CarboLifeAPI
             return html;
         }
 
+        private static string getKpi(string label, string value, string unit)
+        {
+            string html = "<DIV class=\"kpi\">";
+            html += "<DIV class=\"kpi-label\">" + label + "</DIV>";
+            html += "<DIV class=\"kpi-value\">" + value + "<span class=\"kpi-unit\">" + unit + "</span></DIV>";
+            html += "</DIV>";
+
+            return html;
+        }
+
+        private static string getInfoItem(string label, string value)
+        {
+            string html = "<DIV class=\"info-item\">";
+            html += "<DIV class=\"info-label\">" + label + "</DIV>";
+            html += "<DIV class=\"info-value\">" + value + "</DIV>";
+            html += "</DIV>" + System.Environment.NewLine;
+
+            return html;
+        }
+
+        /// <summary>
+        /// Formats a number with thousand separators so the headline figures stay readable.
+        /// </summary>
+        private static string Fmt(double value, int decimals)
+        {
+            return value.ToString("N" + decimals);
+        }
+
         public static string getCSS()
         {
             string html = @"
 <style type=""text/css"">
 
+:root { --coral: #B21616; }
+
+* { box-sizing: border-box; }
+
 body {
-  font-family: ""Segoe UI"", ""Segoe UI"", sans-serif;
+  font-family: ""Segoe UI"", ""Helvetica Neue"", Arial, sans-serif;
   background-color: #ffffff;
   color: #1a1a1a;
   margin: 0;
-  padding: 48px 56px 72px 56px;
+  padding: 44px 52px 64px 52px;
+  font-size: 13px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
 }
 
-h1, h2 {
-  color: #B21616;
-  font-weight: 300;
-  letter-spacing: 0.01em;
+a { color: var(--coral); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- document header ---------- */
+
+.doc-header { margin: 0 0 32px 0; }
+
+.eyebrow {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6a6a6a;
+  margin: 0 0 12px 0;
 }
 
-body > h1:first-of-type {
-  margin: 0 0 4px 0;
-  font-size: 30px;
+h1.doc-title {
+  font-size: 34px;
   font-weight: 300;
-  padding-bottom: 18px;
-  border-bottom: 2px solid #B21616;
+  color: var(--coral);
+  letter-spacing: -0.005em;
+  line-height: 1.15;
+  text-transform: none;
+  margin: 0;
+  padding: 0;
+  border: none;
 }
+
+.doc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 14px 0 0 0;
+  padding: 13px 0 0 0;
+  border-top: 1px solid #e6e6e6;
+  font-size: 12px;
+  color: #707070;
+}
+
+.doc-meta span { white-space: nowrap; }
+.doc-meta span + span::before { content: ""\00b7""; color: #c8c8c8; margin-right: 16px; }
+
+/* ---------- headline figures ---------- */
+
+.kpi-band {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 2px solid var(--coral);
+  border-bottom: 1px solid #e6e6e6;
+  margin: 0 0 44px 0;
+}
+
+.kpi {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 26px 20px 26px;
+  border-left: 1px solid #ededed;
+}
+.kpi:first-child { border-left: none; padding-left: 0; }
+
+.kpi-label {
+  min-height: 2.5em;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6a6a6a;
+}
+
+.kpi-value {
+  font-size: 29px;
+  font-weight: 600;
+  color: #111111;
+  line-height: 1;
+  margin: auto 0 0 0;
+  white-space: nowrap;
+}
+
+.kpi-unit { font-size: 11.5px; font-weight: 400; color: #6a6a6a; margin-left: 6px; }
+
+/* ---------- section headings ---------- */
 
 h1 {
-  font-size: 21px;
-  margin: 52px 0 16px 0;
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--coral);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 54px 0 20px 0;
+  padding: 0 0 9px 0;
+  border-bottom: 1px solid #e6e6e6;
 }
 
 h2 {
-  font-size: 15px;
-  font-weight: 400;
-  margin: 26px 0 8px 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--coral);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  margin: 28px 0 10px 0;
 }
+
+h1 b, h2 b { font-weight: inherit; }
 
 h3 {
-  color: #444444;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 400;
-  line-height: 1.75;
-  margin: 16px 0;
-  max-width: 760px;
+  line-height: 1.85;
+  color: #3d3d3d;
+  max-width: 800px;
 }
 
-a {
-  color: #B21616;
-  text-decoration: none;
+/* ---------- project information ---------- */
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px 44px;
+  margin: 0 0 8px 0;
+  max-width: 1180px;
 }
 
-a:hover {
-  text-decoration: underline;
+.info-item { padding: 0 0 13px 0; border-bottom: 1px solid #f0f0f0; }
+
+.info-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #6a6a6a;
+  margin: 0 0 6px 0;
 }
 
-table {
-  width: auto;
-  max-width: 100%;
-  border-collapse: collapse;
-  font-size: 12.5px;
-  margin: 6px 0 40px 0;
-  background-color: transparent;
-}
+.info-value { font-size: 14.5px; color: #111111; }
+
+/* ---------- charts ---------- */
+
+.charts { display: flex; flex-direction: column; gap: 30px; margin: 0 0 8px 0; }
+
+.chart-score { max-width: 50%; }
+
+.chart-row { display: flex; gap: 44px; align-items: flex-start; max-width: 62.5%; }
+.chart-row .chart { flex: 1 1 0; min-width: 0; }
+
+.charts h2 { margin: 0 0 10px 0; }
+.charts img { display: block; width: 100%; height: auto; max-width: 100%; margin: 0; }
+
+img { display: block; max-width: 100%; height: auto; }
+
+/* ---------- tables ---------- */
+
+table { border-collapse: collapse; background-color: transparent; }
 
 td {
-  padding: 8px 14px;
+  padding: 6px 11px;
   border: none;
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid #f2f2f2;
   vertical-align: middle;
   color: #1a1a1a;
+}
+
+/* ---------- phase / global value tables ---------- */
+
+.values-row { display: flex; flex-wrap: wrap; gap: 24px 64px; margin: 0; }
+.values-col { flex: 0 1 330px; }
+
+table.values-table { width: 100%; margin: 0 0 20px 0; font-size: 13px; }
+
+.values-table td {
+  padding: 7px 0;
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
   white-space: nowrap;
+  color: #1a1a1a;
 }
 
-td b {
+.values-table td b { font-weight: 400; color: #333333; }
+.values-table td:last-child { text-align: right; }
+
+.values-table tr.hrow td {
+  font-size: 10.5px;
   font-weight: 600;
-  color: #000000;
-}
-
-tr:nth-child(even) {
-  background-color: #fafafa;
-}
-
-.static-table td {
-  border-bottom: none;
-}
-
-.static-table tr:nth-child(even) {
-  background-color: transparent;
-}
-
-td h2 {
-  margin: 20px 0 4px 0;
-}
-
-img {
-  display: block;
-  margin: 6px 0 18px 0;
-  width: auto;
-  height: auto;
-  max-width: 620px;
-  max-height: 260px;
-}
-
-.charts {
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
-  margin: 6px 0 40px 0;
-}
-
-.chart-row {
-  display: flex;
-  gap: 40px;
-  align-items: flex-start;
-  max-width: 62.5%;
-}
-
-.chart-row .chart {
-  flex: 1 1 0;
-  min-width: 0;
-}
-
-.charts h2 {
-  margin: 0 0 12px 0;
-  font-size: 14px;
+  letter-spacing: 0.13em;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #888888;
-  font-weight: 600;
+  color: #6a6a6a;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #d4d4d4;
 }
 
-.charts img {
-  margin: 0;
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  max-height: none;
-}
+/* ---------- summary narrative ---------- */
 
-.chart-score {
-  max-width: 62.5%;
-}
-
-.info-table {
-  margin: 6px 0 40px 0;
-}
-
-.info-table td {
-  border-bottom: none;
-  padding: 5px 40px 5px 0;
-  font-size: 15px;
-  white-space: nowrap;
-}
-
-.info-table tr:nth-child(even) {
-  background-color: transparent;
-}
-
-.info-table td b {
+h3.summary {
+  font-size: 13px;
   font-weight: 400;
-  color: #888888;
-  font-size: 13.5px;
+  line-height: 1.95;
+  color: #3d3d3d;
+  max-width: 800px;
+  margin: 30px 0 8px 0;
+  padding: 22px 0 24px 0;
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+/* ---------- data tables ---------- */
+
+.table-wrap { overflow-x: auto; margin: 0 0 8px 0; padding: 0 0 4px 0; }
+
+table.data-table { width: 100%; font-size: 11px; }
+
+.data-table td {
+  padding: 6px 11px;
+  border: none;
+  border-bottom: 1px solid #f2f2f2;
+  vertical-align: middle;
+  white-space: nowrap;
+  color: #1a1a1a;
+}
+
+.data-table td:first-child { padding-left: 0; }
+.data-table td:nth-child(n+4) { text-align: right; }
+.data-table td:nth-child(3) { white-space: normal; min-width: 165px; color: #5a5a5a; }
+
+.data-table tr:hover td { background-color: #fafafa; }
+
+.data-table tr.hrow td,
+.data-table tr.urow td { background-color: #ffffff; }
+
+.data-table tr.hrow td {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #5f5f5f;
+  white-space: normal;
+  padding: 0 11px 6px 11px;
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.data-table tr.urow td {
+  font-size: 10.5px;
+  font-weight: 400;
+  color: #6e6e6e;
+  padding: 0 11px 8px 11px;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.data-table tr.hrow td:first-child,
+.data-table tr.urow td:first-child { padding-left: 0; }
+
+.data-table tr.urow td b { font-weight: 400; }
+
+.data-table tr.group td {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--coral);
+  text-align: left;
+  white-space: nowrap;
+  padding: 20px 0 7px 0;
+  border-bottom: 1px solid #e6e6e6;
+  background-color: #ffffff;
+}
+
+.data-table tr.totals td {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #111111;
+  padding-top: 10px;
+  border-top: 1px solid #cfcfcf;
+  border-bottom: none;
+  background-color: #ffffff;
+}
+
+/* ---------- footer ---------- */
+
+.doc-footer {
+  margin: 56px 0 0 0;
+  padding: 16px 0 0 0;
+  border-top: 1px solid #e6e6e6;
+  font-size: 11px;
+  line-height: 1.85;
+  color: #6a6a6a;
+}
+
+.doc-footer a { color: #6a6a6a; border-bottom: 1px solid #d8d8d8; }
+.doc-footer a:hover { color: var(--coral); border-bottom-color: var(--coral); text-decoration: none; }
+
+/* ---------- print ---------- */
+
+@media print {
+  @page { size: A4 landscape; margin: 12mm; }
+  body { padding: 0; font-size: 11px; }
+  .table-wrap { overflow: visible; }
+  table.data-table { font-size: 8px; }
+  .data-table td { padding: 3px 6px; }
+  .data-table tr:hover td { background-color: transparent; }
+  h1 { margin-top: 30px; page-break-after: avoid; }
+  h2 { page-break-after: avoid; }
+  .doc-header, .kpi-band { page-break-after: avoid; }
+  tr, .kpi-band, .charts, .chart-row, .info-item { page-break-inside: avoid; }
+  .doc-footer { page-break-before: avoid; }
 }
 
 </style>
@@ -972,9 +1152,9 @@ img {
         public static string closeHTML()
         {
             string html = "";
-            html += "<H3>Report Generated on: " + DateTime.Today.ToShortDateString() + "<BR>" + System.Environment.NewLine;
+            html += "<DIV class=\"doc-footer\">Report Generated on: " + DateTime.Today.ToShortDateString() + "<BR>" + System.Environment.NewLine;
             html += "Report Generated by: " + "Carbo Life Calculator Version: " + Assembly.GetExecutingAssembly().GetName().Version.ToString() + "<BR>" + System.Environment.NewLine;
-            html += @"<A href=""https://github.com/DavidVeld/CarboLifeCalc"">https://github.com/DavidVeld/CarboLifeCalc</A></H3><BR>" + System.Environment.NewLine;
+            html += @"<A href=""https://github.com/DavidVeld/CarboLifeCalc"">https://github.com/DavidVeld/CarboLifeCalc</A></DIV>" + System.Environment.NewLine;
 
             try
             {

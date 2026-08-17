@@ -302,7 +302,27 @@ namespace CarboLifeAPI
             return valueList;
         }
         /// <summary>
-        /// This code will combine the 
+        /// The category an element should be reported under once the generated allowances are folded
+        /// away. Reinforcement and the steel and timber connection allowances are carbon that belongs
+        /// to the element they were worked out from, so they are reported against that element rather
+        /// than as a category of their own. The generators record which element that was in the
+        /// SubCategory, see CarboProject.getRCGroup and getConnectionGroup.
+        /// </summary>
+        private static string getMergedCategoryName(CarboElement cEl)
+        {
+            //An allowance with nothing to fold into keeps its own category, which is better than
+            //collecting it under a blank name.
+            if (CarboGroupCategories.IsGeneratedAllowance(cEl.Category) == true
+                && string.IsNullOrEmpty(cEl.SubCategory) == false)
+            {
+                return cEl.SubCategory;
+            }
+
+            return cEl.Category;
+        }
+
+        /// <summary>
+        /// This code will combine the
         /// </summary>
         /// <param name="projectElements"></param>
         /// <returns></returns>
@@ -317,10 +337,8 @@ namespace CarboLifeAPI
                     string targetName;
                     if (cEl.isSubstructure)
                         targetName = "Substructure";
-                    else if (cEl.Category == "Reinforcement")
-                        targetName = cEl.SubCategory;
                     else
-                        targetName = cEl.Category;
+                        targetName = getMergedCategoryName(cEl);
 
                     // Find if this bucket already exists in our list
                     var existingPoint = valueList.FirstOrDefault(p => p.Name == targetName);
@@ -344,7 +362,8 @@ namespace CarboLifeAPI
             return valueList;
         }
         /// <summary>
-        /// By category dataset, however reinforcement values are added to the category
+        /// By category dataset, however the generated allowance values (reinforcement, steel and
+        /// timber connections) are added to the category of the element they belong to.
         /// </summary>
         /// <param name="projectElements"></param>
         /// <returns></returns>
@@ -358,12 +377,8 @@ namespace CarboLifeAPI
                 {
                     CarboDataPoint newelement = new CarboDataPoint();
 
-                    //check if element is reinforcement:
-
-                    if(cEl.Category == "Reinforcement")
-                        newelement.Name = cEl.SubCategory;
-                    else
-                        newelement.Name = cEl.Category;
+                    //Reinforcement and connection allowances go in with their parent element.
+                    newelement.Name = getMergedCategoryName(cEl);
 
                     newelement.Value = (cEl.EC/1000);
 
