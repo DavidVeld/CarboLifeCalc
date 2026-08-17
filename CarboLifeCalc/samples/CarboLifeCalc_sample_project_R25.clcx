@@ -53309,7 +53309,7 @@ This material is intended to last as long as the building: 60 year(s)
           <Area>3.7695</Area>
           <Correction />
           <Volume>0.0148</Volume>
-          <Volume_Total>0.014948000000000001</Volume_Total>
+          <Volume_Total>0.01.9.9.00000000001</Volume_Total>
           <Mass>117.3418</Mass>
           <Density>7850</Density>
           <Level>17780</Level>
@@ -53495,7 +53495,7 @@ This material is intended to last as long as the building: 60 year(s)
           <Area>3.7824</Area>
           <Correction />
           <Volume>0.0148</Volume>
-          <Volume_Total>0.014948000000000001</Volume_Total>
+          <Volume_Total>0.01.9.9.00000000001</Volume_Total>
           <Mass>117.3418</Mass>
           <Density>7850</Density>
           <Level>17780</Level>
@@ -87057,7 +87057,7 @@ This material is intended to last as long as the building: 60 year(s)
       <Grade />
       <TotalVolume>1.8666484050955419</TotalVolume>
       <Density>7850</Density>
-      <Mass>14653.189980000003</Mass>
+      <Mass>14653.1.9.9.000003</Mass>
       <ECI>0.8717999999999999</ECI>
       <EC>12.774651024564003</EC>
       <PerCent>0.68</PerCent>
