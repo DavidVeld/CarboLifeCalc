@@ -712,7 +712,7 @@ namespace CarboLifeUI.UI
                         SKPieChart skChart = new SKPieChart(chartControl) { Width = Convert.ToInt16(pie_Chart1.ActualWidth), Height = Convert.ToInt16(pie_Chart1.ActualHeight) };
                         using var image = skChart.GetImage();
                         using var data = image.Encode();
-                        string base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
+                        string base64CartesianChart1 = Convert.ToBase64String(data.ToArray());
 
                         System.Drawing.Image image1 = ReportBuilder.base64ToImage(base64CartesianChart1);
                         if (image1 != null)
@@ -733,7 +733,7 @@ namespace CarboLifeUI.UI
                         SKCartesianChart skChart = new SKCartesianChart(chartControl) { Width = Convert.ToInt16(chart_Level.ActualWidth), Height = Convert.ToInt16(chart_Level.ActualHeight) };
                         using var image = skChart.GetImage();
                         using var data = image.Encode();
-                        string base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
+                        string base64CartesianChart1 = Convert.ToBase64String(data.ToArray());
 
                         System.Drawing.Image image1 = ReportBuilder.base64ToImage(base64CartesianChart1);
                         if (image1 != null)
@@ -763,7 +763,7 @@ namespace CarboLifeUI.UI
                         SKPieChart skChart = new SKPieChart(chartControl) { Width = Convert.ToInt16(pie_Chart2.ActualWidth), Height = Convert.ToInt16(pie_Chart2.ActualHeight) };
                         using var image = skChart.GetImage();
                         using var data = image.Encode();
-                        string base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
+                        string base64CartesianChart1 = Convert.ToBase64String(data.ToArray());
 
                             System.Drawing.Image image1 = ReportBuilder.base64ToImage(base64CartesianChart1);
                             if (image1 != null)

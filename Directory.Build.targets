@@ -1,0 +1,23 @@
+<Project>
+
+  <!--
+    SkiaSharp's .NET Framework targets drop the native libSkiaSharp.dll into x86\, x64\ and
+    arm64\ subfolders of the output, never into the output root. That is fine for a Revit or
+    Grasshopper add-in, which goes through CarboLifeUI.NativeDependencies.Preload() and probes
+    the subfolder, but not for CarboLifeCalc.exe: there the process directory *is* the output
+    directory, so a plain DllImport("libSkiaSharp") looks in the root and finds nothing.
+
+    Mirror the x64 copy up into the root. The build is always x64 (see Directory.Build.props).
+    Harmless in projects that never pull SkiaSharp in - the Condition just skips.
+
+    The NET8 build does not need this: .NET Core resolves native assets through deps.json.
+  -->
+  <Target Name="CopySkiaSharpNativeToOutputRoot"
+          AfterTargets="Build"
+          Condition="'$(TargetFramework)' == 'net48' And Exists('$(OutputPath)x64\libSkiaSharp.dll')">
+    <Copy SourceFiles="$(OutputPath)x64\libSkiaSharp.dll"
+          DestinationFolder="$(OutputPath)"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

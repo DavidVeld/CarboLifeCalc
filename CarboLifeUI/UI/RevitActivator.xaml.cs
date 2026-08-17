@@ -26,24 +26,53 @@ namespace CarboLifeUI.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //Which Revit versions this binary can actually be loaded by. The 4.8 build is
+            //compiled against the Revit 2023 API and runs on 2023-2024, the last Revit
+            //generation on .NET Framework; the NET8 build starts at 2025. Offering a
+            //version from the wrong generation would install an add-in Revit cannot load.
+#if NETFRAMEWORK
+            _versions = new[]
+            {
+                new VersionEntry("2023",
+                    @"C:\ProgramData\Autodesk\Revit\Addins\2023",
+                    chx_slot1, lbl_slot1),
+
+                new VersionEntry("2024",
+                    @"C:\ProgramData\Autodesk\Revit\Addins\2024",
+                    chx_slot2, lbl_slot2),
+            };
+#else
             _versions = new[]
             {
                 new VersionEntry("2025",
                     @"C:\ProgramData\Autodesk\Revit\Addins\2025",
-                    chx_2025, lbl_2025),
+                    chx_slot1, lbl_slot1),
 
                 new VersionEntry("2026",
                     @"C:\ProgramData\Autodesk\Revit\Addins\2026",
-                    chx_2026, lbl_2026),
+                    chx_slot2, lbl_slot2),
 
                 new VersionEntry("2027",
                     Path.Combine(
                         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                         @"Autodesk\Revit\Addins\2027"),
-                    chx_2027, lbl_2027),
+                    chx_slot3, lbl_slot3),
             };
+#endif
 
+            HideUnusedRows();
             CheckRevitVersions();
+        }
+
+        /// <summary>
+        /// The window has a fixed set of rows; collapse the ones this build has no version for.
+        /// </summary>
+        private void HideUnusedRows()
+        {
+            var rows = new[] { row_slot1, row_slot2, row_slot3 };
+
+            for (int i = _versions.Length; i < rows.Length; i++)
+                rows[i].Visibility = Visibility.Collapsed;
         }
 
         private void CheckRevitVersions()

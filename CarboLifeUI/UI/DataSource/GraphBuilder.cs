@@ -25,6 +25,9 @@ namespace CarboLifeUI.UI
 {
     public static class GraphBuilder
     {
+        //Random.Shared is .NET 6+; a single shared instance behaves the same here and
+        //keeps the 4.8 build compiling. Only ever used for fallback series colours.
+        private static readonly Random _sharedRandom = new Random();
 
         public static double min;
         public static double max;
@@ -679,9 +682,9 @@ namespace CarboLifeUI.UI
             else
             {
                 SKColor randomColor = new SKColor(
-    (byte)Random.Shared.Next(256),
-    (byte)Random.Shared.Next(256),
-    (byte)Random.Shared.Next(256),
+    (byte)_sharedRandom.Next(256),
+    (byte)_sharedRandom.Next(256),
+    (byte)_sharedRandom.Next(256),
     255); // optional alpha
 
                 result = randomColor;

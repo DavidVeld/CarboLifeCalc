@@ -53,11 +53,18 @@ namespace CarboCircle.data
                     }
                     else if (mined_cce.materialClass == "Masonry" || mined_cce.materialClass == "Brick")
                     {
-                        carboCircleElement aggregarte = mined_cce.Copy();
-                        //aggregarte.name = "mined_cce.name;
-                        aggregarte.volume = mined_cce.volume * Convert.ToDouble(carboCircleProject.settings.VolumeLoss / 100);
-                        aggregarte.materialName = "Reused masonry";
-                        aggregarte.materialClass = "Masonry";
+                        //Masonry comes back as reusable masonry, less what deconstruction
+                        //destroys. The factor mirrors how VolumeLoss is applied to concrete
+                        //in carboCircleProject.correctMinedValues.
+                        double masonryFactor = 1 - (Convert.ToDouble(carboCircleProject.settings.MasonryLoss) / 100);
+
+                        if (masonryFactor < 0)
+                            masonryFactor = 0;
+
+                        reuseElement.name = "Reused masonry from: " + mined_cce.name;
+                        reuseElement.volume = mined_cce.volume * masonryFactor;
+                        reuseElement.materialName = "Reused masonry";
+                        reuseElement.materialClass = "Masonry";
                     }
                     else
                     {

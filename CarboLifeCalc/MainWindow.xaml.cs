@@ -34,6 +34,9 @@ namespace CarboLifeCalc
     {
         public MainWindow()
         {
+            //Charts need the native SkiaSharp library. No-op on the NET8 build.
+            CarboLifeUI.NativeDependencies.Preload();
+
             InitializeComponent();
 
         }

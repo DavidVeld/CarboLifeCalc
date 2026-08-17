@@ -1,277 +1,390 @@
-﻿using CarboLifeAPI;
+using CarboLifeAPI;
 using CarboLifeAPI.Data;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Xml.Serialization;
 
 namespace CarboCircle.data
 {
+    /// <summary>
+    /// The single store for every CarboCircle setting.
+    ///
+    /// Deliberately self-contained: CarboCircle does not read or write the main
+    /// calculator's CarboSettings. The only thing it takes from the main application is
+    /// material *values*, through a CarboLifeAPI material file named by
+    /// <see cref="materialDataBasePath"/> - and even that path is a CarboCircle setting
+    /// with a local fallback.
+    ///
+    /// Persisted as XML to circledb\CarboCircleSettings.xml. Unknown elements in an older
+    /// file are ignored by XmlSerializer, and any property missing from the file keeps the
+    /// constructor default, so older settings files load without migration.
+    /// </summary>
     public class carboCircleSettings
     {
-        //Project Parameters
-
-
-        //generalImportSettings
-        public string MineParameterName { get; set; } //Always By Type, or type name if empty
-        public string RequiredParameterName { get; set; } //Always By Type, or type name if empty
-        public string gradeParameter { get; set; } //Always By Type, or type name if empty
+        //--------------------------------------------------------------------------------
+        // Import - parameter mapping
+        //--------------------------------------------------------------------------------
 
         /// <summary>
-        /// "All Visible in View",
-        /// "All New in View",
-        /// "All Demolished in View",
-        /// "Selected"
+        /// Type parameter holding the section size of a mined element. Empty = use the
+        /// Revit type name.
         /// </summary>
-        public string extractionMethod { get; set; } //Always By Type, or type name if empty
-
-        [Obsolete]
+        public string MineParameterName { get; set; }
 
         /// <summary>
-        /// "All Visible in View",
-        /// "All New in View",
-        /// "All Demolished in View",
-        /// "Selected"
+        /// Type parameter holding the section size of a required element. Empty = use the
+        /// Revit type name.
         /// </summary>
-        public string MineExtractionMethod { get; set; } //Always By Type, or type name if empty
-
-        [Obsolete]
+        public string RequiredParameterName { get; set; }
 
         /// <summary>
-        /// "All Visible in View",
-        /// "All New in View",
-        /// "All Demolished in View",
-        /// "Selected"
+        /// Type parameter holding the steel grade. Empty = grade is not read.
         /// </summary>
-        public string RequiredExtractionMethod { get; set; } //Always By Type, or type name if empty
-
-        //existingImportSettings
-        public double cutoffbeamLength { get; set; } //600 defaiult
-
-        [Obsolete]
-        public double cutoffColumnLength { get; set; } //600 defaiult
+        public string gradeParameter { get; set; }
 
         /// <summary>
-        /// in %
+        /// Type parameter holding the width of a timber section. Empty = use the Revit
+        /// type name.
         /// </summary>
-        public int VolumeLoss { get; set; }
+        public string timberWidthParameter { get; set; }
 
         /// <summary>
-        /// in %
+        /// Type parameter holding the depth of a timber section. Empty = use the Revit
+        /// type name.
         /// </summary>
-        public int MasonryLoss { get; set; }
+        public string timberDepthParameter { get; set; }
+
+        //--------------------------------------------------------------------------------
+        // Import - extraction
+        //--------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Remembered choice for the mine side. One of "All Visible in View",
+        /// "All Demolished in View", "Selected".
+        /// </summary>
+        public string MineExtractionMethod { get; set; }
+
+        /// <summary>
+        /// Remembered choice for the project side. One of "All Visible in View",
+        /// "All New in View", "Selected".
+        /// </summary>
+        public string RequiredExtractionMethod { get; set; }
+
+        /// <summary>
+        /// The method the import about to run should use. Set from whichever of
+        /// <see cref="MineExtractionMethod"/> / <see cref="RequiredExtractionMethod"/>
+        /// applies, immediately before raising the external event.
+        ///
+        /// Not persisted: it describes one operation, not a preference. The two properties
+        /// above are what survive a restart.
+        /// </summary>
+        [XmlIgnore]
+        public string extractionMethod { get; set; }
+
+        //--------------------------------------------------------------------------------
+        // Import - what to collect, and what is lost in deconstruction
+        //--------------------------------------------------------------------------------
 
         public bool ConsiderWalls { get; set; }
         public bool ConsiderSlabs { get; set; }
         public bool ConsiderColumnBeams { get; set; }
 
         /// <summary>
-        /// "Path to database",
+        /// Length lost cutting a steel member free, per end, in mm.
         /// </summary>
-        public string dataBasePath { get; set; } //Always By Type, or type name if empty
+        public double cutoffbeamLength { get; set; }
 
-        //matchSettings
         /// <summary>
-        /// in mm
+        /// Length lost cutting a timber member free, per end, in mm.
+        /// </summary>
+        public double timberCutoffLength { get; set; }
+
+        /// <summary>
+        /// Concrete volume lost in deconstruction, in %.
+        /// </summary>
+        public int VolumeLoss { get; set; }
+
+        /// <summary>
+        /// Masonry volume lost in deconstruction, in %.
+        /// </summary>
+        public int MasonryLoss { get; set; }
+
+        //--------------------------------------------------------------------------------
+        // Databases - both CarboCircle-owned, both fall back to the shipped copy
+        //--------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Steel section mapping table (csv). Empty or missing = circledb\CarboCircleMasterSections.csv.
+        /// </summary>
+        public string dataBasePath { get; set; }
+
+        /// <summary>
+        /// Material file (cxml) supplying the carbon values for reused materials. Empty or
+        /// missing = circledb\carboCircleMaterials.cxml.
+        ///
+        /// This is the one place CarboCircle leans on the main calculator: the file is in
+        /// CarboLifeAPI's material format and is handed to CarboProject as its template.
+        /// Point it at one of the main application's databases to use those values instead.
+        /// </summary>
+        public string materialDataBasePath { get; set; }
+
+        //--------------------------------------------------------------------------------
+        // Matching tolerances
+        //--------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Permitted extra section depth when substituting a member, in mm.
         /// </summary>
         public double depthRange { get; set; }
+
         /// <summary>
-        /// in %
+        /// Permitted extra strength when substituting a member, in %.
         /// </summary>
         public double strengthRange { get; set; }
 
-        //colours
-        /// <summary>
-        /// Existing reused beams
-        /// </summary>
+        //--------------------------------------------------------------------------------
+        // Visualisation colours
+        //--------------------------------------------------------------------------------
+
+        /// <summary>Mined element that was matched to a requirement.</summary>
         public CarboColour colour_ReusedMinedData { get; set; }
 
+        /// <summary>Mined element that found no taker.</summary>
         public CarboColour colour_NotReused { get; set; }
+
+        /// <summary>Required element satisfied from reused stock.</summary>
         public CarboColour colour_FromReusedData { get; set; }
+
+        /// <summary>Required element that needs new material.</summary>
         public CarboColour colour_NotFromReused { get; set; }
 
-        /// <summary>
-        /// Reused Volumes Not Uses
-        /// </summary>
+        /// <summary>Mined volume element available for reuse.</summary>
         public CarboColour colour_ReusedMinedVolumes { get; set; }
 
         /// <summary>
-        /// Reused Volumes Not Uses
+        /// Required volume satisfied from reused stock. Persisted and defaulted, but the
+        /// current visualisation has no separate list for it.
         /// </summary>
         public CarboColour colour_FromReusedVolumes { get; set; }
 
         public carboCircleSettings()
         {
-
             MineParameterName = string.Empty;
             RequiredParameterName = string.Empty;
+            gradeParameter = string.Empty;
+            timberWidthParameter = string.Empty;
+            timberDepthParameter = string.Empty;
 
+            //Defaults match the combo entries the interface used to hard-select.
+            MineExtractionMethod = "All Demolished in View";
+            RequiredExtractionMethod = "All New in View";
             extractionMethod = string.Empty;
-            MineExtractionMethod = string.Empty;
-            RequiredExtractionMethod = string.Empty;
-
-            cutoffbeamLength = 600;
-            cutoffColumnLength = 600;
-            VolumeLoss = 25;
-            MasonryLoss = 25;
-
-            depthRange = 50;
-            strengthRange = 10;
 
             ConsiderWalls = false;
             ConsiderSlabs = false;
             ConsiderColumnBeams = true;
 
-            colour_ReusedMinedData = new CarboColour(255,25,160,235);
-            colour_ReusedMinedVolumes = new CarboColour(255, 50, 50, 255);
+            cutoffbeamLength = 600;
+            timberCutoffLength = 300;
+            VolumeLoss = 25;
+            MasonryLoss = 25;
+
+            dataBasePath = string.Empty;
+            materialDataBasePath = string.Empty;
+
+            depthRange = 50;
+            strengthRange = 10;
+
+            colour_ReusedMinedData = new CarboColour(255, 25, 160, 235);
             colour_NotReused = new CarboColour(255, 235, 235, 235);
             colour_FromReusedData = new CarboColour(255, 80, 220, 80);
-            colour_FromReusedVolumes = new CarboColour(255, 255, 50, 255);
             colour_NotFromReused = new CarboColour(255, 250, 220, 220);
-
-            dataBasePath = "";
+            colour_ReusedMinedVolumes = new CarboColour(255, 50, 50, 255);
+            colour_FromReusedVolumes = new CarboColour(255, 255, 50, 255);
         }
 
+        //--------------------------------------------------------------------------------
+        // Load / Save / Copy
+        //--------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Reads the settings file. Never returns null: a missing file is created from
+        /// defaults, and an unreadable one is replaced by defaults.
+        /// </summary>
         public carboCircleSettings Load()
         {
-            return DeSerializeXML();
+            string path = getCircleSettingsFilePath();
+
+            if (path == null)
+                return new carboCircleSettings();
+
+            if (!File.Exists(path))
+            {
+                carboCircleSettings fresh = new carboCircleSettings();
+                fresh.Save();
+                return fresh;
+            }
+
+            string failure = null;
+
+            try
+            {
+                XmlSerializer ser = new XmlSerializer(typeof(carboCircleSettings));
+
+                using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    carboCircleSettings loaded = ser.Deserialize(fs) as carboCircleSettings;
+
+                    if (loaded != null)
+                        return loaded;
+                }
+            }
+            catch (Exception ex)
+            {
+                failure = ex.Message;
+            }
+
+            //Unreadable or empty: repair with defaults rather than handing back null.
+            //Repair first, then tell the user - so the file is already good by the time
+            //anyone dismisses the message.
+            carboCircleSettings repaired = new carboCircleSettings();
+            repaired.Save();
+
+            if (failure != null)
+            {
+                System.Windows.MessageBox.Show(
+                    "The CarboCircle settings file could not be read and has been reset to defaults." +
+                    Environment.NewLine + Environment.NewLine + failure,
+                    "CarboCircle settings", System.Windows.MessageBoxButton.OK,
+                    System.Windows.MessageBoxImage.Warning);
+            }
+
+            return repaired;
         }
+
+        /// <summary>
+        /// Writes the settings file. Returns true only if the file was actually written.
+        /// </summary>
         public bool Save()
         {
-            return SerializeXML();
-        }
-        private carboCircleSettings DeSerializeXML()
-        {
-            string mySettingsPath = getCircleSettingsFilePath();
-            carboCircleSettings bufferproject = new carboCircleSettings();
+            string path = getCircleSettingsFilePath();
 
-            if (File.Exists(mySettingsPath))
-            {
-                try
-                {
-                    XmlSerializer ser = new XmlSerializer(typeof(carboCircleSettings));
-
-                    using (FileStream fs = new FileStream(mySettingsPath, FileMode.Open))
-                    {
-                        bufferproject = ser.Deserialize(fs) as carboCircleSettings;
-                    }
-
-                    //If the settings exists and all is well use this:
-                    return bufferproject;
-                }
-                catch (Exception ex)
-                {
-                    System.Windows.MessageBox.Show(ex.Message);
-                    //override the current file with a new setting file as repair;
-                    bufferproject.Save();
-                    return null;
-                }
-            }
-            else
-            {
-                carboCircleSettings newsettings = new carboCircleSettings();
-                newsettings.Save();
-                return newsettings;
-            }
-        }
-        private bool SerializeXML()
-        {
-            bool result = false;
-
-            string mySettingsPath = getCircleSettingsFilePath();
-            if (mySettingsPath == null || mySettingsPath == "")
+            if (string.IsNullOrEmpty(path))
                 return false;
 
             try
             {
                 XmlSerializer ser = new XmlSerializer(typeof(carboCircleSettings));
 
-                using (FileStream fs = new FileStream(mySettingsPath, FileMode.Create))
+                using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write))
                 {
                     ser.Serialize(fs, this);
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show(ex.Message, "CarboCircle settings",
+                    System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
                 return false;
             }
-
-            return result;
         }
 
         /// <summary>
-        /// Finds the location of the Carbo Life Calculator Settings File
+        /// Independent snapshot, used to give the settings dialog something it can edit and
+        /// throw away on Cancel.
+        ///
+        /// Cloning through the serializer rather than listing members by hand is
+        /// deliberate: the previous hand-written version silently dropped
+        /// <see cref="gradeParameter"/> and copied the wrong source into
+        /// <see cref="colour_NotFromReused"/>, so every load and every import quietly
+        /// corrupted the file. Anything that survives Save/Load now survives Copy, by
+        /// construction.
         /// </summary>
-        /// <returns>Settings File path</returns>
-        internal static string getCircleSettingsFilePath()
+        internal carboCircleSettings Copy()
         {
-            //string fileName = "db\\CarboSettings.xml";
-            string myLocalPath = Utils.getAssemblyPath() + "\\circledb\\" + "CarboCircleSettings.xml";
+            carboCircleSettings clone;
+
             try
             {
-                if (File.Exists(myLocalPath))
-                    return myLocalPath;
-                else
+                XmlSerializer ser = new XmlSerializer(typeof(carboCircleSettings));
+
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    MessageBox.Show("Could not find a path reference to the CarboLifeCircle Setting File, you possibly have to re-install the software" + Environment.NewLine +
-                            "Target: " + myLocalPath + Environment.NewLine +
-                            "Target: " + myLocalPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return myLocalPath;
+                    ser.Serialize(ms, this);
+                    ms.Position = 0;
+                    clone = ser.Deserialize(ms) as carboCircleSettings ?? new carboCircleSettings();
                 }
             }
-            catch 
+            catch
+            {
+                //A clone that throws must not take the window down with it.
+                clone = new carboCircleSettings();
+            }
+
+            //[XmlIgnore] members do not travel through the serializer, so carry them here.
+            clone.extractionMethod = this.extractionMethod;
+
+            return clone;
+        }
+
+        //--------------------------------------------------------------------------------
+        // Paths
+        //--------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Location of the CarboCircle settings file, creating the folder if needed.
+        /// The file itself does not have to exist - <see cref="Load"/> creates it.
+        /// </summary>
+        internal static string getCircleSettingsFilePath()
+        {
+            try
+            {
+                string folder = Path.Combine(Utils.getAssemblyPath(), "circledb");
+
+                if (!Directory.Exists(folder))
+                    Directory.CreateDirectory(folder);
+
+                return Path.Combine(folder, "CarboCircleSettings.xml");
+            }
+            catch
             {
                 return null;
             }
-
         }
 
-        internal carboCircleSettings Copy()
+        /// <summary>
+        /// Steel section mapping table: the configured file if it exists, otherwise the
+        /// copy shipped in circledb.
+        /// </summary>
+        internal string getSectionDatabasePath()
         {
-            carboCircleSettings clone = new carboCircleSettings
-            {
-                //Import settings
-                MineParameterName = this.MineParameterName,
-                RequiredParameterName = this.RequiredParameterName,
-
-                extractionMethod = this.extractionMethod,
-                //MineExtractionMethod = this.MineExtractionMethod,
-                //RequiredExtractionMethod= this.RequiredExtractionMethod,
-
-                cutoffbeamLength = this.cutoffbeamLength,
-                cutoffColumnLength = this.cutoffColumnLength,
-                VolumeLoss = this.VolumeLoss,
-                MasonryLoss = this.MasonryLoss,
-
-                depthRange = this.depthRange,
-                strengthRange = this.strengthRange,
-
-                ConsiderWalls = this.ConsiderWalls,
-                ConsiderSlabs = this.ConsiderSlabs,
-                ConsiderColumnBeams = this.ConsiderColumnBeams,
-
-                dataBasePath = this.dataBasePath,
-
-                //Colours
-                colour_ReusedMinedData = this.colour_ReusedMinedData.Copy(),
-                colour_ReusedMinedVolumes = this.colour_ReusedMinedVolumes.Copy(),
-                colour_NotReused = this.colour_NotReused.Copy(),
-                colour_FromReusedData = this.colour_FromReusedData.Copy(),
-                colour_FromReusedVolumes = this.colour_FromReusedVolumes.Copy(),
-                colour_NotFromReused= this.colour_NotReused.Copy()
-
-            };
-
-            return clone;
-
-
+            return resolveAgainstCircleDb(dataBasePath, "CarboCircleMasterSections.csv");
         }
 
+        /// <summary>
+        /// Reuse material file: the configured file if it exists, otherwise the copy
+        /// shipped in circledb.
+        /// </summary>
+        internal string getMaterialDatabasePath()
+        {
+            return resolveAgainstCircleDb(materialDataBasePath, "carboCircleMaterials.cxml");
+        }
 
+        private static string resolveAgainstCircleDb(string configuredPath, string shippedFileName)
+        {
+            if (!string.IsNullOrEmpty(configuredPath) && File.Exists(configuredPath))
+                return configuredPath;
+
+            try
+            {
+                return Path.Combine(Utils.getAssemblyPath(), "circledb", shippedFileName);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

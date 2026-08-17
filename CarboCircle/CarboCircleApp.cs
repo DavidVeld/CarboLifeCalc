@@ -26,6 +26,10 @@ namespace CarboCircle
 
         public Result OnStartup(UIControlledApplication application)
         {
+            //Charts need the native SkiaSharp library, which Windows will not find in an
+            //add-in folder on its own. No-op on the NET8 build.
+            CarboLifeUI.NativeDependencies.Preload();
+
             //Placeholders we will call later
             m_CarboCircleWindow = null;
             thisApp = this;

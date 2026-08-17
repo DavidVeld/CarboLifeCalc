@@ -1,15 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
-<carboCircleSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0"?>
+<carboCircleSettings xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <MineParameterName />
   <RequiredParameterName />
-  <extractionMethod>All New in View</extractionMethod>
-  <cutoffbeamLength>600</cutoffbeamLength>
-  <VolumeLoss>25</VolumeLoss>
-  <MasonryLoss>25</MasonryLoss>
+  <gradeParameter />
+  <timberWidthParameter />
+  <timberDepthParameter />
+  <MineExtractionMethod>All Demolished in View</MineExtractionMethod>
+  <RequiredExtractionMethod>All New in View</RequiredExtractionMethod>
   <ConsiderWalls>false</ConsiderWalls>
   <ConsiderSlabs>false</ConsiderSlabs>
   <ConsiderColumnBeams>true</ConsiderColumnBeams>
+  <cutoffbeamLength>600</cutoffbeamLength>
+  <timberCutoffLength>300</timberCutoffLength>
+  <VolumeLoss>25</VolumeLoss>
+  <MasonryLoss>25</MasonryLoss>
   <dataBasePath />
+  <materialDataBasePath />
   <depthRange>50</depthRange>
   <strengthRange>10</strengthRange>
   <colour_ReusedMinedData>
@@ -32,9 +38,9 @@
   </colour_FromReusedData>
   <colour_NotFromReused>
     <a>255</a>
-    <r>235</r>
-    <g>235</g>
-    <b>235</b>
+    <r>250</r>
+    <g>220</g>
+    <b>220</b>
   </colour_NotFromReused>
   <colour_ReusedMinedVolumes>
     <a>255</a>

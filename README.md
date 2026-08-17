@@ -66,8 +66,16 @@ This project is licensed under the [MIT License](LICENSE).
 ![alt text](https://github.com/DavidVeld/CarboLifeCalc/blob/master/CarboLifeCalc/img/scr/screenshot3.png)
 
 
-For Revit Version 2024 and below please visit:
+## Revit versions
 
+This source tree builds both Revit generations from one solution:
+
+- **.NET Framework 4.8** build — Revit 2023 - 2024
+- **.NET 8** build — Revit 2025 and up
+
+See [BUILDING.md](BUILDING.md) for how the two builds are wired up and where they diverge.
+
+The older Framework-only line lives at
 https://github.com/DavidVeld/CarboLifeCalc---FrameWork
 
 **Design Better Initiative**

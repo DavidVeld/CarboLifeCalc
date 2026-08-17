@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.DB;
+using CarboLifeRevitCompat;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.UI;
@@ -273,7 +274,7 @@ namespace CarboLifeRevit
 
             //Below is a list of categories that are "valid, as it contains geometry" but should not be included in the carbo calc.
 
-            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
+            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.LongValue();
 
             if (enumCategory == BuiltInCategory.OST_StairsRuns)
             {
@@ -514,7 +515,7 @@ namespace CarboLifeRevit
                 }
 
                 //Id:
-                setId = el.Id.Value;
+                setId = el.Id.LongValue();
                 setGUID = el.UniqueId;
 
                 //Name (Type)
@@ -622,7 +623,7 @@ namespace CarboLifeRevit
                 }
 
                 //Structural Foundations are always substructre:
-                BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
+                BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.LongValue();
 
                 if (enumCategory == BuiltInCategory.OST_StructuralFoundation)
                     setIsSubstructure = true;

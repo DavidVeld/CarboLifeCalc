@@ -459,7 +459,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                     //skChart.SaveImage("PieImageFromControl.png");
                     using var image = skChart.GetImage();
                     using var data = image.Encode();
-                    base64CartesianChart1 = Convert.ToBase64String(data.AsSpan());
+                    base64CartesianChart1 = Convert.ToBase64String(data.ToArray());
 
                     //Chart1 = ChartUtils.ControlToImage(foundchart1, 300, 300);
                     //Chart1.Save(@"C:\Users\David\Documents\img1.jpg");
@@ -472,7 +472,7 @@ Do you want to buy me a coffee and you get a key to remove this message?";
                     //skChart.SaveImage("PieImageFromControl.png");
                     using var image = skChart.GetImage();
                     using var data = image.Encode();
-                    base64CartesianChart2 = Convert.ToBase64String(data.AsSpan());
+                    base64CartesianChart2 = Convert.ToBase64String(data.ToArray());
 
                     //Chart2 = ChartUtils.ControlToImage(foundchart2, 300, 300);
                 }
@@ -734,7 +734,11 @@ Do you want to buy me a coffee and you get a key to remove this message?";
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+#if !NETFRAMEWORK
+            //.NET Core dropped the legacy single-byte code pages into a separate
+            //provider that has to be registered. .NET Framework has them built in.
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+#endif
             System.Drawing.Rectangle resolution = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
             int height = resolution.Height;
 

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
     <OutputType>WinExe</OutputType>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -246,7 +246,13 @@
     <Content Include="img\scr\screenshot7.png" />
     <Content Include="img\scr\screenshot8.png" />
     <Content Include="img\scr\screenshot9.png" />
-    <Content Include="libSkiaSharp.dll">
+    <!--
+      Checked-in native from SkiaSharp 3.119.0 (win-x64), for the NET8 build only.
+      The 4.8 build runs SkiaSharp 2.88.9 and gets its native from the NuGet package
+      instead - copying this one alongside 2.88 managed assemblies fails in
+      SkiaSharpVersion.CheckNativeLibraryCompatible.
+    -->
+    <Content Include="libSkiaSharp.dll" Condition="'$(TargetFramework)' == 'net8.0-windows'">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\DVLogo256.jpg">
@@ -344,10 +350,16 @@
     </None>
   </ItemGroup>
   <PropertyGroup>
-    <FileVersion>1.9.8.0</FileVersion>
+    <FileVersion>1.9.9.0</FileVersion>
     <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
-  <Target Name="RenameLibDllToGha" AfterTargets="Build">
+  <!--
+    Grasshopper only loads plug-ins named *.gha, so ship a copy of CarboCroc.dll under
+    that extension. The TargetFramework condition keeps this out of the outer,
+    multi-targeting pass, where OutputPath has no framework folder and nothing has been
+    copied yet.
+  -->
+  <Target Name="RenameLibDllToGha" AfterTargets="Build" Condition="'$(TargetFramework)' != ''">
     <ItemGroup>
       <LibDll Include="$(OutputPath)CarboCroc.dll" />
     </ItemGroup>

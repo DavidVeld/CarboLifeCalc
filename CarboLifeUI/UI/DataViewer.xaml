@@ -125,6 +125,7 @@
                   CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" HorizontalScrollBarVisibility="Visible"  >
             <DataGrid.Resources>
                 <local:SumValues x:Key="SumValues"/>
+                <local:RoundTo3DecimalsConverter x:Key="RoundTo3Decimals"/>
             </DataGrid.Resources>
 
 
@@ -168,10 +169,13 @@
                 <!---Description-->
                 <DataGridTextColumn Width="1*" MinWidth="100" Header="Description &#x0a;" Binding="{Binding Path=Description, Mode=TwoWay}" IsReadOnly="False"/>
                 <!--Volume-->
-                <DataGridTextColumn 
+                <!-- Rounded for display: a volume summed from model elements arrives as
+                     1.9999999 rather than 2. Editing still works - the converter hands the
+                     typed value back, and Dgv_Overview_CellEditEnding applies it. -->
+                <DataGridTextColumn
     MinWidth="100"
     Header="Volume &#x0a;[m³]"
-    Binding="{Binding Path=Volume, Mode=TwoWay}"
+    Binding="{Binding Path=Volume, Mode=TwoWay, Converter={StaticResource RoundTo3Decimals}}"
     IsReadOnly="False"
     Visibility="Visible"/>
                 <!--- Advanced Fields -->

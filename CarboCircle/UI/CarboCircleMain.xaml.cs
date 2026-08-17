@@ -52,9 +52,8 @@ namespace CarboCircle.UI
             {
                 //initiate new projece
                 activeProject = new carboCircleProject();
-                carboCircleSettings settings = new carboCircleSettings();
-                settings = settings.Load().Copy();
-                activeProject.settings = settings;
+                //Load() always hands back a usable instance, so no Copy() is needed here.
+                activeProject.settings = new carboCircleSettings().Load();
 
                 // Subscribe to the DataReady event
                 m_Handler.DataReady += OnDataReady;
@@ -134,9 +133,10 @@ namespace CarboCircle.UI
 
         private void btn_ImportmaterialsRevit_Click(object sender, RoutedEventArgs e)
         {
+            //Remember the choice, then hand it to the import that is about to run.
+            activeProject.settings.MineExtractionMethod = cbb_MineSetting.Text;
             activeProject.settings.extractionMethod = cbb_MineSetting.Text;
-            carboCircleSettings settings = activeProject.settings.Copy();
-            settings.Save();
+            activeProject.settings.Save();
 
             if (m_ExEvent != null)
             {
@@ -150,9 +150,10 @@ namespace CarboCircle.UI
 
         private void btn_ImportProjectRevit_Click(object sender, RoutedEventArgs e)
         {
+            //Remember the choice, then hand it to the import that is about to run.
+            activeProject.settings.RequiredExtractionMethod = cbb_ImportProjectSetting.Text;
             activeProject.settings.extractionMethod = cbb_ImportProjectSetting.Text;
-            carboCircleSettings settings = activeProject.settings.Copy();
-            settings.Save();
+            activeProject.settings.Save();
 
             if (m_ExEvent != null)
             {
@@ -240,17 +241,6 @@ namespace CarboCircle.UI
 
         }
 
-        private void ShowSettings()
-        {
-            CarboCircleSettings settings = new CarboCircleSettings(activeProject);
-            settings.Show();
-            if (settings.isAccepted)
-            {
-                activeProject.settings = settings.settings.Copy();
-                //ShowSettings();
-            }
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -268,12 +258,14 @@ namespace CarboCircle.UI
             cbb_ImportProjectSetting.Items.Add("All Visible in View");// Index 0;
             cbb_ImportProjectSetting.Items.Add("All New in View"); // Index 1;
             cbb_ImportProjectSetting.Items.Add("Selected");// Index 2;
-            cbb_ImportProjectSetting.SelectedIndex = 1;
 
             cbb_MineSetting.Items.Add("All Visible in View"); //Index: 0
             cbb_MineSetting.Items.Add("All Demolished in View"); //Index: 1
             cbb_MineSetting.Items.Add("Selected"); //Index: 2
-            cbb_MineSetting.SelectedIndex = 1;
+
+            //The two sides offer different methods, so each remembers its own choice.
+            selectRemembered(cbb_ImportProjectSetting, activeProject.settings.RequiredExtractionMethod);
+            selectRemembered(cbb_MineSetting, activeProject.settings.MineExtractionMethod);
 
             txt_BeamStrengthTolerance.Text = activeProject.settings.strengthRange.ToString();
             txt_SteelBeamDepthTolerance.Text = activeProject.settings.depthRange.ToString();
@@ -293,14 +285,22 @@ namespace CarboCircle.UI
 
         }
 
+        /// <summary>
+        /// Selects the remembered entry, falling back to the second one (the historic
+        /// default) when the setting is empty or no longer in the list.
+        /// </summary>
+        private static void selectRemembered(System.Windows.Controls.ComboBox combo, string remembered)
+        {
+            int index = string.IsNullOrEmpty(remembered) ? -1 : combo.Items.IndexOf(remembered);
+
+            combo.SelectedIndex = index >= 0 ? index : 1;
+        }
+
         private void btn_Go_Click(object sender, RoutedEventArgs e)
         {
-            // Get active settings:
-            if (double.TryParse(txt_SteelBeamDepthTolerance.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double tolerance))
-            {
-                activeProject.settings.strengthRange = tolerance;
-                activeProject.settings.depthRange = tolerance;
-            }
+            // Get active settings. The two tolerances are separate values - the depth box
+            // used to be written into both, silently discarding the strength tolerance.
+            storeSettings();
 
             // Main script:
             if (activeProject.minedData.Count > 0 && activeProject.requiredData.Count > 0)
@@ -322,25 +322,32 @@ namespace CarboCircle.UI
 
         private void btn_MineSettings_Click(object sender, RoutedEventArgs e)
         {
+            //Carry what the main window owns into the settings object first, so the dialog
+            //opens showing the tolerances currently on screen.
             storeSettings();
 
             CarboCircleSettings settingsWindow = new CarboCircleSettings(activeProject);
             settingsWindow.ShowDialog();
+
             if (settingsWindow.isAccepted)
             {
-                activeProject.settings = settingsWindow.settings.Copy();
-                ShowSettings();
+                //The dialog edited and saved its own snapshot; adopt it and redraw.
+                activeProject.settings = settingsWindow.settings;
+                LoadInterFaceFromSettings();
             }
         }
 
+        /// <summary>
+        /// Pushes the settings the main window edits directly into the settings object.
+        /// Colours are written straight through by their own click handlers.
+        /// </summary>
         private void storeSettings()
         {
-            activeProject.settings.strengthRange = Utils.ConvertMeToDouble(txt_BeamStrengthTolerance.Text);
-            activeProject.settings.depthRange = Utils.ConvertMeToDouble(txt_SteelBeamDepthTolerance.Text);
+            if (!string.IsNullOrWhiteSpace(txt_BeamStrengthTolerance.Text))
+                activeProject.settings.strengthRange = Utils.ConvertMeToDouble(txt_BeamStrengthTolerance.Text);
 
-            //colours
-
-
+            if (!string.IsNullOrWhiteSpace(txt_SteelBeamDepthTolerance.Text))
+                activeProject.settings.depthRange = Utils.ConvertMeToDouble(txt_SteelBeamDepthTolerance.Text);
         }
 
         private void txt_ParseTextSettings_TextChanged(object sender, TextChangedEventArgs e)
@@ -566,6 +573,7 @@ namespace CarboCircle.UI
 
         private void btn_Close_Click(object sender, RoutedEventArgs e)
         {
+            storeSettings();
             activeProject.settings.Save();
             FormStatusChecker.isWindowOpen = false;
 
@@ -707,6 +715,7 @@ namespace CarboCircle.UI
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            storeSettings();
             activeProject.settings.Save();
             FormStatusChecker.isWindowOpen = false;
 

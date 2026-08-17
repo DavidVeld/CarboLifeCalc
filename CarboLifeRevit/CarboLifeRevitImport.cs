@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Autodesk.Revit.DB;
+using CarboLifeRevitCompat;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
@@ -213,7 +214,7 @@ namespace CarboLifeRevit
                 {
                     //This is an updated version where the getGeometry Method is used. 
                     //This is slower but needed for railings and ramps
-                    BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
+                    BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.LongValue();
                     List<CarboElement> carboElementList = new List<CarboElement>();
 
                     //Railings, ramps and curtain walls are not processed with the fast method, they require a geometry extraction.
@@ -434,7 +435,7 @@ namespace CarboLifeRevit
         {
             double result = 0;
 
-            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.Value;
+            BuiltInCategory enumCategory = (BuiltInCategory)el.Category.Id.LongValue();
 
             if (enumCategory == BuiltInCategory.OST_Floors)
             {

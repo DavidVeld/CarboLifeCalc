@@ -187,8 +187,11 @@ namespace CarboCircle.data
 
         internal static CarboLifeAPI.Data.CarboProject convertToCarboLifeProject(carboCircleProject circleProject)
         {
-            string databasepath = getCircleDatabasePath();
-            if (File.Exists(databasepath))
+            //Carbon values for the reused materials come from the file named in the
+            //CarboCircle settings, falling back to the copy shipped in circledb.
+            string databasepath = circleProject.settings.getMaterialDatabasePath();
+
+            if (databasepath != null && File.Exists(databasepath))
             {
                 CarboProject result = new CarboProject(databasepath);
                 //Get Materials
@@ -229,31 +232,5 @@ namespace CarboCircle.data
             }
         }
 
-        /// <summary>
-        /// Finds the location of the Carbo Circle Material Database
-        /// </summary>
-        /// <returns>Settings File path</returns>
-        internal static string getCircleDatabasePath()
-        {
-            //string fileName = "db\\CarboSettings.xml";
-            string myLocalPath = Utils.getAssemblyPath() + "\\circledb\\" + "carboCircleMaterials.cxml";
-            try
-            {
-                if (File.Exists(myLocalPath))
-                    return myLocalPath;
-                else
-                {
-                    MessageBox.Show("Could not find a path reference to the carboCircleMaterials.cxml re-used material database file, you possibly have to re-install the software" + Environment.NewLine +
-                            "Target: " + myLocalPath + Environment.NewLine +
-                            "Target: " + myLocalPath, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return myLocalPath;
-                }
-            }
-            catch
-            {
-                return null;
-            }
-
-        }
     }
 }

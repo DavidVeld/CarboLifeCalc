@@ -41,29 +41,30 @@
             Select a version of Revit to activate the plugin. Untick and apply to remove the addin.
         </TextBlock>
 
-        <!-- Versions group -->
+        <!--
+            Versions group. The rows are deliberately year-agnostic: the 4.8 build offers
+            Revit 2023-2024 and the NET8 build 2025-2027, and both come from this one file.
+            Window_Loaded fills in the years and collapses any unused row.
+        -->
         <GroupBox Header="Versions" Style="{StaticResource baseStyleBold}">
             <StackPanel Margin="8">
 
-                <!-- 2025 -->
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,12">
-                    <CheckBox Name="chx_2025" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <Label Name="lbl_2025" Style="{StaticResource baseStyleLabel}"
-                           VerticalAlignment="Center" Content="Revit 2025"/>
+                <StackPanel Name="row_slot1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,12">
+                    <CheckBox Name="chx_slot1" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <Label Name="lbl_slot1" Style="{StaticResource baseStyleLabel}"
+                           VerticalAlignment="Center"/>
                 </StackPanel>
 
-                <!-- 2026 -->
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,12">
-                    <CheckBox Name="chx_2026" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <Label Name="lbl_2026" Style="{StaticResource baseStyleLabel}"
-                           VerticalAlignment="Center" Content="Revit 2026"/>
+                <StackPanel Name="row_slot2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,0,12">
+                    <CheckBox Name="chx_slot2" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <Label Name="lbl_slot2" Style="{StaticResource baseStyleLabel}"
+                           VerticalAlignment="Center"/>
                 </StackPanel>
 
-                <!-- 2027 -->
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <CheckBox Name="chx_2027" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <Label Name="lbl_2027" Style="{StaticResource baseStyleLabel}"
-                           VerticalAlignment="Center" Content="Revit 2027"/>
+                <StackPanel Name="row_slot3" Orientation="Horizontal" VerticalAlignment="Center">
+                    <CheckBox Name="chx_slot3" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <Label Name="lbl_slot3" Style="{StaticResource baseStyleLabel}"
+                           VerticalAlignment="Center"/>
                 </StackPanel>
 
             </StackPanel>

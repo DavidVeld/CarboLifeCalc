@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.DB;
+using CarboLifeRevitCompat;
 using Autodesk.Revit.UI;
 using CarboCircle.data;
 using CarboLifeAPI;
@@ -367,19 +368,9 @@ namespace CarboCircle
         private static List<carboCircleElement> getSteelDataBase(carboCircleSettings appSettings)
         {
             List<carboCircleElement> result = new List<carboCircleElement>();
-            string dbpath = "";
+            string dbpath = appSettings.getSectionDatabasePath();
 
-            if (File.Exists(appSettings.dataBasePath))
-            {
-                dbpath = appSettings.dataBasePath;
-            }
-            else
-            {
-                string assemblyath = Utils.getAssemblyPath();
-                dbpath = assemblyath + "\\circledb\\" + "CarboCircleMasterSections.csv";
-            }
-
-            if (File.Exists(dbpath))
+            if (dbpath != null && File.Exists(dbpath))
                 if (IsFileLocked(dbpath) == false)
                 {
                     DataTable data = CarboLifeAPI.Utils.LoadCSV(dbpath);
@@ -737,8 +728,8 @@ namespace CarboCircle
 
             foreach (carboCircleMatchElement element in matchedData)
             {
-                ElementId matchedMinedElement = new ElementId(element.mined_id);
-                ElementId matchedRequiredElement = new ElementId(element.required_id);
+                ElementId matchedMinedElement = element.mined_id.ToElementId();
+                ElementId matchedRequiredElement = element.required_id.ToElementId();
 
                 reusedRequiredElementIds.Add(matchedRequiredElement);
                 reusedMinedElementIds.Add(matchedMinedElement);
@@ -793,7 +784,7 @@ namespace CarboCircle
                             //single object Volume Elements
                             ElementId eid = null;
 
-                            eid = new ElementId(cce.id);
+                            eid = cce.id.ToElementId();
 
                             Element el = doc.GetElement(eid);
                             if (el != null)

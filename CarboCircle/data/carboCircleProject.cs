@@ -87,6 +87,9 @@ namespace CarboCircle.data
             if (settings.cutoffbeamLength < 0)
                 settings.cutoffbeamLength = 500;
 
+            if (settings.timberCutoffLength < 0)
+                settings.timberCutoffLength = 300;
+
             if (settings.VolumeLoss <= 0)
                 settings.VolumeLoss = 25;
 
@@ -103,7 +106,7 @@ namespace CarboCircle.data
                 }
                 else if(cCE.materialClass == "Wood")
                 {
-                    lengthNet = cCE.length - Convert.ToDouble((2 * 0.3)) ; //300mm cut off each side
+                    lengthNet = cCE.length - 2 * (settings.timberCutoffLength / 1000); //value cut off each side
                 }
 
                 if (lengthNet < 0)

@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System;
 using Autodesk.Revit.DB;
+using CarboLifeRevitCompat;
 using System.Windows;
 using System.Collections.Generic;
 using CarboCircle.data;
@@ -143,8 +144,8 @@ namespace CarboCircle
 
             if (matchedPair != null)
             {
-                ElementId element1 = new ElementId(matchedPair.mined_id);
-                ElementId element2 = new ElementId(matchedPair.required_id);
+                ElementId element1 = matchedPair.mined_id.ToElementId();
+                ElementId element2 = matchedPair.required_id.ToElementId();
                 List<ElementId> elements = new List<ElementId>();
                 elements.Add(element1);
                 elements.Add(element2);
@@ -190,7 +191,7 @@ namespace CarboCircle
                             foreach (carboCircleElement ccEl in collectedElementsBuffer)
                             {
                                 collectedElements.Add(ccEl.Copy());
-                                ids.Add(new ElementId(ccEl.id));
+                                ids.Add(ccEl.id.ToElementId());
                             }
                         }
                         else

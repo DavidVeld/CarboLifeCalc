@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.DB;
+using CarboLifeRevitCompat;
 using Autodesk.Revit.UI;
 using System.Windows;
 using System;
@@ -115,7 +116,7 @@ namespace CarboLifeRevit
                     //Reset all coulours
                     foreach (CarboValues cv in resultList.entireProjectData)
                     {
-                        Element el = doc.GetElement(new ElementId(cv.Id));
+                        Element el = doc.GetElement(cv.Id.ToElementId());
 
                         if (el != null)
                         {
@@ -128,7 +129,7 @@ namespace CarboLifeRevit
                     {
                         foreach (CarboValues cv in resultList.validData)
                         {
-                            Element el = doc.GetElement(new ElementId(cv.Id));
+                            Element el = doc.GetElement(cv.Id.ToElementId());
                             if (el != null)
                             {
                                 //if switch is false reset overrides.
@@ -143,7 +144,7 @@ namespace CarboLifeRevit
                         {
                             foreach (CarboValues cv in resultList.outOfBoundsMaxData)
                             {
-                                Element el = doc.GetElement(new ElementId(cv.Id));
+                                Element el = doc.GetElement(cv.Id.ToElementId());
                                 if (el != null)
                                 {
                                     //if switch is false reset overrides.
@@ -156,7 +157,7 @@ namespace CarboLifeRevit
 
                             foreach (CarboValues cv in resultList.outOfBoundsMinData)
                             {
-                                Element el = doc.GetElement(new ElementId(cv.Id));
+                                Element el = doc.GetElement(cv.Id.ToElementId());
                                 if (el != null)
                                 {
                                     //if switch is false reset overrides.

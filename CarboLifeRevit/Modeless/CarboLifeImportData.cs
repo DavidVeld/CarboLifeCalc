@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Autodesk.Revit.DB;
+using CarboLifeRevitCompat;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using Autodesk.Revit.UI.Selection;
@@ -37,7 +38,7 @@ namespace CarboLifeRevit
                 {
                     foreach (CarboElement ce in elementsFromGroups)
                     {
-                        ElementId id = new ElementId(ce.Id);
+                        ElementId id = ce.Id.ToElementId();
                         Element testElement = doc.GetElement(id);
 
                         if (testElement != null)
@@ -85,7 +86,7 @@ namespace CarboLifeRevit
 
                     foreach (CarboElement ce in elementsFromGroups)
                     {
-                        ElementId id = new ElementId(ce.Id);
+                        ElementId id = ce.Id.ToElementId();
                         Element targetElement = doc.GetElement(id);
 
                         if (targetElement != null)

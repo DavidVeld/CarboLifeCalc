@@ -1,0 +1,61 @@
+<Project>
+
+  <PropertyGroup>
+    <!--
+      One source tree, two builds ("Duo"):
+
+        net48           -> Revit 2023 - 2024   (last Revit generation on .NET Framework)
+        net8.0-windows  -> Revit 2025 and up
+
+      Every project multi-targets both, so a single build of the solution produces
+      both sets of binaries side by side under bin\<Config>\<TargetFramework>\.
+
+      Revit 2023 is the lower bound of the 4.8 pair, so the 4.8 build compiles against
+      the 2023 API. Everything it uses still exists in 2024, whereas the 64-bit
+      ElementId members introduced in 2024 do not exist in 2023 - see Shared\RevitCompat.cs.
+    -->
+    <RevitVersion Condition="'$(TargetFramework)' == 'net48'">2023</RevitVersion>
+    <RevitVersion Condition="'$(TargetFramework)' == 'net8.0-windows'">2025</RevitVersion>
+
+    <!--
+      Absolute paths. The old '..\..\..\..\..\..\Program Files\...' hint paths only
+      resolved when the repo happened to sit exactly six levels below the drive root.
+      ProgramW6432 is used rather than ProgramFiles because Visual Studio's MSBuild is
+      a 32-bit process, where ProgramFiles points at "Program Files (x86)".
+    -->
+    <RevitApiDir>$(ProgramW6432)\Autodesk\Revit $(RevitVersion)\</RevitApiDir>
+    <RhinoDir>$(ProgramW6432)\Rhino 7\</RhinoDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
+    <!--
+      The .NET SDK defaults .NET Framework targets to C# 7.3. The shared source uses
+      'using var' (C# 8) and records / target-typed new (C# 9).
+    -->
+    <LangVersion>latest</LangVersion>
+
+    <!--
+      Revit and Rhino are x64, and SkiaSharp carries a native dll, so an AnyCPU build
+      with the default 32-bit-preferred flag loads the x86 native into a 64-bit host and
+      throws BadImageFormatException. Never let the 4.8 build come out as 32-bit.
+    -->
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+
+    <!--
+      .NET Framework binds assembly versions strictly. SkiaSharp asks for
+      System.Runtime.CompilerServices.Unsafe 4.0.4.1 while the output ships 6.0.0.0,
+      and System.Text.Json drags in a similar set. Generated redirects fix the
+      standalone exe; add-ins additionally rely on the AssemblyResolve handler in
+      CarboLifeUI\NativeDependencies.cs, because the CLR reads Revit.exe.config for those.
+    -->
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+    <!-- C# 9 record types need this attribute, which .NET Framework does not ship. -->
+    <Compile Include="$(MSBuildThisFileDirectory)Shared\IsExternalInit.cs" Link="Properties\IsExternalInit.cs" />
+  </ItemGroup>
+
+</Project>
