@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
         Title="Carbo Life Calculator: Revit Import Settings"
-        Width="880" Height="680" MinWidth="880" MinHeight="680"
+        Width="1320" Height="900" MinWidth="1320" MinHeight="900"
         ResizeMode="NoResize"
         Loaded="Window_Loaded"
         Icon="pack://application:,,,/CarboLifeUI;component/Resources/ico_clcwindow.ico">
@@ -40,6 +40,24 @@
             <Style x:Key="CheckSection" TargetType="CheckBox" BasedOn="{StaticResource baseStyleBold}">
                 <Setter Property="Margin" Value="0,0,0,4"/>
             </Style>
+
+            <Style x:Key="WarningText" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="11"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="#C05000"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="Margin" Value="0,0,0,6"/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Style>
+
+            <!-- One allowance block: everything inside belongs to the tickbox at the top of it -->
+            <Style x:Key="AllowanceBorder" TargetType="Border">
+                <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="4"/>
+                <Setter Property="Padding" Value="8,6,8,8"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -62,6 +80,11 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
+                    <CheckBox Name="chk_UseMappedMaterialData" IsChecked="True"
+                              Style="{StaticResource baseStyleBold}"
+                              VerticalAlignment="Center" Margin="0,0,16,0">
+                        Use previously mapped materials
+                    </CheckBox>
                     <Button Name="btn_ImportClose" Width="100" Height="26" Margin="0,0,8,0"
                             Style="{StaticResource ButtonStyle}" Click="Btn_ImportClose_Click">Ok &amp; Import</Button>
                     <Button Name="btn_Cancel" Width="80" Height="26"
@@ -70,9 +93,12 @@
             </Grid>
         </Border>
 
-        <!-- Main columns -->
+        <!-- Main columns. Scrolls rather than clips, the allowance column keeps growing. -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="1*"/>
@@ -83,26 +109,29 @@
                 <StackPanel>
                     <Label Style="{StaticResource baseStyleTitle}" Content="Basic Element Import Settings" Margin="0,0,0,8"/>
 
-                    <!-- Update Project -->
-                    <TextBlock Style="{StaticResource FieldLabel}">Update project</TextBlock>
-                    <TextBlock Style="{StaticResource HintText}">Select an existing project if you want to update it</TextBlock>
-                    <Grid Margin="0,0,0,12">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="36"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Name="txt_ProjectPath" Grid.Column="0" Height="26"
-                                 Style="{StaticResource textboxReadOnlyStyle}" IsEnabled="False"/>
-                        <Button Name="btn_ProjectPath" Grid.Column="1" Margin="4,0,0,0"
-                                Height="26" Style="{StaticResource ButtonStyle}"
-                                Click="btn_ProjectPath_Click">…</Button>
-                    </Grid>
+                    <!-- Update Project, hidden. Leaving projectPath empty imports as a new project. -->
+                    <StackPanel Name="pnl_UpdateProject" Visibility="Collapsed">
+                        <TextBlock Style="{StaticResource FieldLabel}">Update project</TextBlock>
+                        <TextBlock Style="{StaticResource HintText}">Select an existing project if you want to update it</TextBlock>
+                        <Grid Margin="0,0,0,12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="36"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Name="txt_ProjectPath" Grid.Column="0" Height="26"
+                                     Style="{StaticResource textboxReadOnlyStyle}" IsEnabled="False"/>
+                            <Button Name="btn_ProjectPath" Grid.Column="1" Margin="4,0,0,0"
+                                    Height="26" Style="{StaticResource ButtonStyle}"
+                                    Click="btn_ProjectPath_Click">…</Button>
+                        </Grid>
+                    </StackPanel>
 
                     <!-- Template -->
                     <TextBlock Style="{StaticResource FieldLabel}">Template</TextBlock>
                     <TextBlock Style="{StaticResource HintText}">Select the material template to use for this project</TextBlock>
                     <ComboBox Name="cbb_Template" Height="26" Margin="0,0,0,12"
-                              Style="{StaticResource ComboBoxFlatStyle}"/>
+                              Style="{StaticResource ComboBoxFlatStyle}"
+                              SelectionChanged="cbb_Template_SelectionChanged"/>
                         <!-- Category -->
                     <TextBlock Style="{StaticResource FieldLabel}">Category</TextBlock>
                     <TextBlock Style="{StaticResource HintText}">The main grouping value. Defaults to the Revit Category Name; override with a custom parameter.</TextBlock>
@@ -127,29 +156,6 @@
                         <Label Content="%" VerticalAlignment="Center" Margin="6,0,0,0"/>
                     </StackPanel>
 
-                    <Separator Margin="0,0,0,12"/>
-
-                    <!-- Map Reinforcement -->
-                    <CheckBox Name="chk_MapReinforcement" Style="{StaticResource CheckSection}">
-                        Map reinforcement quantities on import
-                    </CheckBox>
-                    <TextBlock Style="{StaticResource HintText}">
-                        Auto-create reinforcement quantities based on material and category
-                    </TextBlock>
-                    <Button x:Name="btn_ReinforcementImport" HorizontalAlignment="Left"
-                            Width="80" Height="26" Margin="0,0,0,12"
-                            Style="{StaticResource ButtonStyle}"
-                            Click="btn_ReinforcementImport_Click">Settings</Button>
-
-                    <!-- Disabled items -->
-                    <CheckBox Name="chk_AddSteelConnecitons" IsEnabled="False" Foreground="Gray"
-                              Style="{StaticResource CheckSection}" Margin="0,0,0,6">
-                        Add steel connection allowances on import
-                    </CheckBox>
-                    <CheckBox Name="chk_AddTimberConnections" IsEnabled="False" Foreground="Gray"
-                              Style="{StaticResource CheckSection}">
-                        Add timber connection allowances on import
-                    </CheckBox>
                 </StackPanel>
             </Border>
 
@@ -206,19 +212,6 @@
                                  Style="{StaticResource flatTextBox}"/>
                     </Grid>
 
-                    <!-- Existing Elements -->
-                    <CheckBox Name="chk_ImportExisting" Style="{StaticResource CheckSection}">
-                        Include &amp; group existing elements
-                    </CheckBox>
-                    <TextBlock Style="{StaticResource HintText}">Define the name of the "existing" phase below</TextBlock>
-                    <TextBox Name="txt_ExistingPhaseName" Height="26" Margin="0,0,0,12"
-                             Style="{StaticResource flatTextBox}"/>
-
-                    <!-- Demolished Elements -->
-                    <CheckBox Name="chk_ImportDemolished" Style="{StaticResource CheckSection}" Margin="0,0,0,12">
-                        Include &amp; group demolished elements
-                    </CheckBox>
-
                     <!-- Additional Parameter -->
                     <CheckBox Name="chk_AdditionalImport" Style="{StaticResource CheckSection}">
                         Group by additional parameter
@@ -237,14 +230,132 @@
 
                     <Separator Margin="0,0,0,12"/>
 
-                    <!-- Use Previously Mapped Materials -->
-                    <CheckBox Name="chk_UseMappedMaterialData" IsChecked="True"
-                              Style="{StaticResource CheckSection}">
-                        Use previously mapped materials
+                    <!-- Existing Elements -->
+                    <CheckBox Name="chk_ImportExisting" Style="{StaticResource CheckSection}">
+                        Include &amp; group existing elements
+                    </CheckBox>
+                    <TextBlock Style="{StaticResource HintText}">Define the name of the "existing" phase below</TextBlock>
+                    <TextBox Name="txt_ExistingPhaseName" Height="26" Margin="0,0,0,12"
+                             Style="{StaticResource flatTextBox}"/>
+
+                    <!-- Demolished Elements -->
+                    <CheckBox Name="chk_ImportDemolished" Style="{StaticResource CheckSection}">
+                        Include &amp; group demolished elements
                     </CheckBox>
 
                 </StackPanel>
             </Border>
+
+            <!-- ═══ RIGHT: Allowances ═══ -->
+            <Border Grid.Column="4" Style="{StaticResource SectionBorder}">
+                <StackPanel>
+                    <Label Style="{StaticResource baseStyleTitle}" Content="Allowances Added on Import" Margin="0,0,0,4"/>
+                    <TextBlock Style="{StaticResource HintText}" Margin="0,0,0,8">
+                        Each block below applies only to its own tick box. Materials and categories come from the
+                        selected template — check them whenever you change it.
+                    </TextBlock>
+
+                    <!-- ─── Reinforcement ─── -->
+                    <Border Style="{StaticResource AllowanceBorder}">
+                        <StackPanel>
+                            <CheckBox Name="chk_MapReinforcement" Style="{StaticResource CheckSection}"
+                                      Checked="chk_MapReinforcement_Toggled" Unchecked="chk_MapReinforcement_Toggled">
+                                Map reinforcement quantities
+                            </CheckBox>
+                            <TextBlock Style="{StaticResource HintText}">
+                                Adds reinforcement to every group in the category below, per the density mapping table.
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource FieldLabel}">Reinforcement material</TextBlock>
+                            <ComboBox Name="cbb_RCImportMaterial" Height="26" Margin="0,0,0,8"
+                                      Style="{StaticResource ComboBoxFlatStyle}"
+                                      ToolTip="The template material used for the generated reinforcement quantities"/>
+
+                            <TextBlock Style="{StaticResource FieldLabel}">Reinforced material category</TextBlock>
+                            <ComboBox Name="cbb_RCMaterialCategory" Height="26" Margin="0,0,0,6"
+                                      Style="{StaticResource ComboBoxFlatStyle}"
+                                      ToolTip="Groups whose material sits in this template category get reinforcement added"/>
+
+                            <TextBlock x:Name="txt_RCWarning" Style="{StaticResource WarningText}"/>
+
+                            <Button x:Name="btn_ReinforcementImport" HorizontalAlignment="Left"
+                                    Width="140" Height="26"
+                                    Style="{StaticResource ButtonStyle}"
+                                    Click="btn_ReinforcementImport_Click">Density mapping…</Button>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- ─── Steel connections ─── -->
+                    <Border Style="{StaticResource AllowanceBorder}">
+                        <StackPanel>
+                            <CheckBox Name="chk_AddSteelConnections" Style="{StaticResource CheckSection}"
+                                      Checked="chk_AddSteelConnections_Toggled" Unchecked="chk_AddSteelConnections_Toggled">
+                                Add steel connection allowances
+                            </CheckBox>
+                            <TextBlock Style="{StaticResource HintText}">
+                                Adds a percentage of the steel volume of every group in the category below.
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource FieldLabel}">Connection material</TextBlock>
+                            <ComboBox Name="cbb_SteelConnectionMaterial" Height="26" Margin="0,0,0,8"
+                                      Style="{StaticResource ComboBoxFlatStyle}"
+                                      ToolTip="The template material used for the generated connection allowances"/>
+
+                            <TextBlock Style="{StaticResource FieldLabel}">Steelwork material category</TextBlock>
+                            <ComboBox Name="cbb_SteelMaterialCategory" Height="26" Margin="0,0,0,8"
+                                      Style="{StaticResource ComboBoxFlatStyle}"
+                                      ToolTip="Groups whose material sits in this template category get connections added"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="Allowance"
+                                           VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                <TextBox Name="txt_SteelConnectionPercentage" Width="70" Height="26"
+                                         Style="{StaticResource flatTextBox}"
+                                         ToolTip="Percentage of the steel volume added as connections"/>
+                                <Label Content="% of steel volume" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                            </StackPanel>
+
+                            <TextBlock x:Name="txt_SteelWarning" Style="{StaticResource WarningText}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- ─── Timber connections ─── -->
+                    <Border Style="{StaticResource AllowanceBorder}">
+                        <StackPanel>
+                            <CheckBox Name="chk_AddTimberConnections" Style="{StaticResource CheckSection}"
+                                      Checked="chk_AddTimberConnections_Toggled" Unchecked="chk_AddTimberConnections_Toggled">
+                                Add timber connection allowances
+                            </CheckBox>
+                            <TextBlock Style="{StaticResource HintText}">
+                                Adds a percentage of the timber volume of every group in the category below.
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource FieldLabel}">Connection material</TextBlock>
+                            <ComboBox Name="cbb_TimberConnectionMaterial" Height="26" Margin="0,0,0,8"
+                                      Style="{StaticResource ComboBoxFlatStyle}"
+                                      ToolTip="The template material used for the generated connection allowances, usually steel"/>
+
+                            <TextBlock Style="{StaticResource FieldLabel}">Timber material category</TextBlock>
+                            <ComboBox Name="cbb_TimberMaterialCategory" Height="26" Margin="0,0,0,8"
+                                      Style="{StaticResource ComboBoxFlatStyle}"
+                                      ToolTip="Groups whose material sits in this template category get connections added"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                <TextBlock Style="{StaticResource FieldLabel}" Text="Allowance"
+                                           VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                <TextBox Name="txt_TimberConnectionPercentage" Width="70" Height="26"
+                                         Style="{StaticResource flatTextBox}"
+                                         ToolTip="Percentage of the timber volume added as connections"/>
+                                <Label Content="% of timber volume" VerticalAlignment="Center" Margin="6,0,0,0"/>
+                            </StackPanel>
+
+                            <TextBlock x:Name="txt_TimberWarning" Style="{StaticResource WarningText}"/>
+                        </StackPanel>
+                    </Border>
+
+                </StackPanel>
+            </Border>
         </Grid>
+        </ScrollViewer>
     </DockPanel>
 </Window>

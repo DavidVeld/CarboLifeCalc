@@ -80,6 +80,9 @@ namespace CarboLifeRevit
                         if (myProject.RevitImportSettings.mapReinforcement == true)
                             myProject = mapReinforcement(app, myProject);
 
+                        //Builds the steel and timber connection allowances that are switched on.
+                        myProject.CreateConnectionGroups();
+
                         //MapElements if required
                         if (myProject.RevitImportSettings.UseImportedMap == true)
                         {

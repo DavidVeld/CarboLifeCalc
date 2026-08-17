@@ -36,48 +36,19 @@ namespace CarboLifeUI.UI
         public List<CarboNumProperty> rcMap { get; set; }
         public string categoryType { get; set; }
         public string categoryName { get; set; }
-        public string carboMaterialName { get; set; }
-        public string carboMaterialCategory { get; set; }
 
 
-        public MaterialConcreteMapper(CarboGroupSettings carboSettings, CarboProject project = null)
+        public MaterialConcreteMapper(CarboGroupSettings carboSettings)
         {
-            CarboDatabase template = null;
-
-            if (project != null)
-            {
-                template = project.CarboDatabase;
-            }
-            else
-            {
-                template = new CarboDatabase();
-                template = template.DeSerializeXML("");
-            }
-
-            //List<string> materialList = new List<string>();
-
             this.InitializeComponent();
-
-            foreach(CarboMaterial cm in template.CarboMaterialList)
-            {
-                cbb_RCImportMaterial.Items.Add(cm.Name);
-            }
 
             cbb_RCImportType.Items.Clear();
             cbb_RCImportType.Items.Add("Type Parameter");
             cbb_RCImportType.Items.Add("Instance Parameter");
 
-            List<string> CategoryList = template.getCategoryList();
-            foreach(string category in CategoryList) 
-            {
-                cbb_RCMaterialCategory.Items.Add(category);
-            }
-
             rcMap = carboSettings.rcQuantityMap;
             categoryType = carboSettings.RCParameterType;
             categoryName = carboSettings.RCParameterName;
-            carboMaterialName = carboSettings.RCMaterialName;
-            carboMaterialCategory = carboSettings.RCMaterialCategory;
 
             if (rcMap.Count == 0)
             {
@@ -89,8 +60,6 @@ namespace CarboLifeUI.UI
                 rcMap = settings.defaultCarboGroupSettings.rcQuantityMap;
                 categoryType = settings.defaultCarboGroupSettings.RCParameterType;
                 categoryName = settings.defaultCarboGroupSettings.RCParameterName;
-                carboMaterialName = settings.defaultCarboGroupSettings.RCMaterialName;
-                carboMaterialCategory = settings.defaultCarboGroupSettings.RCMaterialCategory;
             }
 
                 DataContext = this;
@@ -102,8 +71,6 @@ namespace CarboLifeUI.UI
         {
             cbb_RCImportType.SelectedItem = categoryType;
             txt_RCImportValue.Text = categoryName;
-            cbb_RCImportMaterial.SelectedItem = carboMaterialName;
-            cbb_RCMaterialCategory.SelectedItem = carboMaterialCategory;
 
         }
 
@@ -112,10 +79,8 @@ namespace CarboLifeUI.UI
         {
             isAccepted = true;
 
-            carboMaterialName = cbb_RCImportMaterial.Text;
             categoryName = txt_RCImportValue.Text;
             categoryType = cbb_RCImportType.Text;
-            carboMaterialCategory = cbb_RCMaterialCategory.Text;
 
             this.Close();
         }

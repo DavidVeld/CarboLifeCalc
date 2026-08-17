@@ -57,6 +57,26 @@ namespace CarboLifeAPI.Data
         public string RCMaterialCategory { get; set; }
         public bool UseImportedMap { get; set; }
 
+        //Steel connection allowance
+        public bool mapSteelConnections { get; set; }
+        public string SteelConnectionMaterialName { get; set; }
+        public string SteelMaterialCategory { get; set; }
+
+        /// <summary>
+        /// The connection allowance as a percentage of the steel volume in a matching group.
+        /// </summary>
+        public double SteelConnectionPercentage { get; set; }
+
+        //Timber connection allowance
+        public bool mapTimberConnections { get; set; }
+        public string TimberConnectionMaterialName { get; set; }
+        public string TimberMaterialCategory { get; set; }
+
+        /// <summary>
+        /// The connection allowance as a percentage of the timber volume in a matching group.
+        /// </summary>
+        public double TimberConnectionPercentage { get; set; }
+
         public double UncertaintyFactor { get; set; }
 
         public CarboGroupSettings()
@@ -90,6 +110,17 @@ namespace CarboLifeAPI.Data
             RCParameterName = "";
             RCParameterType = "";
             RCMaterialName = "Reinforcement";
+            RCMaterialCategory = "";
+
+            mapSteelConnections = false;
+            SteelConnectionMaterialName = "";
+            SteelMaterialCategory = "";
+            SteelConnectionPercentage = 5;
+
+            mapTimberConnections = false;
+            TimberConnectionMaterialName = "";
+            TimberMaterialCategory = "";
+            TimberConnectionPercentage = 0.15;
 
             UseImportedMap = true;
 

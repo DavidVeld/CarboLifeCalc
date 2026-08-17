@@ -274,7 +274,37 @@ namespace CarboLifeAPI.Data
 
         }
         /// <summary>
-        /// De-Serialises a material Database No file extension. 
+        /// Loads a material template from disk, both .cxml and .csv templates are supported.
+        /// </summary>
+        /// <param name="templateFilePath">Full path to the template file, "" loads the default template</param>
+        /// <returns>The template database, never null but possibly empty</returns>
+        public static CarboDatabase LoadTemplate(string templateFilePath)
+        {
+            if (templateFilePath == null)
+                templateFilePath = "";
+
+            if (templateFilePath.EndsWith("csv", StringComparison.OrdinalIgnoreCase))
+            {
+                CarboDatabase csvResult = new CarboDatabase();
+                try
+                {
+                    foreach (CarboMaterial cm in DataExportUtils.GetMaterialDatabaseFromCVSFile(templateFilePath))
+                        csvResult.CarboMaterialList.Add(cm);
+                }
+                catch
+                {
+                    MessageBox.Show("Error importing materials from CSV, please review", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                return csvResult;
+            }
+
+            CarboDatabase result = new CarboDatabase().DeSerializeXML(templateFilePath);
+
+            return result != null ? result : new CarboDatabase();
+        }
+
+        /// <summary>
+        /// De-Serialises a material Database No file extension.
         /// Current Options are: "db\\UserMaterials" and "db\\BaseMaterials" use "" for UserMaterial
         /// </summary>
         /// <param name="fileName"></param>

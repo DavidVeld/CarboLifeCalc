@@ -920,9 +920,8 @@ namespace CarboLifeUI.UI
                     CarboLifeProject.RevitImportSettings.rcQuantityMap = concreteMapper.rcMap;
                     CarboLifeProject.RevitImportSettings.RCParameterType = concreteMapper.categoryType;
                     CarboLifeProject.RevitImportSettings.RCParameterName = concreteMapper.categoryName;
-                    CarboLifeProject.RevitImportSettings.RCMaterialName = concreteMapper.carboMaterialName;
-                    CarboLifeProject.RevitImportSettings.RCMaterialCategory = concreteMapper.carboMaterialCategory;
 
+                    //RCMaterialName and RCMaterialCategory are template bound and set in the import settings dialog.
                     CarboLifeProject.CreateReinforcementGroup();
                 }
                 catch (Exception ex) { }
