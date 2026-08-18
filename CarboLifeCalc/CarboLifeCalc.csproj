@@ -276,7 +276,6 @@
     <Content Include="samples\2024-\CLC_DetailItem_SCORSRating.rfa">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="samples\2024-\Unit Test CLC R2023.0010.rvt" />
     <Content Include="samples\2024-\Unit Test CLC R2023.rvt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

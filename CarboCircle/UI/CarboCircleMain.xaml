@@ -5,6 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboCircle.UI"
              mc:Ignorable="d" 
+             Title="CarboCircle : Reuse Materials"
+             Background="#FFFFFF"
+             FontFamily="Segoe UI"
+             FontWeight="Normal"
+             FontSize="12"
              d:DesignHeight="600" d:DesignWidth="900" d:Height="600" d:Width="900" d:MinHeight="600" d:MinWidth="900" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <ResourceDictionary>
@@ -32,7 +37,7 @@
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Carbo Circle : Reuse Materials</Label>
+        <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Padding="5,0,5,0" Style="{StaticResource WindowTitleStyle}">Carbo Circle : Reuse Materials</Label>
 
 
         <TabControl Name="tab_Main" Grid.Row="3" Grid.Column="1" Background="White" BorderBrush="Black" BorderThickness="0" Grid.ColumnSpan="2" Margin="5">
@@ -96,7 +101,10 @@
 
                     </Grid>
 
-                    <GroupBox Grid.Column="1" Margin="0,0,0,0" Grid.Row="2" Header="Visualise" Style="{StaticResource formTitleStyle}">
+                    <!-- No Style here on purpose: the GroupBox style in MyStyles carries the
+                         header template, and a Control-targeted style applied by hand would
+                         replace it. -->
+                    <GroupBox Grid.Column="1" Margin="0,0,0,0" Grid.Row="2" Header="Visualise">
                         <Grid Background="White"  Grid.Column="1" Grid.Row="1" >
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="5"/>
@@ -124,11 +132,11 @@
                             <Label Grid.Column="1" Margin="5,0,5,0" Grid.Row="5" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">New Structure NOT From Reused:</Label>
                             <Label Grid.Column="1" Margin="5,0,5,0" Grid.Row="6" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Potential Reusable Mass Materials:</Label>
 
-                            <Button Name="btn_ColourMinedReused" Grid.Column="2" Grid.Row="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="DarkSlateBlue" BorderBrush="Black" BorderThickness="1" IsEnabled="True" Click="btn_ColourMinedReused_Click" ></Button>
-                            <Button Name="btn_ColourMinedNotReused" Grid.Column="2"  Grid.Row="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="White" BorderBrush="Black" BorderThickness="1" IsEnabled="True" Click="btn_ColourMinedNotReused_Click" ></Button>
-                            <Button Name="btn_ColourRequiredReused" Grid.Column="2"  Grid.Row="4" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="16" Background="DarkSeaGreen" BorderBrush="Black" BorderThickness="1" IsEnabled="True" Click="btn_ColourRequiredReused_Click"></Button>
-                            <Button Name="btn_ColourRequiredNotReused" Grid.Column="2"  Grid.Row="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="red" BorderBrush="Black" BorderThickness="1" IsEnabled="True" Click="btn_ColourRequiredNotReused_Click" ></Button>
-                            <Button Name="btn_ColourMassReusable" Grid.Column="2"  Grid.Row="6" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="red" BorderBrush="Black" BorderThickness="1" IsEnabled="True" Click="btn_ColourMassReusable_Click" ></Button>
+                            <Button Name="btn_ColourMinedReused" Grid.Column="2" Grid.Row="2" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="DarkSlateBlue" Style="{StaticResource ColourSwatchStyle}" IsEnabled="True" Click="btn_ColourMinedReused_Click" ></Button>
+                            <Button Name="btn_ColourMinedNotReused" Grid.Column="2"  Grid.Row="3" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="White" Style="{StaticResource ColourSwatchStyle}" IsEnabled="True" Click="btn_ColourMinedNotReused_Click" ></Button>
+                            <Button Name="btn_ColourRequiredReused" Grid.Column="2"  Grid.Row="4" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="16" Background="DarkSeaGreen" Style="{StaticResource ColourSwatchStyle}" IsEnabled="True" Click="btn_ColourRequiredReused_Click"></Button>
+                            <Button Name="btn_ColourRequiredNotReused" Grid.Column="2"  Grid.Row="5" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="red" Style="{StaticResource ColourSwatchStyle}" IsEnabled="True" Click="btn_ColourRequiredNotReused_Click" ></Button>
+                            <Button Name="btn_ColourMassReusable" Grid.Column="2"  Grid.Row="6" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Height="15" Background="red" Style="{StaticResource ColourSwatchStyle}" IsEnabled="True" Click="btn_ColourMassReusable_Click" ></Button>
 
                             <Button x:Name="btn_Visualise" Grid.Row="8" Width="120" Height="25" Grid.Column="1" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource ButtonStyle}" Click="btn_Visualise_Click"  Content="Colour in Revit"/>
 

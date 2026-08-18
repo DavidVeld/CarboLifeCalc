@@ -59,27 +59,18 @@ namespace CarboCircle.data
         //--------------------------------------------------------------------------------
 
         /// <summary>
-        /// Remembered choice for the mine side. One of "All Visible in View",
-        /// "All Demolished in View", "Selected".
+        /// Remembered choice for the mine side. One of the
+        /// <see cref="carboCircleExtractionMethod"/> values offered by
+        /// <see cref="carboCircleExtractionMethod.MineMethods"/>.
         /// </summary>
         public string MineExtractionMethod { get; set; }
 
         /// <summary>
-        /// Remembered choice for the project side. One of "All Visible in View",
-        /// "All New in View", "Selected".
+        /// Remembered choice for the project side. One of the
+        /// <see cref="carboCircleExtractionMethod"/> values offered by
+        /// <see cref="carboCircleExtractionMethod.RequiredMethods"/>.
         /// </summary>
         public string RequiredExtractionMethod { get; set; }
-
-        /// <summary>
-        /// The method the import about to run should use. Set from whichever of
-        /// <see cref="MineExtractionMethod"/> / <see cref="RequiredExtractionMethod"/>
-        /// applies, immediately before raising the external event.
-        ///
-        /// Not persisted: it describes one operation, not a preference. The two properties
-        /// above are what survive a restart.
-        /// </summary>
-        [XmlIgnore]
-        public string extractionMethod { get; set; }
 
         //--------------------------------------------------------------------------------
         // Import - what to collect, and what is lost in deconstruction
@@ -175,10 +166,10 @@ namespace CarboCircle.data
             timberWidthParameter = string.Empty;
             timberDepthParameter = string.Empty;
 
-            //Defaults match the combo entries the interface used to hard-select.
-            MineExtractionMethod = "All Demolished in View";
-            RequiredExtractionMethod = "All New in View";
-            extractionMethod = string.Empty;
+            //Named constants rather than repeated literals: these are the same values the
+            //combo boxes offer and the collector switches on.
+            MineExtractionMethod = carboCircleExtractionMethod.AllDemolishedInView;
+            RequiredExtractionMethod = carboCircleExtractionMethod.AllNewInView;
 
             ConsiderWalls = false;
             ConsiderSlabs = false;
@@ -301,6 +292,9 @@ namespace CarboCircle.data
         /// <see cref="colour_NotFromReused"/>, so every load and every import quietly
         /// corrupted the file. Anything that survives Save/Load now survives Copy, by
         /// construction.
+        ///
+        /// Every member is now a persisted preference, so a serializer round trip is a
+        /// complete clone and nothing has to be carried by hand afterwards.
         /// </summary>
         internal carboCircleSettings Copy()
         {
@@ -322,9 +316,6 @@ namespace CarboCircle.data
                 //A clone that throws must not take the window down with it.
                 clone = new carboCircleSettings();
             }
-
-            //[XmlIgnore] members do not travel through the serializer, so carry them here.
-            clone.extractionMethod = this.extractionMethod;
 
             return clone;
         }

@@ -82,50 +82,87 @@ namespace CarboCircle.data
             correctMinedValues();
         }
 
+        /// <summary>
+        /// Fills in the net quantities on the mined lists: what is left of an existing
+        /// element once deconstruction has taken its share.
+        /// </summary>
         private void correctMinedValues()
         {
-            if (settings.cutoffbeamLength < 0)
-                settings.cutoffbeamLength = 500;
-
-            if (settings.timberCutoffLength < 0)
-                settings.timberCutoffLength = 300;
-
-            if (settings.VolumeLoss <= 0)
-                settings.VolumeLoss = 25;
-
+            //Read into locals, not written back. These used to be clamped into the settings
+            //object itself, which is then saved - so a deliberate 0% loss was silently
+            //replaced by 25% and the figure the user typed was overwritten on disk. A
+            //negative entry now simply means no loss, rather than a number nobody chose.
+            double beamCutoff = settings.cutoffbeamLength > 0 ? settings.cutoffbeamLength : 0;
+            double timberCutoff = settings.timberCutoffLength > 0 ? settings.timberCutoffLength : 0;
+            double volumeLoss = settings.VolumeLoss > 0 ? settings.VolumeLoss : 0;
 
             foreach (carboCircleElement cCE in minedData)
             {
-                double percentageCut = 0;
-                double length  = cCE.length;
+                double length = cCE.length;
                 double lengthNet = length;
 
                 if (cCE.materialClass == "Steel")
                 {
-                    lengthNet = cCE.length - 2 * (settings.cutoffbeamLength / 1000); //value cut off each side
+                    lengthNet = length - 2 * (beamCutoff / 1000); //value cut off each side
                 }
                 else if(cCE.materialClass == "Wood")
                 {
-                    lengthNet = cCE.length - 2 * (settings.timberCutoffLength / 1000); //value cut off each side
+                    lengthNet = length - 2 * (timberCutoff / 1000); //value cut off each side
                 }
 
                 if (lengthNet < 0)
                     lengthNet = 0;
 
-                percentageCut = lengthNet / length;
-                if (percentageCut < 0)
-                    percentageCut = 0;
+                //The allowance is worked out from the length, so with no length there is
+                //nothing to work it out from and none is applied. Dividing here regardless
+                //meant 0/0 for every element Revit reports no length for - columns, most of
+                //the time - which put NaN into netVolume, and nothing downstream tests for
+                //NaN. It reached the interface, the csv export and the report.
+                double percentageCut = 1;
+
+                if (length > 0)
+                {
+                    percentageCut = lengthNet / length;
+
+                    if (percentageCut < 0)
+                        percentageCut = 0;
+                }
 
                 cCE.netLength = lengthNet;
                 cCE.netVolume = cCE.volume * percentageCut;
 
             }
 
-            double factor = 1 - (Convert.ToDouble(settings.VolumeLoss) / 100);
+            double factor = 1 - (volumeLoss / 100);
 
             foreach (carboCircleElement cCE in minedVolumes)
             {
                 cCE.netVolume = cCE.volume * factor;
+            }
+        }
+
+        /// <summary>
+        /// Fills in the net quantities on the required lists.
+        ///
+        /// Net and gross are the same here, deliberately. A deconstruction allowance
+        /// describes what survives being taken out of an existing building; a proposed
+        /// element is not being taken out of anything, and the design needs the whole
+        /// member and the whole volume.
+        ///
+        /// Both lists used to be left at zero, because importing the project side called
+        /// correctMinedValues - which only ever walks the mined lists.
+        /// </summary>
+        private void correctRequiredValues()
+        {
+            foreach (carboCircleElement cCE in requiredData)
+            {
+                cCE.netLength = cCE.length;
+                cCE.netVolume = cCE.volume;
+            }
+
+            foreach (carboCircleElement cCE in requiredVolumes)
+            {
+                cCE.netVolume = cCE.volume;
             }
         }
 
@@ -205,13 +242,21 @@ namespace CarboCircle.data
             //combine all volumdata to single;
             requiredVolumes = combineByMaterialName(requiredVolumeBuffer);
 
-            correctMinedValues();
+            correctRequiredValues();
 
         }
 
         internal void FindOpportunities()
         {
-            //carboCircleProject result = new carboCircleProject();
+            //The cutoff lengths and the volume losses are all edited after the data has been
+            //imported, so the net quantities are worked out again here rather than trusted
+            //from import time. Changing an allowance and pressing Go used to match against
+            //the figures from the previous settings, and the mined side only happened to
+            //stay current because importing the project side recalculated it as a side
+            //effect.
+            correctMinedValues();
+            correctRequiredValues();
+
             List<carboCircleElement> leftOvers = new List<carboCircleElement>();
 
             List<carboCirclePair> pairs = carboCircleMatchCore.findOpportunities(this, out leftOvers);

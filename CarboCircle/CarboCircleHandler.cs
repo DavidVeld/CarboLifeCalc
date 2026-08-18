@@ -20,6 +20,18 @@ namespace CarboCircle
         public ExternalEvent _revitEvent;
 
         public int commandSwitch = 0; //0 = existing 1 = proposed 2 = colourmatch 
+
+        /// <summary>
+        /// How the pending import should pick its elements: one of the
+        /// <see cref="carboCircleExtractionMethod"/> values.
+        ///
+        /// Part of the request, not of the settings. Both sides of the tool import through
+        /// the same command, each wanting a different method, so this cannot live on the
+        /// shared settings object - and it must never be read back from the settings file,
+        /// which only remembers the two per-side preferences.
+        /// </summary>
+        private string requestedExtractionMethod = carboCircleExtractionMethod.AllVisibleInView;
+
         carboCircleSettings importSettings = null;
         carboCircleProject activeProject = null;
         carboCircleMatchElement matchedPair = null;
@@ -58,6 +70,17 @@ namespace CarboCircle
         public void SetSwitch(int v)
         {
             commandSwitch = v;
+        }
+
+        /// <summary>
+        /// Sets how the next import should pick its elements. Call this alongside
+        /// <see cref="SetSwitch"/> before raising the external event.
+        /// </summary>
+        internal void SetExtractionMethod(string method)
+        {
+            requestedExtractionMethod = string.IsNullOrEmpty(method)
+                ? carboCircleExtractionMethod.AllVisibleInView
+                : method;
         }
         public void Execute(UIApplication uiapp)
         {
@@ -171,49 +194,94 @@ namespace CarboCircle
 
         private void ImportElementsActiveView(UIApplication uiapp)
         {
-            if (importSettings != null)
+            carboCircleImportLog log = new carboCircleImportLog();
+            log.ExtractionMethod = requestedExtractionMethod;
+
+            if (importSettings == null)
             {
-                try
+                log.Fail("No settings were handed to the import.");
+                reportImport(log);
+                return;
+            }
+
+            try
+            {
+                List<ElementId> ids = new List<ElementId>();
+
+
+                List<carboCircleElement> collectedElementsBuffer = carboCircleRevitCommands.getElementsFromActiveView(uiapp, importSettings, requestedExtractionMethod, log);
+                collectedElements = new List<carboCircleElement>();
+
+                if (collectedElementsBuffer != null)
                 {
-                    List<ElementId> ids = new List<ElementId>();
-
-
-                    List<carboCircleElement> collectedElementsBuffer = carboCircleRevitCommands.getElementsFromActiveView(uiapp, importSettings);
-                    collectedElements = new List<carboCircleElement>();
-
-                    if (collectedElementsBuffer != null)
+                    if (collectedElementsBuffer.Count > 0)
                     {
-                        if (collectedElementsBuffer.Count > 0)
-                        {
-                            collectedElements = new List<carboCircleElement>();
-                            collectedElements.Clear();
+                        collectedElements = new List<carboCircleElement>();
+                        collectedElements.Clear();
 
-                            foreach (carboCircleElement ccEl in collectedElementsBuffer)
-                            {
-                                collectedElements.Add(ccEl.Copy());
-                                ids.Add(ccEl.id.ToElementId());
-                            }
-                        }
-                        else
+                        foreach (carboCircleElement ccEl in collectedElementsBuffer)
                         {
-                            collectedElements = new List<carboCircleElement>();
+                            collectedElements.Add(ccEl.Copy());
+                            ids.Add(ccEl.id.ToElementId());
                         }
-
                     }
                     else
                     {
-                        collectedElements = null;
+                        collectedElements = new List<carboCircleElement>();
                     }
 
-                    if (collectedElements != null && ids.Count > 1)
-                    {
-                        uidoc.Selection.SetElementIds(ids);
-                        uidoc.RefreshActiveView();
-                    }
                 }
-                catch
+                else
                 {
+                    collectedElements = null;
                 }
+
+                if (collectedElements != null && ids.Count > 1)
+                {
+                    uidoc.Selection.SetElementIds(ids);
+                    uidoc.RefreshActiveView();
+                }
+            }
+            catch (Exception ex)
+            {
+                //An import that died half way used to leave the window untouched and
+                //silent, which is indistinguishable from a model with nothing in it.
+                log.Fail("Reading the model", ex);
+                collectedElements = null;
+            }
+
+            log.ElementsCollected = collectedElements == null ? 0 : collectedElements.Count;
+            reportImport(log);
+        }
+
+        /// <summary>
+        /// Tells the user what the import did, but only when they would otherwise be left
+        /// guessing.
+        ///
+        /// An import that worked says so by filling the lists and turning the step button
+        /// green, so a dialog on top of that is just something to dismiss. What needs
+        /// saying out loud is an import that came back with nothing, or one that hit a real
+        /// failure - those are indistinguishable from a tool that quietly did nothing,
+        /// which is the whole reason this reporting exists.
+        ///
+        /// Elements merely skipped do not count: a model always has some the import cannot
+        /// use, and interrupting for those would put the dialog back on every run.
+        /// </summary>
+        private static void reportImport(carboCircleImportLog log)
+        {
+            if (log.ElementsCollected > 0 && !log.HasFailures())
+                return;
+
+            try
+            {
+                TaskDialog dialog = new TaskDialog("CarboCircle import");
+                dialog.MainInstruction = log.Headline();
+                dialog.MainContent = log.Details();
+                dialog.Show();
+            }
+            catch
+            {
+                //Never let the report about a failure become a second failure.
             }
         }
 

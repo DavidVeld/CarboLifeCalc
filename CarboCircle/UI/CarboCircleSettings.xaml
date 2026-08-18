@@ -1,205 +1,367 @@
 ﻿<Window x:Class="CarboCircle.UI.CarboCircleSettings"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CarboCircle.UI"
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="900" d:Height="600" d:Width="900" d:MinHeight="600" d:MinWidth="900" Loaded="Window_Loaded">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:CarboCircle.UI"
+        mc:Ignorable="d"
+        Title="CarboCircle : Settings"
+        Background="#FFFFFF"
+        FontFamily="Segoe UI"
+        FontWeight="Normal"
+        FontSize="12"
+        Width="880" Height="655"
+        MinWidth="820" MinHeight="520"
+        WindowStartupLocation="CenterOwner"
+        Loaded="Window_Loaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary
-                    Source="MyStyles.xaml">
-                </ResourceDictionary>
-
+                <ResourceDictionary Source="MyStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- ══════════════════════════════════════════════════════════════════ -->
+            <!-- Local conveniences.                                                -->
+            <!--                                                                    -->
+            <!-- Every row on this window is the same shape - caption, value, unit - -->
+            <!-- so the shape is described once here. The previous version positioned -->
+            <!-- each control with its own hand-tuned Margin, which is why captions   -->
+            <!-- overlapped their fields and nothing survived a resize.              -->
+            <!-- ══════════════════════════════════════════════════════════════════ -->
+
+            <Style x:Key="RowCaption" TargetType="{x:Type Label}" BasedOn="{StaticResource formTextStyle}">
+                <Setter Property="Padding"           Value="0,0,10,0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+
+            <Style x:Key="RowValue" TargetType="{x:Type TextBox}" BasedOn="{StaticResource flatTextBox}">
+                <Setter Property="Height"            Value="26"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin"            Value="0,3,0,3"/>
+            </Style>
+
+            <Style x:Key="RowUnit" TargetType="{x:Type Label}" BasedOn="{StaticResource formGreyText}">
+                <Setter Property="Padding"           Value="6,0,0,0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="MinWidth"          Value="24"/>
+            </Style>
+
+            <Style x:Key="GroupNote" TargetType="{x:Type TextBlock}">
+                <Setter Property="Foreground"   Value="{StaticResource SubtleBrush}"/>
+                <Setter Property="FontFamily"   Value="Segoe UI"/>
+                <Setter Property="FontSize"     Value="10"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="Margin"       Value="0,0,0,8"/>
+            </Style>
+
+            <Style x:Key="SettingsCheckBox" TargetType="{x:Type CheckBox}">
+                <Setter Property="Margin"            Value="0,5,0,5"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+
+            <!-- The two database rows are read-only rather than disabled: a disabled box
+                 cannot be focused or copied from, and screen readers skip it. Read-only
+                 keeps the path reachable while still making clear it is set by Browse. -->
+            <Style x:Key="PathBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource flatTextBox}">
+                <Setter Property="Height"            Value="26"/>
+                <Setter Property="IsReadOnly"        Value="True"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin"            Value="0,3,6,3"/>
+                <Setter Property="Foreground"        Value="{StaticResource SubtleBrush}"/>
+            </Style>
+
+            <Style x:Key="BrowseButton" TargetType="{x:Type Button}" BasedOn="{StaticResource ButtonStyle}">
+                <Setter Property="Width"             Value="30"/>
+                <Setter Property="Height"            Value="26"/>
+                <Setter Property="Padding"           Value="0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid>
+    <Grid Margin="20,16,20,16">
         <Grid.RowDefinitions>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="35"/>
-            <RowDefinition Height="5"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 0: title            -->
+            <RowDefinition Height="*"/>
+            <!-- 1: the two columns  -->
+            <RowDefinition Height="Auto"/>
+            <!-- 2: footer buttons   -->
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="5"/>
-            <ColumnDefinition Width="1.2*"/>
-            <ColumnDefinition Width="5"/>
-        </Grid.ColumnDefinitions>
 
-        <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formBoldTitleStyle}">Carbo Circle Settings</Label>
-        <Button x:Name="btn_Close" Grid.Row="3" Grid.Column="3" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_Close_Click"  Content="Close"/>
-        <Button x:Name="btn_Accept" Grid.Row="3" Grid.Column="3" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Height="25" Style="{StaticResource ButtonStyle}"  Content="Accept" Click="btn_Accept_Click"/>
+        <!-- ── Title ──────────────────────────────────────────────────────────── -->
+        <Label Grid.Row="0"
+               Style="{StaticResource WindowTitleStyle}"
+               Padding="0,0,0,0"
+               Margin="0,0,0,14"
+               Content="CarboCircle Settings"/>
 
-        <Grid Grid.Column="1" Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="35"/>
-                <RowDefinition Height="65"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="53"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="52"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="30"/>
+        <!-- ── Body: two columns, grouped by the question each group answers ──── -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <RowDefinition Height="0*"/>
+                <!-- ═══════════════════ LEFT COLUMN ═══════════════════ -->
+                <StackPanel Grid.Column="0">
 
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                    <!-- ── 1. What the import looks at ──────────────────────── -->
+                    <GroupBox Header="What to collect" Margin="0,0,0,14">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource GroupNote}"
+                                       Text="Which Revit categories an import reads. Beams and columns are read as sections that can be substituted; walls and floors are read as volumes of material."/>
 
+                            <CheckBox x:Name="chk_MineSteelBeams"
+                                      Style="{StaticResource SettingsCheckBox}"
+                                      Content="Structural framing and columns"
+                                      ToolTip="Read beams and columns. These are matched against the steel section table and can be substituted for one another."/>
+                            <CheckBox x:Name="chk_MineWalls"
+                                      Style="{StaticResource SettingsCheckBox}"
+                                      Content="Walls"
+                                      ToolTip="Read walls as volumes of material. A compound wall contributes one entry per structural layer."/>
+                            <CheckBox x:Name="chk_MineFloors"
+                                      Style="{StaticResource SettingsCheckBox}"
+                                      Content="Floors"
+                                      ToolTip="Read floors as volumes of material. A compound floor contributes one entry per structural layer."/>
+                        </StackPanel>
+                    </GroupBox>
 
-            <Label Grid.Row="1" Style="{StaticResource formBoldTitleStyle}" Content="Import Settings:"/>
-            <Label Grid.Row="2" Style="{StaticResource formTitleStyle}">Required Materials</Label>
+                    <!-- ── 2. What deconstruction costs ─────────────────────── -->
+                    <GroupBox Header="Lost in deconstruction" Margin="0,0,0,14">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource GroupNote}"
+                                       Text="How much of an existing element does not survive being taken out. Applied to mined material only - a proposed element always needs its full size."/>
 
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-            <Label Grid.Row="2" Grid.ColumnSpan="1" Margin="0,25,0,0" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">Materials to be imported:</Label>
-            <Label Grid.Row="3" Grid.ColumnSpan="1" Margin="0,8,0,0" Style="{StaticResource formGreyText}">Value is taken from Family or Material Class Parameter Value</Label>
+                                <Label   Grid.Row="0" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_CutoffValue}"
+                                         Content="Steel _members, cut off each end"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txt_CutoffValue"
+                                         Style="{StaticResource RowValue}"
+                                         ToolTip="Length lost cutting a steel member free, per end. 600 mm is a common allowance."/>
+                                <Label   Grid.Row="0" Grid.Column="2" Style="{StaticResource RowUnit}" Content="mm"/>
 
-            <CheckBox x:Name="chk_MineSteelBeams" Grid.Row="4" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Structural Framing + Columns" Width="174"/>
-            <CheckBox x:Name="chk_MineWalls" Grid.Row="4" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Height="25"  Content="Walls" IsEnabled="True" Width="50"/>
-            <CheckBox x:Name="chk_MineFloors" Grid.Row="4" Margin="10,42,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25"  Content="Floors" IsEnabled="True" Grid.RowSpan="2" Width="54"/>
+                                <Label   Grid.Row="1" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_WoodCutoff}"
+                                         Content="_Timber members, cut off each end"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txt_WoodCutoff"
+                                         Style="{StaticResource RowValue}"
+                                         ToolTip="Length lost cutting a timber member free, per end. 300 mm is a common allowance."/>
+                                <Label   Grid.Row="1" Grid.Column="2" Style="{StaticResource RowUnit}" Content="mm"/>
 
-            <Label Grid.Row="5" Style="{StaticResource formTitleStyle}" Content="Steel Beam / Columns"/>
+                                <Label   Grid.Row="2" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_ConcreteLoss}"
+                                         Content="_Concrete volume lost"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" x:Name="txt_ConcreteLoss"
+                                         Style="{StaticResource RowValue}"
+                                         ToolTip="Share of a concrete volume lost in deconstruction. 25% is the usual figure. Enter 0 for no loss."/>
+                                <Label   Grid.Row="2" Grid.Column="2" Style="{StaticResource RowUnit}" Content="%"/>
 
-            <Label Margin="5,0,5,0" Grid.Row="6" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Parameters Used for Element Name:</Label>
-            <TextBox Margin="15,20,5,0" Grid.Row="6" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" Grid.RowSpan="2" IsEnabled="False">The Size (name) of a section size. As a default the Revit Type Name is used but you can override this by providing a type parameter.</TextBox>
+                                <Label   Grid.Row="3" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_MasonryLoss}"
+                                         Content="M_asonry volume lost"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" x:Name="txt_MasonryLoss"
+                                         Style="{StaticResource RowValue}"
+                                         ToolTip="Share of a masonry volume lost in deconstruction. 25% is the usual figure. Enter 0 for no loss."/>
+                                <Label   Grid.Row="3" Grid.Column="2" Style="{StaticResource RowUnit}" Content="%"/>
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
 
-            <Label Margin="5,0,5,0" Grid.Row="7" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Parameter:</Label>
-            <TextBox Name="txt_MinedParameter" Grid.Row="7" Margin="120,0,0,0" Width="250" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
-            <Label Margin="5,0,5,0" Grid.Row="8" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Visibility="Hidden">Project:</Label>
-            <TextBox Name="txt_RequiredParameter" Grid.Row="8" Margin="120,0,0,0" Width="250" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}" Visibility="Hidden"/>
+                    <!-- ── 3. How far a substitution may stray ──────────────── -->
+                    <GroupBox Header="Substitution tolerances" Margin="0,0,0,14">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource GroupNote}"
+                                       Text="How much bigger than the requirement a mined member may be and still count as a match. Zero means only an exact section will do."/>
 
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="90"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-            <Label Margin="5,0,5,0" Grid.Row="9" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">Grade Parameter:</Label>
-            <TextBox Name="txt_SteelGradeParameter" Grid.Row="9" Margin="120,0,0,0" Width="250" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+                                <Label   Grid.Row="0" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_SteelBeamDepthTolerance}"
+                                         Content="Permitted extra section _depth"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txt_SteelBeamDepthTolerance"
+                                         Style="{StaticResource RowValue}"
+                                         ToolTip="A mined member may be this much deeper than the one it replaces."/>
+                                <Label   Grid.Row="0" Grid.Column="2" Style="{StaticResource RowUnit}" Content="mm"/>
 
-            <Label Margin="5,0,5,0" Grid.Row="10" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">Length lost due to removal (both sides):</Label>
-            <TextBox Name="txt_CutoffValue" Grid.Row="10" Margin="120,20,0,0" Width="170" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
-            <Label Margin="300,25,0,0" Grid.Row="10" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.RowSpan="2" Width="29">mm</Label>
+                                <Label   Grid.Row="1" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_BeamStrengthTolerance}"
+                                         Content="Permitted extra _strength"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txt_BeamStrengthTolerance"
+                                         Style="{StaticResource RowValue}"
+                                         ToolTip="A mined member may be this much stronger than the one it replaces, measured on Iy, Iz, Wely and Welz."/>
+                                <Label   Grid.Row="1" Grid.Column="2" Style="{StaticResource RowUnit}" Content="%"/>
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
 
-            <Label Grid.Row="11" Margin="0,3,0,0" Style="{StaticResource formTitleStyle}" Content="Masonry / Concrete"/>
+                <!-- ═══════════════════ RIGHT COLUMN ═══════════════════ -->
+                <StackPanel Grid.Column="2">
 
-            <Label Margin="5,0,5,0" Grid.Row="12" Height="28" VerticalAlignment="Center" Style="{StaticResource formTextStyle}">Masonry Loss (25% reccomended):</Label>
-            <TextBox Name="txt_MasonryLoss" Grid.Row="12" Margin="190,0,0,0" Width="100" HorizontalAlignment="Left" Height="28" VerticalAlignment="Center" Style="{StaticResource flatTextBox}"/>
-            <Label Margin="300,0,0,0" Grid.Row="12" Height="28" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Width="19">%</Label>
+                    <!-- ── 4. Where the import reads names and sizes from ───── -->
+                    <GroupBox Header="Parameter overrides" Margin="0,0,0,14">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource GroupNote}"
+                                       Text="By default an element is identified by its Revit type name. Name a type parameter here to use that instead. Leave a box empty to keep the default."/>
 
-            <Label Margin="5,0,5,0" Grid.Row="13" Height="28" VerticalAlignment="Center" Style="{StaticResource formTextStyle}">Concrete Loss (25% reccomended):</Label>
-            <TextBox Name="txt_ConcreteLoss" Grid.Row="13" Margin="190,0,0,0" Width="100" HorizontalAlignment="Left" Height="28" VerticalAlignment="Center" Style="{StaticResource flatTextBox}"/>
-            <Label Margin="300,0,0,0" Grid.Row="13" Height="28" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Width="19">%</Label>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="150"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
+                                <Label   Grid.Row="0" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_MinedParameter}"
+                                         Content="Section _name"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txt_MinedParameter"
+                                         Style="{StaticResource RowValue}"
+                                         ToolTip="Type parameter holding the section size, for example &quot;UB 305x165x40&quot;. This is the one parameter override the import reads."/>
 
+                                <Label   Grid.Row="1" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_RequiredParameter}"
+                                         Content="Section name, _project side"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txt_RequiredParameter"
+                                         Style="{StaticResource RowValue}"
+                                         ToolTip="Stored, but not yet read by the import - both sides currently use the mined section name parameter above."/>
 
-        </Grid>
+                                <Label   Grid.Row="2" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_SteelGradeParameter}"
+                                         Content="Steel _grade"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" x:Name="txt_SteelGradeParameter"
+                                         Style="{StaticResource RowValue}"
+                                         ToolTip="Stored, but not yet read by the import - grade currently comes from the Revit material class."/>
 
-        <Grid Grid.Column="3" Grid.Row="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="1.5*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                                <Label   Grid.Row="3" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_ParameterWidth}"
+                                         Content="Timber _width"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" x:Name="txt_ParameterWidth"
+                                         Style="{StaticResource RowValue}"
+                                         ToolTip="Stored, but not yet read by the import - timber sizes currently come from the type parameters b and d."/>
 
-            <GroupBox Grid.Column="3" Grid.Row="1" Header="Timber Settings" FontSize="16" FontWeight="DemiBold">
-                <Grid Grid.Column="3" Grid.Row="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="53"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="52"/>
-                        <RowDefinition Height="35"/>
+                                <Label   Grid.Row="4" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_ParameterDepth}"
+                                         Content="Timber dep_th"/>
+                                <TextBox Grid.Row="4" Grid.Column="1" x:Name="txt_ParameterDepth"
+                                         Style="{StaticResource RowValue}"
+                                         ToolTip="Stored, but not yet read by the import - timber sizes currently come from the type parameters b and d."/>
+                            </Grid>
 
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                            <!-- Said plainly rather than left for the user to discover: four of
+                                 these five boxes are saved and then ignored by the import. -->
+                            <TextBlock Style="{StaticResource GroupNote}"
+                                       Margin="0,10,0,0"
+                                       Text="Only Section name is read by the import at present. The other four are saved with the project but not yet used."/>
+                        </StackPanel>
+                    </GroupBox>
 
-                    <Label Margin="5,0,5,0" Grid.Row="1" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Parameters Used for Element Name:</Label>
-                    <TextBox Margin="15,20,5,0" Grid.Row="1" VerticalAlignment="Top" Style="{StaticResource formGreyText}" TextWrapping="Wrap" BorderBrush="Transparent" Grid.RowSpan="2">The Size (name) of a section size. As a default the Revit Type Name is used but you can override this by providing a type parameter.</TextBox>
+                    <!-- ── 5. Which files the numbers come from ─────────────── -->
+                    <GroupBox Header="Databases" Margin="0,0,0,14">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource GroupNote}"
+                                       Text="Both fall back to the copy shipped in the circledb folder when nothing is chosen, shown here as Local."/>
 
-                    <Label Margin="5,0,5,0" Grid.Row="2" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Width:</Label>
-                    <TextBox Name="txt_ParameterWidth" Grid.Row="2" Margin="120,0,0,0" Width="250" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
-                    <Label Margin="5,0,5,0" Grid.Row="3" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}">Depth:</Label>
-                    <TextBox Name="txt_ParameterDepth" Grid.Row="3" Margin="120,0,0,0" Width="250" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="130"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
 
-                    <Label Margin="5,0,5,0" Grid.Row="4" Height="28" VerticalAlignment="Top" Style="{StaticResource formTextStyle}" Grid.RowSpan="2">Length lost due to removal (both Sides):</Label>
-                    <TextBox Name="txt_WoodCutoff" Grid.Row="4" Margin="120,20,0,0" Width="170" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
-                    <Label Margin="300,25,0,0" Grid.Row="4" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.RowSpan="2" Width="29">mm</Label>
+                                <Label   Grid.Row="0" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_SteelDataBasePath}"
+                                         Content="Steel se_ctions"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txt_SteelDataBasePath"
+                                         Style="{StaticResource PathBox}"
+                                         ToolTip="Csv table of steel sections and their properties. Mined members are mapped onto the nearest entry in this table."/>
+                                <Button  Grid.Row="0" Grid.Column="2" x:Name="btn_Browse"
+                                         Style="{StaticResource BrowseButton}"
+                                         Content="..."
+                                         ToolTip="Choose a steel section table"
+                                         Click="btn_Browse_Click"/>
 
+                                <Label   Grid.Row="1" Grid.Column="0" Style="{StaticResource RowCaption}"
+                                         Target="{Binding ElementName=txt_MaterialDataBasePath}"
+                                         Content="Reuse mater_ials"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txt_MaterialDataBasePath"
+                                         Style="{StaticResource PathBox}"
+                                         ToolTip="Carbo Life material file supplying the carbon values for reused material. Point this at one of the main application databases to use those figures."/>
+                                <Button  Grid.Row="1" Grid.Column="2" x:Name="btn_BrowseMaterials"
+                                         Style="{StaticResource BrowseButton}"
+                                         Content="..."
+                                         ToolTip="Choose a reuse material database"
+                                         Click="btn_BrowseMaterials_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
 
+        <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,14,0,0">
+            <!-- Named btn_Close for the existing handler, but labelled for what it does:
+                 it discards the edits rather than saving them.
 
-                </Grid>
-            </GroupBox>
-
-            <GroupBox Grid.Column="0" Grid.Row="2" Header="Reuse Mapping Settings" FontSize="16" FontWeight="DemiBold">
-                <Grid Grid.Column="0" Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="0"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="*"/>
-
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-
-                    <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource formBoldTitleStyle}" Content=""/>
-                    <Label Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Steel Beam / Column Settings</Label>
-
-                    <Label Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="0,-5,0,0" Style="{StaticResource formTextStyle}"></Label>
-
-                    <Label Grid.Column="1" Margin="5,0,0,0" Grid.Row="3" Width="190" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Steel Member Mapping Table Path:</Label>
-                    <TextBox Name="txt_SteelDataBasePath" Grid.Row="3"  Margin="190,1,50,0" TextWrapping="Wrap"   VerticalAlignment="Top"  Height="27" Background="Transparent"  Style="{StaticResource flatTextBox}" IsEnabled="False"/>
-                    <Button Name="btn_Browse" Grid.Row="3" Margin="0,2,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="17" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_Browse_Click" >...</Button>
-
-                    <Label Grid.Column="1" Margin="5,0,0,0" Grid.Row="7" Width="190" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource formTextStyle}" Grid.RowSpan="1">Reused Material Database:</Label>
-                    <TextBox Name="txt_MaterialDataBasePath" Grid.Row="7"  Margin="190,1,50,0" TextWrapping="Wrap"   VerticalAlignment="Top"  Height="27" Background="Transparent"  Style="{StaticResource flatTextBox}" IsEnabled="False"/>
-                    <Button Name="btn_BrowseMaterials" Grid.Row="7" Margin="0,2,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="17" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_BrowseMaterials_Click" >...</Button>
-
-                    <Label Grid.Column="3" Grid.Row="4" Grid.ColumnSpan="2" Style="{StaticResource formTitleStyle}">Imperfect Matches</Label>
-
-                    <Label Grid.Column="1" Margin="5,-5,5,0" Grid.Row="5" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Beam Depth Tolerance (+):</Label>
-                    <TextBox Name="txt_SteelBeamDepthTolerance" Grid.Row="5" Margin="190,0,0,0" Width="100" HorizontalAlignment="Left" Height="28" Grid.RowSpan="2" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
-                    <Label Grid.Column="1" Margin="300,1,5,0" Grid.Row="5" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">mm</Label>
-
-                    <Label Grid.Column="1" Margin="5,-5,5,0" Grid.Row="6" Height="28" VerticalAlignment="Top" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">Strength Tolerance (+):</Label>
-                    <TextBox Name="txt_BeamStrengthTolerance" Grid.Row="6" Margin="190,0,0,0" Width="100" HorizontalAlignment="Left" Height="28" Grid.RowSpan="2" VerticalAlignment="Top" Style="{StaticResource flatTextBox}"/>
-                    <Label Grid.Column="1" Margin="300,1,5,0" Grid.Row="6" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="2" Style="{StaticResource formTextStyle}">%</Label>
-
-
-
-
-
-                </Grid>
-            </GroupBox>
-
-
-        </Grid>
-
-
-
+                 Deliberately not IsCancel="True". The handler already calls Close(), and a
+                 cancel button in a ShowDialog window also sets DialogResult afterwards -
+                 an interaction worth being sure about rather than guessing at, and one
+                 that cannot be exercised outside Revit. Escape therefore does not close
+                 this window; add IsCancel and drop the Close() from btn_Close_Click if you
+                 want it. -->
+            <Button x:Name="btn_Close"
+                    Style="{StaticResource ButtonStyle}"
+                    Width="90" Height="27"
+                    Margin="0,0,10,0"
+                    Content="Cancel"
+                    ToolTip="Close without keeping any of these changes"
+                    Click="btn_Close_Click"/>
+            <Button x:Name="btn_Accept"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Width="90" Height="27"
+                    IsDefault="True"
+                    Content="Accept"
+                    ToolTip="Save these settings and close"
+                    Click="btn_Accept_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

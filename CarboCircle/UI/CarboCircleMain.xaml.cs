@@ -133,9 +133,12 @@ namespace CarboCircle.UI
 
         private void btn_ImportmaterialsRevit_Click(object sender, RoutedEventArgs e)
         {
-            //Remember the choice, then hand it to the import that is about to run.
-            activeProject.settings.MineExtractionMethod = cbb_MineSetting.Text;
-            activeProject.settings.extractionMethod = cbb_MineSetting.Text;
+            //Remember the choice as the mine side preference, then hand it to the import
+            //that is about to run. The import is told the method directly: it is a property
+            //of this one request, and the settings file only remembers preferences.
+            string method = chosenMethod(cbb_MineSetting, activeProject.settings.MineExtractionMethod);
+
+            activeProject.settings.MineExtractionMethod = method;
             activeProject.settings.Save();
 
             if (m_ExEvent != null)
@@ -143,6 +146,7 @@ namespace CarboCircle.UI
                 dataSwitch = 0;
                 m_Handler.SetSwitch(1);
                 m_Handler.SetSettings(activeProject);
+                m_Handler.SetExtractionMethod(method);
 
                 m_ExEvent.Raise();
             }
@@ -150,9 +154,11 @@ namespace CarboCircle.UI
 
         private void btn_ImportProjectRevit_Click(object sender, RoutedEventArgs e)
         {
-            //Remember the choice, then hand it to the import that is about to run.
-            activeProject.settings.RequiredExtractionMethod = cbb_ImportProjectSetting.Text;
-            activeProject.settings.extractionMethod = cbb_ImportProjectSetting.Text;
+            //Remember the choice as the project side preference, then hand it to the
+            //import that is about to run. See the mine side above.
+            string method = chosenMethod(cbb_ImportProjectSetting, activeProject.settings.RequiredExtractionMethod);
+
+            activeProject.settings.RequiredExtractionMethod = method;
             activeProject.settings.Save();
 
             if (m_ExEvent != null)
@@ -160,6 +166,7 @@ namespace CarboCircle.UI
                 dataSwitch = 1;
                 m_Handler.SetSwitch(1);
                 m_Handler.SetSettings(activeProject);
+                m_Handler.SetExtractionMethod(method);
 
                 m_ExEvent.Raise();
             }
@@ -255,17 +262,19 @@ namespace CarboCircle.UI
             cbb_ImportProjectSetting.Items.Clear();
             cbb_MineSetting.Items.Clear();
 
-            cbb_ImportProjectSetting.Items.Add("All Visible in View");// Index 0;
-            cbb_ImportProjectSetting.Items.Add("All New in View"); // Index 1;
-            cbb_ImportProjectSetting.Items.Add("Selected");// Index 2;
+            //Filled from the same constants the collector switches on, so a label and the
+            //branch it is meant to select cannot drift apart.
+            foreach (string method in carboCircleExtractionMethod.RequiredMethods())
+                cbb_ImportProjectSetting.Items.Add(method);
 
-            cbb_MineSetting.Items.Add("All Visible in View"); //Index: 0
-            cbb_MineSetting.Items.Add("All Demolished in View"); //Index: 1
-            cbb_MineSetting.Items.Add("Selected"); //Index: 2
+            foreach (string method in carboCircleExtractionMethod.MineMethods())
+                cbb_MineSetting.Items.Add(method);
 
             //The two sides offer different methods, so each remembers its own choice.
-            selectRemembered(cbb_ImportProjectSetting, activeProject.settings.RequiredExtractionMethod);
-            selectRemembered(cbb_MineSetting, activeProject.settings.MineExtractionMethod);
+            selectRemembered(cbb_ImportProjectSetting, activeProject.settings.RequiredExtractionMethod,
+                carboCircleExtractionMethod.AllNewInView);
+            selectRemembered(cbb_MineSetting, activeProject.settings.MineExtractionMethod,
+                carboCircleExtractionMethod.AllDemolishedInView);
 
             txt_BeamStrengthTolerance.Text = activeProject.settings.strengthRange.ToString();
             txt_SteelBeamDepthTolerance.Text = activeProject.settings.depthRange.ToString();
@@ -286,14 +295,39 @@ namespace CarboCircle.UI
         }
 
         /// <summary>
-        /// Selects the remembered entry, falling back to the second one (the historic
-        /// default) when the setting is empty or no longer in the list.
+        /// Selects the remembered entry, falling back to <paramref name="fallback"/> when the
+        /// setting is empty or is not one of the methods this side offers. Named rather than
+        /// positional: the fallback used to be "index 1", which only happened to be the
+        /// intended default.
         /// </summary>
-        private static void selectRemembered(System.Windows.Controls.ComboBox combo, string remembered)
+        private static void selectRemembered(System.Windows.Controls.ComboBox combo, string remembered, string fallback)
         {
             int index = string.IsNullOrEmpty(remembered) ? -1 : combo.Items.IndexOf(remembered);
 
-            combo.SelectedIndex = index >= 0 ? index : 1;
+            if (index < 0)
+                index = combo.Items.IndexOf(fallback);
+
+            combo.SelectedIndex = index >= 0 ? index : 0;
+        }
+
+        /// <summary>
+        /// The extraction method chosen in a combo, falling back to the remembered
+        /// preference when nothing is selected.
+        ///
+        /// Never returns empty. This value now decides which branch the collector takes, so
+        /// an empty one would silently mean "everything visible" - which is how the import
+        /// used to ignore the choice altogether.
+        /// </summary>
+        private static string chosenMethod(System.Windows.Controls.ComboBox combo, string remembered)
+        {
+            string chosen = combo.SelectedItem as string;
+
+            if (!string.IsNullOrEmpty(chosen))
+                return chosen;
+
+            return string.IsNullOrEmpty(remembered)
+                ? carboCircleExtractionMethod.AllVisibleInView
+                : remembered;
         }
 
         private void btn_Go_Click(object sender, RoutedEventArgs e)
