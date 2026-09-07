@@ -60,6 +60,41 @@ namespace CarboLifeUI.UI
         private bool uiReady;
 
         /// <summary>
+        /// A material database picked with btn_TemplatePath. Empty means the template list is
+        /// built where the settings point; set, the list is built from this file's folder, so a
+        /// database chosen from somewhere else - a team share, a project folder - and the ones
+        /// beside it appear in the list before anything has been saved.
+        /// </summary>
+        private string templateSourcePath;
+
+        /// <summary>
+        /// The mapping file this import will read the previous material matches from, and write
+        /// the new ones back to. Resolved the same way the import resolves it, and repointed by
+        /// btn_MappingPath.
+        /// </summary>
+        private string mappingFilePath;
+
+        /// <summary>
+        /// The mapping file the settings ask for, before resolution. Kept to spot the case where
+        /// the file that will actually be used is not the one that was configured.
+        /// </summary>
+        private string configuredMappingPath;
+
+        /// <summary>
+        /// True once the user has pointed at another mapping file here. Only then is the path
+        /// written back to the settings: the box shows the resolved path, which falls back to the
+        /// local default while a shared folder is briefly unreachable, and saving that fallback
+        /// would detach the user from the shared file for good.
+        /// </summary>
+        private bool mappingFilePathChanged;
+
+        /// <summary>Colours of the two file status lines, matching the WarningText style.</summary>
+        private static readonly System.Windows.Media.Brush statusProblemBrush =
+            new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xC0, 0x50, 0x00));
+
+        private static readonly System.Windows.Media.Brush statusOkBrush = System.Windows.Media.Brushes.Gray;
+
+        /// <summary>
         /// Below this score a match is too weak to offer, see FindClosestMatch.
         /// Anything under roughly this level shares no recognisable word with the original.
         /// </summary>
@@ -110,24 +145,9 @@ namespace CarboLifeUI.UI
             FitToScreen();
 
             // Get DefaultTemplate:
-            templateCollection = PathUtils.getTemplateFiles();
-            if (templateCollection != null)
-            {
-                foreach (var template in templateCollection)
-                {
-                    cbb_Template.Items.Add(template.Key);
-                }
+            LoadTemplateList(null);
 
-                //The template saved in the settings, or the user's own materials. Falling back to
-                //index 0 meant whichever file the materials folder listed first, which is a
-                //reference database like Okobaudat rather than the materials the user maintains.
-                string selected = PathUtils.GetDefaultTemplateSelection(templateCollection.Keys);
-
-                if (selected != null)
-                    cbb_Template.SelectedItem = selected;
-                else if (cbb_Template.Items.Count > 0)
-                    cbb_Template.SelectedIndex = 0;
-            }
+            LoadMappingFilePath();
 
             BuildAllowanceBlocks();
 
@@ -137,7 +157,72 @@ namespace CarboLifeUI.UI
             LoadActiveTemplate();
             LoadAllowanceListsToUI();
 
+            ShowFilePaths();
+
             uiReady = true;
+        }
+
+        /// <summary>
+        /// Fills the template list from the materials folder.
+        /// </summary>
+        /// <param name="preferred">
+        /// The template to keep selected when it is still on the list. Null selects the stored default.
+        /// </param>
+        private void LoadTemplateList(string preferred)
+        {
+            templateCollection = string.IsNullOrEmpty(templateSourcePath)
+                ? PathUtils.getTemplateFiles()
+                : PathUtils.GetTemplateFiles(templateSourcePath);
+
+            cbb_Template.Items.Clear();
+
+            if (templateCollection == null)
+                return;
+
+            foreach (var template in templateCollection)
+                cbb_Template.Items.Add(template.Key);
+
+            if (cbb_Template.Items.Count == 0)
+                return;
+
+            //What the user had picked stays picked, it is only gone if the file itself is.
+            if (string.IsNullOrEmpty(preferred) == false && cbb_Template.Items.Contains(preferred))
+            {
+                cbb_Template.SelectedItem = preferred;
+                return;
+            }
+
+            //The template saved in the settings, or the user's own materials. Falling back to
+            //index 0 meant whichever file the materials folder listed first, which is a
+            //reference database like Okobaudat rather than the materials the user maintains.
+            string selected = PathUtils.GetDefaultTemplateSelection(templateCollection.Keys);
+
+            if (selected != null)
+                cbb_Template.SelectedItem = selected;
+            else
+                cbb_Template.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// Reads the mapping file location the same way CarboMapFile reads it, so the path shown
+        /// is the file the import will really use rather than the one the settings ask for.
+        /// </summary>
+        private void LoadMappingFilePath()
+        {
+            try
+            {
+                CarboSettings settings = new CarboSettings().Load();
+                configuredMappingPath = settings.mappingPath;
+            }
+            catch
+            {
+                //An unreadable settings file leaves nothing to compare against, the resolved
+                //path below is still worth showing.
+                configuredMappingPath = "";
+            }
+
+            mappingFilePath = PathUtils.GetMappingFilePath();
+            mappingFilePathChanged = false;
         }
 
         /// <summary>
@@ -280,6 +365,21 @@ namespace CarboLifeUI.UI
             chk_UseMappedMaterialData.IsChecked = importSettings.UseImportedMap;
 
             txt_UncertFact.Text = (importSettings.UncertaintyFactor * 100).ToString();
+
+            //GIA. Settings written before these fields existed deserialise them as null, which
+            //would blank the boxes and quietly switch the lookup off, so fall back to the names
+            //the parameter check tool adds.
+            txt_GIAParamName.Text = importSettings.GIAParameterName == null
+                ? CarboGroupSettings.DefaultGIAParameterName
+                : importSettings.GIAParameterName;
+
+            txt_GIANewParamName.Text = importSettings.GIANewParameterName == null
+                ? CarboGroupSettings.DefaultGIANewParameterName
+                : importSettings.GIANewParameterName;
+
+            txt_GIAMethod.Text = string.IsNullOrEmpty(importSettings.GIADeterminationMethod)
+                ? CarboGroupSettings.GIAFromRevitEstimate
+                : importSettings.GIADeterminationMethod;
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -322,14 +422,7 @@ namespace CarboLifeUI.UI
                 return false;
             }
 
-            string result = null;
-
-            if (templateCollection != null)
-                templateCollection.TryGetValue(chosen, out result);
-
-            //The combo box holds file names; fall back to the usual resolution for a full path.
-            if (string.IsNullOrEmpty(result) || File.Exists(result) == false)
-                result = PathUtils.getTemplateFilePath(chosen);
+            string result = ResolveSelectedTemplatePath();
 
             if (string.IsNullOrEmpty(result) || File.Exists(result) == false)
             {
@@ -346,7 +439,10 @@ namespace CarboLifeUI.UI
             //silently rather than loudly, so it is caught here too.
             try
             {
-                CarboDatabase check = new CarboDatabase().DeSerializeXML(result);
+                //LoadTemplate rather than DeSerializeXML: the lists offer .csv databases and the
+                //import reads them, but reading one as XML fails, so a .csv selection was turned
+                //away here as "contains no materials".
+                CarboDatabase check = CarboDatabase.LoadTemplate(result);
 
                 if (check == null || check.CarboMaterialList == null || check.CarboMaterialList.Count == 0)
                 {
@@ -464,8 +560,27 @@ namespace CarboLifeUI.UI
             }
             settings.defaultCarboGroupSettings.UncertaintyFactor = uncertaintyPercent / 100.0;
 
-            string fullTemplatePath = PathUtils.getTemplateFilePath(cbb_Template.Text);
-            settings.templatePath = fullTemplatePath;
+            //GIA. The names are the user's to choose; the method is written by the import, so it
+            //is carried over rather than read back off the read only box.
+            settings.defaultCarboGroupSettings.GIAParameterName = txt_GIAParamName.Text.Trim();
+            settings.defaultCarboGroupSettings.GIANewParameterName = txt_GIANewParamName.Text.Trim();
+            settings.defaultCarboGroupSettings.GIADeterminationMethod =
+                string.IsNullOrEmpty(importSettings.GIADeterminationMethod)
+                    ? CarboGroupSettings.GIAFromRevitEstimate
+                    : importSettings.GIADeterminationMethod;
+
+            //As LoadActiveTemplate: the resolved path of the selected database, which may sit
+            //outside the materials folder. An empty selection leaves the stored one alone rather
+            //than replacing it with a default the user never picked.
+            string fullTemplatePath = ResolveSelectedTemplatePath();
+
+            if (string.IsNullOrEmpty(fullTemplatePath) == false)
+                settings.templatePath = fullTemplatePath;
+
+            //Only what the user pointed at here, see mappingFilePathChanged: writing back the
+            //resolved path would turn a momentarily unreachable shared file into the local default.
+            if (mappingFilePathChanged == true && string.IsNullOrEmpty(mappingFilePath) == false)
+                settings.mappingPath = mappingFilePath;
 
             //Save as default for next time/project;
             settings.Save();
@@ -500,6 +615,253 @@ namespace CarboLifeUI.UI
             }
         }
 
+        /// <summary>
+        /// Re-reads the materials folder and the selected database, and refills everything that
+        /// comes out of it. This is what to press after editing a database or dropping a new one
+        /// into the materials folder: the lists are built once when the dialog opens, so without
+        /// it the import runs against the version that was on disk at that moment.
+        /// </summary>
+        private void btn_ReloadTemplates_Click(object sender, RoutedEventArgs e)
+        {
+            //A mapping file the user pointed at here stays pointed at; only a configured one is
+            //re-read, its date may have moved or the settings may have been changed elsewhere.
+            if (mappingFilePathChanged == false)
+                LoadMappingFilePath();
+
+            ReloadTemplateList(cbb_Template.SelectedItem as string);
+        }
+
+        /// <summary>
+        /// Points this import at a material database anywhere on disk, not only at one already in
+        /// the materials folder. The list is rebuilt from the folder the file came from and the
+        /// new database is read straight away, so the allowance lists and the paths shown all
+        /// belong to it. Saved with the rest of the settings, so Cancel changes nothing.
+        /// </summary>
+        private void btn_TemplatePath_Click(object sender, RoutedEventArgs e)
+        {
+            string startIn = "";
+
+            try
+            {
+                string current = ResolveSelectedTemplatePath();
+
+                if (string.IsNullOrEmpty(current) == false)
+                    startIn = Path.GetDirectoryName(current);
+            }
+            catch
+            {
+                //A path the framework will not take apart just means the dialog opens elsewhere.
+            }
+
+            //csv included: the list offers those too, so the picker has to be able to return one.
+            string picked = Utils.OpenCarboMaterialLibrary(startIn, true);
+
+            //Cancelled, or something unusable: keep the database that is already in use.
+            if (string.IsNullOrEmpty(picked))
+                return;
+
+            templateSourcePath = picked;
+
+            ReloadTemplateList(Path.GetFileName(picked));
+        }
+
+        /// <summary>
+        /// Rebuilds the template list and everything that comes out of the selected database.
+        /// </summary>
+        /// <param name="preferred">The template to end up selected, null takes the stored default</param>
+        private void ReloadTemplateList(string preferred)
+        {
+            //Emptying and refilling the list raises SelectionChanged, which is not a user choice.
+            bool wasReady = uiReady;
+            uiReady = false;
+
+            try
+            {
+                LoadTemplateList(preferred);
+            }
+            finally
+            {
+                uiReady = wasReady;
+            }
+
+            ReloadActiveTemplateIntoUI();
+        }
+
+        /// <summary>
+        /// Points this import at another mapping file. Saved with the rest of the settings, so
+        /// cancelling the dialog leaves the configured mapping file alone.
+        /// </summary>
+        private void btn_MappingPath_Click(object sender, RoutedEventArgs e)
+        {
+            string startIn = "";
+
+            try
+            {
+                if (string.IsNullOrEmpty(mappingFilePath) == false)
+                    startIn = Path.GetDirectoryName(mappingFilePath);
+            }
+            catch
+            {
+                //A path the framework will not take apart just means the dialog opens elsewhere.
+            }
+
+            string picked = Utils.OpenCarboMappingLibrary(startIn);
+
+            //Cancelled, or something unusable: keep the file that is already in use.
+            if (string.IsNullOrEmpty(picked))
+                return;
+
+            mappingFilePath = picked;
+            mappingFilePathChanged = true;
+
+            ShowFilePaths();
+        }
+
+        /// <summary>
+        /// Shows the two files this import depends on: the material database the quantities are
+        /// priced with, and the mapping file the previous material matches come from.
+        ///
+        /// Both are resolved rather than configured directly, and both fall back silently - a
+        /// missing template to another database, an unreachable mapping file to the local default.
+        /// An import that took a fallback still produced numbers, and nothing on screen said so.
+        /// </summary>
+        private void ShowFilePaths()
+        {
+            ShowPath(txt_TemplateFilePath, txt_TemplateFileStatus, ResolveSelectedTemplatePath(),
+                     "No material database selected: every material would be priced at zero.");
+
+            ShowPath(txt_MappingFilePath, txt_MappingFileStatus, mappingFilePath,
+                     "No mapping file set: nothing can be matched to the materials used before.");
+
+            //A configured mapping file on a share that is offline resolves to the local default,
+            //so the import would quietly run against a different set of matches. Added to
+            //whatever ShowPath found rather than replacing it: the fallback can be missing too.
+            if (mappingFilePathChanged == false && UsingAnotherMappingFile() == true)
+            {
+                AppendStatus(txt_MappingFileStatus,
+                             "Not the configured file: " + configuredMappingPath + " could not be reached.");
+            }
+        }
+
+        /// <summary>
+        /// True when the mapping file in use is not the one the settings ask for.
+        /// A settings value that is only a file name is no mismatch, it resolves to itself.
+        /// </summary>
+        private bool UsingAnotherMappingFile()
+        {
+            if (string.IsNullOrEmpty(configuredMappingPath) || string.IsNullOrEmpty(mappingFilePath))
+                return false;
+
+            try
+            {
+                if (string.IsNullOrEmpty(Path.GetDirectoryName(configuredMappingPath)))
+                    return false;
+            }
+            catch
+            {
+                return false;
+            }
+
+            return string.Equals(configuredMappingPath, mappingFilePath,
+                                 StringComparison.OrdinalIgnoreCase) == false;
+        }
+
+        /// <summary>
+        /// Puts a file path in a read only box and says underneath whether it is there.
+        /// The modification date is part of the answer to "am I using the right file": two
+        /// databases of the same name on two machines are told apart by little else.
+        /// </summary>
+        /// <param name="box">The box holding the path</param>
+        /// <param name="status">The line underneath it</param>
+        /// <param name="path">The resolved path, empty when there is none</param>
+        /// <param name="missingMessage">What to say when nothing could be resolved at all</param>
+        private static void ShowPath(WpfTextBox box, TextBlock status, string path, string missingMessage)
+        {
+            box.Text = string.IsNullOrEmpty(path) ? "" : path;
+            box.ToolTip = string.IsNullOrEmpty(path) ? null : path;
+
+            if (string.IsNullOrEmpty(path))
+            {
+                SetStatus(status, missingMessage, true);
+                return;
+            }
+
+            if (File.Exists(path) == false)
+            {
+                //Offline share against deleted file: the first repairs itself, the second does not.
+                if (PathUtils.IsTemporarilyUnavailable(path) == true)
+                    SetStatus(status, "This location cannot be reached right now.", true);
+                else
+                    SetStatus(status, "This file does not exist.", true);
+
+                return;
+            }
+
+            string changed;
+
+            try
+            {
+                changed = File.GetLastWriteTime(path).ToString("dd MMM yyyy HH:mm", CultureInfo.CurrentCulture);
+            }
+            catch
+            {
+                changed = "";
+            }
+
+            SetStatus(status, changed == "" ? "Found." : "Found, last changed " + changed + ".", false);
+        }
+
+        /// <summary>
+        /// Adds a line to a status line, and colours the whole of it as something to act on.
+        /// </summary>
+        private static void AppendStatus(TextBlock status, string message)
+        {
+            string text = string.IsNullOrEmpty(status.Text)
+                ? message
+                : status.Text + Environment.NewLine + message;
+
+            SetStatus(status, text, true);
+        }
+
+        /// <summary>
+        /// Writes one of the file status lines. Anything the user should act on before importing
+        /// is coloured like the allowance warnings.
+        /// </summary>
+        private static void SetStatus(TextBlock status, string message, bool isProblem)
+        {
+            status.Text = message;
+            status.ToolTip = message;
+            status.Foreground = isProblem ? statusProblemBrush : statusOkBrush;
+            status.FontWeight = isProblem ? System.Windows.FontWeights.SemiBold : System.Windows.FontWeights.Normal;
+        }
+
+        /// <summary>
+        /// The material database file behind the template selected in cbb_Template.
+        /// Empty when the selection resolves to no file at all.
+        /// </summary>
+        private string ResolveSelectedTemplatePath()
+        {
+            //SelectedItem rather than Text, Text still holds the old value while SelectionChanged runs.
+            string templateName = cbb_Template.SelectedItem as string;
+
+            if (string.IsNullOrEmpty(templateName))
+                templateName = cbb_Template.Text == null ? "" : cbb_Template.Text.Trim();
+
+            if (string.IsNullOrEmpty(templateName))
+                return "";
+
+            string path = null;
+
+            if (templateCollection != null)
+                templateCollection.TryGetValue(templateName, out path);
+
+            //The combo box holds file names; fall back to the usual resolution for a full path.
+            if (string.IsNullOrEmpty(path) || File.Exists(path) == false)
+                path = PathUtils.getTemplateFilePath(templateName);
+
+            return string.IsNullOrEmpty(path) ? "" : path;
+        }
+
         private void btn_ReinforcementImport_Click(object sender, RoutedEventArgs e)
         {
             MaterialConcreteMapper rcMapper = new MaterialConcreteMapper(importSettings);
@@ -520,12 +882,10 @@ namespace CarboLifeUI.UI
         /// </summary>
         private void LoadActiveTemplate()
         {
-            //SelectedItem rather than Text, Text still holds the old value while SelectionChanged runs.
-            string templateName = cbb_Template.SelectedItem as string;
-            if (string.IsNullOrEmpty(templateName))
-                templateName = cbb_Template.Text;
-
-            activeTemplate = CarboDatabase.LoadTemplate(PathUtils.getTemplateFilePath(templateName));
+            //Through the template list, not getTemplateFilePath: that one only searches the local
+            //materials folder, so a database on a share or picked with btn_TemplatePath would be
+            //silently read from a same named local file, or from the default.
+            activeTemplate = CarboDatabase.LoadTemplate(ResolveSelectedTemplatePath());
         }
 
         /// <summary>
@@ -797,6 +1157,15 @@ namespace CarboLifeUI.UI
             if (uiReady == false)
                 return;
 
+            ReloadActiveTemplateIntoUI();
+        }
+
+        /// <summary>
+        /// Re-reads the selected template and refills everything that comes out of it, keeping
+        /// what the user has picked.
+        /// </summary>
+        private void ReloadActiveTemplateIntoUI()
+        {
             LoadActiveTemplate();
 
             //Keep what the user was working with, the new template may name things differently.
@@ -808,6 +1177,8 @@ namespace CarboLifeUI.UI
             }
 
             LoadAllowanceListsToUI();
+
+            ShowFilePaths();
         }
 
         private static string Preserve(WpfComboBox box, string fallback)

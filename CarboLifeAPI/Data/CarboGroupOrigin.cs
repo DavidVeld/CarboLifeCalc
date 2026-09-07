@@ -42,7 +42,12 @@ namespace CarboLifeAPI.Data
         /// <summary>Named by the saved mapping file, so it was decided on a previous run.</summary>
         MappingFile = 1,
         /// <summary>Chosen by the user in the material mapper.</summary>
-        UserAssigned = 2
+        UserAssigned = 2,
+        /// <summary>
+        /// Put there by one of the allowance generators, which take the name straight from the
+        /// import settings. Nothing was guessed, so there is nothing to review.
+        /// </summary>
+        Generated = 3
     }
 
     /// <summary>

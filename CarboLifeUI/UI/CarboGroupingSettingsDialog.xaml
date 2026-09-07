@@ -73,18 +73,13 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom">
-                    <Button Name="btn_ExportSettings" Width="80" Height="26" Margin="0,0,6,0"
-                            Style="{StaticResource ButtonStyle}" Click="btn_ExportSettings_Click">Export</Button>
-                    <Button Name="btn_ImportSettings" Width="80" Height="26"
-                            Style="{StaticResource ButtonStyle}" Click="btn_ImportSettings_Click">Import</Button>
+                    <Button Name="btn_ExportSettings" Width="90" Height="26" Margin="0,0,6,0"
+                            Style="{StaticResource ButtonStyle}" Click="btn_ExportSettings_Click">Export Settings</Button>
+                    <Button Name="btn_ImportSettings" Width="90" Height="26"
+                            Style="{StaticResource ButtonStyle}" Click="btn_ImportSettings_Click">Import Settings</Button>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
-                    <CheckBox Name="chk_UseMappedMaterialData" IsChecked="True"
-                              Style="{StaticResource baseStyleBold}"
-                              VerticalAlignment="Center" Margin="0,0,16,0">
-                        Use previously mapped materials
-                    </CheckBox>
                     <Button Name="btn_ImportClose" Width="100" Height="26" Margin="0,0,8,0"
                             Style="{StaticResource ButtonStyle}" Click="Btn_ImportClose_Click">Ok &amp; Import</Button>
                     <Button Name="btn_Cancel" Width="80" Height="26"
@@ -155,6 +150,78 @@
                                  Style="{StaticResource flatTextBox}"/>
                         <Label Content="%" VerticalAlignment="Center" Margin="6,0,0,0"/>
                     </StackPanel>
+
+                    <!-- ─── The two files this import reads and writes ───
+                         The template list above shows file names; which file a name resolves to,
+                         and which mapping file the previous material matches come from, are both
+                         decided elsewhere. Shown here so they can be checked before importing
+                         rather than found out afterwards, from the numbers. -->
+                    <Border Style="{StaticResource AllowanceBorder}">
+                        <StackPanel>
+                            <Label Style="{StaticResource baseStyleBold}" Padding="0" Margin="0,0,0,2"
+                                   Content="Files used for this import"/>
+                            <TextBlock Style="{StaticResource HintText}">
+                                Check both before importing. Change points at a file anywhere on disk;
+                                Reload re-reads the materials folder and the selected database.
+                            </TextBlock>
+
+                            <TextBlock Style="{StaticResource FieldLabel}">Material database</TextBlock>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Wrapping rather than one clipped line: the file name sits at the
+                                     end of a path, so a box that shows only the start of it answers
+                                     nothing. There is room for it in this column. -->
+                                <TextBox Name="txt_TemplateFilePath" Grid.Column="0" MinHeight="26"
+                                         Style="{StaticResource textboxReadOnlyStyle}"
+                                         IsReadOnly="True" TextWrapping="Wrap" Padding="2,4,2,4"/>
+                                <Button Name="btn_ReloadTemplates" Grid.Column="1" Margin="4,0,0,0"
+                                        Width="70" Height="26" VerticalAlignment="Top"
+                                        Style="{StaticResource ButtonStyle}"
+                                        Click="btn_ReloadTemplates_Click"
+                                        ToolTip="Re-read the materials folder and the selected database">Reload</Button>
+                                <Button Name="btn_TemplatePath" Grid.Column="2" Margin="4,0,0,0"
+                                        Width="78" Height="26" VerticalAlignment="Top"
+                                        Style="{StaticResource ButtonStyle}"
+                                        Click="btn_TemplatePath_Click"
+                                        ToolTip="Pick a material database from anywhere on disk">Change…</Button>
+                            </Grid>
+                            <TextBlock x:Name="txt_TemplateFileStatus" Style="{StaticResource HintText}"/>
+
+                            <TextBlock Style="{StaticResource FieldLabel}">Material mapping file</TextBlock>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Empty, standing in for the Reload button above it, so both
+                                         path boxes are the same width and both Change buttons line up.
+                                         There is nothing to reload for a single file. -->
+                                    <ColumnDefinition Width="74"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Name="txt_MappingFilePath" Grid.Column="0" MinHeight="26"
+                                         Style="{StaticResource textboxReadOnlyStyle}"
+                                         IsReadOnly="True" TextWrapping="Wrap" Padding="2,4,2,4"/>
+                                <Button Name="btn_MappingPath" Grid.Column="2" Margin="4,0,0,0"
+                                        Width="78" Height="26" VerticalAlignment="Top"
+                                        Style="{StaticResource ButtonStyle}"
+                                        Click="btn_MappingPath_Click"
+                                        ToolTip="Point this import at another mapping file">Change…</Button>
+                            </Grid>
+                            <TextBlock x:Name="txt_MappingFileStatus" Style="{StaticResource HintText}"/>
+
+                            <CheckBox Name="chk_UseMappedMaterialData" IsChecked="True"
+                                      Style="{StaticResource CheckSection}" Margin="0,4,0,0">
+                                Use previously mapped materials
+                            </CheckBox>
+                            <TextBlock Style="{StaticResource HintText}" Margin="0,2,0,0">
+                                Matches the imported materials against the mapping file above. New
+                                matches are written back to it.
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
 
                 </StackPanel>
             </Border>
@@ -242,6 +309,49 @@
                     <CheckBox Name="chk_ImportDemolished" Style="{StaticResource CheckSection}">
                         Include &amp; group demolished elements
                     </CheckBox>
+
+                    <Separator Margin="0,12,0,12"/>
+
+                    <!-- ─── Gross Internal Area ───
+                         The GIA every intensity figure is divided by. Leaving a name empty
+                         switches that one off and falls back to the floor measurement.
+                         Here rather than beside the uncertainty factor it belongs with: the
+                         left column already fills the window, this one has the room. -->
+                    <Label Style="{StaticResource baseStyleBold}" Padding="0" Margin="0,0,0,2"
+                           Content="Gross Internal Area"/>
+                    <TextBlock Style="{StaticResource HintText}">
+                        Project Information parameters holding the GIA. Filled in they are what the import
+                        uses, otherwise the floors in the view are measured. Either way the result is
+                        written back to them when the calculator closes.
+                    </TextBlock>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="8"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource FieldLabel}">Total GIA parameter</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource FieldLabel}">New GIA parameter</TextBlock>
+
+                        <TextBox Name="txt_GIAParamName" Grid.Row="1" Grid.Column="0" Height="26"
+                                 Style="{StaticResource flatTextBox}"
+                                 ToolTip="Project Information parameter holding the total GIA. Leave empty to always measure the floors."/>
+                        <TextBox Name="txt_GIANewParamName" Grid.Row="1" Grid.Column="2" Height="26"
+                                 Style="{StaticResource flatTextBox}"
+                                 ToolTip="Project Information parameter holding the new build GIA. Leave empty to always measure the floors."/>
+                    </Grid>
+
+                    <TextBlock Style="{StaticResource FieldLabel}" Margin="0,10,0,2">Determination method of the last import</TextBlock>
+                    <TextBox Name="txt_GIAMethod" Height="26"
+                             Style="{StaticResource textboxReadOnlyStyle}"
+                             IsReadOnly="True" IsEnabled="False"
+                             ToolTip="Recorded by the import, not set here. Use the parameter check tool to add the default parameters to a model that has none."/>
 
                 </StackPanel>
             </Border>

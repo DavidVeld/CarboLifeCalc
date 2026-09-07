@@ -76,7 +76,9 @@ namespace CarboLifeUI.UI
                         cbb_BuildingType.Items.Add(name);
                     }
 
-                    cbb_BuildingType.SelectedItem = CarboLifeProject.Category;
+                    //Selecting Category straight left the box blank whenever the project carried a
+                    //type this list does not offer, "Structure" from an older default included.
+                    cbb_BuildingType.SelectedItem = CarboLifeProject.ResolveBuildingType(typelist);
 
                 }
 

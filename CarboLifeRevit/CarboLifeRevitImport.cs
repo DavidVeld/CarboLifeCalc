@@ -31,6 +31,11 @@ namespace CarboLifeRevit
             string MyAssemblyDir = Path.GetDirectoryName(MyAssemblyPath);
             bool updateFile = false;
 
+            //How the GIA of the file being updated was arrived at. The collection below records
+            //its own answer over the top of it, which is only the right one for a new project:
+            //an update keeps the GIA that is already in the file, so it keeps its record too.
+            string storedGIAMethod = "";
+
             CarboProject projectToUpdate = new CarboProject();
 
             if (File.Exists(updatePath))
@@ -61,6 +66,9 @@ namespace CarboLifeRevit
                         }
 
                         settings = projectToUpdate.RevitImportSettings;
+
+                        if (settings != null)
+                            storedGIAMethod = settings.GIADeterminationMethod;
                     }
                     catch (Exception ex)
                     {
@@ -124,6 +132,18 @@ namespace CarboLifeRevit
                     {
                         projectToUpdate.Audit();
                         projectToUpdate.UpdateProject(myProject);
+
+                        //UpdateProject leaves the stored GIA alone, so the parameters are applied
+                        //here too. A GIA typed into the model still wins over the one saved in the
+                        //file, which is the whole point of keeping it in the model.
+                        if (settings != null)
+                        {
+                            settings.GIADeterminationMethod =
+                                ApplyGIAParameters(doc, projectToUpdate, settings)
+                                    ? CarboGroupSettings.GIAFromUserInput
+                                    : storedGIAMethod;
+                        }
+
                         projectToUpdate.CalculateProject();
                         projectToOpen = projectToUpdate;
                     }
@@ -135,6 +155,12 @@ namespace CarboLifeRevit
                     AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
 
                     carboCalcProgram.ShowDialog();
+
+                    //The GIA may have been corrected in the project settings while the window was
+                    //open. Put it back into the model so the next run starts from it rather than
+                    //measuring the floors again. Quiet on purpose, there is nothing to decide.
+                    WriteGIAParameters(doc, projectToOpen);
+                    SaveGIAMethodToSettings(projectToOpen.RevitImportSettings);
                 }
                 catch (Exception ex)
                 {
@@ -313,6 +339,19 @@ namespace CarboLifeRevit
             {
                 myProject.AreaNew = m2Area; //to sqr m2
             }
+
+            //A GIA the user has typed into the project information beats the floors measured
+            //above, which only ever sees what the active view happens to show. Recorded either
+            //way so the number can be traced back to where it came from.
+            bool giaFromParameters = ApplyGIAParameters(doc, myProject, settings);
+
+            if (settings != null)
+            {
+                settings.GIADeterminationMethod = giaFromParameters
+                    ? CarboGroupSettings.GIAFromUserInput
+                    : CarboGroupSettings.GIAFromRevitEstimate;
+            }
+
             //Apply settings to new projectfile
             myProject.RevitImportSettings = settings;
 
@@ -479,5 +518,200 @@ namespace CarboLifeRevit
 
             return result;
         }
+
+        #region GIA project information parameters
+
+        /// <summary>
+        /// Revit keeps areas in square feet whatever the project units say, the calculator works
+        /// in square metres.
+        /// </summary>
+        private const double squareMetresPerSquareFoot = 0.3048 * 0.3048;
+
+        /// <summary>
+        /// Within this two GIAs in square metres are the same number. A hundredth of a square
+        /// metre is well under anything worth dividing a carbon figure by, and it keeps the write
+        /// back from firing on rounding noise.
+        /// </summary>
+        private const double areaTolerance = 0.01;
+
+        /// <summary>
+        /// A CarboProject starts life with an area of 1, which the import replaces once it has a
+        /// real one. At or below that there is no GIA: nothing is read from it and, more to the
+        /// point, nothing is written back to the model over the top of a real number.
+        /// </summary>
+        private const double unsetArea = 1;
+
+        /// <summary>
+        /// Copies the GIA out of the Project Information parameters named in the settings, where
+        /// those parameters exist and hold a value. Anything not filled in is left as it was, so
+        /// the floor measurement or the value already in the file stands.
+        /// </summary>
+        /// <returns>True when at least one GIA came from a parameter.</returns>
+        private static bool ApplyGIAParameters(Document doc, CarboProject project, CarboGroupSettings settings)
+        {
+            if (doc == null || project == null || settings == null)
+                return false;
+
+            bool applied = false;
+
+            try
+            {
+                Element projectInfo = doc.ProjectInformation;
+
+                if (projectInfo == null)
+                    return false;
+
+                double total = ReadAreaParameter(projectInfo, settings.GIAParameterName);
+                double areaNew = ReadAreaParameter(projectInfo, settings.GIANewParameterName);
+
+                if (total > unsetArea)
+                {
+                    project.Area = total;
+                    applied = true;
+                }
+
+                if (areaNew > unsetArea)
+                {
+                    project.AreaNew = areaNew;
+                    applied = true;
+                }
+            }
+            catch (Exception)
+            {
+                //A model without the parameters is the normal case, not a problem to report.
+                return applied;
+            }
+
+            return applied;
+        }
+
+        /// <summary>
+        /// Writes the project's GIA back into the Project Information parameters named in its
+        /// import settings, so the next run reads it instead of measuring the floors again.
+        /// Silent throughout: a model without the parameters, or one that cannot be written to,
+        /// is left alone.
+        /// </summary>
+        private static void WriteGIAParameters(Document doc, CarboProject project)
+        {
+            if (doc == null || project == null || doc.IsReadOnly == true)
+                return;
+
+            CarboGroupSettings settings = project.RevitImportSettings;
+
+            if (settings == null)
+                return;
+
+            try
+            {
+                Element projectInfo = doc.ProjectInformation;
+
+                if (projectInfo == null)
+                    return;
+
+                Parameter total = GetWritableAreaParameter(projectInfo, settings.GIAParameterName);
+                Parameter areaNew = GetWritableAreaParameter(projectInfo, settings.GIANewParameterName);
+
+                bool writeTotal = NeedsUpdate(total, project.Area);
+                bool writeNew = NeedsUpdate(areaNew, project.AreaNew);
+
+                if (writeTotal == false && writeNew == false)
+                    return;
+
+                using (Transaction t = new Transaction(doc, "Update CarboLife GIA"))
+                {
+                    t.Start();
+
+                    if (writeTotal == true)
+                        total.Set(project.Area / squareMetresPerSquareFoot);
+
+                    if (writeNew == true)
+                        areaNew.Set(project.AreaNew / squareMetresPerSquareFoot);
+
+                    t.Commit();
+                }
+            }
+            catch (Exception)
+            {
+                //Nothing here is worth interrupting the user for, the GIA is in the project file
+                //either way.
+            }
+        }
+
+        /// <summary>
+        /// Keeps the record of how this import found its GIA in the application settings, where
+        /// the import settings dialog reads it back. Only that one field: everything else in the
+        /// file was written by the dialog itself when it closed, before any of this ran.
+        /// </summary>
+        private static void SaveGIAMethodToSettings(CarboGroupSettings settings)
+        {
+            if (settings == null || string.IsNullOrEmpty(settings.GIADeterminationMethod))
+                return;
+
+            try
+            {
+                CarboSettings stored = new CarboSettings().Load();
+
+                if (stored == null || stored.defaultCarboGroupSettings == null)
+                    return;
+
+                if (stored.defaultCarboGroupSettings.GIADeterminationMethod == settings.GIADeterminationMethod)
+                    return;
+
+                stored.defaultCarboGroupSettings.GIADeterminationMethod = settings.GIADeterminationMethod;
+                stored.Save();
+            }
+            catch (Exception)
+            {
+                //Nothing depends on this beyond a label in the settings dialog.
+            }
+        }
+
+        /// <summary>
+        /// Reads an area parameter off the project information in square metres.
+        /// Returns 0 when the parameter is missing, empty, or not an area at all.
+        /// </summary>
+        private static double ReadAreaParameter(Element projectInfo, string parameterName)
+        {
+            if (string.IsNullOrEmpty(parameterName))
+                return 0;
+
+            Parameter parameter = projectInfo.LookupParameter(parameterName.Trim());
+
+            if (parameter == null || parameter.HasValue == false || parameter.StorageType != StorageType.Double)
+                return 0;
+
+            return parameter.AsDouble() * squareMetresPerSquareFoot;
+        }
+
+        /// <summary>
+        /// The named area parameter when it exists and can be written to, otherwise null.
+        /// </summary>
+        private static Parameter GetWritableAreaParameter(Element projectInfo, string parameterName)
+        {
+            if (string.IsNullOrEmpty(parameterName))
+                return null;
+
+            Parameter parameter = projectInfo.LookupParameter(parameterName.Trim());
+
+            if (parameter == null || parameter.IsReadOnly == true || parameter.StorageType != StorageType.Double)
+                return null;
+
+            return parameter;
+        }
+
+        /// <summary>
+        /// True when the parameter is there to be written and does not already hold this area.
+        /// </summary>
+        private static bool NeedsUpdate(Parameter parameter, double squareMetres)
+        {
+            if (parameter == null || squareMetres <= unsetArea + areaTolerance)
+                return false;
+
+            double current = parameter.HasValue ? parameter.AsDouble() * squareMetresPerSquareFoot : 0;
+
+            return Math.Abs(current - squareMetres) > areaTolerance;
+        }
+
+        #endregion
     }
 }

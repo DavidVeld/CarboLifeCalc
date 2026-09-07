@@ -74,14 +74,14 @@ namespace CarboLifeRevit
             /// Parameters CheckCarbonParams
             PushButton pB_CarboCalcParams = CarboCalcPanel.AddItem(new PushButtonData("Carbo Life Calc Parameters", "ParamCheck", MyAssemblyPath, "CarboLifeRevit.CheckCarbonParams")) as PushButton;
             //LImage
-            Uri img_CarboCalcParams = new Uri(MyAssemblyDir + @"\img\ico_CarboLifeSettings32.png");
-            BitmapImage limg_CarboCalcParams = new BitmapImage(img_CarboCalc);
+            Uri img_CarboCalcParams = new Uri(MyAssemblyDir + @"\img\ico_CarboLifeParams32.png");
+            BitmapImage limg_CarboCalcParams = new BitmapImage(img_CarboCalcParams);
             //SImahe
-            Uri imgsmll_CarboCalcParams = new Uri(MyAssemblyDir + @"\img\ico_CarboLifeSettings16.png");
-            BitmapImage smllimg_CarboCalcParams = new BitmapImage(imgsmll_CarboCalc);
+            Uri imgsmll_CarboCalcParams = new Uri(MyAssemblyDir + @"\img\ico_CarboLifeParams16.png");
+            BitmapImage smllimg_CarboCalcParams = new BitmapImage(imgsmll_CarboCalcParams);
 
-            pB_CarboCalcParams.LargeImage = limg_CarboCalc;
-            pB_CarboCalcParams.Image = smllimg_CarboCalc;
+            pB_CarboCalcParams.LargeImage = limg_CarboCalcParams;
+            pB_CarboCalcParams.Image = smllimg_CarboCalcParams;
             pB_CarboCalcParams.SetContextualHelp(contextualHelp);
             pB_CarboCalcParams.ToolTip = "Check and Import All required Parameters for CarboLife To work.";
 

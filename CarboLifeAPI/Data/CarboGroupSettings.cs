@@ -19,6 +19,19 @@ namespace CarboLifeAPI.Data
 
     public class CarboGroupSettings
     {
+        /// <summary>
+        /// The two names CheckCarbonParams binds to Project Information, and what the import
+        /// looks for when no other name has been given.
+        /// </summary>
+        public const string DefaultGIAParameterName = "CLC_GIA_Area";
+        public const string DefaultGIANewParameterName = "CLC_GIA_AreaNew";
+
+        /// <summary>The GIA was measured off the floors in the view.</summary>
+        public const string GIAFromRevitEstimate = "Revit estimate";
+
+        /// <summary>The GIA was read from the project information parameters below.</summary>
+        public const string GIAFromUserInput = "User Input";
+
         public string CategoryName { get; set; }
         public string CategoryParamName { get; set; }
 
@@ -79,6 +92,27 @@ namespace CarboLifeAPI.Data
 
         public double UncertaintyFactor { get; set; }
 
+        //GIA
+        /// <summary>
+        /// The Project Information parameter holding the total GIA of the project, in the units
+        /// of the Revit model. Filled in, it is what the import uses; empty, or absent from the
+        /// model, the GIA is measured off the floors instead.
+        /// </summary>
+        public string GIAParameterName { get; set; }
+
+        /// <summary>
+        /// The Project Information parameter holding the new-build GIA of the project.
+        /// Read the same way as <see cref="GIAParameterName"/>.
+        /// </summary>
+        public string GIANewParameterName { get; set; }
+
+        /// <summary>
+        /// How the GIA of the last import was arrived at, either <see cref="GIAFromRevitEstimate"/>
+        /// or <see cref="GIAFromUserInput"/>. A record rather than a choice: which one applies is
+        /// decided by whether the parameters above hold a value.
+        /// </summary>
+        public string GIADeterminationMethod { get; set; }
+
         public CarboGroupSettings()
         {
             CategoryName = "(Revit) Category";
@@ -125,6 +159,10 @@ namespace CarboLifeAPI.Data
             UseImportedMap = true;
 
             UncertaintyFactor = 0.10;
+
+            GIAParameterName = DefaultGIAParameterName;
+            GIANewParameterName = DefaultGIANewParameterName;
+            GIADeterminationMethod = GIAFromRevitEstimate;
 
             rcQuantityMap = new List<CarboNumProperty>();
             

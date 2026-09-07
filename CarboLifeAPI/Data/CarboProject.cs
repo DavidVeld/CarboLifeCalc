@@ -31,8 +31,25 @@ namespace CarboLifeAPI.Data
         public CarboEnergyProperties energyProperties { get; set; }
         public string Name { get; set; }
         public string Number { get; set; }
+
+        /// <summary>
+        /// The building type, which decides the benchmark the overview graph rates the project
+        /// against. It has to be one of the BuildingType names in data\Letidata.csv: the combo box
+        /// is filled from that file and the benchmark lookup compares the text exactly.
+        /// See DefaultBuildingType and ResolveBuildingType.
+        /// </summary>
         public string Category { get; set; }
         public string Description { get; set; }
+
+        /// <summary>
+        /// The building type a new project starts on.
+        ///
+        /// It must be spelled the way data\Letidata.csv spells it, odd capital and all. The old
+        /// default, "Structure", is not a row in that file, so the combo box had nothing to select
+        /// and came up blank, and both benchmark lookups returned null - the SCORS graph drew its
+        /// bands with no indicator arrow on them until someone picked a type by hand.
+        /// </summary>
+        public const string DefaultBuildingType = "IstructE Structure";
         public double SocialCost { get; set; }
         //Calculated Values
         public double EE { get; set; }
@@ -218,7 +235,7 @@ namespace CarboLifeAPI.Data
 
             Name = "New Project";
             Number = "000000";
-            Category = "Structure";
+            Category = DefaultBuildingType;
             Description = "New Project";
             valueUnit = string.IsNullOrEmpty(settings.Currency) ? "£" : settings.Currency;
             Area = 1;
@@ -231,7 +248,11 @@ namespace CarboLifeAPI.Data
             C1Factor = 3.40; // kg CO₂e per m2
 
             //A Global
-            A0Global = 1;
+            //Held in kg, like every other reader of A0Global: the project settings box divides by
+            //1000 to show tonnes and multiplies by 1000 on the way back in. The old seed of 1 was
+            //one kilogram, which came up as "0.001" in a box labelled tCO₂e and read as a number
+            //somebody had chosen rather than a placeholder.
+            A0Global = 10000; // 10 tCO₂e
 
             //Recomputed by CalculateProject from AreaNew and A5AreaFactor, so this is only a seed.
             A5Global = 0;
@@ -259,6 +280,54 @@ namespace CarboLifeAPI.Data
             calculateSubStructure = true;
 
             UncertFact = RevitImportSettings.UncertaintyFactor;
+        }
+
+        /// <summary>
+        /// Settles Category on one of the building types the benchmark data actually offers, and
+        /// returns it, so the caller can select it in a combo box knowing it is there.
+        ///
+        /// A project saved before DefaultBuildingType was a real benchmark name carries
+        /// "Structure", and a project can also carry a type since removed from Letidata.csv.
+        /// Either way it selected nothing in the combo box and matched no benchmark, and the
+        /// value is written into the CSV and JSON exports as well, so it is repaired here rather
+        /// than papered over in the interface.
+        /// </summary>
+        /// <param name="availableTypes">The building types the data file offers.</param>
+        /// <returns>The building type now on the project.</returns>
+        public string ResolveBuildingType(IEnumerable<string> availableTypes)
+        {
+            List<string> types = new List<string>();
+
+            if (availableTypes != null)
+            {
+                foreach (string type in availableTypes)
+                {
+                    if (string.IsNullOrEmpty(type) == false)
+                        types.Add(type);
+                }
+            }
+
+            //Nothing to check against: Letidata.csv is missing or empty, which the list loader
+            //already reports. Replacing the project's own value on top of that would only lose it.
+            if (types.Count == 0)
+                return Category;
+
+            foreach (string type in types)
+            {
+                if (string.Equals(type, Category, StringComparison.OrdinalIgnoreCase) == true)
+                {
+                    //Adopt the file's spelling: the benchmark lookup compares the text exactly, so
+                    //a project written with different capitals would otherwise still find nothing.
+                    Category = type;
+                    return Category;
+                }
+            }
+
+            //Not a type this data knows. Prefer the default, and fall back to the first row only
+            //if a rewritten data file no longer carries it.
+            Category = types.Contains(DefaultBuildingType) == true ? DefaultBuildingType : types[0];
+
+            return Category;
         }
 
 
@@ -2293,6 +2362,13 @@ namespace CarboLifeAPI.Data
             result.Origin = CarboGroupOrigin.Reinforcement;
             result.VolumeLink = grp.Id.ToString();
 
+            //The material above came out of the import settings, so this group was never a guess.
+            //Copying the parent brought the parent's match score and review note with it, and
+            //those describe the match made against the parent's concrete material name: left in
+            //place every reinforcement group turned up in the review list, quoting a note about
+            //the concrete while showing the rebar material.
+            result.SetMaterialProvenance(CarboMaterialSource.Generated, 1, "");
+
             //if there is an override to the values check this now?
             CarboNumProperty rcDensityProperty = null;
 
@@ -2545,6 +2621,11 @@ namespace CarboLifeAPI.Data
             result.Origin = origin;
             result.VolumeLink = grp.Id.ToString();
 
+            //Same as getRCGroup: the connection material came out of the import settings, and the
+            //match score and review note copied off the parent belong to the parent's steel or
+            //timber material, not to the plate or fixing material now on this group.
+            result.SetMaterialProvenance(CarboMaterialSource.Generated, 1, "");
+
             //The allowance is a fraction of the volume of the group it belongs to.
             //This builds an expression that gets parsed back by StringToFormula, so it must be invariant.
             string connectionCorrection = "*(" + (percentage / 100).ToString(CultureInfo.InvariantCulture) + ")";
@@ -2651,7 +2732,17 @@ namespace CarboLifeAPI.Data
 
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine(flagged.Count + " of " + groupList.Count +
+            //Counted against the groups the matcher was actually asked about. The generated
+            //allowances take their material from the import settings and can never be in the
+            //flagged list, so counting them in the total only made the fraction look better.
+            int matched = 0;
+            foreach (CarboGroup grp in groupList)
+            {
+                if (grp != null && grp.IsAutoGenerated() == false)
+                    matched++;
+            }
+
+            sb.AppendLine(flagged.Count + " of " + matched +
                           " groups were given a material the matcher is not confident about.");
             sb.AppendLine("Their carbon is included in the totals. Check them before issuing anything.");
             sb.AppendLine();

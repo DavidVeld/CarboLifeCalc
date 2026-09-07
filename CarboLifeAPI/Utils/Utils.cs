@@ -816,20 +816,28 @@ namespace CarboLifeAPI
         /// Opends a file dialog to select a Carbo Life Material Library file (.clcx)
         /// </summary>
         /// <returns>The filepath if valid or "" if not</returns>
-        public static string OpenCarboMaterialLibrary(string pathForViewing = "")
+        /// <param name="pathForViewing">The folder the dialog opens in</param>
+        /// <param name="includeCsv">
+        /// Offer .csv material tables as well. The template lists build from both extensions and
+        /// CarboDatabase.LoadTemplate reads both, so a caller that lists a .csv database should
+        /// let the user pick one. See IsMaterialLibraryFile below.
+        /// </param>
+        public static string OpenCarboMaterialLibrary(string pathForViewing = "", bool includeCsv = false)
         {
             string path = "";
             try
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Carbo Life Material File (*.cxml)|*.cxml";
+                openFileDialog.Filter = includeCsv
+                    ? "Carbo Life Material File (*.cxml;*.csv)|*.cxml;*.csv"
+                    : "Carbo Life Material File (*.cxml)|*.cxml";
 
                 if (Directory.Exists(pathForViewing))
                     openFileDialog.InitialDirectory = pathForViewing;
 
                 var ok = openFileDialog.ShowDialog();
 
-                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName) && openFileDialog.FileName.EndsWith("cxml"))
+                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName) && IsMaterialLibraryFile(openFileDialog.FileName, includeCsv))
                 {
                     if (DataExportUtils.IsFileLocked(openFileDialog.FileName) == false)
                     {
@@ -850,6 +858,18 @@ namespace CarboLifeAPI
             }
 
             return "";
+        }
+
+        /// <summary>
+        /// True when a picked file is one the material databases are read from.
+        /// Case insensitive: a .CXML file off a share was silently rejected before.
+        /// </summary>
+        private static bool IsMaterialLibraryFile(string fileName, bool includeCsv)
+        {
+            if (fileName.EndsWith("cxml", StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            return includeCsv && fileName.EndsWith("csv", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

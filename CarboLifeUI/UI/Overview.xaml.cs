@@ -109,7 +109,11 @@ namespace CarboLifeUI.UI
 
                 }
                 cbb_GraphType.SelectedItem = "Material";
-                cbb_BuildingType.SelectedItem = CarboLifeProject.Category;
+                //Selecting Category straight left the box blank whenever the project carried a type
+                //this list does not offer, "Structure" from an older default included, and the
+                //graph then drew its bands with no indicator arrow on them.
+                cbb_BuildingType.SelectedItem =
+                    CarboLifeProject.ResolveBuildingType(cbb_BuildingType.Items.OfType<string>());
                 txt_Area.Text = CarboLifeProject.Area.ToString();
                 txt_AreaNew.Text = CarboLifeProject.AreaNew.ToString();
 
