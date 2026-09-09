@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -100,6 +101,13 @@ namespace CarboLifeAPI
             return path;
 
         }
+        /// <summary>
+        /// True when a file cannot be opened for writing right now, either because something else
+        /// holds it or because this user is not allowed to write it.
+        ///
+        /// This asks for ReadWrite access, so it answers "can I save over this", not "can I read
+        /// this". A caller that only intends to read should use <see cref="IsFileReadable"/>.
+        /// </summary>
         public static bool IsFileLocked(string file)
         {
             try
@@ -114,9 +122,47 @@ namespace CarboLifeAPI
                 //The file is open
                 return true;
             }
+            catch (Exception)
+            {
+                //A read-only file, or one on a share the user may read but not write, raises
+                //UnauthorizedAccessException rather than IOException. That escaped this method
+                //entirely and was caught by whatever called it, which turned a plain permission
+                //problem into whatever generic message that caller happened to carry. Unwritable
+                //and locked are the same answer to everyone who asks this - none of them can
+                //proceed with the write - so answer it here rather than throwing past them.
+                //Mirrors the copy in CarboCircle. See also IsFileReadable below.
+                return true;
+            }
 
             //All is ok
             return false;
+        }
+
+        /// <summary>
+        /// True when a file can actually be read right now.
+        ///
+        /// The pickers used to gate on <see cref="IsFileLocked"/>, which asks for write access.
+        /// A company material database or mapping file on a share the user may read but not
+        /// write failed that test, and the user was told their file could not be found or was of
+        /// the wrong format. Reading a database does not need write access, so this is what the
+        /// pickers ask instead. FileShare.ReadWrite because a colleague having the same shared
+        /// file open is no reason we cannot read it.
+        /// </summary>
+        public static bool IsFileReadable(string file)
+        {
+            try
+            {
+                using (FileStream stream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    stream.Close();
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
         }
         /*
         [Obsolete("Not Used")]
@@ -761,32 +807,36 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                     double totalA1_C_Seq = totalA1_A5 + carboLifeProject.C1Global + (tC / 1000) + sumSeq + sumMix;
 
                     // Build Row
-                    string row = $"{CVSFormat(carboLifeProject.Name)}," +
-                                 $"{carboLifeProject.Number}," +
-                                 $"{CVSFormat(carboLifeProject.Category)}," +
-                                 $"{CVSFormat(carboLifeProject.Description)}," +
-                                 $"{carboLifeProject.SocialCost}," +
-                                 $"{carboLifeProject.Area}," +
-                                 $"{carboLifeProject.AreaNew}," +
-                                 $"{Math.Round(carboLifeProject.A0GlobalUncert/1000,3)}," +
-                                 $"{carboLifeProject.A5Global}," +
-                                 $"{carboLifeProject.b675Global}," +
-                                 $"{carboLifeProject.C1Global}," +
-                                 $"{tEC}," +
-                                 $"{Math.Round(sumA1A3, 3)}," +
-                                 $"{Math.Round(sumA4, 3)}," +
-                                 $"{Math.Round(sumA5, 3)}," +
-                                 $"{Math.Round(tB / 1000, 3)}," +
-                                 $"{Math.Round(tC / 1000, 3)}," +
-                                 $"{Math.Round(tD / 1000, 3)}," +
-                                 $"{Math.Round(sumMix, 3)}," +
-                                 $"{Math.Round(sumSeq, 3)}," +
-                                 $"{Math.Round(totalA1_A5, 3)}," +      // New Col 1
-                                 $"{Math.Round(totalA1_C_Seq, 3)}," +   // New Col 2
-                                 $"{carboLifeProject.valueUnit}," +
-                                 $"{carboLifeProject.designLife}," +
-                                 $"{CVSFormat(carboLifeProject.getGeneralText())}," +
-                                 $"{Math.Round((carboLifeProject.UncertFact), 3)}";
+                    //String interpolation formats in the current culture, so these numbers used
+                    //to arrive with a comma for a decimal point on half of Europe's machines.
+                    CsvLine row = new CsvLine();
+
+                    row.Add(carboLifeProject.Name);
+                    row.Add(carboLifeProject.Number);
+                    row.Add(carboLifeProject.Category);
+                    row.Add(carboLifeProject.Description);
+                    row.Add(carboLifeProject.SocialCost);
+                    row.Add(carboLifeProject.Area);
+                    row.Add(carboLifeProject.AreaNew);
+                    row.Add(carboLifeProject.A0GlobalUncert / 1000, 3);
+                    row.Add(carboLifeProject.A5Global);
+                    row.Add(carboLifeProject.b675Global);
+                    row.Add(carboLifeProject.C1Global);
+                    row.Add(tEC);
+                    row.Add(sumA1A3, 3);
+                    row.Add(sumA4, 3);
+                    row.Add(sumA5, 3);
+                    row.Add(tB / 1000, 3);
+                    row.Add(tC / 1000, 3);
+                    row.Add(tD / 1000, 3);
+                    row.Add(sumMix, 3);
+                    row.Add(sumSeq, 3);
+                    row.Add(totalA1_A5, 3);         // New Col 1
+                    row.Add(totalA1_C_Seq, 3);      // New Col 2
+                    row.Add(carboLifeProject.valueUnit);
+                    row.Add(carboLifeProject.designLife);
+                    row.Add(carboLifeProject.getGeneralText());
+                    row.Add(carboLifeProject.UncertFact, 3);
 
                     // Attach Category Columns
                     List<CarboElement> pElements = carboLifeProject.getElementsFromGroups().ToList();
@@ -796,10 +846,10 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                     {
                         var match = catPoints?.FirstOrDefault(p => p.Name == catName);
                         double val = (match != null) ? match.Value : 0.0;
-                        row += "," + Math.Round(val, 3);
+                        row.Add(val, 3);
                     }
 
-                    csvBuilder.AppendLine(row);
+                    csvBuilder.Append(row.ToLine());
                 }
                 catch { /* Skip */ }
             }
@@ -814,65 +864,59 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
                 return;
 
-            string fileString = "";
-
-
+            StringBuilder fileString = new StringBuilder();
 
             //Create Headers;
-            fileString =
-                "Name" + "," + //0
-                "Number" + "," + //1
-                "Category" + "," + //2
-                "Description" + "," + //3
-                "SocialCost" + "," + //4
-                "Area" + "," + //5
-                "AreaNew" + "," + //6
+            fileString.Append(new CsvLine().AddRange(
+                "Name",         //0
+                "Number",       //1
+                "Category",     //2
+                "Description",  //3
+                "SocialCost",   //4
+                "Area",         //5
+                "AreaNew",      //6
 
-                "A0Global" + "," + //7
-                "A5Global" + "," + //8
-                "b675Global" + "," + //9
-                "C1Global" + "," + //10
+                "A0Global",     //7
+                "A5Global",     //8
+                "b675Global",   //9
+                "C1Global",     //10
 
-                "valueUnit" + "," + //11
-                "designLife" + "," + //12
-                "story" + "," + //13
+                "valueUnit",    //11
+                "designLife",   //12
+                "story"         //13
+                ).ToLine());
 
-                Environment.NewLine;
             //Advanced
+            try
+            {
+                CsvLine row = new CsvLine();
 
-                try
-                {
-                    string resultString = "";
+                //Name, Number, Category and Description are free text and used to go in raw.
+                //A project called "Job 123, Phase 2" shifted every column to its right.
+                row.Add(carboLifeProject.Name);                     //0
+                row.Add(carboLifeProject.Number);                   //1
+                row.Add(carboLifeProject.Category);                 //2
+                row.Add(carboLifeProject.Description);              //3
+                row.Add(carboLifeProject.SocialCost);               //4
+                row.Add(carboLifeProject.Area);                     //5
+                row.Add(carboLifeProject.AreaNew);                  //6
+                row.Add(carboLifeProject.A0GlobalUncert);           //7
+                row.Add(carboLifeProject.A5Global);                 //8
+                row.Add(carboLifeProject.b675Global);               //9
+                row.Add(carboLifeProject.C1Global);                 //10
 
-                    resultString += carboLifeProject.Name + ","; //1
-                    resultString += carboLifeProject.Number + ","; //2
-                    resultString += carboLifeProject.Category + ","; //3
-                    resultString += carboLifeProject.Description + ","; //3
-                    resultString += carboLifeProject.SocialCost + ","; //4
-                    resultString += carboLifeProject.Area + ","; //5
-                    resultString += carboLifeProject.AreaNew + ","; //6
-                    resultString += carboLifeProject.A0GlobalUncert + ","; //7
-                    resultString += carboLifeProject.A5Global + ","; //8
-                    resultString += carboLifeProject.b675Global + ","; //9
-                    resultString += carboLifeProject.C1Global + ","; //10
+                row.Add(carboLifeProject.valueUnit);                //11
+                row.Add(carboLifeProject.designLife);               //12
+                row.Add(carboLifeProject.getGeneralText());         //13
 
-                    resultString += carboLifeProject.valueUnit + ","; //11
-                    resultString += carboLifeProject.designLife + ","; //12
+                fileString.Append(row.ToLine());
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine("An error occurred while writing the file: " + ex.Message);
+            }
 
-                resultString += CVSFormat(carboLifeProject.getGeneralText()) + ","; //13
-
-
-                resultString += Environment.NewLine;
-
-                    fileString += resultString;
-                }
-                catch (IOException ex)
-                {
-                    Console.WriteLine("An error occurred while writing the file: " + ex.Message);
-                }
-            
-
-            WriteCVSFile(fileString, exportPath);
+            WriteCVSFile(fileString.ToString(), exportPath);
 
         }
         private static void CreateProjectTotalsCVSFile(List<CarboProject> projectListToCompareTo, string exportPath, CarboProject baseProject)
@@ -880,38 +924,38 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
                 return;
 
-            string fileString = "";
+            StringBuilder fileString = new StringBuilder();
 
             //Create Headers;
-            fileString =
-                "Name" + "," + //0
-                "Number" + "," + //1
-                "Category" + "," + //2
-                "Description" + "," + //3
-                "SocialCost" + "," + //4
-                "Area" + "," + //5
-                "AreaNew" + "," + //6
+            fileString.Append(new CsvLine().AddRange(
+                "Name",         //0
+                "Number",       //1
+                "Category",     //2
+                "Description",  //3
+                "SocialCost",   //4
+                "Area",         //5
+                "AreaNew",      //6
 
-                "A0Global" + "," + //7
-                "A5Global" + "," + //8
-                "b675Global" + "," + //9
-                "C1Global" + "," + //10
+                "A0Global",     //7
+                "A5Global",     //8
+                "b675Global",   //9
+                "C1Global",     //10
 
-                "TotalEC" + "," + //11
-                "Total_A1A3" + "," + //12
-                "Total_A4" + "," + //13
-                "Total_A5" + "," + //14
-                "Total_B" + "," + //15
-                "Total_C1C4" + "," + //16
-                "Total_D" + "," + //17
-                "Total_Mix" + "," + //18
-                "Total_Seq" + "," + //19
+                "TotalEC",      //11
+                "Total_A1A3",   //12
+                "Total_A4",     //13
+                "Total_A5",     //14
+                "Total_B",      //15
+                "Total_C1C4",   //16
+                "Total_D",      //17
+                "Total_Mix",    //18
+                "Total_Seq",    //19
 
-                "valueUnit" + "," + //20
-                "designLife" + "," + //21
-                "story" + "," + //22
+                "valueUnit",    //20
+                "designLife",   //21
+                "story"         //22
+                ).ToLine());
 
-                Environment.NewLine;
             //Advanced
 
 
@@ -965,46 +1009,44 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                     }
 
 
-                    string resultString = "";
+                    CsvLine row = new CsvLine();
 
-                    resultString += CVSFormat(carboLifeProject.Name) + ","; //1
-                    resultString += carboLifeProject.Number + ","; //2
-                    resultString += CVSFormat(carboLifeProject.Category) + ","; //3
-                    resultString += CVSFormat(carboLifeProject.Description) + ","; //3
-                    resultString += carboLifeProject.SocialCost + ","; //4
-                    resultString += carboLifeProject.Area + ","; //5
-                    resultString += carboLifeProject.AreaNew + ","; //6
+                    row.Add(carboLifeProject.Name);             //0
+                    row.Add(carboLifeProject.Number);           //1
+                    row.Add(carboLifeProject.Category);         //2
+                    row.Add(carboLifeProject.Description);      //3
+                    row.Add(carboLifeProject.SocialCost);       //4
+                    row.Add(carboLifeProject.Area);             //5
+                    row.Add(carboLifeProject.AreaNew);          //6
 
-                    resultString += carboLifeProject.A0GlobalUncert + ","; //7
-                    resultString += carboLifeProject.A5Global + ","; //8
-                    resultString += carboLifeProject.b675Global + ","; //9
-                    resultString += carboLifeProject.C1Global + ","; //10
+                    row.Add(carboLifeProject.A0GlobalUncert);   //7
+                    row.Add(carboLifeProject.A5Global);         //8
+                    row.Add(carboLifeProject.b675Global);       //9
+                    row.Add(carboLifeProject.C1Global);         //10
 
-                    resultString += totalEC.ToString() + ","; //11
-                    resultString += Math.Round(totalA1/1000, 3).ToString() + ","; //12
-                    resultString += Math.Round(totalA4 / 1000, 3).ToString() + ","; //13
-                    resultString += Math.Round(totalA5 / 1000, 3).ToString() + ","; //14
-                    resultString += Math.Round(totalB / 1000, 3).ToString() + ","; //15
-                    resultString += Math.Round(totalC / 1000, 3).ToString() + ","; //16
-                    resultString += Math.Round(totalD / 1000, 3).ToString() + ","; //17
-                    resultString += Math.Round(totalM / 1000, 3).ToString() + ","; //18
-                    resultString += Math.Round(totalS / 1000, 3).ToString() + ","; //19
+                    row.Add(totalEC);                           //11
+                    row.Add(totalA1 / 1000, 3);                 //12
+                    row.Add(totalA4 / 1000, 3);                 //13
+                    row.Add(totalA5 / 1000, 3);                 //14
+                    row.Add(totalB / 1000, 3);                  //15
+                    row.Add(totalC / 1000, 3);                  //16
+                    row.Add(totalD / 1000, 3);                  //17
+                    row.Add(totalM / 1000, 3);                  //18
+                    row.Add(totalS / 1000, 3);                  //19
 
-                    resultString += carboLifeProject.valueUnit + ","; //20
-                    resultString += carboLifeProject.designLife + ","; //21
-                    resultString += CVSFormat(carboLifeProject.getGeneralText()) + ","; //22
+                    row.Add(carboLifeProject.valueUnit);        //20
+                    row.Add(carboLifeProject.designLife);       //21
+                    row.Add(carboLifeProject.getGeneralText()); //22
 
-                    resultString += Environment.NewLine;
-
-                    fileString += resultString;
+                    fileString.Append(row.ToLine());
                 }
                 catch (IOException ex)
                 {
-                    
+
                 }
             }
 
-            WriteCVSFile(fileString, exportPath);
+            WriteCVSFile(fileString.ToString(), exportPath);
             MessageBox.Show("Export File Created at: " + exportPath);
         }
 
@@ -1056,7 +1098,9 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                     List<CarboDataPoint> projectPoints = CarboCalcTextUtils.ConvertResultTableToDataPointsMergedPlus(projectElements);
 
                     // Start the row
-                    string row = $"{CVSFormat(carboLifeProject.Number)},{CVSFormat(carboLifeProject.Name)}";
+                    CsvLine row = new CsvLine();
+                    row.Add(carboLifeProject.Number);
+                    row.Add(carboLifeProject.Name);
 
                     // Map values to the global category list
                     foreach (string cat in allCategories)
@@ -1064,10 +1108,10 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                         var match = projectPoints?.FirstOrDefault(p => p.Name == cat);
                         double value = (match != null) ? match.Value : 0.0;
 
-                        row += "," + Math.Round(value, 3).ToString();
+                        row.Add(value, 3);
                     }
 
-                    csvBuilder.AppendLine(row);
+                    csvBuilder.Append(row.ToLine());
                 }
                 catch (Exception ex)
                 {
@@ -1101,75 +1145,69 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
                 return;
 
-            string fileString = "";
-
-            /*
-             * 
-             */
-
+            StringBuilder fileString = new StringBuilder();
 
             //Create Headers;
-            fileString =
-                "Category" + "," + //0
-                "Material" + "," + //1
-                "Description" + "," + //2
-                "Base Volume" + "," + //3
-                "[Formula]" + "," + //4
-                "[Waste] (%)" + "," + //5
-                "[B4] (x)" + "," + //6
-                "[Additional] (tCO2e/kg)" + "," + //7
-                "Total Volume" + "," + //8
-                "Density (kg/m³)" + "," + //9
-                "Mass (kg)" + "," + //10
+            fileString.Append(new CsvLine().AddRange(
+                "Category",                 //0
+                "Material",                 //1
+                "Description",              //2
+                "Base Volume",              //3
+                "[Formula]",                //4
+                "[Waste] (%)",              //5
+                "[B4] (x)",                 //6
+                "[Additional] (tCO2e/kg)",  //7
+                "Total Volume",             //8
+                "Density (kg/m³)",          //9
+                "Mass (kg)",                //10
 
-                "ECI (kgCO2e/kg)" + "," + //11
-                "EC (tCO2e)" + "," + //12
-                "Total (%)" + "," + //13
+                "ECI (kgCO2e/kg)",          //11
+                "EC (tCO2e)",               //12
+                "Total (%)",                //13
 
-                "A1-A3 (tCO2e)" + "," + //14
-                "A4 (tCO2e)" + "," + //15
-                "A5 (tCO2e)" + "," + //16
-                "B1-B5 (tCO2e)" + "," + //17
-                "C1-C4 (tCO2e)" + "," + //18
-                "D (tCO2e)" + "," + //19
-                "Sequestration (tCO2e)" + "," + //20
-                "Additional (tCO2e)" + //21
-                Environment.NewLine;
+                "A1-A3 (tCO2e)",            //14
+                "A4 (tCO2e)",               //15
+                "A5 (tCO2e)",               //16
+                "B1-B5 (tCO2e)",            //17
+                "C1-C4 (tCO2e)",            //18
+                "D (tCO2e)",                //19
+                "Sequestration (tCO2e)",    //20
+                "Additional (tCO2e)"        //21
+                ).ToLine());
+
             //Advanced
             foreach (CarboGroup grp in carboLifeProject.getGroupList)
             {
                 try
                 {
-                    string resultString = "";
+                    CsvLine row = new CsvLine();
 
-                    resultString += CVSFormat(grp.Category) + ","; //1
-                    resultString += CVSFormat(grp.MaterialName) + ","; //2
-                    resultString += CVSFormat(grp.Description) + ","; //3
-                    resultString += grp.Volume + ","; //3
-                    resultString += CVSFormat(grp.Correction) + ","; //4
-                    resultString += grp.Waste + ","; //5
-                    resultString += grp.inUseProperties.B4 + ","; //6
-                    resultString += grp.Additional + ","; //7
-                    resultString += grp.TotalVolume + ","; //8
-                    resultString += grp.Density + ","; //9
-                    resultString += grp.Mass + ","; //10
+                    row.Add(grp.Category);              //0
+                    row.Add(grp.MaterialName);          //1
+                    row.Add(grp.Description);           //2
+                    row.Add(grp.Volume);                //3
+                    row.Add(grp.Correction);            //4
+                    row.Add(grp.Waste);                 //5
+                    row.Add(grp.inUseProperties.B4);    //6
+                    row.Add(grp.Additional);            //7
+                    row.Add(grp.TotalVolume);           //8
+                    row.Add(grp.Density);               //9
+                    row.Add(grp.Mass);                  //10
 
-                    resultString += grp.ECI + ","; //11
-                    resultString += grp.EC + ","; //12
-                    resultString += grp.PerCent + ","; //13
+                    row.Add(grp.ECI);                   //11
+                    row.Add(grp.EC);                    //12
+                    row.Add(grp.PerCent);               //13
 
-                    resultString += ((grp.Material.ECI_A1A3 * grp.Mass)) / 1000 + ","; //14
-                    resultString += ((grp.Material.ECI_A4 * grp.Mass)) / 1000 + ","; //15
-                    resultString += ((grp.Material.ECI_A5 * grp.Mass)) / 1000 + ","; //16
-                    resultString += ((grp.Material.ECI_B1B5)) / 1000 + ","; //17
-                    resultString += ((grp.Material.ECI_C1C4 * grp.Mass)) / 1000 + ","; //18
-                    resultString += ((grp.Material.ECI_D * grp.Mass)) / 1000 + ","; //19
-                    resultString += ((grp.Material.ECI_Seq * grp.Mass)) / 1000 + ","; //20
-                    resultString += ((grp.Material.ECI_Mix * grp.Mass)) / 1000 + ","; //21
+                    row.Add((grp.Material.ECI_A1A3 * grp.Mass) / 1000);   //14
+                    row.Add((grp.Material.ECI_A4 * grp.Mass) / 1000);     //15
+                    row.Add((grp.Material.ECI_A5 * grp.Mass) / 1000);     //16
+                    row.Add((grp.Material.ECI_B1B5) / 1000);              //17
+                    row.Add((grp.Material.ECI_C1C4 * grp.Mass) / 1000);   //18
+                    row.Add((grp.Material.ECI_D * grp.Mass) / 1000);      //19
+                    row.Add((grp.Material.ECI_Seq * grp.Mass) / 1000);    //20
+                    row.Add((grp.Material.ECI_Mix * grp.Mass) / 1000);    //21
 
-                    resultString += Environment.NewLine;
-
-                    fileString += resultString;
+                    fileString.Append(row.ToLine());
                 }
                 catch (IOException ex)
                 {
@@ -1177,7 +1215,7 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                 }
             }
 
-            WriteCVSFile(fileString, exportPath);
+            WriteCVSFile(fileString.ToString(), exportPath);
 
         }
         private static void CreateElementsCVSFile(CarboProject carboLifeProject, string exportPath)
@@ -1185,179 +1223,197 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
                 return;
 
-            string fileString = "";
-
+            StringBuilder fileString = new StringBuilder();
 
             //Create Headers;
-            fileString =
-                "Id" + "," + //0
-                "Category" + "," + //1
-                "Name" + "," + //2
-                "SubCategory" + "," + //3
+            fileString.Append(new CsvLine().AddRange(
+                "Id",                           //0
+                "Category",                     //1
+                "Name",                         //2
+                "SubCategory",                  //3
 
-                "Material Name" + "," + //4
-                "Carbo Material Name" + "," + //5
-                "Level" + "," + //6
-                "Level Name" + "," + //7
+                "Material Name",                //4
+                "Carbo Material Name",          //5
+                "Level",                        //6
+                "Level Name",                   //7
 
-                "Volume (m3)" + "," + //7.1
-                "Volume Total (m3)" + "," + //7.2
-                "Volume Cumulative (m3)" + "," + //7.3
+                "Volume (m3)",                  //8
+                "Volume Total (m3)",            //9
+                "Volume Cumulative (m3)",       //10
 
-                "Density (kg/m3)" + "," + //7.4
-                "Mass (kg)" + "," + //8
-                "Grade" + ","+  //8.1
+                "Density (kg/m3)",              //11
+                "Mass (kg)",                    //12
+                "Grade",                        //13
 
-                "ECI (kgCO2e/kg)" + "," + //9
-                "ECI Cumulative (kgCO2e/kg)" + "," + //10
-                "EC (kgCO2e)" + "," + //11
-                "EC Cumulative (kgCO2e)" + "," + //12
+                "ECI (kgCO2e/kg)",              //14
+                "ECI Cumulative (kgCO2e/kg)",   //15
+                "EC (kgCO2e)",                  //16
+                "EC Cumulative (kgCO2e)",       //17
 
-                "isExisting" + "," + //13
-                "isDemolished" + "," + //14
-                "isSubstructure" + "," + //15
-                "includeInCalc" + "," + //16
-                "Additional" + "," + //17
-                
-                "EC A1A3 (kgCO2e)" + "," + //18
-                "EC A4 (kgCO2e)" + "," + //19
-                "EC A5 (kgCO2e)" + "," + //20
-                "EC B1B7 (kgCO2e)" + "," + //21
-                "EC C1C4 (kgCO2e)" + "," + //22
-                "EC D (kgCO2e)" + "," + //23
-                "EC Misc (kgCO2e)" + "," + //24
-                "EC Sequestration (kgCO2e)" + "," + //25
+                "isExisting",                   //18
+                "isDemolished",                 //19
+                "isSubstructure",               //20
+                "includeInCalc",                //21
+                "Additional",                   //22
 
-                "Correction" + "," + //26
-                "RC Density (kg/m3)" + "," + //27
-                "Area (m2)" + "," + //28
-                "GUID" + //29
+                "EC A1A3 (kgCO2e)",             //23
+                "EC A4 (kgCO2e)",               //24
+                "EC A5 (kgCO2e)",               //25
+                "EC B1B7 (kgCO2e)",             //26
+                "EC C1C4 (kgCO2e)",             //27
+                "EC D (kgCO2e)",                //28
+                "EC Misc (kgCO2e)",             //29
+                "EC Sequestration (kgCO2e)",    //30
 
-
-        Environment.NewLine;
+                "Correction",                   //31
+                "RC Density (kg/m3)",           //32
+                "Area (m2)",                    //33
+                "GUID"                          //34
+                ).ToLine());
 
         IList<CarboElement> elementList = carboLifeProject.getElementsFromGroups().ToList();
 
 
             foreach (CarboElement el in elementList)
             {
-                string resultString = "";
                 //Argument 2 is the Revit MaterialClass. el.Category is the Revit ELEMENT category
                 //("Walls", "Structural Framing"), which is a different concept and used to poison
                 //the match here.
                 CarboMaterial material = carboLifeProject.CarboDatabase.getClosestMatch(el.CarboMaterialName, el.MaterialCategoryName, el.Grade);
-
-                resultString += el.Id + ","; //0
-                resultString += CVSFormat(el.Category) + ","; //1
-                resultString += CVSFormat(el.Name) + ","; //2
-                resultString += CVSFormat(el.SubCategory) + ","; //3
-                resultString += CVSFormat(el.MaterialName) + ","; //4
-                resultString += CVSFormat(el.CarboMaterialName) + ","; //5
-                resultString += el.Level + ","; //6
-                resultString += el.LevelName + ","; //7
-
-                resultString += el.Volume + ","; //7.1
-                resultString += el.Volume_Total + ","; //7.2
-                resultString += el.Volume_Cumulative + ","; //7.3
-
-                resultString += material.Density + ","; //7.4
-                resultString += el.Mass + ","; //8
-                resultString += material.Grade + ","; //8
-
-                resultString += el.ECI + ","; //9
-                resultString += el.ECI_Cumulative + ","; //10
-                resultString += el.EC + ","; //11
-                resultString += el.EC_Cumulative + ","; //12
-
-                resultString += el.isExisting + ","; //13
-                resultString += el.isDemolished + ","; //14
-                resultString += el.isSubstructure + ","; //15
-                resultString += el.includeInCalc + ","; //16
-
-                resultString += CVSFormat(el.AdditionalData) + ","; //17
 
                 //Individual Totals Elements
                 double mass = el.Mass;
                 if (mass == 0)
                     mass = el.Volume_Total * el.Density;
 
-                resultString += mass * material.ECI_A1A3 + ","; //18
-                resultString += mass * material.ECI_A4 + ","; //19
-                resultString += mass * material.ECI_A5 + ","; //20
-                resultString += mass * material.ECI_B1B5 + ","; //21
-                resultString += mass * material.ECI_C1C4 + ","; //22
-                resultString += mass * material.ECI_D + ","; //23
-                resultString += mass * material.ECI_Mix + ","; //24
-                resultString += mass * material.ECI_Seq + ","; //25
+                //The matcher can come back empty. Every impact figure below reads off it, so it
+                //used to take the whole export down with a null reference, on a background
+                //thread where nothing was watching. The element keeps its row and its geometry,
+                //and the figures that need a material are left at zero.
+                double density = el.Density;
+                string grade = el.Grade;
+                double ecA1A3 = 0, ecA4 = 0, ecA5 = 0, ecB1B5 = 0, ecC1C4 = 0, ecD = 0, ecMix = 0, ecSeq = 0;
 
-                resultString += el.Correction + ","; //26
-                resultString += el.rcDensity + ","; //27
-                resultString += el.Area + ","; //28
-                resultString += el.GUID + ","; //28
+                if (material != null)
+                {
+                    density = material.Density;
+                    grade = material.Grade;
 
-                resultString += Environment.NewLine; //enter
+                    ecA1A3 = mass * material.ECI_A1A3;
+                    ecA4 = mass * material.ECI_A4;
+                    ecA5 = mass * material.ECI_A5;
+                    ecB1B5 = mass * material.ECI_B1B5;
+                    ecC1C4 = mass * material.ECI_C1C4;
+                    ecD = mass * material.ECI_D;
+                    ecMix = mass * material.ECI_Mix;
+                    ecSeq = mass * material.ECI_Seq;
+                }
 
-                fileString += resultString;
+                CsvLine row = new CsvLine();
 
+                row.Add(el.Id);                     //0
+                row.Add(el.Category);               //1
+                row.Add(el.Name);                   //2
+                row.Add(el.SubCategory);            //3
+                row.Add(el.MaterialName);           //4
+                row.Add(el.CarboMaterialName);      //5
+                row.Add(el.Level);                  //6
+                row.Add(el.LevelName);              //7
+
+                row.Add(el.Volume);                 //8
+                row.Add(el.Volume_Total);           //9
+                row.Add(el.Volume_Cumulative);      //10
+
+                row.Add(density);                   //11
+                row.Add(el.Mass);                   //12
+                row.Add(grade);                     //13
+
+                row.Add(el.ECI);                    //14
+                row.Add(el.ECI_Cumulative);         //15
+                row.Add(el.EC);                     //16
+                row.Add(el.EC_Cumulative);          //17
+
+                row.Add(el.isExisting);             //18
+                row.Add(el.isDemolished);           //19
+                row.Add(el.isSubstructure);         //20
+                row.Add(el.includeInCalc);          //21
+
+                row.Add(el.AdditionalData);         //22
+
+                row.Add(ecA1A3);                    //23
+                row.Add(ecA4);                      //24
+                row.Add(ecA5);                      //25
+                row.Add(ecB1B5);                    //26
+                row.Add(ecC1C4);                    //27
+                row.Add(ecD);                       //28
+                row.Add(ecMix);                     //29
+                row.Add(ecSeq);                     //30
+
+                row.Add(el.Correction);             //31
+                row.Add(el.rcDensity);              //32
+                row.Add(el.Area);                   //33
+                row.Add(el.GUID);                   //34
+
+                fileString.Append(row.ToLine());
             }
 
             foreach (CarboGroup grp in carboLifeProject.getGroupList)
             {
                 if (grp.AllElements.Count == 0)
                 {
-                    string resultString = "";
+                    string materialName = grp.Material != null ? grp.Material.Name : "";
 
-                    resultString += grp.Id + ","; //0
-                    resultString += CVSFormat(grp.Category) + ","; //1
-                    resultString += CVSFormat(grp.Description) + ","; //2
-                    resultString += CVSFormat(grp.SubCategory) + ","; //3
-                    resultString += CVSFormat(grp.Material.Name) + ","; //4
-                    resultString += CVSFormat(grp.Material.Name) + ","; //5
-                    resultString += "" + ","; //6
-                    resultString += "" + ","; //7
+                    CsvLine row = new CsvLine();
 
-                    resultString += grp.Volume + ","; //7.1
-                    resultString += grp.TotalVolume + ","; //7.2
-                    resultString += grp.TotalVolume + ","; //7.3
+                    row.Add(grp.Id);                //0
+                    row.Add(grp.Category);          //1
+                    row.Add(grp.Description);       //2
+                    row.Add(grp.SubCategory);       //3
+                    row.Add(materialName);          //4
+                    row.Add(materialName);          //5
+                    row.AddEmpty();                 //6  Level
+                    row.AddEmpty();                 //7  Level Name
 
-                    resultString += grp.Density + ","; //7.4
-                    resultString += grp.Mass + ","; //8
-                    resultString += grp.Grade + ","; //8.1
+                    row.Add(grp.Volume);            //8
+                    row.Add(grp.TotalVolume);       //9
+                    row.Add(grp.TotalVolume);       //10
 
-                    resultString += grp.ECI + ","; //9
-                    resultString += grp.ECI + ","; //10
-                    resultString += grp.EC + ","; //11
-                    resultString += grp.EC + ","; //12
+                    row.Add(grp.Density);           //11
+                    row.Add(grp.Mass);              //12
+                    row.Add(grp.Grade);             //13
 
-                    resultString += grp.isExisting + ","; //13
-                    resultString += grp.isDemolished + ","; //14
-                    resultString += grp.isSubstructure + ","; //15
-                    resultString += "True" + ","; //16
+                    row.Add(grp.ECI);               //14
+                    row.Add(grp.ECI);               //15
+                    row.Add(grp.EC);                //16
+                    row.Add(grp.EC);                //17
 
-                    resultString += CVSFormat(grp.additionalData) + ","; //17
+                    row.Add(grp.isExisting);        //18
+                    row.Add(grp.isDemolished);      //19
+                    row.Add(grp.isSubstructure);    //20
+                    row.Add(true);                  //21 includeInCalc
+
+                    row.Add(grp.additionalData);    //22
 
                     //Individual Totals Elements
+                    row.Add(grp.getTotalA1A3);      //23
+                    row.Add(grp.getTotalA4);        //24
+                    row.Add(grp.getTotalA5);        //25
+                    row.Add(grp.getTotalB1B7);      //26
+                    row.Add(grp.getTotalC1C4);      //27
+                    row.Add(grp.getTotalD);         //28
+                    row.Add(grp.getTotalMix);       //29
+                    row.Add(grp.getTotalSeq);       //30
 
-                    resultString += grp.getTotalA1A3 + ","; //18
-                    resultString += grp.getTotalA4 + ","; //19
-                    resultString += grp.getTotalA5 + ","; //20
-                    resultString += grp.getTotalB1B7 + ","; //21
-                    resultString += grp.getTotalC1C4 + ","; //22
-                    resultString += grp.getTotalD + ","; //23
-                    resultString += grp.getTotalMix + ","; //24
-                    resultString += grp.getTotalSeq + ","; //25
+                    row.Add(grp.Correction);        //31
+                    row.Add(grp.RcDensity);         //32
+                    row.Add(0d);                    //33 Area
+                    row.AddEmpty();                 //34 GUID, these rows are a group not an element
 
-                    resultString += grp.Correction + ","; //26
-                    resultString += grp.RcDensity + ","; //27
-                    resultString += "0" + ","; //28 (Area)
-
-                    resultString += Environment.NewLine; //enter
-
-                    fileString += resultString;
+                    fileString.Append(row.ToLine());
                 }
             }
 
-            WriteCVSFile(fileString, exportPath);
+            WriteCVSFile(fileString.ToString(), exportPath);
 
 }
         public static string CVSFormat(string str)
@@ -1377,36 +1433,162 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             return str;
         }
 
+        /// <summary>
+        /// Builds one line of a CSV file, one field at a time.
+        /// </summary>
+        /// <remarks>
+        /// Everything written to a CSV goes through here, for two reasons.
+        ///
+        /// Numbers are formatted with the invariant culture. The rows used to be built by
+        /// concatenating values straight into a string, which formats them in the user's own
+        /// culture, so on any comma decimal locale 12.5 was written as "12,5" and one column
+        /// silently became two. A four column row came out of a Dutch, German or Italian
+        /// machine with seven fields in it.
+        ///
+        /// Text goes through CVSFormat exactly once, so a comma in a project name or an
+        /// element level no longer shifts every column to its right.
+        ///
+        /// The separator is written between fields rather than after each one, which is what
+        /// keeps the field count honest: several of these files used to end every data row
+        /// with a trailing comma while the header did not, giving the rows one phantom column
+        /// more than the header. Utils.LoadCSV throws on that when the file is read back.
+        /// </remarks>
+        internal sealed class CsvLine
+        {
+            private readonly StringBuilder builder = new StringBuilder();
+            private int fieldCount;
+
+            /// <summary>
+            /// How many fields the line holds, so a header and its rows can be checked against
+            /// each other.
+            /// </summary>
+            public int FieldCount { get { return fieldCount; } }
+
+            private CsvLine AppendField(string preparedText)
+            {
+                if (fieldCount > 0)
+                    builder.Append(',');
+
+                builder.Append(preparedText);
+                fieldCount++;
+
+                return this;
+            }
+
+            /// <summary>Text, escaped and quoted only where the content needs it.</summary>
+            public CsvLine Add(string value)
+            {
+                return AppendField(CVSFormat(value));
+            }
+
+            public CsvLine Add(double value)
+            {
+                return AppendField(value.ToString(CultureInfo.InvariantCulture));
+            }
+
+            public CsvLine Add(double value, int decimals)
+            {
+                return AppendField(Math.Round(value, decimals).ToString(CultureInfo.InvariantCulture));
+            }
+
+            public CsvLine Add(int value)
+            {
+                return AppendField(value.ToString(CultureInfo.InvariantCulture));
+            }
+
+            public CsvLine Add(long value)
+            {
+                return AppendField(value.ToString(CultureInfo.InvariantCulture));
+            }
+
+            /// <summary>Written as True/False, the same as before this class existed.</summary>
+            public CsvLine Add(bool value)
+            {
+                return AppendField(value ? "True" : "False");
+            }
+
+            public CsvLine AddEmpty()
+            {
+                return AppendField(string.Empty);
+            }
+
+            /// <summary>Adds every string in order, for building a header.</summary>
+            public CsvLine AddRange(params string[] values)
+            {
+                foreach (string value in values)
+                    Add(value);
+
+                return this;
+            }
+
+            /// <summary>The finished line, with its line break.</summary>
+            public string ToLine()
+            {
+                return builder.ToString() + Environment.NewLine;
+            }
+        }
+
+        /// <summary>
+        /// Reads a number out of a field of one of these CSV files.
+        /// </summary>
+        /// <remarks>
+        /// The counterpart to CsvLine, and it has to be: these files are written in the
+        /// invariant culture, so that is the reading tried first, with NumberStyles.Float so
+        /// that no separator can be swallowed as a thousands group.
+        ///
+        /// Utils.ConvertMeToDouble is the wrong tool here and was quietly corrupting the
+        /// material round trip. It resolves what a user typed into a text box, and it treats a
+        /// lone separator with exactly three digits behind it as genuinely ambiguous, deferring
+        /// to the machine's own culture. An exported "0.225" read back on a Dutch or German
+        /// machine therefore came in as 225, a factor of a thousand, with nothing to show for it.
+        ///
+        /// It stays as the fallback, for a file somebody has opened in Excel and saved back out
+        /// with their own decimal comma in it.
+        /// </remarks>
+        public static double ReadCsvDouble(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return 0;
+
+            double result;
+
+            if (double.TryParse(value.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out result))
+                return result;
+
+            Utils.TryConvertToDouble(value, out result);
+
+            return result;
+        }
+
         [Obsolete("Replaced by CreateMaterialDatabaseCSVFile")]
         private static void CreateMaterialsCVSFile(CarboProject carboLifeProject, string exportPath)
         {
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
                 return;
 
-            string fileString = "";
+            StringBuilder fileString = new StringBuilder();
 
             //Create Headers;
-            fileString =
-                "Id" + "," + //0
-                "Name" + "," + //1
-                "Category" + "," + //2
-                "Description" + "," + //3
-                "Density" + "," + //4
-                "ECI (kgCO2e/kg)" + "," + //5
-                "ECI Volume (kgCO2e/m³)" + "," + //6
+            fileString.Append(new CsvLine().AddRange(
+                "Id",                           //0
+                "Name",                         //1
+                "Category",                     //2
+                "Description",                  //3
+                "Density",                      //4
+                "ECI (kgCO2e/kg)",              //5
+                "ECI Volume (kgCO2e/m³)",       //6
 
-                "A1-A3 (kgCO2e/kg)" + "," + //7
-                "A4 (kgCO2e/kg)" + "," + //8
-                "A5 (kgCO2e/kg)" + "," + //9
-                "B1-B7 (kgCO2e/kg)" + "," + //10
-                "C1-C4 (kgCO2e/kg)" + "," + //11
-                "D (tCO2e)" + "," + //12
-                "Sequestration (kgCO2e/kg)" + "," + //13
-                "Additional (kgCO2e/kg)" + "," + //14
+                "A1-A3 (kgCO2e/kg)",            //7
+                "A4 (kgCO2e/kg)",               //8
+                "A5 (kgCO2e/kg)",               //9
+                "B1-B7 (kgCO2e/kg)",            //10
+                "C1-C4 (kgCO2e/kg)",            //11
+                "D (tCO2e)",                    //12
+                "Sequestration (kgCO2e/kg)",    //13
+                "Additional (kgCO2e/kg)",       //14
 
-                "Default Waste (%)" + "," + //15
-
-                Environment.NewLine;
+                "Default Waste (%)"             //15
+                ).ToLine());
 
             ObservableCollection<CarboGroup> cglist = carboLifeProject.getGroupList;
             cglist = new ObservableCollection<CarboGroup>(cglist.OrderBy(i => i.MaterialName));
@@ -1417,44 +1599,47 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             {
                 if (cbg.MaterialName != material)
                 {
-                    string resultString = "";
+                    CsvLine row = new CsvLine();
 
-                    resultString += cbg.Material.Id + ","; //1
-                    resultString += CVSFormat(cbg.Material.Name) + ","; //2
-                    resultString += CVSFormat(cbg.Material.Category) + ","; //3
-                    resultString += CVSFormat(cbg.Material.Description) + ","; //3
-                    resultString += cbg.Material.Density + ","; //4
-                    resultString += cbg.Material.ECI + ","; //5
-                    resultString += cbg.Material.getVolumeECI + ","; //6
+                    row.Add(cbg.Material.Id);               //0
+                    row.Add(cbg.Material.Name);             //1
+                    row.Add(cbg.Material.Category);         //2
+                    row.Add(cbg.Material.Description);      //3
+                    row.Add(cbg.Material.Density);          //4
+                    row.Add(cbg.Material.ECI);              //5
+                    row.Add(cbg.Material.getVolumeECI);     //6
 
-                    resultString += cbg.Material.ECI_A1A3 + ","; //7
-                    resultString += cbg.Material.ECI_A4 + ","; //8
-                    resultString += cbg.Material.ECI_A5 + ","; //9
-                    resultString += cbg.Material.ECI_B1B5 + ","; //10
-                    resultString += cbg.Material.ECI_C1C4 + ","; //11
-                    resultString += cbg.Material.ECI_D + ","; //12
-                    resultString += cbg.Material.ECI_Seq + ","; //13
-                    resultString += cbg.Material.ECI_Mix + ","; //14
+                    row.Add(cbg.Material.ECI_A1A3);         //7
+                    row.Add(cbg.Material.ECI_A4);           //8
+                    row.Add(cbg.Material.ECI_A5);           //9
+                    row.Add(cbg.Material.ECI_B1B5);         //10
+                    row.Add(cbg.Material.ECI_C1C4);         //11
+                    row.Add(cbg.Material.ECI_D);            //12
+                    row.Add(cbg.Material.ECI_Seq);          //13
+                    row.Add(cbg.Material.ECI_Mix);          //14
 
-                    resultString += cbg.Material.WasteFactor + ","; //14
+                    row.Add(cbg.Material.WasteFactor);      //15
 
-                    resultString += Environment.NewLine; //enter
-
-                    fileString += resultString;
+                    fileString.Append(row.ToLine());
                 }
             }
 
-            WriteCVSFile(fileString, exportPath);
+            WriteCVSFile(fileString.ToString(), exportPath);
         }
 
         public static void WriteCVSFile(string fileString, string exportPath)
         {
             try
             {
-                using (StreamWriter writer = new StreamWriter(exportPath))
+                //UTF-8 with a byte order mark. Without one Excel opens the file as ANSI, so the
+                //kg/m³ in the headers and the £ in the project file arrive as mojibake. Reading
+                //is unaffected: Utils.LoadCSV goes through StreamReader, which detects the mark
+                //and strips it, so the first header still reads as "Id" and not "﻿Id".
+                using (StreamWriter writer = new StreamWriter(exportPath, false, new UTF8Encoding(true)))
                 {
-                    // Write header row
-                    writer.WriteLine(fileString);
+                    //Write, not WriteLine: every row already carries its own line break, so
+                    //WriteLine left a blank line on the end of every file.
+                    writer.Write(fileString);
                 }
             }
             catch (IOException ex)
@@ -1474,58 +1659,63 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                             "materials with identical ID's will be overwritten. " +
                             "New Ids will be imported as a new material" + Environment.NewLine; */
 
-            string fileString = "";
-//Create Headers;
-fileString =
-                "Id" + "," + //0
-                "Name" + "," + //1
-                "Category" + "," + //2
-                "Description" + "," + //3
-                "Density" + "," + //4
-                "WasteFactor" + "," + //5
-                "Grade" + "," + //5.1
-                "EPDURL" + "," + //5.2
+            //This file is an import template as well as an export: GetMaterialDatabaseFromCVSFile
+            //reads it back by column index, 0 to 16, so the order below is a contract. The
+            //values it parses go through Utils.ConvertMeToDouble, which resolves a lone
+            //separator before handing the text to a culture, so the invariant "12.5" written
+            //here still reads back as 12.5 on a comma decimal machine.
+            StringBuilder fileString = new StringBuilder();
 
-                "ECI (kgCO2e/kg)" + "," + //6
-                "ECI_A1A3 (kgCO2e/kg)" + "," + //7
-                "ECI_A4 (kgCO2e/kg)" + "," + //8
-                "ECI_A5 (kgCO2e/kg)" + "," + //9
-                "ECI_B1B5 (kgCO2e/kg)" + "," + //10
-                "ECI_C1C4 (kgCO2e/kg)" + "," + //11
-                "ECI_D (kgCO2e/kg)" + "," + //12
-                "ECI_Seq (kgCO2e/kg)" + "," + //13
-                "ECI_Mix (kgCO2e/kg)" + "," + //14
+            //Create Headers;
+            fileString.Append(new CsvLine().AddRange(
+                "Id",                       //0
+                "Name",                     //1
+                "Category",                 //2
+                "Description",              //3
+                "Density",                  //4
+                "WasteFactor",              //5
+                "Grade",                    //6
+                "EPDURL",                   //7
 
-                Environment.NewLine;
+                "ECI (kgCO2e/kg)",          //8
+                "ECI_A1A3 (kgCO2e/kg)",     //9
+                "ECI_A4 (kgCO2e/kg)",       //10
+                "ECI_A5 (kgCO2e/kg)",       //11
+                "ECI_B1B5 (kgCO2e/kg)",     //12
+                "ECI_C1C4 (kgCO2e/kg)",     //13
+                "ECI_D (kgCO2e/kg)",        //14
+                "ECI_Seq (kgCO2e/kg)",      //15
+                "ECI_Mix (kgCO2e/kg)"       //16
+                ).ToLine());
+
             //Advanced
             foreach (CarboMaterial cm in materialDataBase.CarboMaterialList)
             {
                 try
                 {
-                    string resultString = "";
+                    CsvLine row = new CsvLine();
 
-                    resultString += cm.Id + ","; //1
-                    resultString += CVSFormat(cm.Name) + ","; //2
-                    resultString += CVSFormat(cm.Category) + ","; //3
-                    resultString += CVSFormat(cm.Description) + ","; //3
-                    resultString += cm.Density + ","; //4
-                    resultString += cm.WasteFactor + ","; //5
-                    resultString += cm.Grade + ","; //5.1
-                    resultString += cm.EPDurl + ","; //5.2
+                    row.Add(cm.Id);             //0
+                    row.Add(cm.Name);           //1
+                    row.Add(cm.Category);       //2
+                    row.Add(cm.Description);    //3
+                    row.Add(cm.Density);        //4
+                    row.Add(cm.WasteFactor);    //5
+                    row.Add(cm.Grade);          //6
+                    //A URL can hold a comma, and this one used to go in raw.
+                    row.Add(cm.EPDurl);         //7
 
-                    resultString += cm.ECI + ","; //6
-                    resultString += cm.ECI_A1A3 + ","; //7
-                    resultString += cm.ECI_A4 + ","; //8
-                    resultString += cm.ECI_A5 + ","; //9
-                    resultString += cm.ECI_B1B5 + ","; //10
-                    resultString += cm.ECI_C1C4 + ","; //11
-                    resultString += cm.ECI_D + ","; //12
-                    resultString += cm.ECI_Seq + ","; //13
-                    resultString += cm.ECI_Mix + ","; //14
+                    row.Add(cm.ECI);            //8
+                    row.Add(cm.ECI_A1A3);       //9
+                    row.Add(cm.ECI_A4);         //10
+                    row.Add(cm.ECI_A5);         //11
+                    row.Add(cm.ECI_B1B5);       //12
+                    row.Add(cm.ECI_C1C4);       //13
+                    row.Add(cm.ECI_D);          //14
+                    row.Add(cm.ECI_Seq);        //15
+                    row.Add(cm.ECI_Mix);        //16
 
-                    resultString += Environment.NewLine;
-
-                    fileString += resultString;
+                    fileString.Append(row.ToLine());
                 }
                 catch (IOException ex)
                 {
@@ -1535,7 +1725,7 @@ fileString =
 
             try
             {
-                WriteCVSFile(fileString, exportPath);
+                WriteCVSFile(fileString.ToString(), exportPath);
             }
             catch
             {
@@ -1557,17 +1747,17 @@ fileString =
                     try
                     {
                         CarboMaterial cm = new CarboMaterial();
-                        cm.Id = Convert.ToInt32(Utils.ConvertMeToDouble(dr[0].ToString()));
+                        cm.Id = Convert.ToInt32(ReadCsvDouble(dr[0].ToString()));
                         cm.Name = dr[1].ToString();
                         cm.Category = dr[2].ToString();
                         cm.Description = dr[3].ToString();
 
-                        cm.Density = Convert.ToInt32(Utils.ConvertMeToDouble(dr[4].ToString()));
-                        cm.WasteFactor = Utils.ConvertMeToDouble(dr[5].ToString());
+                        cm.Density = Convert.ToInt32(ReadCsvDouble(dr[4].ToString()));
+                        cm.WasteFactor = ReadCsvDouble(dr[5].ToString());
                         cm.Grade = dr[6].ToString();
                         cm.EPDurl = dr[7].ToString();
 
-                        cm.ECI = Utils.ConvertMeToDouble(dr[8].ToString());
+                        cm.ECI = ReadCsvDouble(dr[8].ToString());
 
                         cm.ECI_A1A3_Override = true;
                         cm.ECI_A4_Override = true;
@@ -1577,14 +1767,14 @@ fileString =
                         cm.ECI_Seq_Override = true;
 
 
-                        cm.ECI_A1A3 = Utils.ConvertMeToDouble(dr[9].ToString());
-                        cm.ECI_A4 = Utils.ConvertMeToDouble(dr[10].ToString());
-                        cm.ECI_A5 = Utils.ConvertMeToDouble(dr[11].ToString());
-                        cm.ECI_B1B5 = Utils.ConvertMeToDouble(dr[12].ToString());
-                        cm.ECI_C1C4 = Utils.ConvertMeToDouble(dr[13].ToString());
-                        cm.ECI_D = Utils.ConvertMeToDouble(dr[14].ToString());
-                        cm.ECI_Seq = Utils.ConvertMeToDouble(dr[15].ToString());
-                        cm.ECI_Mix = Utils.ConvertMeToDouble(dr[16].ToString());
+                        cm.ECI_A1A3 = ReadCsvDouble(dr[9].ToString());
+                        cm.ECI_A4 = ReadCsvDouble(dr[10].ToString());
+                        cm.ECI_A5 = ReadCsvDouble(dr[11].ToString());
+                        cm.ECI_B1B5 = ReadCsvDouble(dr[12].ToString());
+                        cm.ECI_C1C4 = ReadCsvDouble(dr[13].ToString());
+                        cm.ECI_D = ReadCsvDouble(dr[14].ToString());
+                        cm.ECI_Seq = ReadCsvDouble(dr[15].ToString());
+                        cm.ECI_Mix = ReadCsvDouble(dr[16].ToString());
 
 
 
@@ -1603,34 +1793,34 @@ fileString =
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
                 return false;
 
-            string fileString = "";
-            //Create Headers;
-            fileString =
-                            "Id" + "," + //0
-                            "Name" + "," + //1
-                            "Category" + "," + //2
-                            "MaterialName" + "," + //3
-                            "Volume" + "," + //4
-                            "IsSubstructure" + "," + //5
-                            "Level" + "," + //6
-                            "AdditionalData" + "," + //7
-                            Environment.NewLine;
-                    string resultString =
-                                    "999999" + "," + //0
-                                    "Example Element" + "," + //1
-                                    "Floor" + "," + //2
-                                    "Concrete" + "," + //3
-                                    "100" + "," + //4
-                                    "FALSE" + "," + //5
-                                    "Level 01" + "," + //6
-                                    "Transfer slab" + "," + //7
-                                    Environment.NewLine;
+            StringBuilder fileString = new StringBuilder();
 
-                    fileString += resultString;
+            //Create Headers;
+            fileString.Append(new CsvLine().AddRange(
+                "Id",               //0
+                "Name",             //1
+                "Category",         //2
+                "MaterialName",     //3
+                "Volume",           //4
+                "IsSubstructure",   //5
+                "Level",            //6
+                "AdditionalData"    //7
+                ).ToLine());
+
+            fileString.Append(new CsvLine().AddRange(
+                "999999",           //0
+                "Example Element",  //1
+                "Floor",            //2
+                "Concrete",         //3
+                "100",              //4
+                "FALSE",            //5
+                "Level 01",         //6
+                "Transfer slab"     //7
+                ).ToLine());
 
             try
             {
-                WriteCVSFile(fileString, exportPath);
+                WriteCVSFile(fileString.ToString(), exportPath);
             }
             catch
             {
@@ -1652,11 +1842,11 @@ fileString =
                     {
                         CarboElement element = new CarboElement();
 
-                        element.Id = Convert.ToInt32(Utils.ConvertMeToDouble(dr[0].ToString()));
+                        element.Id = Convert.ToInt32(ReadCsvDouble(dr[0].ToString()));
                         element.Name = dr[1].ToString();
                         element.Category = dr[2].ToString();
                         element.MaterialName = dr[3].ToString();
-                        element.Volume = Convert.ToInt32(Utils.ConvertMeToDouble(dr[4].ToString()));
+                        element.Volume = Convert.ToInt32(ReadCsvDouble(dr[4].ToString()));
                         element.isSubstructure = bool.Parse((dr[5].ToString()));
                         element.LevelName = dr[6].ToString();
                         element.AdditionalData = dr[7].ToString();
@@ -1682,35 +1872,36 @@ fileString =
             if (File.Exists(savePath) && IsFileLocked(savePath) == true)
                 return;
 
-            string fileString = "";
+            StringBuilder fileString = new StringBuilder();
 
             //CLASS	IFCMATERIAL	QUANTITY	QTY_TYPE	THICKNESS_MM	TRANSPORT_KM	TRANSPORTDISTANCE_KMLEG2	YM_TRANSPORTATION_KM	COMMENT	SERVICELIFE	WASTAGE	MATERIAL REUSED	COSTPERUNIT	TOTALCOST	BREEAM Int'l Mat 01 classification (use to choose)	MAT01CLASS	BREEAM UK / RICS Classification (use to choose)	LEVEL	BYGNINGSDEL (use to choose)	BYGNINGSDEL	Talo2000 Rakennusosa (use to choose)	TALO2000	KG DIN 276 (use to choose)	KGDIN276	SFB (use to choose)	SFB	NS 3454 (use to choose)	NS3454	Level(s) - Language	Level(s) (use to choose)	CLASSIFICATION_LEVELS
             //Create Headers;
-            fileString =
-                "CLASS" + "," + //0
-                "IFCMATERIAL" + "," + //1
-                "QUANTITY" + "," + //2
-                "QTY_TYPE" + "," + //3
-                "COMMENT" + "," + //4
-                "SERVICELIFE" + "," + //5
-                "WASTAGE" + "," + //6
-                Environment.NewLine;
+            fileString.Append(new CsvLine().AddRange(
+                "CLASS",        //0
+                "IFCMATERIAL",  //1
+                "QUANTITY",     //2
+                "QTY_TYPE",     //3
+                "COMMENT",      //4
+                "SERVICELIFE",  //5
+                "WASTAGE"       //6
+                ).ToLine());
+
             //Advanced
             foreach (CarboGroup grp in carboLifeProject.getGroupList)
             {
                 try
                 {
-                    string resultString = "";
-                    resultString += CVSFormat(grp.Category) + ","; //0
-                    resultString += CVSFormat(grp.MaterialName) + ","; //1
-                    resultString += grp.TotalVolume + ","; //2
-                    resultString += CVSFormat("M3") + ","; //3
-                    resultString += CVSFormat(grp.Description) + ","; //4
-                    resultString += carboLifeProject.designLife + ","; //5
-                    resultString += 0; //6
-                    resultString += Environment.NewLine;
+                    CsvLine row = new CsvLine();
 
-                    fileString += resultString;
+                    row.Add(grp.Category);                  //0
+                    row.Add(grp.MaterialName);              //1
+                    row.Add(grp.TotalVolume);               //2
+                    row.Add("M3");                          //3
+                    row.Add(grp.Description);               //4
+                    row.Add(carboLifeProject.designLife);   //5
+                    row.Add(0d);                            //6
+
+                    fileString.Append(row.ToLine());
                 }
                 catch (IOException ex)
                 {
@@ -1718,7 +1909,7 @@ fileString =
                 }
             }
 
-            WriteCVSFile(fileString, savePath);
+            WriteCVSFile(fileString.ToString(), savePath);
             string targetPath = Path.GetDirectoryName(savePath);
             string filename = Path.GetFileNameWithoutExtension(savePath);
 
@@ -1761,26 +1952,27 @@ fileString =
             if (File.Exists(savePath) && IsFileLocked(savePath) == true)
                 return;
 
-            string fileString = "";
+            StringBuilder fileString = new StringBuilder();
 
             //Material	Material Type	Material Specification	Structural Element	Description	Component Lifespan [years]	Aspect of Structure	Significant Temporary Works?	Number of Times Temp Works Used before EOL	Volume [m3] or Mass [kg]?	"Material Quantity
             carboLifeProject.CalculateProject();
 
             //Create Headers;
-            fileString =
-                "Material" + "," + //0
-                "Material Type" + "," + //1
-                "Material Specification" + "," + //2
-                "Structural Element" + "," + //3
-                "Description" + "," + //4
-                "Component Lifespan" + "," + //5
-                "Aspect" + "," + //6
-                "Significant" + "," + //7
-                "Number of Times Temp Works" + "," + //8
-                "Volume or Mass" + "," + //9
-                "Quantity" + "," + //10
-                "Quantity Clean" + "," + //10
-                Environment.NewLine;
+            fileString.Append(new CsvLine().AddRange(
+                "Material",                     //0
+                "Material Type",                //1
+                "Material Specification",       //2
+                "Structural Element",           //3
+                "Description",                  //4
+                "Component Lifespan",           //5
+                "Aspect",                       //6
+                "Significant",                  //7
+                "Number of Times Temp Works",   //8
+                "Volume or Mass",               //9
+                "Quantity",                     //10
+                "Quantity Clean"                //11
+                ).ToLine());
+
             //Advanced
             foreach (CarboGroup grp in carboLifeProject.getGroupList)
             {
@@ -1788,23 +1980,22 @@ fileString =
                 {
                     grp.CalculateTotals();
 
-                    string resultString = "";
-                    resultString += CVSFormat(grp.MaterialName) + ","; //0
-                    resultString += "" + ","; //1
-                    resultString += "" + ","; //2
-                    resultString += "" + ","; //3
-                    resultString += CVSFormat(grp.MaterialName + " " + grp.Description) + ","; //4
-                    resultString += "60" + ","; //6
-                    resultString += "New Build" + ","; //5
-                    resultString += "No" + ","; //8
-                    resultString += "" + ","; //9
-                    resultString += "Volume [m3]" + ","; //10
-                    resultString += grp.TotalVolume + ","; //11
-                    resultString += grp.Volume; //11
+                    CsvLine row = new CsvLine();
 
-                    resultString += Environment.NewLine;
+                    row.Add(grp.MaterialName);                              //0
+                    row.AddEmpty();                                         //1
+                    row.AddEmpty();                                         //2
+                    row.AddEmpty();                                         //3
+                    row.Add(grp.MaterialName + " " + grp.Description);      //4
+                    row.Add("60");                                          //5
+                    row.Add("New Build");                                   //6
+                    row.Add("No");                                          //7
+                    row.AddEmpty();                                         //8
+                    row.Add("Volume [m3]");                                 //9
+                    row.Add(grp.TotalVolume);                               //10
+                    row.Add(grp.Volume);                                    //11
 
-                    fileString += resultString;
+                    fileString.Append(row.ToLine());
                 }
                 catch (IOException ex)
                 {
@@ -1812,7 +2003,7 @@ fileString =
                 }
             }
 
-            WriteCVSFile(fileString, savePath);
+            WriteCVSFile(fileString.ToString(), savePath);
             string targetPath = Path.GetDirectoryName(savePath);
             string filename = Path.GetFileNameWithoutExtension(savePath);
 

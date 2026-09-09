@@ -84,6 +84,12 @@ namespace CarboLifeRevit
                 if (projectInfoCategory != null)
                     projectInfoSet.Insert(projectInfoCategory);
 
+                //Parameters Revit would not bind. Insert and ReInsert report that by returning
+                //false rather than by throwing, and both results used to be discarded, so a
+                //parameter the tool had failed to add was still reported as a success and the
+                //import then found nothing on the model. Collected and named at the end.
+                List<string> notBound = new List<string>();
+
                 using (Transaction t = new Transaction(doc, "Add CarboLife Parameters"))
                 {
                     t.Start();
@@ -113,7 +119,10 @@ namespace CarboLifeRevit
                                 // be an instance binding. Nothing to bind to when the
                                 // category is missing, which is the case in a family.
                                 if (projectInfoSet.IsEmpty)
+                                {
+                                    notBound.Add(def.Name);
                                     continue;
+                                }
 
                                 binding = uiApp.Application.Create.NewInstanceBinding(projectInfoSet);
                             }
@@ -130,13 +139,34 @@ namespace CarboLifeRevit
 
                             // Insert the binding into the document under the "Data" group
                             // Note: PG_DATA is for Revit < 2024. Use GroupTypeId.Data for 2024+
+                            bool bound;
+
                             if (needsRebinding == true)
-                                doc.ParameterBindings.ReInsert(def, binding, GroupTypeId.Data);
+                                bound = doc.ParameterBindings.ReInsert(def, binding, GroupTypeId.Data);
                             else
-                                doc.ParameterBindings.Insert(def, binding, GroupTypeId.Data);
+                                bound = doc.ParameterBindings.Insert(def, binding, GroupTypeId.Data);
+
+                            if (bound == false)
+                                notBound.Add(def.Name);
                         }
                     }
                     t.Commit();
+                }
+
+                if (notBound.Count > 0)
+                {
+                    //Named rather than counted: which parameter is missing decides what stops
+                    //working, and the usual cause - the same name already in the model bound
+                    //somewhere else - is one the user has to resolve in Revit themselves.
+                    TaskDialog.Show("Some parameters could not be added",
+                                    "CarboLife parameters were loaded, but Revit would not bind the following:" +
+                                    Environment.NewLine + Environment.NewLine +
+                                    "  " + string.Join(Environment.NewLine + "  ", notBound.ToArray()) +
+                                    Environment.NewLine + Environment.NewLine +
+                                    "This usually means a parameter of the same name already exists in the model. " +
+                                    "Check it under Manage > Project Parameters. Anything relying on the parameters above will not work until this is resolved.");
+
+                    return Result.Succeeded;
                 }
 
                 TaskDialog.Show("Success", "CarboLife parameters are now loaded and bound to model categories.");

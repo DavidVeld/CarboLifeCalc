@@ -336,53 +336,13 @@ namespace CarboLifeAPI
         }
 
         /// <summary>
-        /// Finds the location of the Carbo Life Calculator Template File
+        /// The material templates on offer beside the one the settings point at.
+        /// The settings are read here; see GetTemplateFiles for the listing itself.
         /// </summary>
-        /// <returns>Template Path</returns>
         public static IDictionary<string, string> getTemplateFiles()
         {
             CarboSettings settings = new CarboSettings().Load();
             return GetTemplateFiles(settings.templatePath);
-            
-            var result = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-            try
-            {
-                string defaultTemplatePath = getTemplateFile();
-
-                if (string.IsNullOrEmpty(defaultTemplatePath)) return result;
-
-                string defaultFileName = Path.GetFileName(defaultTemplatePath);
-                result.Add(defaultFileName, defaultTemplatePath);
-
-                // Get the directory containing the default template
-                string templateDirectory = Path.GetDirectoryName(defaultTemplatePath);
-                if (string.IsNullOrEmpty(templateDirectory) || !Directory.Exists(templateDirectory)) return result;
-
-                // Define extensions to search for
-                string[] extensions = { "*.cxml", "*.csv" };
-
-                foreach (var ext in extensions)
-                {
-                    string[] files = Directory.GetFiles(templateDirectory, ext);
-                    foreach (string file in files)
-                    {
-                        string fileName = Path.GetFileName(file);
-
-                        // Skip if already added (the default template)
-                        if (!result.ContainsKey(fileName))
-                        {
-                            result.Add(fileName, file);
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                // Silently fail or log as needed for your implementation
-            }
-
-            return result;
         }
 
         // ── Template resolution ─────────────────────────────────────────

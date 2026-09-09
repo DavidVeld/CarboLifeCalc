@@ -252,7 +252,10 @@ namespace CarboLifeAPI.Data
             //1000 to show tonnes and multiplies by 1000 on the way back in. The old seed of 1 was
             //one kilogram, which came up as "0.001" in a box labelled tCO₂e and read as a number
             //somebody had chosen rather than a placeholder.
-            A0Global = 10000; // 10 tCO₂e
+            //
+            //Area is still 1 here, so this is the one tonne floor. The import calls SeedA0FromArea
+            //again once it knows the real GIA; see GetSeedA0.
+            A0Global = GetSeedA0(Area);
 
             //Recomputed by CalculateProject from AreaNew and A5AreaFactor, so this is only a seed.
             A5Global = 0;
@@ -280,6 +283,70 @@ namespace CarboLifeAPI.Data
             calculateSubStructure = true;
 
             UncertFact = RevitImportSettings.UncertaintyFactor;
+        }
+
+        /// <summary>
+        /// The rate a new project's A0 allowance is seeded at, in kg CO₂e per m² of GIA.
+        ///
+        /// A0 is the pre-construction stage: site investigations, surveys, and the design work
+        /// itself. RICS WLCA 2nd edition makes it optional for buildings and says it is normally
+        /// assumed to be zero for them, and neither the IStructE SCORS bands nor the LETI targets
+        /// contain any A0 at all - both rate A1-A5. So there is no published rate to copy, and
+        /// this is deliberately a token: enough to appear in the breakdown and be noticed, small
+        /// enough that nobody could mistake it for an assessed figure.
+        ///
+        /// A rate rather than a fixed tonnage because getUpfrontTotals feeds A0 into the number
+        /// that is divided by GIA and rated against those bands. A flat 10 tCO₂e - what this used
+        /// to be - is 0.55 kgCO₂e/m² on a 20,000 m² tower and 55 on a 200 m² house, which on the
+        /// IStructE scale is more than the whole width of the A++ band. At a rate it is 1 kgCO₂e/m²
+        /// on both, and the rating moves by the same negligible amount whatever the project size.
+        /// </summary>
+        public const double DefaultA0RatePerM2 = 1.0;
+
+        /// <summary>
+        /// The seed is rounded up to a whole tonne, so the project settings box - which reads in
+        /// tonnes - always shows a round number rather than "0.237".
+        /// </summary>
+        private const double a0SeedRoundingKg = 1000;
+
+        /// <summary>
+        /// The A0 allowance a project of this floor area starts on, in kg CO₂e.
+        ///
+        /// <see cref="DefaultA0RatePerM2"/> per m², rounded up to the next whole tonne, and never
+        /// less than one: a project too small to reach a tonne still had preliminary studies done
+        /// on it, and zero would drop A0 out of the breakdown entirely.
+        /// </summary>
+        /// <param name="area">Gross internal area in m²</param>
+        public static double GetSeedA0(double area)
+        {
+            //An area that is missing, zero or nonsense still gets the floor rather than a
+            //NaN carried into every total downstream.
+            if (area > 0 == false || double.IsInfinity(area))
+                return a0SeedRoundingKg;
+
+            double kg = area * DefaultA0RatePerM2;
+
+            //The GIA can arrive as 3000.0000000000005 from the square feet Revit stores it in,
+            //and rounding that up would hand back four tonnes where three was meant. Settled to
+            //the milligram first, which is far below anything the rounding below can see.
+            double tonnes = Math.Ceiling(Math.Round(kg, 6) / a0SeedRoundingKg);
+
+            if (tonnes < 1)
+                tonnes = 1;
+
+            return tonnes * a0SeedRoundingKg;
+        }
+
+        /// <summary>
+        /// Puts the A0 allowance back on the seed for this project's floor area.
+        ///
+        /// Only for a project being created: A0 is a figure the user owns and edits in the
+        /// project settings, so unlike A5Global and C1Global it is never recomputed by
+        /// CalculateProject. Updating an existing project must not call this.
+        /// </summary>
+        public void SeedA0FromArea()
+        {
+            A0Global = GetSeedA0(Area);
         }
 
         /// <summary>
@@ -1526,6 +1593,24 @@ namespace CarboLifeAPI.Data
 
         /// <summary>
         /// Forces the Project to calculate by phase, even if is is not set by the project. Leaving blank will result in a full report of all phases.
+        ///
+        /// TO REFACTOR. This is a second, hand-maintained copy of the totals in CalculateProject,
+        /// differing only in reading its per-module flags from arguments rather than from the
+        /// project, and in skipping setElementotals. Two copies of one calculation drift, and
+        /// this one had: A0 was added in kilograms to a sum of tonnes, a thousandfold error that
+        /// survived because nothing calls this with fullResult true. It is corrected below.
+        ///
+        /// Two differences are still outstanding and want a proper look, not a patch:
+        ///
+        ///  - A5, C1 and B6/B7 are computed inline here and thrown away, where CalculateProject
+        ///    assigns this.A5Global, this.C1Global and this.b675Global. After a call to this
+        ///    method those three properties still hold whatever the last CalculateProject left,
+        ///    and DataExportUtils reads them. Fixing it changes what this writes to the object
+        ///    rather than only what it returns, so it needs testing against the exports.
+        ///
+        ///  - The right end state is one calculation taking the module flags as a parameter,
+        ///    with both entry points calling it. Worth doing when there is room to test the
+        ///    exports and the overview graphs against it, rather than on the way to a release.
         /// </summary>
         /// <param name="cA13"></param>
         /// <param name="cA4"></param>
@@ -1562,7 +1647,17 @@ namespace CarboLifeAPI.Data
             //Set Global Values if required
 
             if (cA0 == true)
-                globalTotals += A0GlobalUncert;
+                //Kilograms to tonnes, as CalculateProject does. A0Global is held in kg while EC
+                //and every other term of this sum are in tonnes, so leaving the division out put
+                //A0 in a thousand times over: on a 5,000 m2 project that is 5,500 tCO2e added
+                //where 5.5 was meant, several times the whole structural total.
+                //
+                //It never showed, because the only callers are getResultTable and
+                //getByElementTable with fullResult true and nothing passes that today. The tables
+                //they return carry no A0 column either - the damage was to ECTotal, which this
+                //method overwrites and CarboCompare, the phase pie chart and the LCAx export all
+                //read afterwards.
+                globalTotals += A0GlobalUncert / 1000;
             else { }
             //Ignore
 

@@ -59,7 +59,7 @@ Your support helps keep the project alive and evolving!
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENCE.txt).
 
 ![alt text](https://github.com/DavidVeld/CarboLifeCalc/blob/master/CarboLifeCalc/img/scr/screenshot1.png)
 ![alt text](https://github.com/DavidVeld/CarboLifeCalc/blob/master/CarboLifeCalc/img/scr/screenshot2.png)

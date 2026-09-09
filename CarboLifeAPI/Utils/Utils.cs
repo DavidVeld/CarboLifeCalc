@@ -789,16 +789,18 @@ namespace CarboLifeAPI
 
                 var ok = openFileDialog.ShowDialog();
 
-                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName) && openFileDialog.FileName.EndsWith("clcx"))
+                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName) && openFileDialog.FileName.EndsWith("clcx", StringComparison.OrdinalIgnoreCase))
                 {
-                    if(DataExportUtils.IsFileLocked(openFileDialog.FileName) == false)
+                    //Readable, not writable: opening a project only reads it, and asking for write
+                    //access turned a file on a read-only share into "it could not be found".
+                    if(DataExportUtils.IsFileReadable(openFileDialog.FileName) == true)
                     {
                         path = openFileDialog.FileName;
                         return path;
                     }
                     else
                     {
-                        MessageBox.Show("The selected Carbo Life Project file is currently in use by another process. Please close any other applications that might be using the file and try again.", "File In Use", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("The selected Carbo Life Project file could not be read. It may be open in another program, or you may not have permission to read it.", "File Could Not Be Read", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return "";
                     }
                 }
@@ -839,14 +841,18 @@ namespace CarboLifeAPI
 
                 if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName) && IsMaterialLibraryFile(openFileDialog.FileName, includeCsv))
                 {
-                    if (DataExportUtils.IsFileLocked(openFileDialog.FileName) == false)
+                    //Readable, not writable: a material database is only ever read, and a company
+                    //database on a share the user may read but not write - the whole point of the
+                    //Change button in the import settings - failed the write test and was reported
+                    //as missing or malformed.
+                    if (DataExportUtils.IsFileReadable(openFileDialog.FileName) == true)
                     {
                         path = openFileDialog.FileName;
                         return path;
                     }
                     else
                     {
-                        MessageBox.Show("The selected Carbo Life Material file is currently in use by another process. Please close any other applications that might be using the file and try again.", "File In Use", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("The selected Carbo Life Material file could not be read. It may be open in another program, or you may not have permission to read it.", "File Could Not Be Read", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return "";
                     }
                 }
@@ -873,7 +879,7 @@ namespace CarboLifeAPI
         }
 
         /// <summary>
-        /// Opends a file dialog to select a Carbo Life Material Library file (.clcx)
+        /// Opens a file dialog to select a Carbo Life material mapping file (.xml)
         /// </summary>
         /// <returns>The filepath if valid or "" if not</returns>
         public static string OpenCarboMappingLibrary(string pathForViewing = "")
@@ -889,18 +895,34 @@ namespace CarboLifeAPI
 
                 var ok = openFileDialog.ShowDialog();
 
-                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName) && openFileDialog.FileName.EndsWith("xml"))
+                if (openFileDialog.FileName != "" && File.Exists(openFileDialog.FileName) && openFileDialog.FileName.EndsWith("xml", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (DataExportUtils.IsFileLocked(openFileDialog.FileName) == false)
+                    //Readable, not writable: the mapping file is read to match materials with. It
+                    //is written back to as well, but a read-only shared mapping file is still worth
+                    //importing against, and SaveToXml says clearly when it cannot write.
+                    if (DataExportUtils.IsFileReadable(openFileDialog.FileName) == false)
                     {
-                        path = openFileDialog.FileName;
-                        return path;
-                    }
-                    else
-                    {
-                        MessageBox.Show("The selected Carbo Life Mapping file is currently in use by another process. Please close any other applications that might be using the file and try again.", "File In Use", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("The selected Carbo Life Mapping file could not be read. It may be open in another program, or you may not have permission to read it.", "File Could Not Be Read", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return "";
                     }
+
+                    //.xml is not enough to go on. The mapping file lives in db\settings next to
+                    //CarboSettings.xml, and Export Settings writes more .xml files of its own, so
+                    //the folder this dialog opens in is full of xml that is not a mapping table.
+                    //Picking one of those pointed the import at a file with no matches in it, and
+                    //nothing said so - the material mapping simply stopped working.
+                    if (IsCarboMappingFile(openFileDialog.FileName) == false)
+                    {
+                        MessageBox.Show("The selected file is not a Carbo Life material mapping file." +
+                                        Environment.NewLine + Environment.NewLine +
+                                        openFileDialog.FileName + Environment.NewLine + Environment.NewLine +
+                                        "A mapping file holds the list of Revit material names and the Carbo Life materials they were matched to. Settings files and other xml files cannot be used here.",
+                                        "Not A Mapping File", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return "";
+                    }
+
+                    path = openFileDialog.FileName;
+                    return path;
                 }
             }
             catch
@@ -910,6 +932,51 @@ namespace CarboLifeAPI
             }
 
             return "";
+        }
+
+        /// <summary>
+        /// True when a file really is a material mapping file, judged by what is in it rather
+        /// than by its extension.
+        ///
+        /// The root element is what tells them apart: a mapping file is a serialised
+        /// CarboMapFile, a settings file a serialised CarboSettings, and both are .xml sitting in
+        /// the same folder. Read as a stream and stopped at the root element, so a large mapping
+        /// file costs nothing to check and a file that is not xml at all fails quietly.
+        ///
+        /// An empty mapping table is accepted: a mapping file that has not matched anything yet
+        /// is a legitimate starting point, and the import fills it in.
+        /// </summary>
+        private static bool IsCarboMappingFile(string fileName)
+        {
+            try
+            {
+                System.Xml.XmlReaderSettings readerSettings = new System.Xml.XmlReaderSettings();
+
+                //A mapping file needs neither a DTD nor an external entity, and this one may have
+                //come off a share or out of an email. Both are a way for such a file to reach
+                //back into the local file system, so neither is allowed here.
+                readerSettings.DtdProcessing = System.Xml.DtdProcessing.Prohibit;
+                readerSettings.XmlResolver = null;
+
+                using (FileStream stream = File.Open(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (System.Xml.XmlReader reader = System.Xml.XmlReader.Create(stream, readerSettings))
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.NodeType != System.Xml.XmlNodeType.Element)
+                            continue;
+
+                        //The first element is the root; whatever it is, that settles it.
+                        return string.Equals(reader.Name, "CarboMapFile", StringComparison.OrdinalIgnoreCase);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //Unreadable or not xml. Either way it is not a mapping file we can use.
+            }
+
+            return false;
         }
     }
 }

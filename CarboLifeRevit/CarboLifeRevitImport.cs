@@ -352,6 +352,14 @@ namespace CarboLifeRevit
                     : CarboGroupSettings.GIAFromRevitEstimate;
             }
 
+            //The GIA is settled now, so the A0 allowance can be seeded off it rather than off the
+            //area of 1 the constructor had to use. Safe on the update path too: UpdateProject
+            //copies elements and groups onto the file being updated and never touches its A0 or
+            //its area, so the value set here is discarded there along with the rest of this
+            //throwaway project - which is what should happen, A0 being the user's own figure once
+            //a project exists.
+            myProject.SeedA0FromArea();
+
             //Apply settings to new projectfile
             myProject.RevitImportSettings = settings;
 
