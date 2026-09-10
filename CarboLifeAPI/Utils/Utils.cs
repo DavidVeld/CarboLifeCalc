@@ -22,6 +22,43 @@ namespace CarboLifeAPI
     {
         public static DataTable LoadCSV(string strFilePath)
         {
+            char separator;
+            return LoadCSV(strFilePath, out separator);
+        }
+
+        /// <summary>
+        /// Reads a csv into a DataTable, and says which field separator the file turned out to
+        /// use.
+        /// </summary>
+        /// <remarks>
+        /// The separator is sniffed from the header rather than assumed, because Excel saves a
+        /// csv with the machine's list separator: a semicolon wherever the decimal point is a
+        /// comma. Read as commas such a file is one column wide, so every row fails and an
+        /// import comes back empty with nothing said. Files this application writes are always
+        /// comma separated and are unaffected.
+        ///
+        /// A caller that parses numbers should note that a semicolon file almost certainly
+        /// carries comma decimal points too - that is why Excel changed the separator.
+        /// </remarks>
+        public static DataTable LoadCSV(string strFilePath, out char separator)
+        {
+            separator = ',';
+
+            //Sniff the first line before the real read. StreamReader strips the byte order mark
+            //here just as it does below, so the header comes back clean either way.
+            try
+            {
+                using (StreamReader sniffer = new StreamReader(strFilePath))
+                {
+                    string headerLine = sniffer.ReadLine();
+                    separator = CsvFileReader.DetectSeparator(headerLine);
+                }
+            }
+            catch (Exception)
+            {
+                //Unreadable: let the real read below raise it in the usual way.
+            }
+
             //Call up a table
             DataTable dt = new DataTable("");
 
@@ -29,6 +66,8 @@ namespace CarboLifeAPI
             int rowcount = 0;
             using (CsvFileReader reader = new CsvFileReader(strFilePath, Encoding.UTF8, true))
             {
+                reader.Separator = separator;
+
                 CsvRow row = new CsvRow();
                 while (reader.ReadRow(row))
                 {

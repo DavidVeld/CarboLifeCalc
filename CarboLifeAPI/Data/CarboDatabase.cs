@@ -761,6 +761,18 @@ namespace CarboLifeAPI.Data
 
         public bool SyncCSVMaterials(CarboDatabase importedDb, bool deleteMaterials)
         {
+            //An empty import is never a legitimate instruction, and with deleteMaterials set it
+            //used to empty the library: Clear() ran first and then there was nothing to put
+            //back. A csv the reader could not make sense of - the wrong column order, or one
+            //Excel re-saved semicolon separated - produced exactly that empty list, and the
+            //method still returned true, so the caller reported success and the editor wrote
+            //the emptied library back over the user's template file.
+            //
+            //Refusing here rather than in the dialog because this is the last point before the
+            //data is gone, and more than one caller reaches it.
+            if (importedDb == null || importedDb.CarboMaterialList == null || importedDb.CarboMaterialList.Count == 0)
+                return false;
+
             //validate Ids
             foreach(CarboMaterial cm in importedDb.CarboMaterialList)
             {

@@ -718,7 +718,20 @@ Do you want to buy me a coffee and you get a key to remove this message?";
 
                     CarboDatabase cd = bufferDatabase.DeSerializeXML(materialOpenPath);
 
-                    MaterialEditor mateditor = new MaterialEditor(cd.CarboMaterialList[0].Name, cd);
+                    //A library with no materials in it would have thrown on the [0] here.
+
+
+                    string firstMaterialName = cd != null && cd.CarboMaterialList != null && cd.CarboMaterialList.Count > 0
+
+
+                        ? cd.CarboMaterialList[0].Name
+
+
+                        : "";
+
+
+
+                    MaterialEditor mateditor = new MaterialEditor(firstMaterialName, cd);
                     mateditor.ShowDialog();
 
                     if (mateditor.acceptNew == true)
@@ -802,28 +815,55 @@ Do you want to buy me a coffee and you get a key to remove this message?";
             if (elementImportDialog.isAccepted == true)
             {
                 List<CarboElement> elements = elementImportDialog.elementList;
-                if (elements.Count > 0)
+
+                if (elements == null || elements.Count == 0)
                 {
-                    try
+                    MessageBox.Show("No elements were read from the file, so the project has been "
+                        + "left as it was.", "Nothing imported", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                //Importing throws the existing model away. That was happening with no warning and
+                //no way back, which matters most in the case that used to be silent: a file where
+                //only some of the rows could be read still got this far, and the old groups were
+                //gone before anyone could see the import was short.
+                int existingGroups = carboLifeProject == null || carboLifeProject.getGroupList == null
+                    ? 0
+                    : carboLifeProject.getGroupList.Count;
+
+                if (existingGroups > 0)
+                {
+                    MessageBoxResult answer = MessageBox.Show(
+                        "Importing replaces everything in this project." + Environment.NewLine + Environment.NewLine
+                        + "The " + existingGroups + " group(s) currently in the project will be deleted and "
+                        + "rebuilt from the " + elements.Count + " element(s) in this file."
+                        + Environment.NewLine + Environment.NewLine + "Continue?",
+                        "Confirm replacing the model", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                    if (answer != MessageBoxResult.Yes)
+                        return;
+                }
+
+                try
+                {
+                    //
+                    carboLifeProject.DeleteAllGroups();
+
+                    foreach (CarboElement ce in elements)
                     {
-                        //
-                        carboLifeProject.DeleteAllGroups();
-
-                        foreach (CarboElement ce in elements)
-                        {
-                            carboLifeProject.AddorUpdateElement(ce);
-                        }
-
-                        //run once;
-                        carboLifeProject.CreateGroups();
-                        //carboLifeProject.CreateReinforcementGroup();
-                        carboLifeProject.CalculateProject();
+                        carboLifeProject.AddorUpdateElement(ce);
                     }
-                    catch (Exception ex)
-                    {
 
-                    }
-                    
+                    //run once;
+                    carboLifeProject.CreateGroups();
+                    //carboLifeProject.CreateReinforcementGroup();
+                    carboLifeProject.CalculateProject();
+                }
+                catch (Exception ex)
+                {
+                    //Was swallowed, so a half built project looked like a successful import.
+                    MessageBox.Show("The elements could not be imported: " + ex.Message,
+                        "Import failed", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
@@ -831,16 +871,63 @@ Do you want to buy me a coffee and you get a key to remove this message?";
         private void mnu_ImportLCAx_Click(object sender, RoutedEventArgs e)
         {
             string path = JsonExportUtils.GetLCAxFileLocation();
-            if (path != null && path != "")
+
+            if (path == null || path == "")
+                return;
+
+            //Opening an LCAx file replaces whatever is open, so offer to save first, the same
+            //as opening a project does.
+            if (carboLifeProject != null && carboLifeProject.justSaved == false)
             {
-                CarboProject carboLifeProject = null;
-                bool ok = JsonExportUtils.openLCAx(path,out carboLifeProject);
-                if (ok == true)
+                MessageBoxResult save = MessageBox.Show("Do you want to save your project first?",
+                    "Warning", MessageBoxButton.YesNoCancel);
+
+                if (save == MessageBoxResult.Cancel)
+                    return;
+
+                if (save == MessageBoxResult.Yes)
                 {
-                    this.carboLifeProject = carboLifeProject;
-                    
+                    if (carboLifeProject.filePath == "")
+                    {
+                        if (SaveFileAs() == false)
+                            return;
+                    }
+                    else if (SaveFile(carboLifeProject.filePath) == false)
+                    {
+                        return;
+                    }
                 }
             }
+
+            JsonExportUtils.LcaxImportResult imported = JsonExportUtils.ImportLCAx(path);
+
+            if (imported.Project == null || imported.AssembliesRead == 0)
+            {
+                MessageBox.Show("Nothing could be read from this LCAx file, so the project has "
+                    + "been left as it was." + Environment.NewLine + Environment.NewLine
+                    + imported.Summary(),
+                    "Nothing imported", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            //What came in, and just as importantly what did not: a file from another tool is
+            //not obliged to carry everything this application calculates from.
+            MessageBoxResult go = MessageBox.Show(imported.Summary() + Environment.NewLine
+                + "This replaces the project that is currently open. Continue?",
+                "Import LCAx", MessageBoxButton.YesNo, MessageBoxImage.Information);
+
+            if (go != MessageBoxResult.Yes)
+                return;
+
+            carboLifeProject = imported.Project;
+            carboLifeProject.CalculateProject();
+
+            tab_Main.Visibility = Visibility.Hidden;
+            tab_Main.Visibility = Visibility.Visible;
+
+            //Imported, not saved: this project has no file of its own yet.
+            carboLifeProject.justSaved = false;
+            carboLifeProject.filePath = "";
         }
 
         private void mnu_ExportToOneClick_Click(object sender, RoutedEventArgs e)

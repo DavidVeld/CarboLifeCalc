@@ -245,6 +245,21 @@ namespace CarboLifeAPI.Data
         }
 
         /// <summary>
+        /// The description with any provenance note taken off the end.
+        /// </summary>
+        /// <remarks>
+        /// The note is a working annotation for the person doing the mapping - "[CHECK MATERIAL
+        /// 0.54] REVIEW: Matched 'Steel Generic' [name 1.00, family steel]" - and it was reaching
+        /// the OneClick and IStructE description columns verbatim, so it travelled out to
+        /// whoever those files were sent to. Anything a document leaving this application puts
+        /// in front of a reader should come through here.
+        /// </remarks>
+        public string GetPlainDescription()
+        {
+            return StripProvenanceNote(Description);
+        }
+
+        /// <summary>
         /// Removes a provenance note previously written by SetMaterialProvenance, leaving the rest
         /// of the description alone.
         /// </summary>

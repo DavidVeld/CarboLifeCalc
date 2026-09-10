@@ -69,33 +69,27 @@ namespace CarboLifeAPI
 
         public static string GetOpenCSVLocation()
         {
-            //Create a File and save it as a HTML File
             OpenFileDialog openDialog = new OpenFileDialog();
             openDialog.Title = "Open CSV File";
-            openDialog.Filter = "csv file |*.csv";
-            openDialog.FilterIndex = 2;
+            openDialog.Filter = "csv file|*.csv";
+            openDialog.FilterIndex = 1;
             openDialog.RestoreDirectory = true;
 
-            openDialog.ShowDialog();
+            if (openDialog.ShowDialog() != true)
+                return null;
 
             string path = openDialog.FileName;
 
-            //Check if the file can be read and written to.
-            if (File.Exists(path))
-            {
-                //File Should exist
-                bool isInUse = IsFileLocked(path);
+            if (string.IsNullOrWhiteSpace(path) || File.Exists(path) == false)
+                return null;
 
-                if (isInUse == true)
-                    return null;
-            }
-            else
-            {
-                //File doesnt Exist
-                if (path != "")
-                    return null;
-            }
-
+            //IsFileReadable, not IsFileLocked. IsFileLocked asks for write access, so it
+            //answers "can I save over this" - and a file the user still has open in Excel
+            //fails it. Opening one to read is exactly what this dialog is for, and the
+            //material import dialog's own instructions tell the user to edit the file in
+            //Excel first, so refusing an open file made the documented workflow a no-op.
+            if (IsFileReadable(path) == false)
+                return null;
 
             //If this part is reached; return the valid path;
             return path;
@@ -781,15 +775,20 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                     double tA1 = 0, tEC = 0, tA4 = 0, tA5 = 0, tB = 0, tC = 0, tD = 0, tM = 0, tS = 0;
                     foreach (CarboGroup cbg in carboLifeProject.getGroupList)
                     {
+                        if (cbg.Material == null)
+                            continue;
+
+                        //The group getters, so the B4 replacement count and the group's
+                        //Additional allowance are in these totals. ECI * Mass left both out.
                         tEC += cbg.EC;
-                        tA1 += (cbg.Material.ECI_A1A3 * cbg.Mass);
-                        tA4 += (cbg.Material.ECI_A4 * cbg.Mass);
-                        tA5 += (cbg.Material.ECI_A5 * cbg.Mass);
-                        tB += (cbg.Material.ECI_B1B5 * cbg.Mass);
-                        tC += (cbg.Material.ECI_C1C4 * cbg.Mass);
-                        tD += (cbg.Material.ECI_D * cbg.Mass);
-                        tM += (cbg.Material.ECI_Mix * cbg.Mass);
-                        tS += (cbg.Material.ECI_Seq * cbg.Mass);
+                        tA1 += cbg.getTotalA1A3;
+                        tA4 += cbg.getTotalA4;
+                        tA5 += cbg.getTotalA5;
+                        tB += cbg.getTotalB1B7;
+                        tC += cbg.getTotalC1C4;
+                        tD += cbg.getTotalD;
+                        tM += cbg.getTotalMix;
+                        tS += cbg.getTotalSeq;
                     }
 
                     // Perform Sums for new columns
@@ -900,7 +899,11 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                 row.Add(carboLifeProject.SocialCost);               //4
                 row.Add(carboLifeProject.Area);                     //5
                 row.Add(carboLifeProject.AreaNew);                  //6
-                row.Add(carboLifeProject.A0GlobalUncert);           //7
+                //A0GlobalUncert is in kgCO2e while A5Global, b675Global and C1Global beside it are
+
+                //all tCO2e. This column used to carry the kg figure, a thousand times its neighbours.
+
+                row.Add(carboLifeProject.A0GlobalUncert / 1000);           //7
                 row.Add(carboLifeProject.A5Global);                 //8
                 row.Add(carboLifeProject.b675Global);               //9
                 row.Add(carboLifeProject.C1Global);                 //10
@@ -997,15 +1000,20 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
 
                     foreach (CarboGroup cbg in cglist)
                     {
+                        if (cbg.Material == null)
+                            continue;
+
+                        //The group getters, so the B4 replacement count and the group's
+                        //Additional allowance are in these totals. ECI * Mass left both out.
                         totalEC += cbg.EC;
-                        totalA1 += (cbg.Material.ECI_A1A3 * cbg.Mass);
-                        totalA4 += (cbg.Material.ECI_A4 * cbg.Mass);
-                        totalA5 += (cbg.Material.ECI_A5 * cbg.Mass);
-                        totalB += (cbg.Material.ECI_B1B5 * cbg.Mass);
-                        totalC += (cbg.Material.ECI_C1C4 * cbg.Mass);
-                        totalD += (cbg.Material.ECI_D * cbg.Mass);
-                        totalM += (cbg.Material.ECI_Mix * cbg.Mass);
-                        totalS += (cbg.Material.ECI_Seq * cbg.Mass);
+                        totalA1 += cbg.getTotalA1A3;
+                        totalA4 += cbg.getTotalA4;
+                        totalA5 += cbg.getTotalA5;
+                        totalB += cbg.getTotalB1B7;
+                        totalC += cbg.getTotalC1C4;
+                        totalD += cbg.getTotalD;
+                        totalM += cbg.getTotalMix;
+                        totalS += cbg.getTotalSeq;
                     }
 
 
@@ -1019,7 +1027,13 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                     row.Add(carboLifeProject.Area);             //5
                     row.Add(carboLifeProject.AreaNew);          //6
 
-                    row.Add(carboLifeProject.A0GlobalUncert);   //7
+                    //A0GlobalUncert is in kgCO2e while A5Global, b675Global and C1Global beside it are
+
+
+                    //all tCO2e. This column used to carry the kg figure, a thousand times its neighbours.
+
+
+                    row.Add(carboLifeProject.A0GlobalUncert / 1000);   //7
                     row.Add(carboLifeProject.A5Global);         //8
                     row.Add(carboLifeProject.b675Global);       //9
                     row.Add(carboLifeProject.C1Global);         //10
@@ -1156,7 +1170,8 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                 "[Formula]",                //4
                 "[Waste] (%)",              //5
                 "[B4] (x)",                 //6
-                "[Additional] (tCO2e/kg)",  //7
+                //This column carries grp.Additional, which is an intensity per kg, not a tonnage.
+                "[Additional] (kgCO2e/kg)", //7
                 "Total Volume",             //8
                 "Density (kg/m³)",          //9
                 "Mass (kg)",                //10
@@ -1198,14 +1213,31 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                     row.Add(grp.EC);                    //12
                     row.Add(grp.PerCent);               //13
 
-                    row.Add((grp.Material.ECI_A1A3 * grp.Mass) / 1000);   //14
-                    row.Add((grp.Material.ECI_A4 * grp.Mass) / 1000);     //15
-                    row.Add((grp.Material.ECI_A5 * grp.Mass) / 1000);     //16
-                    row.Add((grp.Material.ECI_B1B5) / 1000);              //17
-                    row.Add((grp.Material.ECI_C1C4 * grp.Mass) / 1000);   //18
-                    row.Add((grp.Material.ECI_D * grp.Mass) / 1000);      //19
-                    row.Add((grp.Material.ECI_Seq * grp.Mass) / 1000);    //20
-                    row.Add((grp.Material.ECI_Mix * grp.Mass) / 1000);    //21
+                    //The group's own getters rather than a hand rolled ECI * Mass, which had
+                    //drifted from them in three ways. They were missing the B4 replacement
+                    //count, which the Excel exporter this was adapted from did apply, so a
+                    //group on a 20 year element life in a 60 year building reported a third of
+                    //its carbon. B1-B5 had lost its "* grp.Mass" altogether and was writing an
+                    //intensity divided by a thousand into a tonnage column. And the Additional
+                    //allowance never reached the last column, where getTotalMix folds it in.
+                    //These getters are what the application itself displays.
+                    if (grp.Material != null)
+                    {
+                        row.Add(grp.getTotalA1A3 / 1000);   //14
+                        row.Add(grp.getTotalA4 / 1000);     //15
+                        row.Add(grp.getTotalA5 / 1000);     //16
+                        row.Add(grp.getTotalB1B7 / 1000);   //17
+                        row.Add(grp.getTotalC1C4 / 1000);   //18
+                        row.Add(grp.getTotalD / 1000);      //19
+                        row.Add(grp.getTotalSeq / 1000);    //20
+                        row.Add(grp.getTotalMix / 1000);    //21
+                    }
+                    else
+                    {
+                        //Nothing to price the group with, and the getters would throw on it.
+                        for (int i = 14; i <= 21; i++)
+                            row.Add(0d);
+                    }
 
                     fileString.Append(row.ToLine());
                 }
@@ -1226,89 +1258,25 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             StringBuilder fileString = new StringBuilder();
 
             //Create Headers;
-            fileString.Append(new CsvLine().AddRange(
-                "Id",                           //0
-                "Category",                     //1
-                "Name",                         //2
-                "SubCategory",                  //3
+            fileString.Append(getElementCsvHeader().ToLine());
 
-                "Material Name",                //4
-                "Carbo Material Name",          //5
-                "Level",                        //6
-                "Level Name",                   //7
+            //One calculation feeds this file, the JSON export and the LCAx export.
+            //
+            //This used to look the material up again per element through getClosestMatch, which
+            //goes back to the database and so ignores any edit made to the material inside the
+            //project, and it then priced the element with a bare ECI * mass: no B4 replacement
+            //count and no group Additional. The same file's group rows, a hundred lines further
+            //down, went through the group getters and did include both, so one file answered the
+            //same question two different ways.
+            //
+            //converToJsProject reads the material off the group the element actually sits in,
+            //applies B4 and Additional exactly as CarboGroup.getTotalXX does, sorts by Id and
+            //appends one row per element-less group, which is why the second loop that used to
+            //be here has gone.
+            JsCarboProject jsProject = JsonExportUtils.converToJsProject(carboLifeProject);
 
-                "Volume (m3)",                  //8
-                "Volume Total (m3)",            //9
-                "Volume Cumulative (m3)",       //10
-
-                "Density (kg/m3)",              //11
-                "Mass (kg)",                    //12
-                "Grade",                        //13
-
-                "ECI (kgCO2e/kg)",              //14
-                "ECI Cumulative (kgCO2e/kg)",   //15
-                "EC (kgCO2e)",                  //16
-                "EC Cumulative (kgCO2e)",       //17
-
-                "isExisting",                   //18
-                "isDemolished",                 //19
-                "isSubstructure",               //20
-                "includeInCalc",                //21
-                "Additional",                   //22
-
-                "EC A1A3 (kgCO2e)",             //23
-                "EC A4 (kgCO2e)",               //24
-                "EC A5 (kgCO2e)",               //25
-                "EC B1B7 (kgCO2e)",             //26
-                "EC C1C4 (kgCO2e)",             //27
-                "EC D (kgCO2e)",                //28
-                "EC Misc (kgCO2e)",             //29
-                "EC Sequestration (kgCO2e)",    //30
-
-                "Correction",                   //31
-                "RC Density (kg/m3)",           //32
-                "Area (m2)",                    //33
-                "GUID"                          //34
-                ).ToLine());
-
-        IList<CarboElement> elementList = carboLifeProject.getElementsFromGroups().ToList();
-
-
-            foreach (CarboElement el in elementList)
+            foreach (JsCarboElement el in jsProject.elementList)
             {
-                //Argument 2 is the Revit MaterialClass. el.Category is the Revit ELEMENT category
-                //("Walls", "Structural Framing"), which is a different concept and used to poison
-                //the match here.
-                CarboMaterial material = carboLifeProject.CarboDatabase.getClosestMatch(el.CarboMaterialName, el.MaterialCategoryName, el.Grade);
-
-                //Individual Totals Elements
-                double mass = el.Mass;
-                if (mass == 0)
-                    mass = el.Volume_Total * el.Density;
-
-                //The matcher can come back empty. Every impact figure below reads off it, so it
-                //used to take the whole export down with a null reference, on a background
-                //thread where nothing was watching. The element keeps its row and its geometry,
-                //and the figures that need a material are left at zero.
-                double density = el.Density;
-                string grade = el.Grade;
-                double ecA1A3 = 0, ecA4 = 0, ecA5 = 0, ecB1B5 = 0, ecC1C4 = 0, ecD = 0, ecMix = 0, ecSeq = 0;
-
-                if (material != null)
-                {
-                    density = material.Density;
-                    grade = material.Grade;
-
-                    ecA1A3 = mass * material.ECI_A1A3;
-                    ecA4 = mass * material.ECI_A4;
-                    ecA5 = mass * material.ECI_A5;
-                    ecB1B5 = mass * material.ECI_B1B5;
-                    ecC1C4 = mass * material.ECI_C1C4;
-                    ecD = mass * material.ECI_D;
-                    ecMix = mass * material.ECI_Mix;
-                    ecSeq = mass * material.ECI_Seq;
-                }
-
                 CsvLine row = new CsvLine();
 
                 row.Add(el.Id);                     //0
@@ -1324,9 +1292,9 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                 row.Add(el.Volume_Total);           //9
                 row.Add(el.Volume_Cumulative);      //10
 
-                row.Add(density);                   //11
+                row.Add(el.Density);                //11
                 row.Add(el.Mass);                   //12
-                row.Add(grade);                     //13
+                row.Add(el.Grade);                  //13
 
                 row.Add(el.ECI);                    //14
                 row.Add(el.ECI_Cumulative);         //15
@@ -1340,77 +1308,23 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
 
                 row.Add(el.AdditionalData);         //22
 
-                row.Add(ecA1A3);                    //23
-                row.Add(ecA4);                      //24
-                row.Add(ecA5);                      //25
-                row.Add(ecB1B5);                    //26
-                row.Add(ecC1C4);                    //27
-                row.Add(ecD);                       //28
-                row.Add(ecMix);                     //29
-                row.Add(ecSeq);                     //30
+                row.Add(el.EC_A1A3_Total);          //23
+                row.Add(el.EC_A4_Total);            //24
+                row.Add(el.EC_A5_Total);            //25
+                row.Add(el.EC_B1B7_Total);          //26
+                row.Add(el.EC_C1C4_Total);          //27
+                row.Add(el.EC_D_Total);             //28
+                row.Add(el.EC_Mix_Total);           //29
+                row.Add(el.EC_Sequestration_Total); //30
 
                 row.Add(el.Correction);             //31
-                row.Add(el.rcDensity);              //32
+                row.Add(el.RCDensity);              //32
                 row.Add(el.Area);                   //33
                 row.Add(el.GUID);                   //34
+                //Appended: the Revit material class, which the matcher uses beside the name.
+                row.Add(el.MaterialCategoryName);   //35
 
                 fileString.Append(row.ToLine());
-            }
-
-            foreach (CarboGroup grp in carboLifeProject.getGroupList)
-            {
-                if (grp.AllElements.Count == 0)
-                {
-                    string materialName = grp.Material != null ? grp.Material.Name : "";
-
-                    CsvLine row = new CsvLine();
-
-                    row.Add(grp.Id);                //0
-                    row.Add(grp.Category);          //1
-                    row.Add(grp.Description);       //2
-                    row.Add(grp.SubCategory);       //3
-                    row.Add(materialName);          //4
-                    row.Add(materialName);          //5
-                    row.AddEmpty();                 //6  Level
-                    row.AddEmpty();                 //7  Level Name
-
-                    row.Add(grp.Volume);            //8
-                    row.Add(grp.TotalVolume);       //9
-                    row.Add(grp.TotalVolume);       //10
-
-                    row.Add(grp.Density);           //11
-                    row.Add(grp.Mass);              //12
-                    row.Add(grp.Grade);             //13
-
-                    row.Add(grp.ECI);               //14
-                    row.Add(grp.ECI);               //15
-                    row.Add(grp.EC);                //16
-                    row.Add(grp.EC);                //17
-
-                    row.Add(grp.isExisting);        //18
-                    row.Add(grp.isDemolished);      //19
-                    row.Add(grp.isSubstructure);    //20
-                    row.Add(true);                  //21 includeInCalc
-
-                    row.Add(grp.additionalData);    //22
-
-                    //Individual Totals Elements
-                    row.Add(grp.getTotalA1A3);      //23
-                    row.Add(grp.getTotalA4);        //24
-                    row.Add(grp.getTotalA5);        //25
-                    row.Add(grp.getTotalB1B7);      //26
-                    row.Add(grp.getTotalC1C4);      //27
-                    row.Add(grp.getTotalD);         //28
-                    row.Add(grp.getTotalMix);       //29
-                    row.Add(grp.getTotalSeq);       //30
-
-                    row.Add(grp.Correction);        //31
-                    row.Add(grp.RcDensity);         //32
-                    row.Add(0d);                    //33 Area
-                    row.AddEmpty();                 //34 GUID, these rows are a group not an element
-
-                    fileString.Append(row.ToLine());
-                }
             }
 
             WriteCVSFile(fileString.ToString(), exportPath);
@@ -1453,7 +1367,7 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
         /// with a trailing comma while the header did not, giving the rows one phantom column
         /// more than the header. Utils.LoadCSV throws on that when the file is read back.
         /// </remarks>
-        internal sealed class CsvLine
+        public sealed class CsvLine
         {
             private readonly StringBuilder builder = new StringBuilder();
             private int fieldCount;
@@ -1481,13 +1395,24 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                 return AppendField(CVSFormat(value));
             }
 
+            /// <summary>
+            /// A number. NaN and the infinities are written as 0: they would otherwise arrive as
+            /// the words "NaN" and "Infinity" in a numeric column, which Excel shows as text and
+            /// the reader cannot make a number of.
+            /// </summary>
             public CsvLine Add(double value)
             {
+                if (double.IsNaN(value) || double.IsInfinity(value))
+                    return AppendField("0");
+
                 return AppendField(value.ToString(CultureInfo.InvariantCulture));
             }
 
             public CsvLine Add(double value, int decimals)
             {
+                if (double.IsNaN(value) || double.IsInfinity(value))
+                    return AppendField("0");
+
                 return AppendField(Math.Round(value, decimals).ToString(CultureInfo.InvariantCulture));
             }
 
@@ -1526,6 +1451,69 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             {
                 return builder.ToString() + Environment.NewLine;
             }
+        }
+
+        /// <summary>
+        /// The element csv header, used by the Elements export and by the import template so the
+        /// two cannot drift apart. GetElementsFromCVSFile reads a file in this shape back, so an
+        /// exported Elements.csv is a valid import file: edit it and bring it straight back in.
+        /// </summary>
+        /// <remarks>
+        /// The columns after Grade are computed - mass, densities, the ECI and EC figures - and
+        /// are written for reading, not for reading back. An import takes the geometry, the
+        /// names and the flags, and the calculation works the rest out again from the material.
+        ///
+        /// A column may only ever be APPENDED. Material Class went on the end for that reason:
+        /// it is what the matcher uses beside the material name, and without it a round trip
+        /// came back matching on the name alone.
+        /// </remarks>
+        private static CsvLine getElementCsvHeader()
+        {
+            return new CsvLine().AddRange(
+                "Id",                           //0
+                "Category",                     //1
+                "Name",                         //2
+                "SubCategory",                  //3
+
+                "Material Name",                //4
+                "Carbo Material Name",          //5
+                "Level",                        //6
+                "Level Name",                   //7
+
+                "Volume (m3)",                  //8
+                "Volume Total (m3)",            //9
+                "Volume Cumulative (m3)",       //10
+
+                "Density (kg/m3)",              //11
+                "Mass (kg)",                    //12
+                "Grade",                        //13
+
+                "ECI (kgCO2e/kg)",              //14
+                "ECI Cumulative (kgCO2e/kg)",   //15
+                "EC (kgCO2e)",                  //16
+                "EC Cumulative (kgCO2e)",       //17
+
+                "isExisting",                   //18
+                "isDemolished",                 //19
+                "isSubstructure",               //20
+                "includeInCalc",                //21
+                "Additional",                   //22
+
+                "EC A1A3 (kgCO2e)",             //23
+                "EC A4 (kgCO2e)",               //24
+                "EC A5 (kgCO2e)",               //25
+                "EC B1B7 (kgCO2e)",             //26
+                "EC C1C4 (kgCO2e)",             //27
+                "EC D (kgCO2e)",                //28
+                "EC Misc (kgCO2e)",             //29
+                "EC Sequestration (kgCO2e)",    //30
+
+                "Correction",                   //31
+                "RC Density (kg/m3)",           //32
+                "Area (m2)",                    //33
+                "GUID",                         //34
+                "Material Class"                //35
+                );
         }
 
         /// <summary>
@@ -1736,9 +1724,31 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
 
         public static List<CarboMaterial> GetMaterialDatabaseFromCVSFile(string importPath)
         {
-            List<CarboMaterial> cmList = new List<CarboMaterial>();
+            int rowsRead;
+            int rowsSkipped;
+            return GetMaterialDatabaseFromCVSFile(importPath, out rowsRead, out rowsSkipped);
+        }
 
-            if (File.Exists(importPath) && IsFileLocked(importPath) == false)
+        /// <summary>
+        /// Reads a material csv, and reports how many rows made it and how many were skipped.
+        /// </summary>
+        /// <remarks>
+        /// The counts exist so a caller can tell "this file held no materials" from "this file
+        /// could not be read". Every row is parsed inside its own try, so a file with the wrong
+        /// column order, or one Excel has re-saved in a shape this cannot read, used to come
+        /// back as an empty list with nothing said about it - and an empty list handed to
+        /// CarboDatabase.SyncCSVMaterials with "delete materials not in list" ticked emptied
+        /// the user's library.
+        /// </remarks>
+        public static List<CarboMaterial> GetMaterialDatabaseFromCVSFile(string importPath, out int rowsRead, out int rowsSkipped)
+        {
+            List<CarboMaterial> cmList = new List<CarboMaterial>();
+            rowsRead = 0;
+            rowsSkipped = 0;
+
+            //IsFileReadable, not IsFileLocked: this only reads the file, and the dialog that
+            //calls it asks the user to edit the csv in Excel first.
+            if (File.Exists(importPath) && IsFileReadable(importPath))
             {
                 System.Data.DataTable profileTable = Utils.LoadCSV(importPath);
 
@@ -1779,9 +1789,15 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
 
 
                         cmList.Add(cm);
+                        rowsRead++;
                     }
                     catch(Exception ex)
-                    { }
+                    {
+                        //A row in the wrong shape, most often a file whose columns have been
+                        //reordered or which was saved in a layout this cannot read. Counted so
+                        //the caller can say so rather than presenting an empty list as success.
+                        rowsSkipped++;
+                    }
                 }
             }
 
@@ -1793,30 +1809,58 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
                 return false;
 
+            //The same layout the Elements export writes, so the template and an exported
+            //Elements.csv are one format: whichever of the two a user has in front of them
+            //behaves the same way coming back in.
             StringBuilder fileString = new StringBuilder();
 
             //Create Headers;
-            fileString.Append(new CsvLine().AddRange(
-                "Id",               //0
-                "Name",             //1
-                "Category",         //2
-                "MaterialName",     //3
-                "Volume",           //4
-                "IsSubstructure",   //5
-                "Level",            //6
-                "AdditionalData"    //7
-                ).ToLine());
+            fileString.Append(getElementCsvHeader().ToLine());
 
-            fileString.Append(new CsvLine().AddRange(
-                "999999",           //0
-                "Example Element",  //1
-                "Floor",            //2
-                "Concrete",         //3
-                "100",              //4
-                "FALSE",            //5
-                "Level 01",         //6
-                "Transfer slab"     //7
-                ).ToLine());
+            //One example row. The computed columns are left empty on purpose: mass, density and
+            //the ECI and EC figures are worked out from the material and the volume on import,
+            //so anything typed into them is ignored. A non round volume, because the importer
+            //used to round every one of them to a whole number.
+            CsvLine example = new CsvLine();
+
+            example.Add(999999L);           //0  Id
+            example.Add("Floors");          //1  Category
+            example.Add("Example Element"); //2  Name
+            example.AddEmpty();             //3  SubCategory
+            example.Add("Concrete");        //4  Material Name
+            example.AddEmpty();             //5  Carbo Material Name, filled in by the matcher
+            example.Add(0d);                //6  Level, the elevation
+            example.Add("Level 01");        //7  Level Name
+            example.Add(12.5);              //8  Volume (m3)
+            example.AddEmpty();             //9  Volume Total, computed
+            example.AddEmpty();             //10 Volume Cumulative, computed
+            example.AddEmpty();             //11 Density, computed
+            example.AddEmpty();             //12 Mass, computed
+            example.Add("C32/40");          //13 Grade
+            example.AddEmpty();             //14 ECI, computed
+            example.AddEmpty();             //15 ECI Cumulative, computed
+            example.AddEmpty();             //16 EC, computed
+            example.AddEmpty();             //17 EC Cumulative, computed
+            example.Add(false);             //18 isExisting
+            example.Add(false);             //19 isDemolished
+            example.Add(false);             //20 isSubstructure
+            example.Add(true);              //21 includeInCalc
+            example.Add("Transfer slab");   //22 Additional
+            example.AddEmpty();             //23 EC A1A3, computed
+            example.AddEmpty();             //24 EC A4, computed
+            example.AddEmpty();             //25 EC A5, computed
+            example.AddEmpty();             //26 EC B1B7, computed
+            example.AddEmpty();             //27 EC C1C4, computed
+            example.AddEmpty();             //28 EC D, computed
+            example.AddEmpty();             //29 EC Misc, computed
+            example.AddEmpty();             //30 EC Sequestration, computed
+            example.AddEmpty();             //31 Correction
+            example.AddEmpty();             //32 RC Density
+            example.AddEmpty();             //33 Area
+            example.AddEmpty();             //34 GUID
+            example.Add("Concrete");        //35 Material Class
+
+            fileString.Append(example.ToLine());
 
             try
             {
@@ -1830,36 +1874,217 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
         }
         public static List<CarboElement> GetElementsFromCVSFile(string importPath)
         {
+            int rowsRead;
+            int rowsSkipped;
+            return GetElementsFromCVSFile(importPath, out rowsRead, out rowsSkipped);
+        }
+
+        /// <summary>
+        /// Reads elements out of a csv, and reports how many rows made it and how many did not.
+        /// </summary>
+        /// <remarks>
+        /// Columns are matched by HEADER NAME, not by position, which is what lets one file
+        /// serve both directions: an exported Elements.csv can be edited and brought straight
+        /// back in, so a problem can be chased through the same file on the way out and the way
+        /// back. Reading by position meant the export and the import were two different layouts
+        /// that happened to share a first column, and feeding an exported Elements.csv to the
+        /// importer read Category as the name, a material name as a volume, and rejected every
+        /// row.
+        ///
+        /// The narrow old template still works: names are compared with spaces, case and any
+        /// trailing "(m3)" style unit ignored, and where the two files call the same thing by
+        /// different names both spellings are accepted. "Level" is the one genuine collision -
+        /// the old template used it for the level's NAME, the export uses it for the elevation -
+        /// so it is read as an elevation only when a separate "Level Name" column is present.
+        ///
+        /// Mass, density and every ECI or EC column are deliberately not read. They are results,
+        /// and the calculation works them out again from the material and the volume; taking
+        /// them from the file would let a stale number outlive the thing it was computed from.
+        /// </remarks>
+        public static List<CarboElement> GetElementsFromCVSFile(string importPath, out int rowsRead, out int rowsSkipped)
+        {
             List<CarboElement> elementList = new List<CarboElement>();
+            rowsRead = 0;
+            rowsSkipped = 0;
 
-            if (File.Exists(importPath) && IsFileLocked(importPath) == false)
+            //IsFileReadable, not IsFileLocked: reading a file the user still has open in Excel
+            //is fine, and refusing it made the import silently do nothing.
+            if (File.Exists(importPath) == false || IsFileReadable(importPath) == false)
+                return elementList;
+
+            System.Data.DataTable profileTable = Utils.LoadCSV(importPath);
+
+            if (profileTable == null || profileTable.Columns.Count == 0)
+                return elementList;
+
+            Dictionary<string, int> columns = buildColumnMap(profileTable);
+
+            //Nothing recognisable in the header: report every row as unread rather than hand
+            //back a list of blank elements that would look like a successful import.
+            if (findColumn(columns, "volume") < 0 && findColumn(columns, "materialname") < 0)
             {
-                System.Data.DataTable profileTable = Utils.LoadCSV(importPath);
+                rowsSkipped = profileTable.Rows.Count;
+                return elementList;
+            }
 
-                foreach (DataRow dr in profileTable.Rows)
+            //The old template's "Level" is a name; the export's is an elevation beside a
+            //separate "Level Name".
+            bool levelIsElevation = findColumn(columns, "levelname") >= 0;
+
+            foreach (DataRow dr in profileTable.Rows)
+            {
+                try
                 {
-                    try
-                    {
-                        CarboElement element = new CarboElement();
+                    CarboElement element = new CarboElement();
 
-                        element.Id = Convert.ToInt32(ReadCsvDouble(dr[0].ToString()));
-                        element.Name = dr[1].ToString();
-                        element.Category = dr[2].ToString();
-                        element.MaterialName = dr[3].ToString();
-                        element.Volume = Convert.ToInt32(ReadCsvDouble(dr[4].ToString()));
-                        element.isSubstructure = bool.Parse((dr[5].ToString()));
-                        element.LevelName = dr[6].ToString();
-                        element.AdditionalData = dr[7].ToString();
-                        elementList.Add(element);
-                    }
-                    catch(Exception ex)
-                    {
+                    //Int64: Revit has used 64 bit element ids since 2024, and Convert.ToInt32
+                    //threw an overflow on them, which dropped the row without a word.
+                    element.Id = (long)Math.Round(readCsvDouble(dr, columns, "id"));
 
+                    element.Name = readCsvText(dr, columns, "name");
+                    element.Category = readCsvText(dr, columns, "category");
+                    element.SubCategory = readCsvText(dr, columns, "subcategory");
+
+                    element.MaterialName = readCsvText(dr, columns, "materialname");
+                    element.CarboMaterialName = readCsvText(dr, columns, "carbomaterialname");
+                    element.MaterialCategoryName = readCsvText(dr, columns, "materialclass");
+
+                    if (levelIsElevation)
+                    {
+                        element.Level = readCsvDouble(dr, columns, "level");
+                        element.LevelName = readCsvText(dr, columns, "levelname");
                     }
+                    else
+                    {
+                        element.LevelName = readCsvText(dr, columns, "level");
+                    }
+
+                    //A double. Convert.ToInt32 here rounded every volume to a whole number, so
+                    //2.5 m3 came in as 2 and 0.8 as 1.
+                    element.Volume = readCsvDouble(dr, columns, "volume");
+                    element.Volume_Total = element.Volume;
+
+                    element.Grade = readCsvText(dr, columns, "grade");
+                    element.Correction = readCsvText(dr, columns, "correction");
+                    element.AdditionalData = readCsvText(dr, columns, "additionaldata", "additional");
+                    element.GUID = readCsvText(dr, columns, "guid");
+
+                    element.Area = readCsvDouble(dr, columns, "area");
+                    element.rcDensity = readCsvDouble(dr, columns, "rcdensity");
+
+                    element.isExisting = readCsvBool(dr, columns, "isexisting", false);
+                    element.isDemolished = readCsvBool(dr, columns, "isdemolished", false);
+                    element.isSubstructure = readCsvBool(dr, columns, "issubstructure", false);
+                    element.includeInCalc = readCsvBool(dr, columns, "includeincalc", true);
+
+                    elementList.Add(element);
+                    rowsRead++;
+                }
+                catch (Exception ex)
+                {
+                    rowsSkipped++;
                 }
             }
+
             return elementList;
 
+        }
+
+        /// <summary>
+        /// Header name to column index, normalised so "Volume (m3)", "Volume" and "volume" are
+        /// the same column.
+        /// </summary>
+        //Qualified: Excel interop puts a DataTable of its own in scope in this file.
+        private static Dictionary<string, int> buildColumnMap(System.Data.DataTable table)
+        {
+            Dictionary<string, int> map = new Dictionary<string, int>();
+
+            for (int i = 0; i < table.Columns.Count; i++)
+            {
+                string key = normaliseColumnName(table.Columns[i].ColumnName);
+
+                if (key.Length > 0 && map.ContainsKey(key) == false)
+                    map.Add(key, i);
+            }
+
+            return map;
+        }
+
+        /// <summary>
+        /// Lowercased, with any bracketed unit and every non alphanumeric character removed, so
+        /// "Volume (m3)", "Volume" and "RC Density (kg/m3)" reduce to volume, volume, rcdensity.
+        /// </summary>
+        private static string normaliseColumnName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return "";
+
+            string text = name;
+
+            int bracket = text.IndexOf('(');
+            if (bracket >= 0)
+                text = text.Substring(0, bracket);
+
+            StringBuilder builder = new StringBuilder();
+
+            foreach (char c in text)
+            {
+                if (char.IsLetterOrDigit(c))
+                    builder.Append(char.ToLowerInvariant(c));
+            }
+
+            return builder.ToString();
+        }
+
+        /// <summary>First of the given names that the file actually has, or -1.</summary>
+        private static int findColumn(Dictionary<string, int> columns, params string[] names)
+        {
+            foreach (string name in names)
+            {
+                int index;
+                if (columns.TryGetValue(name, out index))
+                    return index;
+            }
+
+            return -1;
+        }
+
+        private static string readCsvText(DataRow dr, Dictionary<string, int> columns, params string[] names)
+        {
+            int index = findColumn(columns, names);
+
+            if (index < 0 || index >= dr.Table.Columns.Count)
+                return "";
+
+            return dr[index] == null ? "" : dr[index].ToString();
+        }
+
+        private static double readCsvDouble(DataRow dr, Dictionary<string, int> columns, params string[] names)
+        {
+            return ReadCsvDouble(readCsvText(dr, columns, names));
+        }
+
+        /// <summary>
+        /// A flag out of a csv. bool.Parse takes only "true" and "false", so a column filled in
+        /// as Yes, No, 1 or 0 - which is what a spreadsheet invites - threw, and the row was
+        /// dropped without a word.
+        /// </summary>
+        private static bool readCsvBool(DataRow dr, Dictionary<string, int> columns, string name, bool fallback)
+        {
+            string value = readCsvText(dr, columns, name);
+
+            if (string.IsNullOrWhiteSpace(value))
+                return fallback;
+
+            string text = value.Trim().ToLowerInvariant();
+
+            if (text == "true" || text == "yes" || text == "y" || text == "1" || text == "x")
+                return true;
+
+            if (text == "false" || text == "no" || text == "n" || text == "0")
+                return false;
+
+            return fallback;
         }
 
         /// <summary>
@@ -1867,11 +2092,286 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
         /// </summary>
         /// <param name="carboLifeProject"></param>
         /// <param name="savePath"></param>
+        /// <summary>
+        /// Turns a csv this application has just written into an xlsx, through Excel, and offers
+        /// to open it. Returns false and leaves the csv in place when it cannot.
+        /// </summary>
+        /// <remarks>
+        /// One copy for the OneClick and IStructE exports, which each had their own and neither
+        /// of which was safe:
+        ///
+        /// DisplayAlerts was left on, so saving onto an existing xlsx raised Excel's overwrite
+        /// prompt inside an instance with no window - the export simply stopped, waiting on a
+        /// dialog nobody could see.
+        ///
+        /// Nothing was released. Quit() on its own routinely leaves EXCEL.EXE resident, so every
+        /// export leaked another one.
+        ///
+        /// Workbooks.Open reads a text file with the machine's own decimal separator, and these
+        /// csv files are written invariant, so on a comma decimal machine Excel took "5.555" for
+        /// text or a date. OpenText takes the separators as arguments, which is the whole reason
+        /// for using it here.
+        ///
+        /// And the csv was deleted before anyone knew whether the conversion had worked.
+        /// </remarks>
+        private static bool ConvertCsvToXlsx(string csvPath, out string xlsxPath, out string message)
+        {
+            xlsxPath = Path.Combine(Path.GetDirectoryName(csvPath),
+                                    Path.GetFileNameWithoutExtension(csvPath) + ".xlsx");
+            message = "";
+
+            if (File.Exists(xlsxPath) && IsFileLocked(xlsxPath) == true)
+            {
+                message = "The file " + Path.GetFileName(xlsxPath) + " is open in another program. "
+                    + "Close it and export again." + Environment.NewLine + Environment.NewLine
+                    + "The csv has been kept at:" + Environment.NewLine + csvPath;
+                return false;
+            }
+
+            Application app = null;
+            Workbooks books = null;
+            Workbook wb = null;
+
+            try
+            {
+                try
+                {
+                    app = new Application();
+                }
+                catch (Exception)
+                {
+                    //Not an IOException, which is all the old code caught, so this used to
+                    //escape into the caller.
+                    message = "Excel is needed to write the xlsx file and it could not be started."
+                        + Environment.NewLine + Environment.NewLine
+                        + "The data has been written as a csv instead:" + Environment.NewLine + csvPath;
+                    return false;
+                }
+
+                app.Visible = false;
+                //Without this an existing xlsx brings up the overwrite prompt in a hidden Excel.
+                app.DisplayAlerts = false;
+                app.ScreenUpdating = false;
+
+                books = app.Workbooks;
+
+                //Origin 65001 is UTF-8, matching the byte order mark WriteCVSFile writes, and the
+                //separators are stated rather than taken from the machine.
+                books.OpenText(csvPath,
+                    65001,                          //Origin, UTF-8
+                    1,                              //StartRow
+                    XlTextParsingType.xlDelimited,  //DataType
+                    XlTextQualifier.xlTextQualifierDoubleQuote,
+                    false,                          //ConsecutiveDelimiter
+                    false,                          //Tab
+                    false,                          //Semicolon
+                    true,                           //Comma
+                    false,                          //Space
+                    false,                          //Other
+                    Type.Missing,                   //OtherChar
+                    Type.Missing,                   //FieldInfo
+                    Type.Missing,                   //TextVisualLayout
+                    ".",                            //DecimalSeparator
+                    ",",                            //ThousandsSeparator
+                    Type.Missing,                   //TrailingMinusNumbers
+                    false);                         //Local
+
+                wb = app.ActiveWorkbook;
+
+                if (wb == null)
+                {
+                    message = "Excel did not open the exported csv." + Environment.NewLine + Environment.NewLine
+                        + "The data has been kept as a csv:" + Environment.NewLine + csvPath;
+                    return false;
+                }
+
+                wb.SaveAs(xlsxPath, XlFileFormat.xlOpenXMLWorkbook, Type.Missing, Type.Missing, Type.Missing,
+                          Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing,
+                          Type.Missing, Type.Missing, Type.Missing);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                message = "The xlsx file could not be written: " + ex.Message + Environment.NewLine + Environment.NewLine
+                    + "The data has been kept as a csv:" + Environment.NewLine + csvPath;
+                return false;
+            }
+            finally
+            {
+                //Closed and released in reverse order, each guarded: a throw part way through
+                //must not leave Excel running with the file open.
+                try { if (wb != null) wb.Close(false, Type.Missing, Type.Missing); }
+                catch (Exception) { }
+
+                try { if (app != null) app.Quit(); }
+                catch (Exception) { }
+
+                //FinalReleaseComObject, not ReleaseComObject. The latter drops one reference,
+                //and a wrapper can hold more than one, which is why Excel was measured still
+                //running after this block had finished. Then the collections: the wrappers are
+                //finalizable, so until they have actually been finalised Excel still has a
+                //client and stays resident. Two passes, because the first can queue more.
+                releaseComObject(wb);
+                releaseComObject(books);
+                releaseComObject(app);
+
+                wb = null;
+                books = null;
+                app = null;
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+
+        private static void releaseComObject(object comObject)
+        {
+            if (comObject == null)
+                return;
+
+            try
+            {
+                if (Marshal.IsComObject(comObject))
+                    Marshal.FinalReleaseComObject(comObject);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        /// <summary>
+        /// Reports the outcome of a csv to xlsx conversion and offers to open the result.
+        /// </summary>
+        private static void ReportXlsxExport(bool converted, string csvPath, string xlsxPath, string message)
+        {
+            if (converted == false)
+            {
+                //The csv is deliberately left where it is, so the export is never a total loss.
+                MessageBox.Show(message, "Exported as csv", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            //Only now that the xlsx exists.
+            if (File.Exists(csvPath) && IsFileLocked(csvPath) == false)
+            {
+                try { File.Delete(csvPath); }
+                catch (Exception) { }
+            }
+
+            if (File.Exists(xlsxPath) == false)
+                return;
+
+            MessageBoxResult result = MessageBox.Show("Exported Data Successfully! Press ok to open the file.",
+                "Success", MessageBoxButton.OKCancel);
+
+            if (result == MessageBoxResult.OK)
+            {
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.FileName = xlsxPath;
+                startInfo.UseShellExecute = true;
+
+                Process.Start(startInfo);
+            }
+        }
+
+        /// <summary>
+        /// One collated line of generated allowance in the OneClick export: the reinforcement,
+        /// steel connection and timber connection groups are built one per parent group, so a
+        /// model of any size makes dozens of near identical rows out of them.
+        /// </summary>
+        private sealed class CollatedAllowance
+        {
+            public string Category { get; set; }
+            public string MaterialName { get; set; }
+
+            /// <summary>Steel, Concrete, Timber and so on, off the assigned material.</summary>
+            public string MaterialType { get; set; }
+            public string Grade { get; set; }
+
+            public double Quantity { get; set; }
+
+
+            public int GroupCount { get; set; }
+            public long ServiceLifeYears { get; set; }
+
+            /// <summary>False once two of the collated groups disagree on their service life.</summary>
+            public bool ServiceLifeAgrees { get; set; }
+
+            public CollatedAllowance()
+            {
+                Category = "";
+                MaterialName = "";
+                MaterialType = "";
+                Grade = "";
+                Quantity = 0;
+                GroupCount = 0;
+                ServiceLifeYears = 0;
+                ServiceLifeAgrees = true;
+            }
+        }
+
+        /// <summary>
+        /// Steel, Concrete, Timber and so on: the assigned material's own category, which is the
+        /// vocabulary the IStructE tables shipped with this application use for material type.
+        /// </summary>
+        private static string getMaterialType(CarboGroup grp)
+        {
+            if (grp == null || grp.Material == null)
+                return "";
+
+            return grp.Material.Category;
+        }
+
+        /// <summary>
+        /// The service life to declare for a group, in years.
+        ///
+        /// OneClick reads this as the component's own service life and works replacements out
+        /// from it, so a group carrying a shorter element design life - what the calculation
+        /// calls B4 - has to send that rather than the building's life, which is what every row
+        /// used to carry.
+        /// </summary>
+        private static long getServiceLifeYears(CarboGroup grp, CarboProject carboLifeProject)
+        {
+            if (grp == null || grp.inUseProperties == null)
+                return carboLifeProject.designLife;
+
+            //designLifeToEnd is the "lasts as long as the building" switch and it is on by
+            //default, while elementdesignlife sits at its own default of 50 until something
+            //calls CarboB1B7Properties.calculate. Reading the number without checking the
+            //switch therefore reported 50 years for every untouched group, whatever the
+            //building's design life was.
+            if (grp.inUseProperties.designLifeToEnd == true)
+                return carboLifeProject.designLife;
+
+            if (grp.inUseProperties.elementdesignlife > 0)
+                return (long)Math.Round(grp.inUseProperties.elementdesignlife);
+
+            return carboLifeProject.designLife;
+        }
+
         public static void ExportToOneClick(CarboProject carboLifeProject, string savePath)
         {
             if (File.Exists(savePath) && IsFileLocked(savePath) == true)
                 return;
 
+            WriteCVSFile(BuildOneClickCsv(carboLifeProject), savePath);
+
+            string xlsxPath;
+            string message;
+            bool converted = ConvertCsvToXlsx(savePath, out xlsxPath, out message);
+
+            ReportXlsxExport(converted, savePath, xlsxPath, message);
+        }
+
+        /// <summary>
+        /// The OneClick export as csv text, separated from the file and Excel handling so the
+        /// content can be read and checked without either.
+        /// </summary>
+        public static string BuildOneClickCsv(CarboProject carboLifeProject)
+        {
             StringBuilder fileString = new StringBuilder();
 
             //CLASS	IFCMATERIAL	QUANTITY	QTY_TYPE	THICKNESS_MM	TRANSPORT_KM	TRANSPORTDISTANCE_KMLEG2	YM_TRANSPORTATION_KM	COMMENT	SERVICELIFE	WASTAGE	MATERIAL REUSED	COSTPERUNIT	TOTALCOST	BREEAM Int'l Mat 01 classification (use to choose)	MAT01CLASS	BREEAM UK / RICS Classification (use to choose)	LEVEL	BYGNINGSDEL (use to choose)	BYGNINGSDEL	Talo2000 Rakennusosa (use to choose)	TALO2000	KG DIN 276 (use to choose)	KGDIN276	SFB (use to choose)	SFB	NS 3454 (use to choose)	NS3454	Level(s) - Language	Level(s) (use to choose)	CLASSIFICATION_LEVELS
@@ -1886,65 +2386,108 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                 "WASTAGE"       //6
                 ).ToLine());
 
+            //The generated allowances - reinforcement, steel connections, timber connections -
+            //are built one group per parent group, so a model of any size produces dozens of
+            //near identical rows. They are collated into one line each here.
+            //
+            //Collated per allowance rather than into one line for all of them, because the three
+            //generators take their material from three separate settings: merging them would put
+            //rebar, connection steel and timber fixings under a single material name, and
+            //OneClick prices what that name says. Keying on category and material name gives one
+            //line per allowance, which is one line where there were dozens.
+            Dictionary<string, CollatedAllowance> collated = new Dictionary<string, CollatedAllowance>();
+            List<string> collatedOrder = new List<string>();
+
             //Advanced
             foreach (CarboGroup grp in carboLifeProject.getGroupList)
             {
                 try
                 {
+                    //A group can compute to nothing - every element in it excluded, or a group
+                    //of substructure with the substructure switch off - and a zero quantity row
+                    //is only noise in the receiving tool.
+                    if (grp.TotalVolume <= 0)
+                        continue;
+
+                    if (grp.IsAutoGenerated() == true)
+                    {
+                        //Keyed on category and material together. Both hold spaces, so they are
+                        //carried on the accumulator rather than parsed back out of the key.
+                        string key = (grp.Category ?? "") + "|" + (grp.MaterialName ?? "");
+
+                        CollatedAllowance allowance;
+
+                        if (collated.TryGetValue(key, out allowance) == false)
+                        {
+                            allowance = new CollatedAllowance();
+                            allowance.Category = grp.Category;
+                            allowance.MaterialName = grp.MaterialName;
+                            allowance.ServiceLifeYears = getServiceLifeYears(grp, carboLifeProject);
+
+                            collated.Add(key, allowance);
+                            collatedOrder.Add(key);
+                        }
+
+                        allowance.Quantity += grp.TotalVolume;
+                        allowance.GroupCount++;
+
+                        //The collated groups need not share a service life. Where they all agree
+                        //that value is reported; where they do not there is no single honest
+                        //answer, so it falls back to the building's life.
+                        if (allowance.ServiceLifeYears != getServiceLifeYears(grp, carboLifeProject))
+                            allowance.ServiceLifeAgrees = false;
+
+                        continue;
+                    }
+
                     CsvLine row = new CsvLine();
 
-                    row.Add(grp.Category);                  //0
-                    row.Add(grp.MaterialName);              //1
-                    row.Add(grp.TotalVolume);               //2
-                    row.Add("M3");                          //3
-                    row.Add(grp.Description);               //4
-                    row.Add(carboLifeProject.designLife);   //5
-                    row.Add(0d);                            //6
+                    row.Add(grp.Category);                                      //0
+                    row.Add(grp.MaterialName);                                  //1
+                    row.Add(grp.TotalVolume);                                   //2
+                    row.Add("M3");                                              //3
+                    //The plain description: the matcher's review note is an internal working
+                    //annotation and this file goes to somebody else.
+                    row.Add(grp.GetPlainDescription());                         //4
+                    row.Add(getServiceLifeYears(grp, carboLifeProject));        //5
+                    row.Add(0d);                                                //6
 
                     fileString.Append(row.ToLine());
                 }
-                catch (IOException ex)
+                catch (Exception ex)
                 {
+                    //Nothing in here touches a file, so the IOException this used to catch could
+                    //not fire, while a null material on a group would escape the whole export.
                     Console.WriteLine("An error occurred while writing the file: " + ex.Message);
                 }
             }
 
-            WriteCVSFile(fileString.ToString(), savePath);
-            string targetPath = Path.GetDirectoryName(savePath);
-            string filename = Path.GetFileNameWithoutExtension(savePath);
-
-            try
+            //The collated allowance lines, after the groups that stand for real elements.
+            foreach (string key in collatedOrder)
             {
-                string targetPathFull = targetPath + "\\" + filename + ".xlsx";
+                CollatedAllowance allowance = collated[key];
 
-                Application app = new Application();
-                Workbook wb = app.Workbooks.Open(savePath, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-                wb.SaveAs(targetPath + "\\" + filename + ".xlsx", XlFileFormat.xlOpenXMLWorkbook, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-                wb.Close();
-                app.Quit();
-                if(File.Exists(savePath) && DataExportUtils.IsFileLocked(savePath) == false)
-                    File.Delete(savePath);
+                if (allowance.Quantity <= 0)
+                    continue;
 
-                if (File.Exists(targetPathFull))
-                {
-                    var result = MessageBox.Show("Exported Data Successfully! Press ok to open the file.", "Success", MessageBoxButton.OKCancel);
-                    if (result == MessageBoxResult.OK)
-                    {
-                        var startInfo = new ProcessStartInfo
-                        {
-                            FileName = targetPathFull, 
-                            UseShellExecute = true 
-                        };
-                        Process.Start(startInfo);
-                    }
-                }
+                CsvLine row = new CsvLine();
 
+                row.Add(allowance.Category);                                    //0 CLASS
+                row.Add(allowance.MaterialName);                                //1 IFCMATERIAL
+                row.Add(allowance.Quantity);                                    //2 QUANTITY
+                row.Add("M3");                                                  //3 QTY_TYPE
+                row.Add("Generated allowance, collated from "
+                        + allowance.GroupCount.ToString(CultureInfo.InvariantCulture)
+                        + " group(s)");                                         //4 COMMENT
+                row.Add(allowance.ServiceLifeAgrees
+                        ? allowance.ServiceLifeYears
+                        : (long)carboLifeProject.designLife);                   //5 SERVICELIFE
+                row.Add(0d);                                                    //6 WASTAGE
 
+                fileString.Append(row.ToLine());
             }
-            catch (IOException ex)
-            {
-                Console.WriteLine("An error occurred while writing the file: " + ex.Message);
-            }
+
+            return fileString.ToString();
         }
 
         public static void ExportToIstructEClick(CarboProject carboLifeProject, string savePath)
@@ -1952,26 +2495,61 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             if (File.Exists(savePath) && IsFileLocked(savePath) == true)
                 return;
 
+            carboLifeProject.CalculateProject();
+
+            WriteCVSFile(BuildIstructECsv(carboLifeProject), savePath);
+
+            string xlsxPath;
+            string message;
+            bool converted = ConvertCsvToXlsx(savePath, out xlsxPath, out message);
+
+            ReportXlsxExport(converted, savePath, xlsxPath, message);
+        }
+
+        /// <summary>
+        /// The IStructE export as csv text, separated from the file and Excel handling so the
+        /// content can be read and checked without either.
+        /// </summary>
+        public static string BuildIstructECsv(CarboProject carboLifeProject)
+        {
             StringBuilder fileString = new StringBuilder();
 
             //Material	Material Type	Material Specification	Structural Element	Description	Component Lifespan [years]	Aspect of Structure	Significant Temporary Works?	Number of Times Temp Works Used before EOL	Volume [m3] or Mass [kg]?	"Material Quantity
-            carboLifeProject.CalculateProject();
 
-            //Create Headers;
+            //This file is pasted into the IStructE spreadsheet, so it is positional: the columns
+            //have to be the template's columns, in the template's order, and there may not be an
+            //extra one on the end. The names below are the template's own, copied from the row
+            //recorded above, so a reader can line the two up before pasting.
+            //
+            //It used to carry a twelfth column, "Quantity Clean", holding the volume before
+            //waste and the uncertainty factor. There is no twelfth column in the template, so it
+            //ran into whatever sits beside it. The same figure is in the Results csv, as
+            //"Base Volume" beside "Total Volume".
+            //
+            //Blank columns are deliberate. The ones this cannot know are left empty for the user
+            //to fill in once the data is in the sheet.
             fileString.Append(new CsvLine().AddRange(
-                "Material",                     //0
-                "Material Type",                //1
-                "Material Specification",       //2
-                "Structural Element",           //3
-                "Description",                  //4
-                "Component Lifespan",           //5
-                "Aspect",                       //6
-                "Significant",                  //7
-                "Number of Times Temp Works",   //8
-                "Volume or Mass",               //9
-                "Quantity",                     //10
-                "Quantity Clean"                //11
+                "Material",                                     //0
+                "Material Type",                                //1
+                "Material Specification",                       //2
+                "Structural Element",                           //3
+                "Description",                                  //4
+                "Component Lifespan [years]",                   //5
+                "Aspect of Structure",                          //6
+                "Significant Temporary Works?",                 //7
+                "Number of Times Temp Works Used before EOL",   //8
+                "Volume [m3] or Mass [kg]?",                    //9
+                "Material Quantity"                             //10
                 ).ToLine());
+
+            //The generated allowances - reinforcement, steel connections, timber connections -
+            //are built one group per parent group, so they arrive as dozens of near identical
+            //rows. Collated to one line each, keyed on category and material so reinforcement,
+            //the metal connection allowance and the timber connection allowance stay apart:
+            //they take their material from three separate settings and the tool prices what the
+            //material says.
+            Dictionary<string, CollatedAllowance> collated = new Dictionary<string, CollatedAllowance>();
+            List<string> collatedOrder = new List<string>();
 
             //Advanced
             foreach (CarboGroup grp in carboLifeProject.getGroupList)
@@ -1980,64 +2558,100 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                 {
                     grp.CalculateTotals();
 
+                    //A group can compute to nothing, and a zero quantity row is only noise in
+                    //the receiving spreadsheet.
+                    if (grp.TotalVolume <= 0)
+                        continue;
+
+                    if (grp.IsAutoGenerated() == true)
+                    {
+                        string key = (grp.Category ?? "") + "|" + (grp.MaterialName ?? "");
+
+                        CollatedAllowance allowance;
+
+                        if (collated.TryGetValue(key, out allowance) == false)
+                        {
+                            allowance = new CollatedAllowance();
+                            allowance.Category = grp.Category;
+                            allowance.MaterialName = grp.MaterialName;
+                            allowance.MaterialType = getMaterialType(grp);
+                            allowance.Grade = grp.Grade;
+                            allowance.ServiceLifeYears = getServiceLifeYears(grp, carboLifeProject);
+
+                            collated.Add(key, allowance);
+                            collatedOrder.Add(key);
+                        }
+
+                        allowance.Quantity += grp.TotalVolume;
+                        allowance.GroupCount++;
+
+                        if (allowance.ServiceLifeYears != getServiceLifeYears(grp, carboLifeProject))
+                            allowance.ServiceLifeAgrees = false;
+
+                        continue;
+                    }
+
                     CsvLine row = new CsvLine();
 
-                    row.Add(grp.MaterialName);                              //0
-                    row.AddEmpty();                                         //1
-                    row.AddEmpty();                                         //2
-                    row.AddEmpty();                                         //3
-                    row.Add(grp.MaterialName + " " + grp.Description);      //4
-                    row.Add("60");                                          //5
-                    row.Add("New Build");                                   //6
-                    row.Add("No");                                          //7
-                    row.AddEmpty();                                         //8
-                    row.Add("Volume [m3]");                                 //9
-                    row.Add(grp.TotalVolume);                               //10
-                    row.Add(grp.Volume);                                    //11
+                    row.Add(grp.MaterialName);                              //0  Material
+                    //Material Type and Material Specification were both left empty while the
+                    //group has always carried them.
+                    row.Add(getMaterialType(grp));                          //1  Material Type
+                    row.Add(grp.Grade);                                     //2  Material Specification
+                    row.AddEmpty();                                         //3  Structural Element
+                    //The plain description: the matcher's review note is an internal working
+                    //annotation and this file goes to somebody else.
+                    row.Add((grp.MaterialName + " " + grp.GetPlainDescription()).Trim()); //4 Description
+                    //Was the literal "60" on every row, whatever the project's design life or
+                    //the group's own element design life said.
+                    row.Add(getServiceLifeYears(grp, carboLifeProject));    //5  Component Lifespan
+                    row.Add("New Build");                                   //6  Aspect
+                    row.Add("No");                                          //7  Significant
+                    row.AddEmpty();                                         //8  Number of Times Temp Works
+                    row.Add("Volume [m3]");                                 //9  Volume or Mass
+                    row.Add(grp.TotalVolume);                               //10 Material Quantity
 
                     fileString.Append(row.ToLine());
                 }
-                catch (IOException ex)
+                catch (Exception ex)
                 {
+                    //Nothing in here touches a file, so the IOException this used to catch could
+                    //not fire, while a null material on a group would escape the whole export.
                     Console.WriteLine("An error occurred while writing the file: " + ex.Message);
                 }
             }
 
-            WriteCVSFile(fileString.ToString(), savePath);
-            string targetPath = Path.GetDirectoryName(savePath);
-            string filename = Path.GetFileNameWithoutExtension(savePath);
-
-            try
+            //The collated allowance lines, after the groups that stand for real elements.
+            foreach (string key in collatedOrder)
             {
-                string targetPathFull = targetPath + "\\" + filename + ".xlsx";
-                Application app = new Application();
-                Workbook wb = app.Workbooks.Open(savePath, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-                wb.SaveAs(targetPathFull, XlFileFormat.xlOpenXMLWorkbook, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-                wb.Close();
-                app.Quit();
+                CollatedAllowance allowance = collated[key];
 
-                if (File.Exists(savePath) && DataExportUtils.IsFileLocked(savePath) == false)
-                    File.Delete(savePath);
+                if (allowance.Quantity <= 0)
+                    continue;
 
-                if (File.Exists(targetPathFull))
-                {
-                    var result = MessageBox.Show("Exported Successfully! Press ok to open the file.","Success",MessageBoxButton.OKCancel);
-                    if(result == MessageBoxResult.OK)
-                    {
-                            var startInfo = new ProcessStartInfo
-                            {
-                                FileName = targetPathFull, // Path to your HTML file
-                                UseShellExecute = true // This is the key part that allows it to open with the default application
-                            };
-                        Process.Start(startInfo);
-                    }
-                }
+                CsvLine row = new CsvLine();
 
+                row.Add(allowance.MaterialName);                            //0  Material
+                row.Add(allowance.MaterialType);                            //1  Material Type
+                row.Add(allowance.Grade);                                   //2  Material Specification
+                row.AddEmpty();                                             //3  Structural Element
+                row.Add(allowance.MaterialName + " " + allowance.Category
+                        + ", generated allowance collated from "
+                        + allowance.GroupCount.ToString(CultureInfo.InvariantCulture)
+                        + " group(s)");                                     //4  Description
+                row.Add(allowance.ServiceLifeAgrees
+                        ? allowance.ServiceLifeYears
+                        : (long)carboLifeProject.designLife);               //5  Component Lifespan
+                row.Add("New Build");                                       //6  Aspect
+                row.Add("No");                                              //7  Significant
+                row.AddEmpty();                                             //8  Number of Times Temp Works
+                row.Add("Volume [m3]");                                     //9  Volume or Mass
+                row.Add(allowance.Quantity);                                //10 Material Quantity
+
+                fileString.Append(row.ToLine());
             }
-            catch (IOException ex)
-            {
-                MessageBox.Show("An error occurred while writing the file: " + ex.Message);
-            }
+
+            return fileString.ToString();
         }
 
         public class LookupItem

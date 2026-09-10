@@ -232,7 +232,7 @@ namespace LCAx
     public partial class Assembly
     {
         [JsonPropertyName("type")]
-        public string Type { get { return "actual"; } }
+        public string Type { get; set; }
 
         [JsonPropertyName("classification")]
         public List<Classification> Classification { get; set; }
@@ -266,6 +266,7 @@ namespace LCAx
 
         public Assembly()
         {
+            Type = "actual";
             Id = string.Empty;
             Name = string.Empty;
             Products = new Dictionary<string, Product>();
@@ -281,7 +282,7 @@ namespace LCAx
     public partial class Product
     {
         [JsonPropertyName("type")]
-        public string Type { get { return "actual"; } }
+        public string Type { get; set; }
 
         [JsonPropertyName("description")]
         public string Description { get; set; }
@@ -318,6 +319,7 @@ namespace LCAx
 
         public Product()
         {
+            Type = "actual";
             Id = string.Empty;
             ImpactData = new Epd();
             Name = string.Empty;
@@ -335,7 +337,7 @@ namespace LCAx
     public partial class Epd
     {
         [JsonPropertyName("type")]
-        public string Type { get { return "actual"; } }
+        public string Type { get; set; }
 
         [JsonPropertyName("comment")]
         public string Comment { get; set; }
@@ -389,6 +391,7 @@ namespace LCAx
 
         public Epd()
         {
+            Type = "actual";
             DeclaredUnit = Unit.Unknown;
             FormatVersion = string.Empty;
             Id = string.Empty;
@@ -511,7 +514,7 @@ namespace LCAx
     public partial class ProjectInfo
     {
         [JsonPropertyName("type")]
-        public string Type { get { return "buildingInfo"; } }
+        public string Type { get; set; }
 
         [JsonPropertyName("buildingCompletionYear")]
         public long? BuildingCompletionYear { get; set; }
@@ -584,6 +587,7 @@ namespace LCAx
 
         public ProjectInfo()
         {
+            Type = "buildingInfo";
             BuildingType = LCAx.BuildingType.Other;
             BuildingTypology = new List<BuildingTypology>();
             FloorsAboveGround = 0;

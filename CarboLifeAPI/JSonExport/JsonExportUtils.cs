@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 //using System.Web.Script.Serialization;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -878,27 +879,669 @@ namespace CarboLifeAPI
 
 
         /// <summary>
-        /// Reads the project header out of an LCAx file. This does NOT rebuild the groups,
-        /// elements or materials, so what comes back is an empty project carrying a name, a
-        /// number, a description and a design life.
+        /// What came out of an LCAx file, and what did not.
         /// </summary>
-        private static CarboProject convertToCarboCalcProject(Lcax lcaxFile)
+        public class LcaxImportResult
+        {
+            public CarboProject Project { get; set; }
+
+            public int AssembliesRead { get; set; }
+            public int AssembliesSkipped { get; set; }
+            public int ProductsRead { get; set; }
+            public int ProductsSkipped { get; set; }
+
+            /// <summary>Anything the reader had to decide, guess or give up on.</summary>
+            public List<string> Notes { get; set; }
+
+            public LcaxImportResult()
+            {
+                Notes = new List<string>();
+            }
+
+            public void Note(string text)
+            {
+                if (Notes.Contains(text) == false)
+                    Notes.Add(text);
+            }
+
+            public string Summary()
+            {
+                StringBuilder text = new StringBuilder();
+
+                text.AppendLine(AssembliesRead.ToString(CultureInfo.InvariantCulture) + " assembly/assemblies read as groups, "
+                    + ProductsRead.ToString(CultureInfo.InvariantCulture) + " product(s) read as elements.");
+
+                if (AssembliesSkipped > 0 || ProductsSkipped > 0)
+                    text.AppendLine("Skipped: " + AssembliesSkipped.ToString(CultureInfo.InvariantCulture)
+                        + " assembly/assemblies and " + ProductsSkipped.ToString(CultureInfo.InvariantCulture) + " product(s).");
+
+                if (Notes.Count > 0)
+                {
+                    text.AppendLine();
+                    foreach (string note in Notes)
+                        text.AppendLine("- " + note);
+                }
+
+                return text.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Reads an LCAx file into a Carbo Life project.
+        /// </summary>
+        /// <remarks>
+        /// The mapping is the reverse of the export: an assembly is a group, a product is an
+        /// element, and a product's EPD is a material. What cannot be reversed is reported
+        /// rather than guessed at, because a file from another tool is not obliged to carry what
+        /// this application needs.
+        ///
+        /// Two things are worth knowing about the numbers.
+        ///
+        /// This application works in volume and density: mass is volume times density and the
+        /// carbon is mass times an intensity per kg. An LCAx product states a quantity in
+        /// whatever unit suits it, and an EPD states its impacts per its own declared unit, so
+        /// both have to be brought back to that footing. Density is looked for in the EPD's
+        /// metadata (which is where this application's own export puts it) and then in the EPD's
+        /// unit conversions. Where it cannot be found, the density is set to 1 so that the
+        /// carbon still comes out right, and a note says so, because the mass column will then
+        /// read as the volume rather than as a mass.
+        ///
+        /// EN 15804 counts biogenic carbon inside the total, and the export writes sequestration
+        /// into gwp a1a3 with a copy of its own under gwp_bio. Reading back therefore subtracts
+        /// gwp_bio from a1a3 and puts it in the sequestration field, or the credit would be
+        /// counted twice. The mix allowance has no life cycle stage of its own in LCAx, so it
+        /// cannot be separated out again and stays inside a1a3: a round trip through LCAx moves
+        /// that number rather than losing it.
+        /// </remarks>
+        public static LcaxImportResult ImportLCAx(string path)
+        {
+            LcaxImportResult result = new LcaxImportResult();
+
+            if (string.IsNullOrWhiteSpace(path) || File.Exists(path) == false)
+            {
+                result.Note("The file could not be found.");
+                return result;
+            }
+
+            Lcax lcaxFile;
+
+            try
+            {
+                string jsonString = File.ReadAllText(path);
+                lcaxFile = JsonSerializer.Deserialize<Lcax>(jsonString, getLcaxSerializerOptions());
+            }
+            catch (Exception ex)
+            {
+                result.Note("The file could not be read as LCAx: " + ex.Message);
+                return result;
+            }
+
+            if (lcaxFile == null)
+            {
+                result.Note("The file held no LCAx project.");
+                return result;
+            }
+
+            result.Project = convertToCarboCalcProject(lcaxFile, result);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Builds a Carbo Life project out of a deserialised LCAx file.
+        /// </summary>
+        private static CarboProject convertToCarboCalcProject(Lcax lcaxFile, LcaxImportResult report)
         {
             CarboProject result = new CarboProject();
 
             if (lcaxFile == null)
                 return result;
 
-            result.Name = lcaxFile.Name;
+            //Header
+            result.Name = string.IsNullOrWhiteSpace(lcaxFile.Name) ? "Imported LCAx project" : lcaxFile.Name;
             result.Description = lcaxFile.Description;
             result.Number = lcaxFile.Id;
 
-            if (lcaxFile.ReferenceStudyPeriod.HasValue == true)
-                result.designLife = lcaxFile.ReferenceStudyPeriod.Value;
+            if (string.IsNullOrWhiteSpace(lcaxFile.Comment) == false)
+                result.Category = lcaxFile.Comment;
+
+            if (lcaxFile.ReferenceStudyPeriod.HasValue && lcaxFile.ReferenceStudyPeriod.Value > 0)
+                result.designLife = (int)lcaxFile.ReferenceStudyPeriod.Value;
+
+            //The uncertainty factor cuts both ways and has to be handled on both sides.
+            //
+            //A quantity in an LCAx file is final: whatever allowance the tool that wrote it made
+            //is already inside the number. But this application does not store a quantity, it
+            //stores a net volume and re-applies waste and uncertainty on every calculation, and
+            //it also DERIVES the A5 and C1 globals from the floor area times that same factor.
+            //Zeroing the factor therefore fixes the quantities and shrinks the globals; keeping
+            //it fixes the globals and inflates the quantities.
+            //
+            //So the factor is restored where the file records it, and the volumes are divided by
+            //it on the way in, so that re-applying it lands back on the number in the file.
+            result.UncertFact = 0;
+            readLcaxGlobal(lcaxFile, "uncertaintyFactor", v => result.UncertFact = v);
+
+            double quantityDivisor = 1 + result.UncertFact;
+
+            if (quantityDivisor <= 0)
+                quantityDivisor = 1;
+
+            //Gross floor area, so the per m2 figures mean something straight away.
+            if (lcaxFile.ProjectInfo != null && lcaxFile.ProjectInfo.GrossFloorArea != null
+                && lcaxFile.ProjectInfo.GrossFloorArea.Value > 0)
+            {
+                result.Area = lcaxFile.ProjectInfo.GrossFloorArea.Value;
+                result.AreaNew = result.Area;
+            }
+            else
+            {
+                report.Note("No gross floor area in the file, so the per m2 figures will read against the default area until it is set.");
+            }
+
+            applyLcaxReportedStages(lcaxFile, result, report);
+
+            //This application's own exports put the globals in metadata; another tool's file will
+            //not have them, and they simply stay at zero.
+            //A0 is a figure the user enters, and the property that reads it back applies the
+            //uncertainty factor, so the uplifted number in the metadata has to come back down
+            //before it is stored or it gains the factor twice.
+            readLcaxGlobal(lcaxFile, "a0GlobalTCo2e", v => result.A0Global = (v * 1000) / quantityDivisor);
+            readLcaxGlobal(lcaxFile, "socialCostPerTonne", v => result.SocialCost = v);
+
+            //The A5, C1 and B6-B7 globals are not stored: the calculation derives them from the
+            //floor area, the demolition area and the energy figures every time it runs, so
+            //anything put here would be overwritten a moment later. A file from another tool
+            //carries none of those inputs, and those globals will read as zero until they are
+            //entered.
+
+            if (lcaxFile.Assemblies == null || lcaxFile.Assemblies.Count == 0)
+            {
+                report.Note("The file holds no assemblies, so there is nothing to build groups from.");
+                return result;
+            }
+
+            //One material per EPD, shared between the products that reference it.
+            Dictionary<string, CarboMaterial> materials = new Dictionary<string, CarboMaterial>();
+            int nextMaterialId = 900000;
+            int nextGroupId = 1;
+
+            List<CarboGroup> groups = new List<CarboGroup>();
+
+            foreach (KeyValuePair<string, Assembly> entry in lcaxFile.Assemblies)
+            {
+                Assembly assembly = entry.Value;
+
+                if (assembly == null)
+                {
+                    report.AssembliesSkipped++;
+                    continue;
+                }
+
+                //The "reference" half of the union points at an assembly held somewhere else.
+                //There is nothing here to read, and following a uri is not something an import
+                //should do on its own.
+                if (string.IsNullOrEmpty(assembly.Type) == false
+                    && assembly.Type.Equals("reference", StringComparison.OrdinalIgnoreCase))
+                {
+                    report.AssembliesSkipped++;
+                    report.Note("One or more assemblies are references to another file and were skipped.");
+                    continue;
+                }
+
+                if (assembly.Products == null || assembly.Products.Count == 0)
+                {
+                    report.AssembliesSkipped++;
+                    report.Note("One or more assemblies hold no products and were skipped.");
+                    continue;
+                }
+
+                List<CarboElement> elements = new List<CarboElement>();
+                CarboMaterial groupMaterial = null;
+
+                foreach (KeyValuePair<string, Product> productEntry in assembly.Products)
+                {
+                    Product product = productEntry.Value;
+
+                    if (product == null)
+                    {
+                        report.ProductsSkipped++;
+                        continue;
+                    }
+
+                    if (string.IsNullOrEmpty(product.Type) == false
+                        && product.Type.Equals("reference", StringComparison.OrdinalIgnoreCase))
+                    {
+                        report.ProductsSkipped++;
+                        report.Note("One or more products are references to another file and were skipped.");
+                        continue;
+                    }
+
+                    CarboMaterial material = materialFromLcax(product, materials, ref nextMaterialId, report);
+
+                    double density = material == null || material.Density <= 0 ? 1 : material.Density;
+                    double volume = lcaxQuantityToVolume(product.Quantity, product.Unit, density, report);
+
+                    if (double.IsNaN(volume))
+                    {
+                        report.ProductsSkipped++;
+                        continue;
+                    }
+
+                    //Net, so that the uncertainty factor re-applied by the calculation lands
+                    //back on the quantity the file states.
+                    volume = volume / quantityDivisor;
+
+                    CarboElement element = new CarboElement();
+
+                    element.Id = nextElementId(product, elements.Count);
+                    element.Name = string.IsNullOrWhiteSpace(product.Name) ? productEntry.Key : product.Name;
+                    element.GUID = product.Id == null ? "" : product.Id;
+                    element.Category = string.IsNullOrWhiteSpace(assembly.Comment) ? assembly.Name : assembly.Comment;
+                    element.SubCategory = "";
+                    element.Volume = volume;
+                    element.Volume_Total = volume;
+                    element.includeInCalc = true;
+
+                    if (material != null)
+                    {
+                        element.MaterialName = material.Name;
+                        element.CarboMaterialName = material.Name;
+                        element.MaterialCategoryName = material.Category;
+                        element.Grade = material.Grade;
+                        element.Density = material.Density;
+                    }
+
+                    readLcaxProductMetaData(product, element);
+
+                    elements.Add(element);
+                    report.ProductsRead++;
+
+                    if (groupMaterial == null)
+                        groupMaterial = material;
+                }
+
+                if (elements.Count == 0)
+                {
+                    report.AssembliesSkipped++;
+                    continue;
+                }
+
+                CarboGroup group = new CarboGroup();
+
+                group.Id = nextGroupId++;
+                group.Category = string.IsNullOrWhiteSpace(assembly.Comment) ? assembly.Name : assembly.Comment;
+                group.SubCategory = "";
+                group.Description = assembly.Name;
+                group.Origin = CarboGroupOrigin.Import;
+
+                if (groupMaterial != null)
+                    group.setMaterial(groupMaterial);
+
+                //setMaterial puts the material's default waste allowance on the group. An LCAx
+                //quantity is the quantity, already carrying whatever waste the tool that wrote
+                //it applied, so adding the default on top would inflate it a second time.
+                group.Waste = 0;
+
+                foreach (CarboElement element in elements)
+                    group.AllElements.Add(element);
+
+                group.Volume = elements.Sum(x => x.Volume);
+
+                groups.Add(group);
+                report.AssembliesRead++;
+            }
+
+            //The materials the products referred to, so they can be edited afterwards.
+            foreach (CarboMaterial material in materials.Values)
+                result.CarboDatabase.AddMaterial(material);
+
+            result.AddGroups(groups);
+            result.CalculateProject();
 
             return result;
-
         }
+
+        /// <summary>
+        /// Turns the file's lifeCycleStages into this application's calculation switches.
+        /// </summary>
+        /// <remarks>
+        /// This matters more than it looks. A group's ECI is assembled from the material's
+        /// stages according to these switches, so a project that imported every figure
+        /// correctly but left the switches at their defaults still reported a different total:
+        /// stage D is off by default, and the steel credit of -1.61 kgCO2e/kg simply was not in
+        /// the sum. lifeCycleStages is the file saying which stages its assessment covers, which
+        /// is exactly the question the switches answer.
+        /// </remarks>
+        private static void applyLcaxReportedStages(Lcax lcaxFile, CarboProject result, LcaxImportResult report)
+        {
+            if (lcaxFile.LifeCycleStages == null || lcaxFile.LifeCycleStages.Count == 0)
+            {
+                report.Note("The file does not say which life cycle stages it covers, so the "
+                    + "calculation switches have been left at their defaults. Check them against the source.");
+                return;
+            }
+
+            List<LifeCycleStage> stages = lcaxFile.LifeCycleStages;
+
+            result.calculateA0 = stages.Contains(LifeCycleStage.A0);
+            result.calculateA13 = stages.Contains(LifeCycleStage.A1A3);
+            result.calculateA4 = stages.Contains(LifeCycleStage.A4);
+            result.calculateA5 = stages.Contains(LifeCycleStage.A5);
+
+            result.calculateB = stages.Contains(LifeCycleStage.B1) || stages.Contains(LifeCycleStage.B2)
+                || stages.Contains(LifeCycleStage.B3) || stages.Contains(LifeCycleStage.B4)
+                || stages.Contains(LifeCycleStage.B5);
+
+            result.calculateB67 = stages.Contains(LifeCycleStage.B6) || stages.Contains(LifeCycleStage.B7);
+
+            result.calculateC = stages.Contains(LifeCycleStage.C1) || stages.Contains(LifeCycleStage.C2)
+                || stages.Contains(LifeCycleStage.C3) || stages.Contains(LifeCycleStage.C4);
+
+            result.calculateD = stages.Contains(LifeCycleStage.D);
+
+            //Sequestration has no life cycle stage of its own; it is reported as a biogenic
+            //impact category, so its presence there is what says it was assessed.
+            result.calculateSeq = lcaxFile.ImpactCategories != null
+                && lcaxFile.ImpactCategories.Contains(ImpactCategoryKey.GwpBio);
+
+            //The mix allowance is this application's own idea and has nowhere to live in LCAx,
+            //so it cannot be read back either way.
+            report.Note("Calculation switches were set from the file's lifeCycleStages. The mix "
+                + "allowance has no equivalent in LCAx and has been left at its default.");
+        }
+
+        private static void readLcaxGlobal(Lcax lcaxFile, string key, Action<double> apply)
+        {
+            if (lcaxFile.MetaData == null)
+                return;
+
+            string text;
+            if (lcaxFile.MetaData.TryGetValue(key, out text) == false)
+                return;
+
+            double value;
+            if (double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out value))
+                apply(value);
+        }
+
+        private static long nextElementId(Product product, int fallback)
+        {
+            long id;
+
+            if (product.Id != null && long.TryParse(product.Id, NumberStyles.Integer, CultureInfo.InvariantCulture, out id))
+                return id;
+
+            return fallback + 1;
+        }
+
+        /// <summary>
+        /// Copies back the few element facts this application's own export writes into a
+        /// product's metadata. A file from another tool simply has none of these.
+        /// </summary>
+        private static void readLcaxProductMetaData(Product product, CarboElement element)
+        {
+            if (product.MetaData == null)
+                return;
+
+            string text;
+
+            if (product.MetaData.TryGetValue("revitMaterialName", out text))
+                element.MaterialName = text;
+
+            if (product.MetaData.TryGetValue("category", out text) && string.IsNullOrWhiteSpace(text) == false)
+                element.Category = text;
+
+            if (product.MetaData.TryGetValue("subCategory", out text))
+                element.SubCategory = text;
+
+            if (product.MetaData.TryGetValue("levelName", out text))
+                element.LevelName = text;
+
+            if (product.MetaData.TryGetValue("levelElevation", out text))
+                element.Level = DataExportUtils.ReadCsvDouble(text);
+
+            if (product.MetaData.TryGetValue("isSubstructure", out text))
+                element.isSubstructure = text.Trim().ToLowerInvariant() == "true";
+
+            if (product.MetaData.TryGetValue("isDemolished", out text))
+                element.isDemolished = text.Trim().ToLowerInvariant() == "true";
+
+            if (product.MetaData.TryGetValue("isExisting", out text))
+                element.isExisting = text.Trim().ToLowerInvariant() == "true";
+
+            if (product.MetaData.TryGetValue("includedInCalculation", out text))
+                element.includeInCalc = text.Trim().ToLowerInvariant() != "false";
+
+            if (product.MetaData.TryGetValue("volumeCorrection", out text))
+                element.Correction = text;
+
+            if (product.MetaData.TryGetValue("additionalData", out text))
+                element.AdditionalData = text;
+        }
+
+        /// <summary>
+        /// A product quantity brought back to cubic metres, which is what this application
+        /// calculates in. Returns NaN when the unit cannot be converted.
+        /// </summary>
+        private static double lcaxQuantityToVolume(double quantity, Unit unit, double density, LcaxImportResult report)
+        {
+            if (unit == Unit.M3)
+                return quantity;
+
+            if (unit == Unit.Kg)
+                return density > 0 ? quantity / density : quantity;
+
+            if (unit == Unit.Tones)
+                return density > 0 ? (quantity * 1000) / density : quantity * 1000;
+
+            report.Note("Quantities given in " + LcaxKey.Of(unit) + " cannot be turned into a volume, "
+                + "so those products were skipped. This application calculates in m3 and kg.");
+
+            return double.NaN;
+        }
+
+        /// <summary>
+        /// The material behind a product, built from its EPD and shared between the products
+        /// that name the same one.
+        /// </summary>
+        private static CarboMaterial materialFromLcax(Product product, Dictionary<string, CarboMaterial> materials,
+            ref int nextMaterialId, LcaxImportResult report)
+        {
+            Epd epd = product.ImpactData;
+
+            if (epd == null)
+            {
+                report.Note("One or more products carry no impact data and were imported with no material.");
+                return null;
+            }
+
+            if (string.IsNullOrEmpty(epd.Type) == false
+                && epd.Type.Equals("reference", StringComparison.OrdinalIgnoreCase))
+            {
+                report.Note("One or more products point at an EPD held in another file, so they were imported with no material.");
+                return null;
+            }
+
+            string key = string.IsNullOrWhiteSpace(epd.Id) ? epd.Name : epd.Id;
+
+            if (string.IsNullOrWhiteSpace(key))
+                key = "unnamed";
+
+            CarboMaterial existing;
+            if (materials.TryGetValue(key, out existing))
+                return existing;
+
+            CarboMaterial material = new CarboMaterial();
+
+            int parsedId;
+            material.Id = int.TryParse(epd.Id, NumberStyles.Integer, CultureInfo.InvariantCulture, out parsedId)
+                ? parsedId
+                : nextMaterialId++;
+
+            material.Name = string.IsNullOrWhiteSpace(epd.Name) ? key : epd.Name;
+            material.Description = epd.Comment;
+            material.Category = readLcaxMetaData(epd.MetaData, "category", "Other");
+            material.Grade = readLcaxMetaData(epd.MetaData, "grade", "");
+
+            if (epd.Source != null && string.IsNullOrWhiteSpace(epd.Source.Url) == false)
+                material.EPDurl = epd.Source.Url;
+
+            material.Density = lcaxDensity(epd, report);
+
+            applyLcaxImpacts(epd, material, report);
+
+            //The overrides keep the values that came out of the file rather than letting the
+            //A1A3 table rules put them back to whatever the name suggests.
+            material.ECI_A1A3_Override = true;
+            material.ECI_A4_Override = true;
+            material.ECI_A5_Override = true;
+            material.ECI_C1C4_Override = true;
+            material.ECI_D_Override = true;
+            material.ECI_Seq_Override = true;
+
+            material.CalculateTotals();
+
+            materials.Add(key, material);
+
+            return material;
+        }
+
+        private static string readLcaxMetaData(Dictionary<string, string> metaData, string key, string fallback)
+        {
+            if (metaData == null)
+                return fallback;
+
+            string text;
+            return metaData.TryGetValue(key, out text) && string.IsNullOrWhiteSpace(text) == false ? text : fallback;
+        }
+
+        /// <summary>
+        /// The density of an EPD's material in kg/m3: from the metadata this application's own
+        /// export writes, then from the EPD's own unit conversions, and 1 when neither says.
+        /// </summary>
+        private static double lcaxDensity(Epd epd, LcaxImportResult report)
+        {
+            string text = readLcaxMetaData(epd.MetaData, "densityKgM3", "");
+
+            double density;
+            if (string.IsNullOrWhiteSpace(text) == false
+                && double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out density)
+                && density > 0)
+                return density;
+
+            //A conversion states how much of another unit one declared unit is worth, so a kg
+            //EPD converting to m3 gives 1/density, and an m3 EPD converting to kg gives density.
+            if (epd.Conversions != null)
+            {
+                foreach (Conversion conversion in epd.Conversions)
+                {
+                    if (conversion == null || conversion.Value <= 0)
+                        continue;
+
+                    if (epd.DeclaredUnit == Unit.Kg && conversion.To == Unit.M3)
+                        return 1 / conversion.Value;
+
+                    if (epd.DeclaredUnit == Unit.M3 && conversion.To == Unit.Kg)
+                        return conversion.Value;
+                }
+            }
+
+            report.Note("One or more materials give no density, so it has been set to 1 kg/m3. "
+                + "The carbon figures are right, but their mass reads as their volume until a density is entered.");
+
+            return 1;
+        }
+
+        /// <summary>
+        /// Turns an EPD's impacts into intensities per kg on the material.
+        /// </summary>
+        private static void applyLcaxImpacts(Epd epd, CarboMaterial material, LcaxImportResult report)
+        {
+            if (epd.Impacts == null || epd.Impacts.Count == 0)
+            {
+                report.Note("One or more EPDs carry no impact figures, so their material was imported at zero.");
+                return;
+            }
+
+            Dictionary<string, double?> gwp = findLcaxImpact(epd.Impacts, ImpactCategoryKey.Gwp);
+
+            if (gwp == null)
+            {
+                report.Note("One or more EPDs report no gwp figures. This application reads global warming potential only.");
+                return;
+            }
+
+            Dictionary<string, double?> bio = findLcaxImpact(epd.Impacts, ImpactCategoryKey.GwpBio);
+
+            //Per declared unit, brought to per kg.
+            double perKg = 1;
+
+            if (epd.DeclaredUnit == Unit.M3)
+                perKg = material.Density > 0 ? 1 / material.Density : 1;
+            else if (epd.DeclaredUnit == Unit.Tones)
+                perKg = 0.001;
+            else if (epd.DeclaredUnit != Unit.Kg)
+                report.Note("One or more EPDs declare their impacts per " + LcaxKey.Of(epd.DeclaredUnit)
+                    + ", which cannot be turned into a figure per kg. They were read as if declared per kg.");
+
+            double sequestration = stage(bio, LifeCycleStage.A1A3) * perKg;
+
+            //a1a3 is taken as it stands and the biogenic figure is read alongside it, NOT
+            //subtracted from it. An EPD's impacts block states the material's own declared
+            //figures, and the export writes a1a3 and gwp_bio from two separate fields, so
+            //subtracting here counted the sequestration credit twice: a timber material came
+            //back with several times the production carbon it went out with.
+            //
+            //The results blocks elsewhere in the file do fold sequestration into a1a3, the way
+            //EN 15804 counts biogenic carbon inside the total. Those are computed figures and
+            //are recalculated on import rather than read, so the two conventions do not meet.
+            material.ECI_A1A3 = stage(gwp, LifeCycleStage.A1A3) * perKg;
+            material.ECI_A4 = stage(gwp, LifeCycleStage.A4) * perKg;
+            material.ECI_A5 = stage(gwp, LifeCycleStage.A5) * perKg;
+
+            material.ECI_B1B5 = (stage(gwp, LifeCycleStage.B1) + stage(gwp, LifeCycleStage.B2)
+                + stage(gwp, LifeCycleStage.B3) + stage(gwp, LifeCycleStage.B4)
+                + stage(gwp, LifeCycleStage.B5)) * perKg;
+
+            material.ECI_C1C4 = (stage(gwp, LifeCycleStage.C1) + stage(gwp, LifeCycleStage.C2)
+                + stage(gwp, LifeCycleStage.C3) + stage(gwp, LifeCycleStage.C4)) * perKg;
+
+            material.ECI_D = stage(gwp, LifeCycleStage.D) * perKg;
+            material.ECI_Seq = sequestration;
+            material.ECI_Mix = 0;
+        }
+
+        private static Dictionary<string, double?> findLcaxImpact(
+            Dictionary<string, Dictionary<string, double?>> impacts, ImpactCategoryKey category)
+        {
+            string wanted = LcaxKey.Of(category);
+
+            foreach (KeyValuePair<string, Dictionary<string, double?>> entry in impacts)
+            {
+                if (string.Equals(entry.Key, wanted, StringComparison.OrdinalIgnoreCase))
+                    return entry.Value;
+            }
+
+            return null;
+        }
+
+        private static double stage(Dictionary<string, double?> figures, LifeCycleStage lifeCycleStage)
+        {
+            if (figures == null)
+                return 0;
+
+            string wanted = LcaxKey.Of(lifeCycleStage);
+
+            foreach (KeyValuePair<string, double?> entry in figures)
+            {
+                if (string.Equals(entry.Key, wanted, StringComparison.OrdinalIgnoreCase))
+                    return entry.Value.HasValue ? entry.Value.Value : 0;
+            }
+
+            return 0;
+        }
+
 
         private static JsCarboElement ConvertoToJsCarboElement(CarboElement ce, CarboProject carboProject)
         {
@@ -909,6 +1552,7 @@ namespace CarboLifeAPI
             JsCe.GUID = ce.GUID;
             JsCe.MaterialName = ce.MaterialName;
             JsCe.CarboMaterialName = ce.CarboMaterialName;
+            JsCe.MaterialCategoryName = ce.MaterialCategoryName;
             JsCe.Category = ce.Category;
             JsCe.SubCategory = ce.SubCategory;
             JsCe.AdditionalData = ce.AdditionalData;
@@ -948,23 +1592,34 @@ namespace CarboLifeAPI
             JsCe.Name = grp.Description;
             JsCe.Id = grp.Id;
             JsCe.MaterialName = grp.MaterialName;
+            //A group stands in for its own element here, so the matched material name is the
+            //group's material. Left unset it was null, which is not what any reader expects in
+            //the column beside MaterialName.
+            JsCe.CarboMaterialName = grp.MaterialName;
+            //The group has no Revit material class of its own; the assigned material's
+            //category is the same idea and is where CarboElement takes it from too.
+            JsCe.MaterialCategoryName = grp.Material != null ? grp.Material.Category : "";
             JsCe.Category = grp.Category;
             JsCe.SubCategory = grp.SubCategory;
             JsCe.AdditionalData = grp.additionalData;
-            JsCe.Grade = "";
+            JsCe.Grade = grp.Grade;
             JsCe.LevelName = "";
 
-            JsCe.RCDensity = 0;
+            JsCe.RCDensity = grp.RcDensity;
             JsCe.Correction = grp.Correction;
             JsCe.GUID = "";
 
             JsCe.Volume = grp.Volume;
             JsCe.Volume_Total = grp.TotalVolume;
+            JsCe.Volume_Cumulative = grp.TotalVolume;
 
             JsCe.Area = 0;
 
             JsCe.Level = 0;
             JsCe.Density = grp.Density;
+            //Left unset this exported as zero, while every stage total beside it was a real
+            //figure derived from exactly this mass.
+            JsCe.Mass = grp.Mass;
 
             JsCe.ECI = grp.ECI;
             JsCe.EC = grp.EC;
@@ -1025,32 +1680,20 @@ namespace CarboLifeAPI
 
         }
 
+        /// <summary>
+        /// Opens an LCAx file as a project. Kept for callers that only want the project; use
+        /// ImportLCAx directly to see what the reader had to skip.
+        /// </summary>
         public static bool openLCAx(string path, out CarboProject carboLifeProject)
         {
-            bool result = false;
+            LcaxImportResult imported = ImportLCAx(path);
 
-            carboLifeProject = new CarboProject();
+            carboLifeProject = imported.Project;
 
-            try
-            {
-                //Read the file. This used to hand the path itself to the deserialiser, which
-                //could only ever throw: a path is not a JSON document.
-                string jsonString = File.ReadAllText(path);
-
-                Lcax lcaxFile = JsonSerializer.Deserialize<Lcax>(jsonString, getLcaxSerializerOptions());
-
-                carboLifeProject = convertToCarboCalcProject(lcaxFile);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                carboLifeProject = null;
+            if (carboLifeProject == null)
                 return false;
-            }
 
-            result = true;
-            return result;
-
+            return imported.AssembliesRead > 0;
         }
 
 

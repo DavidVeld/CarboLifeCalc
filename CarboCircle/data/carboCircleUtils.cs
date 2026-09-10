@@ -5,32 +5,26 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using System.Windows;
 
 namespace CarboCircle.data
 {
     internal class carboCircleUtils
     {
-        /// <summary>
-        /// A number for a csv cell, always in invariant culture.
-        ///
-        /// The whole file is comma separated, so a comma decimal separator does not merely look
-        /// odd - it adds a field and shifts every column after it, and the reader is positional.
-        /// </summary>
-        private static string num(double value)
-        {
-            if (double.IsNaN(value) || double.IsInfinity(value))
-                return "0";
-
-            return value.ToString("R", CultureInfo.InvariantCulture);
-        }
-
         internal static void ExportDataToCSV(List<carboCircleElement> dataCombined, string path)
         {
             if (File.Exists(path) && DataExportUtils.IsFileLocked(path) == true)
                 return;
 
-            string fileString = "";
+            //DataExportUtils.CsvLine, the same builder the Carbo Life exports use, so there is
+            //one place that decides how a number or a piece of text becomes a csv field. It
+            //formats every number in the invariant culture, which this file needs more than
+            //most: it is comma separated and read back positionally, so a comma decimal
+            //separator does not merely look odd, it adds a field and shifts every column after
+            //it. It also writes the separator between fields rather than after each one, which
+            //is what keeps the row the same width as the header.
+            StringBuilder fileString = new StringBuilder();
 
             //Create Headers;
             //
@@ -38,72 +32,95 @@ namespace CarboCircle.data
             //GetElementsFromCVSFile. The three at the end were added when the matcher started
             //depending on them; a file written before that simply stops short and the reader
             //leaves them at their defaults.
-            fileString =
-                "id, GUID, humanId, category, name, materialName, materialClass, length, " +
-                "volume, netLength, netVolume, grade, quality, isVolumeElement, " +
-                "standardName, standardDepth, standardWidth, standardCategory, Iy, Wy, " +
-                "Iz, Wz, matchGUID, isOffcut, sectionConfidence, sourceGUID, massPerMetre" +
-                Environment.NewLine;
+            //
+            //The names used to be written as one string with ", " between them, which left a
+            //leading space on all but the first, so the header read "id", " GUID", " humanId".
+            fileString.Append(new DataExportUtils.CsvLine().AddRange(
+                "id",                   //0
+                "GUID",                 //1
+                "humanId",              //2
+                "category",             //3
+                "name",                 //4
+                "materialName",         //5
+                "materialClass",        //6
+                "length",               //7
+                "volume",               //8
+                "netLength",            //9
+                "netVolume",            //10
+                "grade",                //11
+                "quality",              //12
+                "isVolumeElement",      //13
+                "standardName",         //14
+                "standardDepth",        //15
+                "standardWidth",        //16
+                "standardCategory",     //17
+                "Iy",                   //18
+                "Wy",                   //19
+                "Iz",                   //20
+                "Wz",                   //21
+                "matchGUID",            //22
+                "isOffcut",             //23
+                "sectionConfidence",    //24
+                "sourceGUID",           //25
+                "massPerMetre"          //26
+                ).ToLine());
+
             //Advanced
             foreach (carboCircleElement ccE in dataCombined)
             {
                 try
                 {
-                    string resultString = "";
+                    DataExportUtils.CsvLine row = new DataExportUtils.CsvLine();
 
-                    resultString += DataExportUtils.CVSFormat(ccE.id.ToString()) + ","; //1
-                    resultString += DataExportUtils.CVSFormat(ccE.GUID) + ","; //2
-                    resultString += DataExportUtils.CVSFormat(ccE.humanId) + ","; //3
-                    resultString += DataExportUtils.CVSFormat(ccE.category) + ","; //3
-                    resultString += DataExportUtils.CVSFormat(ccE.name) + ","; //3
-                    resultString += DataExportUtils.CVSFormat(ccE.materialName) + ","; //3
-                    resultString += DataExportUtils.CVSFormat(ccE.materialClass) + ","; //3
-                    //Invariant culture, explicitly. These four were concatenated straight into
-                    //the string, which formats in the current culture - so on a machine with a
-                    //comma decimal separator every one of them emitted an extra comma into a
-                    //comma-separated file and shifted every later column by one.
-                    resultString += num(ccE.length) + ",";
-                    resultString += num(ccE.volume) + ",";
-                    resultString += num(ccE.netLength) + ",";
-                    resultString += num(ccE.netVolume) + ",";
+                    row.Add(ccE.id);                    //0
+                    row.Add(ccE.GUID);                  //1
+                    row.Add(ccE.humanId);               //2
+                    row.Add(ccE.category);              //3
+                    row.Add(ccE.name);                  //4
+                    row.Add(ccE.materialName);          //5
+                    row.Add(ccE.materialClass);         //6
 
-                    resultString += DataExportUtils.CVSFormat(ccE.grade) + ","; //3
-                    resultString += DataExportUtils.CVSFormat(ccE.quality.ToString()) + ","; //3
-                    resultString += DataExportUtils.CVSFormat(ccE.isVolumeElement.ToString()) + ","; //3
+                    row.Add(ccE.length);                //7
+                    row.Add(ccE.volume);                //8
+                    row.Add(ccE.netLength);             //9
+                    row.Add(ccE.netVolume);             //10
 
-                    resultString += DataExportUtils.CVSFormat(ccE.standardName) + ",";
-                    resultString += num(ccE.standardDepth) + ",";
-                    resultString += num(ccE.standardWidth) + ",";
-                    resultString += DataExportUtils.CVSFormat(ccE.standardCategory) + ",";
-                    resultString += num(ccE.Iy) + ",";
-                    resultString += num(ccE.Wy) + ",";
-                    resultString += num(ccE.Iz) + ",";
+                    row.Add(ccE.grade);                 //11
+                    row.Add(ccE.quality);               //12
+                    row.Add(ccE.isVolumeElement);       //13
+
+                    row.Add(ccE.standardName);          //14
+                    row.Add(ccE.standardDepth);         //15
+                    row.Add(ccE.standardWidth);         //16
+                    row.Add(ccE.standardCategory);      //17
+                    row.Add(ccE.Iy);                    //18
+                    row.Add(ccE.Wy);                    //19
+                    row.Add(ccE.Iz);                    //20
                     //Wz, at last. This column has always been written with Wy in it, under a
                     //header saying Wz, and read back into Wy again - so Wz came home as zero on
                     //every round trip. That mattered little while nothing used it; the matcher
                     //now gates on minor-axis capacity, and a zero there quietly skips the gate.
-                    resultString += num(ccE.Wz) + ",";
-                    resultString += DataExportUtils.CVSFormat(ccE.matchGUID) + ",";
-                    resultString += DataExportUtils.CVSFormat(ccE.isOffcut.ToString()) + ",";
+                    row.Add(ccE.Wz);                    //21
+                    row.Add(ccE.matchGUID);             //22
+                    row.Add(ccE.isOffcut);              //23
 
                     //Appended for the matcher. sectionConfidence in particular: without it every
                     //imported element claims an exact section identity, and two rows sharing a
                     //name become a "100% match" on a name nobody confirmed.
-                    resultString += ccE.sectionConfidence.ToString(CultureInfo.InvariantCulture) + ",";
-                    resultString += DataExportUtils.CVSFormat(ccE.sourceGUID) + ",";
-                    resultString += num(ccE.massPerMetre) + ",";
+                    row.Add(ccE.sectionConfidence);     //24
+                    row.Add(ccE.sourceGUID);            //25
+                    row.Add(ccE.massPerMetre);          //26
 
-                    resultString += Environment.NewLine;
-
-                    fileString += resultString;
+                    fileString.Append(row.ToLine());
                 }
-                catch (IOException ex)
+                catch (Exception ex)
                 {
-                   // Console.WriteLine("An error occurred while writing the file: " + ex.Message);
+                    //Nothing here touches a file, so the IOException this used to catch could
+                    //never fire while a null on the element would escape the whole export.
                 }
             }
 
-            DataExportUtils.WriteCVSFile(fileString, path);
+            DataExportUtils.WriteCVSFile(fileString.ToString(), path);
 
 
         }
@@ -180,7 +197,7 @@ namespace CarboCircle.data
                         try
                         {
                             carboCircleElement cce = new carboCircleElement();
-                            cce.id = Convert.ToInt32(Utils.ConvertMeToDouble(dr[0].ToString()));
+                            cce.id = Convert.ToInt32(DataExportUtils.ReadCsvDouble(dr[0].ToString()));
                             cce.GUID = dr[1].ToString();
                             cce.humanId = dr[2].ToString();
                             cce.category = dr[3].ToString();
@@ -188,13 +205,13 @@ namespace CarboCircle.data
                             cce.materialName = dr[5].ToString();
                             cce.materialClass = dr[6].ToString();
 
-                            cce.length = Utils.ConvertMeToDouble(dr[7].ToString());
-                            cce.volume = Utils.ConvertMeToDouble(dr[8].ToString());
-                            cce.netLength = Utils.ConvertMeToDouble(dr[9].ToString());
-                            cce.netVolume = Utils.ConvertMeToDouble(dr[10].ToString());
+                            cce.length = DataExportUtils.ReadCsvDouble(dr[7].ToString());
+                            cce.volume = DataExportUtils.ReadCsvDouble(dr[8].ToString());
+                            cce.netLength = DataExportUtils.ReadCsvDouble(dr[9].ToString());
+                            cce.netVolume = DataExportUtils.ReadCsvDouble(dr[10].ToString());
 
                             cce.grade = dr[11].ToString();
-                            cce.quality = Convert.ToInt32(Utils.ConvertMeToDouble(dr[12].ToString()));
+                            cce.quality = Convert.ToInt32(DataExportUtils.ReadCsvDouble(dr[12].ToString()));
                             
                             bool parseOk = false;
                             bool isVolume = true;
@@ -205,14 +222,14 @@ namespace CarboCircle.data
                                 cce.isVolumeElement = isVolume;
 
                             cce.standardName = dr[14].ToString();
-                            cce.standardDepth = Utils.ConvertMeToDouble(dr[15].ToString());
-                            cce.standardWidth = Utils.ConvertMeToDouble(dr[16].ToString());
+                            cce.standardDepth = DataExportUtils.ReadCsvDouble(dr[15].ToString());
+                            cce.standardWidth = DataExportUtils.ReadCsvDouble(dr[16].ToString());
                             cce.standardCategory = dr[17].ToString();
-                            cce.Iy = Utils.ConvertMeToDouble(dr[18].ToString());
-                            cce.Wy = Utils.ConvertMeToDouble(dr[19].ToString());
-                            cce.Iz = Utils.ConvertMeToDouble(dr[20].ToString());
+                            cce.Iy = DataExportUtils.ReadCsvDouble(dr[18].ToString());
+                            cce.Wy = DataExportUtils.ReadCsvDouble(dr[19].ToString());
+                            cce.Iz = DataExportUtils.ReadCsvDouble(dr[20].ToString());
                             //Was read into Wy a second time, so Wz was always zero.
-                            cce.Wz = Utils.ConvertMeToDouble(dr[21].ToString());
+                            cce.Wz = DataExportUtils.ReadCsvDouble(dr[21].ToString());
                             cce.matchGUID = dr[22].ToString();
 
                             parseOk = Boolean.TryParse(dr[23].ToString(), out isOffcut);
@@ -228,7 +245,7 @@ namespace CarboCircle.data
                             //numbers may still earn a substitution, but the name alone will not
                             //be presented as a 100% match.
                             if (dr.Table.Columns.Count > 24)
-                                cce.sectionConfidence = (int)Math.Round(Utils.ConvertMeToDouble(dr[24].ToString()));
+                                cce.sectionConfidence = (int)Math.Round(DataExportUtils.ReadCsvDouble(dr[24].ToString()));
                             else
                                 cce.sectionConfidence = 1;
 
@@ -236,7 +253,7 @@ namespace CarboCircle.data
                                 cce.sourceGUID = dr[25].ToString();
 
                             if (dr.Table.Columns.Count > 26)
-                                cce.massPerMetre = Utils.ConvertMeToDouble(dr[26].ToString());
+                                cce.massPerMetre = DataExportUtils.ReadCsvDouble(dr[26].ToString());
 
 
 

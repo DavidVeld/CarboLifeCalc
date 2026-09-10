@@ -19,6 +19,11 @@ namespace CarboLifeAPI.Data
         public string MaterialName { get; set; }
         //Matched To Material Name
         public string CarboMaterialName { get; set; }
+        /// <summary>
+        /// The Revit material class. The matcher weighs this beside the name, so it has to
+        /// survive an export and come back in, or a re-import matches on the name alone.
+        /// </summary>
+        public string MaterialCategoryName { get; set; }
         public string Category { get; set; }
         public string SubCategory { get; set; }
         public string AdditionalData { get; set; }

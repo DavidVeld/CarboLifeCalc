@@ -35,13 +35,18 @@ namespace CarboLifeUI.UI
         {
             try
             {
-                //originalDatabase = database;
-                returnedDatabase = database;
-                selectedMaterial = database.GetExcactMatch(selectedMaterialName);
+                //A copy, so Cancel means cancel. This used to take the caller's database by
+                //reference, and every edit - a changed ECI, an added material, a csv import
+                //replacing the library - went straight into it. All three callers read
+                //returnedDatabase back on accept, so nothing needs the mutation, but the one
+                //that hands over the live project database (DataViewer) had no way to undo.
+                returnedDatabase = database.Copy();
+
+                selectedMaterial = returnedDatabase.GetExcactMatch(selectedMaterialName);
                 if (selectedMaterial == null)
                 {
                     MessageBox.Show("This material could not be found in the database, the closest match will now be found");
-                    selectedMaterial = database.getClosestMatch(selectedMaterialName);
+                    selectedMaterial = returnedDatabase.getClosestMatch(selectedMaterialName);
                 }
 
                 acceptNew = false;
@@ -1119,24 +1124,40 @@ namespace CarboLifeUI.UI
         private void btn_Sync_Copy_Click(object sender, RoutedEventArgs e)
         {
             CarboDatabase cdb = returnedDatabase;
-            string file = "";
-            string path = @"C:\Temp\file.csv";
 
-            file = "Id,Name,Description,Category,Density,ECI_A1A3" + Environment.NewLine;
+            //Was hardcoded to C:\Temp\file.csv, which overwrote whatever was there without
+            //asking and failed outright on a machine with no C:\Temp.
+            string path = DataExportUtils.GetSaveAsLocation();
+
+            if (path == null || path == "")
+                return;
+
+            //The last writer in the solution that still concatenated its numbers straight into
+            //the string, so Density and ECI_A1A3 came out with a comma for a decimal point on
+            //any locale that uses one, in a comma separated file.
+            StringBuilder file = new StringBuilder();
+
+            file.Append(new DataExportUtils.CsvLine().AddRange(
+                "Id", "Name", "Description", "Category", "Density", "ECI_A1A3").ToLine());
 
             foreach (CarboMaterial mat in cdb.CarboMaterialList)
             {
-                file += mat.Id + "," +
-                    DataExportUtils.CVSFormat(mat.Name) + "," +
-                    DataExportUtils.CVSFormat(mat.Description) + "," +
-                    DataExportUtils.CVSFormat(mat.Category) + "," + 
-                    mat.Density + "," + 
-                    mat.ECI_A1A3 + Environment.NewLine; ;
+                DataExportUtils.CsvLine row = new DataExportUtils.CsvLine();
+
+                row.Add(mat.Id);
+                row.Add(mat.Name);
+                row.Add(mat.Description);
+                row.Add(mat.Category);
+                row.Add(mat.Density);
+                row.Add(mat.ECI_A1A3);
+
+                file.Append(row.ToLine());
             }
 
-            DataExportUtils.WriteCVSFile(file, path);
+            DataExportUtils.WriteCVSFile(file.ToString(), path);
 
-
+            MessageBox.Show(cdb.CarboMaterialList.Count + " material(s) written to:" + Environment.NewLine + path,
+                "Developer export", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         /// <summary>
@@ -1151,7 +1172,18 @@ namespace CarboLifeUI.UI
 
             if(matImpDia.isAccepted == true)
             {
-                this.returnedDatabase.SyncCSVMaterials(matImpDia.importedDb, matImpDia.deleteMaterials);
+                //The result was thrown away, so a refused or failed sync looked identical to a
+                //successful one.
+                bool ok = this.returnedDatabase.SyncCSVMaterials(matImpDia.importedDb, matImpDia.deleteMaterials);
+
+                if (ok == false)
+                {
+                    MessageBox.Show("The materials could not be imported, so the library has been left "
+                        + "as it was." + Environment.NewLine + Environment.NewLine
+                        + "This happens when the file held no readable material rows.",
+                        "Import failed", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
                 ReloadMaterialCategories();
             }
             RefreshMaterialList();

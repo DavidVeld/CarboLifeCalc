@@ -600,21 +600,21 @@ namespace CarboCircle
                     ccE.category = dr[3].ToString(); //check
 
                     ccE.standardName = dr[1].ToString();
-                    ccE.standardDepth = Utils.ConvertMeToDouble(dr[8].ToString()); //check
-                    ccE.standardWidth = Utils.ConvertMeToDouble(dr[9].ToString()); //check
+                    ccE.standardDepth = DataExportUtils.ReadCsvDouble(dr[8].ToString()); //check
+                    ccE.standardWidth = DataExportUtils.ReadCsvDouble(dr[9].ToString()); //check
 
                     ccE.standardCategory = dr[3].ToString();
-                    ccE.Wy = Utils.ConvertMeToDouble(dr[25].ToString());
-                    ccE.Iy = Utils.ConvertMeToDouble(dr[21].ToString());
-                    ccE.Wz = Utils.ConvertMeToDouble(dr[26].ToString());
-                    ccE.Iz = Utils.ConvertMeToDouble(dr[22].ToString());
+                    ccE.Wy = DataExportUtils.ReadCsvDouble(dr[25].ToString());
+                    ccE.Iy = DataExportUtils.ReadCsvDouble(dr[21].ToString());
+                    ccE.Wz = DataExportUtils.ReadCsvDouble(dr[26].ToString());
+                    ccE.Iz = DataExportUtils.ReadCsvDouble(dr[22].ToString());
 
                     ccE.materialName = dr[5].ToString();
 
                     //Mass per metre. Present on every row of the shipped table now - the 18 IPE
                     //rows that used to leave it blank have been filled - but a user-supplied
                     //table can still omit it, so every use of it has to tolerate zero.
-                    ccE.massPerMetre = Utils.ConvertMeToDouble(dr[7].ToString());
+                    ccE.massPerMetre = DataExportUtils.ReadCsvDouble(dr[7].ToString());
 
                     //A catalogue row IS its section, by definition.
                     ccE.sectionConfidence = 0;

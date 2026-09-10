@@ -62,17 +62,58 @@ namespace CarboLifeAPI
     public class CsvFileReader : StreamReader
 
     {
+        /// <summary>
+        /// The field separator. A comma is what everything in this application writes, but
+        /// Excel saves a "csv" with the machine's list separator, which is a semicolon on every
+        /// locale that uses a comma for the decimal point. A user who exports a file, edits it
+        /// in Excel and saves it - the workflow the material import dialog asks for - hands
+        /// back a semicolon file on half of Europe, and read as commas it is a single column
+        /// per row, so every row failed and the import came back silently empty.
+        /// </summary>
+        public char Separator { get; set; }
+
         public CsvFileReader(Stream stream, Encoding encodeType, bool byteOrder)
             : base(stream)
         {
+            Separator = ',';
         }
 
         public CsvFileReader(string filename, Encoding encodeType,bool byteOrder )
             : base(filename)
         {
+            Separator = ',';
         }
 
-        
+        /// <summary>
+        /// Picks the separator a line was written with: whichever of ',' and ';' appears more
+        /// often outside quotes. A comma file with the odd semicolon in a description still
+        /// reads as commas, and the other way round.
+        /// </summary>
+        public static char DetectSeparator(string headerLine)
+        {
+            if (string.IsNullOrEmpty(headerLine))
+                return ',';
+
+            int commas = 0;
+            int semicolons = 0;
+            bool inQuotes = false;
+
+            for (int i = 0; i < headerLine.Length; i++)
+            {
+                char c = headerLine[i];
+
+                if (c == '"')
+                    inQuotes = !inQuotes;
+                else if (inQuotes == false && c == ',')
+                    commas++;
+                else if (inQuotes == false && c == ';')
+                    semicolons++;
+            }
+
+            return semicolons > commas ? ';' : ',';
+        }
+
+
         /// <summary>
         /// Reads a row of data from a CSV file
         /// </summary>
@@ -126,7 +167,7 @@ namespace CarboLifeAPI
                 {
                     // Parse unquoted value
                     int start = pos;
-                    while (pos < row.LineText.Length && row.LineText[pos] != ',')
+                    while (pos < row.LineText.Length && row.LineText[pos] != Separator)
                         pos++;
                     value = row.LineText.Substring(start, pos - start);
                 }
@@ -139,7 +180,7 @@ namespace CarboLifeAPI
                 rows++;
 
                 // Eat up to and including next comma
-                while (pos < row.LineText.Length && row.LineText[pos] != ',')
+                while (pos < row.LineText.Length && row.LineText[pos] != Separator)
                     pos++;
                 if (pos < row.LineText.Length)
                     pos++;

@@ -40,12 +40,42 @@ namespace CarboLifeUI.UI
             //MessageBox.Show("Select a csv to import");
             string openPath = DataExportUtils.GetOpenCSVLocation();
 
-            if (openPath != null && openPath != "")
-            {
-                elementList = DataExportUtils.GetElementsFromCVSFile(openPath);
-                dgv_Preview.ItemsSource = elementList;
+            if (openPath == null || openPath == "")
+                return;
 
+            int rowsRead;
+            int rowsSkipped;
+            List<CarboElement> imported =
+                DataExportUtils.GetElementsFromCVSFile(openPath, out rowsRead, out rowsSkipped);
+
+            //Say what happened. The result used to go straight into the preview, so a file that
+            //yielded nothing, or half of what it held, looked exactly like a short file.
+            if (imported == null || imported.Count == 0)
+            {
+                string reason = rowsSkipped > 0
+                    ? "None of its " + rowsSkipped + " rows could be read. The file needs the column "
+                      + "headers of the exported Elements csv, or of the template this dialog writes."
+                    : "The file holds no element rows.";
+
+                MessageBox.Show("No elements were read from:" + Environment.NewLine
+                    + System.IO.Path.GetFileName(openPath) + Environment.NewLine + Environment.NewLine
+                    + reason + Environment.NewLine + Environment.NewLine
+                    + "The list below has been left as it was.",
+                    "Nothing imported", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+                return;
             }
+
+            if (rowsSkipped > 0)
+            {
+                MessageBox.Show(rowsRead + " element(s) were read and " + rowsSkipped
+                    + " row(s) were skipped because they could not be read." + Environment.NewLine
+                    + "Check the list below before accepting.",
+                    "Partly imported", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
+            elementList = imported;
+            dgv_Preview.ItemsSource = elementList;
         }
 
         private void Btn_Import_Click(object sender, RoutedEventArgs e)

@@ -98,7 +98,20 @@ namespace CarboLifeCalc
 
                     CarboDatabase cd = bufferDatabase.DeSerializeXML(pathToOpen);
 
-                    MaterialEditor mateditor = new MaterialEditor(cd.CarboMaterialList[0].Name, cd);
+                    //A library with no materials in it would have thrown on the [0] here.
+
+
+                    string firstMaterialName = cd != null && cd.CarboMaterialList != null && cd.CarboMaterialList.Count > 0
+
+
+                        ? cd.CarboMaterialList[0].Name
+
+
+                        : "";
+
+
+
+                    MaterialEditor mateditor = new MaterialEditor(firstMaterialName, cd);
                     mateditor.ShowDialog();
 
                     if (mateditor.acceptNew == true)
