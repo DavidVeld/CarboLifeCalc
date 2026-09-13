@@ -25,6 +25,7 @@ namespace CarboCroc
             pManager.AddTextParameter("MaterialName", "Material", "Material Name", GH_ParamAccess.item, "");
             pManager.AddGeometryParameter("BREP", "BREP", "Geometry With Volume", GH_ParamAccess.item);
             pManager.AddTextParameter("Category", "Category", "Category", GH_ParamAccess.item, "");
+            pManager.AddNumberParameter("Rebar", "Rebar", "Reinforcement rate in kg/m3 of this element. 0 leaves it to the rates on the allowances component.", GH_ParamAccess.item, 0);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -42,6 +43,7 @@ namespace CarboCroc
             //double volume = 0;
             string category = "";
             string guid = "";
+            double rebar = 0;
 
             try
             {
@@ -54,6 +56,7 @@ namespace CarboCroc
                 DA.GetData<string>(2, ref materialname);
                 DA.GetData(3, ref geometry);
                 DA.GetData<string>(4, ref category);
+                DA.GetData<double>(5, ref rebar);
 
                 IGH_GeometricGoo ghGeo = geometry as IGH_GeometricGoo;
                 Brep brep = null;
@@ -78,6 +81,7 @@ namespace CarboCroc
                     result.MaterialName = materialname;
                     result.Category = category;
                     result.GUID = geometry.ReferenceID.ToString();
+                    result.rcDensity = rebar > 0 ? rebar : 0;
 
                     if (mp != null)
                     {

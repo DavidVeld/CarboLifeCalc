@@ -543,6 +543,14 @@ namespace CarboLifeAPI.Data
             isSubstructure = carboElement.isSubstructure;
             additionalData = carboElement.AdditionalData;
 
+            //Carried over like the four above it. getRCGroup reads RcDensity to decide whether a
+            //group states its own reinforcement rate or falls back to the rcQuantityMap keyed on
+            //category, but nothing ever put an element's rate onto its group, so that branch
+            //could not fire and a rate set per element was silently dropped. The grouping key in
+            //CarboElementImporter already compares RcDensity, so elements reinforced at different
+            //rates land in separate groups, which is what makes the per element rate meaningful.
+            RcDensity = carboElement.rcDensity;
+
             VolumeLink = "";
 
             //A group built around an element always comes from an import.

@@ -27,7 +27,7 @@ namespace CarboCroc
             pManager.AddGenericParameter("Carbo Groups", "CG", "Carbo Groups", GH_ParamAccess.list);
             pManager.AddBooleanParameter("Switches", "CS", "Carbo Switches", GH_ParamAccess.list);
             pManager.AddTextParameter("TemplatePath", "TP", "Template Path", GH_ParamAccess.item, "");
-            pManager.AddNumberParameter("Uncertainty", "U", "Uncertainty factor (Between 0 and 1)", GH_ParamAccess.item, 0);
+            pManager.AddNumberParameter("Uncertainty", "U", "Uncertainty factor (between 0 and 1). Leave unset to use the factor from the Carbo Life import settings, which is the one the main application applies.", GH_ParamAccess.item, CarboCrocProcess.UncertaintyNotSupplied);
         }
 
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
@@ -50,7 +50,7 @@ namespace CarboCroc
 
             string templatePath = "";
             bool oktemplatePath = DA.GetData<string>(2, ref templatePath);
-            double uncertainty = 0;
+            double uncertainty = CarboCrocProcess.UncertaintyNotSupplied;
             bool okUncertainty = DA.GetData<double>(3, ref uncertainty);
 
             CarboProject runtimeProject = null;

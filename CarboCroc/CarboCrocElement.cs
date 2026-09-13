@@ -23,6 +23,7 @@ namespace CarboCroc
             pManager.AddNumberParameter("Volume", "Volume", "Element Volume", GH_ParamAccess.item);
             pManager.AddTextParameter("Category", "Category", "Category", GH_ParamAccess.item, "");
             pManager.AddTextParameter("GUID", "GUID", "GUID (Rhino Element Id)", GH_ParamAccess.item, "");
+            pManager.AddNumberParameter("Rebar", "Rebar", "Reinforcement rate in kg/m3 of this element. 0 leaves it to the rates on the allowances component.", GH_ParamAccess.item, 0);
 
         }
 
@@ -41,6 +42,7 @@ namespace CarboCroc
             double volume = 0;
             string category = "";
             string guid = "";
+            double rebar = 0;
 
             try
             {
@@ -52,6 +54,7 @@ namespace CarboCroc
                 DA.GetData<double>(3, ref volume);
                 DA.GetData<string>(4, ref category);
                 DA.GetData<string>(5, ref guid);
+                DA.GetData<double>(6, ref rebar);
 
                 if (volume != 0 && materialname != "")
                 {
@@ -61,6 +64,7 @@ namespace CarboCroc
                     result.Volume = volume;
                     result.Category = category;
                     result.GUID = guid;
+                    result.rcDensity = rebar > 0 ? rebar : 0;
 
                     DA.SetData(0, result);
                     error = "Ok";
