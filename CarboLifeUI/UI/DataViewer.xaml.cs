@@ -865,21 +865,14 @@ namespace CarboLifeUI.UI
 
         private void mnu_MapElements_Click(object sender, RoutedEventArgs e)
         {
-            MaterialMapper materialMapper = new MaterialMapper(this.CarboLifeProject);
-            materialMapper.ShowDialog();
-            if (materialMapper.isAccepted == true)
-            {
-                this.CarboLifeProject.carboMaterialMap = materialMapper.mappinglist;
-
-                //The user just chose these in the mapper, so the groups they cover are marked as
-                //user assigned and stop being flagged for review.
-                this.CarboLifeProject.mapAllMaterials(CarboMaterialSource.UserAssigned);
-
-                //The mapper has just changed the materials, so the totals and the grid have to
-                //follow. Without this the numbers stayed on screen from before the mapping until
-                //the user happened to press Calculate.
+            //Same call the Revit import makes when the user asks for the mapper straight after
+            //an import, so both routes leave the project in the same state.
+            //
+            //The mapper has just changed the materials, so the totals and the grid have to
+            //follow. Without this the numbers stayed on screen from before the mapping until
+            //the user happened to press Calculate.
+            if (MaterialMapper.MapProject(this.CarboLifeProject) == true)
                 ApplyAndRefresh();
-            }
         }
 
         private void btn_OpenMaterialEditor_Click(object sender, RoutedEventArgs e)

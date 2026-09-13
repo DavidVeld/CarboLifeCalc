@@ -109,24 +109,53 @@ namespace CarboLifeRevit
                             CarboMapFile defaultMappingFile = CarboMapFile.LoadFromXml();
                             if (defaultMappingFile != null)
                             {
-                                myProject.carboMaterialMap = defaultMappingFile.mappingTable;
+                                //Only the rows for the template this project is actually using.
+                                //A lookup already requires the template to match, so the rest
+                                //could never apply; the shared file just grows with every
+                                //template the office uses and the whole lot was being carried
+                                //around in memory and scanned past on every group.
+                                myProject.carboMaterialMap =
+                                    defaultMappingFile.RowsForTemplate(myProject.CarboDatabase.templateName);
+
                                 myProject.mapAllMaterials();
                                 myProject.CalculateProject();
                             }
                         }
 
-                        //Say once, here, which groups were given a material the matcher was not
-                        //sure about. Their carbon is already in the totals, and until now the
-                        //only trace was a "[CHECK MATERIAL]" prefix in the description text that
-                        //nothing read and nobody was told to look for.
-                        string materialReview = myProject.getMaterialReviewSummary();
-                        if (string.IsNullOrEmpty(materialReview) == false)
-                        {
-                            MessageBox.Show(materialReview, "Check these materials",
-                                            MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
-
                         projectToOpen = myProject;
+
+                        //Say once, here, HOW MANY groups were given a material the matcher was
+                        //not sure about - a count, not a listing.
+                        //
+                        //This used to print up to eight of them with their scores and match
+                        //notes. Nobody reads eight lines of detail at the moment an import
+                        //finishes, and there was nothing to press but Ok, so the warning was
+                        //dismissed and the guessed materials stayed. The per group detail is
+                        //still in the Description column, where it can be read in context.
+                        //
+                        //The second button is the point of the dialog: it opens the material
+                        //mapper straight away, so the main window comes up with the materials
+                        //already put right rather than with a job to remember.
+                        int flaggedGroups = myProject.getGroupsNeedingMaterialReview().Count;
+
+                        if (flaggedGroups > 0)
+                        {
+                            CarboImportSummary importSummary =
+                                new CarboImportSummary(flaggedGroups, myProject.getMatchableGroupCount());
+
+                            importSummary.ShowDialog();
+
+                            if (importSummary.RunMaterialMapper == true)
+                            {
+                                //Exactly what the ribbon's Map Materials button does inside the
+                                //main window, so a material mapped here behaves the same as one
+                                //mapped a minute later, and is saved to the shared file the same
+                                //way. The totals have to be rebuilt because the materials, and so
+                                //every group's carbon, have just changed.
+                                if (MaterialMapper.MapProject(projectToOpen) == true)
+                                    projectToOpen.CalculateProject();
+                            }
+                        }
                     }
                     else //upadte an existing file:
                     {

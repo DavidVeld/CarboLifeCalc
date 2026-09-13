@@ -33,6 +33,12 @@ namespace CarboLifeUI.UI
         //public CarboMaterialList materialList { get; set; }
         public List<CarboName> materialList { get; set; }
 
+        /// <summary>
+        /// The material template this project is mapping into. Every row written from this dialog
+        /// belongs to it, so rows for the other templates in the shared file are never touched.
+        /// </summary>
+        private string mappingTemplateName = "";
+
         public MaterialMapper(CarboProject carboProject)
         {
             List<CarboMaterial> list = carboProject.CarboDatabase.CarboMaterialList.OrderBy(o => o.Name).ToList();
@@ -43,6 +49,8 @@ namespace CarboLifeUI.UI
 
             try
             {
+                mappingTemplateName = carboProject.CarboDatabase.templateName ?? "";
+
                 mappinglist = new List<CarboMapElement>();
                 mappinglist = Utils.GenerateMappinglist(carboProject);
 
@@ -63,6 +71,38 @@ namespace CarboLifeUI.UI
 
             DataContext = this;
 
+        }
+
+        /// <summary>
+        /// Shows the mapper over a project and applies whatever the user mapped.
+        ///
+        /// Everything a caller has ever wanted from this dialog, in one place: the Revit import
+        /// offers it straight after collecting elements, and the main window offers it from the
+        /// ribbon. Both have to leave the project in the same state, or a material mapped during
+        /// an import would behave differently from the same material mapped a minute later.
+        /// </summary>
+        /// <returns>
+        /// True when the user accepted and the project was changed, so a caller with a view on
+        /// screen knows it has to recalculate and refresh.
+        /// </returns>
+        public static bool MapProject(CarboProject carboProject)
+        {
+            if (carboProject == null)
+                return false;
+
+            MaterialMapper mapper = new MaterialMapper(carboProject);
+            mapper.ShowDialog();
+
+            if (mapper.isAccepted == false)
+                return false;
+
+            carboProject.carboMaterialMap = mapper.mappinglist;
+
+            //The user just chose these in the mapper, so the groups they cover are marked as
+            //user assigned and stop being flagged for review.
+            carboProject.mapAllMaterials(CarboMaterialSource.UserAssigned);
+
+            return true;
         }
 
         public MaterialMapper()
@@ -101,35 +141,23 @@ namespace CarboLifeUI.UI
             {
                 try
                 {
+                    //Only this session's rows, and only the ones for the template this project is
+                    //using. GenerateMappinglist already stamps that template on every row it
+                    //makes; filtering again means a row for someone else's template can never be
+                    //written from here even if one somehow reached this list.
                     CarboMapFile CurrentMappingFile = new CarboMapFile();
                     CurrentMappingFile.mappingTable = mappinglist;
+                    CurrentMappingFile.mappingTable = CurrentMappingFile.RowsForTemplate(mappingTemplateName);
 
-                    CarboMapFile SavedMappingFile = CarboMapFile.LoadFromXml();
-
-                    //LoadFromXml hands back an empty file when there is nothing there yet, and
-                    //null only when a file exists but could not be read. Writing this session's
-                    //rows over an unreadable shared file would throw away everyone else's
-                    //mappings, so that case stops here instead.
-                    if (SavedMappingFile == null)
+                    //No load-then-merge here any more: that was the race. SaveToXml re-reads the
+                    //file at the moment of writing and merges these rows into whatever it finds,
+                    //so a colleague who saved in the meantime keeps their work. It also refuses
+                    //outright if the file exists but cannot be parsed.
+                    string error;
+                    if (CurrentMappingFile.SaveToXml("", out error) == false)
                     {
-                        System.Windows.MessageBox.Show(
-                            "The shared mapping file exists but could not be read, so it has been left alone." +
-                            Environment.NewLine + Environment.NewLine +
-                            PathUtils.GetMappingFilePath() + Environment.NewLine + Environment.NewLine +
-                            "Your mapping has NOT been saved. Overwriting it here would have discarded " +
-                            "everyone else's mappings. Repair or replace that file, then map again.",
-                            "Mapping not saved", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    else
-                    {
-                        SavedMappingFile.Merge(CurrentMappingFile.mappingTable);
-
-                        string error;
-                        if (SavedMappingFile.SaveToXml("", out error) == false)
-                        {
-                            System.Windows.MessageBox.Show(error, "Mapping not saved",
-                                                           MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
+                        System.Windows.MessageBox.Show(error, "Mapping not saved",
+                                                       MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 catch (Exception ex)

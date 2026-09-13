@@ -147,14 +147,15 @@
     <UncertaintyFactor>0.1</UncertaintyFactor>
   </defaultCarboGroupSettings>
   <templatePath></templatePath>
+  <mappingPath></mappingPath>
   <useLocal>true</useLocal>
   <firstLaunch>true</firstLaunch>
   <defaultDesignLife>60</defaultDesignLife>
   <Currency>£</Currency>
   <ecRevitParameter>CLC_EmbodiedCarbon</ecRevitParameter>
   <secretMessage />
-  <carboLegendName>CLC_ResultsView</carboLegendName>
-  <carboResultLegendName>CLC_Calculation</carboResultLegendName>
+  <carboLegendName>CLC_ColourLegend</carboLegendName>
+  <carboResultLegendName>CLC_ResultsView</carboResultLegendName>
   <showCars>true</showCars>
   <showPlanes>true</showPlanes>
   <showTrees>true</showTrees>

@@ -17,7 +17,7 @@
   <dataBasePath />
   <materialDataBasePath />
   <depthRange>50</depthRange>
-  <strengthRange>10</strengthRange>
+  <strengthRange>25</strengthRange>
   <colour_ReusedMinedData>
     <a>255</a>
     <r>25</r>

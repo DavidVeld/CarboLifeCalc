@@ -85,13 +85,36 @@ namespace CarboLifeAPI.Data
                     if (string.IsNullOrEmpty(folder) == false && Directory.Exists(folder) == false)
                         Directory.CreateDirectory(folder);
 
+                    //Re-read whatever is on disk NOW and merge these rows into it, rather than
+                    //writing the copy that was loaded when the dialog opened.
+                    //
+                    //Two technicians mapping at the same time both did
+                    //LoadFromXml -> Merge -> SaveToXml, and the second save wrote the file as it
+                    //had been BEFORE the first one, so the first person's mappings vanished with
+                    //no error. The lock check below only catches the much narrower case of the
+                    //file being held open at the moment of writing. Merging here makes two
+                    //concurrent saves additive instead of destructive.
+                    CarboMapFile toWrite;
+
+                    if (TryMergeWithFileOnDisk(myPath, out toWrite) == false)
+                    {
+                        //The file is there but cannot be parsed. Writing these rows over it would
+                        //throw away every other mapping in it, which is precisely what must not
+                        //happen to a file the whole team shares.
+                        error = "The mapping file exists but could not be read, so it has been left alone:" +
+                                Environment.NewLine + myPath + Environment.NewLine + Environment.NewLine +
+                                "Your mapping has NOT been saved. Overwriting it would have discarded " +
+                                "everyone else's mappings. Repair or replace that file, then map again.";
+                        return false;
+                    }
+
                     //Write beside the target, then swap, so a failure never truncates the shared file.
                     string tempPath = myPath + ".tmp";
 
                     XmlSerializer serializer = new XmlSerializer(typeof(CarboMapFile));
                     using (StreamWriter writer = new StreamWriter(tempPath, false, Encoding.UTF8))
                     {
-                        serializer.Serialize(writer, this);
+                        serializer.Serialize(writer, toWrite);
                     }
 
                     if (File.Exists(myPath))
@@ -172,6 +195,76 @@ namespace CarboLifeAPI.Data
             }
         }
 
+        /// <summary>
+        /// Builds what should actually be written: the file currently on disk with this
+        /// instance's rows merged into it.
+        ///
+        /// Rows held here win where the keys match; anything on disk that is not held here is
+        /// carried over untouched. That is what keeps a concurrent save from deleting a
+        /// colleague's work, and what keeps other templates' rows out of harm's way.
+        /// </summary>
+        /// <param name="merged">What to write. Only meaningful when this returns true.</param>
+        /// <returns>
+        /// False only when a file exists and cannot be read - the one case where writing would
+        /// destroy mappings rather than add to them. No file yet is a success: there is simply
+        /// nothing to merge with.
+        /// </returns>
+        private bool TryMergeWithFileOnDisk(string path, out CarboMapFile merged)
+        {
+            merged = this;
+
+            if (File.Exists(path) == false)
+                return true;
+
+            CarboMapFile onDisk;
+
+            try
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(CarboMapFile));
+                using (StreamReader reader = new StreamReader(path))
+                {
+                    onDisk = serializer.Deserialize(reader) as CarboMapFile;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+            if (onDisk == null || onDisk.mappingTable == null)
+                return false;
+
+            onDisk.Merge(this.mappingTable);
+            merged = onDisk;
+            return true;
+        }
+
+        /// <summary>
+        /// The rows that belong to one material template.
+        ///
+        /// A lookup already requires the template to match, so rows for other templates can never
+        /// be used by this project - they were simply carried around in memory and scanned past.
+        /// Filtering on load makes that explicit and keeps a project working only with its own.
+        /// </summary>
+        public List<CarboMapElement> RowsForTemplate(string templateName)
+        {
+            List<CarboMapElement> result = new List<CarboMapElement>();
+
+            if (mappingTable == null)
+                return result;
+
+            foreach (CarboMapElement row in mappingTable)
+            {
+                if (row == null)
+                    continue;
+
+                if (string.Equals(row.templateName, templateName, StringComparison.OrdinalIgnoreCase))
+                    result.Add(row);
+            }
+
+            return result;
+        }
+
         public void Merge(List<CarboMapElement> newMappingTable)
         {
             foreach (var newElement in newMappingTable)
@@ -199,11 +292,62 @@ namespace CarboLifeAPI.Data
 
         private void CleanUp()
         {
-            // Remove duplicates based on revitName, category, and templateName
+            // Remove duplicates based on revitName, category, and templateName.
+            //
+            // Case-insensitively, to agree with Merge above and with the lookup in
+            // CarboProject.GetMapItem. Grouping on an anonymous type used the default string
+            // comparer, which is case sensitive, so "Concrete" and "CONCRETE" both survived a
+            // cleanup while the lookup - being case insensitive - could only ever reach the
+            // first. The second row was dead weight that nothing could use.
             mappingTable = mappingTable
-                .GroupBy(e => new { e.revitName, e.category, e.templateName })
+                .Where(e => e != null)
+                .GroupBy(e => new MapKey(e.revitName, e.category, e.templateName))
                 .Select(g => g.First())
                 .ToList();
+        }
+
+        /// <summary>
+        /// The identity of a mapping row: the Revit material, the element category it was seen
+        /// in, and the material template it maps into. Compared the way every other part of the
+        /// mapping path compares them, without regard to case.
+        /// </summary>
+        private sealed class MapKey : IEquatable<MapKey>
+        {
+            private readonly string revitName;
+            private readonly string category;
+            private readonly string templateName;
+
+            public MapKey(string revitName, string category, string templateName)
+            {
+                this.revitName = revitName ?? "";
+                this.category = category ?? "";
+                this.templateName = templateName ?? "";
+            }
+
+            public bool Equals(MapKey other)
+            {
+                if (other == null)
+                    return false;
+
+                return string.Equals(revitName, other.revitName, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(category, other.category, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(templateName, other.templateName, StringComparison.OrdinalIgnoreCase);
+            }
+
+            public override bool Equals(object obj)
+            {
+                return Equals(obj as MapKey);
+            }
+
+            public override int GetHashCode()
+            {
+                //Must hash case insensitively or equal keys could land in different buckets.
+                int h = 17;
+                h = unchecked(h * 31 + StringComparer.OrdinalIgnoreCase.GetHashCode(revitName));
+                h = unchecked(h * 31 + StringComparer.OrdinalIgnoreCase.GetHashCode(category));
+                h = unchecked(h * 31 + StringComparer.OrdinalIgnoreCase.GetHashCode(templateName));
+                return h;
+            }
         }
     }
 }

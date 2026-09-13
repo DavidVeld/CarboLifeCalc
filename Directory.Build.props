@@ -58,4 +58,27 @@
     <Compile Include="$(MSBuildThisFileDirectory)Shared\IsExternalInit.cs" Link="Properties\IsExternalInit.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!--
+      Company, copyright and product name for every assembly, declared once.
+      Every project sets GenerateAssemblyInfo=false, so the matching .csproj properties are
+      ignored and these have to come from source. Without it the shipped DLLs show a blank
+      publisher in their file properties.
+    -->
+    <Compile Include="$(MSBuildThisFileDirectory)Shared\AssemblyMetadata.cs" Link="Properties\AssemblyMetadata.cs" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <!--
+      Keep the build machine's directory layout out of the shipped binaries.
+
+      A normal build writes the absolute path of the .pdb into the DLL's debug directory, and the
+      source root into the .pdb itself, so CarboLifeAPI.dll went out carrying
+      "C:\Users\<developer>\source\repos\...". PathMap rewrites those to a neutral root and
+      Deterministic makes the output reproducible.
+    -->
+    <PathMap>$(MSBuildThisFileDirectory)=.\</PathMap>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
 </Project>
