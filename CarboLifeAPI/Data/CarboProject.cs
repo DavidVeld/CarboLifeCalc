@@ -2430,7 +2430,7 @@ namespace CarboLifeAPI.Data
                 if (grp.Material == null)
                     continue;
 
-                if(grp.Material.Category == RevitImportSettings.RCMaterialCategory)
+                if (SameMaterialCategory(grp.Material.Category, RevitImportSettings.RCMaterialCategory))
                 {
                     //this is a RC group that needs to be mapped
                     CarboGroup rcGroup = getRCGroup(grp, reinforcementMaterial);
@@ -2446,6 +2446,24 @@ namespace CarboLifeAPI.Data
             }
 
             return newRCGroups.Count;
+        }
+
+        /// <summary>
+        /// Whether a group's material category is the one an allowance was asked for.
+        ///
+        /// This is the gate that decides whether a group gets an allowance at all, and it was a
+        /// case sensitive ==. The main application picks the category from a list built out of the
+        /// project's own groups so it always agreed, but a template that spells it "concrete", or
+        /// a Grasshopper definition where the same value is typed into a text input - CarboCroc's
+        /// Carbo Allowances component defaults it to "Concrete" - produced no groups whatsoever
+        /// and said nothing about why.
+        /// </summary>
+        private static bool SameMaterialCategory(string groupCategory, string wantedCategory)
+        {
+            if (groupCategory == null || wantedCategory == null)
+                return false;
+
+            return string.Equals(groupCategory.Trim(), wantedCategory.Trim(), StringComparison.OrdinalIgnoreCase);
         }
 
         private CarboGroup getRCGroup(CarboGroup grp, CarboMaterial reinforcementMaterial)
@@ -2467,16 +2485,20 @@ namespace CarboLifeAPI.Data
             //if there is an override to the values check this now?
             CarboNumProperty rcDensityProperty = null;
 
+            //Says which row of the map answered, so an approximate match can be shown in the
+            //description rather than passing itself off as the rate somebody asked for.
+            CarboRcCategoryMatch rcMatch = null;
+
             if (result.RcDensity == 0)
             {
-                foreach (CarboNumProperty property in RevitImportSettings.rcQuantityMap)
-                {
-                    if (property.PropertyName == result.Category)
-                    {
-                        rcDensityProperty = property;
-                        break;
-                    }
-                }
+                //Was a plain ==, so only a category spelt exactly as the csv spells it found its
+                //rate and everything else silently took the 100 kg/m3 default below. The category
+                //is typed into a Revit parameter by hand as often as it comes from the Revit
+                //category name, so case, spacing and a plural all have to be forgiven.
+                rcMatch = CarboRcCategoryMatcher.Match(RevitImportSettings.rcQuantityMap, result.Category);
+
+                if (rcMatch.Found == true)
+                    rcDensityProperty = rcMatch.Property;
             }
             else
             {
@@ -2522,6 +2544,15 @@ namespace CarboLifeAPI.Data
             //Description;
             result.Category = CarboGroupCategories.Reinforcement;
             result.Description = grp.Category + " reinforcement " + rcDensityProperty.Value.ToString() + " kg/m³";
+
+            //A rate reached through anything but an exact row name is a reading of what the
+            //category was meant to say, so the row it settled on is named here. Without it the
+            //group looks identical to one that matched outright, and a category quietly matched
+            //to the wrong row would be invisible.
+            if (rcMatch != null && rcMatch.IsApproximate == true)
+            {
+                result.Description += " (matched to \"" + rcDensityProperty.PropertyName + "\")";
+            }
 
             if (result.isSubstructure == true)
             {
@@ -2693,7 +2724,7 @@ namespace CarboLifeAPI.Data
                 if (grp.Material == null)
                     continue;
 
-                if (grp.Material.Category == materialCategory)
+                if (SameMaterialCategory(grp.Material.Category, materialCategory))
                 {
                     CarboGroup connectionGroup = getConnectionGroup(grp, connectionMaterial, percentage, groupCategory, volumeName, origin);
                     if (connectionGroup != null)

@@ -4,6 +4,7 @@ General Slab,110
 Transfer Slab,150
 Raft,115
 Pile,80
+Piles,80
 General Beam,220
 Ground Beam,230
 Light Column,100
@@ -14,7 +15,7 @@ Retaining Wall,110
 Precast Wall,40
 Precast Plank,80
 Precast Column,100
-Pilecap,272
+Pilecap,200
 PT slab,85
 Columns,350
 Floors,175
@@ -23,8 +24,8 @@ Mass,0
 Ramps,150
 Roofs,160
 Stairs,150
-Structural Columns,400
-Structural Foundations,250
+Structural Columns,350
+Structural Foundations,150
 Structural Framing,220
 Structural Trusses,200
 Walls,109
