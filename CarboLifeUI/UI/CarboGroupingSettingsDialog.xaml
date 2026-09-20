@@ -63,6 +63,19 @@
 
     <DockPanel LastChildFill="True" Margin="10">
 
+        <!-- ─── Names this model does not have ───
+             Filled and shown by the code-behind. Every parameter, workset and phase named below
+             is looked up by the import and silently skipped when it is absent: the import still
+             finishes and still produces numbers, so a name left over from the last project costs
+             a whole import before anyone notices. This is the one place it can be said first. -->
+        <Border x:Name="pnl_MissingNames" DockPanel.Dock="Top"
+                Background="#FFF6E9" BorderBrush="#C05000" BorderThickness="1"
+                CornerRadius="4" Padding="10,6,10,6" Margin="0,0,0,10"
+                Visibility="Collapsed">
+            <TextBlock x:Name="txt_MissingNames" TextWrapping="Wrap"
+                       FontSize="12" FontWeight="SemiBold" Foreground="#C05000"/>
+        </Border>
+
         <!-- Footer -->
         <Border DockPanel.Dock="Bottom" Margin="0,10,0,0">
             <Grid>
@@ -137,9 +150,9 @@
                         </Grid.ColumnDefinitions>
                         <ComboBox Name="cbb_MainGroup" Grid.Column="0" Height="26" Margin="0,0,6,0"
                                   Style="{StaticResource ComboBoxFlatStyle}"
-                                  DropDownClosed="cbb_MainGroup_DropDownClosed"/>
-                        <TextBox Name="txt_CategoryparamName" Grid.Column="1" Height="26"
-                                 Style="{StaticResource flatTextBox}"/>
+                                  SelectionChanged="cbb_MainGroup_SelectionChanged"/>
+                        <ComboBox Name="cbb_CategoryparamName" Grid.Column="1" Height="26"
+                                  Style="{StaticResource ParameterComboBoxStyle}"/>
                     </Grid>
 
                     <!-- Uncertainty Factor -->
@@ -231,24 +244,29 @@
                 <StackPanel>
                     <Label Style="{StaticResource baseStyleTitle}" Content="Advanced Element Import Settings" Margin="0,0,0,8"/>
 
-                    <!-- Substructure -->
-                    <CheckBox x:Name="chk_ImportSubstructure" Style="{StaticResource CheckSection}">
+                    <!-- Substructure. The right hand box is a parameter name or, when the type on
+                         the left says workset, a fragment of a workset name. Both lists come from
+                         the model; see CarboParameterPicker. -->
+                    <CheckBox x:Name="chk_ImportSubstructure" Style="{StaticResource CheckSection}"
+                              Checked="MissingNameSetting_Toggled" Unchecked="MissingNameSetting_Toggled">
                         Group by substructure parameter
                     </CheckBox>
-                    <TextBlock Style="{StaticResource HintText}">Define a parameter to identify the building's substructure</TextBlock>
+                    <TextBlock x:Name="txt_SubstructureHint" Style="{StaticResource HintText}">Define a parameter to identify the building's substructure</TextBlock>
                     <Grid Margin="0,0,0,12">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="170"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <ComboBox Name="cbb_SubstructureImportType" Grid.Column="0" Height="26" Margin="0,0,6,0"
-                                  Style="{StaticResource ComboBoxFlatStyle}"/>
-                        <TextBox Name="txt_SubstructureParamName" Grid.Column="1" Height="26"
-                                 Style="{StaticResource flatTextBox}"/>
+                                  Style="{StaticResource ComboBoxFlatStyle}"
+                                  SelectionChanged="cbb_SubstructureImportType_SelectionChanged"/>
+                        <ComboBox Name="cbb_SubstructureParamName" Grid.Column="1" Height="26"
+                                  Style="{StaticResource ParameterComboBoxStyle}"/>
                     </Grid>
 
                     <!-- Material Grade -->
-                    <CheckBox Name="chk_MaterialGrade" Style="{StaticResource CheckSection}">
+                    <CheckBox Name="chk_MaterialGrade" Style="{StaticResource CheckSection}"
+                              Checked="MissingNameSetting_Toggled" Unchecked="MissingNameSetting_Toggled">
                         Group by material grade
                     </CheckBox>
                     <TextBlock Style="{StaticResource HintText}">Define a parameter to import material grade</TextBlock>
@@ -258,13 +276,15 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <ComboBox Name="cbb_GradeImportType" Grid.Column="0" Height="26" Margin="0,0,6,0"
-                                  Style="{StaticResource ComboBoxFlatStyle}"/>
-                        <TextBox Name="txt_GradeImportValue" Grid.Column="1" Height="26"
-                                 Style="{StaticResource flatTextBox}"/>
+                                  Style="{StaticResource ComboBoxFlatStyle}"
+                                  SelectionChanged="cbb_GradeImportType_SelectionChanged"/>
+                        <ComboBox Name="cbb_GradeImportValue" Grid.Column="1" Height="26"
+                                  Style="{StaticResource ParameterComboBoxStyle}"/>
                     </Grid>
 
                     <!-- Correction Parameter -->
-                    <CheckBox Name="chk_doCorrection" Style="{StaticResource CheckSection}">
+                    <CheckBox Name="chk_doCorrection" Style="{StaticResource CheckSection}"
+                              Checked="MissingNameSetting_Toggled" Unchecked="MissingNameSetting_Toggled">
                         Group by correction parameter
                     </CheckBox>
                     <TextBlock Style="{StaticResource HintText}">Define a parameter for material volume corrections</TextBlock>
@@ -274,13 +294,15 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <ComboBox Name="cbb_CorrectionImportType" Grid.Column="0" Height="26" Margin="0,0,6,0"
-                                  Style="{StaticResource ComboBoxFlatStyle}"/>
-                        <TextBox Name="txt_CorrectionImportValue" Grid.Column="1" Height="26"
-                                 Style="{StaticResource flatTextBox}"/>
+                                  Style="{StaticResource ComboBoxFlatStyle}"
+                                  SelectionChanged="cbb_CorrectionImportType_SelectionChanged"/>
+                        <ComboBox Name="cbb_CorrectionImportValue" Grid.Column="1" Height="26"
+                                  Style="{StaticResource ParameterComboBoxStyle}"/>
                     </Grid>
 
                     <!-- Additional Parameter -->
-                    <CheckBox Name="chk_AdditionalImport" Style="{StaticResource CheckSection}">
+                    <CheckBox Name="chk_AdditionalImport" Style="{StaticResource CheckSection}"
+                              Checked="MissingNameSetting_Toggled" Unchecked="MissingNameSetting_Toggled">
                         Group by additional parameter
                     </CheckBox>
                     <TextBlock Style="{StaticResource HintText}">Define an additional parameter to group the import</TextBlock>
@@ -290,20 +312,24 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <ComboBox Name="cbb_ExtraImportType" Grid.Column="0" Height="26" Margin="0,0,6,0"
-                                  Style="{StaticResource ComboBoxFlatStyle}"/>
-                        <TextBox Name="txt_ExtraImportValue" Grid.Column="1" Height="26"
-                                 Style="{StaticResource flatTextBox}"/>
+                                  Style="{StaticResource ComboBoxFlatStyle}"
+                                  SelectionChanged="cbb_ExtraImportType_SelectionChanged"/>
+                        <ComboBox Name="cbb_ExtraImportValue" Grid.Column="1" Height="26"
+                                  Style="{StaticResource ParameterComboBoxStyle}"/>
                     </Grid>
 
                     <Separator Margin="0,0,0,12"/>
 
-                    <!-- Existing Elements -->
-                    <CheckBox Name="chk_ImportExisting" Style="{StaticResource CheckSection}">
+                    <!-- Existing Elements. Not a parameter but looked up the same way - the created
+                         phase of every element is compared against this name, and a name no phase
+                         carries quietly makes nothing existing - so it is checked like one. -->
+                    <CheckBox Name="chk_ImportExisting" Style="{StaticResource CheckSection}"
+                              Checked="MissingNameSetting_Toggled" Unchecked="MissingNameSetting_Toggled">
                         Include &amp; group existing elements
                     </CheckBox>
                     <TextBlock Style="{StaticResource HintText}">Define the name of the "existing" phase below</TextBlock>
-                    <TextBox Name="txt_ExistingPhaseName" Height="26" Margin="0,0,0,12"
-                             Style="{StaticResource flatTextBox}"/>
+                    <ComboBox Name="cbb_ExistingPhaseName" Height="26" Margin="0,0,0,12"
+                              Style="{StaticResource ParameterComboBoxStyle}"/>
 
                     <!-- Demolished Elements -->
                     <CheckBox Name="chk_ImportDemolished" Style="{StaticResource CheckSection}">
@@ -339,12 +365,12 @@
                         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource FieldLabel}">Total GIA parameter</TextBlock>
                         <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource FieldLabel}">New GIA parameter</TextBlock>
 
-                        <TextBox Name="txt_GIAParamName" Grid.Row="1" Grid.Column="0" Height="26"
-                                 Style="{StaticResource flatTextBox}"
-                                 ToolTip="Project Information parameter holding the total GIA. Leave empty to always measure the floors."/>
-                        <TextBox Name="txt_GIANewParamName" Grid.Row="1" Grid.Column="2" Height="26"
-                                 Style="{StaticResource flatTextBox}"
-                                 ToolTip="Project Information parameter holding the new build GIA. Leave empty to always measure the floors."/>
+                        <ComboBox Name="cbb_GIAParamName" Grid.Row="1" Grid.Column="0" Height="26"
+                                  Style="{StaticResource ParameterComboBoxStyle}"
+                                  ToolTip="Project Information parameter holding the total GIA. Leave empty to always measure the floors."/>
+                        <ComboBox Name="cbb_GIANewParamName" Grid.Row="1" Grid.Column="2" Height="26"
+                                  Style="{StaticResource ParameterComboBoxStyle}"
+                                  ToolTip="Project Information parameter holding the new build GIA. Leave empty to always measure the floors."/>
                     </Grid>
 
                     <TextBlock Style="{StaticResource FieldLabel}" Margin="0,10,0,2">Determination method of the last import</TextBlock>

@@ -38,19 +38,76 @@ namespace CarboCircle.data
         public string RequiredParameterName { get; set; }
 
         /// <summary>
-        /// Type parameter holding the steel grade. Empty = grade is not read.
+        /// Which of the two section-name overrides applies to the side being imported, or
+        /// the empty string when that side has none and the Revit type name should be used.
+        ///
+        /// One method rather than the caller picking, because the choice is a property of
+        /// these settings and getting it wrong is invisible: reading the mine's parameter
+        /// on the project side does not fail, it silently identifies every proposed member
+        /// by its type name instead.
+        /// </summary>
+        internal string sectionNameParameterFor(bool forProject)
+        {
+            string name = forProject ? RequiredParameterName : MineParameterName;
+
+            return string.IsNullOrWhiteSpace(name) ? string.Empty : name.Trim();
+        }
+
+        /// <summary>
+        /// INSTANCE parameter that "Write reuse IDs into the model" writes the pairing id
+        /// into, on the proposed member and on the existing member it comes out of.
+        ///
+        /// An instance parameter, not a type one, and that is the whole point: two beams of
+        /// the same type get different ids because they are different pieces of steel. A
+        /// type parameter would give every beam of that type the same answer.
+        ///
+        /// Empty means the default - see <see cref="reuseIdParameterOrDefault"/>. It is not
+        /// a switch: there is no way to turn the write off here, because the write only ever
+        /// happens when the user presses the button.
+        /// </summary>
+        public string reuseIdParameter { get; set; }
+
+        /// <summary>What the default actually is, in one place.</summary>
+        public const string DefaultReuseIdParameter = "CLC_ReuseID";
+
+        /// <summary>
+        /// The parameter to write into, never blank.
+        ///
+        /// A settings file written before this existed has no element for it, and
+        /// XmlSerializer leaves absent elements at whatever the constructor set - so an old
+        /// file comes back with the default rather than with null.
+        /// </summary>
+        internal string reuseIdParameterOrDefault()
+        {
+            return string.IsNullOrWhiteSpace(reuseIdParameter)
+                ? DefaultReuseIdParameter
+                : reuseIdParameter.Trim();
+        }
+
+        /// <summary>
+        /// Type parameter holding the steel grade.
+        ///
+        /// Persisted, but nothing reads it: grade comes from the material class on the
+        /// element's material. The settings dialog says so rather than offering it as a
+        /// setting, and no longer writes to it - so a value an older version left here
+        /// survives untouched.
         /// </summary>
         public string gradeParameter { get; set; }
 
         /// <summary>
-        /// Type parameter holding the width of a timber section. Empty = use the Revit
-        /// type name.
+        /// Type parameter holding the width of a timber section.
+        ///
+        /// Persisted, but nothing reads it: the import takes width from the type parameter
+        /// "b", the name Revit's own timber families use. As with
+        /// <see cref="gradeParameter"/>, the dialog states that rather than offering a
+        /// setting, and leaves whatever is stored here alone.
         /// </summary>
         public string timberWidthParameter { get; set; }
 
         /// <summary>
-        /// Type parameter holding the depth of a timber section. Empty = use the Revit
-        /// type name.
+        /// Type parameter holding the depth of a timber section. Persisted and unread; the
+        /// import takes depth from the type parameter "d". See
+        /// <see cref="timberWidthParameter"/>.
         /// </summary>
         public string timberDepthParameter { get; set; }
 
@@ -222,6 +279,7 @@ namespace CarboCircle.data
         {
             MineParameterName = string.Empty;
             RequiredParameterName = string.Empty;
+            reuseIdParameter = DefaultReuseIdParameter;
             gradeParameter = string.Empty;
             timberWidthParameter = string.Empty;
             timberDepthParameter = string.Empty;

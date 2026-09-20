@@ -232,6 +232,53 @@ namespace CarboCircle.UI
             }
         }
 
+        /// <summary>
+        /// Stamps the reuse id onto both ends of every matched pair.
+        ///
+        /// Confirmed first, because it is the only thing on this window that changes the
+        /// model - and it is one undo step, which is worth saying while the user still has
+        /// the chance not to press it.
+        /// </summary>
+        private void btn_WriteReuseIds_Click(object sender, RoutedEventArgs e)
+        {
+            if (m_ExEvent == null)
+                return;
+
+            //Checked here rather than left to the handler: nothing to write is a question
+            //about what is on screen, and answering it from the window means the user is
+            //not made to wait for an external event to tell them no.
+            if (activeProject.carboCircleMatchedPairs == null ||
+                activeProject.carboCircleMatchedPairs.Count == 0)
+            {
+                //Fully qualified: this file uses both WinForms and WPF, and both have a
+                //MessageBox.
+                System.Windows.MessageBox.Show(
+                    "There are no matched pairs to write yet. Find the opportunities first.",
+                    "Nothing to write", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            string parameterName = activeProject.settings.reuseIdParameterOrDefault();
+
+            MessageBoxResult go = System.Windows.MessageBox.Show(
+                "Write the reuse ID of every matched pair into the instance parameter \"" +
+                parameterName + "\", on the proposed member and on the existing member it " +
+                "comes from?" + Environment.NewLine + Environment.NewLine +
+                "This changes the model. It is a single undo step, and anything already in " +
+                "that parameter on those members is overwritten.",
+                "Write reuse IDs", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+
+            if (go != MessageBoxResult.OK)
+                return;
+
+            storeSettings();
+
+            m_Handler.SetSwitch(5);
+            m_Handler.SetSettings(activeProject);
+
+            m_ExEvent.Raise();
+        }
+
         private void btn_Select_Click(object sender, RoutedEventArgs e)
         {
             if (liv_MatchedFraming.SelectedItem != null)
@@ -339,6 +386,10 @@ namespace CarboCircle.UI
 
             txt_SteelCutoffLength.Text = activeProject.settings.cutoffbeamLength.ToString();
             txt_TimberCutoffLength.Text = activeProject.settings.timberCutoffLength.ToString();
+
+            //The name beside the write button, read off the same settings the write uses -
+            //so what the button says it will do and what it does cannot disagree.
+            txt_ReuseIdParameter.Text = activeProject.settings.reuseIdParameterOrDefault();
 
             //Setting .Text above raises TextChanged, which refreshes these anyway. Called
             //explicitly so the state does not depend on that: if either box already held the

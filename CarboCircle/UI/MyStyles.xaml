@@ -968,6 +968,164 @@
     <!-- Kept under its old key: 15 references across the two windows. -->
     <Style x:Key="flatTextBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource ModernTextBoxStyle}"/>
 
+    <!-- ══════════════════════════════════════════════════════════════════════════ -->
+    <!-- PARAMETER PICKER                                                           -->
+    <!--                                                                            -->
+    <!-- An editable combo box that has to look like the text box beside it, because -->
+    <!-- on the settings window it sits in the same column as several of them.       -->
+    <!--                                                                            -->
+    <!-- Written as its own template rather than based on ComboBoxFlatStyle, which   -->
+    <!-- was built for the read-only case: its PART_EditableTextBox is left-aligned  -->
+    <!-- and wraps, so as soon as IsEditable is true the caret sits in a box a few   -->
+    <!-- pixels wide and long names wrap out of the control.                         -->
+    <!--                                                                            -->
+    <!-- Two details that matter and do not look like they do:                       -->
+    <!--                                                                            -->
+    <!-- Style="{x:Null}" on the editor. This dictionary sets an implicit TextBox    -->
+    <!-- style, and an implicit style reaches inside a control template. Without the -->
+    <!-- explicit null the editor would draw ModernTextBoxStyle's own border and     -->
+    <!-- background inside this one's, boxed in a box.                                -->
+    <!--                                                                            -->
+    <!-- The chevron is the only thing that opens the list. Templates that make the  -->
+    <!-- whole control one ToggleButton are fine read-only, but here a click in the  -->
+    <!-- text has to place the caret rather than drop the list down.                 -->
+    <!-- ══════════════════════════════════════════════════════════════════════════ -->
+
+    <Style x:Key="ParameterComboItem" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize"   Value="12"/>
+        <Setter Property="Padding"    Value="6,3"/>
+        <Setter Property="Foreground" Value="{StaticResource TextDarkBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border x:Name="Bd"
+                            Background="Transparent"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource LightPinkBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource LightPinkBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ParameterCombo" TargetType="{x:Type ComboBox}">
+        <Setter Property="OverridesDefaultStyle"    Value="True"/>
+        <Setter Property="IsEditable"               Value="True"/>
+        <!-- Substring matching is done in carboCircleParameterPicker. WPF's own search is
+             prefix only and rewrites what was typed. -->
+        <Setter Property="IsTextSearchEnabled"      Value="False"/>
+        <Setter Property="StaysOpenOnEdit"          Value="True"/>
+        <Setter Property="MaxDropDownHeight"        Value="260"/>
+        <Setter Property="FontFamily"               Value="Segoe UI"/>
+        <Setter Property="FontSize"                 Value="12"/>
+        <Setter Property="FontWeight"               Value="Normal"/>
+        <Setter Property="Foreground"               Value="{StaticResource TextDarkBrush}"/>
+        <Setter Property="Background"               Value="{StaticResource FaintBrush}"/>
+        <Setter Property="BorderBrush"              Value="{StaticResource ControlBorderBrush}"/>
+        <Setter Property="BorderThickness"          Value="1"/>
+        <Setter Property="SnapsToDevicePixels"      Value="True"/>
+        <Setter Property="ItemContainerStyle"       Value="{StaticResource ParameterComboItem}"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Border x:Name="Bd"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox x:Name="PART_EditableTextBox"
+                                     Grid.Column="0"
+                                     Style="{x:Null}"
+                                     Margin="5,0,0,0"
+                                     Padding="0"
+                                     BorderThickness="0"
+                                     Background="Transparent"
+                                     Foreground="{TemplateBinding Foreground}"
+                                     FontFamily="{TemplateBinding FontFamily}"
+                                     FontSize="{TemplateBinding FontSize}"
+                                     VerticalContentAlignment="Center"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}"
+                                     Focusable="True"/>
+
+                            <ToggleButton x:Name="Chevron"
+                                          Grid.Column="1"
+                                          Focusable="False"
+                                          ClickMode="Press"
+                                          Background="Transparent"
+                                          IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <Border x:Name="ChevronBd" Background="Transparent">
+                                            <Path x:Name="Arrow"
+                                                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
+                                                  Fill="{StaticResource PrimaryAccentBrush}"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="ChevronBd" Property="Background" Value="{StaticResource LightPinkBrush}"/>
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource DisabledTextBrush}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+
+                            <Popup x:Name="PART_Popup"
+                                   Placement="Bottom"
+                                   Focusable="False"
+                                   AllowsTransparency="True"
+                                   PopupAnimation="None"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}">
+                                <Border Background="#FFFFFF"
+                                        BorderBrush="{StaticResource ControlBorderBrush}"
+                                        BorderThickness="1"
+                                        MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}}"
+                                        MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                        SnapsToDevicePixels="True">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                                  HorizontalScrollBarVisibility="Disabled">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                            <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource BorderPinkBrush}"/>
+                            <Setter TargetName="Bd" Property="Background"  Value="#FFFFFF"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Bd" Property="Background" Value="{StaticResource DisabledBackBrush}"/>
+                            <Setter Property="Foreground" Value="{StaticResource DisabledTextBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--MENU-->
 
 

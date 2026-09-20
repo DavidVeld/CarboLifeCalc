@@ -57,6 +57,308 @@ namespace CarboCircle
 
 
         /// <summary>
+        /// Reads the names of the type parameters in this model into
+        /// <see cref="carboCircleParameterNames"/>, so the settings dialog can offer them
+        /// instead of asking the user to remember and spell one.
+        ///
+        /// Must be called in Revit API context. The settings dialog is opened from a
+        /// modeless window and cannot touch a Document itself, which is why the list is
+        /// harvested here and cached rather than read on demand.
+        ///
+        /// Scope, and why it is this narrow:
+        ///
+        /// Only the four categories the import reads, and only their types. The override is
+        /// applied with ElementType.LookupParameter, so an instance parameter would never be
+        /// found and offering one would be a trap.
+        ///
+        /// Only parameters that store text. The value is read with Parameter.AsString(),
+        /// which returns null for a length or a number however sensible the name looks - so
+        /// a Length parameter in this list would be a setting that silently does nothing.
+        /// </summary>
+        internal static void collectParameterNames(Document doc)
+        {
+            if (doc == null)
+                return;
+
+            List<string> typeNames = new List<string>();
+            List<string> instanceNames = new List<string>();
+
+            try
+            {
+                foreach (BuiltInCategory category in parameterScanCategories)
+                {
+                    FilteredElementCollector types = new FilteredElementCollector(doc)
+                        .OfCategory(category)
+                        .WhereElementIsElementType();
+
+                    foreach (Element type in types)
+                        addTextParameterNames(type, typeNames, writableOnly: false);
+
+                    //Instance parameters have to come off instances - a type does not carry
+                    //them - which means walking placed elements. Capped, because a large
+                    //model has tens of thousands and they answer with the same handful of
+                    //names: this list is a set of suggestions, not a contract, and anything
+                    //it misses can still be typed in.
+                    FilteredElementCollector placed = new FilteredElementCollector(doc)
+                        .OfCategory(category)
+                        .WhereElementIsNotElementType();
+
+                    int scanned = 0;
+
+                    foreach (Element element in placed)
+                    {
+                        //Only writable ones. The reuse id picker is the only consumer, and
+                        //offering a read-only parameter there would be offering a setting
+                        //that cannot do its job.
+                        addTextParameterNames(element, instanceNames, writableOnly: true);
+
+                        if (++scanned >= instanceScanCap)
+                            break;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //Whatever was gathered before the fault is still worth offering, and an
+                //empty list is handled by the dialog. Nothing here is worth interrupting
+                //the user for: not being able to list the parameters never stops them
+                //typing a name.
+            }
+
+            carboCircleParameterNames.setTypeNames(typeNames);
+            carboCircleParameterNames.setInstanceNames(instanceNames);
+        }
+
+        /// <summary>The categories CarboCircle reads, and therefore the only ones whose
+        /// parameters are worth offering.</summary>
+        private static readonly BuiltInCategory[] parameterScanCategories = new BuiltInCategory[]
+        {
+            BuiltInCategory.OST_StructuralFraming,
+            BuiltInCategory.OST_StructuralColumns,
+            BuiltInCategory.OST_Walls,
+            BuiltInCategory.OST_Floors
+        };
+
+        //Enough to see every family variant in any real model, few enough that opening the
+        //settings dialog never feels like it is doing work.
+        private const int instanceScanCap = 500;
+
+        /// <summary>
+        /// Adds the names of an element's text parameters.
+        ///
+        /// Text only. Values are read with Parameter.AsString() and written with Set(string),
+        /// both of which quietly do nothing on a Length or a Number however sensible its name
+        /// looks - so a non-text parameter in either list would be a setting that silently
+        /// fails.
+        /// </summary>
+        private static void addTextParameterNames(Element element, List<string> into, bool writableOnly)
+        {
+            foreach (Parameter parameter in element.Parameters)
+            {
+                if (parameter == null || parameter.Definition == null)
+                    continue;
+
+                if (parameter.StorageType != StorageType.String)
+                    continue;
+
+                if (writableOnly && parameter.IsReadOnly)
+                    continue;
+
+                into.Add(parameter.Definition.Name);
+            }
+        }
+
+        /// <summary>
+        /// Stamps every matched pair with its reuse id, on the proposed member and on the
+        /// existing member it comes out of, and says what happened.
+        ///
+        /// WHAT THE ID IS
+        ///
+        /// The mined element's humanId - the same string the grids and the report already
+        /// show - so the tool has one vocabulary rather than two. For a piece cut out of a
+        /// longer member it is the offcut's id, "A3F_OC1", which names both the member it
+        /// came from and which cut it was.
+        ///
+        /// WHY BOTH ENDS GET THE SAME STRING
+        ///
+        /// So the link can be scheduled. Filter a schedule on the id and the new member and
+        /// the old one appear together; without that, a reuse id on the new member alone
+        /// says the member is reused but not what it is reused from.
+        ///
+        /// One existing member can serve several requirements, through its offcuts, so its
+        /// parameter receives every id it earned, joined - anything else would silently keep
+        /// only the last one.
+        ///
+        /// NOTHING IS ADDED TO THE MODEL. A member with no such parameter is counted and
+        /// left alone. Adding a project parameter means binding a shared parameter
+        /// definition to categories, which changes the model's schema, and that is not
+        /// something to do to somebody's model as a side effect of pressing a button.
+        /// </summary>
+        internal static bool writeReuseIds(Document doc, carboCircleProject project,
+            string parameterName, out string report)
+        {
+            report = "";
+
+            if (doc == null)
+            {
+                report = "There is no model to write to.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(parameterName))
+            {
+                report = "No reuse ID parameter is named in the settings.";
+                return false;
+            }
+
+            if (project == null || project.carboCircleMatchedPairs == null ||
+                project.carboCircleMatchedPairs.Count == 0)
+            {
+                report = "There are no matched pairs yet. Run the matching first.";
+                return false;
+            }
+
+            parameterName = parameterName.Trim();
+
+            //Gathered before the transaction opens, so the transaction holds nothing but the
+            //writes. One entry per Revit element, because one existing member can be cut up
+            //for several requirements and all of those ids belong on it.
+            Dictionary<long, List<string>> wanted = new Dictionary<long, List<string>>();
+            int pairsConsidered = 0;
+
+            foreach (carboCirclePair pair in project.carboCircleMatchedPairs)
+            {
+                if (pair == null || pair.matchClass == carboCircleMatchRules.ClassNoMatch)
+                    continue;
+
+                if (pair.mined_Element == null || pair.required_element == null)
+                    continue;
+
+                string id = pair.mined_Element.humanId;
+
+                if (string.IsNullOrWhiteSpace(id))
+                    continue;
+
+                pairsConsidered++;
+
+                //An offcut's Revit id still points at the member it was cut from, which is
+                //the element that actually exists in the model.
+                want(wanted, pair.mined_Element.id, id);
+                want(wanted, pair.required_element.id, id);
+            }
+
+            if (wanted.Count == 0)
+            {
+                report = "None of the matched pairs carry an ID to write.";
+                return false;
+            }
+
+            int written = 0;
+            int noParameter = 0;
+            int readOnly = 0;
+            int missing = 0;
+            List<string> missingExamples = new List<string>();
+
+            try
+            {
+                using (Transaction transaction = new Transaction(doc, "CarboCircle: write reuse IDs"))
+                {
+                    transaction.Start();
+
+                    foreach (KeyValuePair<long, List<string>> entry in wanted)
+                    {
+                        Element element = doc.GetElement(entry.Key.ToElementId());
+
+                        if (element == null)
+                        {
+                            //Deleted since the import, or from a different model.
+                            missing++;
+                            continue;
+                        }
+
+                        Parameter parameter = element.LookupParameter(parameterName);
+
+                        if (parameter == null || parameter.StorageType != StorageType.String)
+                        {
+                            noParameter++;
+
+                            if (missingExamples.Count < 5)
+                                missingExamples.Add(element.Id.LongValue().ToString());
+
+                            continue;
+                        }
+
+                        if (parameter.IsReadOnly)
+                        {
+                            readOnly++;
+                            continue;
+                        }
+
+                        //Joined in a stable order so a second run on an unchanged model
+                        //writes the same string and the model shows as unmodified.
+                        entry.Value.Sort(StringComparer.OrdinalIgnoreCase);
+
+                        if (parameter.Set(string.Join("; ", entry.Value.ToArray())))
+                            written++;
+                        else
+                            readOnly++;
+                    }
+
+                    transaction.Commit();
+                }
+            }
+            catch (Exception ex)
+            {
+                report = "The reuse IDs could not be written: " + ex.Message;
+                return false;
+            }
+
+            StringBuilder text = new StringBuilder();
+            text.Append(written + " of " + wanted.Count + " members stamped with \"" + parameterName +
+                        "\", from " + pairsConsidered + " matched pairs.");
+
+            if (noParameter > 0)
+            {
+                text.Append(Environment.NewLine + Environment.NewLine +
+                            noParameter + " members have no text parameter called \"" + parameterName +
+                            "\", so they were left alone. Add it as an instance Text parameter on " +
+                            "Structural Framing and Structural Columns, then run this again. " +
+                            "CarboCircle writes values but does not add parameters to your model.");
+
+                if (missingExamples.Count > 0)
+                    text.Append(Environment.NewLine + "For example element " +
+                                string.Join(", ", missingExamples.ToArray()) + ".");
+            }
+
+            if (readOnly > 0)
+                text.Append(Environment.NewLine + Environment.NewLine +
+                            readOnly + " members have that parameter but cannot be written to - " +
+                            "it is read-only, or the element is pinned or not editable.");
+
+            if (missing > 0)
+                text.Append(Environment.NewLine + Environment.NewLine +
+                            missing + " members are no longer in this model. Re-import if the model " +
+                            "has changed since the mine.");
+
+            report = text.ToString();
+            return written > 0;
+        }
+
+        private static void want(Dictionary<long, List<string>> wanted, long elementId, string id)
+        {
+            if (elementId <= 0)
+                return;
+
+            List<string> ids;
+
+            if (!wanted.TryGetValue(elementId, out ids))
+                wanted[elementId] = ids = new List<string>();
+
+            if (!ids.Contains(id))
+                ids.Add(id);
+        }
+
+        /// <summary>
         /// Collects elements from the active view, using the given extraction method.
         /// </summary>
         /// <param name="appSettings">
@@ -71,12 +373,22 @@ namespace CarboCircle
         /// methods through this same code path, so it is not a preference either of them
         /// can own.
         /// </param>
+        /// <param name="forProject">
+        /// True when this import is for the proposed design, false when it is for the mine.
+        /// It picks which of the two section-name parameter overrides applies. Like the
+        /// extraction method it travels with the call: both sides come through here, so it
+        /// is not something either of them can own.
+        ///
+        /// Until this existed, both sides read <c>MineParameterName</c> and the project-side
+        /// setting was saved and ignored - so a proposed model whose section name lived in a
+        /// different parameter from the mined one could not be read at all.
+        /// </param>
         /// <param name="log">
         /// Collects everything that went wrong or got dropped. Nothing on this path
         /// discards a reason silently any more: an import that returns nothing has to be
         /// able to say why, or it is indistinguishable from a model with nothing in it.
         /// </param>
-        internal static List<carboCircleElement> getElementsFromActiveView(UIApplication uiapp, carboCircleSettings appSettings, string extractionMethod, carboCircleImportLog log)
+        internal static List<carboCircleElement> getElementsFromActiveView(UIApplication uiapp, carboCircleSettings appSettings, string extractionMethod, bool forProject, carboCircleImportLog log)
         {
             if (log == null)
                 log = new carboCircleImportLog();
@@ -223,11 +535,15 @@ namespace CarboCircle
 
             //Convert to proper Elements
 
-            List<carboCircleElement> beamCollection = getcarboCircleElements(filteredBeamCollector, doc, appSettings, log);
-            List<carboCircleElement> columnCollection = getcarboCircleElements(filteredColumnCollector, doc, appSettings, log);
+            //Resolved once here rather than per element. Empty means "use the Revit type
+            //name", which is what the settings dialog shows as "Type name".
+            string sectionNameParameter = appSettings.sectionNameParameterFor(forProject);
 
-            List<carboCircleElement> wallCollection = getcarboCircleElements(filteredWallCollector, doc, appSettings, log);
-            List<carboCircleElement> floorCollection = getcarboCircleElements(filteredFloorCollector, doc, appSettings, log);
+            List<carboCircleElement> beamCollection = getcarboCircleElements(filteredBeamCollector, doc, appSettings, sectionNameParameter, log);
+            List<carboCircleElement> columnCollection = getcarboCircleElements(filteredColumnCollector, doc, appSettings, sectionNameParameter, log);
+
+            List<carboCircleElement> wallCollection = getcarboCircleElements(filteredWallCollector, doc, appSettings, sectionNameParameter, log);
+            List<carboCircleElement> floorCollection = getcarboCircleElements(filteredFloorCollector, doc, appSettings, sectionNameParameter, log);
 
 
             //Walls and floors now go in alongside beams and columns. They were converted
@@ -952,7 +1268,11 @@ namespace CarboCircle
         /// <param name="doc"></param>
         /// <param name="appSettings"></param>
         /// <returns></returns>
-        private static List<carboCircleElement> getcarboCircleElements(IEnumerable<Element> Collection, Document doc, carboCircleSettings appSettings, carboCircleImportLog log)
+        /// <param name="sectionNameParameter">
+        /// Type parameter holding the section name, or empty to use the Revit type name.
+        /// Already resolved for the side being imported - see getElementsFromActiveView.
+        /// </param>
+        private static List<carboCircleElement> getcarboCircleElements(IEnumerable<Element> Collection, Document doc, carboCircleSettings appSettings, string sectionNameParameter, carboCircleImportLog log)
         {
             List<carboCircleElement> resultCollection = new List<carboCircleElement>();
 
@@ -997,7 +1317,7 @@ namespace CarboCircle
 
                         foreach (ElementId materialid in materials)
                         {
-                            carboCircleElement newElement = getElementFromMaterialId(materialid, doc, el, appSettings, log);
+                            carboCircleElement newElement = getElementFromMaterialId(materialid, doc, el, appSettings, sectionNameParameter, log);
                             if (newElement != null)
                                 resultCollection.Add(newElement);
                         }
@@ -1024,7 +1344,10 @@ namespace CarboCircle
         /// the tool instead. Compound walls and floors return one element per structural
         /// layer, which is what GetMaterialVolume is measuring.
         /// </summary>
-        private static carboCircleElement getElementFromMaterialId(ElementId materialid, Document doc, Element el, carboCircleSettings appSettings, carboCircleImportLog log)
+        /// <param name="sectionNameParameter">
+        /// Type parameter holding the section name, or empty to use the Revit type name.
+        /// </param>
+        private static carboCircleElement getElementFromMaterialId(ElementId materialid, Document doc, Element el, carboCircleSettings appSettings, string sectionNameParameter, carboCircleImportLog log)
         {
             carboCircleElement resultElement = new carboCircleElement();
 
@@ -1054,9 +1377,13 @@ namespace CarboCircle
                 string elementName = el.Name;
 
                 //override default if there is a parameter set:
-                if (appSettings.MineParameterName != "" && type != null)
+                //
+                //Which parameter that is depends on the side being imported, and the caller
+                //has already worked that out. It used to read MineParameterName whichever
+                //side asked, so the project-side setting was saved and never used.
+                if (!string.IsNullOrEmpty(sectionNameParameter) && type != null)
                 {
-                    Parameter mineParam = type.LookupParameter(appSettings.MineParameterName);
+                    Parameter mineParam = type.LookupParameter(sectionNameParameter);
                     if (mineParam != null)
                     {
                         string paramNamed = mineParam.AsString();

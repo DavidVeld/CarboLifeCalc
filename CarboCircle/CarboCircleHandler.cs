@@ -85,6 +85,7 @@ namespace CarboCircle
         /// 2 = ColourView
         /// 3 = SelectPair
         /// 4 = CreateReport
+        /// 5 = WriteReuseIds
         /// </summary>
         /// <param name="v"></param>
         public void SetSwitch(int v)
@@ -130,6 +131,13 @@ namespace CarboCircle
 
                 if (doc != null)
                 {
+                    //Every request is a trip into API context, which is the only place a
+                    //Document can be read - so it is the only place the parameter list the
+                    //settings dialog offers can be refreshed. Refreshing on each request
+                    //keeps it current after the user switches model or adds a shared
+                    //parameter, neither of which the add-in is told about.
+                    carboCircleRevitCommands.collectParameterNames(doc);
+
                     if (commandSwitch == 0)
                     {
                         //No Action
@@ -151,6 +159,10 @@ namespace CarboCircle
                     else if (commandSwitch == 4)
                     {
                         CreateReport(uiapp);
+                    }
+                    else if (commandSwitch == 5)
+                    {
+                        WriteReuseIds();
                     }
                     else
                     {
@@ -286,6 +298,36 @@ namespace CarboCircle
             }
         }
 
+        /// <summary>
+        /// Stamps the reuse id onto both ends of every matched pair.
+        ///
+        /// Here rather than on the window, for the same reason the report moved here: this
+        /// is the only place a Document may be written to, and the project and the parameter
+        /// name arrived with the request rather than being fetched from a window that may no
+        /// longer be the one the user is looking at.
+        /// </summary>
+        private void WriteReuseIds()
+        {
+            string parameterName = importSettings == null
+                ? carboCircleSettings.DefaultReuseIdParameter
+                : importSettings.reuseIdParameterOrDefault();
+
+            string report;
+            bool ok = carboCircleRevitCommands.writeReuseIds(doc, activeProject, parameterName, out report);
+
+            try
+            {
+                TaskDialog dialog = new TaskDialog("CarboCircle reuse IDs");
+                dialog.MainInstruction = ok ? "Reuse IDs written." : "No reuse IDs were written.";
+                dialog.MainContent = report;
+                dialog.Show();
+            }
+            catch
+            {
+                //Never let the report about a failure become a second failure.
+            }
+        }
+
         private void SelectPair(UIApplication uiapp)
         {
             UIApplication app = uiapp;
@@ -336,7 +378,7 @@ namespace CarboCircle
                 List<ElementId> ids = new List<ElementId>();
 
 
-                List<carboCircleElement> collectedElementsBuffer = carboCircleRevitCommands.getElementsFromActiveView(uiapp, importSettings, requestedExtractionMethod, log);
+                List<carboCircleElement> collectedElementsBuffer = carboCircleRevitCommands.getElementsFromActiveView(uiapp, importSettings, requestedExtractionMethod, requestedProjectSide, log);
                 collectedElements = new List<carboCircleElement>();
 
                 if (collectedElementsBuffer != null)

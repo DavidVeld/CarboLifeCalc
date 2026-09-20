@@ -95,9 +95,72 @@ namespace CarboLifeUI.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             cbb_RCImportType.SelectedItem = categoryType;
-            txt_RCImportValue.Text = categoryName;
+
+            CarboParameterPicker.Attach(cbb_RCImportValue, categoryName,
+                                        RCParameterKind(), CheckRCParameter);
+
+            CheckRCParameter();
 
             FillMaterialBoxes();
+        }
+
+        /// <summary>
+        /// Where the import looks the density override up, read the way getParametervalue reads
+        /// it. SelectedItem rather than Text: inside SelectionChanged, Text is still the old value.
+        /// </summary>
+        private CarboNameKind RCParameterKind()
+        {
+            string type = cbb_RCImportType.SelectedItem as string;
+
+            if (string.IsNullOrEmpty(type))
+                type = cbb_RCImportType.Text;
+
+            return type != null && type.ToLower().Contains("type")
+                ? CarboNameKind.TypeParameter
+                : CarboNameKind.InstanceParameter;
+        }
+
+        private void cbb_RCImportType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //The list is attached in Window_Loaded; before that there is nothing to re-point.
+            if (cbb_RCImportValue == null)
+                return;
+
+            CarboParameterPicker.Repoint(cbb_RCImportValue, RCParameterKind());
+
+            CheckRCParameter();
+        }
+
+        /// <summary>
+        /// Marks the density override when it names a parameter this model does not carry. Worth
+        /// saying but not alarming: without the parameter the mapping table below simply applies
+        /// everywhere, which is what it is for. Silence would leave a per-element override that
+        /// was typed, saved and never once read.
+        /// </summary>
+        private void CheckRCParameter()
+        {
+            string value = CarboParameterPicker.ValueOf(cbb_RCImportValue);
+
+            if (CarboModelNames.Contains(RCParameterKind(), value) == true)
+            {
+                cbb_RCImportValue.BorderBrush =
+                    new System.Windows.Media.SolidColorBrush(
+                        System.Windows.Media.Color.FromRgb(0x97, 0x97, 0x97));
+                cbb_RCImportValue.BorderThickness = new Thickness(1);
+
+                txt_RCParamWarning.Visibility = System.Windows.Visibility.Collapsed;
+                return;
+            }
+
+            cbb_RCImportValue.BorderBrush = new System.Windows.Media.SolidColorBrush(
+                System.Windows.Media.Color.FromRgb(0xC0, 0x50, 0x00));
+            cbb_RCImportValue.BorderThickness = new Thickness(2);
+
+            txt_RCParamWarning.Text =
+                "This model has no " + CarboModelNames.DescriptionOf(RCParameterKind()) +
+                " called \"" + value + "\", so the table below applies to every group.";
+
+            txt_RCParamWarning.Visibility = System.Windows.Visibility.Visible;
         }
 
         /// <summary>
@@ -285,7 +348,7 @@ namespace CarboLifeUI.UI
 
             isAccepted = true;
 
-            categoryName = txt_RCImportValue.Text;
+            categoryName = CarboParameterPicker.ValueOf(cbb_RCImportValue);
             categoryType = cbb_RCImportType.Text;
 
             this.Close();

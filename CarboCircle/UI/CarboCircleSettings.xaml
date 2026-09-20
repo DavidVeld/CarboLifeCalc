@@ -10,7 +10,7 @@
         FontFamily="Segoe UI"
         FontWeight="Normal"
         FontSize="12"
-        Width="880" Height="655"
+        Width="880" Height="880"
         MinWidth="820" MinHeight="520"
         WindowStartupLocation="CenterOwner"
         Loaded="Window_Loaded">
@@ -60,6 +60,36 @@
                 <Setter Property="TextWrapping" Value="Wrap"/>
                 <Setter Property="Margin"       Value="0,0,0,6"/>
                 <Setter Property="Visibility"   Value="Collapsed"/>
+            </Style>
+
+            <!--
+                Divides one group into the parts it is actually made of - here, the source
+                model and the proposed design. Small and spaced rather than bold and boxed:
+                it has to separate two rows without competing with the GroupBox header above
+                them.
+            -->
+            <Style x:Key="SubHeader" TargetType="{x:Type TextBlock}">
+                <Setter Property="Foreground"    Value="{StaticResource PrimaryAccentBrush}"/>
+                <Setter Property="FontFamily"    Value="Segoe UI"/>
+                <Setter Property="FontSize"      Value="10"/>
+                <Setter Property="FontWeight"    Value="SemiBold"/>
+                <Setter Property="Margin"        Value="0,8,0,2"/>
+                <Setter Property="TextWrapping"  Value="Wrap"/>
+            </Style>
+
+            <!--
+                A value the import decides for itself. Read-only rather than disabled, so
+                the text can still be selected and copied and a screen reader still reads
+                it, but greyed so it plainly is not a box to type in.
+            -->
+            <Style x:Key="FixedValueBox" TargetType="{x:Type TextBox}" BasedOn="{StaticResource flatTextBox}">
+                <Setter Property="Height"            Value="26"/>
+                <Setter Property="IsReadOnly"        Value="True"/>
+                <Setter Property="IsTabStop"         Value="False"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin"            Value="0,3,0,3"/>
+                <Setter Property="Foreground"        Value="{StaticResource DisabledTextBrush}"/>
+                <Setter Property="Background"        Value="{StaticResource DisabledBackBrush}"/>
             </Style>
 
             <Style x:Key="GroupNote" TargetType="{x:Type TextBlock}">
@@ -113,6 +143,16 @@
                Content="CarboCircle Settings"/>
 
         <!-- ── Body: two columns, grouped by the question each group answers ──── -->
+        <!--
+            The window is 880 tall because that is what these two columns measure to at
+            880 wide. At the original 655 this viewer reported a 664 px extent in a 502 px
+            viewport, so the cross-family checkbox and half the Databases group opened out
+            of sight behind a scrollbar. The viewer stays for a short screen; on a normal
+            one it now has nothing to do.
+
+            If a group is added, measure rather than guess: ExtentHeight against
+            ViewportHeight on this viewer says exactly how much is hidden.
+        -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -280,66 +320,149 @@
                 <!-- ═══════════════════ RIGHT COLUMN ═══════════════════ -->
                 <StackPanel Grid.Column="2">
 
-                    <!-- ── 4. Where the import reads names and sizes from ───── -->
-                    <GroupBox Header="Parameter overrides" Margin="0,0,0,14">
+                    <!-- ── 4. Where the import reads the section name from ──── -->
+                    <!--
+                        Split by side, because the two sides are usually two different
+                        Revit files with two different conventions: the building being
+                        stripped is often an old model whose types are named anything at
+                        all, while the proposed design is the user's own and tidy. One
+                        shared box forced one answer on both.
+
+                        The value shown is "Type name" rather than an empty box. That is
+                        the same setting the empty box stood for - it is what the import
+                        falls back to - but as a value the user can see and compare
+                        against the alternatives in the same list, instead of a blank that
+                        needed a sentence of explanation underneath it.
+                    -->
+                    <GroupBox Header="Where the section name comes from" Margin="0,0,0,14">
                         <StackPanel>
                             <TextBlock Style="{StaticResource GroupNote}"
-                                       Text="By default an element is identified by its Revit type name. Name a type parameter here to use that instead. Leave a box empty to keep the default."/>
+                                       Text="Every element is identified by a section name, which is looked up in the section table. Pick which type parameter holds it - start typing to search the parameters in this model."/>
+
+                            <TextBlock Style="{StaticResource SubHeader}"
+                                       Text="SOURCE MODEL - what is being stripped"/>
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" MinWidth="150"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="110"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label    Grid.Column="0" Style="{StaticResource RowCaption}"
+                                          Target="{Binding ElementName=cmb_MinedParameter}"
+                                          Content="Section _name"/>
+                                <ComboBox Grid.Column="1" x:Name="cmb_MinedParameter"
+                                          Style="{StaticResource ParameterCombo}"
+                                          Height="26" Margin="0,3,0,3"
+                                          ToolTip="Type parameter holding the section size of a mined element, for example &quot;UB 305x165x40&quot;. Leave it on Type name to use the Revit type name."/>
+                            </Grid>
+
+                            <TextBlock Style="{StaticResource SubHeader}"
+                                       Text="PROPOSED DESIGN - what is being built"/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="110"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label    Grid.Column="0" Style="{StaticResource RowCaption}"
+                                          Target="{Binding ElementName=cmb_RequiredParameter}"
+                                          Content="Section na_me"/>
+                                <ComboBox Grid.Column="1" x:Name="cmb_RequiredParameter"
+                                          Style="{StaticResource ParameterCombo}"
+                                          Height="26" Margin="0,3,0,3"
+                                          ToolTip="Type parameter holding the section size of a required element. Leave it on Type name to use the Revit type name."/>
+                            </Grid>
+
+                            <!-- Shown by the code-behind only when no model has been read,
+                                 so an empty dropdown reads as "nothing harvested yet"
+                                 rather than as a broken control. -->
+                            <TextBlock x:Name="txt_NoParametersNote"
+                                       Style="{StaticResource RowWarning}"
+                                       Margin="0,6,0,0"
+                                       Text="No model has been read yet, so the lists hold nothing to choose from. Type a parameter name, or mine a view first and reopen this window."/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- ── 5. What gets written back ───────────────────────── -->
+                    <!--
+                        The only place CarboCircle writes to the model, and it only happens
+                        when the user presses the button on the main window. An INSTANCE
+                        parameter: two beams of one type are two different pieces of steel
+                        and have to be able to carry different ids.
+                    -->
+                    <GroupBox Header="Writing the reuse ID back" Margin="0,0,0,14">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource GroupNote}"
+                                       Text="&quot;Write reuse IDs&quot; on the results tab stamps each matched pair with the same id - on the new member and on the existing one it comes out of - so the link can be scheduled and filtered in Revit."/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="110"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label    Grid.Column="0" Style="{StaticResource RowCaption}"
+                                          Target="{Binding ElementName=cmb_ReuseIdParameter}"
+                                          Content="_Reuse ID"/>
+                                <ComboBox Grid.Column="1" x:Name="cmb_ReuseIdParameter"
+                                          Style="{StaticResource ParameterCombo}"
+                                          Height="26" Margin="0,3,0,3"
+                                          ToolTip="Instance text parameter the reuse id is written into. It has to exist on the structural framing and column categories already - CarboCircle writes values, it does not add parameters to your model."/>
+                            </Grid>
+
+                            <TextBlock Style="{StaticResource GroupNote}"
+                                       Margin="0,8,0,0"
+                                       Text="Must already exist as an instance Text parameter on those categories. Nothing is added to the model; a member that has no such parameter is reported and left alone. Clear the box to go back to CLC_ReuseID."/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!-- ── 6. What the import works out for itself ──────────── -->
+                    <!--
+                        These three were editable boxes that the import never read. Rather
+                        than keep offering a setting that does nothing, each now shows the
+                        source the import actually uses, greyed out. The settings file
+                        still carries whatever was typed into them before - nothing here
+                        writes to it - so enabling them later loses nothing.
+                    -->
+                    <GroupBox Header="Worked out automatically" Margin="0,0,0,14">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource GroupNote}"
+                                       Text="Not settings. These values are read from fixed places, shown here so it is clear where they come from."/>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" MinWidth="110"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
                                 <Label   Grid.Row="0" Grid.Column="0" Style="{StaticResource RowCaption}"
-                                         Target="{Binding ElementName=txt_MinedParameter}"
-                                         Content="Section _name"/>
-                                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txt_MinedParameter"
-                                         Style="{StaticResource RowValue}"
-                                         ToolTip="Type parameter holding the section size, for example &quot;UB 305x165x40&quot;. This is the one parameter override the import reads."/>
+                                         Content="Steel grade"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" x:Name="txt_SteelGradeParameter"
+                                         Style="{StaticResource FixedValueBox}"
+                                         Text="Material class of the Revit material"
+                                         ToolTip="Grade is taken from the material class on the element's material, not from a type parameter."/>
 
                                 <Label   Grid.Row="1" Grid.Column="0" Style="{StaticResource RowCaption}"
-                                         Target="{Binding ElementName=txt_RequiredParameter}"
-                                         Content="Section name, _project side"/>
-                                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txt_RequiredParameter"
-                                         Style="{StaticResource RowValue}"
-                                         ToolTip="Stored, but not yet read by the import - both sides currently use the mined section name parameter above."/>
+                                         Content="Timber width"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txt_ParameterWidth"
+                                         Style="{StaticResource FixedValueBox}"
+                                         Text="Type parameter &quot;b&quot;"
+                                         ToolTip="Timber width is read from the type parameter b, the name Revit's own timber families use."/>
 
                                 <Label   Grid.Row="2" Grid.Column="0" Style="{StaticResource RowCaption}"
-                                         Target="{Binding ElementName=txt_SteelGradeParameter}"
-                                         Content="Steel _grade"/>
-                                <TextBox Grid.Row="2" Grid.Column="1" x:Name="txt_SteelGradeParameter"
-                                         Style="{StaticResource RowValue}"
-                                         ToolTip="Stored, but not yet read by the import - grade currently comes from the Revit material class."/>
-
-                                <Label   Grid.Row="3" Grid.Column="0" Style="{StaticResource RowCaption}"
-                                         Target="{Binding ElementName=txt_ParameterWidth}"
-                                         Content="Timber _width"/>
-                                <TextBox Grid.Row="3" Grid.Column="1" x:Name="txt_ParameterWidth"
-                                         Style="{StaticResource RowValue}"
-                                         ToolTip="Stored, but not yet read by the import - timber sizes currently come from the type parameters b and d."/>
-
-                                <Label   Grid.Row="4" Grid.Column="0" Style="{StaticResource RowCaption}"
-                                         Target="{Binding ElementName=txt_ParameterDepth}"
-                                         Content="Timber dep_th"/>
-                                <TextBox Grid.Row="4" Grid.Column="1" x:Name="txt_ParameterDepth"
-                                         Style="{StaticResource RowValue}"
-                                         ToolTip="Stored, but not yet read by the import - timber sizes currently come from the type parameters b and d."/>
+                                         Content="Timber depth"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" x:Name="txt_ParameterDepth"
+                                         Style="{StaticResource FixedValueBox}"
+                                         Text="Type parameter &quot;d&quot;"
+                                         ToolTip="Timber depth is read from the type parameter d, the name Revit's own timber families use."/>
                             </Grid>
-
-                            <!-- Said plainly rather than left for the user to discover: four of
-                                 these five boxes are saved and then ignored by the import. -->
-                            <TextBlock Style="{StaticResource GroupNote}"
-                                       Margin="0,10,0,0"
-                                       Text="Only Section name is read by the import at present. The other four are saved with the project but not yet used."/>
                         </StackPanel>
                     </GroupBox>
 

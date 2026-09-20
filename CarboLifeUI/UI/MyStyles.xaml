@@ -388,6 +388,134 @@
     </Style>
     <!-- End of Flat ComboBox -->
 
+    <!-- ═══ Parameter picker combo box ═══
+         An editable combo box for a Revit parameter, workset or phase name: pick one the model
+         holds, or type one it does not.
+
+         WHY NOT ComboBoxFlatStyle. That one draws its border inside ComboBoxToggleButtonTemplate,
+         hard coded, with nothing bound to the control's own BorderBrush - so a box could not be
+         marked as holding a name this model has no match for. Here the border is one Border around
+         the whole control, template bound, which is what lets the code-behind turn it red.
+
+         It matches flatTextBox rather than the other combos on purpose: these fields were text
+         boxes, and they are still typed into. -->
+    <ControlTemplate TargetType="ToggleButton" x:Key="ParameterComboToggleButtonTemplate">
+        <!-- Arrow only. The border and the background belong to the Border in the combo box
+             template below, so that one outline can be recoloured on its own. Transparent rather
+             than unset, or the hit test misses everything but the arrow itself. -->
+        <Grid Background="Transparent">
+            <Path Name="Arrow"
+                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
+                  HorizontalAlignment="Center" VerticalAlignment="Center"
+                  Fill="{StaticResource DVColour}"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="UIElement.IsEnabled" Value="False">
+                <Setter Property="Shape.Fill" TargetName="Arrow" Value="#999"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="ParameterComboBoxStyle" TargetType="{x:Type ComboBox}">
+        <Setter Property="UIElement.SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FrameworkElement.OverridesDefaultStyle" Value="True"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="DemiBold"/>
+        <Setter Property="Foreground" Value="#000"/>
+        <Setter Property="Background" Value="#fff"/>
+        <Setter Property="BorderBrush" Value="#979797"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="MaxDropDownHeight" Value="280"/>
+        <!-- Both set here rather than in code so the box behaves the same before CarboParameterPicker
+             has attached to it: prefix search would rewrite what is typed, see that class. -->
+        <Setter Property="IsEditable" Value="True"/>
+        <Setter Property="IsTextSearchEnabled" Value="False"/>
+
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Border Name="OuterBorder" CornerRadius="4"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="20"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Name="PART_EditableTextBox" Grid.Column="0"
+                                     Style="{x:Null}"
+                                     Margin="5,0,0,0" Padding="0"
+                                     BorderThickness="0" Background="Transparent"
+                                     Foreground="{TemplateBinding Foreground}"
+                                     FontFamily="{TemplateBinding FontFamily}"
+                                     FontSize="{TemplateBinding FontSize}"
+                                     FontWeight="{TemplateBinding FontWeight}"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}"
+                                     VerticalContentAlignment="Center"
+                                     VerticalAlignment="Stretch"
+                                     Focusable="True">
+                                <TextBox.Template>
+                                    <ControlTemplate TargetType="TextBox">
+                                        <ScrollViewer Name="PART_ContentHost" Focusable="False"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalScrollBarVisibility="Hidden"
+                                                      VerticalScrollBarVisibility="Hidden"/>
+                                    </ControlTemplate>
+                                </TextBox.Template>
+                            </TextBox>
+
+                            <ToggleButton Name="ToggleButton" Grid.Column="1"
+                                          ClickMode="Press" Focusable="False"
+                                          IsChecked="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                          Template="{StaticResource ParameterComboToggleButtonTemplate}"/>
+
+                            <Popup Name="Popup" Placement="Bottom" Grid.ColumnSpan="2"
+                                   Focusable="False" AllowsTransparency="True"
+                                   IsOpen="{TemplateBinding ComboBox.IsDropDownOpen}"
+                                   PopupAnimation="Slide">
+                                <Grid Name="DropDown" SnapsToDevicePixels="True"
+                                      MinWidth="{TemplateBinding FrameworkElement.ActualWidth}"
+                                      MaxHeight="{TemplateBinding ComboBox.MaxDropDownHeight}">
+                                    <Border Name="DropDownBorder" Background="White" Margin="0,1,0,0"
+                                            CornerRadius="0" BorderThickness="1"
+                                            BorderBrush="{StaticResource ComboBoxNormalBorderBrush}"/>
+                                    <ScrollViewer Margin="4" SnapsToDevicePixels="True">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!-- A model with nothing of this kind in it, or a name typed that matches
+                             nothing: no popup rather than an empty one under the cursor. -->
+                        <Trigger Property="ItemsControl.HasItems" Value="False">
+                            <Setter Property="UIElement.Visibility" TargetName="Popup" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="UIElement.IsEnabled" Value="False">
+                            <Setter Property="Panel.Background" TargetName="OuterBorder"
+                                    Value="{StaticResource ComboBoxDisabledBackgroundBrush}"/>
+                            <Setter Property="TextElement.Foreground"
+                                    Value="{StaticResource ComboBoxDisabledForegroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="ItemsControl.IsGrouping" Value="True">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- End of Parameter picker combo box -->
+
     <Style x:Key="PercVerified" TargetType="{x:Type DataGridCell}" >
         <Style.Triggers>
             <DataTrigger Binding="{Binding PercVerified}" Value="0">

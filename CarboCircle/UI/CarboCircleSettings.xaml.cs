@@ -46,12 +46,25 @@ namespace CarboCircle.UI
             settings.ConsiderSlabs = chk_MineFloors.IsChecked == true;
             settings.ConsiderWalls = chk_MineWalls.IsChecked == true;
 
-            settings.MineParameterName = txt_MinedParameter.Text;
-            settings.RequiredParameterName = txt_RequiredParameter.Text;
-            settings.gradeParameter = txt_SteelGradeParameter.Text;
+            //Through toSetting rather than straight off the text: it maps the "Type name"
+            //the user sees back onto the empty string the settings file has always stored,
+            //so a file written here still loads in an older build and vice versa.
+            settings.MineParameterName = carboCircleParameterNames.toSetting(
+                carboCircleParameterPicker.textOf(cmb_MinedParameter));
 
-            settings.timberWidthParameter = txt_ParameterWidth.Text;
-            settings.timberDepthParameter = txt_ParameterDepth.Text;
+            settings.RequiredParameterName = carboCircleParameterNames.toSetting(
+                carboCircleParameterPicker.textOf(cmb_RequiredParameter));
+
+            //Stored as typed. An emptied box comes back as the default on the next read
+            //rather than being stored as a default here, so clearing it stays a way of
+            //saying "whatever the default is" instead of freezing today's default in.
+            settings.reuseIdParameter = carboCircleParameterPicker.textOf(cmb_ReuseIdParameter);
+
+            //gradeParameter, timberWidthParameter and timberDepthParameter are deliberately
+            //not written. The import works those out for itself, so the window shows where
+            //they come from rather than offering a setting - and writing the displayed text
+            //back would overwrite whatever an older version left in the file with a
+            //sentence of prose.
 
             //Utils.ConvertMeToDouble rather than double.Parse: the old code threw a
             //FormatException on an empty or comma-decimal entry and took the dialog with it.
@@ -101,12 +114,35 @@ namespace CarboCircle.UI
                 chk_MineFloors.IsChecked = settings.ConsiderSlabs;
                 chk_MineWalls.IsChecked = settings.ConsiderWalls;
 
-                txt_MinedParameter.Text = settings.MineParameterName;
-                txt_RequiredParameter.Text = settings.RequiredParameterName;
-                txt_SteelGradeParameter.Text = settings.gradeParameter;
+                //Each picker gets its own list. Sharing one would have them filter each
+                //other - see carboCircleParameterPicker.
+                //
+                //The two section-name pickers offer TYPE parameters, because the override is
+                //applied with ElementType.LookupParameter. The reuse id picker offers
+                //INSTANCE parameters, because the id is written to the element.
+                carboCircleParameterPicker.attach(cmb_MinedParameter,
+                    carboCircleParameterNames.forSectionPicker(settings.MineParameterName),
+                    carboCircleParameterNames.toDisplay(settings.MineParameterName));
 
-                txt_ParameterWidth.Text = settings.timberWidthParameter;
-                txt_ParameterDepth.Text = settings.timberDepthParameter;
+                carboCircleParameterPicker.attach(cmb_RequiredParameter,
+                    carboCircleParameterNames.forSectionPicker(settings.RequiredParameterName),
+                    carboCircleParameterNames.toDisplay(settings.RequiredParameterName));
+
+                string reuseId = settings.reuseIdParameterOrDefault();
+
+                carboCircleParameterPicker.attach(cmb_ReuseIdParameter,
+                    carboCircleParameterNames.forInstancePicker(reuseId),
+                    reuseId);
+
+                //The dropdowns are filled from the last model read. Say so when that has
+                //not happened, rather than leaving the user to wonder why they are empty.
+                txt_NoParametersNote.Visibility = carboCircleParameterNames.hasNames()
+                    ? System.Windows.Visibility.Collapsed
+                    : System.Windows.Visibility.Visible;
+
+                //The three boxes under "Worked out automatically" carry their text from the
+                //XAML. Nothing is loaded into them, because nothing in the settings file
+                //controls what they describe.
 
                 txt_CutoffValue.Text = settings.cutoffbeamLength.ToString();
                 txt_WoodCutoff.Text = settings.timberCutoffLength.ToString();

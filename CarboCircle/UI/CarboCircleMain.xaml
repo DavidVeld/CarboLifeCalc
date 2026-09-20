@@ -646,8 +646,30 @@
                                             Style="{StaticResource BarButton}"
                                             Click="btn_Select_Click"/>
                                     <Button x:Name="btn_Visualise" Content="Colour the view"
-                                            Style="{StaticResource BarButton}" Margin="0"
+                                            Style="{StaticResource BarButton}"
                                             Click="btn_Visualise_Click"/>
+
+                                    <!--
+                                        The only button on this window that changes the
+                                        model. The parameter it writes to is named beside
+                                        it rather than only in the settings, because "write
+                                        IDs into the model" is not a thing to press without
+                                        knowing where they land.
+
+                                        txt_ReuseIdParameter is filled from the settings
+                                        every time they are loaded, so it cannot drift from
+                                        what the write will actually use.
+                                    -->
+                                    <TextBlock x:Name="txt_ReuseIdParameter"
+                                               Foreground="{StaticResource InkMuted}"
+                                               FontSize="11"
+                                               VerticalAlignment="Center"
+                                               Margin="4,0,8,0"
+                                               Text="CLC_ReuseID"
+                                               ToolTip="The instance parameter the reuse IDs are written into. Change it under Settings."/>
+                                    <Button x:Name="btn_WriteReuseIds" Content="Write ID parameters into model"
+                                            Style="{StaticResource BarButton}" Margin="0"
+                                            Click="btn_WriteReuseIds_Click"/>
                                 </StackPanel>
                             </Grid>
 

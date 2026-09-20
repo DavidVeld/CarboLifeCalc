@@ -31,6 +31,12 @@ namespace CarboLifeRevit
             UIDocument uidoc = app.ActiveUIDocument;
             Document doc = uidoc.Document;
 
+            //This command does not use the settings dialog that checks them, but it does end in
+            //the main window, where the reinforcement mapper can still be opened. Harvesting here
+            //keeps the names it checks against belonging to the model that is actually open,
+            //rather than to whichever one was imported earlier in this Revit session.
+            CarboModelNameHarvest.Collect(app);
+
             string MyAssemblyPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string MyAssemblyDir = Path.GetDirectoryName(MyAssemblyPath);
 

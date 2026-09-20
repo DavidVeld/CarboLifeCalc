@@ -16,7 +16,12 @@ namespace CarboCircle
     public class CarboCircleApp : Autodesk.Revit.UI.IExternalApplication
     {
         public static CarboCircleApp thisApp = null;
-        private CarboCircleMain m_CarboCircleWindow;
+        /// <summary>
+        /// Owns the one CarboCircle window and decides, per button press, whether to build
+        /// one or bring back the one that is already there. See carboCircleWindowGate for
+        /// what pressing the button used to do instead.
+        /// </summary>
+        private readonly carboCircleWindowGate m_CarboCircleWindow = new carboCircleWindowGate();
 
         private CarboCircleHandler handler;
         private ExternalEvent exEvent;
@@ -30,8 +35,6 @@ namespace CarboCircle
             //add-in folder on its own. No-op on the NET8 build.
             CarboLifeUI.NativeDependencies.Preload();
 
-            //Placeholders we will call later
-            m_CarboCircleWindow = null;
             thisApp = this;
 
             //Check if user wants the circle app
@@ -72,9 +75,13 @@ namespace CarboCircle
 
         public Result OnShutdown(UIControlledApplication application)
         {
-            if (m_CarboCircleWindow != null && m_CarboCircleWindow.Visibility == System.Windows.Visibility.Visible)
+            //Closed whether or not it is visible. A hidden window is still a live window,
+            //and the Close button hides rather than closes - so the old test on Visibility
+            //left exactly the window the user thought they had shut behind at shutdown,
+            //still subscribed to the external event handler.
+            if (m_CarboCircleWindow.Window != null)
             {
-                m_CarboCircleWindow.Close();
+                m_CarboCircleWindow.Window.Close();
                 FormStatusChecker.isWindowOpen = false;
             }
 
@@ -89,32 +96,24 @@ namespace CarboCircle
                 exEvent = ExternalEvent.Create(handler);
             }
 
-            //One window per session, and the test for it is whether one exists - not whether
-            //it happens to be visible.
-            //
-            //This used to build a new window whenever isWindowOpen was false, and the Close
-            //button cleared that flag while only HIDING the window. So the second time a user
-            //opened CarboCircle they got a second window, with the first still alive behind it
-            //and still subscribed to every import. Both then wrote into the same project, each
-            //applying its own idea of which side the import was for, and a mine could land in
-            //the required bucket with nothing to show it had happened.
-            if (m_CarboCircleWindow == null)
+            //Harvested here as well as on every external event, because this is the only
+            //moment in API context before the window opens. Without it the settings dialog
+            //would offer nothing to pick from until the user had mined a view once - and
+            //choosing the parameter is something they would reasonably do first.
+            try
             {
-                m_CarboCircleWindow = new CarboCircleMain(exEvent, handler);
-
-                //Only a real close clears the reference, so the next click builds a fresh
-                //window. Hiding does not, and must not.
-                m_CarboCircleWindow.Closed += (s, e) =>
-                {
-                    FormStatusChecker.isWindowOpen = false;
-                    m_CarboCircleWindow = null;
-                };
+                if (uiapp.ActiveUIDocument != null)
+                    carboCircleRevitCommands.collectParameterNames(uiapp.ActiveUIDocument.Document);
+            }
+            catch (Exception)
+            {
+                //No document open, or a model that will not answer. The dialog copes with
+                //an empty list, and nothing else here depends on it.
             }
 
-            FormStatusChecker.isWindowOpen = true;
-
-            m_CarboCircleWindow.Show();
-            m_CarboCircleWindow.Activate();
+            //One window per session: built when there is none, brought back when there is.
+            //The gate owns that decision and the Closed bookkeeping behind it.
+            m_CarboCircleWindow.show(delegate { return new CarboCircleMain(exEvent, handler); });
         }
     }
 }

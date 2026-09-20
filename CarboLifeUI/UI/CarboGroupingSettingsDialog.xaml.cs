@@ -126,6 +126,49 @@ namespace CarboLifeUI.UI
 
         private List<AllowanceBlock> allowanceBlocks;
 
+        /// <summary>
+        /// One settings field that names something in the Revit model: a parameter, a workset or
+        /// a phase. Every one of them is looked up by the import and silently skipped when the
+        /// model has no such thing, so each is checked here and marked when it cannot be found.
+        /// </summary>
+        private class NameField
+        {
+            /// <summary>What to call it in the warning at the top of the dialog.</summary>
+            public string Label;
+
+            public WpfComboBox Box;
+
+            /// <summary>False while the setting this field belongs to is switched off.</summary>
+            public Func<bool> IsActive;
+
+            /// <summary>Which of the model's lists decides whether this name exists.</summary>
+            public Func<CarboNameKind> Kind;
+
+            /// <summary>
+            /// The Type/Instance box beside it, where leaving it unset stops the import reading
+            /// the parameter at all. Null where there is none, or where an unset one is harmless.
+            /// </summary>
+            public WpfComboBox RequiredTypeBox;
+
+            /// <summary>
+            /// Whatever the XAML gave the box, kept so describing a problem in the tooltip can be
+            /// undone without losing the description of the field itself.
+            /// </summary>
+            public object DefaultToolTip;
+
+            public bool DefaultToolTipRead;
+        }
+
+        private List<NameField> nameFields;
+
+        /// <summary>The outline of a field naming something this model does not have.</summary>
+        private static readonly System.Windows.Media.Brush missingNameBorderBrush =
+            new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xC0, 0x50, 0x00));
+
+        /// <summary>The outline every other field keeps, matching flatTextBox in MyStyles.</summary>
+        private static readonly System.Windows.Media.Brush normalNameBorderBrush =
+            new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0x97, 0x97, 0x97));
+
         public CarboGroupingSettingsDialog(CarboGroupSettings settings)
         {
             importSettings = settings;
@@ -158,6 +201,12 @@ namespace CarboLifeUI.UI
             LoadAllowanceListsToUI();
 
             ShowFilePaths();
+
+            //After loadSettingsToUI: the pickers it attaches have to exist before they can be
+            //checked, and the Type/Instance boxes have to hold their stored values before it is
+            //known which of the model's lists each name should be found in.
+            BuildNameFields();
+            RefreshMissingNames();
 
             uiReady = true;
         }
@@ -301,9 +350,14 @@ namespace CarboLifeUI.UI
             cbb_MainGroup.Items.Add("Instance Parameter");
 
             cbb_MainGroup.SelectedItem = importSettings.CategoryName;
-            txt_CategoryparamName.Text = importSettings.CategoryParamName;
 
-            //CheckCaregoryParam();
+            CarboParameterPicker.Attach(cbb_CategoryparamName, importSettings.CategoryParamName,
+                                        CategoryNameKind(), OnNameFieldChanged);
+
+            //Only the enabled state, not CheckCaregoryParam: that one also empties the box, which
+            //is right when the user switches to "(Revit) Category" and wrong on the way in - it
+            //would throw away a parameter name that is still in the settings file.
+            ApplyCategoryParamEnabled();
 
             //Allowances
             chk_MapReinforcement.IsChecked = importSettings.mapReinforcement;
@@ -323,8 +377,11 @@ namespace CarboLifeUI.UI
 
             chk_ImportSubstructure.IsChecked = importSettings.IncludeSubStructure;
             cbb_SubstructureImportType.SelectedItem = importSettings.SubStructureParamType;
-            txt_SubstructureParamName.Text = importSettings.SubStructureParamName;
 
+            CarboParameterPicker.Attach(cbb_SubstructureParamName, importSettings.SubStructureParamName,
+                                        SubstructureNameKind(), OnNameFieldChanged);
+
+            ShowSubstructureHint();
 
             //Grade
             cbb_GradeImportType.Items.Clear();
@@ -333,8 +390,10 @@ namespace CarboLifeUI.UI
             //cbb_GradeImportType.Items.Add("Material Parameter");
 
             chk_MaterialGrade.IsChecked = importSettings.IncludeGradeParameter;
-            cbb_GradeImportType.SelectedItem = importSettings.GradeParameterType.ToString();
-            txt_GradeImportValue.Text = importSettings.GradeParameterName.ToString();
+            cbb_GradeImportType.SelectedItem = importSettings.GradeParameterType;
+
+            CarboParameterPicker.Attach(cbb_GradeImportValue, importSettings.GradeParameterName,
+                                        ParameterKindOf(cbb_GradeImportType), OnNameFieldChanged);
 
             //CorrectionList
             cbb_CorrectionImportType.Items.Clear();
@@ -342,12 +401,16 @@ namespace CarboLifeUI.UI
             cbb_CorrectionImportType.Items.Add("Instance Parameter");
 
             chk_doCorrection.IsChecked = importSettings.IncludeCorrectionParameter;
-            cbb_CorrectionImportType.SelectedItem = importSettings.CorrectionParameterType.ToString();
-            txt_CorrectionImportValue.Text = importSettings.CorrectionParameterName.ToString();
+            cbb_CorrectionImportType.SelectedItem = importSettings.CorrectionParameterType;
 
-            //Existing            
+            CarboParameterPicker.Attach(cbb_CorrectionImportValue, importSettings.CorrectionParameterName,
+                                        ParameterKindOf(cbb_CorrectionImportType), OnNameFieldChanged);
+
+            //Existing
             chk_ImportExisting.IsChecked = importSettings.IncludeExisting;
-            txt_ExistingPhaseName.Text = importSettings.ExistingPhaseName;
+
+            CarboParameterPicker.Attach(cbb_ExistingPhaseName, importSettings.ExistingPhaseName,
+                                        CarboNameKind.Phase, OnNameFieldChanged);
 
             //Demolished
             chk_ImportDemolished.IsChecked = importSettings.IncludeDemo;
@@ -360,7 +423,9 @@ namespace CarboLifeUI.UI
 
             chk_AdditionalImport.IsChecked = importSettings.IncludeAdditionalParameter;
             cbb_ExtraImportType.SelectedItem = importSettings.AdditionalParameterElementType;
-            txt_ExtraImportValue.Text = importSettings.AdditionalParameter;
+
+            CarboParameterPicker.Attach(cbb_ExtraImportValue, importSettings.AdditionalParameter,
+                                        ParameterKindOf(cbb_ExtraImportType), OnNameFieldChanged);
 
             chk_UseMappedMaterialData.IsChecked = importSettings.UseImportedMap;
 
@@ -369,13 +434,17 @@ namespace CarboLifeUI.UI
             //GIA. Settings written before these fields existed deserialise them as null, which
             //would blank the boxes and quietly switch the lookup off, so fall back to the names
             //the parameter check tool adds.
-            txt_GIAParamName.Text = importSettings.GIAParameterName == null
-                ? CarboGroupSettings.DefaultGIAParameterName
-                : importSettings.GIAParameterName;
+            CarboParameterPicker.Attach(cbb_GIAParamName,
+                                        importSettings.GIAParameterName == null
+                                            ? CarboGroupSettings.DefaultGIAParameterName
+                                            : importSettings.GIAParameterName,
+                                        CarboNameKind.ProjectInformation, OnNameFieldChanged);
 
-            txt_GIANewParamName.Text = importSettings.GIANewParameterName == null
-                ? CarboGroupSettings.DefaultGIANewParameterName
-                : importSettings.GIANewParameterName;
+            CarboParameterPicker.Attach(cbb_GIANewParamName,
+                                        importSettings.GIANewParameterName == null
+                                            ? CarboGroupSettings.DefaultGIANewParameterName
+                                            : importSettings.GIANewParameterName,
+                                        CarboNameKind.ProjectInformation, OnNameFieldChanged);
 
             txt_GIAMethod.Text = string.IsNullOrEmpty(importSettings.GIADeterminationMethod)
                 ? CarboGroupSettings.GIAFromRevitEstimate
@@ -490,30 +559,31 @@ namespace CarboLifeUI.UI
 
             //Write default values as standard
             settings.defaultCarboGroupSettings.CategoryName = cbb_MainGroup.Text;
-            settings.defaultCarboGroupSettings.CategoryParamName = txt_CategoryparamName.Text;
+            settings.defaultCarboGroupSettings.CategoryParamName = CarboParameterPicker.ValueOf(cbb_CategoryparamName);
 
             settings.defaultCarboGroupSettings.IncludeSubStructure = chk_ImportSubstructure.IsChecked.Value;
-            settings.defaultCarboGroupSettings.SubStructureParamName = txt_SubstructureParamName.Text;
+            settings.defaultCarboGroupSettings.SubStructureParamName = CarboParameterPicker.ValueOf(cbb_SubstructureParamName);
             settings.defaultCarboGroupSettings.SubStructureParamType = cbb_SubstructureImportType.Text;
 
             settings.defaultCarboGroupSettings.IncludeDemo = chk_ImportDemolished.IsChecked.Value;
             settings.defaultCarboGroupSettings.IncludeExisting = chk_ImportExisting.IsChecked.Value;
+            settings.defaultCarboGroupSettings.ExistingPhaseName = CarboParameterPicker.ValueOf(cbb_ExistingPhaseName);
             //settings.defaultCarboGroupSettings.CombineExistingAndDemo = chk_CombineExistingAndDemo.IsChecked.Value;
 
             //additional value
             settings.defaultCarboGroupSettings.IncludeAdditionalParameter = chk_AdditionalImport.IsChecked.Value;
-            settings.defaultCarboGroupSettings.AdditionalParameter = txt_ExtraImportValue.Text;
+            settings.defaultCarboGroupSettings.AdditionalParameter = CarboParameterPicker.ValueOf(cbb_ExtraImportValue);
             settings.defaultCarboGroupSettings.AdditionalParameterElementType = cbb_ExtraImportType.Text;
 
             //Grade
             settings.defaultCarboGroupSettings.IncludeGradeParameter = chk_MaterialGrade.IsChecked.Value;
-            settings.defaultCarboGroupSettings.GradeParameterName = txt_GradeImportValue.Text;
+            settings.defaultCarboGroupSettings.GradeParameterName = CarboParameterPicker.ValueOf(cbb_GradeImportValue);
             settings.defaultCarboGroupSettings.GradeParameterType = cbb_GradeImportType.Text;
 
             //CorrectionList
             settings.defaultCarboGroupSettings.IncludeCorrectionParameter = chk_doCorrection.IsChecked.Value;
             settings.defaultCarboGroupSettings.CorrectionParameterType = cbb_CorrectionImportType.Text;
-            settings.defaultCarboGroupSettings.CorrectionParameterName = txt_CorrectionImportValue.Text;
+            settings.defaultCarboGroupSettings.CorrectionParameterName = CarboParameterPicker.ValueOf(cbb_CorrectionImportValue);
 
             //RC, materials and density map
             settings.defaultCarboGroupSettings.mapReinforcement = chk_MapReinforcement.IsChecked.Value;
@@ -562,8 +632,8 @@ namespace CarboLifeUI.UI
 
             //GIA. The names are the user's to choose; the method is written by the import, so it
             //is carried over rather than read back off the read only box.
-            settings.defaultCarboGroupSettings.GIAParameterName = txt_GIAParamName.Text.Trim();
-            settings.defaultCarboGroupSettings.GIANewParameterName = txt_GIANewParamName.Text.Trim();
+            settings.defaultCarboGroupSettings.GIAParameterName = CarboParameterPicker.ValueOf(cbb_GIAParamName);
+            settings.defaultCarboGroupSettings.GIANewParameterName = CarboParameterPicker.ValueOf(cbb_GIANewParamName);
             settings.defaultCarboGroupSettings.GIADeterminationMethod =
                 string.IsNullOrEmpty(importSettings.GIADeterminationMethod)
                     ? CarboGroupSettings.GIAFromRevitEstimate
@@ -588,20 +658,40 @@ namespace CarboLifeUI.UI
             importSettings = settings.defaultCarboGroupSettings;
         }
 
-        private void cbb_MainGroup_DropDownClosed(object sender, EventArgs e)
+        private void cbb_MainGroup_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //Populating the list during Window_Loaded is not a user choice.
+            if (uiReady == false)
+                return;
+
             CheckCaregoryParam();
+
+            //"Type Parameter" and "Instance Parameter" are looked up in different places, so the
+            //same name can exist as one and not the other.
+            CarboParameterPicker.Repoint(cbb_CategoryparamName, CategoryNameKind());
+
+            RefreshMissingNames();
         }
 
         private void CheckCaregoryParam()
         {
-            if (cbb_MainGroup.Text == "(Revit) Category")
+            if (TypeChoiceOf(cbb_MainGroup) == "(Revit) Category")
             {
-                txt_CategoryparamName.Text = "";
-                txt_CategoryparamName.IsEnabled = false;
+                CarboParameterPicker.SetValue(cbb_CategoryparamName, "");
+                cbb_CategoryparamName.IsEnabled = false;
             }
             else
-                txt_CategoryparamName.IsEnabled = true;
+                cbb_CategoryparamName.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// The enabled state CheckCaregoryParam sets, without emptying the box. Used on the way
+        /// in, where a stored parameter name is worth keeping even though the category is
+        /// currently taken from Revit.
+        /// </summary>
+        private void ApplyCategoryParamEnabled()
+        {
+            cbb_CategoryparamName.IsEnabled = TypeChoiceOf(cbb_MainGroup) != "(Revit) Category";
         }
 
         private void btn_ProjectPath_Click(object sender, RoutedEventArgs e)
@@ -1184,6 +1274,397 @@ namespace CarboLifeUI.UI
         private static string Preserve(WpfComboBox box, string fallback)
         {
             return string.IsNullOrEmpty(box.Text) ? fallback : box.Text;
+        }
+
+        // ─────────────────────────────────────────────────────────────────────────────────────
+        //  Names that have to exist in the Revit model
+        //
+        //  Every field below holds the name of something the import looks up: a parameter, a
+        //  workset, a phase. Not one of them fails when the name is absent - the lookup returns
+        //  nothing and the import carries on - so a name left over from the last project produces
+        //  a complete, plausible, wrong result. These pickers offer what the model holds, and
+        //  outline in red whatever is set but not there.
+        // ─────────────────────────────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// What one of the fixed Type/Instance/Workset boxes is set to.
+        ///
+        /// SelectedItem rather than Text, and for the same reason as ResolveSelectedTemplatePath:
+        /// inside a SelectionChanged handler, Text still holds the value the box had before the
+        /// change. Reading it there would re-point a picker at the list the user just moved away
+        /// from, and mark the new name against the old one's model list. Text is the fallback for
+        /// a box with nothing selected at all, which is how an unset AdditionalParameterElementType
+        /// arrives out of an older settings file.
+        /// </summary>
+        private static string TypeChoiceOf(WpfComboBox typeBox)
+        {
+            if (typeBox == null)
+                return "";
+
+            string selected = typeBox.SelectedItem as string;
+
+            if (string.IsNullOrEmpty(selected) == false)
+                return selected;
+
+            return typeBox.Text == null ? "" : typeBox.Text;
+        }
+
+        /// <summary>
+        /// Where the import looks the category override up. Compared the way getCategoryValue
+        /// compares it, on the whole string, so the dialog and the import agree.
+        /// </summary>
+        private CarboNameKind CategoryNameKind()
+        {
+            return TypeChoiceOf(cbb_MainGroup) == "Type Parameter"
+                ? CarboNameKind.TypeParameter
+                : CarboNameKind.InstanceParameter;
+        }
+
+        /// <summary>
+        /// Substructure is the awkward one: the same box holds either an instance parameter name
+        /// or a fragment of a workset name, and the import decides which by looking for "workset"
+        /// in the type - so that is what is looked for here too.
+        /// </summary>
+        private CarboNameKind SubstructureNameKind()
+        {
+            return TypeChoiceOf(cbb_SubstructureImportType).ToLower().Contains("workset")
+                ? CarboNameKind.Workset
+                : CarboNameKind.InstanceParameter;
+        }
+
+        /// <summary>
+        /// Type or instance, read from one of the Type/Instance boxes the same way
+        /// getParametervalue reads it.
+        /// </summary>
+        private static CarboNameKind ParameterKindOf(WpfComboBox typeBox)
+        {
+            return TypeChoiceOf(typeBox).ToLower().Contains("type")
+                ? CarboNameKind.TypeParameter
+                : CarboNameKind.InstanceParameter;
+        }
+
+        /// <summary>
+        /// Every field whose value has to name something in the model, with what decides whether
+        /// it is in use and which of the model's lists should hold it.
+        /// </summary>
+        private void BuildNameFields()
+        {
+            nameFields = new List<NameField>();
+
+            nameFields.Add(new NameField
+            {
+                Label = "Category parameter",
+                Box = cbb_CategoryparamName,
+                IsActive = delegate { return TypeChoiceOf(cbb_MainGroup) != "(Revit) Category"; },
+                Kind = CategoryNameKind
+            });
+
+            nameFields.Add(new NameField
+            {
+                Label = "Substructure parameter",
+                Box = cbb_SubstructureParamName,
+                IsActive = delegate { return chk_ImportSubstructure.IsChecked == true; },
+                Kind = SubstructureNameKind
+            });
+
+            nameFields.Add(new NameField
+            {
+                Label = "Material grade parameter",
+                Box = cbb_GradeImportValue,
+                IsActive = delegate { return chk_MaterialGrade.IsChecked == true; },
+                Kind = delegate { return ParameterKindOf(cbb_GradeImportType); },
+                RequiredTypeBox = cbb_GradeImportType
+            });
+
+            nameFields.Add(new NameField
+            {
+                Label = "Correction parameter",
+                Box = cbb_CorrectionImportValue,
+                IsActive = delegate { return chk_doCorrection.IsChecked == true; },
+                Kind = delegate { return ParameterKindOf(cbb_CorrectionImportType); },
+                RequiredTypeBox = cbb_CorrectionImportType
+            });
+
+            nameFields.Add(new NameField
+            {
+                Label = "Additional parameter",
+                Box = cbb_ExtraImportValue,
+                IsActive = delegate { return chk_AdditionalImport.IsChecked == true; },
+                Kind = delegate { return ParameterKindOf(cbb_ExtraImportType); },
+                RequiredTypeBox = cbb_ExtraImportType
+            });
+
+            nameFields.Add(new NameField
+            {
+                Label = "Existing phase",
+                Box = cbb_ExistingPhaseName,
+                IsActive = delegate { return chk_ImportExisting.IsChecked == true; },
+                Kind = delegate { return CarboNameKind.Phase; }
+            });
+
+            //The GIA fields have no tick box: empty means "measure the floors instead", which is
+            //a documented answer rather than an unfinished one, so only a name that is filled in
+            //and absent is worth marking.
+            nameFields.Add(new NameField
+            {
+                Label = "Total GIA parameter",
+                Box = cbb_GIAParamName,
+                IsActive = delegate { return true; },
+                Kind = delegate { return CarboNameKind.ProjectInformation; }
+            });
+
+            nameFields.Add(new NameField
+            {
+                Label = "New GIA parameter",
+                Box = cbb_GIANewParamName,
+                IsActive = delegate { return true; },
+                Kind = delegate { return CarboNameKind.ProjectInformation; }
+            });
+        }
+
+        /// <summary>
+        /// Called by the pickers once the user has settled on a value.
+        /// </summary>
+        private void OnNameFieldChanged()
+        {
+            //Window_Loaded does its own check once everything is attached.
+            if (uiReady == false)
+                return;
+
+            RefreshMissingNames();
+        }
+
+        /// <summary>
+        /// A tick box that decides whether one of the name fields is used at all. Switching it off
+        /// is a way of resolving a warning, so the count has to follow it.
+        /// </summary>
+        private void MissingNameSetting_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (uiReady == false)
+                return;
+
+            RefreshMissingNames();
+        }
+
+        private void cbb_SubstructureImportType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (uiReady == false)
+                return;
+
+            CarboParameterPicker.Repoint(cbb_SubstructureParamName, SubstructureNameKind());
+
+            ShowSubstructureHint();
+            RefreshMissingNames();
+        }
+
+        private void cbb_GradeImportType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RepointParameterPicker(cbb_GradeImportValue, cbb_GradeImportType);
+        }
+
+        private void cbb_CorrectionImportType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RepointParameterPicker(cbb_CorrectionImportValue, cbb_CorrectionImportType);
+        }
+
+        private void cbb_ExtraImportType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            RepointParameterPicker(cbb_ExtraImportValue, cbb_ExtraImportType);
+        }
+
+        private void RepointParameterPicker(WpfComboBox box, WpfComboBox typeBox)
+        {
+            if (uiReady == false)
+                return;
+
+            CarboParameterPicker.Repoint(box, ParameterKindOf(typeBox));
+
+            RefreshMissingNames();
+        }
+
+        /// <summary>
+        /// Says what the box beside the substructure type is for, because it is two different
+        /// things: a parameter name to be matched in full, or a fragment any workset name may
+        /// contain. A model with no worksets at all is worth saying out loud, since choosing
+        /// worksets in that model cannot ever mark anything as substructure.
+        /// </summary>
+        private void ShowSubstructureHint()
+        {
+            if (SubstructureNameKind() != CarboNameKind.Workset)
+            {
+                txt_SubstructureHint.Text =
+                    "Define a Yes/No instance parameter to identify the building's substructure";
+                return;
+            }
+
+            if (CarboModelNames.HasModel == true && CarboModelNames.CountOf(CarboNameKind.Workset) == 0)
+            {
+                txt_SubstructureHint.Text =
+                    "Every element whose workset name contains the text below counts as substructure. " +
+                    "This model has no worksets, so nothing would be found.";
+                return;
+            }
+
+            txt_SubstructureHint.Text =
+                "Every element whose workset name contains the text below counts as substructure";
+        }
+
+        /// <summary>
+        /// Outlines every field that names something this model does not hold, and says how many
+        /// there are at the top of the dialog.
+        /// </summary>
+        private void RefreshMissingNames()
+        {
+            if (nameFields == null)
+                return;
+
+            List<string> missing = new List<string>();
+
+            foreach (NameField field in nameFields)
+            {
+                string problem = ProblemWith(field);
+
+                MarkNameField(field, problem);
+
+                if (problem != null)
+                    missing.Add(field.Label);
+            }
+
+            ShowMissingNames(missing);
+        }
+
+        /// <summary>
+        /// What is wrong with one field, as a sentence for its tooltip. Null when nothing is.
+        /// </summary>
+        private static string ProblemWith(NameField field)
+        {
+            //Switched off: the import never reads it, so whatever is in the box is only a
+            //remembered value and not a problem with this import.
+            if (field.IsActive() == false)
+                return null;
+
+            string value = CarboParameterPicker.ValueOf(field.Box);
+
+            //Empty means "not used" everywhere these are read.
+            if (value.Length == 0)
+                return null;
+
+            //getParametervalue needs both the name and the type, and does nothing at all without
+            //the type - so a named parameter with no type selected is read as nothing, silently.
+            if (field.RequiredTypeBox != null && string.IsNullOrWhiteSpace(TypeChoiceOf(field.RequiredTypeBox)))
+            {
+                return "No parameter type is selected, so \"" + value + "\" is never read." +
+                       Environment.NewLine +
+                       "Pick Type Parameter or Instance Parameter in the box to the left.";
+            }
+
+            CarboNameKind kind = field.Kind();
+
+            if (CarboModelNames.Contains(kind, value) == true)
+                return null;
+
+            string description = CarboModelNames.DescriptionOf(kind);
+
+            if (CarboModelNames.CountOf(kind) == 0)
+            {
+                return "This model has no " + description + "s at all, so \"" + value +
+                       "\" cannot be found." + Environment.NewLine +
+                       "The import will look for it, find nothing and carry on.";
+            }
+
+            if (kind == CarboNameKind.Workset)
+            {
+                return "No workset in this model has a name containing \"" + value + "\"." +
+                       Environment.NewLine +
+                       "Nothing would be marked as substructure.";
+            }
+
+            return "This model has no " + description + " called \"" + value + "\"." +
+                   Environment.NewLine +
+                   "The import will look for it, find nothing and carry on, so this setting would " +
+                   "have no effect.";
+        }
+
+        /// <summary>
+        /// Outlines one field, or puts it back to normal. The tooltip the field was given in the
+        /// XAML is restored rather than cleared, so explaining the problem does not cost the
+        /// explanation of the field.
+        /// </summary>
+        private static void MarkNameField(NameField field, string problem)
+        {
+            if (field.DefaultToolTipRead == false)
+            {
+                field.DefaultToolTip = field.Box.ToolTip;
+                field.DefaultToolTipRead = true;
+            }
+
+            if (problem == null)
+            {
+                field.Box.BorderBrush = normalNameBorderBrush;
+                field.Box.BorderThickness = new Thickness(1);
+                field.Box.ToolTip = field.DefaultToolTip;
+                return;
+            }
+
+            field.Box.BorderBrush = missingNameBorderBrush;
+            field.Box.BorderThickness = new Thickness(2);
+            field.Box.ToolTip = problem;
+        }
+
+        /// <summary>
+        /// The line above the three columns: how many fields name something that is not there, or
+        /// that nothing could be checked at all.
+        /// </summary>
+        private void ShowMissingNames(List<string> missing)
+        {
+            string message = "";
+
+            if (missing.Count > 0)
+            {
+                string subject = missing.Count == 1 ? "1 setting names" : missing.Count + " settings name";
+                string boxes = missing.Count == 1 ? "the box marked in red" : "the boxes marked in red";
+
+                message = subject + " something this model does not have: " +
+                          string.Join(", ", missing.ToArray()) + ". " +
+                          "The import looks each one up and carries on without it, so please review " +
+                          boxes + " before importing.";
+            }
+
+            //Nothing was read, so nothing is known to be missing. Say that, rather than let an
+            //absence of red borders read as an all clear. Added to whatever was found rather than
+            //replacing it: a field with no parameter type selected is wrong whether or not there
+            //is a model to check it against, and it is still marked in red below.
+            if (CarboModelNames.HasModel == false)
+            {
+                if (message != "")
+                    message += Environment.NewLine;
+
+                message +=
+                    "The Revit model could not be read, so the parameter, workset and phase names " +
+                    "below have not been checked against it and the lists offer nothing to pick from. " +
+                    "Type any name; the import will use it as it always has.";
+            }
+
+            if (message == "")
+            {
+                pnl_MissingNames.Visibility = System.Windows.Visibility.Collapsed;
+                return;
+            }
+
+            SetMissingNamesBanner(message, missing.Count > 0);
+        }
+
+        private void SetMissingNamesBanner(string message, bool isProblem)
+        {
+            txt_MissingNames.Text = message;
+            txt_MissingNames.Foreground = isProblem ? statusProblemBrush : statusOkBrush;
+
+            pnl_MissingNames.BorderBrush = isProblem ? statusProblemBrush : statusOkBrush;
+            pnl_MissingNames.Background = isProblem
+                ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xFF, 0xF6, 0xE9))
+                : System.Windows.Media.Brushes.WhiteSmoke;
+
+            pnl_MissingNames.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void btn_ExportSettings_Click(object sender, RoutedEventArgs e)

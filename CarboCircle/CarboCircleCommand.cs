@@ -25,13 +25,18 @@ namespace CarboCircle
                 ///CarboGroupSettings importSettings = new CarboGroupSettings();
                 //importSettings = importSettings.DeSerializeXML();
 
-                //Show the form
-                if (FormStatusChecker.isWindowOpen)
-                {
-                    MessageBox.Show("Window is already open. Close it before opening a new one.");
-                    return Result.Cancelled;
-                }
-
+                //Show the form.
+                //
+                //No "window is already open" refusal any more. CarboCircle's own Close
+                //button HIDES the window so a mine and a project survive putting the tool
+                //away - which left isWindowOpen true, and this check then refused to open
+                //the very window it was talking about. Closing with the title bar X cleared
+                //the flag and worked; closing with the Close button did not. Same two
+                //clicks, two different outcomes, which is what made it look intermittent.
+                //
+                //Pressing the ribbon button means "show me the window", and all three
+                //states have an obvious answer. ShowCarboCircle gives them: build one,
+                //un-hide the hidden one, or bring the visible one to the front.
                 CarboCircleApp.thisApp.ShowCarboCircle(commandData.Application);
 
                 // The window is open now

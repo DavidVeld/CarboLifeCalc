@@ -45,9 +45,9 @@ namespace CarboLifeUI.UI
 
             message = flaggedGroups + " of " + matchedGroups + " material groups" + verb +
                       " with low confidence." + Environment.NewLine + Environment.NewLine +
-                      their + " carbon is already in the totals, but the material behind " + them +
-                      " is a guess." + Environment.NewLine + Environment.NewLine +
-                      "Run the Material Mapper to give " + them + " the right material. " +
+                      their + " Element carbon was added to the project, but the material behind " + them +
+                      " is a close guess." + Environment.NewLine + Environment.NewLine +
+                      "Run the Material Mapper to confirm " + them + " the right material. " +
                       "What you map there is remembered for next time.";
 
             InitializeComponent();

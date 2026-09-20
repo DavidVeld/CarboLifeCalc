@@ -63,6 +63,12 @@ namespace CarboLifeRevit
             settings = settings.Load();
             CarboGroupSettings importSettings = settings.defaultCarboGroupSettings;
 
+            //What this model actually holds, so the dialog can offer the parameter, workset and
+            //phase names to pick from and mark the ones that are set but not here. Every one of
+            //those names is silently skipped by the import when it is absent, so the settings
+            //dialog is the last place it can be pointed out.
+            CarboModelNameHarvest.Collect(app);
+
             CarboGroupingSettingsDialog settingsWindow = new CarboGroupingSettingsDialog(importSettings);
             settingsWindow.ShowDialog();
 
