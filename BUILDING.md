@@ -64,6 +64,21 @@ newer API, and this file narrows at the Revit boundary — `long.ToElementId()` 
 Compiling against 2023 still yields a binary that runs on 2024, because 2024 kept the
 32-bit members.
 
+**2024 widened two enums along with the ids: `BuiltInCategory` and `BuiltInParameter`,
+both Int32 → Int64.** No shim can cover these, and the rule is simple:
+
+- Passing a constant as an argument — `OfCategory(BuiltInCategory.OST_Walls)` — is safe.
+  The JIT widens it against the Revit actually loaded.
+- Putting them in an **array or a `List` is not**, and nothing warns you. An array
+  initializer becomes a byte blob sized at compile time and passed to
+  `RuntimeHelpers.InitializeArray`; four elements compiled against 2023 arrive as 16 bytes
+  where 2024 wants 32, and it throws *"Value does not fall within the expected range."*
+  In a **static** field that is a `TypeInitializationException`, which poisons the whole
+  class for the session — every method on it fails, not just the one that used the array.
+
+The compiler cannot see this and neither can a normal build. See
+**Checking the 4.8 build against Revit 2024** below.
+
 ### `Shared\IsExternalInit.cs`
 
 C# 9 `record` types (`RevitActivator`) need this attribute; .NET Framework does not ship
@@ -116,6 +131,61 @@ root, which is what the standalone exe needs.
 
 **Never set the 4.8 build back to AnyCPU/32-bit.** Revit and Rhino are x64, and only the
 x64 native is copied to the output root.
+
+## Checking the 4.8 build against Revit 2024
+
+The 4.8 build compiles against Revit **2023** and runs on **2024**, so anything 2024
+changed is invisible until a user opens it there. Type initializers are the dangerous
+case, because one bad static field takes the whole class down permanently.
+
+Windows PowerShell 5.1 is a 64-bit .NET Framework host, so it can run them directly:
+
+```powershell
+$out   = "CarboLifeCalc\bin\x64\Release\net48"
+$revit = "C:\Program Files\Autodesk\Revit 2024"
+
+$onResolve = {
+    param($s, $e)
+    $name = (New-Object Reflection.AssemblyName $e.Name).Name
+    foreach ($dir in @($revit, $out)) {
+        $p = Join-Path $dir "$name.dll"
+        if (Test-Path $p) { try { return [Reflection.Assembly]::LoadFrom($p) } catch { return $null } }
+    }
+    return $null
+}
+[AppDomain]::CurrentDomain.add_AssemblyResolve($onResolve)
+
+$asm = [Reflection.Assembly]::LoadFrom("$out\CarboCircle.dll")
+
+# RevitAPIUI never loads outside Revit, so GetTypes() throws and hands back what it could
+# load. Catching that matters: without it this check silently examines nothing and passes.
+try   { $types = $asm.GetTypes() }
+catch [Reflection.ReflectionTypeLoadException] { $types = $_.Exception.Types | Where-Object { $_ } }
+
+$ran = 0
+foreach ($t in $types) {
+    if ($t.TypeInitializer -eq $null -or $t.IsGenericTypeDefinition) { continue }
+    $ran++
+    try { [Runtime.CompilerServices.RuntimeHelpers]::RunClassConstructor($t.TypeHandle) }
+    catch {
+        $e = $_.Exception
+        while ($e.InnerException) { $e = $e.InnerException }   # the wrapper says nothing
+        "THREW  $($t.FullName)`n       $($e.GetType().Name): $($e.Message)"
+    }
+}
+"checked $ran type initializers"
+```
+
+A count and no `THREW` lines is a pass; expect 4 for `CarboCircle.dll`. A count of 0 means
+the check is broken, not that the build is clean.
+
+This is how `BuiltInCategory[]` was caught: it compiled cleanly, ran cleanly on 2023, and
+threw on every command in 2024 with
+`ArgumentException: Value does not fall within the expected range.`
+
+Not findings: any type whose statics reach `RevitAPIUI` reports a `FileNotFoundException`,
+because that assembly cannot load outside Revit at all — compiler-generated lambda caches
+(`<>c`) included.
 
 ## Smoke-testing the 4.8 chart stack without launching Revit
 

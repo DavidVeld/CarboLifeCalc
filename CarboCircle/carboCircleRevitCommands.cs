@@ -85,37 +85,12 @@ namespace CarboCircle
 
             try
             {
-                foreach (BuiltInCategory category in parameterScanCategories)
-                {
-                    FilteredElementCollector types = new FilteredElementCollector(doc)
-                        .OfCategory(category)
-                        .WhereElementIsElementType();
-
-                    foreach (Element type in types)
-                        addTextParameterNames(type, typeNames, writableOnly: false);
-
-                    //Instance parameters have to come off instances - a type does not carry
-                    //them - which means walking placed elements. Capped, because a large
-                    //model has tens of thousands and they answer with the same handful of
-                    //names: this list is a set of suggestions, not a contract, and anything
-                    //it misses can still be typed in.
-                    FilteredElementCollector placed = new FilteredElementCollector(doc)
-                        .OfCategory(category)
-                        .WhereElementIsNotElementType();
-
-                    int scanned = 0;
-
-                    foreach (Element element in placed)
-                    {
-                        //Only writable ones. The reuse id picker is the only consumer, and
-                        //offering a read-only parameter there would be offering a setting
-                        //that cannot do its job.
-                        addTextParameterNames(element, instanceNames, writableOnly: true);
-
-                        if (++scanned >= instanceScanCap)
-                            break;
-                    }
-                }
+                //Named one per line rather than looped over an array, and that is not a
+                //style preference - see the note above scanCategory.
+                scanCategory(doc, BuiltInCategory.OST_StructuralFraming, typeNames, instanceNames);
+                scanCategory(doc, BuiltInCategory.OST_StructuralColumns, typeNames, instanceNames);
+                scanCategory(doc, BuiltInCategory.OST_Walls, typeNames, instanceNames);
+                scanCategory(doc, BuiltInCategory.OST_Floors, typeNames, instanceNames);
             }
             catch (Exception)
             {
@@ -129,19 +104,63 @@ namespace CarboCircle
             carboCircleParameterNames.setInstanceNames(instanceNames);
         }
 
-        /// <summary>The categories CarboCircle reads, and therefore the only ones whose
-        /// parameters are worth offering.</summary>
-        private static readonly BuiltInCategory[] parameterScanCategories = new BuiltInCategory[]
-        {
-            BuiltInCategory.OST_StructuralFraming,
-            BuiltInCategory.OST_StructuralColumns,
-            BuiltInCategory.OST_Walls,
-            BuiltInCategory.OST_Floors
-        };
-
         //Enough to see every family variant in any real model, few enough that opening the
         //settings dialog never feels like it is doing work.
         private const int instanceScanCap = 500;
+
+        /// <summary>
+        /// Collects the text parameter names one category offers.
+        ///
+        /// NEVER PUT BuiltInCategory VALUES IN AN ARRAY OR A LIST IN THIS PROJECT.
+        ///
+        /// Revit 2024 widened BuiltInCategory from Int32 to Int64, exactly as it widened
+        /// ElementId, and BuiltInParameter with it. The 4.8 build compiles against Revit
+        /// 2023, where the enum is four bytes, so the compiler lays an array initializer out
+        /// as a sixteen byte blob and hands it to RuntimeHelpers.InitializeArray. Under
+        /// Revit 2024 the same four elements need thirty-two bytes, and InitializeArray
+        /// refuses: "Value does not fall within the expected range."
+        ///
+        /// This began life as a static readonly BuiltInCategory[] field, which made it a
+        /// type initializer - so the failure was not one broken method but the whole of
+        /// carboCircleRevitCommands, permanently, with every import and every parameter
+        /// harvest answering TypeInitializationException for the rest of the session.
+        ///
+        /// Passing the constant as an argument, the way the rest of this file does, is safe:
+        /// the value is widened to the parameter's real size by the JIT, against the Revit
+        /// that is actually loaded. Shared\RevitCompat.cs covers the same 2023/2024 boundary
+        /// for ElementId.
+        /// </summary>
+        private static void scanCategory(Document doc, BuiltInCategory category,
+            List<string> typeNames, List<string> instanceNames)
+        {
+            FilteredElementCollector types = new FilteredElementCollector(doc)
+                .OfCategory(category)
+                .WhereElementIsElementType();
+
+            foreach (Element type in types)
+                addTextParameterNames(type, typeNames, writableOnly: false);
+
+            //Instance parameters have to come off instances - a type does not carry them -
+            //which means walking placed elements. Capped, because a large model has tens of
+            //thousands and they answer with the same handful of names: this list is a set of
+            //suggestions, not a contract, and anything it misses can still be typed in.
+            FilteredElementCollector placed = new FilteredElementCollector(doc)
+                .OfCategory(category)
+                .WhereElementIsNotElementType();
+
+            int scanned = 0;
+
+            foreach (Element element in placed)
+            {
+                //Only writable ones. The reuse id picker is the only consumer, and offering
+                //a read-only parameter there would be offering a setting that cannot do its
+                //job.
+                addTextParameterNames(element, instanceNames, writableOnly: true);
+
+                if (++scanned >= instanceScanCap)
+                    break;
+            }
+        }
 
         /// <summary>
         /// Adds the names of an element's text parameters.
