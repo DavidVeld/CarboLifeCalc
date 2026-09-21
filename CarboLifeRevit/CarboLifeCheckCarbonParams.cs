@@ -24,12 +24,33 @@ namespace CarboLifeRevit
 
         /// <summary>
         /// Parameters that have to be readable per element, so they cannot be type bound.
+        ///
+        /// CLC_RCDensity is here rather than type bound because a reinforcement density is a
+        /// property of the piece, not of its type: two slabs of one type sit in different
+        /// places and carry different amounts of rebar. Bound to the type, one of them would
+        /// silently overwrite the other's rate.
         /// </summary>
         private static readonly string[] instanceParameters =
         {
             "CLC_EmbodiedCarbon",
             "CLC_IsSubstructure",
-            "CLC_MaterialGrade"
+            "CLC_MaterialGrade",
+            "CLC_RCDensity"
+        };
+
+        /// <summary>
+        /// Parameters in the shared parameter file that this command deliberately leaves out
+        /// of the model.
+        ///
+        /// CLC_ReuseId belongs to CarboCircle, which adds it to the categories it mines at
+        /// the moment the user presses "Write ID parameters into model" - see
+        /// carboCircleRevitCommands.ensureReuseIdParameter. Binding it here as well would put
+        /// it on every model category in a file whose owner may never open CarboCircle, and
+        /// it is the one CarboLife parameter nothing reads back on import.
+        /// </summary>
+        private static readonly string[] ignoredParameters =
+        {
+            "CLC_ReuseId"
         };
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
@@ -98,6 +119,11 @@ namespace CarboLifeRevit
                     {
                         foreach (Definition def in group.Definitions)
                         {
+                            //Not this command's to add. Skipped before the bound check so it
+                            //is never reported as missing either.
+                            if (Array.IndexOf(ignoredParameters, def.Name) >= 0)
+                                continue;
+
                             bool isProjectInformation = Array.IndexOf(projectInformationParameters, def.Name) >= 0;
                             bool isBound = IsParameterBound(doc, def.Name);
 

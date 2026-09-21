@@ -72,7 +72,7 @@ namespace CarboLifeRevit
             FormStatusChecker.isWindowOpen = false;
 
             /// Parameters CheckCarbonParams
-            PushButton pB_CarboCalcParams = CarboCalcPanel.AddItem(new PushButtonData("Carbo Life Calc Parameters", "ParamCheck", MyAssemblyPath, "CarboLifeRevit.CheckCarbonParams")) as PushButton;
+            PushButton pB_CarboCalcParams = CarboCalcPanel.AddItem(new PushButtonData("Import Carbo Life Calc Parameters", "Set Parameters", MyAssemblyPath, "CarboLifeRevit.CheckCarbonParams")) as PushButton;
             //LImage
             Uri img_CarboCalcParams = new Uri(MyAssemblyDir + @"\img\ico_CarboLifeParams32.png");
             BitmapImage limg_CarboCalcParams = new BitmapImage(img_CarboCalcParams);

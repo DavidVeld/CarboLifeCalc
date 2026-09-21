@@ -11,7 +11,7 @@
         Height="820" Width="1320"
         MinHeight="640" MinWidth="1000"
         WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded" Closing="Window_Closing">
+        Loaded="Window_Loaded" Closing="Window_Closing" Icon="/CarboCircle;component/ico_CarboCircle16.ico" >
 
     <!-- ====================================================================
          CarboCircleMain.xaml
@@ -665,8 +665,8 @@
                                                FontSize="11"
                                                VerticalAlignment="Center"
                                                Margin="4,0,8,0"
-                                               Text="CLC_ReuseID"
-                                               ToolTip="The instance parameter the reuse IDs are written into. Change it under Settings."/>
+                                               Text="CLC_ReuseId"
+                                               ToolTip="The instance text parameter the reuse IDs are written into. Change it under Settings."/>
                                     <Button x:Name="btn_WriteReuseIds" Content="Write ID parameters into model"
                                             Style="{StaticResource BarButton}" Margin="0"
                                             Click="btn_WriteReuseIds_Click"/>

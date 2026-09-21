@@ -260,12 +260,22 @@ namespace CarboCircle.UI
 
             string parameterName = activeProject.settings.reuseIdParameterOrDefault();
 
+            //Said before the button is pressed rather than reported afterwards: adding a
+            //parameter changes the model's schema, and that is the sort of thing to be told
+            //about while there is still the option of not doing it. Only the CarboLife
+            //parameter can be added - a name of the user's own has no definition to bind.
+            string mayAdd = carboCircleSettings.isDefaultReuseIdParameter(parameterName)
+                ? Environment.NewLine + Environment.NewLine +
+                  "If this model has not got \"" + parameterName + "\" yet, it is added as an " +
+                  "instance Text parameter on structural framing, columns, walls and floors."
+                : "";
+
             MessageBoxResult go = System.Windows.MessageBox.Show(
                 "Write the reuse ID of every matched pair into the instance parameter \"" +
                 parameterName + "\", on the proposed member and on the existing member it " +
                 "comes from?" + Environment.NewLine + Environment.NewLine +
                 "This changes the model. It is a single undo step, and anything already in " +
-                "that parameter on those members is overwritten.",
+                "that parameter on those members is overwritten." + mayAdd,
                 "Write reuse IDs", MessageBoxButton.OKCancel, MessageBoxImage.Question);
 
             if (go != MessageBoxResult.OK)

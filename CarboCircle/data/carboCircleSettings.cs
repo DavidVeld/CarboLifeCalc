@@ -67,8 +67,16 @@ namespace CarboCircle.data
         /// </summary>
         public string reuseIdParameter { get; set; }
 
-        /// <summary>What the default actually is, in one place.</summary>
-        public const string DefaultReuseIdParameter = "CLC_ReuseID";
+        /// <summary>
+        /// What the default actually is, in one place.
+        ///
+        /// Spelt exactly as CarbonSharedParams.txt spells it, and that matters rather than
+        /// being pedantry: this is the one parameter CarboCircle will add to a model itself,
+        /// and it does so by binding that shared definition. A different spelling here would
+        /// have the write look for "CLC_ReuseID", fail to find it, add "CLC_ReuseId", and
+        /// still fail to find it - for ever.
+        /// </summary>
+        public const string DefaultReuseIdParameter = "CLC_ReuseId";
 
         /// <summary>
         /// The parameter to write into, never blank.
@@ -76,12 +84,35 @@ namespace CarboCircle.data
         /// A settings file written before this existed has no element for it, and
         /// XmlSerializer leaves absent elements at whatever the constructor set - so an old
         /// file comes back with the default rather than with null.
+        ///
+        /// A name that differs from the default only in case comes back as the default. The
+        /// default used to be spelt "CLC_ReuseID" and was written into every settings file
+        /// saved while it was, so without this those files would keep asking for a parameter
+        /// that differs by one letter's case from the one CarboCircle now adds - and Revit's
+        /// LookupParameter is case sensitive, so the write would never find it.
         /// </summary>
         internal string reuseIdParameterOrDefault()
         {
-            return string.IsNullOrWhiteSpace(reuseIdParameter)
+            if (string.IsNullOrWhiteSpace(reuseIdParameter))
+                return DefaultReuseIdParameter;
+
+            string trimmed = reuseIdParameter.Trim();
+
+            return string.Equals(trimmed, DefaultReuseIdParameter, StringComparison.OrdinalIgnoreCase)
                 ? DefaultReuseIdParameter
-                : reuseIdParameter.Trim();
+                : trimmed;
+        }
+
+        /// <summary>
+        /// True when the name is the CarboLife reuse id parameter, which is the one name the
+        /// write is allowed to add to a model - it has a shared parameter definition, with a
+        /// fixed GUID, in CarbonSharedParams.txt. Any other name is the user's own and is
+        /// used exactly as it is.
+        /// </summary>
+        internal static bool isDefaultReuseIdParameter(string name)
+        {
+            return name != null &&
+                   string.Equals(name.Trim(), DefaultReuseIdParameter, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

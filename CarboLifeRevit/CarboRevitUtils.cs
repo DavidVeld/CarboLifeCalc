@@ -557,7 +557,7 @@ namespace CarboLifeRevit
                 additionalParameter = getParametervalue(el, settings.AdditionalParameterElementType,settings.AdditionalParameter);
 
                 grade = getParametervalue(el, settings.GradeParameterType, settings.GradeParameterName);
-                rcDensity = Utils.ConvertMeToDouble(getParametervalue(el, settings.RCParameterType, settings.RCParameterName));
+                rcDensity = getRCDensityValue(el, settings.RCParameterType, settings.RCParameterName);
                 correction = getParametervalue(el, settings.CorrectionParameterType, settings.CorrectionParameterName);
 
                 //Get the level (in meter)
@@ -652,6 +652,134 @@ namespace CarboLifeRevit
             catch (Exception ex)
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// The per-element reinforcement density override, in kg/m³. 0 when the element does
+        /// not carry one, which is the usual case.
+        ///
+        /// WHY THIS IS NOT getParametervalue
+        ///
+        /// It used to be, with Utils.ConvertMeToDouble over the result. getParametervalue
+        /// returns AsValueString for anything that is not text, and AsValueString puts the
+        /// unit on the end: the CLC_RCDensity shared parameter is a Mass Density, so it came
+        /// back as "150.00 kg/m³", out of which ConvertMeToDouble reads no number at all.
+        /// Every element carrying the parameter therefore imported an override of 0 and fell
+        /// back to the category mapping table without saying so.
+        ///
+        /// UNITS
+        ///
+        /// Everything downstream is kg/m³ - the mapping table, the correction expression
+        /// CarboGroup.getRCGroup builds, and the group description. Revit stores mass density
+        /// internally in kg per cubic FOOT, so reading AsDouble and calling it kg/m³ would be
+        /// out by a factor of 35.3. The conversion is done by the API rather than by a factor
+        /// written here, so a model whose density units are set to lb/ft³ gives the same
+        /// answer as one set to kg/m³. A plain Number parameter, which is what a model set up
+        /// before CLC_RCDensity existed will be using, has no unit to convert and is taken as
+        /// kg/m³ exactly as typed.
+        ///
+        /// ONLY A REAL VALUE COUNTS
+        ///
+        /// 0 means "nothing specified here", and getRCGroup then uses the category mapping
+        /// table - which is the point of the table. A blank parameter, a parameter this model
+        /// does not have, and a negative figure all come back as 0 for that reason: none of
+        /// them is a quantity of rebar somebody chose.
+        /// </summary>
+        private static double getRCDensityValue(Element el, string rcParameterType, string rcParameterName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(rcParameterName) || string.IsNullOrEmpty(rcParameterType))
+                    return 0;
+
+                Parameter parameterToSnoop;
+
+                if (rcParameterType.ToLower().Contains("type"))
+                {
+                    ElementId elId = el.GetTypeId();
+                    ElementType type = el.Document.GetElement(elId) as ElementType;
+
+                    parameterToSnoop = type == null ? null : type.LookupParameter(rcParameterName);
+                }
+                else
+                {
+                    parameterToSnoop = el.LookupParameter(rcParameterName);
+                }
+
+                //HasValue, not just null: an unfilled numeric parameter answers AsDouble with
+                //0 either way, but a text one answers AsString with null.
+                if (parameterToSnoop == null || parameterToSnoop.HasValue == false)
+                    return 0;
+
+                double result;
+
+                switch (parameterToSnoop.StorageType)
+                {
+                    case StorageType.Double:
+                        result = getKilogramsPerCubicMetre(parameterToSnoop);
+                        break;
+
+                    case StorageType.Integer:
+                        result = parameterToSnoop.AsInteger();
+                        break;
+
+                    case StorageType.String:
+                        //The settings let any parameter be named here, and a model that
+                        //predates CLC_RCDensity will be using a plain text one.
+                        result = Utils.ConvertMeToDouble(parameterToSnoop.AsString());
+                        break;
+
+                    default:
+                        return 0;
+                }
+
+                if (double.IsNaN(result) || double.IsInfinity(result) || result <= 0)
+                    return 0;
+
+                //A thousandth of a kg/m³ is nothing as a quantity of rebar, and the figure is
+                //shown to the user twice - in the group description and inside the correction
+                //expression getRCGroup builds. Rounding keeps a conversion's floating point
+                //tail out of both rather than reporting "149.99999999999997 kg/m³".
+                return Math.Round(result, 3);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// A numeric parameter's value in kg/m³. See getRCDensityValue for why the API does
+        /// the conversion rather than a factor.
+        /// </summary>
+        private static double getKilogramsPerCubicMetre(Parameter parameter)
+        {
+            double value = parameter.AsDouble();
+
+            try
+            {
+                ForgeTypeId spec = parameter.Definition == null ? null : parameter.Definition.GetDataType();
+
+                //Nothing to convert out of, so the stored figure is the figure.
+                if (spec == null || UnitUtils.IsMeasurableSpec(spec) == false)
+                    return value;
+
+                //A density, which CLC_RCDensity is. Revit stores mass density internally in
+                //kg/ft³, so this is a factor of 35.3 and not a formality.
+                if (UnitUtils.IsValidUnit(spec, UnitTypeId.KilogramsPerCubicMeter) == true)
+                    return UnitUtils.ConvertFromInternalUnits(value, UnitTypeId.KilogramsPerCubicMeter);
+
+                //Not a density. The settings do not stop a Number or a Length being named
+                //here, and nothing can be converted into kg/m³ from one, so the figure the
+                //user sees in Revit is the closest reading of what they meant by typing it.
+                //Number is the common case and its unit is General, for which this is the
+                //identity - so a plain numeric parameter comes through exactly as typed.
+                return UnitUtils.ConvertFromInternalUnits(value, parameter.GetUnitTypeId());
+            }
+            catch (Exception)
+            {
+                return value;
             }
         }
 

@@ -208,10 +208,24 @@ namespace CarboCircle
         /// parameter receives every id it earned, joined - anything else would silently keep
         /// only the last one.
         ///
-        /// NOTHING IS ADDED TO THE MODEL. A member with no such parameter is counted and
-        /// left alone. Adding a project parameter means binding a shared parameter
-        /// definition to categories, which changes the model's schema, and that is not
-        /// something to do to somebody's model as a side effect of pressing a button.
+        /// THE ONE PARAMETER THIS ADDS TO THE MODEL
+        ///
+        /// CLC_ReuseId, and only when the settings still name it - see
+        /// <see cref="ensureReuseIdParameter"/>. It is CarboLife's own shared parameter, with
+        /// a fixed GUID in CarbonSharedParams.txt, so binding it is adding the parameter the
+        /// button exists to fill rather than inventing schema of our own. Pressing "Write ID
+        /// parameters into model" is asking for the ids to be in the model, and answering
+        /// that with a report saying to go and make a project parameter first was an errand,
+        /// not an answer.
+        ///
+        /// A NAME THE USER CHOSE IS NEVER CREATED. There is no definition to bind for it and
+        /// no GUID to give it, and one invented here would differ between two people's
+        /// machines - so the same parameter name would end up as two parameters that cannot
+        /// be scheduled together. A member that has not got it is counted and left alone,
+        /// exactly as before.
+        ///
+        /// Both the binding and the writes go inside one TransactionGroup, so the whole thing
+        /// is the single undo step the window promises before it asks.
         /// </summary>
         internal static bool writeReuseIds(Document doc, carboCircleProject project,
             string parameterName, out string report)
@@ -278,52 +292,71 @@ namespace CarboCircle
             int missing = 0;
             List<string> missingExamples = new List<string>();
 
+            //What happened to the parameter itself, if anything worth saying did. Reported
+            //above the counts, because "12 of 40 members stamped" reads very differently
+            //once you know the other 28 have not got the parameter at all.
+            string parameterNote = "";
+
             try
             {
-                using (Transaction transaction = new Transaction(doc, "CarboCircle: write reuse IDs"))
+                //One undo step for the binding and the writes together. Without the group
+                //the user would undo the values and be left with a parameter they never
+                //asked for, or undo twice for one button.
+                using (TransactionGroup group = new TransactionGroup(doc, "CarboCircle: write reuse IDs"))
                 {
-                    transaction.Start();
+                    group.Start();
 
-                    foreach (KeyValuePair<long, List<string>> entry in wanted)
+                    parameterNote = ensureReuseIdParameter(doc, parameterName);
+
+                    using (Transaction transaction = new Transaction(doc, "CarboCircle: write reuse IDs"))
                     {
-                        Element element = doc.GetElement(entry.Key.ToElementId());
+                        transaction.Start();
 
-                        if (element == null)
+                        foreach (KeyValuePair<long, List<string>> entry in wanted)
                         {
-                            //Deleted since the import, or from a different model.
-                            missing++;
-                            continue;
+                            Element element = doc.GetElement(entry.Key.ToElementId());
+
+                            if (element == null)
+                            {
+                                //Deleted since the import, or from a different model.
+                                missing++;
+                                continue;
+                            }
+
+                            Parameter parameter = element.LookupParameter(parameterName);
+
+                            if (parameter == null || parameter.StorageType != StorageType.String)
+                            {
+                                noParameter++;
+
+                                if (missingExamples.Count < 5)
+                                    missingExamples.Add(element.Id.LongValue().ToString());
+
+                                continue;
+                            }
+
+                            if (parameter.IsReadOnly)
+                            {
+                                readOnly++;
+                                continue;
+                            }
+
+                            //Joined in a stable order so a second run on an unchanged model
+                            //writes the same string and the model shows as unmodified.
+                            entry.Value.Sort(StringComparer.OrdinalIgnoreCase);
+
+                            if (parameter.Set(string.Join("; ", entry.Value.ToArray())))
+                                written++;
+                            else
+                                readOnly++;
                         }
 
-                        Parameter parameter = element.LookupParameter(parameterName);
-
-                        if (parameter == null || parameter.StorageType != StorageType.String)
-                        {
-                            noParameter++;
-
-                            if (missingExamples.Count < 5)
-                                missingExamples.Add(element.Id.LongValue().ToString());
-
-                            continue;
-                        }
-
-                        if (parameter.IsReadOnly)
-                        {
-                            readOnly++;
-                            continue;
-                        }
-
-                        //Joined in a stable order so a second run on an unchanged model
-                        //writes the same string and the model shows as unmodified.
-                        entry.Value.Sort(StringComparer.OrdinalIgnoreCase);
-
-                        if (parameter.Set(string.Join("; ", entry.Value.ToArray())))
-                            written++;
-                        else
-                            readOnly++;
+                        transaction.Commit();
                     }
 
-                    transaction.Commit();
+                    //Assimilate, not Commit: the group becomes one undo item called after
+                    //the button rather than two the user has to undo separately.
+                    group.Assimilate();
                 }
             }
             catch (Exception ex)
@@ -336,13 +369,29 @@ namespace CarboCircle
             text.Append(written + " of " + wanted.Count + " members stamped with \"" + parameterName +
                         "\", from " + pairsConsidered + " matched pairs.");
 
+            if (parameterNote != "")
+                text.Append(Environment.NewLine + Environment.NewLine + parameterNote);
+
             if (noParameter > 0)
             {
                 text.Append(Environment.NewLine + Environment.NewLine +
                             noParameter + " members have no text parameter called \"" + parameterName +
-                            "\", so they were left alone. Add it as an instance Text parameter on " +
-                            "Structural Framing and Structural Columns, then run this again. " +
-                            "CarboCircle writes values but does not add parameters to your model.");
+                            "\", so they were left alone.");
+
+                //Only the CarboLife parameter can be added here, so only that case gets an
+                //instruction the user can follow. Being told to go and make it themselves
+                //when the button has just made it would read as a bug.
+                if (carboCircleSettings.isDefaultReuseIdParameter(parameterName) == false)
+                    text.Append(" Add \"" + parameterName + "\" as an instance Text parameter on " +
+                                "Structural Framing, Structural Columns, Walls and Floors, then run " +
+                                "this again - or clear the name in the settings to use " +
+                                carboCircleSettings.DefaultReuseIdParameter + ", which CarboCircle " +
+                                "adds for you.");
+                else
+                    text.Append(" CarboCircle binds it to structural framing, columns, walls and " +
+                                "floors, so either these members are in some other category or the " +
+                                "model already had a parameter of that name bound elsewhere. Check " +
+                                "it under Manage > Project Parameters.");
 
                 if (missingExamples.Count > 0)
                     text.Append(Environment.NewLine + "For example element " +
@@ -361,6 +410,205 @@ namespace CarboCircle
 
             report = text.ToString();
             return written > 0;
+        }
+
+        /// <summary>
+        /// Makes sure the model carries the reuse id parameter, adding it when it does not,
+        /// and says what it did in a sentence for the report. "" when there is nothing worth
+        /// saying, which is the ordinary case.
+        ///
+        /// ONLY THE CARBOLIFE PARAMETER. CLC_ReuseId is a shared parameter with a fixed GUID
+        /// in CarbonSharedParams.txt, so every model that gets it gets the same parameter and
+        /// two models can be scheduled against each other. A name the user typed has no
+        /// definition to bind and nothing to give it a stable GUID, so it is used as found
+        /// and reported when it is not there.
+        ///
+        /// INSTANCE BINDING, and that is the whole point of the parameter: two beams of one
+        /// type are two different pieces of steel and carry different ids. A type binding
+        /// would give every beam of that type the same answer, and the write would not find
+        /// it at all - Element.LookupParameter does not see type parameters.
+        ///
+        /// Bound to the four categories CarboCircle imports from - framing, columns, walls and
+        /// floors - rather than to every model category that will take a parameter. This is
+        /// somebody's model, and a reuse id on their ducts and door tags is schema nobody
+        /// asked for. Framing and columns are the two the matched pairs use today; walls and
+        /// floors are in because they are read on the same pass and a user scheduling reuse
+        /// wants one parameter across the structure, not to find out later that it stops at
+        /// the beams.
+        ///
+        /// Must be called inside an open TransactionGroup - it opens a transaction of its own.
+        /// </summary>
+        private static string ensureReuseIdParameter(Document doc, string parameterName)
+        {
+            //The user's own name. Nothing to add, and the write reports it if it is absent.
+            if (carboCircleSettings.isDefaultReuseIdParameter(parameterName) == false)
+                return "";
+
+            Autodesk.Revit.ApplicationServices.Application revitApp = doc.Application;
+
+            //Already in the model. A type binding is called out rather than silently left to
+            //produce a report saying every member lacks a parameter the user can plainly see
+            //in Manage > Project Parameters.
+            Autodesk.Revit.DB.Binding existing = findBinding(doc, parameterName);
+
+            if (existing is InstanceBinding)
+                return "";
+
+            if (existing != null)
+                return "\"" + parameterName + "\" already exists in this model as a TYPE parameter, " +
+                       "so the reuse ids cannot be written into it - two beams of one type would have " +
+                       "to share an id. Change it to an instance parameter under " +
+                       "Manage > Project Parameters, then run this again.";
+
+            //Bound to nothing yet, so bind it.
+            //
+            //The shared parameter file path is a user setting and is put back in the finally
+            //below - but only when it was actually changed. Restoring unconditionally would
+            //blank it on any path that returns before the swap, which is a setting the user
+            //never touched being lost because the file was missing.
+            string originalSharedParameterFile = "";
+            bool sharedParameterFileChanged = false;
+
+            try
+            {
+                string assemblyDir = System.IO.Path.GetDirectoryName(
+                    System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+                string sharedParameterFile = System.IO.Path.Combine(assemblyDir, "CarbonSharedParams.txt");
+
+                if (File.Exists(sharedParameterFile) == false)
+                    return "\"" + parameterName + "\" is not in this model and could not be added: the " +
+                           "shared parameter file is missing from " + assemblyDir + ".";
+
+                originalSharedParameterFile = revitApp.SharedParametersFilename;
+                revitApp.SharedParametersFilename = sharedParameterFile;
+                sharedParameterFileChanged = true;
+
+                Definition definition = findSharedDefinition(revitApp, parameterName);
+
+                if (definition == null)
+                    return "\"" + parameterName + "\" is not in this model and could not be added: it is " +
+                           "not in " + sharedParameterFile + ".";
+
+                CategorySet categories = revitApp.Create.NewCategorySet();
+
+                //One call per category, never an array - see the note above scanCategory for
+                //why an array of BuiltInCategory values breaks the 4.8 build under Revit 2024.
+                insertCategory(doc, categories, BuiltInCategory.OST_StructuralFraming);
+                insertCategory(doc, categories, BuiltInCategory.OST_StructuralColumns);
+                insertCategory(doc, categories, BuiltInCategory.OST_Walls);
+                insertCategory(doc, categories, BuiltInCategory.OST_Floors);
+
+                if (categories.IsEmpty)
+                    return "\"" + parameterName + "\" is not in this model and could not be added: none of " +
+                           "the structural framing, column, wall or floor categories will take a parameter " +
+                           "in this document.";
+
+                bool bound;
+
+                using (Transaction transaction = new Transaction(doc, "CarboCircle: add " + parameterName))
+                {
+                    transaction.Start();
+
+                    //Insert answers false rather than throwing when Revit refuses, and that
+                    //result used to be the kind of thing that gets discarded - leaving a
+                    //report that says the parameter was added and a model where it was not.
+                    bound = doc.ParameterBindings.Insert(definition,
+                        revitApp.Create.NewInstanceBinding(categories), GroupTypeId.Data);
+
+                    transaction.Commit();
+                }
+
+                if (bound == false)
+                    return "\"" + parameterName + "\" is not in this model and Revit would not add it. This " +
+                           "usually means a parameter of that name already exists bound to something else. " +
+                           "Check it under Manage > Project Parameters.";
+
+                return "\"" + parameterName + "\" was not in this model, so it was added as an instance " +
+                       "Text parameter on Structural Framing, Structural Columns, Walls and Floors. " +
+                       "Undoing this button removes it again.";
+            }
+            catch (Exception ex)
+            {
+                return "\"" + parameterName + "\" is not in this model and could not be added: " + ex.Message;
+            }
+            finally
+            {
+                try
+                {
+                    if (sharedParameterFileChanged == true)
+                        revitApp.SharedParametersFilename = originalSharedParameterFile;
+                }
+                catch (Exception)
+                {
+                    //Putting a path back is not worth turning into a failure of its own.
+                }
+            }
+        }
+
+        /// <summary>
+        /// The binding of the named parameter in this document, or null when it has none.
+        /// </summary>
+        private static Autodesk.Revit.DB.Binding findBinding(Document doc, string parameterName)
+        {
+            DefinitionBindingMapIterator it = doc.ParameterBindings.ForwardIterator();
+            it.Reset();
+
+            while (it.MoveNext())
+            {
+                if (it.Key != null &&
+                    string.Equals(it.Key.Name, parameterName, StringComparison.OrdinalIgnoreCase))
+                    return it.Current as Autodesk.Revit.DB.Binding;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// The named definition out of the open shared parameter file, whichever group it
+        /// sits in. Searched rather than fetched from a named group so that moving a
+        /// parameter between groups in the file does not quietly stop this finding it.
+        /// </summary>
+        private static Definition findSharedDefinition(
+            Autodesk.Revit.ApplicationServices.Application revitApp, string parameterName)
+        {
+            DefinitionFile file = revitApp.OpenSharedParameterFile();
+
+            if (file == null)
+                return null;
+
+            foreach (DefinitionGroup group in file.Groups)
+            {
+                foreach (Definition definition in group.Definitions)
+                {
+                    if (definition != null &&
+                        string.Equals(definition.Name, parameterName, StringComparison.Ordinal))
+                        return definition;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Adds one category to the set, when this document has it and it will take a
+        /// parameter. Takes the constant as an argument for the reason set out above
+        /// scanCategory: a BuiltInCategory in an array breaks the 4.8 build under Revit 2024.
+        /// </summary>
+        private static void insertCategory(Document doc, CategorySet into, BuiltInCategory builtInCategory)
+        {
+            try
+            {
+                Category category = Category.GetCategory(doc, builtInCategory);
+
+                if (category != null && category.AllowsBoundParameters)
+                    into.Insert(category);
+            }
+            catch (Exception)
+            {
+                //A category this document has not got is one fewer place the ids can land,
+                //not a reason to abandon the other three.
+            }
         }
 
         private static void want(Dictionary<long, List<string>> wanted, long elementId, string id)

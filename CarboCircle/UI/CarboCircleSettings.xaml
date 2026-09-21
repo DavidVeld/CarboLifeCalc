@@ -13,7 +13,7 @@
         Width="880" Height="880"
         MinWidth="820" MinHeight="520"
         WindowStartupLocation="CenterOwner"
-        Loaded="Window_Loaded">
+        Loaded="Window_Loaded" Icon="/CarboCircle;component/ico_CarboCircle16.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -409,12 +409,20 @@
                                 <ComboBox Grid.Column="1" x:Name="cmb_ReuseIdParameter"
                                           Style="{StaticResource ParameterCombo}"
                                           Height="26" Margin="0,3,0,3"
-                                          ToolTip="Instance text parameter the reuse id is written into. It has to exist on the structural framing and column categories already - CarboCircle writes values, it does not add parameters to your model."/>
+                                          ToolTip="Instance TEXT parameter the reuse id is written into. The list offers only the writable text parameters found in the model, because an id is a string - a Length or a Number one would silently refuse the write."/>
                             </Grid>
 
+                            <!--
+                                The list is harvested from the model and already holds nothing
+                                but writable instance text parameters - see
+                                carboCircleRevitCommands.addTextParameterNames. Said here as
+                                well because the box also accepts a name typed in full, which
+                                is how the proposed design's own parameter gets named before
+                                that model has ever been opened.
+                            -->
                             <TextBlock Style="{StaticResource GroupNote}"
                                        Margin="0,8,0,0"
-                                       Text="Must already exist as an instance Text parameter on those categories. Nothing is added to the model; a member that has no such parameter is reported and left alone. Clear the box to go back to CLC_ReuseID."/>
+                                       Text="Text parameters only - an id is a string, so a Length or a Number parameter would refuse the write. Leave it as CLC_ReuseId and CarboCircle adds it to structural framing, columns, walls and floors itself the first time you write the IDs. Name a parameter of your own and it has to exist already: a member that has not got it is reported and left alone."/>
                         </StackPanel>
                     </GroupBox>
 
