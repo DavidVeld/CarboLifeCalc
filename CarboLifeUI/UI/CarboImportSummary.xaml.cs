@@ -12,9 +12,11 @@ namespace CarboLifeUI.UI
     /// the time an import finishes the user wants the model, not a report. The per group detail
     /// is still in the Description column, where it can be read in context.
     ///
-    /// The second button is the point of the dialog. "Check these materials" with no way to act
-    /// on it is not an instruction, it is a nag; pressing it opens the material mapper straight
-    /// away, so the main window comes up with the materials already put right.
+    /// Running the mapper is the point of the dialog. "Check these materials" with no way to act
+    /// on it is not an instruction, it is a nag; pressing the mapper button opens it straight
+    /// away, so the main window comes up with the materials already put right. That is why it is
+    /// the first and the default button, and why the other one is labelled with what it actually
+    /// means - the work comes back later - rather than "Ok", which reads like the way out.
     /// </summary>
     public partial class CarboImportSummary : Window
     {
@@ -58,7 +60,7 @@ namespace CarboLifeUI.UI
             txt_Description.Text = message;
         }
 
-        private void Btn_Ok_Click(object sender, RoutedEventArgs e)
+        private void Btn_Later_Click(object sender, RoutedEventArgs e)
         {
             RunMaterialMapper = false;
             this.Close();

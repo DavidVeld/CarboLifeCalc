@@ -133,9 +133,14 @@ namespace CarboLifeUI.UI
         /// <summary>
         /// True when the model is known to hold this name.
         ///
-        /// Worksets are matched the way the substructure import matches them - the setting is a
-        /// fragment that a workset name has to contain, not a whole name - so "sub" counts as
-        /// present when the model has a "Substructure" workset.
+        /// WORKSETS ARE NEVER REPORTED AS MISSING. The other kinds are names: the import looks for
+        /// exactly what is typed, so a name the model has not got can only ever find nothing. A
+        /// workset setting is not a name but a fragment that any workset name may contain, which
+        /// makes it a search term rather than a reference - and one that is usually an office
+        /// default, deliberately kept broad enough to work across models with different workset
+        /// naming. Marking it against this one model's worksets would flag a setting that is doing
+        /// exactly what it was set up to do. The dropdown still offers the worksets this model has,
+        /// which is the help that was wanted; it is the accusation that was not.
         /// </summary>
         /// <returns>
         /// True for an empty name and whenever no model has been read: nothing has been shown to
@@ -149,20 +154,10 @@ namespace CarboLifeUI.UI
             if (HasModel == false)
                 return true;
 
-            string trimmed = name.Trim();
-
             if (kind == CarboNameKind.Workset)
-            {
-                foreach (string workset in worksets)
-                {
-                    if (workset.IndexOf(trimmed, StringComparison.OrdinalIgnoreCase) >= 0)
-                        return true;
-                }
+                return true;
 
-                return false;
-            }
-
-            return SetOf(kind).Contains(trimmed);
+            return SetOf(kind).Contains(name.Trim());
         }
 
         /// <summary>

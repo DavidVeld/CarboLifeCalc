@@ -68,13 +68,17 @@
              is looked up by the import and silently skipped when it is absent: the import still
              finishes and still produces numbers, so a name left over from the last project costs
              a whole import before anyone notices. This is the one place it can be said first. -->
-        <Border x:Name="pnl_MissingNames" DockPanel.Dock="Top"
-                Background="#FFF6E9" BorderBrush="#C05000" BorderThickness="1"
-                CornerRadius="4" Padding="10,6,10,6" Margin="0,0,0,10"
-                Visibility="Collapsed">
-            <TextBlock x:Name="txt_MissingNames" TextWrapping="Wrap"
-                       FontSize="12" FontWeight="SemiBold" Foreground="#C05000"/>
-        </Border>
+        <TextBlock x:Name="txt_MissingNames" DockPanel.Dock="Top"
+                   TextWrapping="Wrap" FontSize="12" FontWeight="SemiBold"
+                   Foreground="#C05000" Margin="2,0,2,8"
+                   Visibility="Collapsed"/>
+
+        <!-- Which build this is, in the corner where a version belongs. Declared before the footer
+             because a DockPanel gives each Bottom child the edge of what is left, so this one
+             takes the true bottom and the buttons sit above it. -->
+        <TextBlock x:Name="txt_Version" DockPanel.Dock="Bottom"
+                   HorizontalAlignment="Left" Margin="2,6,0,0"
+                   FontFamily="Segoe UI" FontSize="11" Foreground="#888888"/>
 
         <!-- Footer -->
         <Border DockPanel.Dock="Bottom" Margin="0,10,0,0">

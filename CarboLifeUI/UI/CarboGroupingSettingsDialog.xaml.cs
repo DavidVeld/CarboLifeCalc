@@ -187,6 +187,8 @@ namespace CarboLifeUI.UI
 
             FitToScreen();
 
+            ShowVersion();
+
             // Get DefaultTemplate:
             LoadTemplateList(null);
 
@@ -1572,13 +1574,6 @@ namespace CarboLifeUI.UI
                        "The import will look for it, find nothing and carry on.";
             }
 
-            if (kind == CarboNameKind.Workset)
-            {
-                return "No workset in this model has a name containing \"" + value + "\"." +
-                       Environment.NewLine +
-                       "Nothing would be marked as substructure.";
-            }
-
             return "This model has no " + description + " called \"" + value + "\"." +
                    Environment.NewLine +
                    "The import will look for it, find nothing and carry on, so this setting would " +
@@ -1647,24 +1642,34 @@ namespace CarboLifeUI.UI
 
             if (message == "")
             {
-                pnl_MissingNames.Visibility = System.Windows.Visibility.Collapsed;
+                txt_MissingNames.Visibility = System.Windows.Visibility.Collapsed;
                 return;
             }
 
-            SetMissingNamesBanner(message, missing.Count > 0);
+            //Red for something to put right, grey for the note that says nothing could be checked -
+            //that one is not the user's doing and there is no box below it to go and look at.
+            txt_MissingNames.Text = message;
+            txt_MissingNames.Foreground = missing.Count > 0 ? statusProblemBrush : statusOkBrush;
+            txt_MissingNames.Visibility = System.Windows.Visibility.Visible;
         }
 
-        private void SetMissingNamesBanner(string message, bool isProblem)
+        /// <summary>
+        /// The build, in the bottom corner. CarboLifeUI's own version, which is what CarboAbout
+        /// shows, so the two cannot disagree.
+        /// </summary>
+        private void ShowVersion()
         {
-            txt_MissingNames.Text = message;
-            txt_MissingNames.Foreground = isProblem ? statusProblemBrush : statusOkBrush;
+            try
+            {
+                Version version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
 
-            pnl_MissingNames.BorderBrush = isProblem ? statusProblemBrush : statusOkBrush;
-            pnl_MissingNames.Background = isProblem
-                ? new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xFF, 0xF6, 0xE9))
-                : System.Windows.Media.Brushes.WhiteSmoke;
-
-            pnl_MissingNames.Visibility = System.Windows.Visibility.Visible;
+                txt_Version.Text = version == null ? "" : "Version " + version.ToString();
+            }
+            catch (Exception)
+            {
+                //A build that will not say what it is is not worth a dialog about.
+                txt_Version.Text = "";
+            }
         }
 
         private void btn_ExportSettings_Click(object sender, RoutedEventArgs e)

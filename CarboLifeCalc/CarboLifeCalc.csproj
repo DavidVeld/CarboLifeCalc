@@ -380,7 +380,7 @@
     </None>
   </ItemGroup>
   <PropertyGroup>
-    <FileVersion>1.9.9.1</FileVersion>
+    <FileVersion>1.9.9.2</FileVersion>
     <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
   <!--

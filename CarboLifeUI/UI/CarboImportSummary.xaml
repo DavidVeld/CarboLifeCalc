@@ -56,10 +56,15 @@
         </GroupBox>
 
         <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Button Name="btn_Ok" Margin="0,0,10,0" Width="80" Height="30" IsCancel="True"
-                    Style="{StaticResource ButtonStyle}" Click="Btn_Ok_Click">Ok</Button>
-            <Button Name="btn_OkAndMap" Margin="0,0,10,0" Padding="14,0" Height="30" IsDefault="True"
-                    Style="{StaticResource ButtonStyle}" Click="Btn_OkAndMap_Click">OK and Run Material Mapper</Button>
+            <!-- The mapper first, and still the default. The point of this dialog is that the
+                 flagged materials get looked at, so the button that does it is the one the eye
+                 lands on and the one Enter presses. The other one now says what taking it costs -
+                 the work comes back later - instead of reading like the safe way out. Escape
+                 still takes it. -->
+            <Button Name="btn_OkAndMap" Margin="0,0,10,0" Padding="16,0,16,2" Height="30" IsDefault="True"
+                    Style="{StaticResource ButtonStyle}" Click="Btn_OkAndMap_Click">OK, Run Material Mapper</Button>
+            <Button Name="btn_Later" Margin="0,0,10,0" Padding="16,0,16,2" Height="30" IsCancel="True"
+                    Style="{StaticResource ButtonStyle}" Click="Btn_Later_Click">Cancel, I'll do this later</Button>
         </StackPanel>
 
     </Grid>

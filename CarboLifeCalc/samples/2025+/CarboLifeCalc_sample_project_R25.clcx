@@ -15871,7 +15871,7 @@ Set Value by user as: 0kgCO₂/kg
       <isSubstructure>false</isSubstructure>
       <includeInCalc>true</includeInCalc>
       <rcDensity>0</rcDensity>
-      <GUID>20dabff6-6a34-4506-9139-9613345ec958-000a8099</GUID>
+      <GUID>20dabff6-6a34-4506-91.9.9.23345ec958-000a8099</GUID>
     </CarboElement>
     <CarboElement>
       <isUpdated>false</isUpdated>
@@ -77811,7 +77811,7 @@ Recommended Value</Description>
           <isSubstructure>false</isSubstructure>
           <includeInCalc>true</includeInCalc>
           <rcDensity>0</rcDensity>
-          <GUID>20dabff6-6a34-4506-9139-9613345ec958-000a8099</GUID>
+          <GUID>20dabff6-6a34-4506-91.9.9.23345ec958-000a8099</GUID>
         </CarboElement>
         <CarboElement>
           <isUpdated>false</isUpdated>
@@ -81937,7 +81937,7 @@ Recommended Value</Description>
       <Volume>2.5690999999999997</Volume>
       <VolumeLink />
       <Grade />
-      <TotalVolume>3.1396971099999997</TotalVolume>
+      <TotalVolume>3.1.9.9.2099999997</TotalVolume>
       <Density>476</Density>
       <Mass>1494.49582436</Mass>
       <ECI>0.3500000000000001</ECI>
@@ -87687,7 +87687,7 @@ Recommended Value</Description>
           <isSubstructure>false</isSubstructure>
           <includeInCalc>true</includeInCalc>
           <rcDensity>175</rcDensity>
-          <GUID>20dabff6-6a34-4506-9139-9613345ec958-000a8099</GUID>
+          <GUID>20dabff6-6a34-4506-91.9.9.23345ec958-000a8099</GUID>
         </CarboElement>
         <CarboElement>
           <isUpdated>false</isUpdated>

@@ -40,25 +40,49 @@
 
         <Label Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource baseStyleTitle}">Material Mapper</Label>
 
-        <DataGrid Name="dgData2" AutoGenerateColumns="False" ItemsSource="{Binding mappinglist}" CanUserAddRows="False" Grid.Column="2" Grid.Row="4" Margin="5,0,5,10">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding revitName}" Header=" Revit Material Name" Width="1*"/>
-                <DataGridTextColumn Binding="{Binding category}" Header=" Category" Width="135"/>
-                <DataGridTextColumn Binding="{Binding additionalData}" Header=" Additional" Width="135" Visibility="Hidden"/>
+        <!-- Said out loud because it is not discoverable: the column looks like a dropdown, and
+             nobody tries typing into a dropdown unless told they may. -->
+        <TextBlock Grid.Column="2" Grid.Row="1" Margin="0,0,10,0"
+                   HorizontalAlignment="Right" VerticalAlignment="Center"
+                   FontFamily="Segoe UI" FontSize="12" Foreground="#555"
+                   Text="Type any part of a material name to search, or pick one from the list."/>
 
-                <DataGridTemplateColumn Header="Carbo Life Calc Material Name" Width="1.2*" >
+        <!-- VirtualizationMode Standard, not the DataGrid's usual Recycling. A recycled row hands
+             the SAME combo box to a different material, and a combo box carries state that does
+             not survive that: the narrowed dropdown of whoever had it last, and a selection that
+             belongs to a row no longer under it. Rows here are counted in tens, so a container
+             per realised row costs nothing and removes the whole class of bug. -->
+        <DataGrid Name="dgData2" AutoGenerateColumns="False" ItemsSource="{Binding mappinglist}" CanUserAddRows="False"
+                  VirtualizingPanel.VirtualizationMode="Standard"
+                  Grid.Column="2" Grid.Row="4" Margin="5,0,5,10">
+            <DataGrid.Columns>
+                <!-- Read only: these two are the KEY the mapping is looked up by. A stray
+                     keystroke in the Revit name used to detach the row from its group silently. -->
+                <DataGridTextColumn Binding="{Binding revitName}" Header=" Revit Material Name" Width="1*" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding category}" Header=" Category" Width="135" IsReadOnly="True"/>
+                <DataGridTextColumn Binding="{Binding additionalData}" Header=" Additional" Width="135" Visibility="Hidden" IsReadOnly="True"/>
+
+                <DataGridTemplateColumn Header="Carbo Life Calc Material Name" Width="1.2*" SortMemberPath="carboNAME">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ComboBox 
-    ItemsSource="{Binding materialList, RelativeSource={RelativeSource AncestorType=Window}}"
-    DisplayMemberPath="carboNAME"
-    SelectedValuePath="carboNAME"
-    SelectedValue="{Binding carboNAME, UpdateSourceTrigger=PropertyChanged}"
-    IsEditable="True"
-    StaysOpenOnEdit="True"
-    IsTextSearchEnabled="False"
-    KeyUp="ComboBox_KeyUp"
-    Style="{StaticResource ComboBoxFlatStyleLight}" />
+                            <!-- Text, not SelectedValue, and ItemsSource written FIRST.
+                                 Binding the VALUE rather than the SELECTION is what makes typing
+                                 and pasting work: an editable combo box only turns text into a
+                                 selection when its own prefix search is on, and that search is
+                                 off here because it cannot find "C32/40 concrete" from "c32".
+                                 Bound to SelectedValue, anything typed or pasted was displayed
+                                 but never stored - which is the bug this column had.
+                                 Handing it the items clears the text of an editable combo box,
+                                 so ItemsSource has to be set before the text binding, not after.
+                                 See MaterialMapper.xaml.cs for the rest. -->
+                            <ComboBox ItemsSource="{Binding materialNames, RelativeSource={RelativeSource AncestorType=Window}}"
+                                      Text="{Binding carboNAME, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                      Style="{StaticResource ParameterComboBoxStyle}"
+                                      FontSize="14" Margin="1,2,1,2"
+                                      StaysOpenOnEdit="True"
+                                      Loaded="MaterialBox_Loaded"
+                                      DropDownOpened="MaterialBox_DropDownOpened"
+                                      DataContextChanged="MaterialBox_DataContextChanged"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
