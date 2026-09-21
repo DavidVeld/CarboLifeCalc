@@ -54,7 +54,7 @@ namespace CarboCircle
             ContextualHelp contextualHelp = new ContextualHelp(ContextualHelpType.Url, HelpURL);
 
             /// Visual Menu
-            PushButton pB_ShowCarboCalc = CarboCalcPanel.AddItem(new PushButtonData("CarboLifeCircle", "CarboLifeCircle", MyAssemblyPath, "CarboCircle.CarboCircleCommand")) as PushButton;
+            PushButton pB_ShowCarboCalc = CarboCalcPanel.AddItem(new PushButtonData("CarboCircle", "CarboCircle", MyAssemblyPath, "CarboCircle.CarboCircleCommand")) as PushButton;
             //LImage
             Uri pB_ShowCarboCalc2 = new Uri(MyAssemblyDir + @"\img\ico_CarboCircle2D32.png");
             BitmapImage limg_pB_ShowCarboCalc2 = new BitmapImage(pB_ShowCarboCalc2);
