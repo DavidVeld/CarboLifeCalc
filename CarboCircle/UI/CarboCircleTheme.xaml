@@ -8,8 +8,16 @@
 
          App.xaml (or CarboCircleMain.xaml <Window.Resources>):
              <ResourceDictionary.MergedDictionaries>
-                 <ResourceDictionary Source="/CarboCircle;component/UI/CarboCircleTheme.xaml"/>
+                 <ResourceDictionary Source="CarboCircleTheme.xaml"/>
              </ResourceDictionary.MergedDictionaries>
+
+         A same-folder path, not "/CarboCircle;component/UI/CarboCircleTheme.xaml". A pack
+         URI beginning with a single slash is RELATIVE, and relative resolves against the
+         ENTRY assembly - which for an add-in is Revit.exe, not this dll. It works in a
+         standalone WPF app and fails in Revit, where WPF falls back to reading it as a file
+         path and you get "Provide value on TypeConverterMarkupExtension threw an exception".
+         If a full URI is ever needed, write it absolute:
+         pack://application:,,,/CarboCircle;component/UI/CarboCircleTheme.xaml
 
          Every style below is implicit (TargetType only), so existing
          controls pick it up without renaming anything. Keyed styles at

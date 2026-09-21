@@ -11,7 +11,8 @@
         Height="820" Width="1320"
         MinHeight="640" MinWidth="1000"
         WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded" Closing="Window_Closing" Icon="/CarboCircle;component/ico_CarboCircle16.ico" >
+        Loaded="Window_Loaded" Closing="Window_Closing"
+        Icon="pack://application:,,,/CarboCircle;component/ico_CarboCircle16.ico">
 
     <!-- ====================================================================
          CarboCircleMain.xaml

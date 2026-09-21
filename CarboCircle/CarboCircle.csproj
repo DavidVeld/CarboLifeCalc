@@ -33,6 +33,23 @@
     <Page Remove="UI\Legacy\**" />
   </ItemGroup>
   <ItemGroup>
+    <!-- The window icon, and it has to be declared.
+
+         An SDK-style WPF project globs *.xaml in as Page automatically but does NOT do the
+         same for images: an .ico with no item of its own lands in None, which copies it
+         next to the dll and embeds nothing. The pack URI in CarboCircleMain.xaml and
+         CarboCircleSettings.xaml then resolves to nothing and the window dies on load with
+         "Provide value on TypeConverterMarkupExtension threw an exception", whose inner
+         exception - the only part that says anything - is "Cannot locate resource".
+
+         CopyToOutputDirectory Never, like CarboLifeUI\Resources\ico_clcwindow.ico: it is
+         read out of the assembly, so a loose copy beside the dll is dead weight. -->
+    <None Remove="ico_CarboCircle16.ico" />
+    <Resource Include="ico_CarboCircle16.ico">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="circledb\CarboCircleMasterSections.csv" />
     <None Remove="circledb\CarboCircleMasterSections.xlsx" />
     <None Remove="circledb\carboCircleMaterials.cxml" />

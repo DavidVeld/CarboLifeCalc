@@ -13,7 +13,8 @@
         Width="880" Height="880"
         MinWidth="820" MinHeight="520"
         WindowStartupLocation="CenterOwner"
-        Loaded="Window_Loaded" Icon="/CarboCircle;component/ico_CarboCircle16.ico">
+        Loaded="Window_Loaded"
+        Icon="pack://application:,,,/CarboCircle;component/ico_CarboCircle16.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
