@@ -150,9 +150,6 @@
     <Content Include="data\A1A3Tables\ECI3.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="data\A1A3Tables\ECI4.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="data\Eol.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

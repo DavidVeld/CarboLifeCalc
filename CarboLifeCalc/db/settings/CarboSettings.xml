@@ -16,7 +16,7 @@
     <AdditionalParameterElementType>Type Parameter</AdditionalParameterElementType>
     <IncludeGradeParameter>true</IncludeGradeParameter>
     <GradeParameterName>CLC_MaterialGrade</GradeParameterName>
-    <GradeParameterType>Type Parameter</GradeParameterType>
+    <GradeParameterType>Instance Parameter</GradeParameterType>
     <IncludeCorrectionParameter>true</IncludeCorrectionParameter>
     <CorrectionParameterName>CLC_VolumeCorrection</CorrectionParameterName>
     <CorrectionParameterType>Type Parameter</CorrectionParameterType>
@@ -24,124 +24,6 @@
     <RCParameterName />
     <RCParameterType>Instance Parameter</RCParameterType>
     <RCMaterialName>Reinforcement</RCMaterialName>
-    <rcQuantityMap>
-      <CarboNumProperty>
-        <PropertyName>Mass Concrete</PropertyName>
-        <Value>0</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>General Slab</PropertyName>
-        <Value>172</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Transfer Slab</PropertyName>
-        <Value>150</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Raft</PropertyName>
-        <Value>115</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Pile</PropertyName>
-        <Value>80</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>General Beam</PropertyName>
-        <Value>220</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Ground Beam</PropertyName>
-        <Value>280</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Light Column</PropertyName>
-        <Value>100</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Medium Column</PropertyName>
-        <Value>193</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Heavy Column</PropertyName>
-        <Value>400</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>General Wall</PropertyName>
-        <Value>109</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Retaining Wall</PropertyName>
-        <Value>168</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Precast Wall</PropertyName>
-        <Value>40</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Precast Plank</PropertyName>
-        <Value>80</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Precast Column</PropertyName>
-        <Value>100</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Pilecap</PropertyName>
-        <Value>272</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>PT slab</PropertyName>
-        <Value>85</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Columns</PropertyName>
-        <Value>200</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Floors</PropertyName>
-        <Value>175</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Generic Models</PropertyName>
-        <Value>85</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Mass</PropertyName>
-        <Value>0</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Ramps</PropertyName>
-        <Value>150</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Roofs</PropertyName>
-        <Value>160</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Stairs</PropertyName>
-        <Value>150</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Structural Columns</PropertyName>
-        <Value>200</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Structural Foundations</PropertyName>
-        <Value>250</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Structural Framing</PropertyName>
-        <Value>220</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Structural Trusses</PropertyName>
-        <Value>200</Value>
-      </CarboNumProperty>
-      <CarboNumProperty>
-        <PropertyName>Walls</PropertyName>
-        <Value>109</Value>
-      </CarboNumProperty>
-    </rcQuantityMap>
     <RCMaterialCategory>Concrete</RCMaterialCategory>
     <UseImportedMap>true</UseImportedMap>
     <UncertaintyFactor>0.1</UncertaintyFactor>
@@ -295,5 +177,5 @@
       </outmax>
     </CarboColourPreset>
   </colourPresets>
-  <launchCircle>true</launchCircle>
+  <launchCircle>false</launchCircle>
 </CarboSettings>
