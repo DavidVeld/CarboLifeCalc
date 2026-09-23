@@ -125,6 +125,41 @@ namespace CarboLifeAPI.Data
 
         }
 
+        /// <summary>
+        /// True when this element's carbon is part of the project total: it is ticked into the
+        /// calculation, and it is not substructure while substructure is switched off.
+        ///
+        /// The one definition of "counted". CarboGroup.CalculateTotals decides the group volume
+        /// with it and the heat map decides what to colour with it; when the two were written
+        /// separately the heat map coloured elements the total had left out.
+        /// </summary>
+        public bool countsInCalculation(bool calculateSubStructure)
+        {
+            if (includeInCalc == false)
+                return false;
+
+            if (isSubstructure == true && calculateSubStructure == false)
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Zeroes the calculated quantities of an element left out of the calculation.
+        ///
+        /// Volume, the quantity read from the model, is kept, so ticking the element back in
+        /// recalculates it from its own volume. Volume_Total, Mass and EC are results, and a
+        /// skipped element used to keep the ones from the last pass it was counted in. The group
+        /// total never included them, but the element did: the heat map, the Revit write-back and
+        /// the per element exports all showed carbon the project total did not.
+        /// </summary>
+        internal void ClearTotals()
+        {
+            Volume_Total = 0;
+            Mass = 0;
+            EC = 0;
+        }
+
         public CarboElement CopyMe()
         {
             CarboElement clone = new CarboElement();

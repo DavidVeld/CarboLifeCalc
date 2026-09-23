@@ -588,33 +588,50 @@ namespace CarboLifeAPI.Data
             return result;
         }
 
-        private int getUniqueId()
+        /// <summary>The band generated material ids are taken from. See CarboMaterial.SystemEmptyId.</summary>
+        private const int GeneratedIdFirst = 200000;
+        private const int GeneratedIdLast = 300000;
+
+        /// <summary>
+        /// The next free material id in the generated band.
+        ///
+        /// This used to draw a random number from a new Random on every call. On .NET Framework a
+        /// new Random is seeded from the clock tick, so calls in a tight loop - the csv import
+        /// numbering every row that came in without an id - got the same number over and over.
+        /// It was only checked against the library, not against the rows being numbered with it,
+        /// so two new rows could share an id, and the merge that follows matches on id: the
+        /// second row was written over the first, and one material silently vanished.
+        ///
+        /// Now it is one above the highest id already in the band, checked against everything in
+        /// taken, and the id handed out is added to taken so the next call cannot repeat it.
+        /// Deterministic, so an import numbers the same file the same way every time.
+        /// </summary>
+        /// <param name="taken">Every id already in use. Left out, the library's own ids.</param>
+        private int getUniqueId(HashSet<int> taken = null)
         {
-            Again:
-            Random rnd = new Random();
-            int id = rnd.Next(200000, 300000);  // creates a number between 1 and 12
+            if (taken == null)
+                taken = new HashSet<int>(CarboMaterialList.Select(cm => cm.Id));
 
-            bool isUnique = isUniqueId(id);
-
-            if (isUnique == false)
-                goto Again;
-            else
-                return id;
-        }
-
-        private bool isUniqueId(int id)
-        {
-            bool result = true;
-            foreach (CarboMaterial cm in CarboMaterialList)
+            int highest = GeneratedIdFirst - 1;
+            foreach (int id in taken)
             {
-                if (cm.Id == id)
-                {
-                    result = false;
-                    break;
-                }
+                if (id >= GeneratedIdFirst && id < GeneratedIdLast && id > highest)
+                    highest = id;
             }
-            return result;
-        }   
+
+            int next = highest + 1;
+
+            //The top of the band is used up: take the first gap from the bottom instead.
+            if (next >= GeneratedIdLast)
+            {
+                next = GeneratedIdFirst;
+                while (taken.Contains(next))
+                    next++;
+            }
+
+            taken.Add(next);
+            return next;
+        }
 
         public void deleteMaterial(int id)
         {
@@ -774,11 +791,17 @@ namespace CarboLifeAPI.Data
                 return false;
 
             //validate Ids
+            //One set holding the library's ids AND the incoming rows' ids, so a row numbered here
+            //can collide with neither. Checking only the library let two new rows share an id,
+            //and the merge below, which matches on id, then wrote one over the other.
+            HashSet<int> takenIds = new HashSet<int>(this.CarboMaterialList.Select(cm => cm.Id));
+            takenIds.UnionWith(importedDb.CarboMaterialList.Select(cm => cm.Id));
+
             foreach(CarboMaterial cm in importedDb.CarboMaterialList)
             {
                 if(cm.Id == 0)
                 {
-                    cm.Id = getUniqueId();
+                    cm.Id = getUniqueId(takenIds);
                 }
             }
 

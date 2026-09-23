@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Unit tests for CarboLifeAPI: the calculation, the material database and the csv readers.
+    No Revit or Rhino is needed - CarboLifeAPI references neither.
+
+    Build with Visual Studio's MSBuild, like the rest of the solution: the CarboLifeAPI
+    reference brings its Excel COM references along, which `dotnet build` cannot resolve.
+    See BUILDING.md.
+  -->
+
+  <PropertyGroup>
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarboLifeAPI\CarboLifeAPI.csproj" />
+  </ItemGroup>
+
+  <!--
+    CarboProject's constructor reads its settings and material template from db\ and data\
+    beside CarboLifeAPI.dll (PathUtils.GetAssemblyDir), so the tests get the same copies the
+    application ships with.
+  -->
+  <ItemGroup>
+    <Content Include="..\CarboLifeCalc\db\**\*" LinkBase="db" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\CarboLifeCalc\data\**\*" LinkBase="data" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\CarboLifeCalc\samples\2024-\CarboLifeCalc_sample_project_R23.clcx" Link="samples\CarboLifeCalc_sample_project_R23.clcx" CopyToOutputDirectory="PreserveNewest" />
+
+    <!-- shadowCopy off: on .NET Framework xUnit otherwise runs CarboLifeAPI.dll from a temp
+         folder, and PathUtils then looks for db\ and data\ there instead of beside it. -->
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

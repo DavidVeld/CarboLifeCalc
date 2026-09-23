@@ -81,6 +81,14 @@ namespace CarboLifeRevit
             if (project != null)
             {
                 carboProject = project;
+
+                //The heat map reads the per element results - EC_Cumulative, Volume_Cumulative -
+                //which only exist after a calculation. Opening a project or a new import does
+                //calculate, but this window is handed whatever the caller has, so calculate here
+                //rather than rely on that: a project fresh from a file carries whatever totals
+                //were last saved in it.
+                carboProject.CalculateProject();
+
                 UpdateDataSource();
             }
             else

@@ -32,6 +32,35 @@ namespace CarboLifeAPI
     public static class HeatMapCollector
     {
         /// <summary>
+        /// The grouped elements whose carbon is part of the project total.
+        ///
+        /// An element ticked out of the calculation, or substructure while substructure is off,
+        /// is left out of the heat map altogether rather than coloured as zero: zero would read
+        /// as "this element has no carbon", when the truth is "this element is not counted". Left
+        /// out, it keeps its own Revit graphics and stands apart from the coloured ones.
+        /// </summary>
+        private static IEnumerable<CarboElement> getCountedElements(CarboProject carboProject)
+        {
+            return carboProject.getElementsFromGroups()
+                .Where(ce => ce.countsInCalculation(carboProject.calculateSubStructure));
+        }
+
+        /// <summary>
+        /// The ids of elements no part of which is counted. An element split over two groups with
+        /// one part counted is still on the heat map, so it is not listed here.
+        /// </summary>
+        private static List<Int64> getExcludedIds(CarboProject carboProject)
+        {
+            HashSet<Int64> counted = new HashSet<Int64>(getCountedElements(carboProject).Select(ce => ce.Id));
+
+            return carboProject.getElementsFromGroups()
+                .Select(ce => ce.Id)
+                .Where(id => counted.Contains(id) == false)
+                .Distinct()
+                .ToList();
+        }
+
+        /// <summary>
         /// This function uses the CarboProject Class to get a set of datapoints, it can then be called as
         /// CarboGraphResult = GetByMaterialMassChart().Calculate();
         /// </summary>
@@ -40,8 +69,9 @@ namespace CarboLifeAPI
         public static CarboGraphResult GetMaterialMassData(CarboProject carboProject)
         {
             //This is the most usefull set of Data To work with for now:
-            IEnumerable<CarboElement> bufferList = carboProject.getElementsFromGroups();
+            IEnumerable<CarboElement> bufferList = getCountedElements(carboProject);
             CarboGraphResult thisResult = new CarboGraphResult();
+            thisResult.excludedIds = getExcludedIds(carboProject);
 
             try
             {
@@ -73,8 +103,9 @@ namespace CarboLifeAPI
         public static CarboGraphResult GetMaterialVolumeData(CarboProject carboProject)
         {
             //This is the most usefull set of Data To work with for now:
-            IEnumerable<CarboElement> bufferList = carboProject.getElementsFromGroups();
+            IEnumerable<CarboElement> bufferList = getCountedElements(carboProject);
             CarboGraphResult thisResult = new CarboGraphResult();
+            thisResult.excludedIds = getExcludedIds(carboProject);
 
             try
             {
@@ -87,12 +118,20 @@ namespace CarboLifeAPI
                 {
                     //An element without a volume has no carbon density: dividing anyway yields infinity,
                     //which then sets the scale of the whole graph.
-                    if (carboElement.Volume <= 0)
+                    if (carboElement.Volume_Cumulative <= 0)
                         continue;
 
+                    //Both cumulative: the carbon of every part of this Revit element over the volume
+                    //of every part. Revit holds one colour per element id, so a layered wall has to
+                    //get one value. It used to be divided by this part's own Volume, which gave each
+                    //layer of the same wall a different value (a concrete and insulation wall
+                    //came out at 262.5 and 525 instead of 175) and whichever reached Revit last
+                    //won. Volume_Cumulative is the adjusted volume, which is also what keeps
+                    //reinforcement right: the rebar part is a copy of the concrete element, so its
+                    //Volume is the concrete's again, while its Volume_Total is the steel.
                     CarboValues value = new CarboValues();
                     value.Id = carboElement.Id;
-                    value.Value = (carboElement.EC_Cumulative / carboElement.Volume);
+                    value.Value = (carboElement.EC_Cumulative / carboElement.Volume_Cumulative);
                     value.ValueName = carboElement.CarboMaterialName;
                     value.ValueCategory = carboElement.Category;
 
@@ -113,6 +152,7 @@ namespace CarboLifeAPI
         {
             //This is the most usefull set of Data To work with for now:
             CarboGraphResult thisResult = new CarboGraphResult();
+            thisResult.excludedIds = getExcludedIds(carboProject);
             try
             {
                 thisResult.ValueName = "EC";
@@ -123,6 +163,9 @@ namespace CarboLifeAPI
                     //This part collects the required data we need to build the graph later on.
                     foreach (CarboElement carboElement in cgr.AllElements)
                     {
+                        if (carboElement.countsInCalculation(carboProject.calculateSubStructure) == false)
+                            continue;
+
                         CarboValues value = new CarboValues();
                         value.Id = carboElement.Id;
                         value.Value = cgr.EC;
@@ -145,9 +188,10 @@ namespace CarboLifeAPI
         public static CarboGraphResult GetPerElementData(CarboProject carboProject)
         {
             //This is the most usefull set of Data To work with for now:
-            IEnumerable<CarboElement> bufferList = carboProject.getElementsFromGroups();
+            IEnumerable<CarboElement> bufferList = getCountedElements(carboProject);
 
             CarboGraphResult thisResult = new CarboGraphResult();
+            thisResult.excludedIds = getExcludedIds(carboProject);
 
             thisResult.ValueName = "EC";
             thisResult.Unit = "tCO₂e";
@@ -182,7 +226,9 @@ namespace CarboLifeAPI
             //make sure all carbo materials are written in the elements;
             //This is the most usefull set of Data To work with for now:
             CarboGraphResult thisResult = new CarboGraphResult();
+            thisResult.excludedIds = getExcludedIds(carboProject);
             CarboGraphResult result = new CarboGraphResult();
+            result.excludedIds = thisResult.excludedIds;
 
             thisResult.ValueName = "EC";
             thisResult.Unit = "tCO₂e";
@@ -194,7 +240,7 @@ namespace CarboLifeAPI
             {
                 carboProject.CalculateProject();
                 List<CarboDataPoint> materialData = carboProject.getMaterialTotals();
-                IEnumerable<CarboElement> bufferList = carboProject.getElementsFromGroups();
+                IEnumerable<CarboElement> bufferList = getCountedElements(carboProject);
 
 
 

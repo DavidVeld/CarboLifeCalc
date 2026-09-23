@@ -49,6 +49,12 @@ namespace CarboLifeAPI
         /// </summary>
         public IList<CarboValues> outOfBoundsMinData;
 
+        /// <summary>
+        /// Elements in the project that are left out of the calculation, so not in any list above.
+        /// Carried so the colouring can clear an override left on them from before they were
+        /// excluded: it only resets what it is given, and these are no longer in entireProjectData.
+        /// </summary>
+        public IList<Int64> excludedIds;
 
 
         public double max;
@@ -63,6 +69,7 @@ namespace CarboLifeAPI
             outOfBoundsMinData = new List<CarboValues>();
             notSelectedData = new List<CarboValues>();
             selectedData = new List<CarboValues>();
+            excludedIds = new List<Int64>();
             ColourLegendName = "CLC_ColourLegend";
             Unit = "";
             max = double.PositiveInfinity;
