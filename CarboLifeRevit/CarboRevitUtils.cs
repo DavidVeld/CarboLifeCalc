@@ -299,33 +299,57 @@ namespace CarboLifeRevit
             {
 
                 //First Attempt is using a parameter based volume:
-                Parameter parameterVolume = el.LookupParameter("Volume");
+                //The built in parameter first: "Volume" is the English display name, and on a
+                //German or French Revit the lookup by name finds nothing.
+                Parameter parameterVolume = el.get_Parameter(BuiltInParameter.HOST_VOLUME_COMPUTED);
+                if (parameterVolume == null)
+                    parameterVolume = el.LookupParameter("Volume");
+
                 if ((parameterVolume != null))
                 {
-                    double volumeValue = parameterVolume.AsDouble();
-                    if (volumeValue > 0)
+                    double elementVolume = Utils.convertToCubicMtrs(parameterVolume.AsDouble());
+                    if (elementVolume > 0)
                     {
-                        //This element has a volume parameter, us this
-                        List<ElementId> Mateids = el.GetMaterialIds(false).ToList();
-                        foreach (ElementId eid in Mateids)
-                        {
-                            string materialName = "";
-                            string materialCategory = "";
-                            double volume = volumeValue;
-                            volume = Utils.convertToCubicMtrs(volume);
-                            Material material = doc.GetElement(eid) as Material;
+                        //The element's Volume is the whole element. It used to be given to every
+                        //material in full, so a two material element came in at twice its volume.
+                        //Each material now gets Revit's own volume for it, see CarboVolumeSplit.
+                        Dictionary<string, double> materialVolumes = new Dictionary<string, double>();
+                        Dictionary<string, string> materialCategories = new Dictionary<string, string>();
 
-                            materialName = material.Name;
+                        foreach (ElementId eid in el.GetMaterialIds(false))
+                        {
+                            Material material = doc.GetElement(eid) as Material;
+                            if (material == null)
+                                continue;
+
+                            string materialName = material.Name;
+                            string materialCategory = "";
 
                             if (material.MaterialClass != "")
                                 materialCategory = material.MaterialClass;
                             else if (material.MaterialCategory != "")
                                 materialCategory = material.MaterialCategory;
 
-                            result = CarboRevitUtils.addToCarboElement(result, materialName, materialCategory, volume, el, doc, settings);
+                            double materialVolume = Utils.convertToCubicMtrs(el.GetMaterialVolume(eid));
 
+                            //Two material ids can carry the same name; they are one material here.
+                            if (materialVolumes.ContainsKey(materialName))
+                                materialVolumes[materialName] += materialVolume;
+                            else
+                                materialVolumes.Add(materialName, materialVolume);
+
+                            materialCategories[materialName] = materialCategory;
                         }
 
+                        //Null means several materials and no volume for any of them: the
+                        //solids below are measured instead, each with its own material.
+                        Dictionary<string, double> split = CarboVolumeSplit.Split(elementVolume, materialVolumes);
+
+                        if (split != null)
+                        {
+                            foreach (KeyValuePair<string, double> part in split)
+                                result = CarboRevitUtils.addToCarboElement(result, part.Key, materialCategories[part.Key], part.Value, el, doc, settings);
+                        }
                     }
 
                     if (result.Count > 0)

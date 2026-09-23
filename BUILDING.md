@@ -30,6 +30,31 @@ invocation; to build just one, add `/p:TargetFramework=net48`.
   assemblies directly out of `C:\Program Files\Autodesk\Revit <year>\`
 - **Rhino 7** for `CarboCroc`
 
+### Running the tests
+
+`CarboLifeTests` holds unit tests for `CarboLifeAPI`: the calculation, the material
+database and the csv readers. They need neither Revit nor Rhino, and run in a couple of
+seconds. Build the solution (or just the test project) with MSBuild as above, then run
+both builds — some bugs only show on one of the two runtimes:
+
+```bash
+vstest.console.exe CarboLifeTests\bin\Debug\net48\CarboLifeTests.dll /Platform:x64
+vstest.console.exe CarboLifeTests\bin\Debug\net8.0-windows\CarboLifeTests.dll /Platform:x64
+```
+
+`vstest.console.exe` is under `Common7\IDE\Extensions\TestPlatform\` in the Visual Studio
+folder; Test Explorer in Visual Studio runs the same tests.
+
+The tests run against copies of `CarboLifeCalc\db` and `data`, and the sample project,
+placed beside them at build time. `xunit.runner.json` turns off shadow copying (otherwise
+`PathUtils` looks for those folders in a temp directory on .NET Framework) and parallel
+runs (every `CarboProject` reads and writes the same settings file, and two built at once
+take tens of seconds each).
+
+`SampleProjectSnapshotTests` pins the sample project's totals. When a deliberate change
+to the calculation moves them, update the expected values in the same commit and note the
+change in the release notes.
+
 ## Output directories
 
 `$(TargetFramework)` is appended to every output path, so the two builds never collide.

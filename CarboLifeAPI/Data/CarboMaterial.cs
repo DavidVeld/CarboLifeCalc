@@ -138,7 +138,7 @@ namespace CarboLifeAPI.Data
         public const string SystemEmptyCategory = "System";
 
         /// <summary>
-        /// Reserved id for the built in material. Real materials get a random id in the
+        /// Reserved id for the built in material. Real materials get an id in the
         /// 200000-300000 band from CarboDatabase.getUniqueId, so 0 can never collide.
         /// </summary>
         public const int SystemEmptyId = 0;

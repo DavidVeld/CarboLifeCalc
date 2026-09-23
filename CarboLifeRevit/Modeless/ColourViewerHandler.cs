@@ -124,6 +124,22 @@ namespace CarboLifeRevit
                         }
                     }
 
+                    //Elements left out of the calculation are not in entireProjectData, so the loop
+                    //above never reaches them. One coloured before it was excluded would keep that
+                    //colour and still look counted; clear it back to its own graphics.
+                    if (resultList.excludedIds != null)
+                    {
+                        foreach (Int64 id in resultList.excludedIds)
+                        {
+                            Element el = doc.GetElement(id.ToElementId());
+
+                            if (el != null)
+                            {
+                                doc.ActiveView.SetElementOverrides(el.Id, ogs);
+                            }
+                        }
+                    }
+
                     //Colour them if required.
                     if (colourMeSwitch == true)
                     {

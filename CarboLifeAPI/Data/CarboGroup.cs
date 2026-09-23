@@ -707,42 +707,42 @@ namespace CarboLifeAPI.Data
                     Volume = 0;
                     foreach (CarboElement ce in AllElements)
                     {
-                        if (ce.includeInCalc == true)
+                        //An element the calculation leaves out gets zero, not whatever it held
+                        //from the last pass it was counted in. See CarboElement.ClearTotals.
+                        if (ce.countsInCalculation(calcSubstructrue) == false)
                         {
-                            if (calcSubstructrue == false && ce.isSubstructure == true) {
-                                int flag = 0; //No Action just a flag for debug
-                            }
-                            else
+                            ce.ClearTotals();
+                        }
+                        else
+                        {
+                            Volume += ce.Volume;
+
+                            //Calculate the Volume Totals;
+                            //Calculate the real volume based on a correction if required.
+                            double ElWasteFact = 1 + (Waste / 100);
+
+                            double elCorrected = ce.Volume;
+
+                            if (Utils.isValidExpression(Correction) == true)
                             {
-                                Volume += ce.Volume;
-
-                                //Calculate the Volume Totals;
-                                //Calculate the real volume based on a correction if required.
-                                double ElWasteFact = 1 + (Waste / 100);
-
-                                double elCorrected = ce.Volume;
-
-                                if (Utils.isValidExpression(Correction) == true)
-                                {
-                                    string ElVolumeStr = ce.Volume.ToString(CultureInfo.InvariantCulture);
-                                    StringToFormula stf = new StringToFormula();
-                                    elCorrected = SafeCorrectedVolume(stf.Eval(ElVolumeStr + Correction), ce.Volume);
-                                }
-
-                                //B4 is deliberately NOT applied here, see the group volume below.
-                                //The uncertainty factor is, so the element volumes add up to the
-                                //group volume: without it every element sat 1/(1+uncert) below its
-                                //share of the group, which is what the heat map, the Revit
-                                //write-back and the per element exports all read.
-                                ce.Volume_Total = elCorrected * ElWasteFact * uncertaintyFactor;
-
-                                //Calculate last: it derives the element's mass and EC from Volume_Total,
-                                //so it has to run after the waste, correction and B4 factors are in.
-                                //Called before them it used the value left over from the previous
-                                //calculation, which left every element at zero on a fresh import and one
-                                //pass behind after any change to the group.
-                                ce.Calculate(Material);
+                                string ElVolumeStr = ce.Volume.ToString(CultureInfo.InvariantCulture);
+                                StringToFormula stf = new StringToFormula();
+                                elCorrected = SafeCorrectedVolume(stf.Eval(ElVolumeStr + Correction), ce.Volume);
                             }
+
+                            //B4 is deliberately NOT applied here, see the group volume below.
+                            //The uncertainty factor is, so the element volumes add up to the
+                            //group volume: without it every element sat 1/(1+uncert) below its
+                            //share of the group, which is what the heat map, the Revit
+                            //write-back and the per element exports all read.
+                            ce.Volume_Total = elCorrected * ElWasteFact * uncertaintyFactor;
+
+                            //Calculate last: it derives the element's mass and EC from Volume_Total,
+                            //so it has to run after the waste, correction and B4 factors are in.
+                            //Called before them it used the value left over from the previous
+                            //calculation, which left every element at zero on a fresh import and one
+                            //pass behind after any change to the group.
+                            ce.Calculate(Material);
                         }
                     }
                 }

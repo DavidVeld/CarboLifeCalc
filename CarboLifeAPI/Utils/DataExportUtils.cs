@@ -1762,7 +1762,10 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                         cm.Category = dr[2].ToString();
                         cm.Description = dr[3].ToString();
 
-                        cm.Density = Convert.ToInt32(ReadCsvDouble(dr[4].ToString()));
+                        //Density is a double. It was read through Convert.ToInt32, which rounds to
+                        //even, so a 12.5 kg/m³ insulation came in as 12 - a 4% carbon error on
+                        //exactly the light materials where density is the whole calculation.
+                        cm.Density = ReadCsvDouble(dr[4].ToString());
                         cm.WasteFactor = ReadCsvDouble(dr[5].ToString());
                         cm.Grade = dr[6].ToString();
                         cm.EPDurl = dr[7].ToString();

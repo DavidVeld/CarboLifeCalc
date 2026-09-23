@@ -1064,7 +1064,7 @@ namespace CarboLifeAPI.Data
                 CarboDataPoint cb_A0 = new CarboDataPoint("A0(Global)", this.A0GlobalUncert);
                 CarboDataPoint cb_A5Global = new CarboDataPoint("A5(Global)", this.A5Global * 1000);
                 CarboDataPoint cb_C1Global = new CarboDataPoint("C1(Global)", this.C1Global * 1000);
-                CarboDataPoint cb_B67D2 = new CarboDataPoint("Energy B6-B7 + D2 (Global)", this.energyProperties.value);
+                CarboDataPoint cb_B67D2 = new CarboDataPoint("Energy B6-B7 + D2 (Global)", getEnergyGlobal() * 1000);
 
                 //A
                 if (calculateA0 == true || calculateAll == true)
@@ -1195,6 +1195,28 @@ namespace CarboLifeAPI.Data
             return result;
         }
         /// <summary>
+        /// The operational energy carbon, B6 + B7 - D2, in tCO₂e with the uncertainty factor on,
+        /// as the energy figures currently stand.
+        ///
+        /// The one place this number is made. It used to be written out four times and they
+        /// disagreed: CalculateProject applied the uncertainty factor, getTotalEC and
+        /// getPhaseTotals did not, and CalculateProjectByPhase added it whether B6/B7 was switched
+        /// on or not. So with any uncertainty set, the Overview total, the phase chart and the two
+        /// halves of the LCAx export all carried different energy carbon. Uncertainty applies to
+        /// every module, operational energy included, exactly as it does to A0, A5 and C1.
+        ///
+        /// Reads energyProperties.value rather than b675Global so a total asked for straight after
+        /// the energy dialog is edited is current, not one CalculateProject behind.
+        /// </summary>
+        private double getEnergyGlobal()
+        {
+            if (energyProperties == null)
+                return 0;
+
+            return (energyProperties.value / 1000) * (1 + UncertFact);
+        }
+
+        /// <summary>
         /// Returns the toal EC including the global values
         /// </summary>
         /// <returns>EC based on selection in tCO2e</returns>
@@ -1217,7 +1239,7 @@ namespace CarboLifeAPI.Data
                 totalC1 = C1Global;
 
             if (calculateB67 == true)
-                totalB6B7 = energyProperties.value / 1000;
+                totalB6B7 = getEnergyGlobal();
 
 
             double totalTotal = totalMaterials + totalA0 + totalA5 + totalC1 + totalB6B7;
@@ -1539,14 +1561,15 @@ namespace CarboLifeAPI.Data
             else { }
             //Ignore
 
-            if (calculateB67 == true)
-            {
+            //Always worked out, so b675Global is never left over from an earlier design life or
+            //energy figure; whether it is COUNTED is the flag's business, here and in getTotalEC.
+            if (energyProperties != null)
                 energyProperties.calculate(this.designLife);
-                this.b675Global = ((energyProperties.value / 1000)) * uncertaintyFactor;
-                globalTotals += this.b675Global;
 
-            }
-            else { }
+            this.b675Global = getEnergyGlobal();
+
+            if (calculateB67 == true)
+                globalTotals += this.b675Global;
 
             //Msterial Properties + Globals = total
 
@@ -1602,11 +1625,12 @@ namespace CarboLifeAPI.Data
         ///
         /// Two differences are still outstanding and want a proper look, not a patch:
         ///
-        ///  - A5, C1 and B6/B7 are computed inline here and thrown away, where CalculateProject
-        ///    assigns this.A5Global, this.C1Global and this.b675Global. After a call to this
-        ///    method those three properties still hold whatever the last CalculateProject left,
-        ///    and DataExportUtils reads them. Fixing it changes what this writes to the object
-        ///    rather than only what it returns, so it needs testing against the exports.
+        ///  - A5 and C1 are computed inline here and thrown away, where CalculateProject assigns
+        ///    this.A5Global and this.C1Global. After a call to this method those properties still
+        ///    hold whatever the last CalculateProject left, and DataExportUtils reads them. Fixing
+        ///    it changes what this writes to the object rather than only what it returns, so it
+        ///    needs testing against the exports. B6/B7 no longer has this problem: both methods
+        ///    take it from getEnergyGlobal.
         ///
         ///  - The right end state is one calculation taking the module flags as a parameter,
         ///    with both entry points calling it. Worth doing when there is room to test the
@@ -1673,12 +1697,18 @@ namespace CarboLifeAPI.Data
             else { }
             //Ignore
 
-            if (calculateB67 == true)
-                energyProperties.calculate(this.designLife);
-            else { }
-            //Ignore
+            //cEnergyUse, not the project's calculateB67: this method takes its module flags as
+            //arguments, and reading the project's flag for this one alone meant the energy was
+            //calculated by one switch and added to the total regardless of either.
+            if (cEnergyUse == true)
+            {
+                if (energyProperties != null)
+                    energyProperties.calculate(this.designLife);
 
-            ECTotal = EC + globalTotals + ((energyProperties.value * uncertaintyFactor) / 1000);
+                globalTotals += getEnergyGlobal();
+            }
+
+            ECTotal = EC + globalTotals;
 
 
 
@@ -1821,7 +1851,12 @@ namespace CarboLifeAPI.Data
 
                 double EC_Cumulative = buffer_CE.EC_Cumulative + cElement.EC;
                 //Calculate combined ECI.
-                double ECI_Cumulative = EC_Cumulative / mass_Cumulative;
+                //No mass means every part of this element is left out of the calculation, since
+                //an excluded part carries zero mass (CarboElement.ClearTotals). 0/0 is NaN, and a
+                //NaN in the buffer sets the scale of the whole heat map, so keep the ECI it had.
+                double ECI_Cumulative = mass_Cumulative > 0
+                    ? EC_Cumulative / mass_Cumulative
+                    : buffer_CE.ECI_Cumulative;
 
                 //Total EC:
                 buffer_CE.EC_Cumulative = EC_Cumulative;
