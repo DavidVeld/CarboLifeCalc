@@ -120,8 +120,9 @@ namespace CarboLifeUI.UI
 
             carboProject.carboMaterialMap = mapper.mappinglist;
 
-            //The user just chose these in the mapper, so the groups they cover are marked as
-            //user assigned and stop being flagged for review.
+            //The rows the user changed mark their groups as user assigned and stop them being
+            //flagged for review. Rows left as they were change nothing, so a group mapped from the
+            //mapping file keeps saying so.
             carboProject.mapAllMaterials(CarboMaterialSource.UserAssigned);
 
             return true;
@@ -176,7 +177,10 @@ namespace CarboLifeUI.UI
                     //makes; filtering again means a row for someone else's template can never be
                     //written from here even if one somehow reached this list.
                     CarboMapFile CurrentMappingFile = new CarboMapFile();
-                    CurrentMappingFile.mappingTable = mappinglist;
+                    //Only the rows ticked "Save mapping". An unticked row still applies to this
+                    //project; it just leaves the shared default alone, because the merge only
+                    //overwrites rows it is handed.
+                    CurrentMappingFile.mappingTable = mappinglist.Where(row => row != null && row.saveMapping).ToList();
                     CurrentMappingFile.mappingTable = CurrentMappingFile.RowsForTemplate(mappingTemplateName);
 
                     //No load-then-merge here any more: that was the race. SaveToXml re-reads the

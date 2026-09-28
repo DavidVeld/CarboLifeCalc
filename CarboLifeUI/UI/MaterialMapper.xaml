@@ -6,7 +6,7 @@
              xmlns:wpf="http://schemas.microsoft.com/wpf/2008/toolkit"
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Map Materials to Model Dialog"
-             d:DesignHeight="700" d:DesignWidth="800" Height="650" Width="800" MinHeight="650" MinWidth="800" Loaded="Window_Loaded" ShowInTaskbar="True" Background="LightGray" Icon="pack://application:,,,/CarboLifeUI;component/Resources/ico_clcwindow.ico">
+             d:DesignHeight="700" d:DesignWidth="1200" Height="650" Width="1200" MinHeight="650" MinWidth="900" Loaded="Window_Loaded" ShowInTaskbar="True" Background="LightGray" Icon="pack://application:,,,/CarboLifeUI;component/Resources/ico_clcwindow.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -86,9 +86,32 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
+                <!-- The group's description, provenance note included: how sure the initial match
+                     was, and whether a grade was taken into account. Read only, it is information. -->
+                <DataGridTemplateColumn Header=" Description" Width="1.3*" SortMemberPath="description" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding description}" ToolTip="{Binding description}"
+                                       TextWrapping="Wrap" VerticalAlignment="Center" Margin="4,2,4,2"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- A template rather than a DataGridCheckBoxColumn, which takes one click to select
+                     the cell and a second to tick the box. -->
+                <DataGridTemplateColumn Header="Save Mapping" Width="90" SortMemberPath="saveMapping">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding saveMapping, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      ToolTip="Untick to use this material for this project only, without saving it to the shared mapping file."/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <CheckBox Name="chk_SaveMappingFile" IsEnabled="True"  Grid.Row="6" Grid.Column="2" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" IsChecked="True">Save These Mapping Settings for Next Imports !</CheckBox>
+        <CheckBox Name="chk_SaveMappingFile" IsEnabled="True"  Grid.Row="6" Grid.Column="2" Margin="0,5,10,0" Height="25" VerticalAlignment="Top" Style="{StaticResource baseStyleBold}" IsChecked="True" ToolTip="Only rows ticked in the Save Mapping column are saved.">Save Ticked Mappings for Next Imports !</CheckBox>
 
         <Button Name="btn_Accept" Grid.Row="6" Grid.Column="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Accept</Button>
         <Button Name="btn_Cancel" Grid.Row="6" Grid.Column="2" Margin="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>

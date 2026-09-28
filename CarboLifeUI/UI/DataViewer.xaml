@@ -152,7 +152,7 @@
 
         <DataGrid x:Name="dgv_Overview" Grid.Row="4" Grid.Column="1" 
                               Margin="5,5,5,5" AutoGenerateColumns="False" ItemsSource="{Binding}" IsReadOnly="False" SelectionChanged="Dgv_Overview_SelectionChanged" 
-                  CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" HorizontalScrollBarVisibility="Visible"  >
+                  CanUserDeleteRows="False" CanUserAddRows="False" CanUserReorderColumns="False" CanUserResizeRows="True" CanUserResizeColumns="True" CellEditEnding="Dgv_Overview_CellEditEnding" PreparingCellForEdit="Dgv_Overview_PreparingCellForEdit" HorizontalScrollBarVisibility="Visible"  >
             <DataGrid.Resources>
                 <local:SumValues x:Key="SumValues"/>
                 <local:RoundTo3DecimalsConverter x:Key="RoundTo3Decimals"/>

@@ -357,7 +357,9 @@ namespace CarboLifeRevit
             */
 
             // If Project contained area, make sure it is updated.
-            double m2Area = Math.Round((area * (0.3048 * 0.3048)), 2);
+            //The floor slabs' total less 10% as a rough GIA: slab area runs out to the slab edge,
+            //through the wall zone and over the risers, which the internal area does not.
+            double m2Area = Math.Round((area * (0.3048 * 0.3048)) * giaFromFloorAreaFactor, 2);
 
             if (myProject.Area == 1)
             {
@@ -563,6 +565,12 @@ namespace CarboLifeRevit
         /// in square metres.
         /// </summary>
         private const double squareMetresPerSquareFoot = 0.3048 * 0.3048;
+
+        /// <summary>
+        /// The measured floor total less 10%, as a first guess at the GIA when the model does
+        /// not state one.
+        /// </summary>
+        private const double giaFromFloorAreaFactor = 0.9;
 
         /// <summary>
         /// Within this two GIAs in square metres are the same number. A hundredth of a square

@@ -794,8 +794,9 @@ namespace CarboLifeAPI
                             revitName = revitName,
                             carboNAME = carboNAME,
                             category = category,
-                            templateName = templateName
-
+                            templateName = templateName,
+                            description = cg.Description ?? "",
+                            originalCarboName = carboNAME ?? ""
                         };
 
                         mappingList.Add(mapElement);

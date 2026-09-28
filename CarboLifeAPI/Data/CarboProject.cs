@@ -823,7 +823,8 @@ namespace CarboLifeAPI.Data
         /// Who supplied the map. A map the user just built in the material mapper marks the groups
         /// it covers as UserAssigned, the saved defaultmappingfile.xml marks them as MappingFile.
         /// Either way the group stops being flagged for review: the material has been decided,
-        /// whatever the matcher's original guess scored.
+        /// whatever the matcher's original guess scored. Rows the user left unchanged in the
+        /// mapper are skipped, see CarboMapElement.IsChangedByUser.
         /// </param>
         public void mapAllMaterials(CarboMaterialSource source = CarboMaterialSource.MappingFile)
         {
@@ -850,6 +851,12 @@ namespace CarboLifeAPI.Data
                                 //First see if a change is required;
                                 //Find the map file of this group using a single element in the group;
                                 CarboMapElement mapElement = GetMapItem(gr.AllElements[0].MaterialName, gr.Category, this.CarboDatabase.templateName);
+                                //A row the user left alone in the mapper changes nothing, so the
+                                //group keeps its note: "[FROM MAPPING FILE]" stays, rather than
+                                //turning into "[USER ASSIGNED]" for a choice nobody made.
+                                if (mapElement != null && mapElement.IsChangedByUser() == false)
+                                    continue;
+
                                 if (mapElement != null)
                                 {
                                     //Get the material from the mapping name;
@@ -2591,7 +2598,7 @@ namespace CarboLifeAPI.Data
 
             if (result.isSubstructure == true)
             {
-                result.Description += "(Substructure)";
+                result.Description += " (Substructure)";
             }
 
             //based on the values set a volume;
@@ -2805,7 +2812,7 @@ namespace CarboLifeAPI.Data
 
             if (result.isSubstructure == true)
             {
-                result.Description += "(Substructure)";
+                result.Description += " (Substructure)";
             }
 
             //based on the values set a volume;

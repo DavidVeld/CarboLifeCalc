@@ -565,7 +565,7 @@ namespace CarboLifeAPI.Data
             //check if substructure note is required.
             if (importSettings.IncludeSubStructure == true && isSubstructure == true)
             {
-                description += "(Substructure)";
+                description += "(Substructure) ";
             }
 
             description += this.Category;

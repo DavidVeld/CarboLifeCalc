@@ -389,8 +389,30 @@ namespace CarboLifeUI.UI
         //deleted a single group with no confirmation, so it would have been the worse of the two
         //had anyone connected it.
 
+        /// <summary>
+        /// The text a cell held when its editor opened. Opening a cell and leaving it without
+        /// typing still ends an edit, and the volume warning below used to fire for that too.
+        /// </summary>
+        private string cellTextAtEditStart = null;
+
+        private void Dgv_Overview_PreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
+        {
+            TextBox t = e.EditingElement as TextBox;
+            cellTextAtEditStart = t == null ? null : t.Text;
+        }
+
         private void Dgv_Overview_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
+            //Escape: nothing to apply and nothing to warn about.
+            if (e.EditAction == DataGridEditAction.Cancel)
+                return;
+
+            //Opened and left without typing. Still run through below, because the commit writes
+            //the rounded display value back and the group has to be recalculated from its
+            //elements, but nobody tried to override anything, so there is nothing to warn about.
+            TextBox editedBox = e.EditingElement as TextBox;
+            bool textUnchanged = editedBox != null && cellTextAtEditStart != null && editedBox.Text == cellTextAtEditStart;
+
             if (dgv_Overview != null)
             {
                 CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
@@ -426,7 +448,8 @@ namespace CarboLifeUI.UI
                         {
                             if (carboGroup.AllElements.Count > 0)
                             {
-                                MessageBox.Show("The volume of this group is calculated using the elements' volumes extracted from the 3D model," + Environment.NewLine + " you need to purge the elements before overriding the volume");
+                                if (textUnchanged == false)
+                                    MessageBox.Show("The volume of this group is calculated using the elements' volumes extracted from the 3D model," + Environment.NewLine + " you need to purge the elements before overriding the volume");
                                 carboGroup.CalculateTotals();
                                 CarboLifeProject.UpdateGroup(carboGroup);
 
