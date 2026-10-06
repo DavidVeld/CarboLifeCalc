@@ -45,6 +45,14 @@ namespace CarboLifeUI.UI
 
         public string selectedTemplateFile;
 
+        /// <summary>
+        /// The mapping file a one time import has to read and write, set by Ok &amp; Import. Empty
+        /// means the one in the settings, which is every case but this: a file picked here with
+        /// "Save as default settings" unticked never reaches the settings, so the import would
+        /// otherwise quietly use the configured one instead of the one on screen.
+        /// </summary>
+        public string selectedMappingFile = "";
+
         public string projectPath;
 
         /// <summary>
@@ -471,8 +479,13 @@ namespace CarboLifeUI.UI
             if (TryResolveSelectedTemplate() == false)
                 return;
 
+            bool saveAsDefault = chk_SaveAsDefault.IsChecked == true;
+
+            if (saveAsDefault == false && mappingFilePathChanged == true)
+                selectedMappingFile = mappingFilePath;
+
             dialogOk = MessageBoxResult.Yes;
-            SaveSettings();
+            SaveSettings(saveAsDefault);
             this.Close();
         }
 
@@ -552,7 +565,14 @@ namespace CarboLifeUI.UI
             this.Close();
         }
 
-        private void SaveSettings()
+        /// <summary>
+        /// Reads the dialog into importSettings, which is what the import runs with.
+        /// </summary>
+        /// <param name="saveAsDefault">
+        /// False builds the settings without writing them, so they apply to this import only and
+        /// the stored defaults, template and mapping file stay as they were.
+        /// </param>
+        private void SaveSettings(bool saveAsDefault = true)
         {
 
             //Save the latest settings in the default;
@@ -655,7 +675,8 @@ namespace CarboLifeUI.UI
                 settings.mappingPath = mappingFilePath;
 
             //Save as default for next time/project;
-            settings.Save();
+            if (saveAsDefault == true)
+                settings.Save();
 
             importSettings = settings.defaultCarboGroupSettings;
         }

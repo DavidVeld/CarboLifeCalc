@@ -97,6 +97,13 @@
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom">
+                    <!-- Off makes this a one time import: the settings below are used for it and
+                         then forgotten, the stored defaults are left as they were. -->
+                    <CheckBox Name="chk_SaveAsDefault" IsChecked="True"
+                              VerticalAlignment="Center" Margin="0,0,12,0"
+                              ToolTip="Untick to use these settings for this import only, without changing the stored defaults">
+                        Save as default settings
+                    </CheckBox>
                     <Button Name="btn_ImportClose" Width="100" Height="26" Margin="0,0,8,0"
                             Style="{StaticResource ButtonStyle}" Click="Btn_ImportClose_Click">Ok &amp; Import</Button>
                     <Button Name="btn_Cancel" Width="80" Height="26"

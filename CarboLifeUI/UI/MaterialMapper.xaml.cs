@@ -57,6 +57,12 @@ namespace CarboLifeUI.UI
         /// </summary>
         private string mappingTemplateName = "";
 
+        /// <summary>
+        /// Where accepted rows are written. Empty is the configured mapping file; a one time
+        /// import pointed at another file passes that one in, see MapProject.
+        /// </summary>
+        private string mappingFilePath = "";
+
         public MaterialMapper(CarboProject carboProject)
         {
             List<CarboMaterial> list = carboProject.CarboDatabase.CarboMaterialList.OrderBy(o => o.Name).ToList();
@@ -103,16 +109,18 @@ namespace CarboLifeUI.UI
         /// ribbon. Both have to leave the project in the same state, or a material mapped during
         /// an import would behave differently from the same material mapped a minute later.
         /// </summary>
+        /// <param name="mappingPath">The mapping file to write to, empty uses the configured one.</param>
         /// <returns>
         /// True when the user accepted and the project was changed, so a caller with a view on
         /// screen knows it has to recalculate and refresh.
         /// </returns>
-        public static bool MapProject(CarboProject carboProject)
+        public static bool MapProject(CarboProject carboProject, string mappingPath = "")
         {
             if (carboProject == null)
                 return false;
 
             MaterialMapper mapper = new MaterialMapper(carboProject);
+            mapper.mappingFilePath = mappingPath ?? "";
             mapper.ShowDialog();
 
             if (mapper.isAccepted == false)
@@ -188,7 +196,7 @@ namespace CarboLifeUI.UI
                     //so a colleague who saved in the meantime keeps their work. It also refuses
                     //outright if the file exists but cannot be parsed.
                     string error;
-                    if (CurrentMappingFile.SaveToXml("", out error) == false)
+                    if (CurrentMappingFile.SaveToXml(mappingFilePath, out error) == false)
                     {
                         System.Windows.MessageBox.Show(error, "Mapping not saved",
                                                        MessageBoxButton.OK, MessageBoxImage.Warning);

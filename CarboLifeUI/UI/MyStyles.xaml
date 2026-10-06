@@ -673,31 +673,45 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
-                    <BulletDecorator Background="Transparent">
-                        <BulletDecorator.Bullet>
-                            <Border x:Name="Border"  
-                              Width="16" 
-                              Height="16" 
-                              CornerRadius="0" 
+                    <!-- A grid rather than a BulletDecorator. The decorator lines the box up with
+                         the text only while the text sits at the top of the check box, so the
+                         label used to carry a -8 top margin to make up for that. It was tuned to
+                         check boxes 25 high and lifted the text 4px above the box at any other
+                         height. Here the box and the text both follow VerticalContentAlignment,
+                         so they share a centre line whatever the height. -->
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="Border" Grid.Column="0"
+                              Width="16"
+                              Height="16"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              CornerRadius="0"
                               Background="#fff"
                               BorderBrush="#979797"
                               BorderThickness="1">
-                                <Path 
-                                                    Width="10" Height="10" 
+                                <Path
+                                                    Width="10" Height="10"
                                                     x:Name="CheckMark"
-                                                    SnapsToDevicePixels="False" 
+                                                    SnapsToDevicePixels="False"
                                                     Stroke="#000000"
                                                     StrokeThickness="1"
                                                     Fill="{StaticResource DVColour}"
                                                     Data="M 0 0 L 0 10 L 10 10 L 10 0 L 0 0" />
-                            </Border>
-                        </BulletDecorator.Bullet>
-                        <ContentPresenter Margin="8,-8,0,0"
-                            VerticalAlignment="Center"
+                        </Border>
+                        <ContentPresenter x:Name="Content" Grid.Column="1" Margin="8,0,0,0"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             HorizontalAlignment="Left"
                             RecognizesAccessKey="True"/>
-                    </BulletDecorator>
+                    </Grid>
                     <ControlTemplate.Triggers>
+                        <!-- A check box on its own, in a grid cell, is just the box: without this
+                             the label's margin made it 8px wider and pushed it off centre. -->
+                        <Trigger Property="HasContent" Value="false">
+                            <Setter TargetName="Content" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
                         <Trigger Property="IsChecked" Value="false">
                             <Setter TargetName="CheckMark" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
@@ -747,47 +761,56 @@
         <Setter Property="Background" Value="#ffffff"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="FontWeight" Value="DemiBold"></Setter>
-        
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RadioButton}">
-                    <BulletDecorator Background="Transparent">
-                        <BulletDecorator.Bullet>
-                            <Grid Width="16"
-                  Height="16">
-                                <Ellipse x:Name="Border"
-                       StrokeThickness="1">
-                                    <Ellipse.Stroke >
-                                        <LinearGradientBrush EndPoint="0.5,1"
-                                       StartPoint="0.5,0">
-                                            <GradientStop Color="{DynamicResource BorderLightColor}"
-                                  Offset="0" />
-                                            <GradientStop Color="{DynamicResource BorderDarkColor}"
-                                  Offset="1" />
-                                        </LinearGradientBrush>
-                                    </Ellipse.Stroke>
-                                    <Ellipse.Fill>
-                                        <LinearGradientBrush StartPoint="0,0"
-                                       EndPoint="0,1">
-                                            <LinearGradientBrush.GradientStops>
-                                                <GradientStopCollection>
-                                                    <GradientStop Color="{DynamicResource ControlLightColor}" />
-                                                    <GradientStop Color="{DynamicResource ControlMediumColor}"
-                                      Offset="1.0" />
-                                                </GradientStopCollection>
-                                            </LinearGradientBrush.GradientStops>
-                                        </LinearGradientBrush>
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                                <Ellipse x:Name="CheckMark"
-                       Margin="3"
-                       Visibility="Collapsed">
-                                    <Ellipse.Fill>
-                                        <SolidColorBrush Color="{DynamicResource GlyphColor}" />
-                                    </Ellipse.Fill>
-                                </Ellipse>
-                            </Grid>
-                        </BulletDecorator.Bullet>
+                    <!-- Laid out like the check box above, and for the same reason. -->
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Width="16"
+              Height="16"
+              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Ellipse x:Name="Border"
+                   StrokeThickness="1">
+                                <Ellipse.Stroke >
+                                    <LinearGradientBrush EndPoint="0.5,1"
+                                   StartPoint="0.5,0">
+                                        <GradientStop Color="{DynamicResource BorderLightColor}"
+                              Offset="0" />
+                                        <GradientStop Color="{DynamicResource BorderDarkColor}"
+                              Offset="1" />
+                                    </LinearGradientBrush>
+                                </Ellipse.Stroke>
+                                <Ellipse.Fill>
+                                    <LinearGradientBrush StartPoint="0,0"
+                                   EndPoint="0,1">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="{DynamicResource ControlLightColor}" />
+                                                <GradientStop Color="{DynamicResource ControlMediumColor}"
+                                  Offset="1.0" />
+                                            </GradientStopCollection>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Ellipse x:Name="CheckMark"
+                   Margin="3"
+                   Visibility="Collapsed">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="{DynamicResource GlyphColor}" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                        <ContentPresenter Grid.Column="1" Margin="8,0,0,0"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            HorizontalAlignment="Left"
+                            RecognizesAccessKey="True"/>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -818,11 +841,7 @@
                                 <VisualState x:Name="Indeterminate" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <ContentPresenter Margin="8,-8,0,0"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Left"
-                            RecognizesAccessKey="True"/>
-                    </BulletDecorator>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

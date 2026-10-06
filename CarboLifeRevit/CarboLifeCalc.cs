@@ -81,7 +81,8 @@ namespace CarboLifeRevit
                 if (File.Exists(path))
                     approvedPath = path;
 
-                CarboLifeRevitImport.ImportElements(app, importSettings, approvedPath, settingsWindow.selectedTemplateFile);
+                CarboLifeRevitImport.ImportElements(app, importSettings, approvedPath, settingsWindow.selectedTemplateFile,
+                                                    settingsWindow.selectedMappingFile);
                 
             }
             else

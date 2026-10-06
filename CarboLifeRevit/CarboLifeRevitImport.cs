@@ -22,7 +22,11 @@ namespace CarboLifeRevit
 {
     public class CarboLifeRevitImport
     {
-        public static void ImportElements(UIApplication app, CarboGroupSettings settings, string updatePath, string selectedTemplateFile)
+        /// <param name="mappingFilePath">
+        /// The mapping file to read previous matches from and write new ones to. Empty uses the
+        /// configured one; a one time import from the settings dialog can name another.
+        /// </param>
+        public static void ImportElements(UIApplication app, CarboGroupSettings settings, string updatePath, string selectedTemplateFile, string mappingFilePath = "")
         {
             UIDocument uidoc = app.ActiveUIDocument;
             Document doc = uidoc.Document;
@@ -106,7 +110,7 @@ namespace CarboLifeRevit
                         //MapElements if required
                         if (myProject.RevitImportSettings.UseImportedMap == true)
                         {
-                            CarboMapFile defaultMappingFile = CarboMapFile.LoadFromXml();
+                            CarboMapFile defaultMappingFile = CarboMapFile.LoadFromXml(mappingFilePath);
                             if (defaultMappingFile != null)
                             {
                                 //Only the rows for the template this project is actually using.
@@ -152,7 +156,7 @@ namespace CarboLifeRevit
                                 //mapped a minute later, and is saved to the shared file the same
                                 //way. The totals have to be rebuilt because the materials, and so
                                 //every group's carbon, have just changed.
-                                if (MaterialMapper.MapProject(projectToOpen) == true)
+                                if (MaterialMapper.MapProject(projectToOpen, mappingFilePath) == true)
                                     projectToOpen.CalculateProject();
                             }
                         }

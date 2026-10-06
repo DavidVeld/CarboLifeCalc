@@ -143,9 +143,10 @@ namespace CarboLifeAPI.Data
             return false;
         }
 
-        public static CarboMapFile LoadFromXml()
+        /// <param name="path">File to read, empty uses the configured mapping file.</param>
+        public static CarboMapFile LoadFromXml(string path = "")
         {
-            string myPath = PathUtils.GetMappingFilePath();
+            string myPath = string.IsNullOrEmpty(path) ? PathUtils.GetMappingFilePath() : path;
 
             if (File.Exists(myPath))
             {

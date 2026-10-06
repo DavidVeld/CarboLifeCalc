@@ -683,12 +683,19 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
-                    <BulletDecorator Background="Transparent">
-                        <BulletDecorator.Bullet>
-                            <Border x:Name="Border"  
-                              Width="16" 
-                              Height="16" 
-                              CornerRadius="0" 
+                    <!-- A grid rather than a BulletDecorator, see the same template in
+                         CarboLifeUI's MyStyles: the box and the text both follow
+                         VerticalContentAlignment, so they share a centre line at any height. -->
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="Border" Grid.Column="0"
+                              Width="16"
+                              Height="16"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              CornerRadius="0"
                               Background="#fff"
                               BorderBrush="{StaticResource ControlBorderBrush}"
                               BorderThickness="1">
@@ -704,14 +711,16 @@
                                                     StrokeStartLineCap="Round"
                                                     StrokeEndLineCap="Round"
                                                     Data="M 1 5 L 4 8 L 9 1.5" />
-                            </Border>
-                        </BulletDecorator.Bullet>
-                        <ContentPresenter Margin="8,-8,0,0"
-                            VerticalAlignment="Center"
+                        </Border>
+                        <ContentPresenter x:Name="Content" Grid.Column="1" Margin="8,0,0,0"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             HorizontalAlignment="Left"
                             RecognizesAccessKey="True"/>
-                    </BulletDecorator>
+                    </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="false">
+                            <Setter TargetName="Content" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
                         <Trigger Property="IsChecked" Value="false">
                             <Setter TargetName="CheckMark" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
