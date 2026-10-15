@@ -83,12 +83,12 @@ namespace CarboLifeUI.UI
                     EoLElement newElement = new EoLElement();
 
                     string material = dr[0].ToString();
-                    double inc = Utils.ConvertMeToDouble(dr[1].ToString());
-                    double incP = Utils.ConvertMeToDouble(dr[2].ToString());
-                    double landf = Utils.ConvertMeToDouble(dr[3].ToString());
-                    double landfP = Utils.ConvertMeToDouble(dr[4].ToString());
-                    double reuse = Utils.ConvertMeToDouble(dr[5].ToString());
-                    double reuseP = Utils.ConvertMeToDouble(dr[6].ToString());
+                    double inc = DataExportUtils.ReadCsvDouble(dr[1].ToString());
+                    double incP = DataExportUtils.ReadCsvDouble(dr[2].ToString());
+                    double landf = DataExportUtils.ReadCsvDouble(dr[3].ToString());
+                    double landfP = DataExportUtils.ReadCsvDouble(dr[4].ToString());
+                    double reuse = DataExportUtils.ReadCsvDouble(dr[5].ToString());
+                    double reuseP = DataExportUtils.ReadCsvDouble(dr[6].ToString());
 
                     newElement.Material = material;
 

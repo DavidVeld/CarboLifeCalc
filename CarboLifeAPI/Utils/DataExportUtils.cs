@@ -2559,7 +2559,9 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             {
                 try
                 {
-                    grp.CalculateTotals();
+                    //No grp.CalculateTotals() here: with no arguments it recalculated every group
+                    //with all modules on, no uncertainty and substructure in, over the project
+                    //calculation the caller has just run.
 
                     //A group can compute to nothing, and a zero quantity row is only noise in
                     //the receiving spreadsheet.

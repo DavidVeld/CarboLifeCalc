@@ -197,7 +197,7 @@ namespace CarboLifeAPI
                         JsCe.EC_A1A3_Total = mass * material.ECI_A1A3 * b4;
                         JsCe.EC_A4_Total = mass * material.ECI_A4 * b4;
                         JsCe.EC_A5_Total = mass * material.ECI_A5 * b4;
-                        JsCe.EC_B1B7_Total = mass * material.ECI_B1B5 * b4;
+                        JsCe.EC_B1B7_Total = mass * (material.ECI_B1B5 + (grp.inUseProperties == null ? 0 : grp.inUseProperties.totalECI)) * b4;
                         JsCe.EC_C1C4_Total = mass * material.ECI_C1C4 * b4;
                         JsCe.EC_D_Total = mass * material.ECI_D * b4;
                         JsCe.EC_Sequestration_Total = mass * material.ECI_Seq * b4;

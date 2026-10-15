@@ -91,8 +91,8 @@ namespace CarboLifeUI.UI
                     Fuel newFuel = new Fuel();
 
                     string name = dr[0].ToString();
-                    double emission = Utils.ConvertMeToDouble(dr[1].ToString());
-                    double production = Utils.ConvertMeToDouble(dr[2].ToString());
+                    double emission = DataExportUtils.ReadCsvDouble(dr[1].ToString());
+                    double production = DataExportUtils.ReadCsvDouble(dr[2].ToString());
                     string unit = dr[3].ToString();
 
                     newFuel.name = name;
@@ -138,11 +138,11 @@ namespace CarboLifeUI.UI
                     Vehicle newVehicle = new Vehicle();
 
                     string name = dr[0].ToString();
-                    double maxVolume = Utils.ConvertMeToDouble(dr[1].ToString());
-                    double maxLoad = Utils.ConvertMeToDouble(dr[2].ToString());
-                    double kmPer = Utils.ConvertMeToDouble(dr[3].ToString());
-                    double carboCostNew = Utils.ConvertMeToDouble(dr[4].ToString());
-                    double totalDistance = Utils.ConvertMeToDouble(dr[5].ToString());
+                    double maxVolume = DataExportUtils.ReadCsvDouble(dr[1].ToString());
+                    double maxLoad = DataExportUtils.ReadCsvDouble(dr[2].ToString());
+                    double kmPer = DataExportUtils.ReadCsvDouble(dr[3].ToString());
+                    double carboCostNew = DataExportUtils.ReadCsvDouble(dr[4].ToString());
+                    double totalDistance = DataExportUtils.ReadCsvDouble(dr[5].ToString());
                     string defaultFuel = dr[6].ToString();
                     string description = dr[8].ToString();
 

@@ -258,8 +258,7 @@ namespace CarboCroc
                 string value = line.Substring(split + 1).Trim();
 
                 double rate;
-                if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out rate) == false
-                    && double.TryParse(value, NumberStyles.Any, CultureInfo.CurrentCulture, out rate) == false)
+                if (CarboLifeAPI.Utils.TryConvertToDouble(value, out rate) == false)
                 {
                     notes.Add("\"" + value + "\" in \"" + line + "\" is not a number.");
                     continue;

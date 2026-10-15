@@ -108,7 +108,7 @@ namespace CarboLifeUI.UI
                         LookupItem newItem = new LookupItem();
 
                         string name = dr[0].ToString();
-                        double value = Utils.ConvertMeToDouble(dr[1].ToString());
+                        double value = DataExportUtils.ReadCsvDouble(dr[1].ToString());
 
                         newItem.name = name;
                         newItem.value = value;

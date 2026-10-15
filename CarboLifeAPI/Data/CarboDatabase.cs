@@ -378,29 +378,12 @@ namespace CarboLifeAPI.Data
         /// <summary>
         /// Serialises a materialDatabase
         /// </summary>
-        /// <param name="fileName">Current Options are: "db\\UserMaterial" and "db\\BaseMaterial"</param>
+        /// <param name="fileName">Full path of the .cxml to write; empty writes the configured template.</param>
         public void SerializeXML(string fileName)
         {
-            string myPath = fileName;
-
-            //if its a relative path use:
-
-            if (!(File.Exists(myPath)))
-            {
-                if (fileName == "")
-                    fileName = "db\\materials\\UserMaterials.cxml";
-                else
-                    fileName = fileName + ".cxml";
-
-                myPath = Utils.getAssemblyPath() + "\\" + fileName;
-
-                //override if file exists on userfolder;
-                string TemplateFile = PathUtils.getTemplateFile();
-
-                if (File.Exists(TemplateFile))
-                    myPath = TemplateFile;
-
-            }
+            //Writes exactly where it is told. A path that did not exist yet used to be swapped for
+            //the configured template, so Save As to a new file overwrote the template instead.
+            string myPath = string.IsNullOrEmpty(fileName) ? PathUtils.getTemplateFile() : fileName;
 
             try
             {
@@ -437,13 +420,14 @@ namespace CarboLifeAPI.Data
                 //xmlTextWriterSerialize.Close();
                 //memoryStreamSerialize.Close();
                 //memoryStreamSerialize.Dispose();
+
+                //Inside the try: it used to show after the error box too.
+                MessageBox.Show("Database saved to: " + myPath);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
-            MessageBox.Show("Database saved to: " + myPath);
 
         }
         /// <summary>

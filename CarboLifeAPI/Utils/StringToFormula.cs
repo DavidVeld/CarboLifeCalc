@@ -41,7 +41,10 @@ namespace CarboLifeAPI
                 //If this is an operator  
                 if (Array.IndexOf(_operators, token) >= 0)
                 {
-                    while (operatorStack.Count > 0 && Array.IndexOf(_operators, token) < Array.IndexOf(_operators, operatorStack.Peek()))
+                    //Equal ranks evaluate left to right, so "100/2*3" is 150 and "1-2+3" is 2; only ^ groups right to left.
+                    while (operatorStack.Count > 0 &&
+                        (precedence(operatorStack.Peek()) > precedence(token) ||
+                         (precedence(operatorStack.Peek()) == precedence(token) && token != "^")))
                     {
                         string op = operatorStack.Pop();
                         double arg2 = operandStack.Pop();
@@ -67,6 +70,22 @@ namespace CarboLifeAPI
                 operandStack.Push(_operations[Array.IndexOf(_operators, op)](arg1, arg2));
             }
             return operandStack.Pop();
+        }
+
+        //The position in _operators used to double as the rank, which put - below + and / below *.
+        private static int precedence(string op)
+        {
+            switch (op)
+            {
+                case "+":
+                case "-":
+                    return 1;
+                case "*":
+                case "/":
+                    return 2;
+                default:
+                    return 3;
+            }
         }
 
         private string getSubExpression(List<string> tokens, ref int index)
@@ -112,7 +131,12 @@ namespace CarboLifeAPI
             //a user on a locale that uses one. Normalise it so the parse below can stay invariant.
             foreach (char c in expression.Replace(" ", string.Empty).Replace(',', '.'))
             {
-                if (operators.IndexOf(c) >= 0)
+                //The sign of an exponent belongs to the number: .NET writes volumes below 1e-4 as
+                //"3.6E-05", and splitting at that '-' left "3.6E", which threw.
+                bool exponentSign = (c == '-' || c == '+') && sb.Length > 1 &&
+                    (sb[sb.Length - 1] == 'E' || sb[sb.Length - 1] == 'e') && char.IsDigit(sb[sb.Length - 2]);
+
+                if (operators.IndexOf(c) >= 0 && exponentSign == false)
                 {
                     if ((sb.Length > 0))
                     {

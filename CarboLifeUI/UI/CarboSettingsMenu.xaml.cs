@@ -109,8 +109,7 @@ namespace CarboLifeUI.UI
             double parsed;
 
             //Accept what the user's keyboard produces and what a pasted invariant value looks like.
-            bool ok = double.TryParse(text, NumberStyles.Any, CultureInfo.CurrentCulture, out parsed)
-                   || double.TryParse(text, NumberStyles.Any, CultureInfo.InvariantCulture, out parsed);
+            bool ok = Utils.TryConvertToDouble(text, out parsed);
 
             if (ok == false)
             {

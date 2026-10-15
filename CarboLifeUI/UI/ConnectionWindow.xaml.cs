@@ -310,7 +310,9 @@ namespace CarboLifeUI.UI
                 double allowanceVolume = (volume / groupWaste) * (percentage / 100) * (1 + (material.WasteFactor / 100));
                 double allowanceMass = allowanceVolume * material.Density;
 
-                double inUseECI = grp.inUseProperties == null ? 0 : grp.inUseProperties.totalECI;
+                //Under the same switches as CarboGroup.CalculateTotals.
+                double inUseECI = grp.inUseProperties == null || project.calculateB == false ? 0 : grp.inUseProperties.totalECI;
+                double additional = project.calculateAdd ? grp.Additional : 0;
                 double replacement = grp.inUseProperties == null ? 1 : grp.inUseProperties.B4;
 
                 result.Volume += allowanceVolume;
@@ -318,7 +320,7 @@ namespace CarboLifeUI.UI
 
                 //The generated group is a copy of this one, so it inherits its in use properties,
                 //its replacement count and anything added to it by hand.
-                result.EC += (allowanceMass * (stageECI + grp.Additional + inUseECI) * replacement) / 1000;
+                result.EC += (allowanceMass * (stageECI + additional + inUseECI) * replacement) / 1000;
             }
 
             return result;
@@ -485,7 +487,7 @@ namespace CarboLifeUI.UI
         /// <returns>False when the box does not hold a percentage of 0 or more</returns>
         private bool TryReadPercentage(out double percentage)
         {
-            if (double.TryParse(txt_Percentage.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out percentage) == false)
+            if (CarboLifeAPI.Utils.TryConvertToDouble(txt_Percentage.Text, out percentage) == false)
                 return false;
 
             return percentage >= 0;

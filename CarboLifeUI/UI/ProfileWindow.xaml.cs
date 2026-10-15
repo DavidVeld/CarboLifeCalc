@@ -93,9 +93,9 @@ namespace CarboLifeUI.UI
                     Profile newProfile = new Profile();
 
                     string name = dr[0].ToString() + " - " + dr[1].ToString() + " - " +  dr[2].ToString();
-                    double steel = Utils.ConvertMeToDouble(dr[3].ToString());
-                    double constant = Utils.ConvertMeToDouble(dr[4].ToString());
-                    double profileHeight = Utils.ConvertMeToDouble(dr[5].ToString());
+                    double steel = DataExportUtils.ReadCsvDouble(dr[3].ToString());
+                    double constant = DataExportUtils.ReadCsvDouble(dr[4].ToString());
+                    double profileHeight = DataExportUtils.ReadCsvDouble(dr[5].ToString());
 
                     newProfile.name = name;
                     newProfile.steel = steel;

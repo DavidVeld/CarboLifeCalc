@@ -193,7 +193,6 @@ namespace CarboLifeRevit
                     //open. Put it back into the model so the next run starts from it rather than
                     //measuring the floors again. Quiet on purpose, there is nothing to decide.
                     WriteGIAParameters(doc, projectToOpen);
-                    SaveGIAMethodToSettings(projectToOpen.RevitImportSettings);
                 }
                 catch (Exception ex)
                 {
@@ -687,49 +686,31 @@ namespace CarboLifeRevit
         }
 
         /// <summary>
-        /// Keeps the record of how this import found its GIA in the application settings, where
-        /// the import settings dialog reads it back. Only that one field: everything else in the
-        /// file was written by the dialog itself when it closed, before any of this ran.
-        /// </summary>
-        private static void SaveGIAMethodToSettings(CarboGroupSettings settings)
-        {
-            if (settings == null || string.IsNullOrEmpty(settings.GIADeterminationMethod))
-                return;
-
-            try
-            {
-                CarboSettings stored = new CarboSettings().Load();
-
-                if (stored == null || stored.defaultCarboGroupSettings == null)
-                    return;
-
-                if (stored.defaultCarboGroupSettings.GIADeterminationMethod == settings.GIADeterminationMethod)
-                    return;
-
-                stored.defaultCarboGroupSettings.GIADeterminationMethod = settings.GIADeterminationMethod;
-                stored.Save();
-            }
-            catch (Exception)
-            {
-                //Nothing depends on this beyond a label in the settings dialog.
-            }
-        }
-
-        /// <summary>
         /// Reads an area parameter off the project information in square metres.
         /// Returns 0 when the parameter is missing, empty, or not an area at all.
         /// </summary>
-        private static double ReadAreaParameter(Element projectInfo, string parameterName)
+        internal static double ReadAreaParameter(Element projectInfo, string parameterName)
         {
             if (string.IsNullOrEmpty(parameterName))
                 return 0;
 
             Parameter parameter = projectInfo.LookupParameter(parameterName.Trim());
 
-            if (parameter == null || parameter.HasValue == false || parameter.StorageType != StorageType.Double)
+            if (parameter == null || parameter.HasValue == false || isArea(parameter) == false)
                 return 0;
 
             return parameter.AsDouble() * squareMetresPerSquareFoot;
+        }
+
+        /// <summary>
+        /// Only an Area parameter holds square feet. A Number parameter called "GIA" was read as
+        /// square feet too, so 5000 m² came in as 464.5 and was written back as 53,820.
+        /// </summary>
+        private static bool isArea(Parameter parameter)
+        {
+            return parameter.StorageType == StorageType.Double
+                && parameter.Definition != null
+                && parameter.Definition.GetDataType() == SpecTypeId.Area;
         }
 
         /// <summary>
@@ -742,7 +723,7 @@ namespace CarboLifeRevit
 
             Parameter parameter = projectInfo.LookupParameter(parameterName.Trim());
 
-            if (parameter == null || parameter.IsReadOnly == true || parameter.StorageType != StorageType.Double)
+            if (parameter == null || parameter.IsReadOnly == true || isArea(parameter) == false)
                 return null;
 
             return parameter;

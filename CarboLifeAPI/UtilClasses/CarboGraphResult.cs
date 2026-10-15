@@ -107,11 +107,14 @@ namespace CarboLifeAPI
                 notSelectedData = new List<CarboValues>();
                 selectedData = new List<CarboValues>();
 
+                //A set: List.Contains per element was O(n²), and this runs on every heat map click.
+                HashSet<Int64> visible = new HashSet<Int64>(applicablelements);
+
                 foreach (CarboValues cv in entireProjectData)
                 {
                     bool elementIsVisible = false;
                     //Check if element is visible:
-                    elementIsVisible = applicablelements.Contains(cv.Id);
+                    elementIsVisible = visible.Contains(cv.Id);
 
                     if (elementIsVisible == true)
                     {

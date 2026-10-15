@@ -818,8 +818,11 @@ namespace CarboLifeRevit
 
                 foreach (Element el in AllViews)
                 {
-                    View viewElement = el as View;
-                    if (viewElement != null)
+                    //Only a drafting view, which is what this creates, is ever reused and cleared. Any
+                    //view used to qualify, so a legend named "Level 1" wiped the text, details and
+                    //lines off the Level 1 plan.
+                    View viewElement = el as ViewDrafting;
+                    if (viewElement != null && viewElement.IsTemplate == false)
                     {
                         //this is a valid View
                         if (viewElement.Name == viewname)

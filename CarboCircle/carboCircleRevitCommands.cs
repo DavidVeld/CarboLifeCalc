@@ -256,7 +256,10 @@ namespace CarboCircle
             //Gathered before the transaction opens, so the transaction holds nothing but the
             //writes. One entry per Revit element, because one existing member can be cut up
             //for several requirements and all of those ids belong on it.
-            Dictionary<long, List<string>> wanted = new Dictionary<long, List<string>>();
+            //Keyed on the UniqueId, not the element id. The mine is often another model, and
+            //element ids overlap between files, so the id stamped whatever unrelated element
+            //held that number here. GetElement(UniqueId) finds nothing for another model's member.
+            Dictionary<string, List<string>> wanted = new Dictionary<string, List<string>>();
             int pairsConsidered = 0;
 
             foreach (carboCirclePair pair in project.carboCircleMatchedPairs)
@@ -274,10 +277,10 @@ namespace CarboCircle
 
                 pairsConsidered++;
 
-                //An offcut's Revit id still points at the member it was cut from, which is
-                //the element that actually exists in the model.
-                want(wanted, pair.mined_Element.id, id);
-                want(wanted, pair.required_element.id, id);
+                //An offcut's sourceGUID is the member it was cut from, which is the element
+                //that actually exists in the model; its own GUID is made up ("..._OC1").
+                want(wanted, revitUniqueId(pair.mined_Element), id);
+                want(wanted, revitUniqueId(pair.required_element), id);
             }
 
             if (wanted.Count == 0)
@@ -312,9 +315,9 @@ namespace CarboCircle
                     {
                         transaction.Start();
 
-                        foreach (KeyValuePair<long, List<string>> entry in wanted)
+                        foreach (KeyValuePair<string, List<string>> entry in wanted)
                         {
-                            Element element = doc.GetElement(entry.Key.ToElementId());
+                            Element element = doc.GetElement(entry.Key);
 
                             if (element == null)
                             {
@@ -405,8 +408,9 @@ namespace CarboCircle
 
             if (missing > 0)
                 text.Append(Environment.NewLine + Environment.NewLine +
-                            missing + " members are no longer in this model. Re-import if the model " +
-                            "has changed since the mine.");
+                            missing + " members are not in this model: deleted since the import, or " +
+                            "from another model, such as a mine taken from a different file. Run this " +
+                            "in each model to stamp its own members.");
 
             report = text.ToString();
             return written > 0;
@@ -611,15 +615,20 @@ namespace CarboCircle
             }
         }
 
-        private static void want(Dictionary<long, List<string>> wanted, long elementId, string id)
+        private static string revitUniqueId(carboCircleElement element)
         {
-            if (elementId <= 0)
+            return string.IsNullOrEmpty(element.sourceGUID) ? element.GUID : element.sourceGUID;
+        }
+
+        private static void want(Dictionary<string, List<string>> wanted, string uniqueId, string id)
+        {
+            if (string.IsNullOrEmpty(uniqueId))
                 return;
 
             List<string> ids;
 
-            if (!wanted.TryGetValue(elementId, out ids))
-                wanted[elementId] = ids = new List<string>();
+            if (!wanted.TryGetValue(uniqueId, out ids))
+                wanted[uniqueId] = ids = new List<string>();
 
             if (!ids.Contains(id))
                 ids.Add(id);
@@ -1357,9 +1366,12 @@ namespace CarboCircle
         /// same section are folded together: a UKB and a UB of one serial size ARE one section,
         /// and refusing to call them equal would lose exactly the matches this is here to find.
         ///
-        /// Matching by substring rather than by equality, because a Revit family name carries
-        /// more than the designation - "UB-Universal Beam" and "UKB Universal Beam" both reduce
-        /// to a blob with the series buried in it.
+        /// The letters must BE the series, apart from the x separators. Matched as a substring,
+        /// a longer series named a different section and still got its key, asserted as exact,
+        /// which skips the capacity check: WT6X25 (a tee) keyed to W6X25, IPEA300 to IPE300,
+        /// HEAA300 to HEA300, a cold formed CFSHS to the hot finished SHS. The price is that a
+        /// name carrying words as well, "305x165x40 Universal Beam", is no longer recognised as
+        /// exact and falls back to the nearest-name search, which records it as assumed.
         ///
         /// TWO THINGS ABOUT THE AISC SERIES ARE NOT OBVIOUS.
         ///
@@ -1394,10 +1406,15 @@ namespace CarboCircle
                 "HSS", "UB", "UC", "EA", "HP"
             };
 
+            string bare = letters.Replace("X", "");
+
             foreach (string token in tokens)
             {
                 if (letters.IndexOf(token, StringComparison.Ordinal) >= 0)
                 {
+                    if (bare != token.Replace("X", ""))
+                        return "";
+
                     //The spellings that mean one section.
                     if (token == "UKB") return "UB";
                     if (token == "UKC") return "UC";
@@ -1414,7 +1431,7 @@ namespace CarboCircle
             foreach (string token in anchored)
             {
                 if (letters.StartsWith(token, StringComparison.Ordinal))
-                    return token;
+                    return bare == token ? token : "";
             }
 
             return "";

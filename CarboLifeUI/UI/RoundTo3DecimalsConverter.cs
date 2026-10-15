@@ -50,11 +50,12 @@ namespace CarboLifeUI.UI
             if (string.IsNullOrWhiteSpace(text))
                 return Binding.DoNothing;
 
-            //Utils.ConvertMeToDouble is what the rest of the application uses to read a
-            //typed number, so a comma decimal separator behaves the same here as elsewhere.
+            //Invariant first, because Convert above shows the value invariant: on a de-DE or it-IT
+            //machine Utils.ConvertMeToDouble read the untouched "12.345" back as 12345. A typed
+            //comma still works through ReadCsvDouble's fallback.
             //It returns 0 for anything it cannot read, so check that separately - writing a
             //silent zero into a volume would quietly destroy the row.
-            double parsed = Utils.ConvertMeToDouble(text);
+            double parsed = DataExportUtils.ReadCsvDouble(text);
 
             if (parsed == 0 && !looksLikeZero(text))
                 return Binding.DoNothing;

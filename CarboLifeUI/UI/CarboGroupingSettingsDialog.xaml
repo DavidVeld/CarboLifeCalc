@@ -371,6 +371,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource FieldLabel}">Total GIA parameter</TextBlock>
@@ -382,13 +383,11 @@
                         <ComboBox Name="cbb_GIANewParamName" Grid.Row="1" Grid.Column="2" Height="26"
                                   Style="{StaticResource ParameterComboBoxStyle}"
                                   ToolTip="Project Information parameter holding the new build GIA. Leave empty to always measure the floors."/>
-                    </Grid>
 
-                    <TextBlock Style="{StaticResource FieldLabel}" Margin="0,10,0,2">Determination method of the last import</TextBlock>
-                    <TextBox Name="txt_GIAMethod" Height="26"
-                             Style="{StaticResource textboxReadOnlyStyle}"
-                             IsReadOnly="True" IsEnabled="False"
-                             ToolTip="Recorded by the import, not set here. Use the parameter check tool to add the default parameters to a model that has none."/>
+                        <!-- The area the import will take from each parameter, filled by the code-behind -->
+                        <TextBlock Name="txt_GIAValue" Grid.Row="2" Grid.Column="0" Style="{StaticResource HintText}"/>
+                        <TextBlock Name="txt_GIANewValue" Grid.Row="2" Grid.Column="2" Style="{StaticResource HintText}"/>
+                    </Grid>
 
                 </StackPanel>
             </Border>

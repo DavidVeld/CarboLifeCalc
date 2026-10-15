@@ -456,9 +456,38 @@ namespace CarboLifeUI.UI
                                             : importSettings.GIANewParameterName,
                                         CarboNameKind.ProjectInformation, OnNameFieldChanged);
 
-            txt_GIAMethod.Text = string.IsNullOrEmpty(importSettings.GIADeterminationMethod)
-                ? CarboGroupSettings.GIAFromRevitEstimate
-                : importSettings.GIADeterminationMethod;
+            ShowGIAValues();
+        }
+
+        /// <summary>
+        /// Under each GIA box, the area the import will take from that parameter, or that it will
+        /// measure the floors instead.
+        /// </summary>
+        private void ShowGIAValues()
+        {
+            txt_GIAValue.Text = GIAValueText(CarboParameterPicker.ValueOf(cbb_GIAParamName));
+            txt_GIANewValue.Text = GIAValueText(CarboParameterPicker.ValueOf(cbb_GIANewParamName));
+        }
+
+        private static string GIAValueText(string parameterName)
+        {
+            if (parameterName.Length == 0)
+                return "Not used: the floors in the view are measured.";
+
+            //Outside Revit there is nothing to read the value from.
+            if (CarboModelNames.HasModel == false)
+                return "";
+
+            if (CarboModelNames.Contains(CarboNameKind.ProjectInformation, parameterName) == false)
+                return "Not in this model: the floors in the view are measured. The parameter check tool adds it.";
+
+            double area = CarboModelNames.AreaOf(parameterName);
+
+            //As CarboLifeRevitImport.ApplyGIAParameters: 1 m² or less is the unset area and is ignored.
+            if (area <= 1)
+                return "No area value in this model: the floors in the view are measured.";
+
+            return "Will use " + Math.Round(area, 2) + " m² from this model.";
         }
 
         private void Btn_Cancel_Click(object sender, RoutedEventArgs e)
@@ -645,21 +674,16 @@ namespace CarboLifeUI.UI
             settings.defaultCarboGroupSettings.UseImportedMap = chk_UseMappedMaterialData.IsChecked.Value;
 
             double uncertaintyPercent;
-            if (!double.TryParse(txt_UncertFact.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out uncertaintyPercent))
+            if (!Utils.TryConvertToDouble(txt_UncertFact.Text, out uncertaintyPercent))
             {
                 System.Windows.MessageBox.Show("The uncertainty factor must be a valid number. Keeping the previous value.");
                 uncertaintyPercent = importSettings.UncertaintyFactor * 100;
             }
             settings.defaultCarboGroupSettings.UncertaintyFactor = uncertaintyPercent / 100.0;
 
-            //GIA. The names are the user's to choose; the method is written by the import, so it
-            //is carried over rather than read back off the read only box.
+            //GIA. The method is not set here: the import works it out and records it in the project.
             settings.defaultCarboGroupSettings.GIAParameterName = CarboParameterPicker.ValueOf(cbb_GIAParamName);
             settings.defaultCarboGroupSettings.GIANewParameterName = CarboParameterPicker.ValueOf(cbb_GIANewParamName);
-            settings.defaultCarboGroupSettings.GIADeterminationMethod =
-                string.IsNullOrEmpty(importSettings.GIADeterminationMethod)
-                    ? CarboGroupSettings.GIAFromRevitEstimate
-                    : importSettings.GIADeterminationMethod;
 
             //As LoadActiveTemplate: the resolved path of the selected database, which may sit
             //outside the materials folder. An empty selection leaves the stored one alone rather
@@ -1227,7 +1251,7 @@ namespace CarboLifeUI.UI
         /// <returns>False when the box does not hold a percentage of 0 or more</returns>
         private static bool TryReadPercentage(WpfTextBox box, out double percentage)
         {
-            if (double.TryParse(box.Text, NumberStyles.Any, CultureInfo.CurrentCulture, out percentage) == false)
+            if (Utils.TryConvertToDouble(box.Text, out percentage) == false)
                 return false;
 
             return percentage >= 0;
@@ -1455,6 +1479,7 @@ namespace CarboLifeUI.UI
                 return;
 
             RefreshMissingNames();
+            ShowGIAValues();
         }
 
         /// <summary>

@@ -188,11 +188,13 @@ namespace CarboCircle.data
                         {
                             if (vE.materialName == vRE.materialName)
                             {
+                                //idList carries every member, and is what colouring reads. Joining
+                                //every GUID and id onto one string copied it again per element,
+                                //O(n²), into a cell far past Excel's 32,767 characters.
                                 vRE.id = 0;
-                                vRE.GUID += ";" + vE.GUID;
-                                vRE.humanId += ";" + vE.humanId;
 
-                                vRE.category += ";" + vE.category;
+                                if (Array.IndexOf((vRE.category ?? "").Split(';'), vE.category) < 0)
+                                    vRE.category += ";" + vE.category;
                                 vRE.volume += vE.volume;
                                 vRE.netVolume += vE.netVolume;
                                 vRE.idList.Add(vE.id);

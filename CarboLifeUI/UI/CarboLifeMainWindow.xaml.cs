@@ -847,12 +847,15 @@ Alternatively you can purchase IssueBuddyTools and you will find a key to remove
 
                 try
                 {
-                    //
+                    //The elements go too: left in, the previous import's came back in the new groups.
+                    //Added, not replaced by id: a concrete row and its "Reinforcement of" row share
+                    //one id, and replacing turned the slab into its own volume of steel.
                     carboLifeProject.DeleteAllGroups();
+                    carboLifeProject.getAllElements.Clear();
 
                     foreach (CarboElement ce in elements)
                     {
-                        carboLifeProject.AddorUpdateElement(ce);
+                        carboLifeProject.AddElement(ce);
                     }
 
                     //run once;
@@ -981,10 +984,12 @@ Alternatively you can purchase IssueBuddyTools and you will find a key to remove
 
                 if (elements.Count > 0)
                 {
+                    //As the csv import: replace the elements, add rather than merge by id.
                     carboLifeProject.DeleteAllGroups();
+                    carboLifeProject.getAllElements.Clear();
 
                     foreach (CarboElement ce in elements)
-                        carboLifeProject.AddorUpdateElement(ce);
+                        carboLifeProject.AddElement(ce);
 
                     carboLifeProject.CreateGroups();
                     carboLifeProject.CalculateProject();

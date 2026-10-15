@@ -78,6 +78,14 @@ namespace CarboLifeUI.UI
 
         private void Btn_Import_Click(object sender, RoutedEventArgs e)
         {
+            //Accepting before Split, or with a split that left one side empty, emptied the group
+            //and added a copy still carrying its volume, so that carbon was counted twice.
+            if (passedElementList.Count == 0 || filteredElementList.Count == 0)
+            {
+                MessageBox.Show("Split the group first: both parts need at least one element.");
+                return;
+            }
+
             dialogOk = true;
 
             GrpPassed = carboGroup.Clone() as CarboGroup;

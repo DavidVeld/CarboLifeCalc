@@ -1609,7 +1609,7 @@ namespace CarboLifeAPI.Data
                             //B4 replacement count, so the sum of the elements never reconciled
                             //with the group total the report prints.
                             //Group EC is in tonnes, an element carries kg.
-                            double inuseECI = cg.inUseProperties != null ? cg.inUseProperties.totalECI : 0;
+                            double inuseECI = calculateB && cg.inUseProperties != null ? cg.inUseProperties.totalECI : 0;
                             double replacements = cg.inUseProperties != null ? cg.inUseProperties.B4 : 1;
 
                             ce.EC = (cg.ECI + inuseECI) * ce.Mass * replacements;
@@ -2171,54 +2171,7 @@ namespace CarboLifeAPI.Data
         }
         public void AddElement(CarboElement carboElement)
         {
-            //AddorUpdateElement(carboElement);
             elementList.Add(carboElement);
-            justSaved = false;
-        }
-        public void AddorUpdateElement(CarboElement carboElement)
-        {
-            
-            bool found = false;
-            /*
-            for(int i = 0; i<elementList.Count; i++)
-            {
-                CarboElement ce = elementList[i] as CarboElement;
-                if (ce != null)
-                {
-                    if (ce.Id == carboElement.Id)
-                    {
-                        ce = carboElement;
-                        found = true;
-                        i = elementList.Count;
-                    }
-                }
-            }
-
-            
-
-            */
-
-            for (int i = elementList.Count - 1; i >= 0; i--)
-            {
-                CarboElement ce = elementList[i] as CarboElement;
-                if (ce != null)
-                {
-                    if (ce.Id == carboElement.Id)
-                    {
-                        elementList.RemoveAt(i);
-                        elementList.Insert(i, carboElement);
-                        found = true;
-
-                        break;
-                    }
-                }
-            }
-
-            if (found == false)
-            {
-                elementList.Add(carboElement);
-            }
-
             justSaved = false;
         }
         public CarboProject DeSerializeXML(string myPath)

@@ -164,7 +164,7 @@ namespace CarboLifeAPI.Data
                     CarboNumProperty property = new CarboNumProperty();
 
                     string category = dr[0].ToString();
-                    double value = Utils.ConvertMeToDouble(dr[1].ToString());
+                    double value = DataExportUtils.ReadCsvDouble(dr[1].ToString());
 
                     property.PropertyName = category;
                     property.Value = value;

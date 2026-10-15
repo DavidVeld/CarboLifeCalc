@@ -413,6 +413,9 @@ namespace CarboLifeUI.UI
             TextBox editedBox = e.EditingElement as TextBox;
             bool textUnchanged = editedBox != null && cellTextAtEditStart != null && editedBox.Text == cellTextAtEditStart;
 
+            //The grid shows numbers invariant ("12.345"), so they are read back invariant first.
+            //Utils.ConvertMeToDouble defers "12.345" to the machine culture: 12345 on de-DE.
+
             if (dgv_Overview != null)
             {
                 CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
@@ -458,7 +461,7 @@ namespace CarboLifeUI.UI
                             }
                             else
                             {
-                                double volumeEdit = Utils.ConvertMeToDouble(t.Text);
+                                double volumeEdit = DataExportUtils.ReadCsvDouble(t.Text);
                                 if (volumeEdit != 0)
                                 {
                                     carboGroup.Volume = volumeEdit;
@@ -473,7 +476,7 @@ namespace CarboLifeUI.UI
                         //Corrections:
                         if (dgc.Header.ToString().StartsWith("Waste"))
                         {
-                            double wastevalue = Utils.ConvertMeToDouble(t.Text);
+                            double wastevalue = DataExportUtils.ReadCsvDouble(t.Text);
                             if (wastevalue != 0)
                             {
                                 carboGroup.Waste = wastevalue;
@@ -486,7 +489,7 @@ namespace CarboLifeUI.UI
                         //Additional:
                         if (dgc.Header.ToString().StartsWith("Additional"))
                         {
-                            double additional = Utils.ConvertMeToDouble(t.Text);
+                            double additional = DataExportUtils.ReadCsvDouble(t.Text);
                             if (additional != 0)
                             {
                                 carboGroup.Additional = additional;
@@ -500,7 +503,7 @@ namespace CarboLifeUI.UI
                         //B4:
                         if (dgc.Header.ToString().StartsWith("Group"))
                         {
-                            double b4 = Utils.ConvertMeToDouble(t.Text);
+                            double b4 = DataExportUtils.ReadCsvDouble(t.Text);
                             if (b4 != 0)
                             {
                                 carboGroup.inUseProperties.B4 = b4;
@@ -867,7 +870,7 @@ namespace CarboLifeUI.UI
             // do anything with textblock    
             if (tb.Text != null)
             {
-                double value = Utils.ConvertMeToDouble(tb.Text);
+                double value = DataExportUtils.ReadCsvDouble(tb.Text);
                 string textValue = Math.Round(value, 3).ToString(CultureInfo.InvariantCulture);
                 tb.Text = textValue;
             }
@@ -880,7 +883,7 @@ namespace CarboLifeUI.UI
             // do anything with textblock    
             if (tb.Text != null)
             {
-                double value = Utils.ConvertMeToDouble(tb.Text);
+                double value = DataExportUtils.ReadCsvDouble(tb.Text);
 
                 tb.Text = Math.Round(value, 2).ToString() + " % ";
             }
@@ -969,12 +972,21 @@ namespace CarboLifeUI.UI
 
             if (carboGroup != null)
             {
-                GroupAdvancedEditor advancedEditor = new GroupAdvancedEditor(carboGroup, CarboLifeProject.CarboDatabase);
+                //The editor writes into the group as each box loses focus, so it gets a copy:
+                //handed the live group, Cancel kept every change.
+                GroupAdvancedEditor advancedEditor = new GroupAdvancedEditor(carboGroup.Clone() as CarboGroup, CarboLifeProject.CarboDatabase);
                 advancedEditor.ShowDialog();
 
                 if (advancedEditor.isAccepted == true)
                 {
-                    carboGroup = advancedEditor.group;
+                    CarboGroup edited = advancedEditor.group;
+
+                    carboGroup.Correction = edited.Correction;
+                    carboGroup.CorrectionDescription = edited.CorrectionDescription;
+                    carboGroup.Waste = edited.Waste;
+                    carboGroup.WasteDescription = edited.WasteDescription;
+                    carboGroup.Additional = edited.Additional;
+                    carboGroup.AdditionalDescription = edited.AdditionalDescription;
                 }
             }
             else
@@ -999,17 +1011,18 @@ namespace CarboLifeUI.UI
                     selectedGroups.Add(cg);
             }
 
-            if (selectedGroups.Count > 1)
-                MessageBox.Show("Please select only a single group");
+            //None selected used to crash on selectedGroups[0].
+            if (selectedGroups.Count != 1)
+                MessageBox.Show("Please select a single group");
             else
             {
-                GroupWindow splitter = new GroupWindow(selectedGroups[0]);
+                CarboGroup carboGroup = selectedGroups[0];
+
+                GroupWindow splitter = new GroupWindow(carboGroup);
                 splitter.ShowDialog();
 
                 if(splitter.dialogOk == true)
                 {
-                    CarboGroup carboGroup = (CarboGroup)dgv_Overview.SelectedItem;
-                    
                     //Update List of Current
                     carboGroup.AllElements.Clear();
 
@@ -1017,9 +1030,10 @@ namespace CarboLifeUI.UI
                     {
                         carboGroup.AllElements.Add(el);
                     }
-                    
+
                     //Add new list
                     CarboLifeProject.AddGroup(splitter.GrpFiltered);
+                    ApplyAndRefresh();
                 }
 
 

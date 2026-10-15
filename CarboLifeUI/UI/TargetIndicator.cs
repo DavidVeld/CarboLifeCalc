@@ -178,17 +178,17 @@ namespace CarboLifeUI
                     string isStructureText = dr[3].ToString();
 
 
-                    Int32 AAA = (int)Utils.ConvertMeToDouble(dr[4].ToString());
-                    Int32 AA = (int)Utils.ConvertMeToDouble(dr[5].ToString());
-                    Int32 A = (int)Utils.ConvertMeToDouble(dr[6].ToString());
-                    Int32 B = (int)Utils.ConvertMeToDouble(dr[7].ToString());
-                    Int32 C = (int)Utils.ConvertMeToDouble(dr[8].ToString());
-                    Int32 D = (int)Utils.ConvertMeToDouble(dr[9].ToString());
-                    Int32 E = (int)Utils.ConvertMeToDouble(dr[10].ToString());
-                    Int32 F = (int)Utils.ConvertMeToDouble(dr[11].ToString());
-                    Int32 G = (int)Utils.ConvertMeToDouble(dr[12].ToString());
+                    Int32 AAA = (int)DataExportUtils.ReadCsvDouble(dr[4].ToString());
+                    Int32 AA = (int)DataExportUtils.ReadCsvDouble(dr[5].ToString());
+                    Int32 A = (int)DataExportUtils.ReadCsvDouble(dr[6].ToString());
+                    Int32 B = (int)DataExportUtils.ReadCsvDouble(dr[7].ToString());
+                    Int32 C = (int)DataExportUtils.ReadCsvDouble(dr[8].ToString());
+                    Int32 D = (int)DataExportUtils.ReadCsvDouble(dr[9].ToString());
+                    Int32 E = (int)DataExportUtils.ReadCsvDouble(dr[10].ToString());
+                    Int32 F = (int)DataExportUtils.ReadCsvDouble(dr[11].ToString());
+                    Int32 G = (int)DataExportUtils.ReadCsvDouble(dr[12].ToString());
 
-                    Int32 T = (int)Utils.ConvertMeToDouble(dr[13].ToString());
+                    Int32 T = (int)DataExportUtils.ReadCsvDouble(dr[13].ToString());
 
 
                     scors.BuildingType = BuildingType;

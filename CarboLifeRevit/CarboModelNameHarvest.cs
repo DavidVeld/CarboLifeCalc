@@ -41,6 +41,7 @@ namespace CarboLifeRevit
             SortedSet<string> instanceParameters = NewSet();
             SortedSet<string> typeParameters = NewSet();
             SortedSet<string> projectInformation = NewSet();
+            Dictionary<string, double> projectInformationAreas = new Dictionary<string, double>(StringComparer.OrdinalIgnoreCase);
             SortedSet<string> worksets = NewSet();
             SortedSet<string> phases = NewSet();
 
@@ -56,6 +57,10 @@ namespace CarboLifeRevit
             try
             {
                 AddParameterNames(doc.ProjectInformation, projectInformation);
+
+                //Read exactly as the import reads the GIA, so the dialog shows the area it will use.
+                foreach (string name in projectInformation)
+                    projectInformationAreas[name] = CarboLifeRevitImport.ReadAreaParameter(doc.ProjectInformation, name);
             }
             catch (Exception)
             {
@@ -78,7 +83,7 @@ namespace CarboLifeRevit
             }
 
             CarboModelNames.SetNames(instanceParameters, typeParameters, projectInformation,
-                                     worksets, phases);
+                                     worksets, phases, projectInformationAreas);
         }
 
         private static SortedSet<string> NewSet()

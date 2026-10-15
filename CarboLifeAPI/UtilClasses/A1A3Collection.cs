@@ -47,14 +47,14 @@ namespace CarboLifeAPI.Data
                     {
                         A1A3Element newElement = new A1A3Element();
 
-                        int id = Convert.ToInt16(dr[0]);
+                        int id = Convert.ToInt32(DataExportUtils.ReadCsvDouble(dr[0].ToString()));
 
                         string name = dr[1].ToString();
                         string description = dr[2].ToString();
                         string category = dr[3].ToString();
 
-                        double density = Utils.ConvertMeToDouble(dr[4].ToString());
-                        double ECI_A1A3 = Utils.ConvertMeToDouble(dr[5].ToString());
+                        double density = DataExportUtils.ReadCsvDouble(dr[4].ToString());
+                        double ECI_A1A3 = DataExportUtils.ReadCsvDouble(dr[5].ToString());
 
 
                         newElement.Id = id;

@@ -112,7 +112,7 @@ namespace CarboLifeAPI.Data
         {
             get
             {
-                return (Mass * Material.ECI_B1B5 * inUseProperties.B4);
+                return (Mass * (Material.ECI_B1B5 + inUseProperties.totalECI) * inUseProperties.B4);
             }
         }
         public double getTotalC1C4
@@ -669,7 +669,6 @@ namespace CarboLifeAPI.Data
             MaterialName = Material.Name;
             //EEI = Material.EEI;
             double totalECI = 0;
-            totalECI += Additional;
 
             double uncertaintyFactor = 1 + uncertFact;
 
@@ -691,8 +690,11 @@ namespace CarboLifeAPI.Data
                 totalECI += Material.ECI_D;
             if (cSeq == true)
                 totalECI += Material.ECI_Seq;
+            //The group's own Additional sits under the same switch as the material Mix: both go
+            //into the "Additional" phase (getTotalMix), so counting it with the switch off put
+            //carbon in the total that no phase showed.
             if (cAdd == true)
-                totalECI += Material.ECI_Mix;
+                totalECI += Material.ECI_Mix + Additional;
 
             ECI = totalECI;
 
@@ -790,8 +792,9 @@ namespace CarboLifeAPI.Data
 
             double inUseReplacementFactor = inUseProperties.B4;
 
-            //Get all the B1-B7 per group
-            double inuseECI = inUseProperties.totalECI;
+            //Get all the B1-B7 per group. Counted under the B switch, and in getTotalB1B7, for the
+            //same reason as Additional above.
+            double inuseECI = cB ? inUseProperties.totalECI : 0;
             double ECB1B7 = Mass * inuseECI;
             inUseProperties.totalValue = ECB1B7;
 
@@ -901,8 +904,8 @@ namespace CarboLifeAPI.Data
                 //Additional
                 Additional = this.Additional,
                 AdditionalDescription = this.AdditionalDescription,
-                //B4
-                inUseProperties = this.inUseProperties,
+                //B4. Its own copy: shared, the two halves of a split group changed life together.
+                inUseProperties = this.inUseProperties?.Copy(),
 
                 isDemolished = this.isDemolished,
                 isSubstructure = this.isSubstructure,

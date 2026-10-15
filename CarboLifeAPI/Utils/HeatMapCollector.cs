@@ -266,28 +266,25 @@ namespace CarboLifeAPI
 
                 }
 
-                //Combine if materials were combined
+                //Combine if materials were combined. Indexed by id: scanning the result for
+                //every value was O(n²), billions of comparisons on a 100k element model.
+                Dictionary<Int64, CarboValues> byId = new Dictionary<Int64, CarboValues>();
 
                 foreach (CarboValues value in thisResult.entireProjectData)
                 {
-                    bool exists = false;
+                    CarboValues valueNew;
 
-                    foreach (CarboValues valueNew in result.entireProjectData)
+                    if (byId.TryGetValue(value.Id, out valueNew))
                     {
-                        if(valueNew.Id == value.Id)
-                        {
-                            //This element has already a material assigned, add the values
-                            valueNew.Value += value.Value;
-                            valueNew.ValueName = valueNew.ValueName + " + " + value.ValueName;
-                            exists = true;
-                        }
+                        //This element has already a material assigned, add the values
+                        valueNew.Value += value.Value;
+                        valueNew.ValueName = valueNew.ValueName + " + " + value.ValueName;
                     }
-
-                    if (exists == false)
+                    else
                     {
                         result.entireProjectData.Add(value);
+                        byId.Add(value.Id, value);
                     }
-
                 }
 
 

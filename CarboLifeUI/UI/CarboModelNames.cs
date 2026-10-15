@@ -52,6 +52,7 @@ namespace CarboLifeUI.UI
         private static SortedSet<string> projectInformationParameters = NewSet();
         private static SortedSet<string> worksets = NewSet();
         private static SortedSet<string> phases = NewSet();
+        private static Dictionary<string, double> projectInformationAreas = NewAreas();
 
         /// <summary>
         /// True once a model has been read. False in every other case - a dialog opened outside
@@ -65,20 +66,30 @@ namespace CarboLifeUI.UI
             return new SortedSet<string>(StringComparer.OrdinalIgnoreCase);
         }
 
+        private static Dictionary<string, double> NewAreas()
+        {
+            return new Dictionary<string, double>(StringComparer.OrdinalIgnoreCase);
+        }
+
         /// <summary>
         /// Replaces everything known about the model. Called once per harvest, from Revit context.
         /// </summary>
+        /// <param name="projectInformationAreaValues">Project Information area values in m², by parameter name.</param>
         public static void SetNames(IEnumerable<string> instanceParameterNames,
                                     IEnumerable<string> typeParameterNames,
                                     IEnumerable<string> projectInformationNames,
                                     IEnumerable<string> worksetNames,
-                                    IEnumerable<string> phaseNames)
+                                    IEnumerable<string> phaseNames,
+                                    IDictionary<string, double> projectInformationAreaValues)
         {
             instanceParameters = ToSet(instanceParameterNames);
             typeParameters = ToSet(typeParameterNames);
             projectInformationParameters = ToSet(projectInformationNames);
             worksets = ToSet(worksetNames);
             phases = ToSet(phaseNames);
+            projectInformationAreas = projectInformationAreaValues == null
+                ? NewAreas()
+                : new Dictionary<string, double>(projectInformationAreaValues, StringComparer.OrdinalIgnoreCase);
 
             //Phases are the test rather than parameters: every Revit model has at least one phase,
             //so an empty phase list means the harvest never ran or fell over on its first step.
@@ -96,8 +107,23 @@ namespace CarboLifeUI.UI
             projectInformationParameters = NewSet();
             worksets = NewSet();
             phases = NewSet();
+            projectInformationAreas = NewAreas();
 
             HasModel = false;
+        }
+
+        /// <summary>
+        /// The area in m² the model holds in this Project Information parameter, read as the import
+        /// reads it. 0 when the parameter is missing, empty or not an Area parameter.
+        /// </summary>
+        public static double AreaOf(string projectInformationName)
+        {
+            double area;
+
+            if (string.IsNullOrWhiteSpace(projectInformationName))
+                return 0;
+
+            return projectInformationAreas.TryGetValue(projectInformationName.Trim(), out area) ? area : 0;
         }
 
         private static SortedSet<string> ToSet(IEnumerable<string> names)

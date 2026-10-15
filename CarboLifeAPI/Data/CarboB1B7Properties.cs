@@ -107,7 +107,9 @@ namespace CarboLifeAPI.Data
 
                 if (designLifeToEnd == false)
                 {
-                    this.B4 = Math.Ceiling(buildingdesignlife / elementdesignlife);
+                    //Built at least once. A blank or zero life used to give B4 = infinity, and with it an
+                    //infinite project total.
+                    this.B4 = elementdesignlife > 0 ? Math.Max(1, Math.Ceiling(buildingdesignlife / elementdesignlife)) : 1;
 
                     calcResult += "One element of this material will last: " + elementdesignlife + " year(s)" + System.Environment.NewLine;
                     calcResult += "The building is intended to last: " + buildingdesignlife + "year" + System.Environment.NewLine;
@@ -148,6 +150,7 @@ namespace CarboLifeAPI.Data
             result.B5 = this.B5;
             result.B6 = this.B6;
             result.B7 = this.B7;
+            result.totalECI = this.totalECI;
             result.totalValue = this.totalValue;
             result.assetType = this.assetType;
             result.calcResult = this.calcResult;

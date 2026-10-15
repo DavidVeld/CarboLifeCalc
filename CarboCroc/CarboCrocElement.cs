@@ -20,7 +20,7 @@ namespace CarboCroc
             pManager.AddIntegerParameter("Id", "Id", "Identifier", GH_ParamAccess.item, 0);
             pManager.AddTextParameter("Name", "Element Name", "Element Name", GH_ParamAccess.item, "");
             pManager.AddTextParameter("MaterialName", "Material", "Material Name", GH_ParamAccess.item, "");
-            pManager.AddNumberParameter("Volume", "Volume", "Element Volume", GH_ParamAccess.item);
+            pManager.AddNumberParameter("Volume", "Volume", "Element volume in m³", GH_ParamAccess.item);
             pManager.AddTextParameter("Category", "Category", "Category", GH_ParamAccess.item, "");
             pManager.AddTextParameter("GUID", "GUID", "GUID (Rhino Element Id)", GH_ParamAccess.item, "");
             pManager.AddNumberParameter("Rebar", "Rebar", "Reinforcement rate in kg/m3 of this element. 0 leaves it to the rates on the allowances component.", GH_ParamAccess.item, 0);

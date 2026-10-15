@@ -96,6 +96,33 @@ namespace CarboLifeTests
             }
         }
 
+        [Theory]
+        [InlineData("en-GB")]
+        [InlineData("de-DE")]
+        [InlineData("it-IT")]
+        public void Shipped_A1A3_tables_are_read_invariant(string culture)
+        {
+            //They went through the typed-text parser, which hands "0.149" to the machine culture:
+            //149 kgCO₂e/kg on a German or Italian Windows.
+            CultureInfo original = Thread.CurrentThread.CurrentCulture;
+
+            try
+            {
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(culture);
+
+                A1A3Collection tables = new A1A3Collection();
+                tables.LoadAll();
+
+                A1A3Element screed = tables.FindElement("IstructE", "Concrete - Mortar/screed");
+                Assert.Equal(0.149, screed.ECI_A1A3);
+                Assert.Equal(2200, screed.Density);
+            }
+            finally
+            {
+                Thread.CurrentThread.CurrentCulture = original;
+            }
+        }
+
         private static CarboMaterial NamedMaterial(string name, int id)
         {
             CarboMaterial material = TestProjects.Material(name);

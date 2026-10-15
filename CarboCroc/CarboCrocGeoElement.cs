@@ -85,7 +85,12 @@ namespace CarboCroc
 
                     if (mp != null)
                     {
-                        result.Volume = mp.Volume;
+                        //Rhino measures in model units and CarboLife works in m³: a 1 m cube in a
+                        //millimetre file came in as 1,000,000,000 m³.
+                        Rhino.RhinoDoc doc = Rhino.RhinoDoc.ActiveDoc;
+                        double toMetres = doc == null ? 1 : Rhino.RhinoMath.UnitScale(doc.ModelUnitSystem, Rhino.UnitSystem.Meters);
+
+                        result.Volume = mp.Volume * Math.Pow(toMetres, 3);
                     }
                     else
                     { 
