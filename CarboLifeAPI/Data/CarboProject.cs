@@ -152,6 +152,15 @@ namespace CarboLifeAPI.Data
 
         //System field
         public bool justSaved;
+
+        /// <summary>
+        /// Raised at the end of every CalculateProject. The pages recalculate after each edit,
+        /// so this is where the main window learns that the project may have changed and takes
+        /// an undo snapshot.
+        /// </summary>
+        [field: NonSerialized]
+        public event EventHandler Calculated;
+
         public CarboGroup getTotalsGroup()
         {
             CarboGroup newGroup = new CarboGroup();
@@ -1584,6 +1593,7 @@ namespace CarboLifeAPI.Data
 
             justSaved = false;
 
+            Calculated?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -2256,6 +2266,58 @@ namespace CarboLifeAPI.Data
                 System.Windows.MessageBox.Show(ex.Message);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// The whole project as compressed XML, for undo. Two snapshots of the same state are
+        /// byte for byte equal, which is how an unchanged project is told apart from an edit.
+        ///
+        /// justSaved and filePath are written blank: saving is not an edit, and undoing must not
+        /// move the project back to a file name it had before a Save As.
+        /// </summary>
+        public byte[] ToSnapshot()
+        {
+            bool savedFlag = justSaved;
+            string savedPath = filePath;
+
+            try
+            {
+                justSaved = false;
+                filePath = "";
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    //Entitize, or net48 writes \r\n raw and reads it back as \n, so multi-line text changes.
+                    System.Xml.XmlWriterSettings settings = new System.Xml.XmlWriterSettings { NewLineHandling = System.Xml.NewLineHandling.Entitize };
+
+                    using (System.IO.Compression.GZipStream zip = new System.IO.Compression.GZipStream(ms, System.IO.Compression.CompressionLevel.Fastest))
+                    using (System.Xml.XmlWriter writer = System.Xml.XmlWriter.Create(zip, settings))
+                        new XmlSerializer(typeof(CarboProject)).Serialize(writer, this);
+
+                    return ms.ToArray();
+                }
+            }
+            finally
+            {
+                justSaved = savedFlag;
+                filePath = savedPath;
+            }
+        }
+
+        /// <summary>Reads back a <see cref="ToSnapshot"/>. The caller sets filePath and justSaved.</summary>
+        public static CarboProject FromSnapshot(byte[] snapshot)
+        {
+            CarboProject project;
+
+            using (MemoryStream ms = new MemoryStream(snapshot))
+            using (System.IO.Compression.GZipStream zip = new System.IO.Compression.GZipStream(ms, System.IO.Compression.CompressionMode.Decompress))
+                project = (CarboProject)new XmlSerializer(typeof(CarboProject)).Deserialize(zip);
+
+            //As in DeSerializeXML: the database constructor adds "<Empty>" and the XML adds it again.
+            if (project.CarboDatabase != null)
+                project.CarboDatabase.EnsureSystemMaterials();
+
+            return project;
         }
 
         /// <summary>

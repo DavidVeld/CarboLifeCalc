@@ -189,10 +189,22 @@ namespace CarboLifeRevit
 
                     carboCalcProgram.ShowDialog();
 
+                    //Undo, Open or an import inside the window replaces the project object, so the
+                    //one to carry on with is the window's, not the one handed in.
+                    projectToOpen = carboCalcProgram.carboLifeProject;
+
                     //The GIA may have been corrected in the project settings while the window was
                     //open. Put it back into the model so the next run starts from it rather than
                     //measuring the floors again. Quiet on purpose, there is nothing to decide.
                     WriteGIAParameters(doc, projectToOpen);
+
+                    if (carboCalcProgram.OpenHeatmapOnClose)
+                    {
+                        if (Modeless.FormStatusChecker.isWindowOpen)
+                            MessageBox.Show("A heat map window is already open. Close it, then use Heatmap on the ribbon to open this project.", "Heatmap", MessageBoxButton.OK);
+                        else
+                            CarboLifeApp.thisApp.ShowHeatmap(app, projectToOpen, myProject.GetElementIdList());
+                    }
                 }
                 catch (Exception ex)
                 {

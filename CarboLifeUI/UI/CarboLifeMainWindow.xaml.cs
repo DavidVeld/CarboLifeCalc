@@ -34,14 +34,34 @@ namespace CarboLifeUI.UI
     /// </summary>
     public partial class CarboLifeMainWindow : Window
     {
-        public CarboProject carboLifeProject { get; set; }
+        private CarboProject carboProject;
+        private readonly CarboUndoHistory undoHistory = new CarboUndoHistory();
+
+        //A recalculation can come several times per edit; one snapshot, once the UI is idle, covers them.
+        private readonly UiDebouncer undoDebouncer = new UiDebouncer(300);
+
+        /// <summary>
+        /// The open project. Assigning it (new, open, import) starts a fresh undo history.
+        /// </summary>
+        public CarboProject carboLifeProject
+        {
+            get { return carboProject; }
+            set
+            {
+                AttachProject(value);
+                undoHistory.Clear();
+                undoDebouncer.Poke(RecordUndoStep);
+            }
+        }
         /// <summary>
         /// If the app is launched from Revit IsRevit = true to allow extra settings.
         /// </summary>
         public bool IsRevit { get; set; }
         /// <summary>
-        /// If a heat map will be created after exit;
+        /// If a heat map will be created after exit; set by Build Heatmap. Revit opens the heat
+        /// map with carboLifeProject, the project in memory, saved or not.
         /// </summary>
+        public bool OpenHeatmapOnClose { get; private set; }
 
         //For async excel exporter:
         public string ExcelExportPath { get; private set; }
@@ -188,6 +208,113 @@ Alternatively you can purchase IssueBuddyTools and you will find a key to remove
                 return carboLifeProject;
             else
                 return null;
+        }
+
+        private void AttachProject(CarboProject project)
+        {
+            if (carboProject != null)
+                carboProject.Calculated -= CarboProject_Calculated;
+
+            carboProject = project;
+
+            if (carboProject != null)
+                carboProject.Calculated += CarboProject_Calculated;
+        }
+
+        //shortcut: edits that do not recalculate (ProjectSettings name, area, etc.) join the next
+        //recalculated edit as one undo step; add a RecordUndoStep poke there if users notice.
+        private void CarboProject_Calculated(object sender, EventArgs e)
+        {
+            undoDebouncer.Poke(RecordUndoStep);
+        }
+
+        private void RecordUndoStep()
+        {
+            if (carboProject != null)
+                undoHistory.Record(carboProject.ToSnapshot());
+        }
+
+        private void UndoProject()
+        {
+            //A value still in a box, or an edit not yet recorded, is the step being undone.
+            CarboUiCommit.CommitFocused();
+            undoDebouncer.Cancel();
+            RecordUndoStep();
+
+            RestoreProject(undoHistory.Undo());
+        }
+
+        private void RedoProject()
+        {
+            CarboUiCommit.CommitFocused();
+            undoDebouncer.Cancel();
+            RecordUndoStep();
+
+            RestoreProject(undoHistory.Redo());
+        }
+
+        private void RestoreProject(byte[] snapshot)
+        {
+            if (snapshot == null)
+                return;
+
+            try
+            {
+                CarboProject restored = CarboProject.FromSnapshot(snapshot);
+                restored.filePath = carboProject.filePath;
+
+                AttachProject(restored);
+                restored.CalculateProject();
+
+                //Same refresh as opening a file: each page fetches the project again when shown.
+                tab_Main.Visibility = Visibility.Hidden;
+                tab_Main.Visibility = Visibility.Visible;
+
+                restored.justSaved = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void mnu_Undo_Click(object sender, RoutedEventArgs e)
+        {
+            UndoProject();
+        }
+
+        private void mnu_Redo_Click(object sender, RoutedEventArgs e)
+        {
+            RedoProject();
+        }
+
+        private void mnu_Edit_SubmenuOpened(object sender, RoutedEventArgs e)
+        {
+            //An edit made just now may still be waiting on the debouncer.
+            undoDebouncer.Cancel();
+            RecordUndoStep();
+
+            mnu_Undo.IsEnabled = undoHistory.CanUndo;
+            mnu_Redo.IsEnabled = undoHistory.CanRedo;
+        }
+
+        /// <summary>
+        /// KeyDown, not PreviewKeyDown: a text box takes Ctrl+Z for its own typing first, and only
+        /// what it leaves unhandled reaches the project.
+        /// </summary>
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (Keyboard.Modifiers != ModifierKeys.Control)
+                return;
+
+            if (e.Key == Key.Z)
+                UndoProject();
+            else if (e.Key == Key.Y)
+                RedoProject();
+            else
+                return;
+
+            e.Handled = true;
         }
 
         /// <summary>
@@ -574,6 +701,17 @@ Alternatively you can purchase IssueBuddyTools and you will find a key to remove
             this.Close();
         }
 
+        private void btn_BuildHeatmap_Click(object sender, RoutedEventArgs e)
+        {
+            //Closing offers to save first, as any close does.
+            OpenHeatmapOnClose = true;
+            this.Close();
+
+            //Still open: the save prompt was cancelled, so no heat map either.
+            if (IsVisible)
+                OpenHeatmapOnClose = false;
+        }
+
         private void mnu_Activate_Click(object sender, RoutedEventArgs e)
         {
             RevitActivator revitActivator = new RevitActivator();
@@ -760,6 +898,9 @@ Alternatively you can purchase IssueBuddyTools and you will find a key to remove
             //provider that has to be registered. .NET Framework has them built in.
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 #endif
+            //Here and not in the constructor: Revit sets IsRevit after constructing the window.
+            btn_BuildHeatmap.Visibility = IsRevit ? Visibility.Visible : Visibility.Collapsed;
+
             System.Drawing.Rectangle resolution = System.Windows.Forms.Screen.PrimaryScreen.Bounds;
             int height = resolution.Height;
 

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" Title="Carbo Life Calculator"
-             d:DesignHeight="744" MinHeight="744" Height="744" d:DesignWidth="1366" MinWidth="1366"  Width="1366" Closing="Window_Closing" Loaded="Window_Loaded" Icon="pack://application:,,,/CarboLifeUI;component/Resources/ico_clcwindow.ico">
+             d:DesignHeight="744" MinHeight="744" Height="744" d:DesignWidth="1366" MinWidth="1366"  Width="1366" Closing="Window_Closing" Loaded="Window_Loaded" KeyDown="Window_KeyDown" Icon="pack://application:,,,/CarboLifeUI;component/Resources/ico_clcwindow.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -63,6 +63,11 @@
 
                 <Separator></Separator>
                 <MenuItem Name="mnu_CloseMe" Header="Close" Click="mnu_CloseMe_Click" Background="Transparent"/>
+            </MenuItem>
+
+            <MenuItem Header="Edit" Background="White" Style="{StaticResource formTextStyle}" SubmenuOpened="mnu_Edit_SubmenuOpened">
+                <MenuItem Name="mnu_Undo" Header="Undo" InputGestureText="Ctrl+Z" Click="mnu_Undo_Click" Background="Transparent"/>
+                <MenuItem Name="mnu_Redo" Header="Redo" InputGestureText="Ctrl+Y" Click="mnu_Redo_Click" Background="Transparent"/>
             </MenuItem>
 
             <MenuItem Header="Help" Background="White" Style="{StaticResource formTextStyle}">
@@ -140,6 +145,7 @@
 
         <ProgressBar Name="pgr_Exporter" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="5,0,85,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="150" Height="30"></ProgressBar>
         
+        <Button Name="btn_BuildHeatmap" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,165,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Style="{StaticResource ButtonStyle}" Click="btn_BuildHeatmap_Click" Visibility="Collapsed" ToolTip="Close this window and colour the Revit view by this project's carbon">Build Heatmap</Button>
         <Button Name="btn_Accept" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,85,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Accept_Click">Close</Button>
         <Button Name="btn_Cancel" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="25" Style="{StaticResource ButtonStyle}" Click="Btn_Cancel_Click">Cancel</Button>
 
