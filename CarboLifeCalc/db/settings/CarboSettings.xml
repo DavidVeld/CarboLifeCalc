@@ -16,12 +16,12 @@
     <AdditionalParameterElementType>Type Parameter</AdditionalParameterElementType>
     <IncludeGradeParameter>true</IncludeGradeParameter>
     <GradeParameterName>CLC_MaterialGrade</GradeParameterName>
-    <GradeParameterType>Instance Parameter</GradeParameterType>
+    <GradeParameterType>Type Parameter</GradeParameterType>
     <IncludeCorrectionParameter>true</IncludeCorrectionParameter>
     <CorrectionParameterName>CLC_VolumeCorrection</CorrectionParameterName>
     <CorrectionParameterType>Type Parameter</CorrectionParameterType>
     <mapReinforcement>true</mapReinforcement>
-    <RCParameterName />
+    <RCParameterName>CLC_RCDensity</RCParameterName>
     <RCParameterType>Instance Parameter</RCParameterType>
     <RCMaterialName>Reinforcement</RCMaterialName>
     <RCMaterialCategory>Concrete</RCMaterialCategory>
