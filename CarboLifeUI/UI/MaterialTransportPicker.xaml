@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CarboLifeUI.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="750" d:DesignWidth="850" MinWidth="850" MinHeight="750" Width="850" Height="750" Title="A4 Transport Dialog"  Loaded="Window_Loaded" Background="WhiteSmoke" Icon="pack://application:,,,/CarboLifeUI;component/Resources/ico_clcwindow.ico">
+             d:DesignHeight="780" d:DesignWidth="850" MinWidth="850" MinHeight="780" Width="850" Height="780" Title="A4 Transport Dialog"  Loaded="Window_Loaded" Background="WhiteSmoke" Icon="pack://application:,,,/CarboLifeUI;component/Resources/ico_clcwindow.ico">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -67,7 +67,7 @@
                 <TextBox Name="txt_Density" Grid.Column="2" Grid.Row="2" Margin="5,1,0,0" Height="27" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_Density_TextChanged" />
                 <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="2" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">kg/m³</Label>
 
-                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="3" Height="26" VerticalAlignment="Top" Style="{StaticResource InfoLabel}" Grid.RowSpan="2" ToolTip="No vehicle is fully loaded, as a guide around 80% of available volume is loaded on average">Empty run</Label>
+                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="3" Height="26" VerticalAlignment="Top" Style="{StaticResource InfoLabel}" Grid.RowSpan="2" ToolTip="How full the vehicle is on average, applied to its weight or volume limit, whichever it reaches first. No vehicle is fully loaded; as a guide around 80% is loaded on average.">Load factor</Label>
                 <TextBox Name="txt_Empty" Grid.Column="2" Grid.Row="3" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_Empty_TextChanged" />
                 <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="3" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">%</Label>
 
@@ -86,6 +86,7 @@
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="15"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="15"/>
@@ -110,9 +111,9 @@
                 <TextBox Name="txt_MaxVolume" Grid.Column="2" Grid.Row="3" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_MaxVolume_TextChanged"/>
                 <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="3" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">m³</Label>
 
-                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="4" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="2">Fuel Consumption:</Label>
+                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="4" Height="27" VerticalAlignment="Top" Style="{StaticResource InfoLabel}" Grid.RowSpan="2" ToolTip="The distance the vehicle travels on one unit of fuel, e.g. km per litre of diesel. A 22t truck travels around 3-4 km/l.">Fuel Consumption:</Label>
                 <TextBox Name="txt_UnitPerkm" Grid.Column="2" Grid.Row="4" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_UnitPerkm_TextChanged"></TextBox>
-                <Label Name="lbl_unitPerkm" Grid.Column="2" Margin="160,1,10,0" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">l/km</Label>
+                <Label Name="lbl_unitPerkm" Grid.Column="2" Margin="160,1,10,0" Grid.Row="4" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">km/l</Label>
 
 
                 <TextBox Name="txt_MaxLoad" Grid.Column="2" Grid.Row="2" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_MaxLoad_TextChanged"/>
@@ -120,27 +121,31 @@
 
                 <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="6" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="2">Vehicle Construction:</Label>
                 <TextBox Name="txt_Construction" Grid.Column="2" Grid.Row="6" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_Construction_TextChanged"></TextBox>
-                <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">kgCO₂</Label>
+                <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="6" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">kgCO₂e</Label>
 
                 <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="7" Height="26" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="2">Total distance:</Label>
                 <TextBox Name="txt_MaxDistance" Grid.Column="2" Grid.Row="7" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_MaxDistance_TextChanged"></TextBox>
                 <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="7" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">km</Label>
 
+                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="8" Height="27" VerticalAlignment="Top" Style="{StaticResource InfoLabel}" Grid.RowSpan="2" ToolTip="Only used for a vehicle without a load or volume capacity, such as rail and shipping: the average emission per tonne of goods per km, which already includes empty running and part loads.">Tonne-km factor:</Label>
+                <TextBox Name="txt_TonneKm" Grid.Column="2" Grid.Row="8" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_TonneKm_TextChanged"></TextBox>
+                <Label Grid.Column="2" Margin="160,1,10,0" Grid.Row="8" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">gCO₂e/tonne-km</Label>
 
-                <Label Grid.Column="1" Grid.Row="9" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Fuel Type:</Label>
-                <ComboBox Name="cbb_Fuel"  Grid.Column="2" Grid.Row="9" Height="26" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="150" DropDownClosed="cbb_Fuel_DropDownClosed"></ComboBox>
 
-                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="10" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="2">Fuel CO₂e Content:</Label>
-                <TextBox Name="txt_FuelCO2" Grid.Column="2" Grid.Row="10" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_FuelCO2_TextChanged"></TextBox>
-                <Label Name="lbl_perUnit1"  Grid.Column="2" Margin="160,1,10,0" Grid.Row="10" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">kgCO₂/l</Label>
+                <Label Grid.Column="1" Grid.Row="10" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">Fuel Type:</Label>
+                <ComboBox Name="cbb_Fuel"  Grid.Column="2" Grid.Row="10" Height="26" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Style="{StaticResource ComboBoxFlatStyle}" Width="150" DropDownClosed="cbb_Fuel_DropDownClosed"></ComboBox>
 
-                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="11" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="2">Fuel Production:</Label>
-                <TextBox Name="txt_FuelProductionCO2" Grid.Column="2" Grid.Row="11" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_FuelProductionCO2_TextChanged" ></TextBox>
-                <Label Name="lbl_perUnit2" Grid.Column="2" Margin="160,1,10,0" Grid.Row="11" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">kgCO₂/l</Label>
+                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="11" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="2">Fuel CO₂e Content:</Label>
+                <TextBox Name="txt_FuelCO2" Grid.Column="2" Grid.Row="11" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_FuelCO2_TextChanged"></TextBox>
+                <Label Name="lbl_perUnit1"  Grid.Column="2" Margin="160,1,10,0" Grid.Row="11" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">kgCO₂e/l</Label>
 
-                <Label Grid.Column="1" Grid.Row="13" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,0" Style="{StaticResource bigStyle}">Description:</Label>
-                <TextBox Name="txt_Description" Grid.Row="13" Grid.Column="1"  Margin="5,35,0,5"  Style="{StaticResource flatTextBox}" SpellCheck.IsEnabled="True"  Grid.ColumnSpan="2" />
-                <Button Name="btn_EditDescription"  Grid.Row="13" Grid.Column="2" Height="25" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="btn_EditDescription_Click" >Edit...</Button>
+                <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="12" Height="27" VerticalAlignment="Top" Style="{StaticResource bigStyle}" Grid.RowSpan="2">Fuel Production:</Label>
+                <TextBox Name="txt_FuelProductionCO2" Grid.Column="2" Grid.Row="12" Margin="5,1,0,0" Height="26" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource flatTextBox}" IsReadOnly="False" LostFocus="txt_FuelProductionCO2_TextChanged" ></TextBox>
+                <Label Name="lbl_perUnit2" Grid.Column="2" Margin="160,1,10,0" Grid.Row="12" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource bigStyle}">kgCO₂e/l</Label>
+
+                <Label Grid.Column="1" Grid.Row="14" Height="27" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,5,0,0" Style="{StaticResource bigStyle}">Description:</Label>
+                <TextBox Name="txt_Description" Grid.Row="14" Grid.Column="1"  Margin="5,35,0,5"  Style="{StaticResource flatTextBox}" SpellCheck.IsEnabled="True"  Grid.ColumnSpan="2" />
+                <Button Name="btn_EditDescription"  Grid.Row="14" Grid.Column="2" Height="25" VerticalAlignment="Top" Width="40" Margin="5,5,0,5" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle}" Click="btn_EditDescription_Click" >Edit...</Button>
 
 
 
@@ -170,7 +175,7 @@
 
                 <Label Grid.Column="1" Margin="0,1,0,0" Grid.Row="3" Height="26" VerticalAlignment="Top" Style="{StaticResource baseStyle}" Grid.RowSpan="2">Value per kg:</Label>
                 <TextBox Name="txt_Value" Grid.Column="2" Grid.Row="3" Margin="5,0,0,0" Height="26" Width="98" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource textboxReadOnlyStyle}" IsReadOnly="True"></TextBox>
-                <Label Grid.Column="2" Margin="180,0,0,0" Grid.Row="3" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂/kg</Label>
+                <Label Grid.Column="2" Margin="180,0,0,0" Grid.Row="3" Height="26" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{StaticResource baseStyle}">kgCO₂e/kg</Label>
 
                 <Button Name="btn_Calculate" Grid.Row="3" Grid.Column="2" Margin="0,0,5,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="70" Height="30" Style="{StaticResource ButtonStyle}" Click="btn_Calculate_Click" >Calculate</Button>
 

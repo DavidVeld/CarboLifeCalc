@@ -17,6 +17,11 @@ namespace CarboLifeAPI.Data
         public double totalDistance { get; set; }
         public string defaultFuel { get; set; }
         public string description { get; set; }
+        /// <summary>
+        /// Average gCO₂e per tonne of goods per km, used for a vehicle without a load or volume
+        /// capacity (rail, shipping). See CarboA4Properties.
+        /// </summary>
+        public double gCO2PerTonneKm { get; set; }
 
         public Vehicle()
         {
@@ -28,6 +33,12 @@ namespace CarboLifeAPI.Data
             totalDistance = 250000;
             defaultFuel = "Diesel";
             description = "An unspecified Vehicle";
+            gCO2PerTonneKm = 0;
+        }
+
+        public Vehicle Copy()
+        {
+            return (Vehicle)this.MemberwiseClone();
         }
     }
 
@@ -45,6 +56,11 @@ namespace CarboLifeAPI.Data
             emission = 2.62;
             production = 0.4;
             unit = "l";
+        }
+
+        public Fuel Copy()
+        {
+            return (Fuel)this.MemberwiseClone();
         }
     }
 

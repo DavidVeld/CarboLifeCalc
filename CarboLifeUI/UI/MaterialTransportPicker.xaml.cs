@@ -38,7 +38,9 @@ namespace CarboLifeUI.UI
 
         public MaterialTransportPicker(CarboA4Properties c2Properties, CarboMaterial materialToBeTransported)
         {
-            this.a4Properties = c2Properties;
+            //Edit a copy: the caller takes a4Properties back only on Accept, so Cancel leaves
+            //the material's own settings exactly as they were.
+            this.a4Properties = c2Properties.Copy();
             if (c2Properties.materialDensity != materialToBeTransported.Density)
             {
                 MessageBoxResult dialogResult = MessageBox.Show("The transportation density does not match the material density, would you like to use: " + materialToBeTransported.Density + " kg/m³ as a transportation density value?", "Warning", MessageBoxButton.YesNo);
@@ -105,7 +107,7 @@ namespace CarboLifeUI.UI
             }
             else
             {
-                MessageBox.Show("File: " + myPath + " could not be found, make sure you have the Eol list located in indicated folder");
+                MessageBox.Show("File: " + myPath + " could not be found, make sure you have the fuel list located in indicated folder");
             }
 
             return result;
@@ -144,6 +146,7 @@ namespace CarboLifeUI.UI
                     double carboCostNew = DataExportUtils.ReadCsvDouble(dr[4].ToString());
                     double totalDistance = DataExportUtils.ReadCsvDouble(dr[5].ToString());
                     string defaultFuel = dr[6].ToString();
+                    double gCO2PerTonneKm = DataExportUtils.ReadCsvDouble(dr[7].ToString());
                     string description = dr[8].ToString();
 
                     newVehicle.name = name;
@@ -154,13 +157,14 @@ namespace CarboLifeUI.UI
                     newVehicle.totalDistance = totalDistance;
                     newVehicle.defaultFuel = defaultFuel;
                     newVehicle.description = description;
+                    newVehicle.gCO2PerTonneKm = gCO2PerTonneKm;
 
                     result.Add(newVehicle);
                 }
             }
             else
             {
-                MessageBox.Show("File: " + myPath + " could not be found, make sure you have the Eol list located in indicated folder");
+                MessageBox.Show("File: " + myPath + " could not be found, make sure you have the transport list located in indicated folder");
             }
 
             return result;
@@ -183,7 +187,9 @@ namespace CarboLifeUI.UI
             txt_MaxLoad.Text = a4Properties.vehicleSettings.maxLoad.ToString();
             txt_MaxVolume.Text = a4Properties.vehicleSettings.maxVolume.ToString();
             txt_UnitPerkm.Text = a4Properties.vehicleSettings.kmPer.ToString();
-            lbl_unitPerkm.Content = a4Properties.vehicleFuel.unit + "/km";
+            //kmPer is distance per unit of fuel, km/l for diesel: the calculation divides by it.
+            lbl_unitPerkm.Content = "km/" + a4Properties.vehicleFuel.unit;
+            txt_TonneKm.Text = a4Properties.vehicleSettings.gCO2PerTonneKm.ToString();
 
             txt_Construction.Text = a4Properties.vehicleSettings.carboCostNew.ToString();
             txt_MaxDistance.Text = a4Properties.vehicleSettings.totalDistance.ToString();
@@ -194,17 +200,26 @@ namespace CarboLifeUI.UI
             cbb_Fuel.Text = a4Properties.vehicleFuel.name;
             txt_FuelCO2.Text = a4Properties.vehicleFuel.emission.ToString();
             txt_FuelProductionCO2.Text = a4Properties.vehicleFuel.production.ToString();
-            lbl_perUnit1.Content = "kgCO₂/" + a4Properties.vehicleFuel.unit;
-            lbl_perUnit2.Content = "kgCO₂/" + a4Properties.vehicleFuel.unit;
+            lbl_perUnit1.Content = "kgCO₂e/" + a4Properties.vehicleFuel.unit;
+            lbl_perUnit2.Content = "kgCO₂e/" + a4Properties.vehicleFuel.unit;
 
             txt_Calculation.Text = a4Properties.calcResult;
-            txt_Value.Text = a4Properties.value.ToString();
+            txt_Value.Text = a4Properties.isValid ? a4Properties.value.ToString() : "-";
 
             noUpdates = false;
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
+            a4Properties.calculate();
+
+            if (a4Properties.isValid == false)
+            {
+                loadSettings();
+                MessageBox.Show(a4Properties.error, "No transport value", MessageBoxButton.OK);
+                return;
+            }
+
             isAccepted = true;
             this.Close();
         }
@@ -222,11 +237,12 @@ namespace CarboLifeUI.UI
             {
                 try
                 {
-                    Vehicle selectedValue = vehicleList.First(item => item.name == nameToFind);
+                    Vehicle selectedValue = vehicleList.FirstOrDefault(item => item.name == nameToFind);
 
                     if (selectedValue != null)
                     {
-                        a4Properties.vehicleSettings = selectedValue;
+                        //Copies, so editing the fields below never changes the template list.
+                        a4Properties.vehicleSettings = selectedValue.Copy();
 
                         Fuel fuel = selectFuel(selectedValue.defaultFuel);
                         if (fuel != null)
@@ -252,13 +268,10 @@ namespace CarboLifeUI.UI
             {
                 try
                 {
-                    Fuel selectedValue = fuelList.First(item => item.name == defaultFuel);
+                    Fuel selectedValue = fuelList.FirstOrDefault(item => item.name == defaultFuel);
 
                     if (selectedValue != null)
-                    {
-                        result = selectedValue;
-                        loadSettings();
-                    }
+                        result = selectedValue.Copy();
                 }
                 catch
                 { }
@@ -396,6 +409,16 @@ namespace CarboLifeUI.UI
             TextBox tb = (TextBox)sender;
             {
                 a4Properties.vehicleFuel.production = Utils.ConvertMeToDouble(tb.Text);
+                a4Properties.calculate();
+                loadSettings();
+            }
+        }
+
+        private void txt_TonneKm_TextChanged(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            {
+                a4Properties.vehicleSettings.gCO2PerTonneKm = Utils.ConvertMeToDouble(tb.Text);
                 a4Properties.calculate();
                 loadSettings();
             }
