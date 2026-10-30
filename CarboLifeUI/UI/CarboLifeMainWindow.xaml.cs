@@ -67,10 +67,6 @@ namespace CarboLifeUI.UI
         public string ExcelExportPath { get; private set; }
         public string ExcelExportPrefix { get; private set; }
 
-        public bool ExportExcel_Completed { get; private set; }
-        //What the finished export reported, read once ExportExcel_Completed is set.
-        public bool ExportExcel_Written { get; private set; }
-        public Exception ExportExcel_Error { get; private set; }
         public bool ExcelExportResult { get; private set; }
         public bool ExcelExportElements { get; private set; }
         public bool ExcelExportMaterials { get; private set; }
@@ -733,24 +729,24 @@ Alternatively you can purchase IssueBuddyTools and you will find a key to remove
                 ExcelExportMaterials = exportMenu.materials;
                 ExcelExportProject = exportMenu.project;
 
-                //Async Attempt 2:
-
                 if (carboLifeProject != null)
                 {
                     carboLifeProject.CalculateProject();
-
-                    //int ProgressToBeupdated = 100;
 
                     ExcelExportPath = DataExportUtils.GetSaveAsLocation();
 
                     if (ExcelExportPath != null && ExcelExportPath != "")
                     {
-                        BackgroundWorker ExportThread = new BackgroundWorker();
-                        ExportThread.WorkerReportsProgress = true;
-                        ExportThread.DoWork += ExportThread_DoWork;
-                        ExportThread.ProgressChanged += ExportThreadProgressChanged;
-                        ExportThread.RunWorkerCompleted += ExportThreadCompleted;
-                        ExportThread.RunWorkerAsync(new object());
+                        //One export at a time: a second would write the same files.
+                        mnu_ExportToExcel.IsEnabled = false;
+                        pgr_Exporter.Value = 0;
+
+                        BackgroundWorker exportWorker = new BackgroundWorker();
+                        exportWorker.WorkerReportsProgress = true;
+                        exportWorker.DoWork += ExportWorker_DoWork;
+                        exportWorker.ProgressChanged += ExportWorker_ProgressChanged;
+                        exportWorker.RunWorkerCompleted += ExportWorker_Completed;
+                        exportWorker.RunWorkerAsync();
                     }
                     else
                     {
@@ -760,100 +756,43 @@ Alternatively you can purchase IssueBuddyTools and you will find a key to remove
 
             }
         }
-        void ExportThread_DoWork(object sender, DoWorkEventArgs e)
+
+        private void ExportWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (ExcelExportPath != null && ExcelExportPath != "")
-            {
-                ExportExcel_Completed = false;
-                ExportExcel_Written = false;
-                ExportExcel_Error = null;
+            BackgroundWorker worker = (BackgroundWorker)sender;
 
-                BackgroundWorker ExportFile = new BackgroundWorker();
-                ExportFile.WorkerReportsProgress = true;
-                ExportFile.DoWork += ExportFile_DoWork;
-                ExportFile.RunWorkerCompleted += ExportFile_Completed;
-                ExportFile.RunWorkerAsync(new object());
-
-                while (ExportExcel_Completed == false)
-                {
-                    for (int i = 0; i < 100; i++)
-                    {
-                        Thread.Sleep(100);
-                        (sender as BackgroundWorker).ReportProgress(i);
-                        if (i == 99)
-                            i = 0;
-                        if (ExportExcel_Completed == true)
-                            break;
-                    }
-                }
-            }
-            //pgr_Exporter.Value = 0;
-            //end export thread
+            //ExportToCSV reports as it writes rows, and only when the percentage moves, so the
+            //bar follows the export itself. ReportProgress hands each value to the UI thread.
+            e.Result = DataExportUtils.ExportToCSV(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials, ExcelExportProject,
+                percent => worker.ReportProgress(percent));
         }
 
-        private void ExportThreadCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void ExportWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            pgr_Exporter.Value = e.ProgressPercentage;
+        }
+
+        private void ExportWorker_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
             pgr_Exporter.Value = 0;
+            mnu_ExportToExcel.IsEnabled = true;
 
-            string exportpath = System.IO.Path.GetDirectoryName(ExcelExportPath);
-            string prefix = System.IO.Path.GetFileNameWithoutExtension(ExcelExportPath);
-
-            if (prefix != "")
-                prefix = prefix + "_";
-
-            string exportpathResult = exportpath + "\\" + prefix + "Results.csv";
-            string exportpathElements = exportpath + "\\" + prefix + "Elements.csv";
-            string exportpathMaterials = exportpath + "\\" + prefix + "Materials.csv";
-            string exportpathProject = exportpath + "\\" + prefix + "Project.csv";
-
-
-
-            if (ExportExcel_Error != null)
+            //e.Result throws when the worker failed, so it is only read without an error.
+            if (e.Error != null)
             {
-                System.Windows.MessageBox.Show("The CSV export failed:" + Environment.NewLine + ExportExcel_Error.Message, "Export failed", MessageBoxButton.OK);
+                System.Windows.MessageBox.Show("The CSV export failed:" + Environment.NewLine + e.Error.Message, "Export failed", MessageBoxButton.OK);
                 return;
             }
 
             //The files existing is no proof of this export: a declined overwrite or a locked file
             //leaves an earlier export in place. ExportToCSV has already told the user why.
-            if (ExportExcel_Written == false)
+            if (!(e.Result is bool written && written))
                 return;
 
-            if (File.Exists(exportpathResult) || File.Exists(exportpathElements) || File.Exists(exportpathMaterials) || File.Exists(exportpathProject))
-            {
-                System.Windows.MessageBox.Show("CSV export successful. Click OK to open export directory.", "Success!", MessageBoxButton.OK);
-                System.Diagnostics.Process.Start("explorer.exe", exportpath);
-            }
+            string exportpath = System.IO.Path.GetDirectoryName(ExcelExportPath);
 
-        }
-        void ExportThreadProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            pgr_Exporter.Value = e.ProgressPercentage;
-        }
-
-        //The file works:
-        private void ExportFile_Completed(object sender, RunWorkerCompletedEventArgs e)
-        {
-            //Before the Completed flag, which the waiting export thread polls. e.Result throws
-            //when the worker failed, so it is only read without an error.
-            if (e.Error != null)
-                ExportExcel_Error = e.Error;
-            else
-                ExportExcel_Written = e.Result is bool written && written;
-
-            ExportExcel_Completed = true;
-            //MessageBox.Show("Export completed");
-
-            //string dirPath = System.IO.Path.GetDirectoryName(ExcelExportPath);
-            //if(System.IO.Directory.Exists(dirPath))
-            //    System.Diagnostics.Process.Start("explorer.exe", dirPath);
-
-        }
-        private void ExportFile_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //DataExportUtils.ExportToExcel(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials);
-            e.Result = DataExportUtils.ExportToCSV(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials, ExcelExportProject);
-
+            System.Windows.MessageBox.Show("CSV export successful. Click OK to open export directory.", "Success!", MessageBoxButton.OK);
+            System.Diagnostics.Process.Start("explorer.exe", exportpath);
         }
 
         private void mnu_Settings_Click(object sender, RoutedEventArgs e)
