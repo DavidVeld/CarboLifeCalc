@@ -684,7 +684,14 @@ namespace CarboLifeAPI
         }
         */
 
-        public static void ExportToCSV(CarboProject carboLifeProject, string cvsExportPath, bool exportResult, bool exportElements, bool exportMaterials, bool exportProject)
+        /// <summary>
+        /// Writes the selected CSV files. Returns false when nothing was written: the folder is
+        /// missing, the user declined to overwrite, or a file to be written is locked. The
+        /// caller cannot tell this from the files on disk, as older exports may be sitting there.
+        /// reportProgress, if given, receives the overall percentage (0-100) as rows are written,
+        /// on the calling thread and only when the percentage changes.
+        /// </summary>
+        public static bool ExportToCSV(CarboProject carboLifeProject, string cvsExportPath, bool exportResult, bool exportElements, bool exportMaterials, bool exportProject, Action<int> reportProgress = null)
         {
             string exportpath = Path.GetDirectoryName(cvsExportPath);
             string prefix = Path.GetFileNameWithoutExtension(cvsExportPath);
@@ -692,7 +699,7 @@ namespace CarboLifeAPI
             //Check if user has excel
             if (!Directory.Exists(exportpath) == true)
             {
-                return;
+                return false;
             }
 
             if (prefix != "")
@@ -711,22 +718,82 @@ namespace CarboLifeAPI
             {
                 var result = System.Windows.MessageBox.Show("Do you want to override the existing files?", "Question", MessageBoxButton.YesNo);
                 if (result != MessageBoxResult.Yes) //Anything but YES should cancel the command
-                    return;
+                    return false;
             }
+
+            //Each writer skips a locked file without a word, which would leave the old export in
+            //place looking like the new one. Check them all before writing any.
+            List<string> lockedFiles = new List<string>();
+
+            if (exportResult == true && File.Exists(exportpathResult) && IsFileLocked(exportpathResult))
+                lockedFiles.Add(exportpathResult);
+            if (exportElements == true && File.Exists(exportpathElements) && IsFileLocked(exportpathElements))
+                lockedFiles.Add(exportpathElements);
+            if (exportMaterials == true && File.Exists(exportpathMaterials) && IsFileLocked(exportpathMaterials))
+                lockedFiles.Add(exportpathMaterials);
+            if (exportProject == true && File.Exists(exportpathProject) && IsFileLocked(exportpathProject))
+                lockedFiles.Add(exportpathProject);
+
+            if (lockedFiles.Count > 0)
+            {
+                System.Windows.MessageBox.Show("These files are open in another program, close them and try again:" + Environment.NewLine + Environment.NewLine +
+                    string.Join(Environment.NewLine, lockedFiles), "Files not exported", MessageBoxButton.OK);
+                return false;
+            }
+
+            //Each selected file gets an equal share of the bar, filled by the writer as it works
+            //through its rows (a fraction from 0 to 1 of that one file).
+            int fileCount = (exportResult ? 1 : 0) + (exportElements ? 1 : 0) + (exportMaterials ? 1 : 0) + (exportProject ? 1 : 0);
+            int filesDone = 0;
+            int lastPercent = -1;
+
+            Action<double> fileProgress = fraction =>
+            {
+                if (reportProgress == null || fileCount == 0)
+                    return;
+
+                fraction = Math.Max(0, Math.Min(1, fraction));
+                int percent = (int)((filesDone + fraction) * 100 / fileCount);
+
+                if (percent != lastPercent)
+                {
+                    lastPercent = percent;
+                    reportProgress(percent);
+                }
+            };
+
+            fileProgress(0);
 
             //if no files were to be overwritten or no exsting files were found, then you woll arrive here:
             if (exportResult == true)
-                CreateResultsCVSFile(carboLifeProject, exportpathResult);
+            {
+                CreateResultsCVSFile(carboLifeProject, exportpathResult, fileProgress);
+                filesDone++;
+            }
 
             if (exportElements == true)
-                CreateElementsCVSFile(carboLifeProject, exportpathElements);
+            {
+                CreateElementsCVSFile(carboLifeProject, exportpathElements, fileProgress);
+                filesDone++;
+            }
 
             if (exportMaterials == true)
-                CreateMaterialDatabaseCVSFile(carboLifeProject.CarboDatabase, exportpathMaterials);
+            {
+                CreateMaterialDatabaseCVSFile(carboLifeProject.CarboDatabase, exportpathMaterials, fileProgress);
+                filesDone++;
+            }
 
             if (exportProject == true)
+            {
+                //A single row: nothing to measure inside it.
                 CreateProjectDatabaseCVSFile(carboLifeProject, exportpathProject);
+                filesDone++;
+            }
 
+            //Every file done: this is the 100%.
+            fileProgress(0);
+
+            return true;
         }
 
             // 3. PROCESS ROWS
@@ -1154,7 +1221,7 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             target.calculateSeq = baseProject.calculateSeq;
             target.calculateSubStructure = baseProject.calculateSubStructure;
         }
-        private static void CreateResultsCVSFile(CarboProject carboLifeProject, string exportPath)
+        private static void CreateResultsCVSFile(CarboProject carboLifeProject, string exportPath, Action<double> fileProgress = null)
         {
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
                 return;
@@ -1191,8 +1258,13 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                 ).ToLine());
 
             //Advanced
-            foreach (CarboGroup grp in carboLifeProject.getGroupList)
+            ObservableCollection<CarboGroup> groups = carboLifeProject.getGroupList;
+            int rowsDone = 0;
+
+            foreach (CarboGroup grp in groups)
             {
+                fileProgress?.Invoke((double)rowsDone++ / groups.Count);
+
                 try
                 {
                     CsvLine row = new CsvLine();
@@ -1250,7 +1322,7 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             WriteCVSFile(fileString.ToString(), exportPath);
 
         }
-        private static void CreateElementsCVSFile(CarboProject carboLifeProject, string exportPath)
+        private static void CreateElementsCVSFile(CarboProject carboLifeProject, string exportPath, Action<double> fileProgress = null)
         {
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
                 return;
@@ -1275,8 +1347,16 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
             //be here has gone.
             JsCarboProject jsProject = JsonExportUtils.converToJsProject(carboLifeProject);
 
+            //The conversion above walks every element too and cannot report from inside, so it
+            //is counted as the first half of this file and the rows as the second.
+            fileProgress?.Invoke(0.5);
+            int rowsDone = 0;
+            int rowCount = jsProject.elementList.Count;
+
             foreach (JsCarboElement el in jsProject.elementList)
             {
+                fileProgress?.Invoke(0.5 + 0.5 * rowsDone++ / rowCount);
+
                 CsvLine row = new CsvLine();
 
                 row.Add(el.Id);                     //0
@@ -1637,7 +1717,7 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
         }
 
         //MaterialDatabase
-        public static bool CreateMaterialDatabaseCVSFile(CarboDatabase materialDataBase, string exportPath)
+        public static bool CreateMaterialDatabaseCVSFile(CarboDatabase materialDataBase, string exportPath, Action<double> fileProgress = null)
         {
             if (File.Exists(exportPath) && IsFileLocked(exportPath) == true)
                 return false;
@@ -1677,8 +1757,13 @@ private static void CreateProjectCombinedExportCSV(List<CarboProject> projectLis
                 ).ToLine());
 
             //Advanced
+            int rowsDone = 0;
+            int rowCount = materialDataBase.CarboMaterialList.Count;
+
             foreach (CarboMaterial cm in materialDataBase.CarboMaterialList)
             {
+                fileProgress?.Invoke((double)rowsDone++ / rowCount);
+
                 try
                 {
                     CsvLine row = new CsvLine();

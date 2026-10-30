@@ -438,8 +438,16 @@ namespace CarboLifeAPI
         {
             string link = text;
             if (link != "")
-                if (link.StartsWith("http://") | link.StartsWith("https://"))
-                    Process.Start(link);
+                if (link.StartsWith("http://") || link.StartsWith("https://"))
+                {
+                    //UseShellExecute has to be set explicitly. It defaults to true on .NET
+                    //Framework and false on .NET Core, where Process.Start(url) throws instead
+                    //of opening the browser.
+                    ProcessStartInfo startInfo = new ProcessStartInfo(link);
+                    startInfo.UseShellExecute = true;
+
+                    Process.Start(startInfo);
+                }
         }
 
         public static System.Windows.Media.Color getColour(double max, double min, double value, string fieldName)

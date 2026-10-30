@@ -377,7 +377,7 @@
     </None>
   </ItemGroup>
   <PropertyGroup>
-    <FileVersion>1.9.9.5</FileVersion>
+    <FileVersion>1.9.9.6</FileVersion>
     <AssemblyVersion></AssemblyVersion>
   </PropertyGroup>
   <!--
