@@ -684,7 +684,12 @@ namespace CarboLifeAPI
         }
         */
 
-        public static void ExportToCSV(CarboProject carboLifeProject, string cvsExportPath, bool exportResult, bool exportElements, bool exportMaterials, bool exportProject)
+        /// <summary>
+        /// Writes the selected CSV files. Returns false when nothing was written: the folder is
+        /// missing, the user declined to overwrite, or a file to be written is locked. The
+        /// caller cannot tell this from the files on disk, as older exports may be sitting there.
+        /// </summary>
+        public static bool ExportToCSV(CarboProject carboLifeProject, string cvsExportPath, bool exportResult, bool exportElements, bool exportMaterials, bool exportProject)
         {
             string exportpath = Path.GetDirectoryName(cvsExportPath);
             string prefix = Path.GetFileNameWithoutExtension(cvsExportPath);
@@ -692,7 +697,7 @@ namespace CarboLifeAPI
             //Check if user has excel
             if (!Directory.Exists(exportpath) == true)
             {
-                return;
+                return false;
             }
 
             if (prefix != "")
@@ -711,7 +716,27 @@ namespace CarboLifeAPI
             {
                 var result = System.Windows.MessageBox.Show("Do you want to override the existing files?", "Question", MessageBoxButton.YesNo);
                 if (result != MessageBoxResult.Yes) //Anything but YES should cancel the command
-                    return;
+                    return false;
+            }
+
+            //Each writer skips a locked file without a word, which would leave the old export in
+            //place looking like the new one. Check them all before writing any.
+            List<string> lockedFiles = new List<string>();
+
+            if (exportResult == true && File.Exists(exportpathResult) && IsFileLocked(exportpathResult))
+                lockedFiles.Add(exportpathResult);
+            if (exportElements == true && File.Exists(exportpathElements) && IsFileLocked(exportpathElements))
+                lockedFiles.Add(exportpathElements);
+            if (exportMaterials == true && File.Exists(exportpathMaterials) && IsFileLocked(exportpathMaterials))
+                lockedFiles.Add(exportpathMaterials);
+            if (exportProject == true && File.Exists(exportpathProject) && IsFileLocked(exportpathProject))
+                lockedFiles.Add(exportpathProject);
+
+            if (lockedFiles.Count > 0)
+            {
+                System.Windows.MessageBox.Show("These files are open in another program, close them and try again:" + Environment.NewLine + Environment.NewLine +
+                    string.Join(Environment.NewLine, lockedFiles), "Files not exported", MessageBoxButton.OK);
+                return false;
             }
 
             //if no files were to be overwritten or no exsting files were found, then you woll arrive here:
@@ -727,6 +752,7 @@ namespace CarboLifeAPI
             if (exportProject == true)
                 CreateProjectDatabaseCVSFile(carboLifeProject, exportpathProject);
 
+            return true;
         }
 
             // 3. PROCESS ROWS

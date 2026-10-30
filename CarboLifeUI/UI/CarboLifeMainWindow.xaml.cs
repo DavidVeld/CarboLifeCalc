@@ -68,6 +68,9 @@ namespace CarboLifeUI.UI
         public string ExcelExportPrefix { get; private set; }
 
         public bool ExportExcel_Completed { get; private set; }
+        //What the finished export reported, read once ExportExcel_Completed is set.
+        public bool ExportExcel_Written { get; private set; }
+        public Exception ExportExcel_Error { get; private set; }
         public bool ExcelExportResult { get; private set; }
         public bool ExcelExportElements { get; private set; }
         public bool ExcelExportMaterials { get; private set; }
@@ -762,6 +765,8 @@ Alternatively you can purchase IssueBuddyTools and you will find a key to remove
             if (ExcelExportPath != null && ExcelExportPath != "")
             {
                 ExportExcel_Completed = false;
+                ExportExcel_Written = false;
+                ExportExcel_Error = null;
 
                 BackgroundWorker ExportFile = new BackgroundWorker();
                 ExportFile.WorkerReportsProgress = true;
@@ -803,6 +808,17 @@ Alternatively you can purchase IssueBuddyTools and you will find a key to remove
 
 
 
+            if (ExportExcel_Error != null)
+            {
+                System.Windows.MessageBox.Show("The CSV export failed:" + Environment.NewLine + ExportExcel_Error.Message, "Export failed", MessageBoxButton.OK);
+                return;
+            }
+
+            //The files existing is no proof of this export: a declined overwrite or a locked file
+            //leaves an earlier export in place. ExportToCSV has already told the user why.
+            if (ExportExcel_Written == false)
+                return;
+
             if (File.Exists(exportpathResult) || File.Exists(exportpathElements) || File.Exists(exportpathMaterials) || File.Exists(exportpathProject))
             {
                 System.Windows.MessageBox.Show("CSV export successful. Click OK to open export directory.", "Success!", MessageBoxButton.OK);
@@ -818,6 +834,13 @@ Alternatively you can purchase IssueBuddyTools and you will find a key to remove
         //The file works:
         private void ExportFile_Completed(object sender, RunWorkerCompletedEventArgs e)
         {
+            //Before the Completed flag, which the waiting export thread polls. e.Result throws
+            //when the worker failed, so it is only read without an error.
+            if (e.Error != null)
+                ExportExcel_Error = e.Error;
+            else
+                ExportExcel_Written = e.Result is bool written && written;
+
             ExportExcel_Completed = true;
             //MessageBox.Show("Export completed");
 
@@ -829,7 +852,7 @@ Alternatively you can purchase IssueBuddyTools and you will find a key to remove
         private void ExportFile_DoWork(object sender, DoWorkEventArgs e)
         {
             //DataExportUtils.ExportToExcel(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials);
-            DataExportUtils.ExportToCSV(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials, ExcelExportProject);
+            e.Result = DataExportUtils.ExportToCSV(carboLifeProject, ExcelExportPath, ExcelExportResult, ExcelExportElements, ExcelExportMaterials, ExcelExportProject);
 
         }
 
