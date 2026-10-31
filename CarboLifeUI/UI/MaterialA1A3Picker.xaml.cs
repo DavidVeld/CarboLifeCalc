@@ -27,16 +27,28 @@ namespace CarboLifeUI.UI
         public bool isAccepted;
         private A1A3Collection a1a3Collection;
 
+        /// <summary>
+        /// The material's current A1-A3 source on the way in, the chosen table row on the way
+        /// out. Only replaced by a row the user picked, never by a blank.
+        /// </summary>
         public A1A3Element a1a3ElementSelected;
+
+        /// <summary>The selected row in the results, null until one is picked.</summary>
+        private A1A3Element chosen;
+
+        private const string AllCategories = "All";
+
+        /// <summary>Set while the lists are filled from code, so their events stay quiet.</summary>
+        private bool loading;
 
         public MaterialA1A3Picker(A1A3Element a1a3Element)
         {
             isAccepted = false;
             this.a1a3ElementSelected = a1a3Element;
 
+            //LoadAll does not throw: what it could not read is in LoadErrors.
             a1a3Collection = new A1A3Collection();
-            if(a1a3Collection != null)
-                a1a3Collection.LoadAll();
+            a1a3Collection.LoadAll();
 
             InitializeComponent();
 
@@ -45,51 +57,89 @@ namespace CarboLifeUI.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             List<string> groupNames = a1a3Collection.GetGroupNames();
-            List<string> categorynames = a1a3Collection.GetCategoryList(groupNames[0]);
 
-            //Check if a element leeds to be loaded, if not show blank screen
+            if (a1a3Collection.LoadErrors.Count > 0)
+            {
+                MessageBox.Show("Some A1-A3 data could not be loaded:" + Environment.NewLine + Environment.NewLine +
+                    string.Join(Environment.NewLine, a1a3Collection.LoadErrors), "A1-A3 tables", MessageBoxButton.OK);
+            }
+
+            refreshInterface();
+
+            if (groupNames.Count == 0)
+            {
+                MessageBox.Show("No A1-A3 tables were found, so there is nothing to choose from.", "A1-A3 tables", MessageBoxButton.OK);
+                return;
+            }
+
+            loading = true;
 
             foreach (string grp in groupNames)
             {
                 cbb_Group.Items.Add(grp);
             }
 
-            if (a1a3ElementSelected != null)
+            //Open where the material's current source is, when it is still in the tables.
+            A1A3Element current = findCurrent();
+
+            string group = current != null ? current.Group : groupNames[0];
+            cbb_Group.SelectedItem = group;
+            loadCategories(group);
+            cbb_Categories.SelectedItem = current != null ? current.Category : AllCategories;
+
+            loading = false;
+
+            loadPossibleElements();
+
+            if (current != null)
             {
-                a1a3ElementSelected = new A1A3Element();
+                lib_Materials.SelectedItem = current;
+                lib_Materials.ScrollIntoView(current);
+            }
+        }
+
+        /// <summary>The table row the material's current source came from, or null.</summary>
+        private A1A3Element findCurrent()
+        {
+            if (a1a3ElementSelected == null || string.IsNullOrWhiteSpace(a1a3ElementSelected.Name))
+                return null;
+
+            string name = a1a3ElementSelected.Name.Trim();
+
+            foreach (A1A3List list in a1a3Collection.a1a3List)
+            {
+                if (a1a3ElementSelected.Group != null && list.Name != a1a3ElementSelected.Group)
+                    continue;
+
+                foreach (A1A3Element element in list.Elements)
+                {
+                    if (element.Name == name)
+                        return element;
+                }
             }
 
-            if (a1a3ElementSelected.Group != null)
+            return null;
+        }
+
+        private void loadCategories(string group)
+        {
+            cbb_Categories.Items.Clear();
+
+            foreach (string cat in a1a3Collection.GetCategoryList(group))
             {
-                cbb_Group.Text = a1a3ElementSelected.Group;
-            }
-            else
-            {
-                cbb_Group.Text = groupNames[0];
+                cbb_Categories.Items.Add(cat);
             }
 
-            if (a1a3ElementSelected.Category != null)
-            {
-                cbb_Categories.Text = a1a3ElementSelected.Category;
-            }
-            else
-            {
-                cbb_Categories.Text = "ALL";
-            }
-
-            //lib_Materials.SelectedItem = a1a3ElementSelected;
+            cbb_Categories.Items.Add(AllCategories);
+            cbb_Categories.SelectedItem = AllCategories;
         }
 
 
         private void lib_Materials_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            A1A3Element a1a3Element = lib_Materials.SelectedItem as A1A3Element;
-            if (a1a3Element != null)
-            {
-                a1a3ElementSelected = a1a3Element;
-                //txt_Search.Text = a1a3Element.Name;
-                refreshInterface();
-            }
+            //Only a row the user can see counts: a refresh that clears the list clears the choice.
+            chosen = lib_Materials.SelectedItem as A1A3Element;
+            refreshInterface();
         }
 
         /// <summary>A search box filters as you type, through a real debounce. See MaterialEditor.</summary>
@@ -102,46 +152,76 @@ namespace CarboLifeUI.UI
 
         private void loadPossibleElements()
         {
+            if (loading)
+                return;
+
+            A1A3Element keep = chosen;
+
             lib_Materials.ItemsSource = null;
             lib_Materials.Items.Clear();
 
+            string group = cbb_Group.SelectedItem as string ?? "";
+            string category = cbb_Categories.SelectedItem as string ?? AllCategories;
+            string search = (txt_Search.Text ?? "").Trim();
+
             foreach (A1A3List list in a1a3Collection.a1a3List)
             {
+                if (list.Name != group)
+                    continue;
 
-                if (cbb_Group.Text == list.Name && cbb_Group.Text != "")
+                foreach (A1A3Element a1a3Element in list.Elements)
                 {
-                    foreach (A1A3Element a1a3Element in list.Elements)
-                    {
-                        if (a1a3Element.Category == cbb_Categories.Text ||
-                            cbb_Categories.Text == "" ||
-                            cbb_Categories.Text == "All")
-                        {
-                            bool contains = a1a3Element.Name.IndexOf(txt_Search.Text, StringComparison.OrdinalIgnoreCase) >= 0;
+                    if (category != AllCategories && a1a3Element.Category != category)
+                        continue;
 
-                            if (contains == true ||
-                                txt_Search.Text == "")
-                            {
-                                lib_Materials.Items.Add(a1a3Element);
-                            }
-                        }
-                    }
-
-                    break;
+                    if (Matches(a1a3Element, search))
+                        lib_Materials.Items.Add(a1a3Element);
                 }
+
+                break;
             }
+
+            //Still in the list after a new search: keep it selected.
+            if (keep != null && lib_Materials.Items.Contains(keep))
+                lib_Materials.SelectedItem = keep;
+        }
+
+        /// <summary>The search text in the name, category or description, ignoring case.</summary>
+        private static bool Matches(A1A3Element element, string search)
+        {
+            if (search == "")
+                return true;
+
+            return Contains(element.Name, search) || Contains(element.Category, search) || Contains(element.Description, search);
+        }
+
+        private static bool Contains(string text, string search)
+        {
+            return text != null && text.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private void refreshInterface()
         {
-            txt_Name.Text = a1a3ElementSelected.Name;
-            txt_Description.Text = a1a3ElementSelected.Description;
-            txt_Category.Text = a1a3ElementSelected.Category;
-            txt_Density.Text = a1a3ElementSelected.Density.ToString();
-            txt_A1A3.Text = a1a3ElementSelected.ECI_A1A3.ToString();
+            //The chosen row, or the material's current source until one is chosen.
+            A1A3Element shown = chosen ?? a1a3ElementSelected;
+
+            txt_Name.Text = shown?.Name ?? "";
+            txt_Description.Text = shown?.Description ?? "";
+            txt_Category.Text = shown?.Category ?? "";
+            txt_Density.Text = shown == null ? "" : (shown.Density > 0 ? shown.Density.ToString() : "not given");
+            txt_A1A3.Text = shown?.ECI_A1A3.ToString() ?? "";
+
+            btn_Accept.IsEnabled = chosen != null;
         }
 
         private void Btn_Accept_Click(object sender, RoutedEventArgs e)
         {
+            //Accept is only enabled with a row chosen, this is the guard behind it.
+            if (chosen == null)
+                return;
+
+            a1a3ElementSelected = chosen;
+
             isAccepted = true;
             this.Close();
         }
@@ -158,19 +238,13 @@ namespace CarboLifeUI.UI
 
         private void cbb_Group_DropDownClosed(object sender, EventArgs e)
         {
-            string selectedGroup = cbb_Group.Text;
+            string selectedGroup = cbb_Group.SelectedItem as string;
 
-            List<string> categoryList = a1a3Collection.GetCategoryList(selectedGroup);
+            if (selectedGroup == null)
+                return;
 
-            cbb_Categories.Items.Clear();
-
-            foreach(string cat in categoryList)
-            {
-                cbb_Categories.Items.Add(cat);
-            }
-
-            cbb_Categories.Items.Add("All");
-
+            loadCategories(selectedGroup);
+            loadPossibleElements();
         }
 
         private void btn_EditDescription_Click(object sender, RoutedEventArgs e)

@@ -84,7 +84,8 @@ namespace CarboLifeAPI
                         //this is a header
                         foreach (string header in RowData)
                         {
-                            dt.Columns.Add(header);
+                            //A repeated header would throw; it gets a default name instead.
+                            dt.Columns.Add(dt.Columns.Contains(header) ? "" : header);
                         }
                     }
                     else
@@ -92,7 +93,14 @@ namespace CarboLifeAPI
                         //This is a DataRow
                         DataRow dr = dt.NewRow();
 
-                        for (int i = 0; i < RowData.Count; i++)
+                        //A row with more fields than the header, usually an unquoted comma in a
+                        //hand edited description, used to throw and take the caller down. Its
+                        //fields are shifted, so it is kept truncated but listed as malformed for
+                        //a caller that can skip it (see GetMalformedRows).
+                        if (RowData.Count > dt.Columns.Count)
+                            GetMalformedRows(dt).Add(dt.Rows.Count);
+
+                        for (int i = 0; i < RowData.Count && i < dt.Columns.Count; i++)
                         {
                             dr[i] = RowData[i];
                         }
@@ -103,6 +111,23 @@ namespace CarboLifeAPI
                 }
                 return dt;
             }
+        }
+
+        /// <summary>
+        /// The indexes into table.Rows of the rows LoadCSV found with more fields than the
+        /// header. Their fields are shifted, so a caller should not trust them.
+        /// </summary>
+        public static List<int> GetMalformedRows(DataTable table)
+        {
+            const string key = "MalformedRows";
+
+            if (!(table.ExtendedProperties[key] is List<int> rows))
+            {
+                rows = new List<int>();
+                table.ExtendedProperties[key] = rows;
+            }
+
+            return rows;
         }
 
         public static double getScalingfactor(double canvasPixels, double Value)

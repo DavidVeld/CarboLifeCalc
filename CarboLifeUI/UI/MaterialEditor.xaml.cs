@@ -71,10 +71,12 @@ namespace CarboLifeUI.UI
             ReloadMaterialCategories();
 
 
+            //RefreshMaterialList selects selectedMaterial itself, the name is only a fallback.
             RefreshMaterialList();
-            selectMaterial(selectedMaterial.Name);
+            if (selectedMaterial != null && liv_materialList.SelectedItem == null)
+                selectMaterial(selectedMaterial.Name);
 
-            UpdateMaterialSettings();  
+            UpdateMaterialSettings();
         }
 
         private void ReloadMaterialCategories()
@@ -97,25 +99,29 @@ namespace CarboLifeUI.UI
 
         private void selectMaterial(string name)
         {
-            int index = 0;
-
-            if (liv_materialList.Items.Count > 0)
+            //Only when it is in the list: an index past the end used to clear the selection.
+            foreach (CarboMaterial it in liv_materialList.Items)
             {
-                foreach (CarboMaterial it in liv_materialList.Items)
+                if (it.Name == name)
                 {
-                    if (it.Name == name)
-                    {
-                        break;
-                    }
-                    index++;
+                    liv_materialList.SelectedItem = it;
+                    return;
                 }
             }
-            
-            liv_materialList.SelectedIndex = index;
         }
+
+        /// <summary>
+        /// Set while RefreshMaterialList rebuilds the list. Clearing the list deselects, and that
+        /// used to set selectedMaterial to null behind a panel still showing the material, so
+        /// the next stage button or value box crashed on it.
+        /// </summary>
+        private bool refreshingList;
 
         private void Liv_materialList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (refreshingList)
+                return;
+
             selectedMaterial = liv_materialList.SelectedItem as CarboMaterial;
             //MaterialMap selectedFloorMap = GetMaterialMap(cbb_FloorTypes.Text);
             
@@ -388,46 +394,63 @@ namespace CarboLifeUI.UI
 
         private void RefreshMaterialList()
         {
-            //selectedMaterial = null;
+            //The material being edited stays the one being edited through a search, even while
+            //the search hides it, because the panel still shows it. After a sync or import
+            //replaced the database it is found again by id and name; a deleted one is let go.
+            CarboMaterial keep = selectedMaterial;
+            if (keep != null && !returnedDatabase.CarboMaterialList.Contains(keep))
+                keep = returnedDatabase.CarboMaterialList.FirstOrDefault(m => m.Id == keep.Id && m.Name == keep.Name);
+
             string cat = cbb_Categories.Text;
-            string searchtext = txt_Search.Text;
+            string searchtext = (txt_Search.Text ?? "").Trim();
 
-            liv_materialList.Items.Clear();
+            refreshingList = true;
 
-            foreach(CarboMaterial cm in returnedDatabase.CarboMaterialList)
+            try
             {
-                if(cm.Category == cat || cat == "All" || cat == "")
+                liv_materialList.Items.Clear();
+
+                foreach (CarboMaterial cm in returnedDatabase.CarboMaterialList)
                 {
-                    //Search Bar
-                    int hit = cm.Name.IndexOf(searchtext, StringComparison.OrdinalIgnoreCase);
-                    if (searchtext == "" || hit >= 0)
+                    if (cm.Category == cat || cat == "All" || cat == "")
                     {
-                        liv_materialList.Items.Add(cm);
+                        //Search Bar: name, category or description.
+                        if (searchtext == "" || ContainsText(cm.Name, searchtext) ||
+                            ContainsText(cm.Category, searchtext) || ContainsText(cm.Description, searchtext))
+                        {
+                            liv_materialList.Items.Add(cm);
+                        }
                     }
                 }
+
+                //Sort list. Cleared first: they were added again on every refresh, so each
+                //keystroke in the search box made the next sort slower.
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(liv_materialList.Items);
+
+                if (view != null)
+                {
+                    view.SortDescriptions.Clear();
+                    view.SortDescriptions.Add(new System.ComponentModel.SortDescription("Category", System.ComponentModel.ListSortDirection.Ascending));
+                    view.SortDescriptions.Add(new System.ComponentModel.SortDescription("Name", System.ComponentModel.ListSortDirection.Ascending));
+                }
+
+                if (keep != null && liv_materialList.Items.Contains(keep))
+                {
+                    liv_materialList.SelectedItem = keep;
+                    liv_materialList.ScrollIntoView(keep);
+                }
             }
-            if (selectedMaterial != null)
-                liv_materialList.SelectedItem = selectedMaterial;
-
-            //Sort list
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(liv_materialList.Items);
-
-            if (view != null)
+            finally
             {
-                view.SortDescriptions.Add(new System.ComponentModel.SortDescription("Category", System.ComponentModel.ListSortDirection.Ascending));
-                view.SortDescriptions.Add(new System.ComponentModel.SortDescription("Name", System.ComponentModel.ListSortDirection.Ascending));
-
-                /*
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
-                view.GroupDescriptions.Add(groupDescription);
-
-                liv_materialList.Items.Clear();
-                liv_materialList.ItemsSource = null;
-                
-                liv_materialList.ItemsSource = view;
-                */
+                refreshingList = false;
             }
 
+            selectedMaterial = keep;
+        }
+
+        private static bool ContainsText(string text, string search)
+        {
+            return text != null && text.IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private void Chb_ShowICE_Click(object sender, RoutedEventArgs e)
@@ -437,6 +460,9 @@ namespace CarboLifeUI.UI
 
         private void Btn_A1_A3_Click(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             A1A3Element selectedA1A3Values = selectedMaterial.materialA1A3Properties;
 
             if (selectedA1A3Values == null)
@@ -451,10 +477,13 @@ namespace CarboLifeUI.UI
                 selectedMaterial.ECI_A1A3_Override = false;
                 selectedMaterial.materialA1A3Properties = materialBase.a1a3ElementSelected;
 
-                selectedMaterial.Category = selectedMaterial.materialA1A3Properties.Category;
+                //A table row without a category or density leaves the material's own alone.
+                if (!string.IsNullOrWhiteSpace(selectedMaterial.materialA1A3Properties.Category))
+                    selectedMaterial.Category = selectedMaterial.materialA1A3Properties.Category;
                 selectedMaterial.ECI_A1A3 = selectedMaterial.materialA1A3Properties.ECI_A1A3;
                 
-                if (selectedMaterial.materialA1A3Properties.Density != selectedMaterial.Density)
+                if (selectedMaterial.materialA1A3Properties.Density > 0 &&
+                    selectedMaterial.materialA1A3Properties.Density != selectedMaterial.Density)
                 {
                     MessageBoxResult result = MessageBox.Show("The material density of your selected material does not match the material density of your base material, do you wish to override this with the new value?", "Warning", MessageBoxButton.YesNo);
                     if(result == MessageBoxResult.Yes)
@@ -468,6 +497,9 @@ namespace CarboLifeUI.UI
 
         private void Btn_A4_Click(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             MaterialTransportPicker materialTransportPicker = new MaterialTransportPicker(selectedMaterial.materiaA4Properties, selectedMaterial);
             materialTransportPicker.ShowDialog();
             if (materialTransportPicker.isAccepted == true)
@@ -486,6 +518,9 @@ namespace CarboLifeUI.UI
 
         private void Btn_A5_Click(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             MaterialConstructionPicker materialConstructionPicker = new MaterialConstructionPicker(selectedMaterial.materialA5Properties);
             materialConstructionPicker.ShowDialog();
             if (materialConstructionPicker.isAccepted == true)
@@ -504,6 +539,9 @@ namespace CarboLifeUI.UI
 
         private void Btn_C1_C4_Click(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             MaterialEndofLifePicker materialEndofLifePicker = new MaterialEndofLifePicker(selectedMaterial);
             materialEndofLifePicker.ShowDialog();
             if (materialEndofLifePicker.isAccepted == true)
@@ -520,6 +558,9 @@ namespace CarboLifeUI.UI
 
         private void Btn_D_Click(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             MaterialAdditionalPicker materialAdditionalPicker = new MaterialAdditionalPicker(selectedMaterial.materialDProperties);
             materialAdditionalPicker.ShowDialog();
             if (materialAdditionalPicker.isAccepted == true)
@@ -774,6 +815,9 @@ namespace CarboLifeUI.UI
 
         private void txt_A1_A3_TextChanged(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             TextBox tb = (TextBox)sender;
             if (selectedMaterial.ECI_A1A3_Override == true)
             {
@@ -786,6 +830,9 @@ namespace CarboLifeUI.UI
 
         private void txt_A4_TextChanged(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             TextBox tb = (TextBox)sender;
             if (selectedMaterial.ECI_A4_Override == true)
             {
@@ -798,6 +845,9 @@ namespace CarboLifeUI.UI
 
         private void txt_A5_TextChanged(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             TextBox tb = (TextBox)sender;
             if (selectedMaterial.ECI_A5_Override == true)
             {
@@ -811,13 +861,20 @@ namespace CarboLifeUI.UI
 
         private void txt_B1_B5_TextChanged(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             TextBox tb = (TextBox)sender;
                     selectedMaterial.ECI_B1B5 = Utils.ConvertMeToDouble(txt_B1_B5.Text);
             StoreGeneralProperties();
             UpdateMaterialSettings();
         }
         private void txt_C1_C4_TextChanged(object sender, RoutedEventArgs e)
-        {            if (selectedMaterial.ECI_C1C4_Override == true)
+        {
+            if (selectedMaterial == null)
+                return;
+
+            if (selectedMaterial.ECI_C1C4_Override == true)
             {
                 selectedMaterial.ECI_C1C4 = Utils.ConvertMeToDouble(txt_C1_C4.Text);
                 StoreGeneralProperties();
@@ -827,6 +884,9 @@ namespace CarboLifeUI.UI
 
         private void txt_D_TextChanged(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             TextBox tb = (TextBox)sender;
                  if (selectedMaterial.ECI_D_Override == true)
                     {
@@ -838,6 +898,9 @@ namespace CarboLifeUI.UI
 
         private void txt_Seq_TextChanged(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             //This one was async void with nothing to await, so it ran on every keystroke and
             //called UpdateMaterialSettings, which rewrites all the boxes from the model while
             //the user is still typing in one of them.
@@ -851,6 +914,9 @@ namespace CarboLifeUI.UI
 
         private void txt_Mix_TextChanged(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             TextBox tb = (TextBox)sender;
                 selectedMaterial.ECI_Mix = Utils.ConvertMeToDouble(txt_Mix.Text);
             StoreGeneralProperties();
@@ -1058,6 +1124,9 @@ namespace CarboLifeUI.UI
 
         private void txt_Mix_Setting_TextChanged(object sender, RoutedEventArgs e)
         {
+            if (selectedMaterial == null)
+                return;
+
             TextBox tb = (TextBox)sender;
             selectedMaterial.ECI_Mix_Info = tb.Text;
 

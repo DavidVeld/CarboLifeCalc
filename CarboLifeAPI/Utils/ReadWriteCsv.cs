@@ -121,11 +121,15 @@ namespace CarboLifeAPI
         /// <returns></returns>
         public bool ReadRow(CsvRow row)
         {
-            
-
-            row.LineText = ReadLine();
-            if (String.IsNullOrEmpty(row.LineText))
-                return false;
+            //Blank lines are skipped, not taken as the end of the file: one left in the middle
+            //of a hand edited file used to drop every row after it without a word.
+            do
+            {
+                row.LineText = ReadLine();
+                if (row.LineText == null)
+                    return false;
+            }
+            while (string.IsNullOrWhiteSpace(row.LineText));
 
             int pos = 0;
             int rows = 0;
