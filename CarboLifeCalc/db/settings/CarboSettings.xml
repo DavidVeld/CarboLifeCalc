@@ -16,7 +16,7 @@
     <AdditionalParameterElementType>Type Parameter</AdditionalParameterElementType>
     <IncludeGradeParameter>true</IncludeGradeParameter>
     <GradeParameterName>CLC_MaterialGrade</GradeParameterName>
-    <GradeParameterType>Type Parameter</GradeParameterType>
+    <GradeParameterType>Instance Parameter</GradeParameterType>
     <IncludeCorrectionParameter>true</IncludeCorrectionParameter>
     <CorrectionParameterName>CLC_VolumeCorrection</CorrectionParameterName>
     <CorrectionParameterType>Type Parameter</CorrectionParameterType>
