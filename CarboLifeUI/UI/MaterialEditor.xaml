@@ -324,8 +324,7 @@
                                      Margin="2,3" IsReadOnly="True" Style="{StaticResource flatTextBox}"/>
                             <TextBox Name="txt_D" Grid.Row="6" Grid.Column="2"
                                      Margin="2,3" Style="{StaticResource flatTextBox}"
-                                     LostFocus="txt_D_TextChanged"
-                                     Text="{Binding Text, Delay=1000}"/>
+                                     LostFocus="txt_D_TextChanged"/>
                             <CheckBox Name="chx_D_Manual" Grid.Row="6" Grid.Column="3"
                                       VerticalAlignment="Center" HorizontalAlignment="Center"
                                       Click="chx_D_Manual_Click"/>
@@ -340,8 +339,7 @@
                                      Margin="2,3" Style="{StaticResource flatTextBox}"/>
                             <TextBox Name="txt_Seq" Grid.Row="7" Grid.Column="2"
                                      Margin="2,3" Style="{StaticResource flatTextBox}"
-                                     LostFocus="txt_Seq_TextChanged"
-                                     Text="{Binding Text, Delay=1000}"/>
+                                     LostFocus="txt_Seq_TextChanged"/>
                             <CheckBox Name="chx_Seq_Manual" Grid.Row="7" Grid.Column="3"
                                       VerticalAlignment="Center" HorizontalAlignment="Center"
                                       Click="chx_Seq_Manual_Click"/>
@@ -358,8 +356,7 @@
                                      LostFocus="txt_Mix_Setting_TextChanged"/>
                             <TextBox Name="txt_Mix" Grid.Row="8" Grid.Column="2"
                                      Margin="2,3" Style="{StaticResource flatTextBox}"
-                                     LostFocus="txt_Mix_TextChanged"
-                                     Text="{Binding Text, Delay=1000}"/>
+                                     LostFocus="txt_Mix_TextChanged"/>
                             <Button Name="btn_Mix" Grid.Row="8" Grid.Column="4"
                                     Content="Edit..." Margin="2,3" Style="{StaticResource ButtonStyle}"
                                     Click="btn_Mix_Click"/>
