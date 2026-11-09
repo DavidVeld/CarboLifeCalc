@@ -93,7 +93,7 @@ namespace CarboLifeAPI.Data
                 changed = true;
             }
             else if (found.Density != 0 || found.ECI != 0 || found.Id != CarboMaterial.SystemEmptyId
-                     || found.isLocked == false)
+                     || found.isLocked == false || found.AllFiguresFixed() == false)
             {
                 //A copy that drifted, or one edited in an older version, is put back.
                 found.ResetToSystemEmpty();

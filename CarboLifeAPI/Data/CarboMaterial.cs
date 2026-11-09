@@ -188,6 +188,15 @@ namespace CarboLifeAPI.Data
             //Locked, so the material editor treats it as read only like any other locked row.
             empty.isLocked = true;
 
+            //Every figure is fixed, not calculated: CalculateTotals() otherwise recalculates them
+            //from the default sub properties (50 km truck for A4, 50/50 landfill/re-use for C4).
+            empty.ECI_A1A3_Override = true;
+            empty.ECI_A4_Override = true;
+            empty.ECI_A5_Override = true;
+            empty.ECI_C1C4_Override = true;
+            empty.ECI_D_Override = true;
+            empty.ECI_Seq_Override = true;
+
             return empty;
         }
 
@@ -220,12 +229,12 @@ namespace CarboLifeAPI.Data
             ECI_Mix = 0;
             ECI_Mix_Info = "";
 
-            ECI_A1A3_Override = false;
-            ECI_A4_Override = false;
-            ECI_A5_Override = false;
-            ECI_C1C4_Override = false;
-            ECI_Seq_Override = false;
-            ECI_D_Override = false;
+            ECI_A1A3_Override = clean.ECI_A1A3_Override;
+            ECI_A4_Override = clean.ECI_A4_Override;
+            ECI_A5_Override = clean.ECI_A5_Override;
+            ECI_C1C4_Override = clean.ECI_C1C4_Override;
+            ECI_Seq_Override = clean.ECI_Seq_Override;
+            ECI_D_Override = clean.ECI_D_Override;
 
             materialA1A3Properties = new A1A3Element();
             materiaA4Properties = new CarboA4Properties();
@@ -233,6 +242,16 @@ namespace CarboLifeAPI.Data
             materialC1C4Properties = new CarboC1C4Properties();
             materialSeqProperties = new CarboSeqProperties();
             materialDProperties = new CarboDProperties();
+        }
+
+        /// <summary>
+        /// True when every carbon figure is fixed rather than calculated, as the built in
+        /// material needs. A file saved before that was so has them calculated, and gets reset.
+        /// </summary>
+        internal bool AllFiguresFixed()
+        {
+            return ECI_A1A3_Override && ECI_A4_Override && ECI_A5_Override
+                && ECI_C1C4_Override && ECI_D_Override && ECI_Seq_Override;
         }
 
         public CarboMaterial()
